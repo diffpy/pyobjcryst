@@ -1,0 +1,81 @@
+#include <boost/python.hpp>
+#include <boost/python/module.hpp>
+#include <boost/python/suite/indexing/map_indexing_suite.hpp>
+
+#include <string>
+#include <vector>
+#include <iostream>
+
+#include "converters.h"
+#include <numpy/arrayobject.h>
+
+#include "CrystVector/CrystVector.h"
+#include "ObjCryst/Crystal.h"
+#include "ObjCryst/ScatteringPower.h"
+#include "ObjCryst/SpaceGroup.h"
+
+
+namespace {
+// for testing
+
+CrystVector<float> getTestVector()
+{ 
+    /* Should produce
+     * 0 1 2
+     */
+    CrystVector<float> tv(3);
+    for(int i=0;i<3;i++)
+    {
+        tv(i) = i;
+    }
+    return tv;
+}
+
+CrystMatrix<float> getTestMatrix()
+{ 
+    /* Should produce
+     * 0    1
+     * 2    3
+     * 4    5
+     */
+    CrystMatrix<float> tm(3,2);
+    int counter = 0;
+    for(int i=0;i<3;i++)
+    {
+        for(int j=0;j<2;j++)
+        {
+            tm(i,j) = counter;
+            counter++;
+        }
+    }
+    return tm;
+}
+
+typedef std::pair< ObjCryst::ScatteringPower const*, ObjCryst::ScatteringPower const* >
+    sppair;
+
+typedef std::map< sppair, float > mapsppairtofloat;
+
+typedef std::map< sppair, ObjCryst::Crystal::BumpMergePar > mapsppairtobmp;
+
+}
+
+BOOST_PYTHON_MODULE(_registerconverters)
+{
+
+    import_array();
+    boost::python::to_python_converter< CrystVector<float>,
+        CrystVector_REAL_to_ndarray >();
+    boost::python::to_python_converter< CrystMatrix<float>,
+        CrystMatrix_REAL_to_ndarray >();
+    // From boost sources
+    std_pair_to_python_converter
+        <ObjCryst::ScatteringPower const *, ObjCryst::ScatteringPower const * >();
+    // Semi-converter for mapsppairtofloat
+    class_<mapsppairtofloat>("mapsppairtofloat", no_init)
+        .def(map_indexing_suite<mapsppairtofloat>());
+    // Semi-converter for mapsppairtobmp
+    class_<mapsppairtobmp>("mapsppairtobmp", no_init)
+        .def(map_indexing_suite<mapsppairtobmp>());
+
+}
