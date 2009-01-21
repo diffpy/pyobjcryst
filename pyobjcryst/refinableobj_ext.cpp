@@ -1,3 +1,25 @@
+/*****************************************************************************
+*
+* pyobjcryst        by DANSE Diffraction group
+*                   Simon J. L. Billinge
+*                   (c) 2009 Trustees of the Columbia University
+*                   in the City of New York.  All rights reserved.
+*
+* File coded by:    Chris Farrow
+*
+* See AUTHORS.txt for a list of people who contributed.
+* See LICENSE.txt for license information.
+*
+******************************************************************************
+*
+* boost::python bindings to ObjCryst::RefinableObj. This is a virtual class that
+* can be derived from in python. These bindings are used by ObjCryst objects
+* that inherit from RefinableObj (see for example unitcell_ext.cpp).
+*
+* $Id$
+*
+*****************************************************************************/
+
 #include <string>
 #include <map>
 #include <iostream>
@@ -11,6 +33,8 @@
 
 #include "RefinableObj/RefinableObj.h"
 #include "CrystVector/CrystVector.h"
+
+#include "helpers.h"
 
 using namespace ObjCryst;
 using namespace boost::python;
@@ -442,21 +466,12 @@ BOOST_PYTHON_MODULE(_refinableobj)
                 &RefinableObjWrap::default_XMLInput)
         .def("UpdateDisplay", &RefinableObj::UpdateDisplay, 
                 &RefinableObjWrap::default_UpdateDisplay)
-        // No lvalue converter from python iterable to CrystVector
-        //.def("GetGeneGroup", &RefinableObj::GetGeneGroup, 
-        //        &RefinableObjWrap::default_GetGeneGroup)
+        .def("GetGeneGroup", &RefinableObj::GetGeneGroup, 
+                &RefinableObjWrap::default_GetGeneGroup)
         .def("GetRestraintCost", &RefinableObj::GetRestraintCost, 
                 &RefinableObjWrap::default_GetRestraintCost)
         .def("TagNewBestConfig", &RefinableObj::TagNewBestConfig, 
                 &RefinableObjWrap::default_TagNewBestConfig)
-        // Protected Methods
-        //.def("_Prepare", &RefinableObjWrap::Prepare)
-        //.def("_FindPar", &RefinableObjWrap::FindPar)
-        //.def("_AddSubRefObj", &RefinableObjWrap::AddSubRefObj, 
-        //        with_custodian_and_ward<1,2>())
-        //.def("_RemoveSubRefObj", &RefinableObjWrap::RemoveSubRefObj)
-        //.def("_AddOption", &RefinableObjWrap::AddOption)
-        // FIXME? - needs converter
-        //.def("_FindParamSet", &RefinableObjWrap::FindParamSet)
+        .def("__str__", &__str__<RefinableObj>)
         ;
 }

@@ -1,3 +1,26 @@
+/*****************************************************************************
+*
+* pyobjcryst        by DANSE Diffraction group
+*                   Simon J. L. Billinge
+*                   (c) 2009 Trustees of the Columbia University
+*                   in the City of New York.  All rights reserved.
+*
+* File coded by:    Chris Farrow
+*
+* See AUTHORS.txt for a list of people who contributed.
+* See LICENSE.txt for license information.
+*
+******************************************************************************
+*
+* boost::python bindings to ObjCryst::Scatterer. This is a virtual class that
+* can be derived from in python. These bindings are used by ObjCryst objects
+* that inherit from Scatterer (see for example atom_ext.cpp).
+*
+*
+* $Id$
+*
+*****************************************************************************/
+
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
@@ -10,6 +33,8 @@
 #include "RefinableObj/RefinableObj.h"
 #include "ObjCryst/General.h"
 #include "ObjCryst/Scatterer.h"
+
+#include "helpers.h"
 
 using namespace ObjCryst;
 using namespace boost::python;
@@ -184,6 +209,7 @@ BOOST_PYTHON_MODULE(_scatterer)
                 pure_virtual(&Scatterer::GetScatteringComponentList),
                 return_internal_reference<>())
         .def("Print", pure_virtual(&Scatterer::Print))
+        .def("__str__", &__str__<Scatterer>)
         // Protected
         // FIXME Can't get these to work. Probably protected issue.
         //.def("_InitRefParList", pure_virtual(&Scatterer::InitRefParList))

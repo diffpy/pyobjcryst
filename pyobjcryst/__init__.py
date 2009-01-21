@@ -1,5 +1,19 @@
 #!/usr/bin/env python
-"""Python wrapping of ObjCryst namespace of ObjCryst++.
+########################################################################
+#
+# pyobjcryst        by DANSE Diffraction group
+#                   Simon J. L. Billinge
+#                   (c) 2009 trustees of the Michigan State University
+#                   All rights reserved.
+#
+# File coded by:    Chris Farrow
+#
+# See AUTHORS.txt for a list of people who contributed.
+# See LICENSE.txt for license information.
+#
+########################################################################
+
+"""Python wrapping of ObjCryst++.
 
 Classes:
 
@@ -18,11 +32,11 @@ Classes:
 
 Enums:
 
-    RadiationType
+    RadiationType       --  Radiation type identifiers
 
 """
 
-# Register all converters
+# Register convereters
 from registerconverters import *
 
 # General

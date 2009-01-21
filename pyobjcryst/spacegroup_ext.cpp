@@ -1,3 +1,23 @@
+/*****************************************************************************
+*
+* pyobjcryst        by DANSE Diffraction group
+*                   Simon J. L. Billinge
+*                   (c) 2009 Trustees of the Columbia University
+*                   in the City of New York.  All rights reserved.
+*
+* File coded by:    Chris Farrow
+*
+* See AUTHORS.txt for a list of people who contributed.
+* See LICENSE.txt for license information.
+*
+******************************************************************************
+*
+* boost::python bindings to ObjCryst::SpaceGroup.
+*
+* $Id$
+*
+*****************************************************************************/
+
 #include "ObjCryst/SpaceGroup.h"
 
 #include <boost/python.hpp>
@@ -6,8 +26,7 @@
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
-#include <string>
-#include <iostream>
+#include "helpers.h"
 
 using namespace boost::python;
 using namespace ObjCryst;
@@ -87,5 +106,6 @@ BOOST_PYTHON_MODULE(_spacegroup)
         .def("IsReflSystematicAbsent", &SpaceGroup::IsReflSystematicAbsent)
         .def("IsReflCentric", &SpaceGroup::IsReflCentric)
         .def("GetExpectedIntensityFactor", &SpaceGroup::GetExpectedIntensityFactor)
+        .def("__str__", &__str__<SpaceGroup>)
         ;
 }

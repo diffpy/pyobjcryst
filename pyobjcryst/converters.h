@@ -1,3 +1,26 @@
+/*****************************************************************************
+*
+* pyobjcryst        by DANSE Diffraction group
+*                   Simon J. L. Billinge
+*                   (c) 2009 Trustees of the Columbia University
+*                   in the City of New York.  All rights reserved.
+*
+* File coded by:    Chris Farrow
+*
+* See AUTHORS.txt for a list of people who contributed.
+* See LICENSE.txt for license information.
+*
+******************************************************************************
+*
+* Converter functions. These are registered in a special extention implemented
+* in registerconverters.cpp, which is imported in __init__.py. Creating
+* convereters in this fashion keeps them all in one place and eliminates
+* duplication of effort.
+*
+* $Id$
+*
+*****************************************************************************/
+
 #ifndef _CONVERTERS_H
 #define _CONVERTERS_H
 

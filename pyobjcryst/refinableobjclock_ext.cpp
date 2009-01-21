@@ -1,5 +1,22 @@
-#include <string>
-#include <iostream>
+/*****************************************************************************
+*
+* pyobjcryst        by DANSE Diffraction group
+*                   Simon J. L. Billinge
+*                   (c) 2009 Trustees of the Columbia University
+*                   in the City of New York.  All rights reserved.
+*
+* File coded by:    Chris Farrow
+*
+* See AUTHORS.txt for a list of people who contributed.
+* See LICENSE.txt for license information.
+*
+******************************************************************************
+*
+* boost::python bindings to ObjCryst::RefinableObjClock.
+*
+* $Id$
+*
+*****************************************************************************/
 
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
@@ -7,6 +24,8 @@
 #include <boost/python/def.hpp>
 
 #include "RefinableObj/RefinableObj.h"
+
+#include "helpers.h"
 
 using namespace boost::python;
 using ObjCryst::RefinableObjClock;
@@ -50,6 +69,7 @@ const char *  removeparentdoc =
 const char * resetdoc =
 "Reset a Clock to 0, to force an update";
 
+
 } // anonymous namespace
 
 BOOST_PYTHON_MODULE(_refinableobjclock)
@@ -71,5 +91,6 @@ BOOST_PYTHON_MODULE(_refinableobjclock)
         .def(self <= self)
         .def(self > self)
         .def(self >= self)
+        .def("__str__", &__str__<RefinableObjClock>)
         ;
 }
