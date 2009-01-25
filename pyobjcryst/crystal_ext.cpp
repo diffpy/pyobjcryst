@@ -14,6 +14,24 @@
 *
 * boost::python bindings to ObjCryst::Crystal.
 *
+* Changes from ObjCryst++
+* - The "Remove" functions do not delete the internal c++ objects. Care must be
+*   taken to not use Scatterer and ScatteringPower python objects in multiple
+*   crystals, which is in line with c++ counterparts. Here's why...
+*
+*   Crystal takes ownership of Scatterer and ScatteringPower objects and deletes
+*   them in the destructor and in the "Remove" functions. Ownership can be
+*   managed by assuring that the lifetime of the crystal is linked to that of
+*   the sub-objects. In otherwords, we can't delete the crystal and then use the
+*   the sub-objects. Likewise, we can't delete the sub-objects and expect them
+*   to work in the crystal.  The "Remove" functions mess this up and can lead to
+*   memory corruption when a user tries to access an object whose memory has
+*   been deleted out from under it. Therefore, these functions aren't allowed to
+*   delete their sub-objects.
+*
+* - The const-version of overloaded methods that can return either an internal
+*   reference, or a constant interal reference are not wrapped.
+*
 * $Id$
 *
 *****************************************************************************/
@@ -21,6 +39,7 @@
 #include "ObjCryst/Crystal.h"
 #include "ObjCryst/UnitCell.h"
 #include "ObjCryst/Atom.h"
+#include "RefinableObj/RefinableObj.h"
 #include "CrystVector/CrystVector.h"
 
 #include <boost/utility.hpp>
@@ -31,64 +50,155 @@
 #include <boost/python/implicit.hpp>
 
 #include <string>
-#include <iostream>
+#include <map>
+#include <set>
 
 using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
 
-// Overloaded for object management
-
-class CrystalWrap : public Crystal, 
-                      public wrapper<Crystal>
+/* Overloaded so that RemoveScatterer does not delete the passed scatterer 
+class CrystalWrap : public Crystal
 {
 
     public:
 
-    CrystalWrap() : Crystal() {}
-    CrystalWrap(const float a, const float b, const float c, const std::string& sgid) :
-        Crystal(a, b, c, sgid)  {}
-    CrystalWrap(const float a, const float b, const float c, 
-            const float alpha, const float beta, const float gamma,
-            const std::string& sgid) :
-        Crystal(a, b, c, alpha, beta, gamma, sgid)  {}
-    CrystalWrap(const CrystalWrap& C) : Crystal(C) {}
+    CrystalWrap() : Crystal() {};
 
-    // Crystal::RemoveScatterer normally deletes the memory for the scattering
-    // object, and doesn't care if it leaves dangling references.
+    CrystalWrap(const float a, const float b, const float c,
+        const std::string &SpaceGroupId) :
+        Crystal(a, b, c, SpaceGroupId) {}
+
+    CrystalWrap(const float a, const float b, const float c, 
+        const float alpha, const float beta, const float gamma,
+        const std::string &SpaceGroupId) :
+        Crystal(a, b, c, alpha, beta, gamma, SpaceGroupId) {}
+
+    CrystalWrap(const Crystal &oldCryst): Crystal(oldCryst) {}
+
     void RemoveScatterer(Scatterer *scatt)
     {
-        ObjRegistry<Scatterer>& mSR = GetScattererRegistry();
-        mSR.DeRegister(*scatt);
+        
+        ObjRegistry<Scatterer> &sr 
+            = this->GetScattererRegistry();
+        sr.DeRegister(*scatt);
         scatt->DeRegisterClient(*this);
+
         this->RemoveSubRefObj(*scatt);
-        // FIXME - There is no way to click the clock!
+        // This is what we don't want!
+        // delete scatt;
+
+        // this is ugly and cheating!
+        RefinableObjClock& csl = 
+            const_cast<RefinableObjClock&>(this->GetClockScattererList());
+        csl.Print();
+        csl.Click();
+        csl.Print();
+        return;
     }
 
+    void Crystal::RemoveScatteringPower(ScatteringPower *scattPow)
+    {
 
-}; // CrystalWrap
+        ObjRegistry<ScatteringPower>& spr =
+            this->GetScatteringPowerRegistry();
+        spr.DeRegister(*scattPow);
 
+        this->RemoveSubRefObj(*scattPow);
+        mClockMaster.RemoveChild(scattPow->GetClockMaster());
+        mClockMaster.RemoveChild(scattPow->GetMaximumLikelihoodParClock());
+
+        RefinableObjClock& mcsp = 
+            const_cast<RefinableObjClock&>
+            (this->GetMasterClockScatteringPower());
+        mcsp.RemoveChild(scattPow->GetClockMaster());
+        //delete scattPow;
+
+        VBumpMergePar& bmp = this->GetBumpMergeParList();
+       
+        for(Crystal::VBumpMergePar::iterator pos=mvBumpMergePar.begin();
+            pos!=mvBumpMergePar.end();)
+        {
+            if((pos->first.first==scattPow)||(pos->first.second==scattPow))
+            {
+                bmp.erase(pos++);
+                // FIXME
+                //mBumpMergeParClock.Click();
+            }
+            else ++pos;// See Josuttis Std C++ Lib p.205 for safe method
+        }
+
+
+        std::map<pair<const ScatteringPower*,const ScatteringPower*>, float>&  
+            mvBondValenceRo = this->GetBondValenceRoList();
+       
+        for(map<pair<const ScatteringPower*,const ScatteringPower*>, float>::iterator
+            pos=mvBondValenceRo.begin();pos!=mvBondValenceRo.end();)
+        {
+        if((pos->first.first==scattPow)||(pos->first.second==scattPow))
+            {
+                mvBondValenceRo.erase(pos++);
+                //FIXME
+                //mBondValenceParClock.Click();
+            }
+            else ++pos;
+        }
+    }
+
+};
+*/
+
+/* We want to make sure that a scatterer doesn't get added to more than one
+ * crystal.
+ */
+std::set<Scatterer*> scattreg;
+
+void _AddScatterer(Crystal& crystal, Scatterer* scatt)
+{
+    if( scattreg.count(scatt) > 0 )
+    {
+        PyErr_SetString(PyExc_AttributeError, "Scatterer already belongs to a crystal.");
+        throw_error_already_set();
+        return;
+    }
+    scattreg.insert(scatt);
+    crystal.AddScatterer(scatt);
+    return;
 }
+
+std::set<ScatteringPower*> scattpowreg;
+
+void _AddScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
+{
+    if( scattpowreg.count(scattpow) > 0 )
+    {
+        PyErr_SetString(PyExc_AttributeError, "ScatteringPower already belongs to a crystal.");
+        throw_error_already_set();
+        return;
+    }
+    scattpowreg.insert(scattpow);
+    crystal.AddScatteringPower(scattpow);
+    return;
+}
+
+} // namespace
 
 
 BOOST_PYTHON_MODULE(_crystal)
 {
 
-    
-    class_<CrystalWrap, boost::noncopyable, bases<UnitCell> > ("Crystal", init<>())
-        // Constructors
+    class_<Crystal, bases<UnitCell> > ("Crystal", init<>())
+        /* Constructors */
         .def(init<const float, const float, const float, const std::string&>())
         .def(init<const float, const float, const float, 
             const float, const float, const float, 
             const std::string&>())
-        .def(init<const CrystalWrap&>())
-        // Methods
-        // I don't know why this works, but it does.
-        .def("AddScatterer", &Crystal::AddScatterer,
-                with_custodian_and_ward<2,1, with_custodian_and_ward<1,2> >())
-        // FIXME This doesn't update the clock!
-        .def("RemoveScatterer", &CrystalWrap::RemoveScatterer)
+        .def(init<const Crystal&>())
+        /* Methods */
+        .def("AddScatterer", &_AddScatterer,
+            with_custodian_and_ward<2,1,with_custodian_and_ward<1,2> >())
+        //.def("RemoveScatterer", &Crystal::RemoveScatterer)
         .def("GetNbScatterer", &Crystal::GetNbScatterer)
         .def("GetScatt", 
             (Scatterer& (Crystal::*)(const std::string&)) &Crystal::GetScatt, 
@@ -105,9 +215,8 @@ BOOST_PYTHON_MODULE(_crystal)
         //.def("GetScatteringPowerRegistry", ( ObjRegistry<ScatteringPower>& 
         //    (Crystal::*) ()) &Crystal::GetScatteringPowerRegistry,
         //    return_internal_reference<>())
-        .def("AddScatteringPower", &Crystal::AddScatteringPower,
-            with_custodian_and_ward<2,1, with_custodian_and_ward<1,2> >())
-        // FIXME This deletes the ScatteringPower that is passed as an argument.
+        .def("AddScatteringPower", &_AddScatteringPower,
+            with_custodian_and_ward<2,1,with_custodian_and_ward<1,2> >())
         //.def("RemoveScatteringPower", &Crystal::RemoveScatteringPower)
         .def("GetScatteringPower", 
             (ScatteringPower& (Crystal::*)(const std::string&)) 
@@ -146,7 +255,6 @@ BOOST_PYTHON_MODULE(_crystal)
               boost::python::arg("dist"), 
               boost::python::arg("allowMerge")))
         .def("RemoveBumpMergeDistance", &Crystal::RemoveBumpMergeDistance)
-        // FIXME Need converter
         .def("GetBumpMergeParList", (Crystal::VBumpMergePar& (Crystal::*)())
             &Crystal::GetBumpMergeParList, return_internal_reference<>())
         .def("GetClockScattererList", &Crystal::GetClockScattererList,
@@ -155,7 +263,6 @@ BOOST_PYTHON_MODULE(_crystal)
         .def("AddBondValenceRo", &Crystal::AddBondValenceRo)
         .def("RemoveBondValenceRo", &Crystal::AddBondValenceRo)
         .def("GetBondValenceCost", &Crystal::GetBondValenceCost)
-        // FIXME Need converter
         .def("GetBondValenceRoList", 
             (std::map< pair< const ScatteringPower *, const ScatteringPower * >, float > &
             (Crystal::*)()) &Crystal::GetBondValenceRoList,

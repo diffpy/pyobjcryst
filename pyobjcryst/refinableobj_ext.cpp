@@ -47,11 +47,17 @@ class RefinableObjWrap : public RefinableObj,
 
     public: 
 
+    /* alias the constructors from RefinableObj */
     RefinableObjWrap() : RefinableObj() {}
     RefinableObjWrap(const bool internal) : RefinableObj(internal) {}
 
+    // Fix for const void issue
+    void EraseAllParamSet() {
+        this->RefinableObj::EraseAllParamSet();
+    }
+
     const std::string& default_GetClassName() const
-    { return RefinableObj::GetClassName(); }
+    { return this->RefinableObj::GetClassName(); }
 
     const std::string& GetClassName() const
     {
@@ -61,7 +67,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     const std::string& default_GetName() const
-    { return RefinableObj::GetName(); }
+    { return this->RefinableObj::GetName(); }
 
     const std::string& GetName() const
     {
@@ -71,7 +77,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     void default_SetName(const std::string &name)
-    { RefinableObj::SetName(name); }
+    { this->RefinableObj::SetName(name); }
 
     void SetName(const std::string &name)
     {
@@ -81,7 +87,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     void default_Print() const
-    { RefinableObj::Print();}
+    { this->RefinableObj::Print();}
 
     void Print() const
     {
@@ -91,7 +97,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     void default_RegisterClient(RefinableObj& client) const 
-    { RefinableObj::RegisterClient(client); }
+    { this->RefinableObj::RegisterClient(client); }
 
     void RegisterClient(RefinableObj& client) const
     {
@@ -101,7 +107,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     void default_DeRegisterClient(RefinableObj& client) const 
-    { RefinableObj::DeRegisterClient(client); }
+    { this->RefinableObj::DeRegisterClient(client); }
 
     void DeRegisterClient(RefinableObj& client) const
     {
@@ -112,7 +118,7 @@ class RefinableObjWrap : public RefinableObj,
 
     void default_BeginOptimization(const bool allowApproximations, 
             const bool enableRestraints) 
-    { RefinableObj::BeginOptimization(allowApproximations, enableRestraints); }
+    { this->RefinableObj::BeginOptimization(allowApproximations, enableRestraints); }
 
     void BeginOptimization(const bool allowApproximations, 
             const bool enableRestraints) 
@@ -123,7 +129,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     void default_EndOptimization()
-    { RefinableObj::EndOptimization();}
+    { this->RefinableObj::EndOptimization();}
 
     void EndOptimization()
     {
@@ -133,7 +139,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     void default_RandomizeConfiguration()
-    { RefinableObj::RandomizeConfiguration();}
+    { this->RefinableObj::RandomizeConfiguration();}
 
     void RandomizeConfiguration()
     {
@@ -145,7 +151,7 @@ class RefinableObjWrap : public RefinableObj,
 
     void default_GlobalOptRandomMove(const float mutationAmplitude,
             const RefParType *type)
-    { RefinableObj::GlobalOptRandomMove(mutationAmplitude, type);}
+    { this->RefinableObj::GlobalOptRandomMove(mutationAmplitude, type);}
 
     void GlobalOptRandomMove(const float mutationAmplitude,
             const RefParType *type)
@@ -156,7 +162,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     float default_GetLogLikelihood() const
-    { return RefinableObj::GetLogLikelihood(); }
+    { return this->RefinableObj::GetLogLikelihood(); }
 
     float GetLogLikelihood() const
     {
@@ -166,7 +172,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     unsigned int default_GetNbLSQFunction() const
-    { return RefinableObj::GetNbLSQFunction(); }
+    { return this->RefinableObj::GetNbLSQFunction(); }
 
     unsigned int GetNbLSQFunction() const
     {
@@ -176,7 +182,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     const CrystVector<float>& default_GetLSQCalc(const unsigned int i) const 
-    { return RefinableObj::GetLSQCalc(i); }
+    { return this->RefinableObj::GetLSQCalc(i); }
 
     const CrystVector<float>& GetLSQCalc(const unsigned int i) const 
     {
@@ -186,7 +192,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     const CrystVector<float>& default_GetLSQObs(const unsigned int i) const 
-    { return RefinableObj::GetLSQObs(i); }
+    { return this->RefinableObj::GetLSQObs(i); }
 
     const CrystVector<float>& GetLSQObs(const unsigned int i) const 
     {
@@ -196,7 +202,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     const CrystVector<float>& default_GetLSQWeight(const unsigned int i) const 
-    { return RefinableObj::GetLSQWeight(i); }
+    { return this->RefinableObj::GetLSQWeight(i); }
 
     const CrystVector<float>& GetLSQWeight(const unsigned int i) const 
     {
@@ -207,7 +213,7 @@ class RefinableObjWrap : public RefinableObj,
 
     const CrystVector<float>& default_GetLSQDeriv(const unsigned int i,
             RefinablePar &rp)
-    { return RefinableObj::GetLSQDeriv(i, rp); }
+    { return this->RefinableObj::GetLSQDeriv(i, rp); }
 
     const CrystVector<float>& GetLSQDeriv(const unsigned int i,
             RefinablePar &rp)
@@ -218,7 +224,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     void default_XMLOutput(std::ostream &os, int indent) const
-    { RefinableObj::XMLOutput(os, indent); }
+    { this->RefinableObj::XMLOutput(os, indent); }
 
     void XMLOutput(std::ostream &os, int indent) const
     {
@@ -229,7 +235,7 @@ class RefinableObjWrap : public RefinableObj,
 
     void default_XMLInput(std::istream &is, 
             const ObjCryst::XMLCrystTag &tag)
-    { RefinableObj::XMLInput(is, tag); }
+    { this->RefinableObj::XMLInput(is, tag); }
 
     void XMLInput(std::istream &is, 
             const ObjCryst::XMLCrystTag &tag)
@@ -242,7 +248,7 @@ class RefinableObjWrap : public RefinableObj,
     void default_GetGeneGroup(const ObjCryst::RefinableObj &obj,
             CrystVector<unsigned int> &groupIndex,
             unsigned int &firstGroup) const
-    { RefinableObj::GetGeneGroup(obj, groupIndex, firstGroup);}
+    { this->RefinableObj::GetGeneGroup(obj, groupIndex, firstGroup);}
 
     void GetGeneGroup(const ObjCryst::RefinableObj &obj,
             CrystVector<unsigned int> &groupIndex,
@@ -254,7 +260,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     void default_UpdateDisplay() const
-    { RefinableObj::UpdateDisplay();}
+    { this->RefinableObj::UpdateDisplay();}
 
     void UpdateDisplay() const
     {
@@ -264,7 +270,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     float default_GetRestraintCost() const
-    { return RefinableObj::GetRestraintCost();}
+    { return this->RefinableObj::GetRestraintCost();}
 
     float GetRestraintCost() const
     {
@@ -274,7 +280,7 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     void default_TagNewBestConfig() const
-    { RefinableObj::TagNewBestConfig();}
+    { this->RefinableObj::TagNewBestConfig();}
 
     void TagNewBestConfig() const
     {
@@ -323,7 +329,6 @@ BOOST_PYTHON_MODULE(_refinableobj)
 {
 
     class_<RefinableObjWrap, boost::noncopyable>("RefinableObj")
-        .def(init<>())
         .def(init<bool>())
         // Defined
         .def("PrepareForRefinement", &RefinableObj::PrepareForRefinement)
@@ -374,7 +379,7 @@ BOOST_PYTHON_MODULE(_refinableobj)
                 return_internal_reference<>())
         .def("GetParamSet_ParNotFixedHumanValue", 
                 &RefinableObj::GetParamSet_ParNotFixedHumanValue)
-        .def("EraseAllParamSet", &RefinableObj::EraseAllParamSet)
+        .def("EraseAllParamSet", &RefinableObjWrap::EraseAllParamSet)
         .def("GetParamSetName", &RefinableObj::GetParamSetName,
             return_value_policy<copy_const_reference>())
         .def("SetLimitsAbsolute", ( void (RefinableObj::*)
@@ -415,12 +420,16 @@ BOOST_PYTHON_MODULE(_refinableobj)
                 &RefinableObj::SetDeleteRefParInDestructor)
         .def("GetRefParListClock", &RefinableObj::GetRefParListClock,
                 return_value_policy<copy_const_reference>())
+        // FIXME The ownership of Restraint is transferred to this object. The
+        // with_custodian_and_ward call policy is not appropriate in this case.
+        // We need to wrap the Restraint object in an auto_ptr and transfer
+        // ownership inside of AddRestraint.
         .def("AddRestraint", &RefinableObj::AddRestraint,
                 with_custodian_and_ward<1,2>())
         .def("RemoveRestraint", &RefinableObj::RemoveRestraint)
         .def("GetClockMaster", &RefinableObj::GetClockMaster,
                 return_value_policy<copy_const_reference>())
-        // Virtual
+        /* Virtual */
         .def("GetClassName", &RefinableObj::GetClassName, 
                 &RefinableObjWrap::default_GetClassName,
                 return_value_policy<copy_const_reference>())
@@ -431,6 +440,10 @@ BOOST_PYTHON_MODULE(_refinableobj)
                 &RefinableObjWrap::default_SetName)
         .def("Print", &RefinableObj::Print, 
                 &RefinableObjWrap::default_Print)
+        // FIXME The registered RefinableObj is bound to the lifetime of this
+        // object. DeRegisterClient does not change this relationship, so it may
+        // lead to memory leaks if objects are created, registered, deregistered
+        // and then assumed freed.
         .def("RegisterClient", &RefinableObj::RegisterClient, 
                 &RefinableObjWrap::default_RegisterClient,
                 with_custodian_and_ward<1,2>())
@@ -450,16 +463,16 @@ BOOST_PYTHON_MODULE(_refinableobj)
                 &RefinableObjWrap::default_GetNbLSQFunction)
         .def("GetLSQCalc", &RefinableObj::GetLSQCalc, 
                 &RefinableObjWrap::default_GetLSQCalc,
-                return_internal_reference<>())
+                return_value_policy<copy_const_reference>())
         .def("GetLSQObs", &RefinableObj::GetLSQObs, 
                 &RefinableObjWrap::default_GetLSQObs,
-                return_internal_reference<>())
+                return_value_policy<copy_const_reference>())
         .def("GetLSQWeight", &RefinableObj::GetLSQWeight, 
                 &RefinableObjWrap::default_GetLSQWeight,
-                return_internal_reference<>())
+                return_value_policy<copy_const_reference>())
         .def("GetLSQDeriv", &RefinableObj::GetLSQDeriv, 
                 &RefinableObjWrap::default_GetLSQDeriv,
-                return_internal_reference<>())
+                return_value_policy<copy_const_reference>())
         .def("XMLOutput", &RefinableObj::XMLOutput, 
                 &RefinableObjWrap::default_XMLOutput)
         .def("XMLInput", &RefinableObj::XMLInput, 

@@ -1,18 +1,19 @@
 Known issues with the python bindings.
 
 A few ObjCryst++ classes declare functions that do not have any implementation.
-This causes python to give a warning and not import the module. These functions
-are:
+These functions are not wrapped.
 RefinableObj(const RefinableObj &old);
 ScatteringPowerSphere(const ScatteringPowerSphere& old);
+Scatterer::GetClockScattCompList
 
-Some objects have delclarations that boost python cannot handle.
+Some objects have delclarations that boost python cannot handle. These are
+overloaded in the wrapper and the overloaded version is wrapped.
 RefinableObj::EraseAllParamSet() returns const void, but should return just
 void.
 
 Some objects take control of the lifetime of other objects. Namely, Crystal
 takes control of Scatterer and ScatteringPower objects. In particular,
 Crystal::RemoveScatterer and Crystal::RemoveScatteringPower delete owned
-objects, which leaves dangling references in the python layer. No satisfactory
-workaround exists for this problem. I think a proper solution will have to come
-from the library.
+objects, which leaves dangling references in the python layer. For now, these
+functions are not wrapped.
+

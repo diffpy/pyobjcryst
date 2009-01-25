@@ -98,4 +98,8 @@ BOOST_PYTHON_MODULE(_registerconverters)
     class_<mapsppairtobmp>("mapsppairtobmp", no_init)
         .def(map_indexing_suite<mapsppairtobmp>());
 
+    // some tests
+    def("getTestVector", &getTestVector);
+    def("getTestMatrix", &getTestMatrix);
+
 }

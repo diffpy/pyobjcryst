@@ -14,6 +14,10 @@
 *
 * boost::python bindings to ObjCryst::Atom.
 *
+* Changes from ObjCryst::Atom
+* - The default constructor has been disabled. When not followed-up by Init, it
+*   will cause segmentation faults, even if it is printed.
+*
 * $Id$
 *
 *****************************************************************************/
@@ -29,8 +33,7 @@
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 
-#include <string>
-#include <iostream>
+#include <memory>
 
 using namespace boost::python;
 using namespace ObjCryst;
@@ -41,16 +44,11 @@ BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(Init_overloads, Init, 5, 6)
 
 }
 
-
 BOOST_PYTHON_MODULE(_atom)
 {
 
-
-    class_<Atom, bases<Scatterer> > ("Atom")
-    //class_<Atom, bases<Scatterer> > ("Atom")
+    class_<Atom, bases<Scatterer> >("Atom", init<const Atom&>())
         // Constructors
-        // Must be initialized using Init!
-        .def(init<const Atom&>())
         .def(init<const float, const float, const float, const std::string&, 
                 const ObjCryst::ScatteringPower*, optional<const float> >())
         // Methods

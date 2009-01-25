@@ -4,34 +4,46 @@
 from pyobjcryst import *
 from numpy import pi
 
+def makeAtom():
+    sp = ScatteringPowerAtom("Ni", "Ni")
+    sp.SetBiso(8*pi*pi*0.003)
+    atomp = Atom(0, 0, 0, "Ni", sp)
+
+    return sp, atomp
+
+def makeCrystal(sp, atomp):
+    c = Crystal(3.52, 3.52, 3.52, "225")
+    c.AddScatterer(atomp)
+    c.AddScatteringPower(sp)
+    return c
+
 def test1():
 
-    print 'c = Crystal(3.52, 3.52, 3.52, "225")'
-    c = Crystal(3.52, 3.52, 3.52, "225")
-    print 'c.Print()'
-    c.Print()
-    print 'sp = ScatteringPowerAtom("Ni", "Ni")'
-    sp = ScatteringPowerAtom("Ni", "Ni")
-    print 'sp.SetBiso(8*pi*pi*0.003)'
-    sp.SetBiso(8*pi*pi*0.003)
-    print 'atomp = Atom(0, 0, 0, "Ni", sp)'
-    atomp = Atom(0, 0, 0, "Ni", sp)
-    print 'atomp.Print()'
-    atomp.Print()
-    print 'c.AddScatterer(atomp)'
-    c.AddScatterer(atomp)
-    print 'c.AddScatteringPower(sp)'
-    c.AddScatteringPower(sp)
-    print 'c.Print()'
-    c.Print()
-    print 'c.RemoveScatterer(atomp)'
-    c.RemoveScatterer(atomp)
-    print 'c.Print()'
-    c.Print()
-    print 'atomp.Print()'
-    atomp.Print()
-    print 'sp.Print()'
-    sp.Print()
+    sp, atomp = makeAtom()
+    makeCrystal(sp, atomp)
+    # The crystal is out of scope. Since the lifetime of the atom and scatterer
+    # are linked, the crystal should stay alive in memory.
+    print sp
+    print atomp
+    print repr(atomp.GetCrystal())
+
+    # Now add the objects to a different crystal. This should raise an
+    # exception.
+    try:
+        makeCrystal(sp, atomp)
+        print sp
+        print atomp
+        print repr(atomp.GetCrystal())
+    except Exception, e:
+        print e
+
+    del sp
+    del atomp
+
+    # Now see what happens when the scatterer is allowed to go out of scope
+    c = makeCrystal(*makeAtom())
+    print c
+
     return
 
 if __name__ == "__main__":

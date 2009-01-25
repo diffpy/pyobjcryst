@@ -16,6 +16,25 @@
 * can be derived from in python. These bindings are used by ObjCryst objects
 * that inherit from Scatterer (see for example atom_ext.cpp).
 *
+* Changes from ObjCryst++
+*
+* - C++ methods that can return const or non-const objects return non-const
+*   objects in python.
+*
+* - Operator string() is not exposed.
+*
+* - The output of Print() can be accessed from __str__(). This means that 
+*   'print scatterer' is equivalent to scatterer.Print().
+*
+* - Internal use only methods have not been exposed.
+*
+* - InitRefParList is not exposed, as it is not used inside of Scatterer.
+*
+* - GetClockScattCompList is exposed using a workaround, because it is not
+*   implemented in the library.
+*
+* - Methods related to visualization are not exposed.
+*
 *
 * $Id$
 *
@@ -43,21 +62,20 @@ namespace {
 
 const char* scattererdoc = "Generic type of scatterer: can be an atom, or a more complex assembly of atoms.  A Scatterer is able to give its position (in fractionnal coordinates) in the unit cell, and more generally the position of all point scattering centers (ScatteringComponent), along with the ScatteringPower associated with each position.  For simple atoms, there is only one scattering position with the associated scattering power (scattering factor, anomalous, thermic). For complex scatterers (molecules: ZScatterer) there are as many positions as atoms.  A scatterer also has a few functions to display itself in 3D. This is an abstract base class.";
 
-// This is necessary to make sure that all virtual functions get handled
-// properly. We want to create new classes in Python and have them work properly
-// in the c++ code. This is not only flexible, but really awesome.
 class ScattererWrap : public Scatterer, 
                       public wrapper<Scatterer>
 {
 
     public: 
 
-    ScattererWrap() : Scatterer() {}
+    ScattererWrap() : Scatterer(), used(0) {}
 
-    ScattererWrap(const ScattererWrap& S) : Scatterer(S) {}
+    ScattererWrap(const ScattererWrap& S) : Scatterer(S), used(0) {}
+
+    bool used;
 
     void default_SetX(const float x) 
-    { Scatterer::SetX(x);}
+    { this->Scatterer::SetX(x);}
 
     void SetX(const float x)
     {
@@ -70,7 +88,7 @@ class ScattererWrap : public Scatterer,
     }
 
     void default_SetY(const float y) 
-    { Scatterer::SetY(y);}
+    { this->Scatterer::SetY(y);}
 
     void SetY(const float y)
     {
@@ -83,7 +101,7 @@ class ScattererWrap : public Scatterer,
     }
 
     void default_SetZ(const float z) 
-    { Scatterer::SetZ(z);}
+    { this->Scatterer::SetZ(z);}
 
     void SetZ(const float z)
     {
@@ -96,7 +114,7 @@ class ScattererWrap : public Scatterer,
     }
 
     void default_SetOccupancy(const float occ) 
-    { Scatterer::SetOccupancy(occ);}
+    { this->Scatterer::SetOccupancy(occ);}
 
     void SetOccupancy(const float occ)
     {
@@ -151,22 +169,16 @@ class ScattererWrap : public Scatterer,
         this->get_override("GLInitDisplayList")();
     }
 
-    void _InitRefParList()
+    const RefinableObjClock& _GetClockScattCompList() const
     {
-        InitRefParList();
-    }
-
-    const RefinableObjClock& GetClockScattCompList() const
-    {
-        return Scatterer::GetClockScattCompList();
+        return mClockScattCompList;
     }
 
     protected:
 
-    void InitRefParList()
-    {
-        this->get_override("InitRefParList")();
-    }
+    // Needed for compilation
+    void InitRefParList() {};
+
 }; // ScattererWrap
 
 
@@ -178,44 +190,40 @@ BOOST_PYTHON_MODULE(_scatterer)
 
     class_<ScattererWrap, boost::noncopyable, bases<RefinableObj> >
         ("Scatterer")
-        //// Copy constructor
+        /* Constructors */
         .def(init<const ScattererWrap&>())
-        //// Methods
+        /* Methods */
         .def("GetX", &Scatterer::GetX)
         .def("GetY", &Scatterer::GetY)
         .def("GetZ", &Scatterer::GetZ)
         .def("GetOccupancy", &Scatterer::GetOccupancy)
+        // virtual methods
         .def("SetX", &Scatterer::SetX, &ScattererWrap::default_SetX)
         .def("SetY", &Scatterer::SetY, &ScattererWrap::default_SetY)
         .def("SetZ", &Scatterer::SetZ, &ScattererWrap::default_SetZ)
         .def("SetOccupancy", &ObjCryst::Scatterer::SetOccupancy, 
-                &ScattererWrap::default_SetOccupancy)
+            &ScattererWrap::default_SetOccupancy)
         .def("GetClockScatterer", 
-                (RefinableObjClock & (Scatterer::*)())
-                &Scatterer::GetClockScatterer,
-                //return_value_policy<copy_non_const_reference>())
-                return_internal_reference<>())
+            (RefinableObjClock & (Scatterer::*)())
+            &Scatterer::GetClockScatterer,
+            return_internal_reference<>())
         .def("SetCrystal", &Scatterer::SetCrystal,
-                with_custodian_and_ward<1,2>())
-        // FIXME Needs converter
+            with_custodian_and_ward<1,2>())
         .def("GetCrystal", (const Crystal &(Scatterer::*)() const) 
-                &Scatterer::GetCrystal,
-                return_value_policy<copy_const_reference>())
-        // Pure virtual functions
-        .def("CreateCopy", pure_virtual(&Scatterer::CreateCopy),
-            return_value_policy<manage_new_object>())
+            &Scatterer::GetCrystal,
+            return_internal_reference<>())
+        // pure virtual methods
         .def("GetNbComponent", pure_virtual(&Scatterer::GetNbComponent))
+        .def("GetComponentName", pure_virtual(&Scatterer::GetComponentName))
         .def("GetScatteringComponentList", 
-                pure_virtual(&Scatterer::GetScatteringComponentList),
-                return_internal_reference<>())
+            pure_virtual(&Scatterer::GetScatteringComponentList),
+            return_value_policy<copy_const_reference>())
         .def("Print", pure_virtual(&Scatterer::Print))
         .def("__str__", &__str__<Scatterer>)
-        // Protected
-        // FIXME Can't get these to work. Probably protected issue.
-        //.def("_InitRefParList", pure_virtual(&Scatterer::InitRefParList))
-        //.def("_GetClockScattCompList", 
-        //        &ScattererWrap::GetClockScattCompList,
-        //        return_value_policy<copy_const_reference>())
+        // protected methods
+        .def("GetClockScattCompList", 
+            &ScattererWrap::_GetClockScattCompList,
+            return_value_policy<copy_const_reference>())
         ;
 
 }

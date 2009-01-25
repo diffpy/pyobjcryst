@@ -25,7 +25,6 @@
 #include <boost/python/def.hpp>
 
 #include <string>
-#include <iostream>
 
 #include "ObjCryst/ScatteringPower.h"
 #include "ObjCryst/ScatteringPowerSphere.h"
@@ -35,14 +34,32 @@
 using namespace boost::python;
 using namespace ObjCryst;
 
+namespace {
+
+/* This overloads the constructors of ScatteringPowerSphere to work around the
+ * copy constructor, which is not implemented
+ */
+class ScatteringPowerSphereWrap : public ScatteringPowerSphere
+{
+
+    public:
+    ScatteringPowerSphereWrap() : ScatteringPowerSphere() {}
+    ScatteringPowerSphereWrap
+        (const string &name, const float radius, const float bIso=1.0) :
+         ScatteringPowerSphere(name, radius, bIso) {};
+    // Not implemented in the base class, so not defined here.
+    // ScatteringPowerSphereWrap() {};
+};
+
+}
+
 BOOST_PYTHON_MODULE(_scatteringpowersphere)
 {
 
-    class_<ScatteringPowerSphere, bases<ScatteringPower> > ("ScatteringPowerSphere", 
-         init<>())
+    class_<ScatteringPowerSphereWrap, 
+        boost::noncopyable, bases<ScatteringPower> > 
+        ("ScatteringPowerSphere", init<>())
         .def(init<const std::string&, const float, optional<const float> >())
-        // Not implemented in libraries
-        //.def(init<const ScatteringPowerSphere&>())
         .def("Init", &ScatteringPowerSphere::Init,
                 (boost::python::arg("name"),
                 boost::python::arg("radius"),
