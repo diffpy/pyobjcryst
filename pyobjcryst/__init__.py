@@ -36,6 +36,9 @@ Enums:
 
 """
 
+# The packages below are organized according to header file in the ObjCryst
+# source.
+
 # Register convereters
 from registerconverters import *
 
@@ -44,12 +47,6 @@ from general import *
 
 # RefinableObj
 from refinableobj import *
-
-# RefinableObjClock
-from refinableobjclock import *
-
-# RefObjOpt
-from refobjopt import *
 
 # Scatterer
 from scatterer import *
