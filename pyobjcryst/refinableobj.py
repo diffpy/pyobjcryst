@@ -15,10 +15,10 @@
 
 """Python wrapping of RefinableObj."""
 
-__all__ = ["RefinableObj"]
+__all__ = ["RefParType", "RefinableObjClock", "RefinableObj", "RefObjOpt"]
 
 
-#from _refpartype import *
+from _refpartype import *
 from _refinableobjclock import *
 #from _restraint import *
 #from _refinablepar import *

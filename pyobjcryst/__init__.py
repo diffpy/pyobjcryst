@@ -36,7 +36,7 @@ Enums:
 
 """
 
-# The packages below are organized according to header file in the ObjCryst
+# The modules below are organized according to header file in the ObjCryst
 # source.
 
 # Register convereters
