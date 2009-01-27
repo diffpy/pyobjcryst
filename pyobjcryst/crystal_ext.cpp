@@ -12,7 +12,9 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::Crystal.  * * Changes from ObjCryst++
+* boost::python bindings to ObjCryst::Crystal.  
+* 
+* Changes from ObjCryst++
 * - The const-version of overloaded methods that can return either an internal
 *   reference, or a constant interal reference are not wrapped.
 *
@@ -45,7 +47,7 @@ namespace {
 
 /* We want to make sure that Scatterers and ScatterinPowers don't get added to
  * more than one crystal and have a unique name in a given crystal. These help
- * manage so that it is fast.
+ * manage this.
  */
 std::map<Crystal*, std::set<Scatterer*> > scattreg;
 std::map<Crystal*, std::set<string> > scattnamereg;
@@ -127,12 +129,11 @@ void _RemoveScatterer(Crystal& crystal, Scatterer* scatt)
 {
     // Make sure that this scatterer is in this crystal
 
-    std::set<Scatterer*>::iterator siter;
-    siter = scattreg[&crystal].find(scatt);
-    if(siter != scattreg[&crystal].end() )
+    if(scattreg[&crystal].count( scatt) > 0 )
     {
         crystal.RemoveScatterer(scatt, false);
-        scattreg[&crystal].erase( *siter );
+        scattnamereg[&crystal].erase( scatt->GetName() );
+        scattreg[&crystal].erase( scatt );
     }
     else
     {
@@ -151,12 +152,11 @@ void _RemoveScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
 {
     // Make sure that this scatteringpower is in this crystal
 
-    std::set<ScatteringPower*>::iterator siter;
-    siter = scattpowreg[&crystal].find(scattpow);
-    if(siter != scattpowreg[&crystal].end() )
+    if(scattpowreg[&crystal].count(scattpow) > 0 )
     {
         crystal.RemoveScatteringPower(scattpow, false);
-        scattpowreg[&crystal].erase( *siter );
+        scattpownamereg[&crystal].erase( scattpow->GetName() );
+        scattpowreg[&crystal].erase( scattpow );
     }
     else
     {
@@ -194,15 +194,12 @@ BOOST_PYTHON_MODULE(_crystal)
         .def("GetScatt", 
             (Scatterer& (Crystal::*)(const long)) &Crystal::GetScatt, 
             return_internal_reference<>())
-        // FIXME - Needs converter.
-        // I'm treating this the same way as GetSubObjRegistry from
-        // refinableobj_ext.cpp.
-        //.def("GetScattererRegistry", ( ObjRegistry<Scatterer>& 
-        //    (Crystal::*) ()) &Crystal::GetScattererRegistry,
-        //    return_internal_reference<>())
-        //.def("GetScatteringPowerRegistry", ( ObjRegistry<ScatteringPower>& 
-        //    (Crystal::*) ()) &Crystal::GetScatteringPowerRegistry,
-        //    return_internal_reference<>())
+        .def("GetScattererRegistry", ( ObjRegistry<Scatterer>& 
+            (Crystal::*) ()) &Crystal::GetScattererRegistry,
+            return_internal_reference<>())
+        .def("GetScatteringPowerRegistry", ( ObjRegistry<ScatteringPower>& 
+            (Crystal::*) ()) &Crystal::GetScatteringPowerRegistry,
+            return_internal_reference<>())
         .def("AddScatteringPower", &_AddScatteringPower,
             with_custodian_and_ward<2,1,with_custodian_and_ward<1,2> >())
         .def("RemoveScatteringPower", &_RemoveScatteringPower)
