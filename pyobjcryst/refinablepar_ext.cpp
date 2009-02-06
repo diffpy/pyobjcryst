@@ -75,6 +75,7 @@ class PyRefinablePar : public RefinablePar
         pval = new float(value);
         RefinablePar::Init(name, pval, min, max, type, derivMode, hasLimits,
             isFixed, isUsed, isPeriodic, humanScale, period);
+        Restraint::SetType(type);
     }
 
     ~PyRefinablePar()
@@ -163,7 +164,8 @@ BOOST_PYTHON_MODULE(_refinablepar)
                 bp::arg("derivMode")=REFPAR_DERIV_STEP_RELATIVE,
                 bp::arg("hasLimits")=true, bp::arg("isFixed")=false,
                 bp::arg("isUsed")=true, bp::arg("isPeriodic")=false,
-                bp::arg("humanScale")=1., bp::arg("period")=1.)))
+                bp::arg("humanScale")=1., bp::arg("period")=1.))
+            [with_custodian_and_ward<1,6>()])
         ;
 
 

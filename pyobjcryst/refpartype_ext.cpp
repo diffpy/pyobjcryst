@@ -46,7 +46,8 @@ BOOST_PYTHON_MODULE(_refpartype)
 {
 
     class_<RefParType>("RefParType", init<const string&>())
-        .def(init<const RefParType*, const string&>())
+        .def(init<const RefParType*, const string&>()
+            [with_custodian_and_ward<1,2>()])
         /* Functions */
         .def("IsDescendantFromOrSameAs", &RefParType::IsDescendantFromOrSameAs)
         .def("__eq__", &__eq__)

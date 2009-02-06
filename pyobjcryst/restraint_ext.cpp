@@ -16,12 +16,10 @@
 * ObjCryst::RefParDerivStepModel.
 * 
 * Changes from ObjCryst++
-* * The constructor has been changed to accept a float,
-*   rather than a pointer to a float. 
 * * The default and copy constructors are not wrapped, nor is Init.
-* * Get type returns a non-const reference to the RefParType by using const_cast
-*   in the bindings. This should be a no-no, but RefParType has no mutating
-*   methods, so this should no lead to trouble.
+* * GetType returns a non-const reference to the RefParType.  This should be a
+*   no-no, but RefParType has no mutating methods, so this should no lead to
+*   trouble.
 * * XML input/output are on hold until a general stream adapter is developed.
 *
 * $Id$
@@ -65,12 +63,6 @@ class RestraintWrap : public Restraint,
         return default_GetType();
     }
 
-    // Overloaded so it can be wrapped. boost::python doesnt like const xxx*
-    RefParType& GetTypeRef()
-    {
-        return *const_cast<RefParType*>(GetType());
-    }
-
     void default_SetType(const RefParType* type)
     {
         this->Restraint::SetType(type);
@@ -111,9 +103,10 @@ BOOST_PYTHON_MODULE(_restraint)
 {
 
     class_<RestraintWrap, boost::noncopyable>("Restraint", init<>())
-        .def(init<const RefParType*>((bp::arg("type"))))
-        .def("GetType", &RestraintWrap::GetTypeRef,
-            return_internal_reference<>())
+        .def(init<const RefParType*>((bp::arg("type")))[
+            with_custodian_and_ward<1,2>()])
+        .def("GetType", &Restraint::GetType, &RestraintWrap::default_GetType,
+           return_internal_reference<>())
         .def("SetType", &Restraint::SetType, &RestraintWrap::default_SetType)
         .def("GetLogLikelihood", &Restraint::GetLogLikelihood, 
             &RestraintWrap::default_GetLogLikelihood)
