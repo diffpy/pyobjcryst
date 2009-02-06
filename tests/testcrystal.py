@@ -1,36 +1,13 @@
 #!/usr/bin/env python
-"""Small tests for pyobjcryst.
-
-To check for memory leaks, run
-valgrind --tool=memcheck --leak-check=full /usr/bin/python ./pyobjcrysttest.py
-
-"""
+"""Tests for crystal module."""
 
 from pyobjcryst import *
-from numpy import pi
 import unittest
 
-def makeScatterer():
-    sp = ScatteringPowerAtom("Ni", "Ni")
-    sp.SetBiso(8*pi*pi*0.003)
-    atom = Atom(0, 0, 0, "Ni", sp)
-    return sp, atom
+from utils import *
 
-def makeCrystal(sp, atom):
-    c = Crystal(3.52, 3.52, 3.52, "225")
-    c.AddScatterer(atom)
-    c.AddScatteringPower(sp)
-    return c
 
-def getScatterer():
-    """Make a crystal and return scatterer from GetScatt."""
-    sp, atom = makeScatterer()
-    c = makeCrystal(sp, atom)
-
-    sp2 = c.GetScatt(sp.GetName())
-    return sp2
-
-class TestObjCryst(unittest.TestCase):
+class TestCrystal(unittest.TestCase):
 
     def testCrystalScope(self):
         """Test to see if the the crystal survives after it is out of scope."""
@@ -40,6 +17,7 @@ class TestObjCryst(unittest.TestCase):
         # scatterer are linked, the crystal should stay alive in memory.
         self.assertEqual("Ni", sp.GetName())
         self.assertEqual("Ni", atom.GetName())
+        return
     
     def testMultiAdd(self):
         """Test exception for multi-crystal additions."""
