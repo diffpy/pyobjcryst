@@ -1,51 +1,137 @@
 #!/usr/bin/env python
-"""A small test for pyobjcryst."""
+"""Small tests for pyobjcryst.
+
+To check for memory leaks, run
+valgrind --tool=memcheck --leak-check=full /usr/bin/python ./pyobjcrysttest.py
+
+"""
 
 from pyobjcryst import *
 from numpy import pi
 
-def makeAtom():
+def makeScatterer():
     sp = ScatteringPowerAtom("Ni", "Ni")
     sp.SetBiso(8*pi*pi*0.003)
-    atomp = Atom(0, 0, 0, "Ni", sp)
+    atom = Atom(0, 0, 0, "Ni", sp)
+    return sp, atom
 
-    return sp, atomp
-
-def makeCrystal(sp, atomp):
+def makeCrystal(sp, atom):
     c = Crystal(3.52, 3.52, 3.52, "225")
-    c.AddScatterer(atomp)
+    c.AddScatterer(atom)
     c.AddScatteringPower(sp)
     return c
 
-def test1():
+def getScatterer():
+    """Make a crystal and return scatterer from GetScatt."""
+    sp, atom = makeScatterer()
+    c = makeCrystal(sp, atom)
 
-    sp, atomp = makeAtom()
-    makeCrystal(sp, atomp)
+    sp2 = c.GetScatt(sp.GetName())
+    return sp2
+
+def testCrystalScope():
+    """Test to see if the the crystal survives after it is out of scope."""
+    sp, atom = makeScatterer()
+    makeCrystal(sp, atom)
     # The crystal is out of scope. Since the lifetime of the atom and scatterer
     # are linked, the crystal should stay alive in memory.
     print sp
-    print atomp
-    print repr(atomp.GetCrystal())
+    print atom
+    print repr(atom.GetCrystal())
+    return
+    
+def testMultiAdd():
+    """Test exception for multi-crystal additions."""
+    sp, atom = makeScatterer()
+    c = makeCrystal(sp, atom)
 
-    # Now add the objects to a different crystal. This should raise an
-    # exception.
+    # Force this exception
     try:
-        makeCrystal(sp, atomp)
+        makeCrystal(sp, atom)
         print sp
-        print atomp
-        print repr(atomp.GetCrystal())
-    except Exception, e:
-        print e
+        print atom
+        print repr(atom.GetCrystal())
+    except AttributeError, e:
+        print "Exception:", e
+    return
 
-    del sp
-    del atomp
+def testScattererScope():
+    """Test when atoms go out of scope before crystal."""
+    c = makeCrystal(*makeScatterer())
+    print c
+    sp2 = getScatterer()
+    print sp2
+    return
 
-    # Now see what happens when the scatterer is allowed to go out of scope
-    c = makeCrystal(*makeAtom())
+def testRemoveFunctions():
+    """Test the RemoveScatterer and RemoveScatteringPower method."""
+    print "Making Crystal"
+    sp, atom = makeScatterer()
+    c = makeCrystal(sp, atom)
+    print atom
+    print sp
     print c
 
+    # Try to add objects with same names
+    print "Testing name duplication"
+    sp2, atom2 = makeScatterer()
+    try:
+        c.AddScatterer(atom2)
+    except AttributeError, e:
+        print e
+    try:
+        c.AddScatteringPower(sp2)
+    except AttributeError, e:
+        print e
+
+    # Remove the scatterers
+    print "remove scatterers"
+    c.RemoveScatterer(atom)
+    c.RemoveScatteringPower(sp)
+    print atom
+    print sp
+    print c
+
+    # Try to remove scatterers that are not in the crystal
+    try:
+        c.RemoveScatterer(atom2)
+    except AttributeError, e:
+        print e
+    try:
+        c.RemoveScatteringPower(sp2)
+    except AttributeError, e:
+        print e
+
+    return
+
+def parTest():
+    rpt = RefParType("default")
+    testpar = RefinablePar("test", 3.0, 0, 10, rpt)
+    print testpar.__class__, testpar
+    sp, atom = makeScatterer()
+    c = makeCrystal(sp, atom)
+    par = c.GetPar(0)
+    print par.__class__, par
+
+    c.AddPar(testpar);
+    testpar2 = c.GetPar("test")
+    print testpar2.__class__, testpar2
+
+    del sp, atom, c
+
+    testpar2.SetValue(2.17)
+    print testpar.__class__, testpar
+    return
+
+def test1():
+    """Run some tests."""
+    testCrystalScope()
+    testMultiAdd()
+    testScattererScope()
+    testRemoveFunctions()
     return
 
 if __name__ == "__main__":
 
-    test1()
+    parTest()
+
