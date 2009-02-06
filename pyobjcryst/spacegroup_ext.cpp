@@ -28,6 +28,7 @@
 
 #include "helpers.h"
 
+namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
@@ -62,7 +63,7 @@ BOOST_PYTHON_MODULE(_spacegroup)
 
     class_<SpaceGroup> ("SpaceGroup", init<>() )
         // Constructors
-        .def(init<const std::string&>())
+        .def(init<const std::string&>((bp::arg("spgId"))))
         // Methods
         .def("ChangeSpaceGroup", &SpaceGroup::ChangeSpaceGroup)
         .def("GetName", &SpaceGroup::GetName, 
@@ -77,15 +78,15 @@ BOOST_PYTHON_MODULE(_spacegroup)
         .def("GetNbTranslationVectors", &SpaceGroup::GetNbTranslationVectors)
         .def("GetTranslationVectors", &GetTranslationVectors)
         .def("GetAllSymmetrics", &SpaceGroup::GetAllSymmetrics,
-                (boost::python::arg("h"), 
-                 boost::python::arg("k"), 
-                 boost::python::arg("l"), 
-                 boost::python::arg("noCenter")=false, 
-                 boost::python::arg("noTransl")=false,
-                 boost::python::arg("noIdentical")=false))
+                (bp::arg("h"), 
+                 bp::arg("k"), 
+                 bp::arg("l"), 
+                 bp::arg("noCenter")=false, 
+                 bp::arg("noTransl")=false,
+                 bp::arg("noIdentical")=false))
         .def("GetNbSymmetrics", &SpaceGroup::GetNbSymmetrics,
-                 (boost::python::arg("noCenter")=false, 
-                 boost::python::arg("noTransl")=false))
+                 (bp::arg("noCenter")=false, 
+                 bp::arg("noTransl")=false))
         .def("Print", &SpaceGroup::Print)
         .def("HasInversionCenter", &SpaceGroup::HasInversionCenter)
         .def("IsInversionCenterAtOrigin", 
@@ -98,11 +99,11 @@ BOOST_PYTHON_MODULE(_spacegroup)
         .def("GetUniqueAxis", &SpaceGroup::GetUniqueAxis)
         .def("GetExtension", &SpaceGroup::GetExtension)
         .def("GetAllEquivRefl", &SpaceGroup::GetAllEquivRefl, 
-                (boost::python::arg("h"), 
-                 boost::python::arg("k"), 
-                 boost::python::arg("l"), 
-                 boost::python::arg("excludeFriedelMate")=false, 
-                 boost::python::arg("forceFriedelLaw")=false))
+                (bp::arg("h"), 
+                 bp::arg("k"), 
+                 bp::arg("l"), 
+                 bp::arg("excludeFriedelMate")=false, 
+                 bp::arg("forceFriedelLaw")=false))
         .def("IsReflSystematicAbsent", &SpaceGroup::IsReflSystematicAbsent)
         .def("IsReflCentric", &SpaceGroup::IsReflCentric)
         .def("GetExpectedIntensityFactor", &SpaceGroup::GetExpectedIntensityFactor)

@@ -65,6 +65,7 @@ class RefinableObjWrap : public RefinableObj,
     {
         RefinableObj::SetDeleteRefParInDestructor(false);
     }
+
     RefinableObjWrap(const bool internal) : RefinableObj(internal)
     {
         RefinableObj::SetDeleteRefParInDestructor(false);

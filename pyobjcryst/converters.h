@@ -56,7 +56,7 @@ struct CrystVector_REAL_to_ndarray
 
     static PyObject* convert(CrystVector<float> const &cv)
     {
-        std::vector<int> dims(1,cv.numElements());
+        static std::vector<int> dims(1,cv.numElements());
         return makeNdArray((float *) cv.data(), dims);
     }
 

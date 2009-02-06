@@ -16,11 +16,13 @@
 """Python wrapping of RefinableObj."""
 
 __all__ = [
-        "RefParType", 
         "RefinableObjClock", 
         "RefinableObj", 
         "RefObjOpt",
         "RefinableObjRegistry",
+        "RefParType", 
+        "RefParDerivStepModel",
+        "RefinablePar",
         "ScattererRegistry",
         "ScatteringPowerRegistry",
         ]
@@ -29,7 +31,7 @@ __all__ = [
 from _refpartype import *
 from _refinableobjclock import *
 #from _restraint import *
-#from _refinablepar import *
+from _refinablepar import *
 from _refinableobj import *
 from _refobjopt import *
 from _objregistry import *

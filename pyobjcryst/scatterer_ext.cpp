@@ -20,19 +20,13 @@
 *
 * - C++ methods that can return const or non-const objects return non-const
 *   objects in python.
-*
 * - Operator string() is not exposed.
-*
 * - The output of Print() can be accessed from __str__(). This means that 
 *   'print scatterer' is equivalent to scatterer.Print().
-*
 * - Internal use only methods have not been exposed.
-*
 * - InitRefParList is not exposed, as it is not used inside of Scatterer.
-*
 * - GetClockScattCompList is exposed using a workaround, because it is not
 *   implemented in the library.
-*
 * - Methods related to visualization are not exposed.
 *
 *
@@ -68,11 +62,9 @@ class ScattererWrap : public Scatterer,
 
     public: 
 
-    ScattererWrap() : Scatterer(), used(0) {}
+    ScattererWrap() : Scatterer() {}
 
-    ScattererWrap(const ScattererWrap& S) : Scatterer(S), used(0) {}
-
-    bool used;
+    ScattererWrap(const ScattererWrap& S) : Scatterer(S) {}
 
     void default_SetX(const float x) 
     { this->Scatterer::SetX(x);}

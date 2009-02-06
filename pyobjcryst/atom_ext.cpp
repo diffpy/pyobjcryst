@@ -57,7 +57,7 @@ BOOST_PYTHON_MODULE(_atom)
         .def("GetRadius", &Atom::GetRadius)
         .def("IsDummy", &Atom::IsDummy)
         .def("GetScatteringPower", &Atom::GetScatteringPower,
-                return_internal_reference<>())
+            return_internal_reference<>())
         ;
 
 }
