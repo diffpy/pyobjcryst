@@ -23,6 +23,7 @@ __all__ = [
         "RefParType", 
         "RefParDerivStepModel",
         "RefinablePar",
+        "Restraint",
         "ScattererRegistry",
         "ScatteringPowerRegistry",
         ]
@@ -30,7 +31,7 @@ __all__ = [
 
 from _refpartype import *
 from _refinableobjclock import *
-#from _restraint import *
+from _restraint import *
 from _refinablepar import *
 from _refinableobj import *
 from _refobjopt import *
