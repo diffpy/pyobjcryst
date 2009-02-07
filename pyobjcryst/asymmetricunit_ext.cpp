@@ -24,10 +24,12 @@
 #include <boost/python/class.hpp>
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
+#include <boost/python/args.hpp>
 
 #include <string>
 #include <iostream>
 
+namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
@@ -36,10 +38,11 @@ BOOST_PYTHON_MODULE(_asymmetricunit)
 
     class_<AsymmetricUnit> ("AsymmetricUnit", init<>() )
         // Constructors
-        .def(init<const SpaceGroup&>())
+        .def(init<const SpaceGroup&>((bp::arg("spg"))))
         // Methods
-        .def("SetSpaceGroup", &AsymmetricUnit::SetSpaceGroup)
-        .def("IsInAsymmetricUnit", &AsymmetricUnit::IsInAsymmetricUnit)
+        .def("SetSpaceGroup", &AsymmetricUnit::SetSpaceGroup, (bp::arg("spg")))
+        .def("IsInAsymmetricUnit", &AsymmetricUnit::IsInAsymmetricUnit, 
+            (bp::arg("x"), bp::arg("y"), bp::arg("z")))
         .def("Xmin", &AsymmetricUnit::Xmin)
         .def("Xmax", &AsymmetricUnit::Xmax)
         .def("Ymin", &AsymmetricUnit::Ymin)

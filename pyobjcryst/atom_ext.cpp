@@ -32,27 +32,31 @@
 #include <boost/python/class.hpp>
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
+#include <boost/python/args.hpp>
 
-#include <memory>
-
+namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
-
-BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(Init_overloads, Init, 5, 6)
 
 }
 
 BOOST_PYTHON_MODULE(_atom)
 {
 
-    class_<Atom, bases<Scatterer> >("Atom", init<const Atom&>())
+    class_<Atom, bases<Scatterer> >("Atom", init<const Atom&>((bp::arg("old"))))
         // Constructors
         .def(init<const float, const float, const float, const std::string&, 
-                const ObjCryst::ScatteringPower*, optional<const float> >())
+            const ObjCryst::ScatteringPower*, optional<const float> >(
+            (bp::arg("x"), bp::arg("y"), bp::arg("z"), bp::arg("name"),
+             bp::arg("pow"), bp::arg("popu")))
+            [with_custodian_and_ward<1,6>()])
         // Methods
-        .def("Init", &Atom::Init, Init_overloads())
+        .def("Init", &Atom::Init, 
+            (bp::arg("x"), bp::arg("y"), bp::arg("z"), bp::arg("name"),
+             bp::arg("pow"), bp::arg("popu")=1.0),
+            with_custodian_and_ward<1,6>())
         .def("GetMass", &Atom::GetMass)
         .def("GetRadius", &Atom::GetRadius)
         .def("IsDummy", &Atom::IsDummy)

@@ -43,14 +43,16 @@
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/to_python_converter.hpp>
+#include <boost/python/args.hpp>
 
 #include "RefinableObj/RefinableObj.h"
 #include "CrystVector/CrystVector.h"
 
 #include "helpers.h"
 
-using namespace ObjCryst;
+namespace bp = boost::python;
 using namespace boost::python;
+using namespace ObjCryst;
 
 namespace {
 
@@ -390,11 +392,13 @@ BOOST_PYTHON_MODULE(_refinableobj)
         .def("AddPar", (void (RefinableObj::*)(RefinablePar*)) 
             &RefinableObj::AddPar,
             with_custodian_and_ward<1,2>())
-        .def("AddPar", (void (RefinableObj::*)(RefinableObj&, const bool)) 
+        .def("AddPar", (void (RefinableObj::*)(RefinableObj&, const bool))
             &RefinableObj::AddPar,
+            (bp::arg("newRefParList"), bp::arg("copyParam")=false),
             with_custodian_and_ward<1,2>())
         .def("RemovePar", &_RemovePar)
-        .def("CreateParamSet", &RefinableObj::CreateParamSet)
+        .def("CreateParamSet", &RefinableObj::CreateParamSet,
+            (bp::arg("name")=""))
         .def("ClearParamSet", &RefinableObj::ClearParamSet)
         .def("SaveParamSet", &RefinableObj::SaveParamSet)
         .def("RestoreParamSet", &RefinableObj::RestoreParamSet)
@@ -442,7 +446,7 @@ BOOST_PYTHON_MODULE(_refinableobj)
         .def("GetRefParListClock", &RefinableObj::GetRefParListClock,
             return_value_policy<copy_const_reference>())
         .def("AddRestraint", &RefinableObj::AddRestraint,
-            with_custodian_and_ward<2,1,with_custodian_and_ward<1,2> >())
+            with_custodian_and_ward<1,2>())
         .def("RemoveRestraint", &RefinableObj::RemoveRestraint)
         .def("GetClockMaster", &RefinableObj::GetClockMaster,
             return_value_policy<copy_const_reference>())
@@ -467,13 +471,16 @@ BOOST_PYTHON_MODULE(_refinableobj)
             &RefinableObjWrap::default_GetClientRegistry,
             return_internal_reference<>())
         .def("BeginOptimization", &RefinableObj::BeginOptimization, 
-            &RefinableObjWrap::default_BeginOptimization)
+            &RefinableObjWrap::default_BeginOptimization,
+            (bp::arg("allowApproximations")=false, 
+             bp::arg("enableRestraints")=false))
         .def("EndOptimization", &RefinableObj::EndOptimization, 
             &RefinableObjWrap::default_EndOptimization)
         .def("RandomizeConfiguration", &RefinableObj::RandomizeConfiguration, 
             &RefinableObjWrap::default_RandomizeConfiguration)
         .def("GlobalOptRandomMove", &RefinableObj::GlobalOptRandomMove, 
-            &RefinableObjWrap::default_GlobalOptRandomMove)
+            &RefinableObjWrap::default_GlobalOptRandomMove,
+            (bp::arg("mutationAmplitude"), bp::arg("type")=gpRefParTypeObjCryst))
         .def("GetLogLikelihood", &RefinableObj::GetLogLikelihood, 
             &RefinableObjWrap::default_GetLogLikelihood)
         .def("GetNbLSQFunction", &RefinableObj::GetNbLSQFunction, 
