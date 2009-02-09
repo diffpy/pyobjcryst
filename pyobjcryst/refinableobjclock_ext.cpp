@@ -25,7 +25,7 @@
 
 #include "RefinableObj/RefinableObj.h"
 
-#include "helpers.h"
+#include "helpers.hpp"
 
 using namespace boost::python;
 using ObjCryst::RefinableObjClock;

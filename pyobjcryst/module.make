@@ -90,7 +90,7 @@ _registerconverters.so : registerconverters.o
 ## Object Rules
 #
 
-registerconverters.o : registerconverters.cpp converters.h
+registerconverters.o : registerconverters.cpp converters.hpp
  
 %.o:%.cpp
 	$(CC) -c $< -DHAVE_CONFIG_H -I$(PYTHON_INCDIR) -I$(NUMPY_INCDIR) -I$(OBJCRYST_HEADERS)

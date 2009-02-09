@@ -26,7 +26,7 @@
 #include <vector>
 #include <iostream>
 
-#include "converters.h"
+#include "converters.hpp"
 #include <numpy/arrayobject.h>
 
 #include "CrystVector/CrystVector.h"

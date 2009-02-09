@@ -47,7 +47,7 @@
 #include "ObjCryst/General.h"
 #include "ObjCryst/Scatterer.h"
 
-#include "helpers.h"
+#include "helpers.hpp"
 
 using namespace ObjCryst;
 using namespace boost::python;

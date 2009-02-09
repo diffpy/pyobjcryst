@@ -26,7 +26,7 @@
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 
-#include "helpers.h"
+#include "helpers.hpp"
 
 using namespace boost::python;
 using namespace ObjCryst;

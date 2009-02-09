@@ -36,7 +36,7 @@
 #include "ObjCryst/Scatterer.h"
 #include "ObjCryst/DiffractionDataSingleCrystal.h"
 
-#include "helpers.h"
+#include "helpers.hpp"
 
 using namespace ObjCryst;
 using namespace boost::python;

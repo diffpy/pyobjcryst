@@ -26,7 +26,7 @@
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
-#include "helpers.h"
+#include "helpers.hpp"
 
 namespace bp = boost::python;
 using namespace boost::python;

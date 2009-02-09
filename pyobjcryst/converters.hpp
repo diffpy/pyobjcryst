@@ -21,8 +21,8 @@
 *
 *****************************************************************************/
 
-#ifndef _CONVERTERS_H
-#define _CONVERTERS_H
+#ifndef _CONVERTERS_HPP
+#define _CONVERTERS_HPP
 
 #include <vector>
 
@@ -36,8 +36,6 @@
 #include <numpy/noprefix.h>
 #include <numpy/arrayobject.h>
 
-// 
-//
 using namespace boost::python;
 
 // Make an array out of a data pointer and a dimension vector

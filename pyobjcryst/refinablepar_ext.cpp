@@ -47,7 +47,7 @@
 #include "RefinableObj/RefinableObj.h"
 #include "CrystVector/CrystVector.h"
 
-#include "helpers.h"
+#include "helpers.hpp"
 
 namespace bp = boost::python;
 using namespace boost::python;
