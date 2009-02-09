@@ -20,8 +20,8 @@
 
 // This is home to converters that are explicitly applied within the extensions,
 // rather than registered in registerconverters.cpp.
-#ifndef HELPERS_H
-#define HELPERS_H
+#ifndef HELPERS_HPP
+#define HELPERS_HPP
 
 #include <string>
 #include <sstream>

@@ -1,7 +1,10 @@
 1) Go through all bindings and make sure they are correct. List completed files
 here.
 
+AsymmetricUnit
+Atom
 Scatterer
+RefinableObj
 
 2) Add bindings that are required for creating and using crystals. List here
 what is missing.
@@ -14,3 +17,4 @@ All Molecule stuff
 4) Make this easier to use
 * Evaluate and wrap property attributes. For example, value in RefinablePar
 * Name the arguments for overloaded functions
+* Document methods?

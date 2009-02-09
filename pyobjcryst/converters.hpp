@@ -36,36 +36,36 @@
 #include <numpy/noprefix.h>
 #include <numpy/arrayobject.h>
 
-using namespace boost::python;
+namespace bp = boost::python;
 
 // Make an array out of a data pointer and a dimension vector
 PyObject* makeNdArray(float * data, std::vector<int>& dims)
 {
     PyObject* pyarray = PyArray_SimpleNewFromData
                 (dims.size(), &dims[0], PyArray_FLOAT, (void *) data);
-    return incref(PyArray_Copy( (PyArrayObject*) pyarray ));
+    PyObject* pyarraycopy = PyArray_Copy( (PyArrayObject*) pyarray );
+    return bp::incref(pyarraycopy);
 }
 
 // CrystVector to ndarray
-//
-
 struct CrystVector_REAL_to_ndarray
 {
 
     static PyObject* convert(CrystVector<float> const &cv)
     {
-        static std::vector<int> dims(1,cv.numElements());
+        std::vector<int> dims(1);
+        dims[0] = cv.numElements();
         return makeNdArray((float *) cv.data(), dims);
     }
 
-    //static PyTypeObject const *get_ptype()
-    //{
-    //    return PyArray_Type;
-    //    //return PyArray_FLOAT;
-    //}
+    static PyTypeObject const* get_pytype()
+    {
+        return &PyFloatArrType_Type;
+    }
 
 };
 
+// CrystVector to ndarray
 struct CrystMatrix_REAL_to_ndarray
 {
 
@@ -77,30 +77,45 @@ struct CrystMatrix_REAL_to_ndarray
         return makeNdArray((float *) cm.data(), dims);
     }
 
+    static PyTypeObject const* get_pytype()
+    {
+        return &PyFloatArrType_Type;
+    }
+
 };
 
+// std::pair to tuple
 template <typename T1, typename T2>
 struct std_pair_to_tuple
 {
+
 static PyObject* convert(std::pair<T1, T2> const& p)
 {
-  return boost::python::incref(
-    boost::python::make_tuple(p.first, p.second).ptr());
+    bp::object tpl = bp::make_tuple(p.first, p.second);
+    PyObject* rv = tpl.ptr();
+    return bp::incref(rv);
 }
-static PyTypeObject const *get_pytype () {return &PyTuple_Type; }
+
+static PyTypeObject const* get_pytype() 
+{
+    return &PyTuple_Type; 
+}
+
 };
 
 // Helper for convenience.
 template <typename T1, typename T2>
 struct std_pair_to_python_converter
 {
+
 std_pair_to_python_converter()
 {
-  boost::python::to_python_converter<
-    std::pair<T1, T2>,
-    std_pair_to_tuple<T1, T2>
+    bp::to_python_converter<
+        std::pair<T1, T2>,
+        std_pair_to_tuple<T1, T2>
     >();
 }
+
 };
 
 #endif

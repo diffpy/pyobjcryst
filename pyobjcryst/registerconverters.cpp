@@ -20,6 +20,7 @@
 
 #include <boost/python.hpp>
 #include <boost/python/module.hpp>
+#include <boost/python/class.hpp>
 #include <boost/python/suite/indexing/map_indexing_suite.hpp>
 
 #include <string>
@@ -34,6 +35,8 @@
 #include "ObjCryst/ScatteringPower.h"
 #include "ObjCryst/SpaceGroup.h"
 
+using namespace boost::python;
+using namespace ObjCryst;
 
 namespace {
 // for testing
@@ -71,26 +74,21 @@ CrystMatrix<float> getTestMatrix()
     return tm;
 }
 
-typedef std::pair< ObjCryst::ScatteringPower const*, ObjCryst::ScatteringPower const* >
-    sppair;
+typedef std::pair< ScatteringPower const*, ScatteringPower const* > sppair;
 
 typedef std::map< sppair, float > mapsppairtofloat;
 
-typedef std::map< sppair, ObjCryst::Crystal::BumpMergePar > mapsppairtobmp;
-
-}
+typedef std::map< sppair, Crystal::BumpMergePar > mapsppairtobmp; }
 
 BOOST_PYTHON_MODULE(_registerconverters)
 {
 
     import_array();
-    boost::python::to_python_converter< CrystVector<float>,
-        CrystVector_REAL_to_ndarray >();
-    boost::python::to_python_converter< CrystMatrix<float>,
-        CrystMatrix_REAL_to_ndarray >();
+    to_python_converter< CrystVector<float>, CrystVector_REAL_to_ndarray >();
+    to_python_converter< CrystMatrix<float>, CrystMatrix_REAL_to_ndarray >();
     // From boost sources
     std_pair_to_python_converter
-        <ObjCryst::ScatteringPower const *, ObjCryst::ScatteringPower const * >();
+        <ScatteringPower const *, ScatteringPower const * >();
     // Semi-converter for mapsppairtofloat
     class_<mapsppairtofloat>("mapsppairtofloat", no_init)
         .def(map_indexing_suite<mapsppairtofloat>());

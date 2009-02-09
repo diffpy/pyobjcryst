@@ -18,16 +18,24 @@
 This verifies results from tests built into the _registerconverters module.
 """
 
+import unittest
+import pyobjcryst.registerconverters as converters
+import numpy
+
+class TestConverters(unittest.TestCase):
+
+    def testVector(self):
+        tv = numpy.array(range(3), dtype=float)
+        v = converters.getTestVector()
+        self.assertTrue( numpy.array_equal(tv, v) )
+        return
+
+    def testMatrix(self):
+        tm = numpy.array(range(6), dtype=float).reshape(3,2)
+        m = converters.getTestMatrix()
+        self.assertTrue( numpy.array_equal(tm, m) )
+        return
+
+
 if __name__ == "__main__":
-
-    import pyobjcryst.registerconverters as converters
-    import numpy
-
-    tv = numpy.array(range(3), dtype=float)
-    tm = numpy.array(range(6), dtype=float).reshape(3,2)
-
-    # Check to see if the above arrays are equal to the test arrays
-    assert( numpy.array_equal(tv, converters.getTestVector()) )
-    assert( numpy.array_equal(tm, converters.getTestMatrix()) )
-
-    print "Tests passed!"
+    unittest.main()
