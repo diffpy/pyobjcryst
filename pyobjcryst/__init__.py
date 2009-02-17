@@ -66,3 +66,6 @@ from crystal import *
 
 # Molecule
 #from molecule import *
+
+# ZScatterer
+from zscatterer import *
