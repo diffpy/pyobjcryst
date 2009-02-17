@@ -17,6 +17,7 @@
 
 Classes:
 
+    FIXME -- Many not listed
     Atom                --  Atom class
     AsymmetricUnit      --  AsymmetricUnit class
     BumpMergePar        --  Class used by Crystal
@@ -62,3 +63,6 @@ from spacegroup import *
 
 # Crystal
 from crystal import *
+
+# Molecule
+#from molecule import *

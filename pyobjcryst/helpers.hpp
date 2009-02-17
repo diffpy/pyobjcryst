@@ -12,14 +12,13 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::AsymmetricUnit.
+* This is home to converters that are explicitly applied within the extensions,
+* rather than registered in registerconverters.cpp.
 *
 * $Id$
 *
 *****************************************************************************/
 
-// This is home to converters that are explicitly applied within the extensions,
-// rather than registered in registerconverters.cpp.
 #ifndef HELPERS_HPP
 #define HELPERS_HPP
 

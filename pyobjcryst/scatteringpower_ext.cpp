@@ -154,28 +154,12 @@ class ScatteringPowerWrap : public ScatteringPower,
     }
 
 
-    // Protected made public
-    void _default_Init() { default_Init(); }
-    void _Init() { Init(); }
-
-
     protected:
 
     void InitRefParList()
     {
         this->get_override("InitRefParList")();
     }
-
-    void default_Init()
-    { ScatteringPower::Init(); }
-
-    void Init()
-    {
-        if (override Init = this->get_override("Init")) 
-            Init();
-        default_Init();
-    }
-
 
 
 }; // ScatteringPowerWrap
@@ -248,6 +232,5 @@ BOOST_PYTHON_MODULE(_scatteringpower)
         .def("SetFormalCharge", 
             &ScatteringPower::SetFormalCharge,
             &ScatteringPowerWrap::default_SetFormalCharge)
-        .def("_Init", &ScatteringPowerWrap::_Init)
         ;
 }

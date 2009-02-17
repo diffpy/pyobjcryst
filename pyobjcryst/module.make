@@ -98,4 +98,3 @@ registerconverters.o : registerconverters.cpp converters.hpp
 .PHONY : clean
 clean: 
 	-rm -f *.pyc *.so *.o *.a
-

@@ -5,6 +5,7 @@ AsymmetricUnit
 Atom
 Scatterer
 RefinableObj
+RefinablePar
 
 2) Add bindings that are required for creating and using crystals. List here
 what is missing.

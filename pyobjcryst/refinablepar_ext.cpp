@@ -75,7 +75,6 @@ class PyRefinablePar : public RefinablePar
         pval = new float(value);
         RefinablePar::Init(name, pval, min, max, type, derivMode, hasLimits,
             isFixed, isUsed, isPeriodic, humanScale, period);
-        Restraint::SetType(type);
     }
 
     ~PyRefinablePar()

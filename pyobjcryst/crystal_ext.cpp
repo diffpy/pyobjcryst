@@ -40,6 +40,7 @@
 #include <map>
 #include <set>
 
+namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
@@ -215,30 +216,31 @@ BOOST_PYTHON_MODULE(_crystal)
         .def("GetClockScattCompList", &Crystal::GetClockScattCompList,
                 return_value_policy<copy_const_reference>())
         .def("GetMinDistanceTable", &Crystal::GetMinDistanceTable,
-                (boost::python::arg("minDistance")=1.0))
+                (bp::arg("minDistance")=1.0))
         .def("PrintMinDistanceTable", &Crystal::PrintMinDistanceTable,
-                (boost::python::arg("minDistance")=1.0, 
-                 boost::python::arg("os")))
+                (bp::arg("minDistance")=1.0, 
+                 bp::arg("os")))
         .def("CalcDynPopCorr", &Crystal::CalcDynPopCorr,
-                (boost::python::arg("overlapDist")=1.0, 
-                 boost::python::arg("mergeDist")=0.0))
+                (bp::arg("overlapDist")=1.0, 
+                 bp::arg("mergeDist")=0.0))
         .def("ResetDynPopCorr", &Crystal::ResetDynPopCorr)
         .def("SetUseDynPopCorr", &Crystal::SetUseDynPopCorr)
         .def("GetBumpMergeCost", &Crystal::GetBumpMergeCost)
         .def("SetBumpMergeDistance", 
             (void (Crystal::*)(const ScatteringPower&, const ScatteringPower&, const float))
              &Crystal::SetBumpMergeDistance,
-             (boost::python::arg("scatt1"), 
-              boost::python::arg("scatt2"), 
-              boost::python::arg("dist")=1.5))
+             (bp::arg("scatt1"), 
+              bp::arg("scatt2"), 
+              bp::arg("dist")=1.5))
         .def("SetBumpMergeDistance", 
             (void (Crystal::*)
-            (const ScatteringPower&, const ScatteringPower&, const float, const bool))
+            (const ScatteringPower&, const ScatteringPower&, const float, const
+             bool))
              &Crystal::SetBumpMergeDistance,
-             (boost::python::arg("scatt1"), 
-              boost::python::arg("scatt2"), 
-              boost::python::arg("dist"), 
-              boost::python::arg("allowMerge")))
+             (bp::arg("scatt1"), 
+              bp::arg("scatt2"), 
+              bp::arg("dist"), 
+              bp::arg("allowMerge")))
         .def("RemoveBumpMergeDistance", &Crystal::RemoveBumpMergeDistance)
         .def("GetBumpMergeParList", (Crystal::VBumpMergePar& (Crystal::*)())
             &Crystal::GetBumpMergeParList, return_internal_reference<>())
@@ -255,7 +257,7 @@ BOOST_PYTHON_MODULE(_crystal)
         ;
 
 
-    class_<Crystal::BumpMergePar>("BumpMergePar", init<const float, optional<const bool> >())
+    class_<Crystal::BumpMergePar>("BumpMergePar", no_init)
         .def_readwrite("mDist2", &Crystal::BumpMergePar::mDist2)
         .def_readwrite("mCanOverlap", &Crystal::BumpMergePar::mCanOverlap)
         ;

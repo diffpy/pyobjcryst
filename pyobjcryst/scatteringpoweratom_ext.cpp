@@ -23,6 +23,7 @@
 #include <boost/python/class.hpp>
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
+#include <boost/python/args.hpp>
 
 #include <string>
 #include <iostream>
@@ -31,20 +32,23 @@
 #include "RefinableObj/RefinableObj.h"
 #include "CrystVector/CrystVector.h"
 
+namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
 BOOST_PYTHON_MODULE(_scatteringpoweratom)
 {
 
-    class_<ScatteringPowerAtom, bases<ScatteringPower> > ("ScatteringPowerAtom", 
-        init<>())
-        .def(init<const std::string&, const std::string&, optional<const float> >())
+    class_<ScatteringPowerAtom, bases<ScatteringPower> > ("ScatteringPowerAtom",
+            init<>())
+        .def(
+            init<const std::string&, const std::string&, optional<const float> >
+            ((bp::arg("name"), bp::arg("symbol"), bp::arg("bIso")=1.0)))
         .def(init<const ScatteringPowerAtom&>())
         .def("Init", &ScatteringPowerAtom::Init,
-                (boost::python::arg("name"),
-                boost::python::arg("symbol"),
-                boost::python::arg("biso")=1.0
+                (bp::arg("name"),
+                bp::arg("symbol"),
+                bp::arg("biso")=1.0
                 ))
         .def("SetSymbol", &ScatteringPowerAtom::SetSymbol)
         .def("GetElementName", &ScatteringPowerAtom::GetElementName)
