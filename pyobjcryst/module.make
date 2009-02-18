@@ -79,7 +79,7 @@ $(MODULE): $(MODSO)
 # symbols, and then does the original order to close the loops. It seems to
 # work.
 $(MODSO) : $(MODOBJ) _registerconverters.so
-	$(LINK) -shared $(LINKFLAGS) $< -o $@ -lm -lcryst -lRefinableObj -lCrystVector -lQuirks -lCrystVector -lRefinableObj -lcryst -lRefinableObj -lCrystVector -lQuirks -lcctbx -lnewmat -lboost_python -lpython$(PYTHON_VERSION) 
+	$(LINK) -shared $(LINKFLAGS) $< -o $@ -lm -lobjcryst -lboost_python -lpython$(PYTHON_VERSION) 
 
 $(MODOBJ) : $(MODULE)_ext.cpp
 	$(CC) -c $< -o $@ -DHAVE_CONFIG_H -I$(PYTHON_INCDIR) -I$(OBJCRYST_HEADERS)
@@ -89,11 +89,15 @@ _registerconverters.so : registerconverters.o
 
 ## Object Rules
 #
-
 registerconverters.o : registerconverters.cpp converters.hpp
  
 %.o:%.cpp
 	$(CC) -c $< -DHAVE_CONFIG_H -I$(PYTHON_INCDIR) -I$(NUMPY_INCDIR) -I$(OBJCRYST_HEADERS)
+
+## In case you don't have a shared libobjcryst
+
+libobjcryst : objcryst.o
+	$(LINK) -shared $(LINKFLAGS) $< -o libobjcryst.so -lcryst -lRefinableObj -lCrystVector -lQuirks -lCrystVector -lRefinableObj -lcryst -lRefinableObj -lCrystVector -lQuirks -lcctbx -lnewmat
 
 .PHONY : clean
 clean: 
