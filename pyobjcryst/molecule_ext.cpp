@@ -20,13 +20,15 @@
 * - RemoveBondAngle returns None
 * - RemoveDihedralAngle returns None
 * - RemoveRigidGroup returns None
-* - FindBond returns the bond if found, None otherwise
-* - FindBondAngle returns the bond angle if found, None otherwise
-* - FindDihedralAngle returns the dihedral angle if found, None otherwise
+* - FIXME These do not work properly
+*   - FindBond returns the bond if found, None otherwise
+*   - FindBondAngle returns the bond angle if found, None otherwise
+*   - FindDihedralAngle returns the dihedral angle if found, None otherwise
 * - FindAtom is not wrapped, as it would be wrapped to behave as GetAtom.
 * - The public attributes are not wrapped, except Quaternion
 * - FlipAtomGroup is not wrapped.
 * - FlipGroup, RotorGroup and StretchModeGroup are not wrapped.
+* - StretchMode getters are not wrapped
 *
 * $Id$
 *
@@ -90,7 +92,7 @@ PyObject* _FindBond(const Molecule& m, const MolAtom& ma1, const MolAtom& ma2)
 {
     std::vector<MolBond*>::const_iterator mbi;
     mbi = m.FindBond(ma1, ma2);
-    const std::vector<MolBond*> bondlist = m.GetBondList();
+    const std::vector<MolBond*>& bondlist = m.GetBondList();
     PyObject *retval;
     if(bondlist.end() == mbi)
     {
@@ -112,7 +114,7 @@ PyObject* _FindBondAngle(const Molecule& m, const MolAtom& ma1, const MolAtom&
 {
     std::vector<MolBondAngle*>::const_iterator mbai;
     mbai = m.FindBondAngle(ma1, ma2, ma3);
-    const std::vector<MolBondAngle*> bondanglelist = m.GetBondAngleList();
+    const std::vector<MolBondAngle*>& bondanglelist = m.GetBondAngleList();
     PyObject *retval;
     if(bondanglelist.end() == mbai)
     {
@@ -133,10 +135,10 @@ PyObject* _FindDihedralAngle(const Molecule& m, const MolAtom& ma1,
 {
     std::vector<MolDihedralAngle*>::const_iterator mdai;
     mdai = m.FindDihedralAngle(ma1, ma2, ma3, ma4);
-    const std::vector<MolDihedralAngle*> bondanglelist 
+    const std::vector<MolDihedralAngle*>& dihedralanglelist 
         = m.GetDihedralAngleList();
     PyObject *retval;
-    if(bondanglelist.end() == mdai)
+    if(dihedralanglelist.end() == mdai)
     {
         // return None
         retval = Py_None;
@@ -310,8 +312,8 @@ BOOST_PYTHON_MODULE(_molecule)
 {
 
     class_<Molecule, bases<Scatterer> > ("Molecule", 
-        init<Crystal&, const string&> ((bp::arg("cryst"), bp::arg("name")="")))
-        //[with_custodian_and_ward<2,1>()])
+        init<Crystal&, const string&> ((bp::arg("cryst"), bp::arg("name")=""))
+        [with_custodian_and_ward<2,1>()])
         // The crystal is not used, so we don't need to manage it.
         /* Constructors */
         .def(init<const Molecule&>((bp::arg("old"))))
@@ -357,7 +359,6 @@ BOOST_PYTHON_MODULE(_molecule)
         .def("OptimizeConformationSteepestDescent", 
             &Molecule::OptimizeConformationSteepestDescent,
             (bp::arg("maxStep")=0.1, bp::arg("nbSteps")=1))
-        // Doesn't work
         .def("GetAtomList", &_GetAtomList,
             with_custodian_and_ward_postcall<1,0>())
         .def("GetBondList", &_GetBondList,
@@ -366,12 +367,12 @@ BOOST_PYTHON_MODULE(_molecule)
             with_custodian_and_ward_postcall<1,0>())
         .def("GetDihedralAngleList", &_GetDihedralAngleList,
             with_custodian_and_ward_postcall<1,0>())
-        .def("GetStretchModeBondLengthList", &_GetStretchModeBondLengthList,
-            with_custodian_and_ward_postcall<1,0>())
-        .def("GetStretchModeBondAngleList", &_GetStretchModeBondAngleList,
-            with_custodian_and_ward_postcall<1,0>())
-        .def("GetStretchModeTorsionList", &_GetStretchModeTorsionList,
-            with_custodian_and_ward_postcall<1,0>())
+        //.def("GetStretchModeBondLengthList", &_GetStretchModeBondLengthList,
+        //    with_custodian_and_ward_postcall<1,0>())
+        //.def("GetStretchModeBondAngleList", &_GetStretchModeBondAngleList,
+        //    with_custodian_and_ward_postcall<1,0>())
+        //.def("GetStretchModeTorsionList", &_GetStretchModeTorsionList,
+        //    with_custodian_and_ward_postcall<1,0>())
         .def("GetRigidGroupList", &_GetRigidGroupList,
             with_custodian_and_ward_postcall<1,0>())
         .def("RotateAtomGroup", &_RotateAtomGroup, 
