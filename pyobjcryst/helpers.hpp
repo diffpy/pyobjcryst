@@ -76,7 +76,7 @@ bp::list containerToPyList(T& v)
 {
     bp::list l;
 
-    for(typename T::iterator it = v.begin(); it != v.end(); ++it)
+    for(typename T::const_iterator it = v.begin(); it != v.end(); ++it)
     {
         l.append(bp::object(*it));
     }

@@ -24,6 +24,9 @@
 * - FindBondAngle returns the bond angle if found, None otherwise
 * - FindDihedralAngle returns the dihedral angle if found, None otherwise
 * - FindAtom is not wrapped, as it would be wrapped to behave as GetAtom.
+* - The public attributes are not wrapped, except Quaternion
+* - FlipAtomGroup is not wrapped.
+* - FlipGroup, RotorGroup and StretchModeGroup are not wrapped.
 *
 * $Id$
 *
@@ -147,9 +150,8 @@ PyObject* _FindDihedralAngle(const Molecule& m, const MolAtom& ma1,
     return retval;
 }
 
-// This could usually be done with an indexing suite, but I couldn't get it to
-// work with a vector of pointers. This is just as well, as we don't want to
-// allow the user to modify the internal vector.
+// This could usually be done with an indexing suite, but it doesn't work with
+// vectors of pointers.
 bp::list _GetAtomList(const Molecule& m)
 {
     bp::list l;
@@ -242,7 +244,9 @@ bp::list _GetRigidGroupList(const Molecule& m)
     return l;
 }
 
-// Overloaded to accept a python list instead of a std::set
+// Overloaded to accept a python list instead of a std::set. Again, could be
+// done with converters, but there are issues with pointers. Perhaps another
+// day...
 void _RotateAtomGroup(Molecule &m, const MolAtom& at1, const MolAtom& at2,
     const bp::list& atoms, const float angle, const bool keepCenter=true)
 {
@@ -288,7 +292,17 @@ bp::dict _GetConnectivityTable(Molecule &m)
     return d;
 }
 
+bp::list _AsZMatrix(const Molecule& m, const bool keeporder)
+{
+    bp::list l;
 
+    const std::vector<MolZAtom>& v = m.AsZMatrix(keeporder);
+
+    l = containerToPyList< const std::vector<MolZAtom> >(v);
+
+    return l;
+}
+  
 } // namespace
 
 
@@ -330,7 +344,6 @@ BOOST_PYTHON_MODULE(_molecule)
             with_custodian_and_ward_postcall<1,0>())
         // An internal copy of the group is made, so there is no need for
         // lifetime management.
-        // FIXME - define RigidGroup
         .def("AddRigidGroup", &Molecule::AddRigidGroup)
         .def("RemoveRigidGroup", &_RemoveRigidGroup)
         .def("GetAtom", 
@@ -389,6 +402,50 @@ BOOST_PYTHON_MODULE(_molecule)
             return_internal_reference<>())
         .def("RigidifyWithDihedralAngles", 
             &Molecule::RigidifyWithDihedralAngles)
+        .def("BondLengthRandomChange", &Molecule::BondLengthRandomChange,
+            (bp::arg("mode"), bp::arg("amplitude"),
+             bp::arg("respectRestraint")=true)
+            )
+        .def("BondAngleRandomChange", &Molecule::BondAngleRandomChange,
+            (bp::arg("mode"), bp::arg("amplitude"),
+             bp::arg("respectRestraint")=true)
+            )
+        .def("DihedralAngleRandomChange", &Molecule::DihedralAngleRandomChange,
+            (bp::arg("mode"), bp::arg("amplitude"),
+             bp::arg("respectRestraint")=true)
+            )
+        .def("GetCenterAtom", &Molecule::GetCenterAtom,
+            return_internal_reference<>())
+        // Memory management shouldn't be necessary here, but there is the
+        // possibility that a MolAtom that was created in another Molecule is
+        // passed to this one. This could lead to memory corruption if the
+        // original Molecule were to be deleted before this one, hence the
+        // with_custodian_and_ward.
+        .def("SetCenterAtom", &Molecule::SetCenterAtom,
+            with_custodian_and_ward<1,2>())
+        .def("AsZMatrix", &_AsZMatrix,
+            with_custodian_and_ward_postcall<1,0>())
+        .def("BuildRingList", &Molecule::BuildRingList)
+        .def("BuildConnectivityTable", &Molecule::BuildConnectivityTable)
+        .def("BuildRotorGroup", &Molecule::BuildRotorGroup)
+        .def("TuneGlobalOptimRotationAmplitude", 
+            &Molecule::TuneGlobalOptimRotationAmplitude)
+        .def("BuildFlipGroup", &Molecule::BuildFlipGroup)
+        .def("BuildStretchModeBondLength", 
+            &Molecule::BuildStretchModeBondLength)
+        .def("BuildStretchModeBondAngle", 
+            &Molecule::BuildStretchModeBondAngle)
+        .def("BuildStretchModeTorsion", 
+            &Molecule::BuildStretchModeTorsion)
+        .def("BuildStretchModeTwist", 
+            &Molecule::BuildStretchModeTwist)
+        .def("BuildStretchModeGroups", 
+            &Molecule::BuildStretchModeGroups)
+        .def("UpdateScattCompList", &Molecule::UpdateScattCompList)
+        .def("InitOptions", &Molecule::InitOptions)
+        // attributes
+        .def_readwrite("mQuat", &Molecule::mQuat)
         ;
 
 }
+

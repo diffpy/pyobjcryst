@@ -17,10 +17,11 @@
 
 #__all__ = []
 __all__ = ["Molecule", "MolAtom", "MolBond", "MolBondAngle",
-        "MolDihedralAngle"]#, "RigidGroup", "MolRing", "Quaternion"]
+        "MolDihedralAngle", "RigidGroup"]#, "MolRing", "Quaternion"]
 
 from _molecule import *
 from _molatom import *
 from _molbond import *
 from _molbondangle import *
 from _moldihedralangle import *
+from _rigidgroup import *
