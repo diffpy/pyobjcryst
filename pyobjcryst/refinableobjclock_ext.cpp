@@ -16,6 +16,10 @@
 *
 * $Id$
 *
+* Changes from ObjCryst++
+* - operator= is wrapped as the SetEqual method
+*   a.SetEqual(b) -> a = b
+*
 *****************************************************************************/
 
 #include <boost/python.hpp>
@@ -69,6 +73,12 @@ const char *  removeparentdoc =
 const char * resetdoc =
 "Reset a Clock to 0, to force an update";
 
+// set clock1 equal to clock2 (operator=)
+void SetEqual(RefinableObjClock& c1, const RefinableObjClock& c2)
+{
+    c1 = c2;
+}
+
 
 } // anonymous namespace
 
@@ -87,6 +97,7 @@ BOOST_PYTHON_MODULE(_refinableobjclock)
         .def("RemoveChild", &RefinableObjClock::RemoveChild, removechilddoc)
         .def("RemoveParent", &RefinableObjClock::RemoveParent, removeparentdoc)
         .def("Reset", &RefinableObjClock::Reset)
+        .def("SetEqual", &SetEqual)
         .def(self < self)
         .def(self <= self)
         .def(self > self)
