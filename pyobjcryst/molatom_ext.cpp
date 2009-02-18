@@ -15,6 +15,8 @@
 * boost::python bindings to ObjCryst::MolAtom.  
 * 
 * Changes from ObjCryst++
+* - File IO is disabled
+* - X, Y and Z are wrapped as properties rather than methods.
 *
 * $Id$
 *
@@ -51,5 +53,26 @@ BOOST_PYTHON_MODULE(_molatom)
         .def("GetName", (const std::string& (MolAtom::*)() const) 
             &MolAtom::GetName, 
             return_value_policy<copy_const_reference>())
+        .def("SetName", &MolAtom::SetName)
+        .def("GetMolecule", (Molecule& (MolAtom::*)()) 
+            &MolAtom::GetMolecule, 
+            return_internal_reference<>())
+        .def("GetX", &MolAtom::GetX)
+        .def("GetY", &MolAtom::GetY)
+        .def("GetZ", &MolAtom::GetZ)
+        .def("GetOccupancy", &MolAtom::GetOccupancy)
+        .def("SetX", &MolAtom::SetX)
+        .def("SetY", &MolAtom::SetY)
+        .def("SetZ", &MolAtom::SetZ)
+        .def("SetOccupancy", &MolAtom::SetOccupancy)
+        .def("IsDummy", &MolAtom::IsDummy)
+        .def("GetScatteringPower", &MolAtom::GetScatteringPower,
+            return_value_policy<copy_const_reference>())
+        .def("SetIsInRing", &MolAtom::SetIsInRing)
+        .def("IsInRing", &MolAtom::IsInRing)
+        // Python-only
+        .add_property("X", &MolAtom::GetX, &MolAtom::SetX)
+        .add_property("Y", &MolAtom::GetY, &MolAtom::SetY)
+        .add_property("Z", &MolAtom::GetZ, &MolAtom::SetZ)
         ;
 }

@@ -15,9 +15,9 @@
 
 """Python wrapping of Molecule."""
 
-__all__ = []
-#__all__ = ["Molecule", "MolAtom", "MolBond", "MolBondAngle",
-#        "MolDihedralAngle"]#, "RigidGroup", "MolRing", "Quaternion"]
+#__all__ = []
+__all__ = ["Molecule", "MolAtom", "MolBond", "MolBondAngle",
+        "MolDihedralAngle"]#, "RigidGroup", "MolRing", "Quaternion"]
 
 from _molecule import *
 from _molatom import *

@@ -89,17 +89,17 @@ template <typename T1, typename T2>
 struct std_pair_to_tuple
 {
 
-static PyObject* convert(std::pair<T1, T2> const& p)
-{
-    bp::object tpl = bp::make_tuple(p.first, p.second);
-    PyObject* rv = tpl.ptr();
-    return bp::incref(rv);
-}
+    static PyObject* convert(std::pair<T1, T2> const& p)
+    {
+        bp::object tpl = bp::make_tuple(p.first, p.second);
+        PyObject* rv = tpl.ptr();
+        return bp::incref(rv);
+    }
 
-static PyTypeObject const* get_pytype() 
-{
-    return &PyTuple_Type; 
-}
+    static PyTypeObject const* get_pytype() 
+    {
+        return &PyTuple_Type; 
+    }
 
 };
 

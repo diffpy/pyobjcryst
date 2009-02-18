@@ -23,8 +23,13 @@
 #define HELPERS_HPP
 
 #include <string>
+#include <set>
 #include <sstream>
 #include <iostream>
+
+#include <boost/python.hpp>
+
+namespace bp = boost::python;
 
 // This function will help convert a class Print statement into a __str__
 // statement. See refinableobjclock_ext.cpp for an example.
@@ -47,6 +52,41 @@ std::string __str__(const T &obj)
         outstr.erase(idx+1);
 
     return outstr;
+}
+
+template <class T>
+std::set<T> pyListToSet(const bp::list& l)
+{
+
+    std::set<T> cl;
+    T typeobj;
+
+    for(size_t i=0; i < len(l); ++i)
+    {
+        typeobj = bp::extract<T>(l[i]);
+        cl.insert(typeobj);
+    }
+
+    return cl;
+}
+
+// For turning vector-like containers into lists
+template <class T>
+bp::list containerToPyList(T& v)
+{
+    bp::list l;
+
+    for(typename T::iterator it = v.begin(); it != v.end(); ++it)
+    {
+        l.append(bp::object(*it));
+    }
+    return l;
+}
+
+template <class T>
+bp::list setToPyList(std::set<T>& v)
+{
+    return containerToPyList< typename std::set<T> >(v);
 }
 
 #endif

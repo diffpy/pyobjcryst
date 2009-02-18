@@ -26,6 +26,7 @@ __all__ = [
         "Restraint",
         "ScattererRegistry",
         "ScatteringPowerRegistry",
+        "ZAtomRegistry"
         ]
 
 

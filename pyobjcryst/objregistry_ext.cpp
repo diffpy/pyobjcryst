@@ -35,6 +35,7 @@
 #include "RefinableObj/RefinableObj.h"
 #include "ObjCryst/Scatterer.h"
 #include "ObjCryst/DiffractionDataSingleCrystal.h"
+#include "ObjCryst/ZScatterer.h"
 
 #include "helpers.hpp"
 
@@ -114,4 +115,10 @@ BOOST_PYTHON_MODULE(_objregistry)
         ScatteringPowerRegistry("ScatteringPowerRegistry", 
         init<const string&>());
     wrapClass<ScatteringPower>(ScatteringPowerRegistry);
+
+    // ObjRegistry<ZAtom>
+    class_< ObjRegistry<ZAtom> >
+        ZAtomRegistry("ZAtomRegistry", 
+        init<const string&>());
+    wrapClass<ZAtom>(ZAtomRegistry);
 }
