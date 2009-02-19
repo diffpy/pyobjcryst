@@ -3,6 +3,7 @@
 
 from pyobjcryst import *
 import unittest
+import numpy
 
 from utils import makeScatterer, makeCrystal
 
@@ -142,7 +143,6 @@ class TestRefinableObjClock(unittest.TestCase):
         return
 
 
-
 class TestRestraint(unittest.TestCase):
 
     def testEquality(self):
@@ -189,6 +189,223 @@ class TestRefinablePar(unittest.TestCase):
         self.assertEqual(rpt2, self.rpt)
         return
 
+class TestRefinableObj(unittest.TestCase):
+
+    def setUp(self):
+        """Make a RefinableObj and add some RefinablePars."""
+        self.r = RefinableObj()
+        self.r.SetName("test1")
+        # Add some parameters
+        self.rpt = RefParType("test")
+        p1 = RefinablePar("p1", 3, 0, 10, self.rpt)
+        p2 = RefinablePar("p2", -3, -10, 0, self.rpt)
+        self.r.AddPar(p1)
+        self.r.AddPar(p2)
+        return
+
+    def tearDown(self):
+        """Clean up those pesky xml files.
+
+        ObjCryst dumps save state into xml files when an exception is thrown.
+        Clean those up.
+        """
+        import glob
+        files = glob.glob("ObjCryst*.xml")
+        import os
+        map(os.remove, files)
+        return
+
+    def _getPars(self):
+        """Convenience function."""
+        p1 = self.r.GetPar(0)
+        p2 = self.r.GetPar(1)
+        return p1, p2
+
+    def testNames(self):
+        """Test the naming methods."""
+        self.assertEqual("RefinableObj", self.r.GetClassName())
+        self.assertEqual("test1", self.r.GetName())
+        return
+
+    def testGetPar(self):
+        """Test GetPar."""
+        p1 = self.r.GetPar(0)
+        p2 = self.r.GetPar(1)
+        self.assertEqual(2, self.r.GetNbPar())
+        self.assertEqual("p1", p1.GetName())
+        self.assertEqual("p2", p2.GetName())
+        return
+
+    def testFixUnFix(self):
+        """Test FixAllPar."""
+        p1, p2 = self._getPars()
+        r = self.r
+
+        r.FixAllPar()
+        self.assertTrue(p1.IsFixed())
+        self.assertTrue(p2.IsFixed())
+        r.PrepareForRefinement()
+        self.assertEqual(0, r.GetNbParNotFixed())
+
+        r.UnFixAllPar()
+        self.assertFalse(p1.IsFixed())
+        self.assertFalse(p2.IsFixed())
+        r.PrepareForRefinement()
+        self.assertEqual(2, r.GetNbParNotFixed())
+
+        r.FixAllPar()
+        self.assertTrue(p1.IsFixed())
+        self.assertTrue(p2.IsFixed())
+
+        r.SetParIsFixed(0, True)
+        r.SetParIsFixed(1, False)
+        self.assertTrue(p1.IsFixed())
+        self.assertFalse(p2.IsFixed())
+        r.PrepareForRefinement()
+        self.assertEqual(1, r.GetNbParNotFixed())
+
+        r.SetParIsFixed("p1", False)
+        r.SetParIsFixed("p2", True)
+        self.assertFalse(p1.IsFixed())
+        self.assertTrue(p2.IsFixed())
+        r.PrepareForRefinement()
+        self.assertEqual(1, r.GetNbParNotFixed())
+        return
+
+    def testUsedUnUsed(self):
+        """Test FixAllPar."""
+        p1, p2 = self._getPars()
+        r = self.r
+
+        r.SetParIsUsed("p1", False)
+        r.SetParIsUsed("p2", True)
+        self.assertFalse(p1.IsUsed())
+        self.assertTrue(p2.IsUsed())
+
+        r.SetParIsUsed(self.rpt, True)
+        self.assertTrue(p1.IsUsed())
+        self.assertTrue(p2.IsUsed())
+        return
+
+    def testAddParRefinableObj(self):
+        """Test adding another object."""
+        r2 = RefinableObj()
+        r2.SetName("test2")
+        # Add some parameters
+        p3 = RefinablePar("p3", 3, 0, 10, self.rpt)
+        p4 = RefinablePar("p4", -3, -10, 0, self.rpt)
+        r2.AddPar(p3)
+        r2.AddPar(p4)
+
+        self.r.AddPar(r2)
+        self.assertEqual(4, self.r.GetNbPar())
+        return
+
+    def testAddParTwice(self):
+        """Try to add the same parameter twice.
+
+        We could stop this in the bindings, but since RefinableObj doesn't
+        delete its parameters in the destructor, it shouldn't lead to trouble.
+        """
+        p3 = RefinablePar("p3", 3, 0, 10, self.rpt)
+        self.r.AddPar(p3)
+        self.r.AddPar(p3)
+        return
+
+    def testParmSets(self):
+        """Test creation of parameter sets."""
+        # This creates an exception, but it is not easily tranlatable to python.
+        # I'll use the default boost RuntimeError for now.
+        self.assertRaises(RuntimeError, self.r.SaveParamSet, 3)
+        p1, p2 = self._getPars()
+        r = self.r
+
+        # Test saving and retrieval of parameters
+        save1 = r.CreateParamSet("save1")
+        savevals1 = r.GetParamSet(save1)
+        self.assertTrue( numpy.array_equal([3,-3], savevals1) )
+
+        # Change a parameter test new value
+        p1.SetValue(8.0)
+        save2 = r.CreateParamSet("save2")
+        savevals2 = r.GetParamSet(save2)
+        self.assertTrue( numpy.array_equal([8,-3], savevals2) )
+
+        # Restore the old set
+        r.RestoreParamSet(save1)
+        self.assertEqual(3, p1.GetValue())
+
+        # Get the names
+        self.assertEqual(r.GetParamSetName(save1), "save1")
+        self.assertEqual(r.GetParamSetName(save2), "save2")
+
+        # Delete parameter sets
+        r.ClearParamSet(save2)
+        self.assertRaises(RuntimeError, r.SaveParamSet, save2)
+        r.EraseAllParamSet()
+        self.assertRaises(RuntimeError, r.SaveParamSet, save1)
+
+        return
+
+    def testLimits(self):
+        """Test the limit-setting functions."""
+        p1, p2 = self._getPars()
+        r = self.r
+
+        # Check setting absolute limits by name
+        r.SetLimitsAbsolute("p1", 0, 1)
+        p1.SetValue(8)
+        self.assertEqual(1, p1.GetValue())
+        p1.SetValue(-1)
+        self.assertEqual(0, p1.GetValue())
+
+        # Check setting absolute limits by type
+        r.SetLimitsAbsolute(self.rpt, 0, 1)
+        p1.SetValue(10)
+        p2.SetValue(10)
+        self.assertEqual(1, p1.GetValue())
+        self.assertEqual(1, p2.GetValue())
+
+        # Check setting relative limits by name
+        r.SetLimitsRelative("p1", 0, 1)
+        p1.SetValue(8)
+        self.assertEqual(2, p1.GetValue())
+        p1.SetValue(-1)
+        self.assertEqual(1, p1.GetValue())
+
+        # Check setting relative limits by type
+        r.SetLimitsRelative(self.rpt, 0, 1)
+        p1.SetValue(10)
+        p2.SetValue(10)
+        self.assertEqual(2, p1.GetValue())
+        self.assertEqual(2, p2.GetValue())
+
+        # Check setting proportional limits by name
+        p1.SetValue(1)
+        r.SetLimitsProportional("p1", 0, 3)
+        p1.SetValue(8)
+        self.assertEqual(3, p1.GetValue())
+        p1.SetValue(-1)
+        self.assertEqual(0, p1.GetValue())
+
+        # Check setting proportional limits by type
+        p1.SetValue(1)
+        p2.SetValue(2)
+        r.SetLimitsProportional(self.rpt, 1, 2)
+        p1.SetValue(10)
+        p2.SetValue(10)
+        self.assertEqual(2, p1.GetValue())
+        self.assertEqual(4, p2.GetValue())
+        return
+
+    def testOptimStep(self):
+        """Test SetGlobalOptimStep."""
+        p1, p2 = self._getPars()
+        self.r.SetGlobalOptimStep(self.rpt, 1)
+        self.r.SetGlobalOptimStep(self.rpt, 0.1)
+        self.assertAlmostEqual(0.1, p1.GetGlobalOptimStep())
+        self.assertAlmostEqual(0.1, p2.GetGlobalOptimStep())
+        return
 
 
 if __name__ == "__main__":
