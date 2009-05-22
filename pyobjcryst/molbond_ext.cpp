@@ -58,6 +58,9 @@ BOOST_PYTHON_MODULE(_molbond)
             &MolBond::GetMolecule, 
             return_internal_reference<>())
         .def("GetLogLikelihood", 
+            (float (MolBond::*)() const) 
+            &MolBond::GetLogLikelihood) 
+        .def("GetLogLikelihood", 
             (float (MolBond::*)(const bool, const bool) const) 
             &MolBond::GetLogLikelihood) 
         .def("GetName", &MolBond::GetName)
@@ -81,12 +84,21 @@ BOOST_PYTHON_MODULE(_molbond)
         .def("IsFreeTorsion", &MolBond::IsFreeTorsion)
         .def("SetFreeTorsion", &MolBond::SetFreeTorsion)
         // Python-only
+        .add_property("Length", &MolBond::GetLength)
         .add_property("Length0", &MolBond::GetLength0, &MolBond::SetLength0)
         .add_property("LengthDelta", &MolBond::GetLengthDelta,
             &MolBond::SetLengthDelta)
         .add_property("LengthSigma", &MolBond::GetLengthSigma,
             &MolBond::SetLengthSigma)
         .add_property("BondOrder", &MolBond::GetBondOrder,
+            &MolBond::SetBondOrder)
+        .add_property("length", &MolBond::GetLength)
+        .add_property("length0", &MolBond::GetLength0, &MolBond::SetLength0)
+        .add_property("delta", &MolBond::GetLengthDelta,
+            &MolBond::SetLengthDelta)
+        .add_property("sigma", &MolBond::GetLengthSigma,
+            &MolBond::SetLengthSigma)
+        .add_property("order", &MolBond::GetBondOrder,
             &MolBond::SetBondOrder)
         ;
 }

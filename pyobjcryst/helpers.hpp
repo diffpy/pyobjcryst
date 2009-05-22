@@ -84,6 +84,20 @@ bp::list containerToPyList(T& v)
     return l;
 }
 
+// For turning vector-like containers into lists
+// It is assumed that T contains pointers
+template <class T>
+bp::list ptrcontainerToPyList(T& v)
+{
+    bp::list l;
+
+    for(typename T::const_iterator it = v.begin(); it != v.end(); ++it)
+    {
+        l.append(ptr(*it));
+    }
+    return l;
+}
+
 template <class T>
 bp::list setToPyList(std::set<T>& v)
 {

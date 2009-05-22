@@ -97,9 +97,6 @@ BOOST_PYTHON_MODULE(_registerconverters)
     // Semi-converter for mapsppairtobmp
     class_<mapsppairtobmp>("mapsppairtobmp", no_init)
         .def(map_indexing_suite<mapsppairtobmp>());
-    // Vectors of pointers
-    class_<std::vector<MolAtom*> >("MolAtomVector")
-        .def(vector_indexing_suite<std::vector<MolAtom*>, true>());
 
     // some tests
     def("getTestVector", &getTestVector);

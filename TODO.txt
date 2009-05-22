@@ -11,9 +11,6 @@ RefinablePar
 what is missing.
 
 All Molecule stuff
-There's a serious problem here, because many of the accessors use pointers, and
-I can't get these to keep their identity when passed to python. This makes it
-impossible to do certain things, such as easily remove a bond.
 
 3) Anything else?
 * Wrap classes needed for calculating a diffraction pattern.
@@ -25,3 +22,5 @@ impossible to do certain things, such as easily remove a bond.
 
 5) Wrap exceptions!
 
+6) Keep exceptions from writing files. The code for this is in
+ObjCryst/Exception.cpp.

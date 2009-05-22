@@ -59,6 +59,9 @@ BOOST_PYTHON_MODULE(_molbondangle)
             return_internal_reference<>())
         .def("GetName", &MolBondAngle::GetName)
         .def("GetLogLikelihood", 
+            (float (MolBondAngle::*)() const) 
+            &MolBondAngle::GetLogLikelihood) 
+        .def("GetLogLikelihood", 
             (float (MolBondAngle::*)(const bool, const bool) const) 
             &MolBondAngle::GetLogLikelihood) 
         .def("GetAngle", &MolBondAngle::GetAngle)
@@ -83,11 +86,19 @@ BOOST_PYTHON_MODULE(_molbondangle)
         //.def("IsFlexible", &MolBondAngle::IsFlexible)
         //.def("SetFlexible", &MolBondAngle::SetFlexible)
         // Python-only
+        .add_property("Angle", &MolBondAngle::GetAngle)
         .add_property("Angle0", &MolBondAngle::GetAngle0,
             &MolBondAngle::SetAngle0)
         .add_property("AngleDelta", &MolBondAngle::GetAngleDelta,
             &MolBondAngle::SetAngleDelta)
         .add_property("AngleSigma", &MolBondAngle::GetAngleSigma,
+            &MolBondAngle::SetAngleSigma)
+        .add_property("angle", &MolBondAngle::GetAngle)
+        .add_property("angle0", &MolBondAngle::GetAngle0,
+            &MolBondAngle::SetAngle0)
+        .add_property("delta", &MolBondAngle::GetAngleDelta,
+            &MolBondAngle::SetAngleDelta)
+        .add_property("sigma", &MolBondAngle::GetAngleSigma,
             &MolBondAngle::SetAngleSigma)
         ;
 }
