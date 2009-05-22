@@ -17,6 +17,8 @@
 * Changes from ObjCryst++
 * - The const-version of overloaded methods that can return either an internal
 *   reference, or a constant interal reference are not wrapped.
+* - CalcDynPopCorr is not enabled, as the API states that this is for internal
+*   use only.
 *
 * $Id$
 *
@@ -89,7 +91,7 @@ void _AddScatterer(Crystal& crystal, Scatterer* scatt)
     return;
 }
 
-// Overloaded to record ScatterinPower in the registry
+// Overloaded to record ScatteringPower in the registry
 void _AddScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
 {
     // Make sure that the scatteringpower would have a unique name in this
@@ -170,6 +172,45 @@ void _RemoveScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
     return;
 }
 
+void _PrintMinDistanceTable(const Crystal& crystal, 
+        const float minDistance = 0.1)
+{
+
+    crystal.PrintMinDistanceTable(minDistance);
+    return;
+}
+
+// wrap the virtual functions that need it
+class CrystalWrap : public Crystal, public wrapper<Crystal>
+{
+
+    public: 
+
+    CrystalWrap() : Crystal() {}
+
+    CrystalWrap(const CrystalWrap& c) : Crystal(c) {}
+
+    CrystalWrap(const float a, const float b, const float c , 
+            const std::string& sg) 
+        : Crystal(a, b, c, sg) {}
+    CrystalWrap(const float a, const float b, const float c , 
+            const float alpha, const float beta, const float gamma,
+            const std::string& sg) 
+        : Crystal(a, b, c, alpha, beta, gamma, sg) {}
+
+    const ScatteringComponentList& default_GetScatteringComponentList() const
+    { return this->Crystal::GetScatteringComponentList(); }
+
+    const ScatteringComponentList& GetScatteringComponentList() const
+    {
+        if (override GetScatteringComponentList = 
+                this->get_override("GetScatteringComponentList")) 
+            return GetScatteringComponentList();
+        return default_GetScatteringComponentList();
+    }
+
+};
+
 
 } // namespace
 
@@ -177,13 +218,14 @@ void _RemoveScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
 BOOST_PYTHON_MODULE(_crystal)
 {
 
-    class_<Crystal, bases<UnitCell> > ("Crystal", init<>())
+    class_<CrystalWrap, bases<UnitCell>, boost::noncopyable > 
+        ("Crystal", init<>())
         /* Constructors */
         .def(init<const float, const float, const float, const std::string&>())
         .def(init<const float, const float, const float, 
             const float, const float, const float, 
             const std::string&>())
-        .def(init<const Crystal&>())
+        .def(init<const CrystalWrap&>())
         /* Methods */
         .def("AddScatterer", &_AddScatterer,
             with_custodian_and_ward<2,1,with_custodian_and_ward<1,2> >())
@@ -193,6 +235,12 @@ BOOST_PYTHON_MODULE(_crystal)
             (Scatterer& (Crystal::*)(const std::string&)) &Crystal::GetScatt, 
             return_internal_reference<>())
         .def("GetScatt", 
+            (Scatterer& (Crystal::*)(const long)) &Crystal::GetScatt, 
+            return_internal_reference<>())
+        .def("GetScatterer", 
+            (Scatterer& (Crystal::*)(const std::string&)) &Crystal::GetScatt, 
+            return_internal_reference<>())
+        .def("GetScatterer", 
             (Scatterer& (Crystal::*)(const long)) &Crystal::GetScatt, 
             return_internal_reference<>())
         .def("GetScattererRegistry", ( ObjRegistry<Scatterer>& 
@@ -208,21 +256,21 @@ BOOST_PYTHON_MODULE(_crystal)
             (ScatteringPower& (Crystal::*)(const std::string&)) 
             &Crystal::GetScatteringPower, 
             return_internal_reference<>())
-        .def("GetMasterClockScatteringPower", &Crystal::GetMasterClockScatteringPower,
-                return_value_policy<copy_const_reference>())
+        .def("GetMasterClockScatteringPower",
+            &Crystal::GetMasterClockScatteringPower,
+            return_value_policy<copy_const_reference>())
         .def("GetScatteringComponentList", 
-            &Crystal::GetScatteringComponentList,
-            return_internal_reference<>())
+            &CrystalWrap::GetScatteringComponentList,
+            return_value_policy<copy_const_reference>())
         .def("GetClockScattCompList", &Crystal::GetClockScattCompList,
                 return_value_policy<copy_const_reference>())
         .def("GetMinDistanceTable", &Crystal::GetMinDistanceTable,
                 (bp::arg("minDistance")=1.0))
-        .def("PrintMinDistanceTable", &Crystal::PrintMinDistanceTable,
-                (bp::arg("minDistance")=1.0, 
-                 bp::arg("os")))
-        .def("CalcDynPopCorr", &Crystal::CalcDynPopCorr,
-                (bp::arg("overlapDist")=1.0, 
-                 bp::arg("mergeDist")=0.0))
+        .def("PrintMinDistanceTable", &_PrintMinDistanceTable,
+                (bp::arg("minDistance")=1.0))
+        //.def("CalcDynPopCorr", &Crystal::CalcDynPopCorr,
+        //        (bp::arg("overlapDist")=1.0, 
+        //         bp::arg("mergeDist")=0.0))
         .def("ResetDynPopCorr", &Crystal::ResetDynPopCorr)
         .def("SetUseDynPopCorr", &Crystal::SetUseDynPopCorr)
         .def("GetBumpMergeCost", &Crystal::GetBumpMergeCost)

@@ -43,6 +43,7 @@ class ScatteringPowerWrap : public ScatteringPower,
     public: 
 
     ScatteringPowerWrap() : ScatteringPower() {}
+    ScatteringPowerWrap(const ScatteringPower &S) : ScatteringPower(S) {}
     ScatteringPowerWrap(const ScatteringPowerWrap &S) : ScatteringPower(S) {}
 
     // Pure Virtual functions
@@ -170,6 +171,9 @@ class ScatteringPowerWrap : public ScatteringPower,
 BOOST_PYTHON_MODULE(_scatteringpower)
 {
 
+    // By making this non-copyable ScatteringPower can be passed from c++ when
+    // copy_const_reference is uses, but they are turned into RefinableObj
+    // instances.
     class_<ScatteringPowerWrap, boost::noncopyable, bases<RefinableObj> >
         ("ScatteringPower", init<>())
         .def(init<const ScatteringPowerWrap&>())

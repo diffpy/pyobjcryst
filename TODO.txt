@@ -11,6 +11,9 @@ RefinablePar
 what is missing.
 
 All Molecule stuff
+There's a serious problem here, because many of the accessors use pointers, and
+I can't get these to keep their identity when passed to python. This makes it
+impossible to do certain things, such as easily remove a bond.
 
 3) Anything else?
 * Wrap classes needed for calculating a diffraction pattern.
@@ -19,3 +22,6 @@ All Molecule stuff
 * Evaluate and wrap property attributes. For example, value in RefinablePar
 * Name the arguments for overloaded functions
 * Document methods?
+
+5) Wrap exceptions!
+

@@ -71,6 +71,7 @@ std::set<T> pyListToSet(const bp::list& l)
 }
 
 // For turning vector-like containers into lists
+// It is assumed that T contains non-pointers
 template <class T>
 bp::list containerToPyList(T& v)
 {
@@ -78,7 +79,7 @@ bp::list containerToPyList(T& v)
 
     for(typename T::const_iterator it = v.begin(); it != v.end(); ++it)
     {
-        l.append(bp::object(*it));
+        l.append(*it);
     }
     return l;
 }

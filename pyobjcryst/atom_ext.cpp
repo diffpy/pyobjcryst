@@ -60,8 +60,12 @@ BOOST_PYTHON_MODULE(_atom)
         .def("GetMass", &Atom::GetMass)
         .def("GetRadius", &Atom::GetRadius)
         .def("IsDummy", &Atom::IsDummy)
+        // FIXME - this should be returned as a constant reference. However, I
+        // can't get this to work. This returns it as an internal reference,
+        // which is probably a bad idea.
         .def("GetScatteringPower", &Atom::GetScatteringPower,
-            return_value_policy<copy_const_reference>())
+            return_internal_reference<>())
+            //return_value_policy<copy_const_reference>())
         ;
 
 }

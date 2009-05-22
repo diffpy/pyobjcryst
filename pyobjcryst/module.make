@@ -74,10 +74,6 @@ $(MODULE): $(MODSO)
 
 ## Boost 
  
-# The libraries are inter-dependent, so this should cover all the bases. It
-# links in the order given in the ObjCryst, then reverses to pick up undefined
-# symbols, and then does the original order to close the loops. It seems to
-# work.
 $(MODSO) : $(MODOBJ) _registerconverters.so
 	$(LINK) -shared $(LINKFLAGS) $< -o $@ -lm -lobjcryst -lboost_python -lpython$(PYTHON_VERSION) 
 
@@ -96,6 +92,10 @@ registerconverters.o : registerconverters.cpp converters.hpp
 
 ## In case you don't have a shared libobjcryst
 
+# The libraries are inter-dependent, so this should cover all the bases. It
+# links in the order given in the ObjCryst, then reverses to pick up undefined
+# symbols, and then does the original order to close the loops. It seems to
+# work.
 libobjcryst : objcryst.o
 	$(LINK) -shared $(LINKFLAGS) $< -o libobjcryst.so -lcryst -lRefinableObj -lCrystVector -lQuirks -lCrystVector -lRefinableObj -lcryst -lRefinableObj -lCrystVector -lQuirks -lcctbx -lnewmat
 

@@ -13,6 +13,7 @@
 ******************************************************************************
 *
 * boost::python bindings to ObjCryst::MolAtom.  
+* This class is wrapped as a to-python converter only.
 * 
 * Changes from ObjCryst++
 * - File IO is disabled
@@ -49,7 +50,7 @@ namespace {
 BOOST_PYTHON_MODULE(_molatom)
 {
 
-    class_<MolAtom> ("MolAtom", no_init)
+    class_<MolAtom> ("MolAtom", init<const MolAtom&>())
         .def("GetName", (const std::string& (MolAtom::*)() const) 
             &MolAtom::GetName, 
             return_value_policy<copy_const_reference>())
@@ -66,13 +67,22 @@ BOOST_PYTHON_MODULE(_molatom)
         .def("SetZ", &MolAtom::SetZ)
         .def("SetOccupancy", &MolAtom::SetOccupancy)
         .def("IsDummy", &MolAtom::IsDummy)
+        // FIXME - this should be returned as a constant reference. However, I
+        // can't get this to work. This returns it as an internal reference,
+        // which is probably a bad idea.
         .def("GetScatteringPower", &MolAtom::GetScatteringPower,
-            return_value_policy<copy_const_reference>())
+            return_internal_reference<>())
+            //return_value_policy<copy_const_reference>())
         .def("SetIsInRing", &MolAtom::SetIsInRing)
         .def("IsInRing", &MolAtom::IsInRing)
         // Python-only
         .add_property("X", &MolAtom::GetX, &MolAtom::SetX)
         .add_property("Y", &MolAtom::GetY, &MolAtom::SetY)
         .add_property("Z", &MolAtom::GetZ, &MolAtom::SetZ)
+        .add_property("Occ", &MolAtom::GetOccupancy, &MolAtom::SetOccupancy)
+        .add_property("x", &MolAtom::GetX, &MolAtom::SetX)
+        .add_property("y", &MolAtom::GetY, &MolAtom::SetY)
+        .add_property("z", &MolAtom::GetZ, &MolAtom::SetZ)
+        .add_property("occ", &MolAtom::GetOccupancy, &MolAtom::SetOccupancy)
         ;
 }

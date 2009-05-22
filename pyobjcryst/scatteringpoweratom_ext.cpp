@@ -14,6 +14,8 @@
 *
 * boost::python bindings to ObjCryst::ScatteringPowerAtom.
 *
+* FIXME - cannot return one of these from c++ by copy_const_reference
+*
 * $Id$
 *
 *****************************************************************************/

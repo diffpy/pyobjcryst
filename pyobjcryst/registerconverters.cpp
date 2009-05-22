@@ -22,6 +22,7 @@
 #include <boost/python/module.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/suite/indexing/map_indexing_suite.hpp>
+#include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 
 #include <string>
 #include <vector>
@@ -34,6 +35,7 @@
 #include "ObjCryst/Crystal.h"
 #include "ObjCryst/ScatteringPower.h"
 #include "ObjCryst/SpaceGroup.h"
+#include "ObjCryst/Molecule.h"
 
 using namespace boost::python;
 using namespace ObjCryst;
@@ -95,6 +97,9 @@ BOOST_PYTHON_MODULE(_registerconverters)
     // Semi-converter for mapsppairtobmp
     class_<mapsppairtobmp>("mapsppairtobmp", no_init)
         .def(map_indexing_suite<mapsppairtobmp>());
+    // Vectors of pointers
+    class_<std::vector<MolAtom*> >("MolAtomVector")
+        .def(vector_indexing_suite<std::vector<MolAtom*>, true>());
 
     // some tests
     def("getTestVector", &getTestVector);

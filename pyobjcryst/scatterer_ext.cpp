@@ -216,6 +216,10 @@ BOOST_PYTHON_MODULE(_scatterer)
         .def("GetClockScattCompList", 
             &ScattererWrap::_GetClockScattCompList,
             return_value_policy<copy_const_reference>())
+        // Properties - to be compatible with MolAtom
+        .add_property("X", &Scatterer::GetX, &Scatterer::SetX)
+        .add_property("Y", &Scatterer::GetY, &Scatterer::SetY)
+        .add_property("Z", &Scatterer::GetZ, &Scatterer::SetZ)
         ;
 
 }

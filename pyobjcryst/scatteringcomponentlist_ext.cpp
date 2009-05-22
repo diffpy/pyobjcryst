@@ -13,6 +13,7 @@
 ******************************************************************************
 *
 * boost::python bindings to ObjCryst::ScatteringComponentList.
+* This wrapping serves as a to-python converter only.
 *
 * $Id$
 *
@@ -36,9 +37,8 @@ namespace
 {
 
     const ScatteringComponent& 
-    getItem(const ScatteringComponentList &scl, const long i)
+    getItem(const ScatteringComponentList &scl, long idx)
     {
-        long idx = i;
         long n = scl.GetNbComponent();
         if(idx < 0) idx += n;
         if(idx < 0 || idx >= n)
@@ -46,7 +46,7 @@ namespace
             PyErr_SetString(PyExc_IndexError, "index out of range");
             throw_error_already_set();
         }
-        return scl(i);
+        return scl(idx);
     }
 
     bool contains(const ScatteringComponentList &scl,
@@ -65,8 +65,9 @@ BOOST_PYTHON_MODULE(_scatteringcomponentlist)
 {
 
     class_<ScatteringComponentList>
-        ("ScatteringComponentList", init<const long>())
-        .def(init<const ScatteringComponentList &>())
+        ("ScatteringComponentList", no_init)
+        //("ScatteringComponentList", init<const long>())
+        //.def(init<const ScatteringComponentList &>())
         .def("Reset", &ScatteringComponentList::Reset)
         .def("GetNbComponent", &ScatteringComponentList::GetNbComponent)
         .def("Print", &ScatteringComponentList::Print)

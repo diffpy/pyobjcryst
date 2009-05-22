@@ -55,6 +55,15 @@ class TestCrystal(unittest.TestCase):
         self.assertRaises(AttributeError, c.RemoveScatteringPower, sp2)
         return
 
+    def testGetScatteringComponentList(self):
+        """Test the RemoveScatterer and RemoveScatteringPower method."""
+        sp, atom = makeScatterer()
+        c = makeCrystal(sp, atom)
+        scl = c.GetScatteringComponentList()
+        self.assertTrue(1, len(scl))
+        return
+
+
 
 if __name__ == "__main__":
     unittest.main()

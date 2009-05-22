@@ -8,42 +8,63 @@ import unittest
 from utils import *
 from numpy import pi
 
-def makeMolecule():
-
-    c = Crystal(10, 10, 10, "P1")
-    m = Molecule(c, "testmolecule")
-
-    c.AddScatterer(m)
-
-    sp = ScatteringPowerAtom("C", "C")
-    sp.SetBiso(8*pi*pi*0.003)
-    c.AddScatteringPower(sp)
-
-    m.AddAtom(0, 0, 0, sp, "C1")
-    m.AddAtom(0, 0, 0.5, sp, "C2")
-    m.AddAtom(0, 0.5, 0, sp, "C3")
-    m.AddAtom(0.5, 0, 0, sp, "C4")
-
-    return m
+numplaces = 6
 
 
 class TestMolecule(unittest.TestCase):
 
     def setUp(self):
-        self.m = makeMolecule()
-
-    def tearDown(self):
-        del self.m
-
-    def testAtoms(self):
-        for i in range(4):
-            self.assertEqual(self.m.GetAtom(i).GetName(), "C%i"%(i+1))
+        self.c = makeC60()
+        self.m = self.c.GetScatterer("c60")
         return
 
-    def testGetAtomList(self):
-        """Test the GetAtomList method."""
-        for i, a in enumerate(self.m.GetAtomList()):
-            self.assertEqual(a.GetName(), "C%i"%(i+1))
+    def tearDown(self):
+        del self.c
+        del self.m
+        return
+
+    def testAtoms(self):
+        """Make sure the atoms are there.
+
+        This tests AddAtom by association.
+        This tests GetAtom.
+        
+        """
+        self.assertTrue(60, self.m.GetNbAtoms())
+        for i in range(60):
+            a1 = self.m.GetAtom(i)
+            self.assertEqual(a1.GetName(), "C%i"%i)
+        return
+
+    def testRemoveAtom(self):
+        """Test RemoveAtom."""
+        # RemoveAtom method.
+        a = self.m.GetAtom(0)
+
+        self.m.RemoveAtom(a)
+
+        self.assertTrue(59, self.m.GetNbAtoms())
+
+        # Check to see if a is in our list
+        for i in xrange(59):
+            self.assertNotEqual(a.GetName(), self.m.GetAtom(i))
+
+        # What happens if we try to remove an atom that is not in the molecule?
+        # First, try the same atom again. This will throw a cctbx error.
+        # FIXME - change this once exceptions are wrapped
+        self.assertRaises(RuntimeError, self.m.RemoveAtom, a)
+
+        ## Try to remove an atom from another molecule
+        c = makeC60()
+        m = c.GetScatterer("c60")
+        self.assertRaises(RuntimeError, self.m.RemoveAtom, m.GetAtom(1))
+
+        # Remove all the atoms.
+        for i in xrange(self.m.GetNbAtoms()):
+            self.m.RemoveAtom(0)
+
+        self.assertEquals(0, self.m.GetNbAtoms())
+
         return
 
     def testFindBond(self):
@@ -74,7 +95,6 @@ class TestMolecule(unittest.TestCase):
     
     def testFindBondAngle(self):
         """Test the FindBondAngle method."""
-        self.m = makeMolecule()
         a1 = self.m.GetAtom(0)
         a2 = self.m.GetAtom(1)
         a3 = self.m.GetAtom(2)
@@ -97,7 +117,6 @@ class TestMolecule(unittest.TestCase):
     
     def testFindDihedralAngle(self):
         """Test the FindDihedralAngle method."""
-        m = makeMolecule()
         a1 = self.m.GetAtom(0)
         a2 = self.m.GetAtom(1)
         a3 = self.m.GetAtom(2)
@@ -114,6 +133,76 @@ class TestMolecule(unittest.TestCase):
         self.assertTrue(dihedralangle1 is not None)
         self.assertEqual(dihedralangle1.GetName(), dihedralangle2.GetName())
         return
+
+# Test how changing a name to one that is already taken messes things up.
+
+class TestMolAtom(unittest.TestCase):
+
+    def setUp(self):
+        c = makeC60()
+        self.m = c.GetScatterer("c60")
+        self.a = self.m.GetAtom("C0")
+        return
+
+    def tearDown(self):
+        del self.m
+        del self.a
+
+    def testAccessors(self):
+
+        a = self.a
+
+        # Test name Get/Set
+        self.assertTrue(a.GetName(), "C0")
+        a.SetName("test")
+        self.assertTrue(a.GetName(), "test")
+
+        # Test xyz & occ Get/Set
+        self.assertAlmostEquals(3.451266498, a.x, numplaces)
+        self.assertAlmostEquals(0.685, a.y, numplaces)
+        self.assertAlmostEquals(0, a.z, numplaces)
+        self.assertAlmostEquals(1.0, a.occ, numplaces)
+
+        a.x = 3.40
+        a.y = 0.68
+        a.z = 0.1
+        a.occ = 1.02
+        
+        self.assertAlmostEquals(3.40, a.x, numplaces)
+        self.assertAlmostEquals(0.68, a.y, numplaces)
+        self.assertAlmostEquals(0.1, a.z, numplaces)
+        self.assertAlmostEquals(1.02, a.occ, numplaces)
+        
+        # Test GetMolecule. We can't expect the python object to be the same as
+        # our molecule above. However, we can verify that it points to the same
+        # object.
+        m = a.GetMolecule()
+        self.assertEquals(m.GetName(), self.m.GetName())
+        # Change something with the molecule, and check to see if it appears in
+        # self.m
+        m.GetAtom("C1").occ = 0.1
+        self.assertAlmostEquals(0.1, self.m.GetAtom("C1").occ, numplaces)
+
+        # Test IsDummy
+        self.assertFalse(a.IsDummy())
+
+        # Test GetScatteringPower
+        sp = a.GetScatteringPower()
+        self.assertEquals("ScatteringPowerAtom", sp.GetClassName())
+        self.assertEquals("C", sp.GetName())
+
+        # Test Ring Get/Set
+        self.assertFalse(a.IsInRing())
+        a.SetIsInRing(True)
+        self.assertTrue(a.IsInRing())
+        a.SetIsInRing(False)
+        self.assertFalse(a.IsInRing())
+
+        return
+
+
+
+
 
 if __name__ == "__main__":
     unittest.main()

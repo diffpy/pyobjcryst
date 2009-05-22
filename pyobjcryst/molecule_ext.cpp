@@ -13,18 +13,37 @@
 ******************************************************************************
 *
 * boost::python bindings to ObjCryst::Molecule.  
+*
+* Note that all indices are zero-based.
 * 
 * Changes from ObjCryst++
-* - RemoveAtom returns None
-* - RemoveBond returns None
-* - RemoveBondAngle returns None
-* - RemoveDihedralAngle returns None
+* - AddAtom returns the added MolAtom
+* - AddBond returns the added MolBond
+* - AddBondAngle returns the added MolBondAngle
+* - AddDihedralAngle returns the added MolDihedralAngle
+* - RemoveAtom returns None, has an indexed version
+* - RemoveBond returns None, has an indexed version
+* - RemoveBondAngle returns None, has an indexed version
+* - RemoveDihedralAngle returns None, has an indexed version
 * - RemoveRigidGroup returns None
-* - FIXME These do not work properly
-*   - FindBond returns the bond if found, None otherwise
-*   - FindBondAngle returns the bond angle if found, None otherwise
-*   - FindDihedralAngle returns the dihedral angle if found, None otherwise
-* - FindAtom is not wrapped, as it would be wrapped to behave as GetAtom.
+* - Added GetNbAtoms
+* - Added GetNbBonds
+* - Added GetNbBondAngles
+* - Added GetNbDihedralAngles
+* - Added GetNbRigidGroups
+* - Added GetBond
+* - Added GetBondAngle
+* - Added GetDihedralAngle
+* - Added GetRigidGroup
+* - GetAtomList not wrapped due to identity issues
+* - GetBondList not wrapped due to identity issues
+* - GetBondAngleList not wrapped due to identity issues
+* - GetDihedralAngleList not wrapped due to identity issues
+* - GetRigidGroupList not wrapped due to identity issues
+* - FindBond returns the bond if found, None otherwise
+* - FindBondAngle returns the bond angle if found, None otherwise
+* - FindDihedralAngle returns the dihedral angle if found, None otherwise
+* - FindAtom is identical to GetAtom.
 * - The public attributes are not wrapped, except Quaternion
 * - FlipAtomGroup is not wrapped.
 * - FlipGroup, RotorGroup and StretchModeGroup are not wrapped.
@@ -37,6 +56,7 @@
 #include "RefinableObj/RefinableObj.h"
 #include "ObjCryst/Molecule.h"
 #include "ObjCryst/Crystal.h"
+#include "ObjCryst/ScatteringPower.h"
 
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
@@ -45,7 +65,9 @@
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
+#include <iostream>
 #include <vector>
+#include <string>
 #include <list>
 #include <set>
 #include <map>
@@ -58,34 +80,165 @@ using namespace ObjCryst;
 
 namespace {
 
-// Overloaded for void return type
+// Overloaded to return added object
+MolAtom& _AddAtom(Molecule& m, const float x, const float y, const float z,
+        const ScatteringPower* pow, const std::string& name,
+        const bool updateDisplay=true)
+{
+    m.AddAtom(x, y, z, pow, name, updateDisplay);
+    std::vector<MolAtom*>& v = m.GetAtomList();
+    return *v.back();
+}
+
+MolBond& _AddBond(Molecule& m, MolAtom& atom1, MolAtom& atom2, const float
+        length, const float sigma, const float delta, const float bondOrder =
+        1., const bool updateDisplay = true)
+{
+    m.AddBond(atom1, atom2, length, sigma, delta, bondOrder, updateDisplay);
+    std::vector<MolBond*>& v = m.GetBondList();
+    return *v.back();
+}
+
+MolBondAngle& _AddBondAngle(Molecule& m, MolAtom& atom1, MolAtom& atom2,
+        MolAtom& atom3, const float angle, const float sigma, const float
+        delta, const bool updateDisplay = true)
+{
+    m.AddBondAngle(atom1, atom2, atom3, angle, sigma, delta, updateDisplay);
+    std::vector<MolBondAngle*>& v = m.GetBondAngleList();
+    return *v.back();
+}
+
+MolDihedralAngle& _AddDihedralAngle(Molecule& m, MolAtom& atom1, MolAtom&
+        atom2, MolAtom& atom3, MolAtom& atom4, const float angle, const float
+        sigma, const float delta, const bool updateDisplay = true)
+{
+    m.AddDihedralAngle(atom1, atom2, atom3, atom4, angle, sigma, delta,
+            updateDisplay);
+    std::vector<MolDihedralAngle*>& v = m.GetDihedralAngleList();
+    return *v.back();
+}
+
+// New Functions
+size_t GetNbAtoms(Molecule& m)
+{
+    std::vector<MolAtom*>& v = m.GetAtomList();
+    return v.size();
+} 
+
+size_t GetNbBonds(Molecule& m)
+{
+    std::vector<MolBond*>& v = m.GetBondList();
+    return v.size();
+} 
+
+size_t GetNbBondAngles(Molecule& m)
+{
+    std::vector<MolBondAngle*>& v = m.GetBondAngleList();
+    return v.size();
+} 
+
+size_t GetNbDihedralAngles(Molecule& m)
+{
+    std::vector<MolDihedralAngle*>& v = m.GetDihedralAngleList();
+    return v.size();
+} 
+
+size_t GetNbRigidGroups(Molecule& m)
+{
+    std::vector<RigidGroup*>& v = m.GetRigidGroupList();
+    return v.size();
+} 
+
+// Overloaded for safety
+MolAtom& _GetAtomIdx(Molecule& m, size_t idx)
+{
+    std::vector<MolAtom*>& v = m.GetAtomList();
+    if(0 == v.size() || idx > v.size())
+    {
+        PyErr_SetString(PyExc_IndexError, "Index out of range");
+        throw_error_already_set();
+    }
+    return *v[idx];
+} 
+
+MolBond& _GetBondIdx(Molecule& m, size_t idx)
+{
+    std::vector<MolBond*>& v = m.GetBondList();
+    if(0 == v.size() || idx > v.size())
+    {
+        PyErr_SetString(PyExc_IndexError, "Index out of range");
+        throw_error_already_set();
+    }
+    return *v[idx];
+} 
+
+MolBondAngle& _GetBondAngleIdx(Molecule& m, size_t idx)
+{
+    std::vector<MolBondAngle*>& v = m.GetBondAngleList();
+    if(0 == v.size() || idx > v.size())
+    {
+        PyErr_SetString(PyExc_IndexError, "Index out of range");
+        throw_error_already_set();
+    }
+    return *v[idx];
+} 
+
+MolDihedralAngle& _GetDihedralAngleIdx(Molecule& m, size_t idx)
+{
+    std::vector<MolDihedralAngle*>& v = m.GetDihedralAngleList();
+    if(0 == v.size() || idx > v.size())
+    {
+        PyErr_SetString(PyExc_IndexError, "Index out of range");
+        throw_error_already_set();
+    }
+    return *v[idx];
+} 
+
+// Overloaded for void return type and index access.
 void _RemoveAtom(Molecule& m, MolAtom& ma)
 {
-    m.RemoveAtom(ma);
-}
+    m.RemoveAtom(ma, false);
+} 
 
-// Overloaded for void return type
+void _RemoveAtomIdx(Molecule& m, size_t idx)
+{
+    m.RemoveAtom(_GetAtomIdx(m, idx), false);
+} 
+
 void _RemoveBond(Molecule& m, const MolBond& mb)
 {
-    m.RemoveBond(mb);
+    m.RemoveBond(mb, false);
 }
 
-// Overloaded for void return type
+void _RemoveBondIdx(Molecule& m, size_t idx)
+{
+    m.RemoveBond(_GetBondIdx(m, idx), false);
+}
+
 void _RemoveBondAngle(Molecule& m, MolBondAngle& mba)
 {
-    m.RemoveBondAngle(mba);
+    m.RemoveBondAngle(mba, false);
 }
 
-// Overloaded for void return type
+void _RemoveBondAngleIdx(Molecule& m, size_t idx)
+{
+    m.RemoveBondAngle(_GetBondAngleIdx(m, idx), false);
+}
+
 void _RemoveDihedralAngle(Molecule& m, MolDihedralAngle& mda)
 {
-    m.RemoveDihedralAngle(mda);
+    m.RemoveDihedralAngle(mda, false);
+}
+
+void _RemoveDihedralAngleIdx(Molecule& m, size_t idx)
+{
+    m.RemoveDihedralAngle(_GetDihedralAngleIdx(m, idx), false);
 }
 
 // Overloaded for void return type
 void _RemoveRigidGroup(Molecule& m, RigidGroup& mda, const bool ud=true)
 {
-    m.RemoveRigidGroup(mda, ud);
+    m.RemoveRigidGroup(mda, ud, false);
 }
 
 PyObject* _FindBond(const Molecule& m, const MolAtom& ma1, const MolAtom& ma2)
@@ -158,9 +311,14 @@ bp::list _GetAtomList(const Molecule& m)
 {
     bp::list l;
 
-    std::vector<MolAtom*> v = m.GetAtomList();
+    const std::vector<MolAtom*>& v = m.GetAtomList();
 
-    l = containerToPyList< std::vector<MolAtom*> >(v);
+    l = containerToPyList< const std::vector<MolAtom*> >(v);
+
+    //// is what we get what we started with? No!
+    //MolAtom* a = bp::extract<MolAtom*>(l[0]);
+    //assert(v[0] == a);
+    
 
     return l;
 }
@@ -169,9 +327,9 @@ bp::list _GetBondList(const Molecule& m)
 {
     bp::list l;
 
-    std::vector<MolBond*> v = m.GetBondList();
+    const std::vector<MolBond*>& v = m.GetBondList();
 
-    l = containerToPyList< std::vector<MolBond*> >(v);
+    l = containerToPyList< const std::vector<MolBond*> >(v);
 
     return l;
 }
@@ -180,9 +338,9 @@ bp::list _GetBondAngleList(const Molecule& m)
 {
     bp::list l;
 
-    std::vector<MolBondAngle*> v = m.GetBondAngleList();
+    const std::vector<MolBondAngle*>& v = m.GetBondAngleList();
 
-    l = containerToPyList< std::vector<MolBondAngle*> >(v);
+    l = containerToPyList< const std::vector<MolBondAngle*> >(v);
 
     return l;
 }
@@ -191,9 +349,9 @@ bp::list _GetDihedralAngleList(const Molecule& m)
 {
     bp::list l;
 
-    std::vector<MolDihedralAngle*> v = m.GetDihedralAngleList();
+    const std::vector<MolDihedralAngle*>& v = m.GetDihedralAngleList();
 
-    l = containerToPyList< std::vector<MolDihedralAngle*> >(v);
+    l = containerToPyList< const std::vector<MolDihedralAngle*> >(v);
 
     return l;
 }
@@ -202,9 +360,10 @@ bp::list _GetStretchModeBondLengthList(const Molecule& m)
 {
     bp::list l;
 
-    std::list<StretchModeBondLength> v = m.GetStretchModeBondLengthList();
+    const std::list<StretchModeBondLength>& v =
+        m.GetStretchModeBondLengthList();
 
-    l = containerToPyList< std::list<StretchModeBondLength> >(v);
+    l = containerToPyList< const std::list<StretchModeBondLength> >(v);
 
     return l;
 }
@@ -213,9 +372,9 @@ bp::list _GetStretchModeBondAngleList(const Molecule& m)
 {
     bp::list l;
 
-    std::list<StretchModeBondAngle> v = m.GetStretchModeBondAngleList();
+    const std::list<StretchModeBondAngle>& v = m.GetStretchModeBondAngleList();
 
-    l = containerToPyList< std::list<StretchModeBondAngle> >(v);
+    l = containerToPyList< const std::list<StretchModeBondAngle> >(v);
 
     return l;
 }
@@ -224,9 +383,9 @@ bp::list _GetStretchModeTorsionList(const Molecule& m)
 {
     bp::list l;
 
-    std::list<StretchModeTorsion> v = m.GetStretchModeTorsionList();
+    const std::list<StretchModeTorsion>& v = m.GetStretchModeTorsionList();
 
-    l = containerToPyList< std::list<StretchModeTorsion> >(v);
+    l = containerToPyList< const std::list<StretchModeTorsion> >(v);
 
     return l;
 }
@@ -235,9 +394,9 @@ bp::list _GetRigidGroupList(const Molecule& m)
 {
     bp::list l;
 
-    std::vector<RigidGroup*> v = m.GetRigidGroupList();
+    const std::vector<RigidGroup*>& v = m.GetRigidGroupList();
 
-    l = containerToPyList< std::vector<RigidGroup*> >(v);
+    l = containerToPyList< const std::vector<RigidGroup*> >(v);
 
     for( size_t i = 0; i < v.size(); ++i)
     {
@@ -318,40 +477,53 @@ BOOST_PYTHON_MODULE(_molecule)
         /* Constructors */
         .def(init<const Molecule&>((bp::arg("old"))))
         /* Methods */
-        .def("AddAtom", &Molecule::AddAtom, 
+        //.def("AddAtom", &Molecule::AddAtom, 
+        .def("AddAtom", &_AddAtom,
             (bp::arg("x"), bp::arg("y"), bp::arg("z"), bp::arg("pPow"),
              bp::arg("name"), bp::arg("updateDisplay")=true),
-            with_custodian_and_ward<1,5>())
+            with_custodian_and_ward<1,5, return_internal_reference<> >())
         .def("RemoveAtom", &_RemoveAtom)
-        .def("AddBond", &Molecule::AddBond,
+        .def("RemoveAtom", &_RemoveAtomIdx)
+        .def("AddBond", &_AddBond,
             (bp::arg("atom1"), bp::arg("atom2"), bp::arg("length"),
              bp::arg("sigma"), bp::arg("delta"), bp::arg("bondOrder")=1,
-             bp::arg("updateDisplay")=true))
+             bp::arg("updateDisplay")=true),
+            return_internal_reference<>())
         .def("RemoveBond", &_RemoveBond)
+        .def("RemoveBond", &_RemoveBondIdx)
+        .def("GetBond", &_GetBondIdx, return_internal_reference<>())
         .def("FindBond", &_FindBond, 
             with_custodian_and_ward_postcall<1,0>())
-        .def("AddBondAngle", &Molecule::AddBondAngle, 
+        .def("AddBondAngle", &_AddBondAngle, 
             (bp::arg("atom1"), bp::arg("atom2"), bp::arg("atom3"),
              bp::arg("angle"), bp::arg("sigma"), bp::arg("delta"),
-             bp::arg("updateDisplay")=true))
+             bp::arg("updateDisplay")=true),
+            return_internal_reference<>())
         .def("RemoveBondAngle", &_RemoveBondAngle)
+        .def("RemoveBondAngle", &_RemoveBondAngleIdx)
+        .def("GetBondAngle", &_GetBondAngleIdx, return_internal_reference<>())
         .def("FindBondAngle", &_FindBondAngle,
             with_custodian_and_ward_postcall<1,0>())
-        .def("AddDihedralAngle", &Molecule::AddDihedralAngle, 
+        .def("AddDihedralAngle", &_AddDihedralAngle, 
             (bp::arg("atom1"), bp::arg("atom2"), bp::arg("atom3"),
              bp::arg("atom4"), bp::arg("angle"), bp::arg("sigma"),
-             bp::arg("delta"), bp::arg("updateDisplay")=true))
+             bp::arg("delta"), bp::arg("updateDisplay")=true),
+            return_internal_reference<>())
         .def("RemoveDihedralAngle", &_RemoveDihedralAngle)
+        .def("RemoveDihedralAngle", &_RemoveDihedralAngleIdx)
+        .def("GetDihedralAngle", &_GetDihedralAngleIdx,
+                return_internal_reference<>())
         .def("FindDihedralAngle", &_FindDihedralAngle,
             with_custodian_and_ward_postcall<1,0>())
         // An internal copy of the group is made, so there is no need for
         // lifetime management.
         .def("AddRigidGroup", &Molecule::AddRigidGroup)
         .def("RemoveRigidGroup", &_RemoveRigidGroup)
+        .def("GetAtom", &_GetAtomIdx, return_internal_reference<>())
         .def("GetAtom", 
-            (MolAtom& (Molecule::*)(unsigned int)) &Molecule::GetAtom, 
+            (MolAtom& (Molecule::*)(const string&)) &Molecule::GetAtom, 
             return_internal_reference<>())
-        .def("GetAtom", 
+        .def("FindAtom", 
             (MolAtom& (Molecule::*)(const string&)) &Molecule::GetAtom, 
             return_internal_reference<>())
         .def("OptimizeConformation", &Molecule::OptimizeConformation,
@@ -359,22 +531,28 @@ BOOST_PYTHON_MODULE(_molecule)
         .def("OptimizeConformationSteepestDescent", 
             &Molecule::OptimizeConformationSteepestDescent,
             (bp::arg("maxStep")=0.1, bp::arg("nbSteps")=1))
-        .def("GetAtomList", &_GetAtomList,
-            with_custodian_and_ward_postcall<1,0>())
-        .def("GetBondList", &_GetBondList,
-            with_custodian_and_ward_postcall<1,0>())
-        .def("GetBondAngleList", &_GetBondAngleList,
-            with_custodian_and_ward_postcall<1,0>())
-        .def("GetDihedralAngleList", &_GetDihedralAngleList,
-            with_custodian_and_ward_postcall<1,0>())
+        .def("GetNbAtoms", &GetNbAtoms)
+        .def("GetNbBonds", &GetNbBonds)
+        .def("GetNbBondAngles", &GetNbBondAngles)
+        .def("GetNbDihedralAngles", &GetNbDihedralAngles)
+        .def("GetNbRigidGroups", &GetNbRigidGroups)
+        // Not wrapped due to identity issue
+        //.def("GetAtomList", &_GetAtomList,
+        //    with_custodian_and_ward_postcall<1,0>())
+        //.def("GetBondList", &_GetBondList,
+        //    with_custodian_and_ward_postcall<1,0>())
+        //.def("GetBondAngleList", &_GetBondAngleList,
+        //    with_custodian_and_ward_postcall<1,0>())
+        //.def("GetDihedralAngleList", &_GetDihedralAngleList,
+        //    with_custodian_and_ward_postcall<1,0>())
+        //.def("GetRigidGroupList", &_GetRigidGroupList,
+        //    with_custodian_and_ward_postcall<1,0>())
         //.def("GetStretchModeBondLengthList", &_GetStretchModeBondLengthList,
         //    with_custodian_and_ward_postcall<1,0>())
         //.def("GetStretchModeBondAngleList", &_GetStretchModeBondAngleList,
         //    with_custodian_and_ward_postcall<1,0>())
         //.def("GetStretchModeTorsionList", &_GetStretchModeTorsionList,
         //    with_custodian_and_ward_postcall<1,0>())
-        .def("GetRigidGroupList", &_GetRigidGroupList,
-            with_custodian_and_ward_postcall<1,0>())
         .def("RotateAtomGroup", &_RotateAtomGroup, 
             (bp::arg("at1"), bp::arg("at2"), bp::arg("atoms"), bp::arg("angle"),
              bp::arg("keepCenter")=true
@@ -447,6 +625,5 @@ BOOST_PYTHON_MODULE(_molecule)
         // attributes
         .def_readwrite("mQuat", &Molecule::mQuat)
         ;
-
 }
 
