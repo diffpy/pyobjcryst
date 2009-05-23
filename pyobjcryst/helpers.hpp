@@ -55,7 +55,7 @@ std::string __str__(const T &obj)
 }
 
 template <class T>
-std::set<T> pyListToSet(const bp::list& l)
+std::set<T> pyIterableToSet(const bp::object& l)
 {
 
     std::set<T> cl;

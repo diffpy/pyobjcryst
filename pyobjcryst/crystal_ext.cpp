@@ -38,7 +38,6 @@
 #include <boost/python/implicit.hpp>
 
 #include <string>
-#include <sstream>
 #include <map>
 #include <set>
 
@@ -63,10 +62,11 @@ void _AddScatterer(Crystal& crystal, Scatterer* scatt)
     // Make sure that the scatterer would have a unique name in this crystal
     if( scattnamereg[&crystal].count(scatt->GetName()) > 0 )
     {
-        std::stringstream ss;
-        ss << "Crystal already has Scatterer with name '"; 
-        ss << scatt->GetName() << "'";
-        PyErr_SetString(PyExc_AttributeError, ss.str().c_str());
+        std::string s;
+        s += "Crystal already has Scatterer with name '"; 
+        s += scatt->GetName();
+        s += "'";
+        PyErr_SetString(PyExc_AttributeError, s.c_str());
         throw_error_already_set();
         return;
     }
@@ -76,10 +76,11 @@ void _AddScatterer(Crystal& crystal, Scatterer* scatt)
     {
         if( (citer->second).count(scatt) > 0 )
         {
-            std::stringstream ss;
-            ss << "Scatterer '" << scatt->GetName(); 
-            ss << "' already belongs to a crystal.";
-            PyErr_SetString(PyExc_AttributeError, ss.str().c_str());
+            std::string s;
+            s += "Scatterer '"; 
+            s += scatt->GetName(); 
+            s += "' already belongs to a crystal.";
+            PyErr_SetString(PyExc_AttributeError, s.c_str());
             throw_error_already_set();
             return;
         }
@@ -98,10 +99,11 @@ void _AddScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
     // crystal
     if( scattpownamereg[&crystal].count(scattpow->GetName()) > 0 )
     {
-        std::stringstream ss;
-        ss << "Crystal already has ScatteringPower with name '"; 
-        ss << scattpow->GetName() << "'";
-        PyErr_SetString(PyExc_AttributeError, ss.str().c_str());
+        std::string s;
+        s += "Crystal already has ScatteringPower with name '"; 
+        s += scattpow->GetName(); 
+        s += "'";
+        PyErr_SetString(PyExc_AttributeError, s.c_str());
         throw_error_already_set();
         return;
     }
@@ -111,10 +113,11 @@ void _AddScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
     {
         if( (citer->second).count(scattpow) > 0)
         {
-            std::stringstream ss;
-            ss << "ScatteringPower '" << scattpow->GetName(); 
-            ss << "' already belongs to a crystal.";
-            PyErr_SetString(PyExc_AttributeError, ss.str().c_str());
+            std::string s;
+            s += "ScatteringPower '"; 
+            s += scattpow->GetName(); 
+            s += "' already belongs to a crystal.";
+            PyErr_SetString(PyExc_AttributeError, s.c_str());
             throw_error_already_set();
             return;
         }
@@ -140,10 +143,11 @@ void _RemoveScatterer(Crystal& crystal, Scatterer* scatt)
     }
     else
     {
-        std::stringstream ss;
-        ss << "Scatterer '" << scatt->GetName(); 
-        ss << "' does not belong to crystal.";
-        PyErr_SetString(PyExc_AttributeError, ss.str().c_str());
+        std::string s;
+        s += "Scatterer '";
+        s += scatt->GetName(); 
+        s += "' does not belong to crystal.";
+        PyErr_SetString(PyExc_AttributeError, s.c_str());
         throw_error_already_set();
     }
     return;
@@ -163,10 +167,11 @@ void _RemoveScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
     }
     else
     {
-        std::stringstream ss;
-        ss << "ScatteringPower '" << scattpow->GetName(); 
-        ss << "' does not belong to crystal.";
-        PyErr_SetString(PyExc_AttributeError, ss.str().c_str());
+        std::string s;
+        s += "ScatteringPower '";
+        s += scattpow->GetName(); 
+        s += "' does not belong to crystal.";
+        PyErr_SetString(PyExc_AttributeError, s.c_str());
         throw_error_already_set();
     }
     return;
@@ -178,6 +183,19 @@ void _PrintMinDistanceTable(const Crystal& crystal,
 
     crystal.PrintMinDistanceTable(minDistance);
     return;
+}
+
+// We want to turn a ScatteringComponentList into an actual list
+bp::list _GetScatteringComponentList(Crystal &c)
+{
+    const ScatteringComponentList& scl = c.GetScatteringComponentList();
+    bp::list l;
+    for(size_t i = 0; i < scl.GetNbComponent(); ++i)
+    {
+        l.append(scl(i));
+    }
+
+    return l;
 }
 
 // wrap the virtual functions that need it
@@ -259,9 +277,11 @@ BOOST_PYTHON_MODULE(_crystal)
         .def("GetMasterClockScatteringPower",
             &Crystal::GetMasterClockScatteringPower,
             return_value_policy<copy_const_reference>())
-        .def("GetScatteringComponentList", 
-            &CrystalWrap::GetScatteringComponentList,
-            return_value_policy<copy_const_reference>())
+        .def("GetScatteringComponentList", &_GetScatteringComponentList,
+            with_custodian_and_ward_postcall<1,0>())
+        //.def("GetScatteringComponentList", 
+        //    &CrystalWrap::GetScatteringComponentList,
+        //    return_value_policy<copy_const_reference>())
         .def("GetClockScattCompList", &Crystal::GetClockScattCompList,
                 return_value_policy<copy_const_reference>())
         .def("GetMinDistanceTable", &Crystal::GetMinDistanceTable,

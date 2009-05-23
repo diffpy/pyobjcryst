@@ -23,6 +23,18 @@ class TestMolecule(unittest.TestCase):
         del self.m
         return
 
+    def testTest(self):
+        sr = self.c.GetScattererRegistry()
+        #print sr
+        # FIXME - this causes an unending loop when used on the crystal
+        # containing a molecule. It does not happen for the molecule, or for
+        # a crystal containing just atoms. I also tested this in c++ and it
+        # works fine. I believe that there are some memory corruption issues
+        # inside the bindings (probably due to the crystal workarounds) that
+        # are causing this.
+        #scl = self.c.GetScatteringComponentList()
+        return
+
     def testAtoms(self):
         """Make sure the atoms are there.
 

@@ -18,7 +18,6 @@
 __all__ = [
         "Scatterer", 
         "ScatteringComponent", 
-        "ScatteringComponentList", 
         "ScatteringPower",
         "ScatteringPowerAtom",
         "ScatteringPowerSphere",
@@ -28,7 +27,6 @@ __all__ = [
 
 from _scatterer import *
 from _scatteringcomponent import *
-from _scatteringcomponentlist import *
 from _scatteringpower import *
 from _scatteringpoweratom import *
 from _scatteringpowersphere import *

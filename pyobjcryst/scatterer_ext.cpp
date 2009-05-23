@@ -173,6 +173,19 @@ class ScattererWrap : public Scatterer,
 
 }; // ScattererWrap
 
+// We want to turn a ScatteringComponentList into an actual list
+bp::list _GetScatteringComponentList(Scatterer &s)
+{
+    const ScatteringComponentList& scl = s.GetScatteringComponentList();
+    bp::list l;
+    for(size_t i = 0; i < scl.GetNbComponent(); ++i)
+    {
+        l.append(scl(i));
+    }
+
+    return l;
+}
+
 
 } // anonymous namespace
 
@@ -207,9 +220,11 @@ BOOST_PYTHON_MODULE(_scatterer)
         // pure virtual methods
         .def("GetNbComponent", pure_virtual(&Scatterer::GetNbComponent))
         .def("GetComponentName", pure_virtual(&Scatterer::GetComponentName))
-        .def("GetScatteringComponentList", 
-            pure_virtual(&Scatterer::GetScatteringComponentList),
-            return_value_policy<copy_const_reference>())
+        //.def("GetScatteringComponentList", 
+        //    pure_virtual(&Scatterer::GetScatteringComponentList),
+        //    return_value_policy<copy_const_reference>())
+        .def("GetScatteringComponentList", &_GetScatteringComponentList,
+            with_custodian_and_ward_postcall<1,0>())
         .def("Print", pure_virtual(&Scatterer::Print))
         .def("__str__", &__str__<Scatterer>)
         // protected methods

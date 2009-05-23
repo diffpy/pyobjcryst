@@ -401,31 +401,31 @@ bp::list _GetRigidGroupList(const Molecule& m)
     return l;
 }
 
-// Overloaded to accept a python list instead of a std::set. Again, could be
+// Overloaded to accept a python iterable instead of a std::set. Again, could be
 // done with converters, but there are issues with pointers. Perhaps another
 // day...
 void _RotateAtomGroup(Molecule &m, const MolAtom& at1, const MolAtom& at2,
-    const bp::list& atoms, const float angle, const bool keepCenter=true)
+    const bp::object& atoms, const float angle, const bool keepCenter=true)
 {
 
-    std::set<MolAtom*> catoms = pyListToSet<MolAtom*>(atoms);
+    std::set<MolAtom*> catoms = pyIterableToSet<MolAtom*>(atoms);
     m.RotateAtomGroup(at1, at2, catoms, angle, keepCenter);
 }
 
 void _RotateAtomGroupVec(Molecule &m, const MolAtom& at1, const float vx,
-    const float vy, const float vz, const bp::list& atoms, const float angle,
+    const float vy, const float vz, const bp::object& atoms, const float angle,
     const bool keepCenter=true)
 {
 
-    std::set<MolAtom*> catoms = pyListToSet<MolAtom*>(atoms);
+    std::set<MolAtom*> catoms = pyIterableToSet<MolAtom*>(atoms);
     m.RotateAtomGroup(at1, vx, vy, vz, catoms, angle, keepCenter);
 }
 
-void _TranslateAtomGroup(Molecule &m, const bp::list& atoms, const float dx,
+void _TranslateAtomGroup(Molecule &m, const bp::object& atoms, const float dx,
     const float dy, const float dz, const bool keepCenter=true)
 {
 
-    std::set<MolAtom*> catoms = pyListToSet<MolAtom*>(atoms);
+    std::set<MolAtom*> catoms = pyIterableToSet<MolAtom*>(atoms);
     m.TranslateAtomGroup(catoms, dx, dy, dz, keepCenter);
 }
 
@@ -470,7 +470,8 @@ BOOST_PYTHON_MODULE(_molecule)
 
     class_<Molecule, bases<Scatterer> > ("Molecule", 
         init<Crystal&, const string&> ((bp::arg("cryst"), bp::arg("name")=""))
-        [with_custodian_and_ward<2,1>()])
+        )
+        //[with_custodian_and_ward<1,2>()])
         // The crystal is not used, so we don't need to manage it.
         /* Constructors */
         .def(init<const Molecule&>((bp::arg("old"))))
@@ -542,7 +543,6 @@ BOOST_PYTHON_MODULE(_molecule)
         .def("GetNbBondAngles", &_GetNbBondAngles)
         .def("GetNbDihedralAngles", &_GetNbDihedralAngles)
         .def("GetNbRigidGroups", &_GetNbRigidGroups)
-        // Not wrapped due to identity issue
         .def("GetAtomList", &_GetAtomList,
             with_custodian_and_ward_postcall<1,0>())
         .def("GetBondList", &_GetBondList,

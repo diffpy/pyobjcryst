@@ -44,9 +44,6 @@
 using namespace ObjCryst;
 using namespace boost::python;
 
-// Unfortunately there's no better way to do this
-//typedef ObjRegistry<Scatterer> ORScatt;
-
 namespace {
 
 /* Wrap all the class methods for the template class */
