@@ -19,14 +19,6 @@ class TestCrystal(unittest.TestCase):
         self.assertEqual("Ni", atom.GetName())
         return
     
-    def testMultiAdd(self):
-        """Test exception for multi-crystal additions."""
-        sp, atom = makeScatterer()
-        c = makeCrystal(sp, atom)
-        # Force this exception
-        self.assertRaises(AttributeError, makeCrystal, sp, atom)
-        return
-
     def testScattererScope(self):
         """Test when atoms go out of scope before crystal."""
         c = makeCrystal(*makeScatterer())
@@ -39,20 +31,24 @@ class TestCrystal(unittest.TestCase):
         sp, atom = makeScatterer()
         c = makeCrystal(sp, atom)
 
+        # You can add scatterers with the same name. That should be a no-no.
         sp2, atom2 = makeScatterer()
-        self.assertRaises(AttributeError, c.AddScatterer, atom2)
-        self.assertRaises(AttributeError, c.AddScatteringPower, sp2)
+        c.AddScatterer(atom2)
+        c.AddScatteringPower(sp2)
+
+        # These act according to the library. You can try to remove an object
+        # that is not in the crystal, and it will gladly do nothing for you.
 
         # Remove the scatterers
         c.RemoveScatterer(atom)
         c.RemoveScatteringPower(sp)
         # Remove again
-        self.assertRaises(AttributeError, c.RemoveScatterer, atom)
-        self.assertRaises(AttributeError, c.RemoveScatteringPower, sp)
+        c.RemoveScatterer(atom)
+        c.RemoveScatteringPower(sp)
 
         # Try to remove scatterers that are not in the crystal
-        self.assertRaises(AttributeError, c.RemoveScatterer, atom2)
-        self.assertRaises(AttributeError, c.RemoveScatteringPower, sp2)
+        c.RemoveScatterer(atom2)
+        c.RemoveScatteringPower(sp2)
         return
 
     def testGetScatteringComponentList(self):

@@ -19,6 +19,8 @@
 *   reference, or a constant interal reference are not wrapped.
 * - CalcDynPopCorr is not enabled, as the API states that this is for internal
 *   use only.
+* - ResetDynPopCorr and SetUseDynPopCorr are not exposed, as these lead to
+*   memory corruption in crystals that contain molecules.
 *
 * $Id$
 *
@@ -47,114 +49,32 @@ using namespace ObjCryst;
 
 namespace {
 
-/* We want to make sure that Scatterers and ScatterinPowers don't get added to
- * more than one crystal and have a unique name in a given crystal. These help
- * manage this.
- */
-std::map<Crystal*, std::set<Scatterer*> > scattreg;
-std::map<Crystal*, std::set<string> > scattnamereg;
-std::map<Crystal*, std::set<ScatteringPower*> > scattpowreg;
-std::map<Crystal*, std::set<string> > scattpownamereg;
-
-// Overloaded to record Scatterer in the registry
+// Overloaded to protect scatterers from deletion.
 void _AddScatterer(Crystal& crystal, Scatterer* scatt)
 {
-    // Make sure that the scatterer would have a unique name in this crystal
-    if( scattnamereg[&crystal].count(scatt->GetName()) > 0 )
-    {
-        std::string s;
-        s += "Crystal already has Scatterer with name '"; 
-        s += scatt->GetName();
-        s += "'";
-        PyErr_SetString(PyExc_AttributeError, s.c_str());
-        throw_error_already_set();
-        return;
-    }
-    // Make sure the scatterer isn't already in a crystal
-    std::map<Crystal*, std::set<Scatterer*> >::iterator citer;
-    for( citer = scattreg.begin(); citer != scattreg.end(); ++citer)
-    {
-        if( (citer->second).count(scatt) > 0 )
-        {
-            std::string s;
-            s += "Scatterer '"; 
-            s += scatt->GetName(); 
-            s += "' already belongs to a crystal.";
-            PyErr_SetString(PyExc_AttributeError, s.c_str());
-            throw_error_already_set();
-            return;
-        }
-    }
-    // If we got here, then we're ok
-    scattreg[&crystal].insert( scatt );
-    scattnamereg[&crystal].insert( scatt->GetName() );
     crystal.AddScatterer(scatt);
+    crystal.SetDeleteRefObjInDestructor(0);
+    crystal.SetDeleteRefParInDestructor(0);
     // This is a workaround for a library bug
     crystal.SetUseDynPopCorr(0);
     return;
 }
 
-// Overloaded to record ScatteringPower in the registry
+// Overloaded to protect scattering power from deletion.
 void _AddScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
 {
-    // Make sure that the scatteringpower would have a unique name in this
-    // crystal
-    if( scattpownamereg[&crystal].count(scattpow->GetName()) > 0 )
-    {
-        std::string s;
-        s += "Crystal already has ScatteringPower with name '"; 
-        s += scattpow->GetName(); 
-        s += "'";
-        PyErr_SetString(PyExc_AttributeError, s.c_str());
-        throw_error_already_set();
-        return;
-    }
-    // Make sure the scatteringpower isn't already in a crystal
-    std::map<Crystal*, std::set<ScatteringPower*> >::iterator citer;
-    for( citer = scattpowreg.begin(); citer != scattpowreg.end(); ++citer)
-    {
-        if( (citer->second).count(scattpow) > 0)
-        {
-            std::string s;
-            s += "ScatteringPower '"; 
-            s += scattpow->GetName(); 
-            s += "' already belongs to a crystal.";
-            PyErr_SetString(PyExc_AttributeError, s.c_str());
-            throw_error_already_set();
-            return;
-        }
-    }
-    // If we got here, then we're ok
-    scattpowreg[&crystal].insert( scattpow );
-    scattpownamereg[&crystal].insert( scattpow->GetName() );
     crystal.AddScatteringPower(scattpow);
+    crystal.SetDeleteRefObjInDestructor(0);
+    crystal.SetDeleteRefParInDestructor(0);
     // This is a workaround for a library bug
     crystal.SetUseDynPopCorr(0);
     return;
 }
 
-// Overloaded so that RemoveScatterer cannot delete the passed scatterer, and so
-// that one cannot remove a scatterer that is not in the crystal
+// Overloaded so that RemoveScatterer cannot delete the passed scatterer
 void _RemoveScatterer(Crystal& crystal, Scatterer* scatt)
 {
-    // Make sure that this scatterer is in this crystal
-
-    if(scattreg[&crystal].count( scatt) > 0 )
-    {
-        crystal.RemoveScatterer(scatt, false);
-        scattnamereg[&crystal].erase( scatt->GetName() );
-        scattreg[&crystal].erase( scatt );
-    }
-    else
-    {
-        std::string s;
-        s += "Scatterer '";
-        s += scatt->GetName(); 
-        s += "' does not belong to crystal.";
-        PyErr_SetString(PyExc_AttributeError, s.c_str());
-        throw_error_already_set();
-    }
-    return;
+    crystal.RemoveScatterer(scatt, false);
 }
 
 // Overloaded so that RemoveScatteringPower cannot delete the passed
@@ -163,21 +83,7 @@ void _RemoveScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
 {
     // Make sure that this scatteringpower is in this crystal
 
-    if(scattpowreg[&crystal].count(scattpow) > 0 )
-    {
-        crystal.RemoveScatteringPower(scattpow, false);
-        scattpownamereg[&crystal].erase( scattpow->GetName() );
-        scattpowreg[&crystal].erase( scattpow );
-    }
-    else
-    {
-        std::string s;
-        s += "ScatteringPower '";
-        s += scattpow->GetName(); 
-        s += "' does not belong to crystal.";
-        PyErr_SetString(PyExc_AttributeError, s.c_str());
-        throw_error_already_set();
-    }
+    crystal.RemoveScatteringPower(scattpow, false);
     return;
 }
 
@@ -250,7 +156,7 @@ BOOST_PYTHON_MODULE(_crystal)
         .def(init<const CrystalWrap&>())
         /* Methods */
         .def("AddScatterer", &_AddScatterer,
-            with_custodian_and_ward<2,1,with_custodian_and_ward<1,2> >())
+            with_custodian_and_ward<1,2>())
         .def("RemoveScatterer", &_RemoveScatterer)
         .def("GetNbScatterer", &Crystal::GetNbScatterer)
         .def("GetScatt", 
@@ -272,7 +178,7 @@ BOOST_PYTHON_MODULE(_crystal)
             (Crystal::*) ()) &Crystal::GetScatteringPowerRegistry,
             return_internal_reference<>())
         .def("AddScatteringPower", &_AddScatteringPower,
-            with_custodian_and_ward<2,1,with_custodian_and_ward<1,2> >())
+            with_custodian_and_ward<1,2>())
         .def("RemoveScatteringPower", &_RemoveScatteringPower)
         .def("GetScatteringPower", 
             (ScatteringPower& (Crystal::*)(const std::string&)) 
