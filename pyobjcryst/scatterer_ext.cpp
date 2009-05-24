@@ -214,7 +214,7 @@ BOOST_PYTHON_MODULE(_scatterer)
             return_internal_reference<>())
         .def("SetCrystal", &Scatterer::SetCrystal,
             with_custodian_and_ward<1,2>())
-        .def("GetCrystal", (const Crystal &(Scatterer::*)() const) 
+        .def("GetCrystal", (Crystal &(Scatterer::*)()) 
             &Scatterer::GetCrystal,
             return_internal_reference<>())
         // pure virtual methods

@@ -30,6 +30,8 @@
 #include <string>
 #include <iostream>
 
+#include "helpers.hpp"
+
 using namespace boost::python;
 using namespace ObjCryst;
 
@@ -104,5 +106,6 @@ BOOST_PYTHON_MODULE(_unitcell)
         .def("GetSpaceGroup", (SpaceGroup& (UnitCell::*)()) &UnitCell::GetSpaceGroup,
                 return_internal_reference<>())
         .def("GetVolume", &UnitCell::GetVolume)
+        .def("__str__", &__str__<UnitCell>)
         ;
 }

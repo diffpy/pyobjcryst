@@ -89,6 +89,8 @@ void _AddScatterer(Crystal& crystal, Scatterer* scatt)
     scattreg[&crystal].insert( scatt );
     scattnamereg[&crystal].insert( scatt->GetName() );
     crystal.AddScatterer(scatt);
+    // This is a workaround for a library bug
+    crystal.SetUseDynPopCorr(0);
     return;
 }
 
@@ -126,6 +128,8 @@ void _AddScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
     scattpowreg[&crystal].insert( scattpow );
     scattpownamereg[&crystal].insert( scattpow->GetName() );
     crystal.AddScatteringPower(scattpow);
+    // This is a workaround for a library bug
+    crystal.SetUseDynPopCorr(0);
     return;
 }
 

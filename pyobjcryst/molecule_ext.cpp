@@ -470,8 +470,7 @@ BOOST_PYTHON_MODULE(_molecule)
 
     class_<Molecule, bases<Scatterer> > ("Molecule", 
         init<Crystal&, const string&> ((bp::arg("cryst"), bp::arg("name")=""))
-        )
-        //[with_custodian_and_ward<1,2>()])
+        [with_custodian_and_ward<1,2>()])
         // The crystal is not used, so we don't need to manage it.
         /* Constructors */
         .def(init<const Molecule&>((bp::arg("old"))))
