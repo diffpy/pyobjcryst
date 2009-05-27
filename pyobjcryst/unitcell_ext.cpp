@@ -26,7 +26,6 @@
 #include <boost/python/class.hpp>
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
-#include <boost/python/make_constructor.hpp>
 
 #include <string>
 #include <iostream>
@@ -37,32 +36,6 @@ using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
-
-// Factories that set SetDeleteRefParInDestructor(0)
-
-UnitCell* UnitCellDefault()
-{
-    UnitCell* u = new UnitCell();
-    u->SetDeleteRefParInDestructor(0);
-    return u;
-}
-
-UnitCell* UnitCell4(const float a, const float b, const float c,
-        const std::string& SpaceGroupId)
-{
-    UnitCell* u = new UnitCell(a, b, c, SpaceGroupId);
-    u->SetDeleteRefParInDestructor(0);
-    return u;
-}
-
-UnitCell* UnitCell7(const float a, const float b, const float c,
-        const float alpha, const float beta, const float gamma,
-        const std::string& SpaceGroupId)
-{
-    UnitCell* u = new UnitCell(a, b, c, alpha, beta, gamma, SpaceGroupId);
-    u->SetDeleteRefParInDestructor(0);
-    return u;
-}
 
 tuple FractionalToOrthonormalCoords(const UnitCell &uc, 
         float x, float y, float z)
@@ -98,11 +71,13 @@ BOOST_PYTHON_MODULE(_unitcell)
 {
 
     class_<UnitCell, bases<RefinableObj> > 
-        ("UnitCell", init<const UnitCell &>())
+        ("UnitCell", init<>())
         // Constructors
-        .def("__init__", make_constructor(UnitCellDefault))
-        .def("__init__", make_constructor(UnitCell4))
-        .def("__init__", make_constructor(UnitCell7))
+        .def(init<const float, const float, const float, const std::string&>())
+        .def(init<const float, const float, const float, 
+            const float, const float, const float,
+            const std::string&>())
+        .def(init<const UnitCell&>())
         .def("GetLatticePar", 
             (CrystVector<float> (UnitCell::*)() const) &UnitCell::GetLatticePar)
         .def("GetLatticePar", 

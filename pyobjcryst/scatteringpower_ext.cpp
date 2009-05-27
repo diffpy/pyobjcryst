@@ -42,18 +42,9 @@ class ScatteringPowerWrap : public ScatteringPower,
 
     public: 
 
-    ScatteringPowerWrap() : ScatteringPower() 
-    {
-        SetDeleteRefParInDestructor(0);
-    }
-    ScatteringPowerWrap(const ScatteringPower &S) : ScatteringPower(S) 
-    {
-        SetDeleteRefParInDestructor(0);
-    }
-    ScatteringPowerWrap(const ScatteringPowerWrap &S) : ScatteringPower(S) 
-    {
-        SetDeleteRefParInDestructor(0);
-    }
+    ScatteringPowerWrap() : ScatteringPower() {}
+    ScatteringPowerWrap(const ScatteringPower &S) : ScatteringPower(S) {}
+    ScatteringPowerWrap(const ScatteringPowerWrap &S) : ScatteringPower(S) {}
 
     // Pure Virtual functions
 

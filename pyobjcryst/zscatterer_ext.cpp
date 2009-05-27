@@ -42,7 +42,6 @@ namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
-
 BOOST_PYTHON_MODULE(_zscatterer)
 {
 

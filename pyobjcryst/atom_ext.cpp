@@ -34,13 +34,11 @@
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
+#include <string>
+
 namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
-
-namespace {
-
-}
 
 BOOST_PYTHON_MODULE(_atom)
 {

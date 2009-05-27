@@ -14,8 +14,6 @@
 *
 * boost::python bindings to ObjCryst::ScatteringPowerAtom.
 *
-* FIXME - cannot return one of these from c++ by copy_const_reference
-*
 * $Id$
 *
 *****************************************************************************/
@@ -38,15 +36,15 @@ namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
+
 BOOST_PYTHON_MODULE(_scatteringpoweratom)
 {
 
     class_<ScatteringPowerAtom, bases<ScatteringPower> > ("ScatteringPowerAtom",
-            init<>())
+            init<const ScatteringPowerAtom&>())
         .def(
             init<const std::string&, const std::string&, optional<const float> >
             ((bp::arg("name"), bp::arg("symbol"), bp::arg("bIso")=1.0)))
-        .def(init<const ScatteringPowerAtom&>())
         .def("Init", &ScatteringPowerAtom::Init,
                 (bp::arg("name"),
                 bp::arg("symbol"),

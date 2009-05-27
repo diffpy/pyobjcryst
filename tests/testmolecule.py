@@ -27,6 +27,16 @@ class TestMolecule(unittest.TestCase):
     #    print self.c
     #    return
 
+    def testAddPar(self):
+        """See if we crash if we add a parameter and delete the molecule."""
+        m = self.m
+        rpt = RefParType("test")
+        par = RefinablePar("testpar", 3, 0, 10, rpt)
+        m.AddPar(par)
+        del m
+        print par
+        return
+
     def testAtoms(self):
         """Make sure the atoms are there.
 

@@ -93,14 +93,12 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
     CrystalWrap() : Crystal() 
     {
         SetDeleteSubObjInDestructor(false);
-        SetDeleteRefParInDestructor(false);
         SetUseDynPopCorr(0);
     }
 
     CrystalWrap(const CrystalWrap& c) : Crystal(c) 
     {
         SetDeleteSubObjInDestructor(false);
-        SetDeleteRefParInDestructor(false);
         SetUseDynPopCorr(0);
     }
 
@@ -109,7 +107,6 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
         : Crystal(a, b, c, sg) 
     {
         SetDeleteSubObjInDestructor(false);
-        SetDeleteRefParInDestructor(false);
         SetUseDynPopCorr(0);
     }
 
@@ -119,7 +116,6 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
         : Crystal(a, b, c, alpha, beta, gamma, sg) 
     {
         SetDeleteSubObjInDestructor(false);
-        SetDeleteRefParInDestructor(false);
         SetUseDynPopCorr(0);
     }
 

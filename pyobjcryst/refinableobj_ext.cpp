@@ -24,7 +24,7 @@
 * - GetParamSet returns a copy of the internal data so that no indirect
 *   manipulation can take place from python.
 * - SetDeleteRefParInDestructor(false) is called in the constructors of the
-*   python class.
+*   python class and the parameter accessors.
 * - SetDeleteRefParInDestructor is not exposed.
 * - RemovePar is overloaded to return None.
 * - XMLOutput and XMLInput are not wrapped (yet).
@@ -55,6 +55,39 @@ using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
+
+// Workaround to SetDeleteRefParInDestructor(0) when a parameter is added
+
+void _AddPar(RefinableObj& obj, RefinablePar* p)
+{
+    obj.AddPar(p);
+    obj.SetDeleteRefParInDestructor(0);
+}
+
+void _AddParObj(RefinableObj& obj, RefinableObj& o, const bool copyParam = false)
+{
+    obj.AddPar(o, copyParam);
+    obj.SetDeleteRefParInDestructor(0);
+}
+
+RefinablePar& _GetParLong(RefinableObj& obj, const long i)
+{
+    obj.SetDeleteRefParInDestructor(0);
+    return obj.GetPar(i);
+}
+
+RefinablePar& _GetParString(RefinableObj& obj, const string& s)
+{
+    obj.SetDeleteRefParInDestructor(0);
+    return obj.GetPar(s);
+}
+
+RefinablePar& _GetParNotFixedLong(RefinableObj& obj, const long i)
+{
+    obj.SetDeleteRefParInDestructor(0);
+    return obj.GetParNotFixed(i);
+}
+
 
 class RefinableObjWrap : public RefinableObj, 
                  public wrapper<RefinableObj>
@@ -380,20 +413,16 @@ BOOST_PYTHON_MODULE(_refinableobj)
             &RefinableObj::SetParIsUsed)
         .def("GetNbPar", &RefinableObj::GetNbPar)
         .def("GetNbParNotFixed", &RefinableObj::GetNbParNotFixed)
-        .def("GetPar", (RefinablePar& (RefinableObj::*)(const long)) 
-            &RefinableObj::GetPar,
+        .def("GetPar", &_GetParLong,
             return_internal_reference<>())
-        .def("GetPar", (RefinablePar& (RefinableObj::*)(const string&)) 
-            &RefinableObj::GetPar,
+        .def("GetPar", &_GetParString,
             return_internal_reference<>())
-        .def("GetParNotFixed", (RefinablePar& (RefinableObj::*)(const long)) 
-            &RefinableObj::GetParNotFixed,
+        .def("GetParNotFixed", &_GetParNotFixedLong,
             return_internal_reference<>())
-        .def("AddPar", (void (RefinableObj::*)(RefinablePar*)) 
-            &RefinableObj::AddPar,
+        .def("AddPar", &_AddPar,
+            (bp::arg("par")),
             with_custodian_and_ward<1,2>())
-        .def("AddPar", (void (RefinableObj::*)(RefinableObj&, const bool))
-            &RefinableObj::AddPar,
+        .def("AddPar", &_AddParObj,
             (bp::arg("newRefParList"), bp::arg("copyParam")=false),
             with_custodian_and_ward<1,2>())
         .def("RemovePar", &_RemovePar)

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "CrystVector/CrystVector.h"
 #include "ObjCryst/Atom.h"
 #include "ObjCryst/CIF.h"

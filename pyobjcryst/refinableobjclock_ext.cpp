@@ -14,11 +14,11 @@
 *
 * boost::python bindings to ObjCryst::RefinableObjClock.
 *
-* $Id$
-*
 * Changes from ObjCryst++
 * - operator= is wrapped as the SetEqual method
 *   a.SetEqual(b) -> a = b
+*
+* $Id$
 *
 *****************************************************************************/
 
