@@ -34,31 +34,34 @@
 using namespace boost::python;
 using namespace ObjCryst;
 
+
 namespace {
 
-/* This overloads the constructors of ScatteringPowerSphere to work around the
- * copy constructor, which is not implemented
- */
-class ScatteringPowerSphereWrap : public ScatteringPowerSphere
+// Factories that set SetDeleteRefParInDestructor(0)
+ScatteringPowerSphere* ScatteringPowerSphereDefault()
 {
+    ScatteringPowerSphere* sp = new ScatteringPowerSphere();
+    sp->SetDeleteRefParInDestructor(0);
+    return sp;
+}
 
-    public:
-    ScatteringPowerSphereWrap() : ScatteringPowerSphere() {}
-    ScatteringPowerSphereWrap
-        (const string &name, const float radius, const float bIso=1.0) :
-         ScatteringPowerSphere(name, radius, bIso) {};
-    // Not implemented in the base class, so not defined here.
-    // ScatteringPowerSphereWrap() {};
-};
+ScatteringPowerSphere* ScatteringPowerSphere3(const std::string& name,
+        const float radius, const float bIso)
+{
+    ScatteringPowerSphere* sp = new ScatteringPowerSphere(name, radius, bIso);
+    sp->SetDeleteRefParInDestructor(0);
+    return sp;
+}
 
 }
 
 BOOST_PYTHON_MODULE(_scatteringpowersphere)
 {
 
-    class_<ScatteringPowerSphereWrap, 
-        boost::noncopyable, bases<ScatteringPower> > 
-        ("ScatteringPowerSphere", init<>())
+    class_<ScatteringPowerSphere, bases<ScatteringPower> > 
+        ("ScatteringPowerSphere")
+        .def("__init__", make_constructor(ScatteringPowerSphereDefault))
+        .def("__init__", make_constructor(ScatteringPowerSphere3))
         .def(init<const std::string&, const float, optional<const float> >())
         .def("Init", &ScatteringPowerSphere::Init,
                 (boost::python::arg("name"),

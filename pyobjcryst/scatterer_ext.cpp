@@ -62,9 +62,15 @@ class ScattererWrap : public Scatterer,
 
     public: 
 
-    ScattererWrap() : Scatterer() {}
+    ScattererWrap() : Scatterer() 
+    {
+        SetDeleteRefParInDestructor(0);
+    }
 
-    ScattererWrap(const ScattererWrap& S) : Scatterer(S) {}
+    ScattererWrap(const ScattererWrap& S) : Scatterer(S) 
+    {
+        SetDeleteRefParInDestructor(0);
+    }
 
     void default_SetX(const float x) 
     { this->Scatterer::SetX(x);}

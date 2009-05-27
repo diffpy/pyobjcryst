@@ -19,8 +19,6 @@
 *   reference, or a constant interal reference are not wrapped.
 * - CalcDynPopCorr is not enabled, as the API states that this is for internal
 *   use only.
-* - ResetDynPopCorr and SetUseDynPopCorr are not exposed, as these lead to
-*   memory corruption in crystals that contain molecules.
 *
 * $Id$
 *
@@ -48,28 +46,6 @@ using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
-
-// Overloaded to protect scatterers from deletion.
-void _AddScatterer(Crystal& crystal, Scatterer* scatt)
-{
-    crystal.AddScatterer(scatt);
-    crystal.SetDeleteRefObjInDestructor(0);
-    crystal.SetDeleteRefParInDestructor(0);
-    // This is a workaround for a library bug
-    crystal.SetUseDynPopCorr(0);
-    return;
-}
-
-// Overloaded to protect scattering power from deletion.
-void _AddScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
-{
-    crystal.AddScatteringPower(scattpow);
-    crystal.SetDeleteRefObjInDestructor(0);
-    crystal.SetDeleteRefParInDestructor(0);
-    // This is a workaround for a library bug
-    crystal.SetUseDynPopCorr(0);
-    return;
-}
 
 // Overloaded so that RemoveScatterer cannot delete the passed scatterer
 void _RemoveScatterer(Crystal& crystal, Scatterer* scatt)
@@ -114,17 +90,38 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
 
     public: 
 
-    CrystalWrap() : Crystal() {}
+    CrystalWrap() : Crystal() 
+    {
+        SetDeleteSubObjInDestructor(false);
+        SetDeleteRefParInDestructor(false);
+        SetUseDynPopCorr(0);
+    }
 
-    CrystalWrap(const CrystalWrap& c) : Crystal(c) {}
+    CrystalWrap(const CrystalWrap& c) : Crystal(c) 
+    {
+        SetDeleteSubObjInDestructor(false);
+        SetDeleteRefParInDestructor(false);
+        SetUseDynPopCorr(0);
+    }
 
     CrystalWrap(const float a, const float b, const float c , 
             const std::string& sg) 
-        : Crystal(a, b, c, sg) {}
+        : Crystal(a, b, c, sg) 
+    {
+        SetDeleteSubObjInDestructor(false);
+        SetDeleteRefParInDestructor(false);
+        SetUseDynPopCorr(0);
+    }
+
     CrystalWrap(const float a, const float b, const float c , 
             const float alpha, const float beta, const float gamma,
             const std::string& sg) 
-        : Crystal(a, b, c, alpha, beta, gamma, sg) {}
+        : Crystal(a, b, c, alpha, beta, gamma, sg) 
+    {
+        SetDeleteSubObjInDestructor(false);
+        SetDeleteRefParInDestructor(false);
+        SetUseDynPopCorr(0);
+    }
 
     const ScatteringComponentList& default_GetScatteringComponentList() const
     { return this->Crystal::GetScatteringComponentList(); }
@@ -155,7 +152,7 @@ BOOST_PYTHON_MODULE(_crystal)
             const std::string&>())
         .def(init<const CrystalWrap&>())
         /* Methods */
-        .def("AddScatterer", &_AddScatterer,
+        .def("AddScatterer", &Crystal::AddScatterer,
             with_custodian_and_ward<1,2>())
         .def("RemoveScatterer", &_RemoveScatterer)
         .def("GetNbScatterer", &Crystal::GetNbScatterer)
@@ -177,7 +174,7 @@ BOOST_PYTHON_MODULE(_crystal)
         .def("GetScatteringPowerRegistry", ( ObjRegistry<ScatteringPower>& 
             (Crystal::*) ()) &Crystal::GetScatteringPowerRegistry,
             return_internal_reference<>())
-        .def("AddScatteringPower", &_AddScatteringPower,
+        .def("AddScatteringPower", &Crystal::AddScatteringPower,
             with_custodian_and_ward<1,2>())
         .def("RemoveScatteringPower", &_RemoveScatteringPower)
         .def("GetScatteringPower", 
@@ -189,9 +186,6 @@ BOOST_PYTHON_MODULE(_crystal)
             return_value_policy<copy_const_reference>())
         .def("GetScatteringComponentList", &_GetScatteringComponentList,
             with_custodian_and_ward_postcall<1,0>())
-        //.def("GetScatteringComponentList", 
-        //    &CrystalWrap::GetScatteringComponentList,
-        //    return_value_policy<copy_const_reference>())
         .def("GetClockScattCompList", &Crystal::GetClockScattCompList,
                 return_value_policy<copy_const_reference>())
         .def("GetMinDistanceTable", &Crystal::GetMinDistanceTable,

@@ -23,8 +23,8 @@
 *   internal use.
 * - GetParamSet returns a copy of the internal data so that no indirect
 *   manipulation can take place from python.
-* - SetDeleteRefParInDestructor(false) is called in the constructors of the python
-*   class.
+* - SetDeleteRefParInDestructor(false) is called in the constructors of the
+*   python class.
 * - SetDeleteRefParInDestructor is not exposed.
 * - RemovePar is overloaded to return None.
 * - XMLOutput and XMLInput are not wrapped (yet).

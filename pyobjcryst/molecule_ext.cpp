@@ -60,6 +60,7 @@
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
+#include <boost/python/make_constructor.hpp>
 
 #include <iostream>
 #include <vector>
@@ -75,14 +76,42 @@ namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
+
 namespace {
 
-// Overloaded to return added object
+
+// Factories that set SetDeleteRefParInDestructor(0)
+// Can't get this to work because we need a call policy that is not supported
+// by make_constructor.
+//Molecule* Molecule2(Crystal& cryst, const std::string& name="")
+//{
+//    Molecule* m = new Molecule(cryst, name);
+//    m->SetDeleteRefParInDestructor(0);
+//    return m;
+//}
+
+// Workaround to SetDeleteRefParInDestructor(0) when a parameter is added
+
+void _AddPar(Molecule& m, RefinablePar* p)
+{
+    m.AddPar(p);
+    m.SetDeleteRefParInDestructor(0);
+}
+
+void _AddParObj(Molecule& m, RefinableObj& o, const bool copyParam = false)
+{
+    m.AddPar(o, copyParam);
+    m.SetDeleteRefParInDestructor(0);
+}
+
+// Overloaded to return added object and manage the lifetime of the object.
 MolAtom& _AddAtom(Molecule& m, const float x, const float y, const float z,
         const ScatteringPower* pow, const std::string& name,
         const bool updateDisplay=true)
 {
     m.AddAtom(x, y, z, pow, name, updateDisplay);
+    m.SetDeleteSubObjInDestructor(false);
+    m.SetDeleteRefParInDestructor(false);
     std::vector<MolAtom*>& v = m.GetAtomList();
     return *v.back();
 }
@@ -92,6 +121,8 @@ MolBond& _AddBond(Molecule& m, MolAtom& atom1, MolAtom& atom2, const float
         1., const bool updateDisplay = true)
 {
     m.AddBond(atom1, atom2, length, sigma, delta, bondOrder, updateDisplay);
+    m.SetDeleteSubObjInDestructor(false);
+    m.SetDeleteRefParInDestructor(false);
     std::vector<MolBond*>& v = m.GetBondList();
     return *v.back();
 }
@@ -101,6 +132,8 @@ MolBondAngle& _AddBondAngle(Molecule& m, MolAtom& atom1, MolAtom& atom2,
         delta, const bool updateDisplay = true)
 {
     m.AddBondAngle(atom1, atom2, atom3, angle, sigma, delta, updateDisplay);
+    m.SetDeleteSubObjInDestructor(false);
+    m.SetDeleteRefParInDestructor(false);
     std::vector<MolBondAngle*>& v = m.GetBondAngleList();
     return *v.back();
 }
@@ -111,6 +144,8 @@ MolDihedralAngle& _AddDihedralAngle(Molecule& m, MolAtom& atom1, MolAtom&
 {
     m.AddDihedralAngle(atom1, atom2, atom3, atom4, angle, sigma, delta,
             updateDisplay);
+    m.SetDeleteSubObjInDestructor(false);
+    m.SetDeleteRefParInDestructor(false);
     std::vector<MolDihedralAngle*>& v = m.GetDihedralAngleList();
     return *v.back();
 }
@@ -468,12 +503,11 @@ bp::list _AsZMatrix(const Molecule& m, const bool keeporder)
 BOOST_PYTHON_MODULE(_molecule)
 {
 
-    class_<Molecule, bases<Scatterer> > ("Molecule", 
-        init<Crystal&, const string&> ((bp::arg("cryst"), bp::arg("name")=""))
-        [with_custodian_and_ward<1,2>()])
-        // The crystal is not used, so we don't need to manage it.
+    class_<Molecule, bases<Scatterer> > ("Molecule", init<const Molecule&>() )
         /* Constructors */
-        .def(init<const Molecule&>((bp::arg("old"))))
+        .def(init<Crystal&, const std::string&>())
+        // can't get this to work
+        //.def("__init__", make_constructor(Molecule2, with_custodian_and_ward<1,2>))
         /* Methods */
         .def("AddAtom", &_AddAtom,
             (bp::arg("x"), bp::arg("y"), bp::arg("z"), bp::arg("pPow"),
@@ -627,6 +661,12 @@ BOOST_PYTHON_MODULE(_molecule)
             &Molecule::BuildStretchModeGroups)
         .def("UpdateScattCompList", &Molecule::UpdateScattCompList)
         .def("InitOptions", &Molecule::InitOptions)
+        // These are added to work around the problem of deleting refinable
+        // parameters in the destructor.
+        .def("AddPar", &_AddPar, with_custodian_and_ward<1,2>())
+        .def("AddPar", &_AddParObj, 
+            (bp::arg("newRefParList"), bp::arg("copyParam")=false),
+            with_custodian_and_ward<1,2>())
         ;
 }
 

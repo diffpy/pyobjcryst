@@ -123,7 +123,7 @@ class TestRefinableObjClock(unittest.TestCase):
         self.assertTrue(parent < c2)
         return
 
-    def TestRemoveChild(self):
+    def testRemoveChild(self):
         """Test the RemoveChild method."""
         c1 = RefinableObjClock()
         c2 = RefinableObjClock()
