@@ -89,7 +89,7 @@ c60xyz = \
 """
 
 def makeC60():
-    c = Crystal(1, 1, 1, "P1")
+    c = Crystal(100, 100, 100, "P1")
     c.SetName("c60frame")
     m = Molecule(c, "c60")
 

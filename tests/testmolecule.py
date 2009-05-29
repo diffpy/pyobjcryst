@@ -23,18 +23,28 @@ class TestMolecule(unittest.TestCase):
         del self.m
         return
 
-    #def testTest(self):
-    #    print self.c
-    #    return
+    def testContainment(self):
+        """Make sure we can still use the molecule if the crystal is out of
+        scope."""
+        c = makeC60()
+        m = self.c.GetScatterer("c60")
+        self.assertEquals("c60", m.GetName())
+        del c
+        self.assertEquals("c60", m.GetName())
+        return
 
     def testAddPar(self):
         """See if we crash if we add a parameter and delete the molecule."""
-        m = self.m
+        c = makeC60()
+        m = self.c.GetScatterer("c60")
         rpt = RefParType("test")
         par = RefinablePar("testpar", 3, 0, 10, rpt)
         m.AddPar(par)
+        self.assertAlmostEquals(3, par.GetValue())
         del m
-        print par
+        self.assertAlmostEquals(3, par.GetValue())
+        del c
+        self.assertAlmostEquals(3, par.GetValue())
         return
 
     def testAtoms(self):
@@ -50,6 +60,7 @@ class TestMolecule(unittest.TestCase):
             self.assertEqual(a1.GetName(), "C%i"%i)
 
         a = self.m.GetAtom(0)
+        sp = a.GetScatteringPower()
 
         self.assertTrue(60, self.m.GetNbAtoms())
 

@@ -31,6 +31,16 @@
 using namespace boost::python;
 using namespace ObjCryst;
 
+namespace
+{
+
+const ScatteringPower* _getScatteringPower(ScatteringComponent& s)
+{
+    return s.mpScattPow;
+}
+
+}
+
 BOOST_PYTHON_MODULE(_scatteringcomponent)
 {
 
@@ -40,8 +50,12 @@ BOOST_PYTHON_MODULE(_scatteringcomponent)
         .def_readwrite("mY", &ScatteringComponent::mY)
         .def_readwrite("mZ", &ScatteringComponent::mZ)
         .def_readwrite("mOccupancy", &ScatteringComponent::mOccupancy)
-        .def_readonly("mpScattPow", &ScatteringComponent::mpScattPow)
         .def_readwrite("mDynPopCorr", &ScatteringComponent::mDynPopCorr)
+        // Workaround to give attribute access. Again, returning the object,
+        // where it should be read-only.
+        .add_property("mpScattPow", 
+            make_function( &_getScatteringPower, 
+            return_internal_reference<>()))
         .def("__str__", &__str__<ScatteringComponent>)
         ;
 }
