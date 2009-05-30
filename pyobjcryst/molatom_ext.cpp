@@ -44,6 +44,13 @@ using namespace ObjCryst;
 
 namespace {
 
+std::string __str__(MolAtom& a)
+{
+    std::stringstream s;
+    s << a.GetName() << " " << a.GetX() << " " << a.GetY() << " " << a.GetZ();
+    return s.str();
+}
+
 } // namespace
 
 
@@ -84,5 +91,6 @@ BOOST_PYTHON_MODULE(_molatom)
         .add_property("y", &MolAtom::GetY, &MolAtom::SetY)
         .add_property("z", &MolAtom::GetZ, &MolAtom::SetZ)
         .add_property("occ", &MolAtom::GetOccupancy, &MolAtom::SetOccupancy)
+        .def("__str__", &__str__)
         ;
 }

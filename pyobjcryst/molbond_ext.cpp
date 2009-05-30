@@ -15,6 +15,7 @@
 * boost::python bindings to ObjCryst::MolBond.  
 * 
 * Changes from ObjCryst++
+* - Added __getitem__ access for MolAtoms.
 * - File IO is disabled
 * - GetDeriv and CalcGradient are not wrapped.
 * - Length0, LengthDelta, LengthSigma and BondOrder are wrapped as properties
@@ -44,6 +45,22 @@ using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
+
+MolAtom& _GetAtom(MolBond& mb, size_t i)
+{
+    switch(i)
+    {
+        case 0:
+            return mb.GetAtom1();
+            break;
+        case 1:
+            return mb.GetAtom2();
+            break;
+        default:
+            PyErr_SetString(PyExc_IndexError, "Index out of range");
+            throw_error_already_set();
+    }
+}
 
 } // namespace
 
@@ -100,5 +117,7 @@ BOOST_PYTHON_MODULE(_molbond)
             &MolBond::SetLengthSigma)
         .add_property("order", &MolBond::GetBondOrder,
             &MolBond::SetBondOrder)
+        .def("__getitem__", &_GetAtom,
+            return_internal_reference<>())
         ;
 }

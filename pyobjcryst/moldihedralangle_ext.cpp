@@ -15,6 +15,7 @@
 * boost::python bindings to ObjCryst::DihedralAngle.  
 * 
 * Changes from ObjCryst++
+* - Added __getitem__ access for MolAtoms.
 *
 * $Id$
 *
@@ -40,6 +41,28 @@ using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
+    
+MolAtom& _GetAtom(MolDihedralAngle& mb, size_t i)
+{
+    switch(i)
+    {
+        case 0:
+            return mb.GetAtom1();
+            break;
+        case 1:
+            return mb.GetAtom2();
+            break;
+        case 2:
+            return mb.GetAtom3();
+            break;
+        case 3:
+            return mb.GetAtom4();
+            break;
+        default:
+            PyErr_SetString(PyExc_IndexError, "Index out of range");
+            throw_error_already_set();
+    }
+}
 
 } // namespace
 
@@ -100,5 +123,7 @@ BOOST_PYTHON_MODULE(_moldihedralangle)
             &MolDihedralAngle::SetAngleDelta)
         .add_property("sigma", &MolDihedralAngle::GetAngleSigma,
             &MolDihedralAngle::SetAngleSigma)
+        .def("__getitem__", &_GetAtom,
+            return_internal_reference<>())
         ;
 }

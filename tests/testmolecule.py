@@ -16,6 +16,7 @@ class TestMolecule(unittest.TestCase):
     def setUp(self):
         self.c = makeC60()
         self.m = self.c.GetScatterer("c60")
+        rgl = self.m.GetRigidGroupList()
         return
 
     def tearDown(self):
@@ -311,6 +312,72 @@ class TestMolecule(unittest.TestCase):
     
         return
 
+    def testRigidGroup(self):
+        """Test adding and manipulating a rigid group."""
+        # A rigid group has the interface of a set
+        self.assertEquals(0, len(self.m.GetRigidGroupList()))
+        self.assertEquals(0, self.m.GetNbRigidGroups())
+        rg = self.m.AddRigidGroup(self.m.GetAtomList())
+        self.assertEquals(1, self.m.GetNbRigidGroups())
+        rgl = self.m.GetRigidGroupList()
+        self.assertEquals(1, len(rgl))
+        self.assertEquals(60, len(rgl[0]))
+        
+        # We would like to check to see if the atoms are the same, but the
+        # rigid group is a set, not a list.
+
+        # Test to see if we can remove the list.
+        self.m.RemoveRigidGroup(rg)
+        self.assertEquals(0, self.m.GetNbRigidGroups())
+        rgl = self.m.GetRigidGroupList()
+        self.assertEquals(0, len(rgl))
+
+        return
+
+    def testManipulation(self):
+        """Test moving the atoms."""
+        a = self.m.AddAtom(0, 0, 0, None, "center")
+        self.assertTrue(a.IsDummy())
+        self.m.SetCenterAtom(a)
+
+        a0 = self.m.GetAtom(0)
+        x = a0.x
+        y = a0.y
+        z = a0.z
+
+        # Translate the atoms
+
+        self.m.TranslateAtomGroup(self.m.GetAtomList(), 0, 0, 0.5)
+
+        self.assertAlmostEquals(x, a0.x)
+        self.assertAlmostEquals(y, a0.y)
+        self.assertAlmostEquals(z+0.5, a0.z)
+
+        # Move them back
+        self.m.TranslateAtomGroup(self.m.GetAtomList(), 0, 0, -0.5)
+        self.assertAlmostEquals(x, a0.x)
+        self.assertAlmostEquals(y, a0.y)
+        self.assertAlmostEquals(z, a0.z)
+
+        # Rotate the atoms
+
+        import numpy
+        xyz = [numpy.array([a.x, a.y, a.z]) for a in self.m]
+
+        self.m.RotateAtomGroup((0,0,0), (0,0,1),
+                self.m.GetAtomList(), pi/2)
+
+        rm = numpy.array([[0, -1, 0], [1, 0, 0], [0, 0, 1]])
+        for i in range(len(self.m)):
+            xyzi = xyz[i]
+            newxyz = numpy.dot(rm, xyzi)
+            self.assertAlmostEquals(newxyz[0], self.m[i].x)
+            self.assertAlmostEquals(newxyz[1], self.m[i].y)
+            self.assertAlmostEquals(newxyz[2], self.m[i].z)
+
+        return
+
+
 # Test how changing a name to one that is already taken messes things up.
 
 class TestMolAtom(unittest.TestCase):
@@ -569,6 +636,7 @@ class TestMolDihedralAngle(unittest.TestCase):
         da.AngleSigma = 0.1
         angle = da.Angle + (da.Angle0-da.AngleDelta) - 2*pi
         ll = (angle/da.AngleSigma)**2
+
         # For some reason these are not very close in value.
         self.assertAlmostEqual(ll, da.GetLogLikelihood(), 2)
         self.assertAlmostEqual(ll, m.GetLogLikelihood(), 2)

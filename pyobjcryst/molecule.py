@@ -15,15 +15,47 @@
 
 """Python wrapping of Molecule."""
 
-#__all__ = []
-__all__ = ["Molecule", "MolAtom", "MolBond", "MolBondAngle",
-        "MolDihedralAngle", "RigidGroup", "Quaternion"]
-# MolRing
+# TODO - MolRing
+
+__all__ = []
 
 from _molecule import *
+__all__.extend(
+    ["Molecule", "GetBondLength", "GetBondAngle", "GetDihedralAngle"])
+
 from _molatom import *
+__all__.extend(
+    ["MolAtom"])
+
 from _molbond import *
+__all__.extend(
+    ["MolBond"])
+
 from _molbondangle import *
+__all__.extend(
+    ["MolBondAngle"])
+
 from _moldihedralangle import *
+__all__.extend(
+    ["MolDihedralAngle"])
+
 from _quaternion import *
+__all__.extend(
+    ["Quaternion"])
+
 from _rigidgroup import *
+__all__.extend(
+    ["RigidGroup"])
+
+from _stretchmode import *
+__all__.extend(
+    ["StretchMode", "StretchModeBondLength", "StretchModeBondAngle",
+    "StretchModeTorsion", "StretchModeTwist"])
+
+#FIXME - This has missing symbols
+from _polyhedron import *
+__all__.extend(
+    ["MakeTetrahedron", "MakeOctahedron",
+        "MakeSquarePlane", "MakeCube", "MakeAntiPrismTetragonal",
+        "MakePrismTrigonal", "MakeIcosahedron", "MakeTriangle"])
+

@@ -31,6 +31,9 @@ ifndef OBJCRYST_HEADERS
 OBJCRYST_HEADERS=/home/chris/local/src/ObjCryst/ObjCryst
 endif 
 
+# Objcryst libraries - the first 4 should be compiled as shared libraries
+OBJCRYSTLIBS = -lcryst -lRefinableObj -lCrystVector -lQuirks -lcctbx -lnewmat
+
 # CFLAGS
 ifdef DEBUG
 CFLAGS = $(DEBUG) -fPIC -Wall
@@ -75,13 +78,13 @@ $(MODULE): $(MODSO)
 ## Boost 
  
 $(MODSO) : $(MODOBJ) _registerconverters.so
-	$(LINK) -shared $(LINKFLAGS) $< -o $@ -lm -lobjcryst -lboost_python -lpython$(PYTHON_VERSION) 
+	$(LINK) -shared $(LINKFLAGS) $< -o $@ -lm $(OBJCRYSTLIBS) -lboost_python -lpython$(PYTHON_VERSION) 
 
 $(MODOBJ) : $(MODULE)_ext.cpp
 	$(CC) -c $< -o $@ -DHAVE_CONFIG_H -I$(PYTHON_INCDIR) -I$(OBJCRYST_HEADERS)
 
 _registerconverters.so : registerconverters.o
-	$(LINK) -shared $(LINKFLAGS) $< -o $@ -lm -lcryst -lRefinableObj -lCrystVector -lQuirks -lCrystVector -lRefinableObj -lcryst -lRefinableObj -lCrystVector -lQuirks -lcctbx -lnewmat -lboost_python -lpython$(PYTHON_VERSION) 
+	$(LINK) -shared $(LINKFLAGS) $< -o $@ -lm $(OBJCRYSTLIBS) -lboost_python -lpython$(PYTHON_VERSION) 
 
 ## Object Rules
 #
@@ -96,9 +99,6 @@ registerconverters.o : registerconverters.cpp converters.hpp
 # links in the order given in the ObjCryst, then reverses to pick up undefined
 # symbols, and then does the original order to close the loops. It seems to
 # work.
-libobjcryst : objcryst.o
-	$(LINK) -shared $(LINKFLAGS) $< -o libobjcryst.so -lcryst -lRefinableObj -lCrystVector -lQuirks -lCrystVector -lRefinableObj -lcryst -lRefinableObj -lCrystVector -lQuirks -lcctbx -lnewmat
-
 .PHONY : clean
 clean: 
 	-rm -f *.pyc *.so *.o *.a

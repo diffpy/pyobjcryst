@@ -18,6 +18,7 @@
 * 
 * Changes from ObjCryst++
 * - The public data are not wrapped. Accessors will be added as needed.
+* - Added __getitem__ access for MolAtoms.
 * - AddAtom returns the added MolAtom
 * - AddBond returns the added MolBond
 * - AddBondAngle returns the added MolBondAngle
@@ -243,6 +244,36 @@ void _RemoveDihedralAngleIdx(Molecule& m, int idx)
     m.RemoveDihedralAngle(_GetDihedralAngleIdx(m, idx), false);
 }
 
+// Overloaded to return new rigid group object
+RigidGroup& _AddRigidGroup(Molecule& m, const RigidGroup& r, const bool ud=true)
+{
+    m.AddRigidGroup(r, ud);
+    // Get the new rigid group and return it
+    std::vector<RigidGroup*>& v = m.GetRigidGroupList();
+    return *v.back();
+}
+
+// Overloaded to accept python iterable and to return the rigid group object
+RigidGroup& _AddRigidGroupIterable(Molecule& m, bp::object& l, const bool ud=true)
+{
+    // convert l to a rigid group
+    RigidGroup* r = new RigidGroup();
+
+    for(size_t i=0; i < len(l); ++i)
+    {
+        MolAtom* a = extract<MolAtom*>(l[i]);
+        r->insert(a);
+    }
+
+    // Add this rigid group and delete it, since AddRigidGroup makes a copy.
+    m.AddRigidGroup(*r, ud);
+    delete r;
+
+    // Get the new rigid group and return it
+    std::vector<RigidGroup*>& v = m.GetRigidGroupList();
+    return *v.back();
+}
+
 // Overloaded for void return type
 void _RemoveRigidGroup(Molecule& m, RigidGroup& mda, const bool ud=true)
 {
@@ -401,10 +432,6 @@ bp::list _GetRigidGroupList(const Molecule& m)
 
     l = ptrcontainerToPyList< const std::vector<RigidGroup*> >(v);
 
-    for( size_t i = 0; i < v.size(); ++i)
-    {
-        l.append(bp::object(v[i]));
-    }
     return l;
 }
 
@@ -426,6 +453,25 @@ void _RotateAtomGroupVec(Molecule &m, const MolAtom& at1, const float vx,
 
     std::set<MolAtom*> catoms = pyIterableToSet<MolAtom*>(atoms);
     m.RotateAtomGroup(at1, vx, vy, vz, catoms, angle, keepCenter);
+}
+
+// A new method for three-tuples
+void _RotateAtomGroup2Vec(Molecule &m, bp::object& v1, bp::object& v2,
+    const bp::object& atoms, const float angle,
+    const bool keepCenter=true)
+{
+
+    float x, y, z;
+    x = extract<float>(v1[0]);
+    y = extract<float>(v1[1]);
+    z = extract<float>(v1[2]);
+    MolAtom&a = _AddAtom(m, x, y, z, 0, "_rag2vectemp", false);
+    x = extract<float>(v2[0]);
+    y = extract<float>(v2[1]);
+    z = extract<float>(v2[2]);
+    _RotateAtomGroupVec(m, a, x, y, z, atoms, angle, keepCenter);
+    m.RemoveAtom(a, true);
+    return;
 }
 
 void _TranslateAtomGroup(Molecule &m, const bp::object& atoms, const float dx,
@@ -478,8 +524,6 @@ BOOST_PYTHON_MODULE(_molecule)
     class_<Molecule, bases<Scatterer> > ("Molecule", init<const Molecule&>() )
         /* Constructors */
         .def(init<Crystal&, const std::string&>())
-        // can't get this to work
-        //.def("__init__", make_constructor(Molecule2, with_custodian_and_ward<1,2>))
         /* Methods */
         .def("AddAtom", &_AddAtom,
             (bp::arg("x"), bp::arg("y"), bp::arg("z"), bp::arg("pPow"),
@@ -524,13 +568,17 @@ BOOST_PYTHON_MODULE(_molecule)
         .def("RemoveDihedralAngle", &_RemoveDihedralAngle)
         .def("RemoveDihedralAngle", &_RemoveDihedralAngleIdx)
         .def("GetDihedralAngle", &_GetDihedralAngleIdx,
-                return_internal_reference<>())
+            return_internal_reference<>())
         .def("FindDihedralAngle", &_FindDihedralAngle,
             with_custodian_and_ward_postcall<1,0>())
-        // An internal copy of the group is made, so there is no need for
-        // lifetime management.
-        .def("AddRigidGroup", &Molecule::AddRigidGroup)
-        .def("RemoveRigidGroup", &_RemoveRigidGroup)
+        .def("AddRigidGroup", &_AddRigidGroup, 
+            (bp::arg("group"), bp::arg("updateDisplay") = true),
+            return_internal_reference<>())
+        .def("AddRigidGroup", &_AddRigidGroupIterable,
+            (bp::arg("group"), bp::arg("updateDisplay") = true),
+            return_internal_reference<>())
+        .def("RemoveRigidGroup", &_RemoveRigidGroup,
+                (bp::arg("group"), bp::arg("updateDisplay") = true))
         .def("GetAtom", &_GetAtomIdx, return_internal_reference<>())
         .def("GetAtom", 
             (MolAtom& (Molecule::*)(const string&)) &Molecule::GetAtom, 
@@ -572,6 +620,11 @@ BOOST_PYTHON_MODULE(_molecule)
         .def("RotateAtomGroup", &_RotateAtomGroupVec,
             (bp::arg("at1"), bp::arg("vx"), bp::arg("vy"), bp::arg("vz"),
              bp::arg("atoms"), bp::arg("angle"), bp::arg("keepCenter")=true
+             )
+            )
+        .def("RotateAtomGroup", &_RotateAtomGroup2Vec,
+            (bp::arg("v1"), bp::arg("v2"), bp::arg("atoms"), bp::arg("angle"),
+             bp::arg("keepCenter")=true
              )
             )
         .def("TranslateAtomGroup", &_TranslateAtomGroup,
@@ -633,8 +686,14 @@ BOOST_PYTHON_MODULE(_molecule)
             &Molecule::BuildStretchModeGroups)
         .def("UpdateScattCompList", &Molecule::UpdateScattCompList)
         .def("InitOptions", &Molecule::InitOptions)
-        // These are added to work around the problem of deleting refinable
-        // parameters in the destructor.
+        .def("__getitem__", &_GetAtomIdx, return_internal_reference<>())
+        .def("__len__", &_GetNbAtoms)
         ;
+
+    // Wrap some functions
+    def("GetBondLength", &GetBondLength);
+    def("GetBondAngle", &GetBondAngle);
+    def("GetDihedralAngle", &GetDihedralAngle);
+
 }
 
