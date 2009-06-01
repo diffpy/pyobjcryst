@@ -341,28 +341,28 @@ class TestMolecule(unittest.TestCase):
         self.m.SetCenterAtom(a)
 
         a0 = self.m.GetAtom(0)
-        x = a0.x
-        y = a0.y
-        z = a0.z
+        x = a0.X
+        y = a0.Y
+        z = a0.Z
 
         # Translate the atoms
 
         self.m.TranslateAtomGroup(self.m.GetAtomList(), 0, 0, 0.5)
 
-        self.assertAlmostEquals(x, a0.x)
-        self.assertAlmostEquals(y, a0.y)
-        self.assertAlmostEquals(z+0.5, a0.z)
+        self.assertAlmostEquals(x, a0.X)
+        self.assertAlmostEquals(y, a0.Y)
+        self.assertAlmostEquals(z+0.5, a0.Z)
 
         # Move them back
         self.m.TranslateAtomGroup(self.m.GetAtomList(), 0, 0, -0.5)
-        self.assertAlmostEquals(x, a0.x)
-        self.assertAlmostEquals(y, a0.y)
-        self.assertAlmostEquals(z, a0.z)
+        self.assertAlmostEquals(x, a0.X)
+        self.assertAlmostEquals(y, a0.Y)
+        self.assertAlmostEquals(z, a0.Z)
 
         # Rotate the atoms
 
         import numpy
-        xyz = [numpy.array([a.x, a.y, a.z]) for a in self.m]
+        xyz = [numpy.array([a.X, a.Y, a.Z]) for a in self.m]
 
         self.m.RotateAtomGroup((0,0,0), (0,0,1),
                 self.m.GetAtomList(), pi/2)
@@ -371,9 +371,9 @@ class TestMolecule(unittest.TestCase):
         for i in range(len(self.m)):
             xyzi = xyz[i]
             newxyz = numpy.dot(rm, xyzi)
-            self.assertAlmostEquals(newxyz[0], self.m[i].x)
-            self.assertAlmostEquals(newxyz[1], self.m[i].y)
-            self.assertAlmostEquals(newxyz[2], self.m[i].z)
+            self.assertAlmostEquals(newxyz[0], self.m[i].X)
+            self.assertAlmostEquals(newxyz[1], self.m[i].Y)
+            self.assertAlmostEquals(newxyz[2], self.m[i].Z)
 
         return
 
@@ -403,10 +403,10 @@ class TestMolAtom(unittest.TestCase):
         self.assertTrue(a.GetName(), "test")
 
         # Test xyz & occ Get/Set
-        self.assertAlmostEquals(3.451266498, a.x, numplaces)
-        self.assertAlmostEquals(0.685, a.y, numplaces)
-        self.assertAlmostEquals(0, a.z, numplaces)
-        self.assertAlmostEquals(1.0, a.occ, numplaces)
+        self.assertAlmostEquals(3.451266498, a.X, numplaces)
+        self.assertAlmostEquals(0.685, a.Y, numplaces)
+        self.assertAlmostEquals(0, a.Z, numplaces)
+        self.assertAlmostEquals(1.0, a.Occupancy, numplaces)
 
         a.x = 3.40
         a.y = 0.68
@@ -425,8 +425,8 @@ class TestMolAtom(unittest.TestCase):
         self.assertEquals(m.GetName(), self.m.GetName())
         # Change something with the molecule, and check to see if it appears in
         # self.m
-        m.GetAtom("C1").occ = 0.1
-        self.assertAlmostEquals(0.1, self.m.GetAtom("C1").occ, numplaces)
+        m.GetAtom("C1").Occupancy = 0.1
+        self.assertAlmostEquals(0.1, self.m.GetAtom("C1").Occupancy, numplaces)
 
         # Test IsDummy
         self.assertFalse(a.IsDummy())

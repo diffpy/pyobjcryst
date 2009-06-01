@@ -43,27 +43,43 @@ BOOST_PYTHON_MODULE(_polyhedron)
 {
 
     def("MakeTetrahedron", &MakeTetrahedron,
-         return_value_policy<manage_new_object>());
+        (bp::arg("cryst"), bp::arg("name"), bp::arg("centralAtom"),
+         bp::arg("peripheralAtom"), bp::arg("dist")),
+        return_value_policy<manage_new_object>());
 
     def("MakeOctahedron", &MakeOctahedron,
+        (bp::arg("cryst"), bp::arg("name"), bp::arg("centralAtom"),
+         bp::arg("peripheralAtom"), bp::arg("dist")),
         return_value_policy<manage_new_object>());
 
     def("MakeSquarePlane", &MakeSquarePlane,
+        (bp::arg("cryst"), bp::arg("name"), bp::arg("centralAtom"),
+         bp::arg("peripheralAtom"), bp::arg("dist")),
         return_value_policy<manage_new_object>());
 
     def("MakeCube", &MakeCube,
+        (bp::arg("cryst"), bp::arg("name"), bp::arg("centralAtom"),
+         bp::arg("peripheralAtom"), bp::arg("dist")),
         return_value_policy<manage_new_object>());
 
     def("MakeAntiPrismTetragonal", &MakeAntiPrismTetragonal,
+        (bp::arg("cryst"), bp::arg("name"), bp::arg("centralAtom"),
+         bp::arg("peripheralAtom"), bp::arg("dist")),
         return_value_policy<manage_new_object>());
 
     def("MakePrismTrigonal", &MakePrismTrigonal,
+        (bp::arg("cryst"), bp::arg("name"), bp::arg("centralAtom"),
+         bp::arg("peripheralAtom"), bp::arg("dist")),
         return_value_policy<manage_new_object>());
 
     def("MakeIcosahedron", &MakeIcosahedron,
+        (bp::arg("cryst"), bp::arg("name"), bp::arg("centralAtom"),
+         bp::arg("peripheralAtom"), bp::arg("dist")),
         return_value_policy<manage_new_object>());
 
     def("MakeTriangle", &MakeTriangle,
+        (bp::arg("cryst"), bp::arg("name"), bp::arg("centralAtom"),
+         bp::arg("peripheralAtom"), bp::arg("dist")),
         return_value_policy<manage_new_object>());
 
 }

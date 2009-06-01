@@ -236,5 +236,7 @@ BOOST_PYTHON_MODULE(_scatteringpower)
         .def("SetFormalCharge", 
             &ScatteringPower::SetFormalCharge,
             &ScatteringPowerWrap::default_SetFormalCharge)
+        .add_property("Biso", (float (ScatteringPower::*)()const)
+                &ScatteringPower::GetBiso, &ScatteringPower::SetBiso)
         ;
 }

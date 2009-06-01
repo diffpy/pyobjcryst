@@ -521,9 +521,11 @@ bp::list _AsZMatrix(const Molecule& m, const bool keeporder)
 BOOST_PYTHON_MODULE(_molecule)
 {
 
-    class_<Molecule, bases<Scatterer> > ("Molecule", init<const Molecule&>() )
+    class_<Molecule, bases<Scatterer> > ("Molecule", 
+        init<const Molecule&>((bp::arg("oldMolecule"))))
         /* Constructors */
-        .def(init<Crystal&, const std::string&>())
+        .def(init<Crystal&, const std::string&>(
+            (bp::arg("cryst"), bp::arg("name"))))
         /* Methods */
         .def("AddAtom", &_AddAtom,
             (bp::arg("x"), bp::arg("y"), bp::arg("z"), bp::arg("pPow"),

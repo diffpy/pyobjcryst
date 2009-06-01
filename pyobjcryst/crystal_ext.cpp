@@ -142,11 +142,16 @@ BOOST_PYTHON_MODULE(_crystal)
     class_<CrystalWrap, bases<UnitCell>, boost::noncopyable > 
         ("Crystal", init<>())
         /* Constructors */
-        .def(init<const float, const float, const float, const std::string&>())
+        .def(init<const float, const float, const float, const std::string&>(
+            (bp::arg("a"), bp::arg("b"), bp::arg("c"),
+            bp::arg("SpaceGroupId"))))
         .def(init<const float, const float, const float, 
             const float, const float, const float, 
-            const std::string&>())
-        .def(init<const CrystalWrap&>())
+            const std::string&>(
+            (bp::arg("a"), bp::arg("b"), bp::arg("c"),
+            bp::arg("alpha"), bp::arg("beta"), bp::arg("gamma"),
+            bp::arg("SpaceGroupId"))))
+        .def(init<const CrystalWrap&>((bp::arg("oldCryst"))))
         /* Methods */
         .def("AddScatterer", &Crystal::AddScatterer,
             with_custodian_and_ward<1,2>())

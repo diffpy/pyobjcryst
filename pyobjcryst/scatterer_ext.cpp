@@ -235,6 +235,8 @@ BOOST_PYTHON_MODULE(_scatterer)
         .add_property("X", &Scatterer::GetX, &Scatterer::SetX)
         .add_property("Y", &Scatterer::GetY, &Scatterer::SetY)
         .add_property("Z", &Scatterer::GetZ, &Scatterer::SetZ)
+        .add_property("Occupancy", &Scatterer::GetOccupancy,
+                &Scatterer::SetOccupancy)
         ;
 
 }

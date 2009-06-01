@@ -86,11 +86,8 @@ BOOST_PYTHON_MODULE(_molatom)
         .add_property("X", &MolAtom::GetX, &MolAtom::SetX)
         .add_property("Y", &MolAtom::GetY, &MolAtom::SetY)
         .add_property("Z", &MolAtom::GetZ, &MolAtom::SetZ)
-        .add_property("Occ", &MolAtom::GetOccupancy, &MolAtom::SetOccupancy)
-        .add_property("x", &MolAtom::GetX, &MolAtom::SetX)
-        .add_property("y", &MolAtom::GetY, &MolAtom::SetY)
-        .add_property("z", &MolAtom::GetZ, &MolAtom::SetZ)
-        .add_property("occ", &MolAtom::GetOccupancy, &MolAtom::SetOccupancy)
+        .add_property("Occupancy", &MolAtom::GetOccupancy,
+                &MolAtom::SetOccupancy)
         .def("__str__", &__str__)
         ;
 }
