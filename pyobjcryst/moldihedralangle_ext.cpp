@@ -116,13 +116,6 @@ BOOST_PYTHON_MODULE(_moldihedralangle)
             &MolDihedralAngle::SetAngleDelta)
         .add_property("AngleSigma", &MolDihedralAngle::GetAngleSigma,
             &MolDihedralAngle::SetAngleSigma)
-        .add_property("angle", &MolDihedralAngle::GetAngle)
-        .add_property("angle0", &MolDihedralAngle::GetAngle0,
-            &MolDihedralAngle::SetAngle0)
-        .add_property("delta", &MolDihedralAngle::GetAngleDelta,
-            &MolDihedralAngle::SetAngleDelta)
-        .add_property("sigma", &MolDihedralAngle::GetAngleSigma,
-            &MolDihedralAngle::SetAngleSigma)
         .def("__getitem__", &_GetAtom,
             return_internal_reference<>())
         ;

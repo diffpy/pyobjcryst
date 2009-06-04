@@ -57,10 +57,7 @@ void _RemoveScatterer(Crystal& crystal, Scatterer* scatt)
 // scatteringpower 
 void _RemoveScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
 {
-    // Make sure that this scatteringpower is in this crystal
-
     crystal.RemoveScatteringPower(scattpow, false);
-    return;
 }
 
 void _PrintMinDistanceTable(const Crystal& crystal, 
@@ -68,7 +65,6 @@ void _PrintMinDistanceTable(const Crystal& crystal,
 {
 
     crystal.PrintMinDistanceTable(minDistance);
-    return;
 }
 
 // We want to turn a ScatteringComponentList into an actual list

@@ -109,14 +109,6 @@ BOOST_PYTHON_MODULE(_molbond)
             &MolBond::SetLengthSigma)
         .add_property("BondOrder", &MolBond::GetBondOrder,
             &MolBond::SetBondOrder)
-        .add_property("length", &MolBond::GetLength)
-        .add_property("length0", &MolBond::GetLength0, &MolBond::SetLength0)
-        .add_property("delta", &MolBond::GetLengthDelta,
-            &MolBond::SetLengthDelta)
-        .add_property("sigma", &MolBond::GetLengthSigma,
-            &MolBond::SetLengthSigma)
-        .add_property("order", &MolBond::GetBondOrder,
-            &MolBond::SetBondOrder)
         .def("__getitem__", &_GetAtom,
             return_internal_reference<>())
         ;

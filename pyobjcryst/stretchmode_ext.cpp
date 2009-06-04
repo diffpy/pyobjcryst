@@ -106,6 +106,18 @@ void _AddAtomsSetSMBL(StretchModeBondLength& mode, MolAtomSet& l)
     }
 }
 
+bp::list _GetAtomsSMBL(StretchModeBondLength& mode)
+{
+    bp::list l;
+
+    MolAtomSet& v = mode.mvTranslatedAtomList;
+
+    l = ptrcontainerToPyList< MolAtomSet >(v);
+
+    return l;
+}
+
+
 // This one is for the angle modes
 template <class T>
 void _AddAtom(T& mode, MolAtom& a)
@@ -132,6 +144,38 @@ void _AddAtomsSet(T& mode, MolAtomSet& l)
     {
         mode.mvRotatedAtomList.insert(*p);
     }
+}
+
+template <class T>
+bp::list _GetAtoms(T& mode)
+{
+    bp::list l;
+
+    MolAtomSet& v = mode.mvRotatedAtomList;
+
+    l = ptrcontainerToPyList< MolAtomSet >(v);
+
+    return l;
+}
+
+// These are accessors for the atoms.
+
+template <class T>
+MolAtom* _GetAtom0(T& mode)
+{
+    return mode.mpAtom0;
+}
+
+template <class T>
+MolAtom* _GetAtom1(T& mode)
+{
+    return mode.mpAtom1;
+}
+
+template <class T>
+MolAtom* _GetAtom2(T& mode)
+{
+    return mode.mpAtom2;
 }
 
 } // namespace
@@ -162,6 +206,14 @@ BOOST_PYTHON_MODULE(_stretchmode)
             with_custodian_and_ward<1,2>())
         .def("AddAtoms", &_AddAtomsSetSMBL,
             with_custodian_and_ward<1,2>())
+        .def("GetAtoms", &_GetAtomsSMBL,
+            with_custodian_and_ward_postcall<1,0>())
+        .add_property("mpAtom0",
+            make_function( &_GetAtom0<StretchModeBondLength>, 
+            return_internal_reference<>()))
+        .add_property("mpAtom1",
+            make_function( &_GetAtom1<StretchModeBondLength>, 
+            return_internal_reference<>()))
         ;
 
     class_<StretchModeBondAngle, bases<StretchMode> >
@@ -179,6 +231,17 @@ BOOST_PYTHON_MODULE(_stretchmode)
             with_custodian_and_ward<1,2>())
         .def("AddAtoms", &_AddAtomsSet<StretchModeBondAngle>,
             with_custodian_and_ward<1,2>())
+        .def("GetAtoms", &_GetAtoms<StretchModeBondAngle>,
+            with_custodian_and_ward_postcall<1,0>())
+        .add_property("mpAtom0",
+            make_function( &_GetAtom0<StretchModeBondAngle>, 
+            return_internal_reference<>()))
+        .add_property("mpAtom1",
+            make_function( &_GetAtom1<StretchModeBondAngle>, 
+            return_internal_reference<>()))
+        .add_property("mpAtom2",
+            make_function( &_GetAtom2<StretchModeBondAngle>, 
+            return_internal_reference<>()))
         ;
 
     class_<StretchModeTorsion, bases<StretchMode> >
@@ -194,6 +257,14 @@ BOOST_PYTHON_MODULE(_stretchmode)
             with_custodian_and_ward<1,2>())
         .def("AddAtoms", &_AddAtomsSet<StretchModeTorsion>,
             with_custodian_and_ward<1,2>())
+        .def("GetAtoms", &_GetAtoms<StretchModeTorsion>,
+            with_custodian_and_ward_postcall<1,0>())
+        .add_property("mpAtom1",
+            make_function( &_GetAtom1<StretchModeTorsion>, 
+            return_internal_reference<>()))
+        .add_property("mpAtom2",
+            make_function( &_GetAtom2<StretchModeTorsion>, 
+            return_internal_reference<>()))
         ;
 
     class_<StretchModeTwist, bases<StretchMode> >
@@ -208,6 +279,14 @@ BOOST_PYTHON_MODULE(_stretchmode)
             with_custodian_and_ward<1,2>())
         .def("AddAtoms", &_AddAtomsSet<StretchModeTwist>,
             with_custodian_and_ward<1,2>())
+        .def("GetAtoms", &_GetAtoms<StretchModeTwist>,
+            with_custodian_and_ward_postcall<1,0>())
+        .add_property("mpAtom1",
+            make_function( &_GetAtom1<StretchModeTwist>, 
+            return_internal_reference<>()))
+        .add_property("mpAtom2",
+            make_function( &_GetAtom2<StretchModeTwist>, 
+            return_internal_reference<>()))
         ;
 }
 

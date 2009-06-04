@@ -59,6 +59,14 @@ class TestCrystal(unittest.TestCase):
         self.assertTrue(1, len(scl))
         return
 
+    def testGetScatterer(self):
+        """Test GetScatterer."""
+        sp, atom = makeScatterer()
+        c = makeCrystal(sp, atom)
+        for i in range(c.GetNbScatterer()):
+            c.GetScatterer(i)
+        return
+
 
 
 if __name__ == "__main__":

@@ -517,42 +517,42 @@ bp::list _AsZMatrix(const Molecule& m, const bool keeporder)
 // Setters and getters for position
 void _setQ0(Molecule& m, float val)
 {
-    m.GetPar("Q0").SetValue(val);
+    m.GetPar(m.GetName()+"Q0").SetValue(val);
 }
 
 float _getQ0(Molecule& m)
 {
-    return m.GetPar("Q0").GetValue();
+    return m.GetPar(m.GetName()+"Q0").GetValue();
 }
 
 void _setQ1(Molecule& m, float val)
 {
-    m.GetPar("Q1").SetValue(val);
+    m.GetPar(m.GetName()+"Q1").SetValue(val);
 }
 
 float _getQ1(Molecule& m)
 {
-    return m.GetPar("Q1").GetValue();
+    return m.GetPar(m.GetName()+"Q1").GetValue();
 }
 
 void _setQ2(Molecule& m, float val)
 {
-    m.GetPar("Q2").SetValue(val);
+    m.GetPar(m.GetName()+"Q2").SetValue(val);
 }
 
 float _getQ2(Molecule& m)
 {
-    return m.GetPar("Q2").GetValue();
+    return m.GetPar(m.GetName()+"Q2").GetValue();
 }
 
 void _setQ3(Molecule& m, float val)
 {
-    m.GetPar("Q3").SetValue(val);
+    m.GetPar(m.GetName()+"Q3").SetValue(val);
 }
 
 float _getQ3(Molecule& m)
 {
-    return m.GetPar("Q3").GetValue();
+    return m.GetPar(m.GetName()+"Q3").GetValue();
 }
 
 

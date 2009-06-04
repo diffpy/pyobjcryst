@@ -16,12 +16,23 @@ class TestMolecule(unittest.TestCase):
     def setUp(self):
         self.c = makeC60()
         self.m = self.c.GetScatterer("c60")
-        rgl = self.m.GetRigidGroupList()
         return
 
     def tearDown(self):
         del self.c
         del self.m
+        return
+
+    def testProperties(self):
+        """Make sure we can access the python-only properties."""
+        self.m.Q0 *= 1.001
+        self.m.Q1 *= 1.001
+        self.m.Q2 *= 1.001
+        self.m.Q3 *= 1.001
+        self.m.X *= 1.001
+        self.m.Y *= 1.001
+        self.m.Z *= 1.001
+        self.m.Occupancy *= 1.001
         return
 
     def testContainment(self):
@@ -87,6 +98,10 @@ class TestMolecule(unittest.TestCase):
         atoms = self.m.GetAtomList()
         for a in atoms:
             self.m.RemoveAtom(a)
+        del atoms
+
+        atoms = self.m.GetAtomList()
+        self.assertEquals(0, len(atoms))
 
         self.assertEquals(0, self.m.GetNbAtoms())
 
@@ -673,6 +688,9 @@ class TestStretchModeBondLength(unittest.TestCase):
         sm = StretchModeBondLength(atop, abot, None)
         sm.AddAtom(abot)
 
+        self.assertEquals(sm.mpAtom0.GetName(), atop.GetName())
+        self.assertEquals(sm.mpAtom1.GetName(), abot.GetName())
+
         # Stretch the bond by 5%
         delta = 0.05 * d0
         sm.Stretch(delta)
@@ -715,6 +733,11 @@ class TestStretchModeBondAngle(unittest.TestCase):
         sm = StretchModeBondAngle(a1, ac, a2, None)
         sm.AddAtom(a2)
 
+        self.assertEquals(sm.mpAtom0.GetName(), a1.GetName())
+        self.assertEquals(sm.mpAtom1.GetName(), ac.GetName())
+        self.assertEquals(sm.mpAtom2.GetName(), a2.GetName())
+
+
         # Stretch the angle by 5%
         delta = 0.05 * angle0
         sm.Stretch(delta)
@@ -755,13 +778,15 @@ class TestStretchModeTorsion(unittest.TestCase):
         # Add the last atom so it can rotate
         sm.AddAtom(a2)
 
+        self.assertEquals(sm.mpAtom1.GetName(), ac0.GetName())
+        self.assertEquals(sm.mpAtom2.GetName(), ac1.GetName())
+
         # Stretch the angle by 5%
         delta = 0.25 * angle0
         sm.Stretch(delta)
 
         # Make sure this does what we expected
         angle1 = GetDihedralAngle(a1, ac0, ac1, a2)
-        print angle0, angle1
         self.assertAlmostEquals(angle0+delta, angle1, 6)
 
         return

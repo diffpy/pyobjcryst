@@ -170,6 +170,7 @@ BOOST_PYTHON_MODULE(_unitcell)
                 return_internal_reference<>())
         .def("GetVolume", &UnitCell::GetVolume)
         .def("__str__", &__str__<UnitCell>)
+        // python-only
         .add_property("a", &_geta, &_seta)
         .add_property("b", &_getb, &_setb)
         .add_property("c", &_getc, &_setc)

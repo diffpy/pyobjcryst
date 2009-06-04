@@ -114,13 +114,6 @@ BOOST_PYTHON_MODULE(_molbondangle)
             &MolBondAngle::SetAngleDelta)
         .add_property("AngleSigma", &MolBondAngle::GetAngleSigma,
             &MolBondAngle::SetAngleSigma)
-        .add_property("angle", &MolBondAngle::GetAngle)
-        .add_property("angle0", &MolBondAngle::GetAngle0,
-            &MolBondAngle::SetAngle0)
-        .add_property("delta", &MolBondAngle::GetAngleDelta,
-            &MolBondAngle::SetAngleDelta)
-        .add_property("sigma", &MolBondAngle::GetAngleSigma,
-            &MolBondAngle::SetAngleSigma)
         .def("__getitem__", &_GetAtom,
             return_internal_reference<>())
         ;
