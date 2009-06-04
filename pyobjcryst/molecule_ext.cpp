@@ -514,6 +514,47 @@ bp::list _AsZMatrix(const Molecule& m, const bool keeporder)
     return l;
 }
 
+// Setters and getters for position
+void _setQ0(Molecule& m, float val)
+{
+    m.GetPar("Q0").SetValue(val);
+}
+
+float _getQ0(Molecule& m)
+{
+    return m.GetPar("Q0").GetValue();
+}
+
+void _setQ1(Molecule& m, float val)
+{
+    m.GetPar("Q1").SetValue(val);
+}
+
+float _getQ1(Molecule& m)
+{
+    return m.GetPar("Q1").GetValue();
+}
+
+void _setQ2(Molecule& m, float val)
+{
+    m.GetPar("Q2").SetValue(val);
+}
+
+float _getQ2(Molecule& m)
+{
+    return m.GetPar("Q2").GetValue();
+}
+
+void _setQ3(Molecule& m, float val)
+{
+    m.GetPar("Q3").SetValue(val);
+}
+
+float _getQ3(Molecule& m)
+{
+    return m.GetPar("Q3").GetValue();
+}
+
 
 } // namespace
 
@@ -690,6 +731,11 @@ BOOST_PYTHON_MODULE(_molecule)
         .def("InitOptions", &Molecule::InitOptions)
         .def("__getitem__", &_GetAtomIdx, return_internal_reference<>())
         .def("__len__", &_GetNbAtoms)
+        // Properties for molecule position
+        .add_property("Q0", &_getQ0, &_setQ0)
+        .add_property("Q1", &_getQ1, &_setQ1)
+        .add_property("Q2", &_getQ2, &_setQ2)
+        .add_property("Q3", &_getQ3, &_setQ3)
         ;
 
     // Wrap some functions

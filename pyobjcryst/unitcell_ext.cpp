@@ -65,6 +65,69 @@ tuple OrthonormalToMillerCoords(const UnitCell &uc,
     return make_tuple(x,y,z);
 }
 
+// Setter for the lattice parameters.
+
+void _seta(UnitCell& u, float val)
+{
+    u.GetPar("a").SetValue(val);
+}
+
+float _geta(UnitCell& u)
+{
+    return u.GetLatticePar(0);
+}
+
+void _setb(UnitCell& u, float val)
+{
+    u.GetPar("b").SetValue(val);
+}
+
+float _getb(UnitCell& u)
+{
+    return u.GetLatticePar(1);
+}
+
+void _setc(UnitCell& u, float val)
+{
+    u.GetPar("c").SetValue(val);
+}
+
+float _getc(UnitCell& u)
+{
+    return u.GetLatticePar(2);
+}
+
+void _setalpha(UnitCell& u, float val)
+{
+    u.GetPar("alpha").SetValue(val);
+}
+
+float _getalpha(UnitCell& u)
+{
+    return u.GetLatticePar(3);
+}
+
+void _setbeta(UnitCell& u, float val)
+{
+    u.GetPar("beta").SetValue(val);
+}
+
+float _getbeta(UnitCell& u)
+{
+    return u.GetLatticePar(4);
+}
+
+void _setgamma(UnitCell& u, float val)
+{
+    u.GetPar("gamma").SetValue(val);
+}
+
+float _getgamma(UnitCell& u)
+{
+    return u.GetLatticePar(5);
+}
+
+
 }
 
 BOOST_PYTHON_MODULE(_unitcell)
@@ -107,5 +170,11 @@ BOOST_PYTHON_MODULE(_unitcell)
                 return_internal_reference<>())
         .def("GetVolume", &UnitCell::GetVolume)
         .def("__str__", &__str__<UnitCell>)
+        .add_property("a", &_geta, &_seta)
+        .add_property("b", &_getb, &_setb)
+        .add_property("c", &_getc, &_setc)
+        .add_property("alpha", &_getalpha, &_setalpha)
+        .add_property("beta", &_getbeta, &_setbeta)
+        .add_property("gamma", &_getgamma, &_setgamma)
         ;
 }

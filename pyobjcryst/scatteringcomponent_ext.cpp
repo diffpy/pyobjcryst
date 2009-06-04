@@ -57,7 +57,7 @@ BOOST_PYTHON_MODULE(_scatteringcomponent)
         .def_readwrite("Z", &ScatteringComponent::mZ)
         .def_readwrite("mOccupancy", &ScatteringComponent::mOccupancy)
         .def_readwrite("Occupancy", &ScatteringComponent::mOccupancy)
-        .def_readwrite("mDynPopCorr", &ScatteringComponent::mDynPopCorr)
+        .def_readonly("mDynPopCorr", &ScatteringComponent::mDynPopCorr)
         // Workaround to give attribute access. Again, returning the object,
         // where it should be read-only.
         .add_property("mpScattPow", 

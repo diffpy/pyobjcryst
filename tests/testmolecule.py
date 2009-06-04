@@ -645,7 +645,128 @@ class TestMolDihedralAngle(unittest.TestCase):
 
 # End class TestMolDihedralAngle
 
+class TestStretchModeBondLength(unittest.TestCase):
 
+    def setUp(self):
+        self.c = makeMnO6()
+        self.m = self.c.GetScatterer("MnO6")
+        return
+
+    def tearDown(self):
+        del self.m
+        del self.c
+        return
+
+    def testStretchModeBondLength(self):
+        """Test the StretchModeBondLength class."""
+
+        # Measure the distance
+        ac = self.m[0]
+        # The 0, 0, z atom
+        atop = self.m[1]
+        # The 0, 0, -z atom
+        abot = self.m[6]
+        d0 = GetBondLength(atop, abot)
+        dc0 = GetBondLength(ac, atop)
+
+        # Now create a stretch mode with just these two
+        sm = StretchModeBondLength(atop, abot, None)
+        sm.AddAtom(abot)
+
+        # Stretch the bond by 5%
+        delta = 0.05 * d0
+        sm.Stretch(delta)
+
+        # Make sure this does what we expected
+        d1 = GetBondLength(atop, abot)
+        self.assertAlmostEquals(d0+delta, d1, 6)
+
+        # Note that only the second atom has moved
+        dc1 = GetBondLength(ac, atop)
+        self.assertAlmostEquals(dc0, dc1)
+
+        return
+
+# End class TestStretchModeBondLength
+
+class TestStretchModeBondAngle(unittest.TestCase):
+
+    def setUp(self):
+        self.c = makeMnO6()
+        self.m = self.c.GetScatterer("MnO6")
+        return
+
+    def tearDown(self):
+        del self.m
+        del self.c
+        return
+
+    def testStretchModeBondAngle(self):
+        """Test the StretchModeBondLength class."""
+
+        a1 = self.m[1]
+        ac = self.m[0]
+        a2 = self.m[2]
+
+        # Measure the angle
+        angle0 = GetBondAngle(a1, ac, a2)
+
+        # Now create a stretch mode with these
+        sm = StretchModeBondAngle(a1, ac, a2, None)
+        sm.AddAtom(a2)
+
+        # Stretch the angle by 5%
+        delta = 0.05 * angle0
+        sm.Stretch(delta)
+
+        # Make sure this does what we expected
+        angle1 = GetBondAngle(a1, ac, a2)
+        self.assertAlmostEquals(angle0+delta, angle1, 6)
+
+        return
+
+# End class TestStretchModeBondAngle
+
+class TestStretchModeTorsion(unittest.TestCase):
+
+    def setUp(self):
+        self.c = makeMnO6()
+        self.m = self.c.GetScatterer("MnO6")
+        return
+
+    def tearDown(self):
+        del self.m
+        del self.c
+        return
+
+    def testStretchModeTorsion(self):
+        """Test the StretchModeBondLength class."""
+
+        a1 = self.m[1]
+        ac0 = self.m[3]
+        ac1 = self.m[0]
+        a2 = self.m[2]
+
+        # Measure the angle
+        angle0 = GetDihedralAngle(a1, ac0, ac1, a2)
+
+        # Now create a stretch mode with the central bond
+        sm = StretchModeTorsion(ac0, ac1, None)
+        # Add the last atom so it can rotate
+        sm.AddAtom(a2)
+
+        # Stretch the angle by 5%
+        delta = 0.25 * angle0
+        sm.Stretch(delta)
+
+        # Make sure this does what we expected
+        angle1 = GetDihedralAngle(a1, ac0, ac1, a2)
+        print angle0, angle1
+        self.assertAlmostEquals(angle0+delta, angle1, 6)
+
+        return
+
+# End class TestStretchTorsion
 
 if __name__ == "__main__":
     unittest.main()

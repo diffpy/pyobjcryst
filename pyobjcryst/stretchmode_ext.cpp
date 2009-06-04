@@ -151,7 +151,8 @@ BOOST_PYTHON_MODULE(_stretchmode)
 
     class_<StretchModeBondLength, bases<StretchMode> >
         ("StretchModeBondLength", 
-        init<MolAtom&, MolAtom&, MolBond*>()
+        init<MolAtom&, MolAtom&, MolBond*>
+        ((bp::arg("at0"), bp::arg("at1"), bp::arg("pBond")=0))
         [with_custodian_and_ward<1,2,
             with_custodian_and_ward<1,3,
                 with_custodian_and_ward<1,4> > >()])
@@ -165,7 +166,9 @@ BOOST_PYTHON_MODULE(_stretchmode)
 
     class_<StretchModeBondAngle, bases<StretchMode> >
         ("StretchModeBondAngle", 
-        init<MolAtom&, MolAtom&, MolAtom&, MolBondAngle*>()
+        init<MolAtom&, MolAtom&, MolAtom&, MolBondAngle*>
+        ((bp::arg("at0"), bp::arg("at1"), bp::arg("at2"),
+          bp::arg("pBondAngle")=0))
         [with_custodian_and_ward<1,2,
             with_custodian_and_ward<1,3,
                 with_custodian_and_ward<1,4,
@@ -180,28 +183,30 @@ BOOST_PYTHON_MODULE(_stretchmode)
 
     class_<StretchModeTorsion, bases<StretchMode> >
         ("StretchModeTorsion", 
-        init<MolAtom&, MolAtom&, MolDihedralAngle*>()
+        init<MolAtom&, MolAtom&, MolDihedralAngle*>
+        ((bp::arg("at0"), bp::arg("at1"), bp::arg("pDihedralAngle")=0))
         [with_custodian_and_ward<1,2,
             with_custodian_and_ward<1,3,
                 with_custodian_and_ward<1,4> > >()])
-        .def("AddAtom", &_AddAtom<StretchModeBondAngle>,
+        .def("AddAtom", &_AddAtom<StretchModeTorsion>,
             with_custodian_and_ward<1,2>())
-        .def("AddAtoms", &_AddAtoms<StretchModeBondAngle>,
+        .def("AddAtoms", &_AddAtoms<StretchModeTorsion>,
             with_custodian_and_ward<1,2>())
-        .def("AddAtoms", &_AddAtomsSet<StretchModeBondAngle>,
+        .def("AddAtoms", &_AddAtomsSet<StretchModeTorsion>,
             with_custodian_and_ward<1,2>())
         ;
 
     class_<StretchModeTwist, bases<StretchMode> >
         ("StretchModeTwist", 
-        init<MolAtom&, MolAtom&>()
+        init<MolAtom&, MolAtom&>
+        ((bp::arg("at0"), bp::arg("at1")))
         [with_custodian_and_ward<1,2,
             with_custodian_and_ward<1,3> >()])
-        .def("AddAtom", &_AddAtom<StretchModeBondAngle>,
+        .def("AddAtom", &_AddAtom<StretchModeTwist>,
             with_custodian_and_ward<1,2>())
-        .def("AddAtoms", &_AddAtoms<StretchModeBondAngle>,
+        .def("AddAtoms", &_AddAtoms<StretchModeTwist>,
             with_custodian_and_ward<1,2>())
-        .def("AddAtoms", &_AddAtomsSet<StretchModeBondAngle>,
+        .def("AddAtoms", &_AddAtomsSet<StretchModeTwist>,
             with_custodian_and_ward<1,2>())
         ;
 }
