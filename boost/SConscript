@@ -1,0 +1,21 @@
+Import("env")
+
+# Get rid of the lib prefix
+env["SHLIBPREFIX"]=""
+
+# Append objcryst libraries and required boost library
+env.Append(LIBS = ["cryst", "RefinableObj", "CrystVector", "Quirks", "cctbx",
+        "newmat", "boost_python"]
+        )
+
+# Get the modules
+modfiles = Glob("*_ext.cpp")
+
+for fileobj in modfiles:
+    filename = str(fileobj)
+    libname = "_" + filename[:-8]
+    env.SharedLibrary(libname, fileobj)
+
+# Make sure _registerconverters.so is built
+env.SharedLibrary( "_registerconverters.so", "registerconverters.cpp")
+

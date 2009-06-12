@@ -20,6 +20,8 @@
 * - CalcDynPopCorr is not enabled, as the API states that this is for internal
 *   use only.
 *
+*   FIXME - Print causes a seg-fault when dummy atoms are present.
+*
 * $Id$
 *
 *****************************************************************************/
