@@ -1,3 +1,6 @@
+# This is deprecated. Do not use.
+#
+#
 # User variables - can be set as environment variables or as make arguments
 #
 # PYTHON_VERSION	version of Python used for compilation, e.g. "2.3"

@@ -14,8 +14,10 @@ modfiles = Glob("*_ext.cpp")
 for fileobj in modfiles:
     filename = str(fileobj)
     libname = "_" + filename[:-8]
-    env.SharedLibrary(libname, fileobj)
+    sl = env.SharedLibrary(libname, fileobj)
+    env.InstallAs(source = sl[0], target = "../pyobjcryst/%s"%sl[0])
 
 # Make sure _registerconverters.so is built
-env.SharedLibrary( "_registerconverters.so", "registerconverters.cpp")
+sl = env.SharedLibrary( "_registerconverters.so", "registerconverters.cpp")
+env.InstallAs(source = sl[0], target = "../pyobjcryst/%s"%sl[0])
 

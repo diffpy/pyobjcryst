@@ -1,3 +1,4 @@
+# This is deprecated. Do not use.
 .PHONY : all
 all : ${subst _ext.cpp,,${wildcard *_ext.cpp}}
 
