@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-from setuptools import setup, find_packages
+from setuptools import setup
 import fix_setuptools_chmod
 
 # OpenAlea.deploy extends setuptools in order to support scons setups, and
@@ -10,7 +10,7 @@ openalea_requires = ['openalea.deploy']
 openalea_links = ['http://openalea.gforge.inria.fr/pi']
 
 # define distribution
-dist = setup(
+dist =  setup(
         name = "pyobjcryst",
         version = "0.1a1",
         author = "Christopher L. Farrow",
@@ -26,7 +26,7 @@ dist = setup(
         dependency_links = openalea_requires,
 
         # Now we can tell distutils what to install
-        scons_scripts=['SConstruct']
+        scons_scripts=['SConstruct'],
 )
 
 # End of file

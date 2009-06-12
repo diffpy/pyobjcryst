@@ -26,8 +26,8 @@ srcfiles += Glob("./cctbx/cctbx/miller/*.cpp")
 srcfiles += Glob("./cctbx/cctbx/uctbx/*.cpp")
 
 # Make the library object
-cctbxlib = cctbxenv.SharedLibrary("cctbx", srcfiles)
+objects = cctbxenv.SharedObject(srcfiles)
 
 # Put this back into the global environment
-env["cctbxlib"] = cctbxlib
+env["cctbxobjs"] = objects
 

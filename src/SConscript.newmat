@@ -24,7 +24,7 @@ for i, f in enumerate(srcfiles):
     srcfiles[i] = os.path.join(srcdir, f)
 
 # Make the library object
-newmatlib = newmatenv.SharedLibrary("newmat", srcfiles)
+objects = newmatenv.SharedObject(srcfiles)
 
 # Put this back into the global environment
-env["newmatlib"] = newmatlib
+env["newmatobjs"] = objects
