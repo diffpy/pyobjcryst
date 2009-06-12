@@ -1,23 +1,34 @@
 Import("env")
 
+# Let's not mess up the global environment
+shlibenv = env.Clone()
+
+# Make sure we use the proper python build options
+shlibenv.ParseConfig("python-config --includes")
+shlibenv.ParseConfig("python-config --ldflags")
+
 # Get rid of the lib prefix
-env["SHLIBPREFIX"]=""
+shlibenv["SHLIBPREFIX"]=""
 
 # Append objcryst libraries and required boost library
-env.Append(LIBS = ["cryst", "RefinableObj", "CrystVector", "Quirks", "cctbx",
-        "newmat", "boost_python"]
-        )
+shlibenv.Append(LIBS = ["objcryst", "newmat", "cctbx", "boost_python"])
+
+# Identify the headers for ObjCryst
+shlibenv.Append(CPPPATH = "../src/ObjCryst")
 
 # Get the modules
 modfiles = Glob("*_ext.cpp")
 
+# Get the ObjCryst library
+objcrystlib = shlibenv["objcrystlib"]
+
 for fileobj in modfiles:
     filename = str(fileobj)
     libname = "_" + filename[:-8]
-    sl = env.SharedLibrary(libname, fileobj)
-    env.InstallAs(source = sl[0], target = "../pyobjcryst/%s"%sl[0])
+    sl = shlibenv.SharedLibrary(libname, [fileobj, objcrystlib])
+    shlibenv.InstallAs(source = sl[0], target = "../pyobjcryst/%s"%sl[0])
 
 # Make sure _registerconverters.so is built
-sl = env.SharedLibrary( "_registerconverters.so", "registerconverters.cpp")
-env.InstallAs(source = sl[0], target = "../pyobjcryst/%s"%sl[0])
+sl = shlibenv.SharedLibrary( "_registerconverters.so", "registerconverters.cpp")
+shlibenv.InstallAs(source = sl[0], target = "../pyobjcryst/%s"%sl[0])
 

@@ -1,0 +1,30 @@
+Import('env')
+
+# Start by extracting the source library
+import os
+if not os.path.exists("newmat"):
+    import tarfile
+    tf = tarfile.open("newmat.tar.bz2", "r:bz2")
+    tf.extractall()
+    tf.close()
+
+# Define the what we need to install cctbx
+newmatenv = env.Clone()
+
+# Define the requires source files
+srcfiles = [ "fft.cpp", "evalue.cpp", "submat.cpp", "cholesky.cpp",
+"hholder.cpp", "sort.cpp", "newmatrm.cpp", "jacobi.cpp", "svd.cpp",
+"newmat8.cpp", "newmat7.cpp", "newmat6.cpp", "newmat5.cpp", "newmat3.cpp",
+"newmat4.cpp", "newmat2.cpp", "newmat1.cpp", "bandmat.cpp", "myexcept.cpp",
+"newmatex.cpp", "newfft.cpp"]
+
+srcdir = "newmat"
+import os.path
+for i, f in enumerate(srcfiles):
+    srcfiles[i] = os.path.join(srcdir, f)
+
+# Make the library object
+newmatlib = newmatenv.SharedLibrary("newmat", srcfiles)
+
+# Put this back into the global environment
+env["newmatlib"] = newmatlib

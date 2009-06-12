@@ -1,0 +1,32 @@
+Import('env')
+
+# Start by extracting the source library
+import os
+if not os.path.exists("ObjCryst"):
+    import tarfile
+    tf = tarfile.open("objcryst.tar.gz", "r:gz")
+    tf.extractall()
+    tf.close()
+
+# Define the what we need to install objcryst
+objcrystenv = env.Clone()
+
+# Add some necessary flags and libraries
+objcrystenv.Append(CPPFLAGS = " -O3 -w -ffast-math -fstrict-aliasing") 
+objcrystenv.Append(CPPFLAGS = " -pipe -fomit-frame-pointer -funroll-loops")
+
+# Source directories
+objcrystenv.Append(CPPPATH = [".", "./ObjCryst"])
+objcrystenv.Append(CPPPATH = ["./cctbx/cctbx/include", "./cctbx/scitbx/include"])
+
+# Idenfity the required source files
+srcfiles  = Glob("./ObjCryst/ObjCryst/*.cpp")
+srcfiles += Glob("./ObjCryst/RefinableObj/*.cpp")
+srcfiles += Glob("./ObjCryst/CrystVector/*.cpp")
+srcfiles += Glob("./ObjCryst/Quirks/*.cpp")
+
+# Make the library object
+objcrystlib = objcrystenv.SharedLibrary("objcryst", srcfiles)
+
+# Put this back into the global environment
+env["objcrystlib"] = objcrystlib

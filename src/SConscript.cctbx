@@ -1,0 +1,33 @@
+Import('env')
+
+# Start by extracting the source library
+import os
+if not os.path.exists("cctbx"):
+    import tarfile
+    tf = tarfile.open("cctbx.tar.bz2", "r:bz2")
+    tf.extractall()
+    tf.close()
+
+# Define the what we need to install cctbx
+cctbxenv = env.Clone()
+
+# Add some necessary flags
+cctbxenv.Append(CPPFLAGS = "-O3 -pedantic")
+# Source path
+cctbxenv.Append(CPPPATH = ["./cctbx/cctbx/include", "./cctbx/scitbx/include"])
+
+# Idenfity the required source files
+srcfiles  = Glob("./cctbx/cctbx/eltbx/*.cpp")
+srcfiles += Glob("./cctbx/cctbx/eltbx/xray_scattering/*.cpp")
+srcfiles += Glob("./cctbx/cctbx/sgtbx/*.cpp")
+srcfiles += Glob("./cctbx/cctbx/sgtbx/reference_settings/*.cpp")
+srcfiles += Glob("./cctbx/cctbx/global/*.cpp")
+srcfiles += Glob("./cctbx/cctbx/miller/*.cpp")
+srcfiles += Glob("./cctbx/cctbx/uctbx/*.cpp")
+
+# Make the library object
+cctbxlib = cctbxenv.SharedLibrary("cctbx", srcfiles)
+
+# Put this back into the global environment
+env["cctbxlib"] = cctbxlib
+
