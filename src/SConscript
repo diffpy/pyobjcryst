@@ -1,5 +1,25 @@
 Import('env')
 
+# Download the source files if we must
+import os.path
+srcfile = "ObjCryst-r1162.tgz"
+if not (os.path.exists("cctbx") or os.path.exists("cctbx.tar.bz2")) \
+    or not (os.path.exists("newmat") or os.path.exists("newmat.tar.bz2"))\
+    or not (os.path.exists("ObjCryst") or os.path.exists("ObjCryst.tar.gz")):
+
+    # Download the file
+    if not os.path.exists(srcfile):
+        from download import download
+        print "Fetching source files. This might take a while."
+        download("http://dev.danse.us/packages/%s"%srcfile)
+        print "Done!"
+
+    # Uncompress it
+    import tarfile
+    tf = tarfile.open(srcfile, "r:gz")
+    tf.extractall()
+    tf.close()
+
 # This will build the intermediate objects required for the library
 SConscript(["SConscript.cctbx", "SConscript.newmat", "SConscript.objcryst"])
 
