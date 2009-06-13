@@ -10,12 +10,17 @@ objcrystobjs = env["objcrystobjs"]
 
 # This builds the shared library
 sl = env.SharedLibrary("objcryst", objcrystobjs + cctbxobjs + newmatobjs)
+env.Alias("installlib", env.Install("../boost", sl))
 
-# FIXME - need a portable way to install library!!! It would be nice to put it
-# with the extension files, but this requires RPATH (which is not portable)
-# information that comes from the setup.py. Look into how openalea.deploy can
-# help.
-#env.InstallAs(source = sl[0], target = "$LIBDIR/%s"%sl[0])
+
+# FIXME - need a portable way to install library!!!
+# Pick where to install the shared library
+import os
+if os.name == 'posix':
+    libdir = os.environ.get("LIBDIR")
+    if libdir is None or not os.path.exists(libdir):
+        libdir = "/usr/lib"
+    env.Alias("installlib", env.Install(libdir, sl))
 
 # Put this in the environment
 env["objcrystlib"] = sl

@@ -27,6 +27,7 @@ dist =  setup(
 
         # Now we can tell distutils what to install
         scons_scripts=['SConstruct'],
+        scons_parameters=['installpy'],
 )
 
 # End of file
