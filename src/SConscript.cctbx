@@ -1,10 +1,11 @@
 Import('env')
 
 # Start by extracting the source library
+archive = "cctbx.tar.bz2"
 import os
 if not os.path.exists("cctbx"):
     import tarfile
-    tf = tarfile.open("cctbx.tar.bz2", "r:bz2")
+    tf = tarfile.open(archive, "r:bz2")
     tf.extractall()
     tf.close()
 
@@ -27,6 +28,11 @@ srcfiles += Glob("./cctbx/cctbx/uctbx/*.cpp")
 
 # Make the library object
 objects = cctbxenv.SharedObject(srcfiles)
+
+# Let the build system know that we can clean the source directory when clean
+# is called.
+Clean(objects, "cctbx")
+Clean(objects, archive)
 
 # Put this back into the global environment
 env["cctbxobjs"] = objects

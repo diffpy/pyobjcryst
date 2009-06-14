@@ -1,10 +1,11 @@
 Import('env')
 
 # Start by extracting the source library
+archive = "ObjCryst.tar.gz"
 import os
 if not os.path.exists("ObjCryst"):
     import tarfile
-    tf = tarfile.open("ObjCryst.tar.gz", "r:gz")
+    tf = tarfile.open(archive, "r:gz")
     tf.extractall()
     tf.close()
 
@@ -27,6 +28,11 @@ srcfiles += Glob("./ObjCryst/Quirks/*.cpp")
 
 # Make shared objects
 objects = objcrystenv.SharedObject(srcfiles)
+
+# Let the build system know that we can clean the source directory when clean
+# is called.
+Clean(objects, "ObjCryst")
+Clean(objects, archive)
 
 # Put this back into the global environment
 env["objcrystobjs"] = objects
