@@ -4,10 +4,6 @@
 from setuptools import setup
 import fix_setuptools_chmod
 
-# OpenAlea.deploy extends setuptools in order to support scons setups, and
-# various other features.
-openalea_requires = ['openalea.deploy']
-openalea_links = ['http://openalea.gforge.inria.fr/pi']
 
 # define distribution
 dist =  setup(
@@ -20,10 +16,11 @@ dist =  setup(
         license = "BSD",
         url = "http://www.diffpy.org/",
 
-        # These will allow us to use the OpenAlea build system without any
-        # effort.
-        setup_requires = openalea_requires,
-        dependency_links = openalea_requires,
+        # OpenAlea.deploy extends setuptools in order to support scons setups,
+        # and various other features.  These will allow us to use the OpenAlea
+        # build system without considerable effort.
+        setup_requires = ['openalea.deploy'],
+        dependency_links = ['http://openalea.gforge.inria.fr/pi'],
 
         # Now we can tell distutils what to install
         scons_scripts=['SConstruct'],
