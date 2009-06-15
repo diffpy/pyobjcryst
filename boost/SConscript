@@ -1,30 +1,30 @@
 Import("env")
 
 # Let's not mess up the global environment
-shlibenv = env.Clone()
+wrapperenv = env.Clone()
 
 # Make sure we use the proper python build options
-shlibenv.ParseConfig("python-config --includes")
-shlibenv.ParseConfig("python-config --ldflags")
+wrapperenv.ParseConfig("python-config --includes")
+wrapperenv.ParseConfig("python-config --ldflags")
 
 # Look here for our shared library
-shlibenv.Append(LIBPATH = "./")
+wrapperenv.Append(LIBPATH = "./")
 
 # Get rid of the lib prefix
-shlibenv["SHLIBPREFIX"]=""
+wrapperenv["SHLIBPREFIX"]=""
 
 # Make correct suffix
 import os
 if os.name == 'nt':
-    shlibenv['SHLIBSUFFIX']='.pyd'
+    wrapperenv['SHLIBSUFFIX']='.pyd'
 else: 
-    shlibenv['SHLIBSUFFIX']='.so'
+    wrapperenv['SHLIBSUFFIX']='.so'
 
 # Append objcryst libraries and required boost library
-shlibenv.Append(LIBS = ["objcryst", "boost_python"])
+wrapperenv.Append(LIBS = ["objcryst", "boost_python"])
 
 # Identify the headers for ObjCryst
-shlibenv.Append(CPPPATH = "../src/ObjCryst")
+wrapperenv.Append(CPPPATH = "../src/ObjCryst")
 
 # Get the modules
 modfiles = Glob("*_ext.cpp")
@@ -32,12 +32,11 @@ modfiles = Glob("*_ext.cpp")
 for fileobj in modfiles:
     filename = str(fileobj)
     libname = "_" + filename[:-8]
-    sl = shlibenv.SharedLibrary(libname, fileobj)
-    #shlibenv.InstallAs(source = sl[0], target = "../pyobjcryst/%s"%sl[0])
-    env.Alias("installpy", env.Install("../pyobjcryst", sl))
+    wrapper = wrapperenv.LoadableModule("../pyobjcryst/%s"%libname, fileobj)
+    Alias("build", wrapper)
 
 # Make sure _registerconverters.so is built
-sl = shlibenv.SharedLibrary( "_registerconverters.so", "registerconverters.cpp")
-#shlibenv.InstallAs(source = sl[0], target = "../pyobjcryst/%s"%sl[0])
-env.Alias("installpy", env.Install("../pyobjcryst", sl))
+wrapper = wrapperenv.LoadableModule( "../pyobjcryst/_registerconverters",
+        "registerconverters.cpp")
+Alias("build", wrapper)
 

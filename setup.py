@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
-
-from setuptools import setup
+from setuptools import setup, Extension
 import fix_setuptools_chmod
-
 
 # define distribution
 dist =  setup(
@@ -22,9 +20,15 @@ dist =  setup(
         setup_requires = ['openalea.deploy'],
         dependency_links = ['http://openalea.gforge.inria.fr/pi'],
 
+        # This tells openalea.deploy where to put and find the shared libraries
+        # modules.
+        lib_dirs = { 'lib' : 'lib', 'pyobjcryst' : 'pyobjcryst' },
+        # This is a must, since the shared libraries are linked from within the
+        # egg.
+        zip_safe = False,
+
         # Now we can tell distutils what to install
         scons_scripts=['SConstruct'],
-        scons_parameters=['installpy'],
 )
 
 # End of file
