@@ -97,7 +97,6 @@ def makeC60():
 
     sp = ScatteringPowerAtom("C", "C")
     sp.SetBiso(8*pi*pi*0.003)
-    #c.AddScatteringPower(sp)
 
     for i, l in enumerate(c60xyz.strip().splitlines()):
         x, y, z = map(float, l.split())
@@ -157,22 +156,24 @@ def toxyz(crystal, filename):
 
     scl = crystal.GetScatteringComponentList()
 
-    with file(filename, 'w') as f:
+    f = file(filename, 'w')
 
-        f.write(str(len(scl)))
-        f.write("\n\n")
 
-        import numpy
+    f.write(str(len(scl)))
+    f.write("\n\n")
 
-        
-        uc = numpy.array(
-                crystal.FractionalToOrthonormalCoords(1, 1, 1))
+    import numpy
+    
+    uc = numpy.array(
+            crystal.FractionalToOrthonormalCoords(1, 1, 1))
 
-        for s in scl:
-            el = s.mpScattPow.GetSymbol()
-            xyz = numpy.array([s.X, s.Y, s.Z])
-            xyz = numpy.array(crystal.FractionalToOrthonormalCoords(*xyz))
-            x, y, z = xyz
-            f.write("%s %f %f %f\n"%(el, x, y, z))
+    for s in scl:
+        el = s.mpScattPow.GetSymbol()
+        xyz = numpy.array([s.X, s.Y, s.Z])
+        xyz = numpy.array(crystal.FractionalToOrthonormalCoords(*xyz))
+        x, y, z = xyz
+        f.write("%s %f %f %f\n"%(el, x, y, z))
+
+    f.close()
 
     return

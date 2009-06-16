@@ -791,6 +791,27 @@ class TestStretchModeTorsion(unittest.TestCase):
 
         return
 
+    def testDummy(self):
+        """Test adding a dummy atom."""
+        return
+
+        # FIXME - uncomment once the changes to the ObjCryst source are brought
+        # into this package.
+        
+
+        # In this past, dummy atoms would cause seg-faults in crystal::Print
+        self.m.AddAtom(0, 0, 0, None, "center")
+
+        import tempfile
+        t = tempfile.TemporaryFile()
+
+
+        print >> t, self.m
+
+        print >> t, self.c
+
+        return
+
 # End class TestStretchTorsion
 
 if __name__ == "__main__":

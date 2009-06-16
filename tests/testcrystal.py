@@ -13,6 +13,7 @@ class TestCrystal(unittest.TestCase):
         """Test to see if the the crystal survives after it is out of scope."""
         sp, atom = makeScatterer()
         makeCrystal(sp, atom)
+
         # The crystal is out of scope. Since the lifetime of the atom and
         # scatterer are linked, the crystal should stay alive in memory.
         self.assertEqual("Ni", sp.GetName())
