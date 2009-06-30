@@ -24,8 +24,8 @@ dist =  setup(
 
         # This tells openalea.deploy where to put and find the shared
         # libraries. Shared libraries retrieved in this way will be installed
-        # in the sytem's shared library location. Another location can be
-        # chosen during install with the `-install-dyn-lib` flag. 
+        # in the system's shared library location. Another location can be
+        # chosen during install with the `--install-dyn-lib` option. 
         lib_dirs = { 'lib' : 'lib'},
 
         # This is a must, since the shared libraries are linked from within the
@@ -33,10 +33,10 @@ dist =  setup(
         zip_safe = False,
 
         # This tells openalea.deploy where to put and find binaries. Binaries
-        # are not installed in a system directory.  Instead of binaries, we're
-        # using it to move the compiled modules into the distribution directory
-        # so that they get installed with the package, but don't clutter the
-        # shared library directory.
+        # are installed locally within the egg, and not in a system directory.
+        # Instead of binaries, we're using it to move the compiled modules into
+        # the package directory so that they get installed with the python
+        # files, and don't clutter the shared library directory.
         bin_dirs = { 'pyobjcryst' : 'pyobjcryst'},
 
         # Now we can tell openalea.deploy where to find our scons file
