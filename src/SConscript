@@ -2,8 +2,8 @@ Import('env')
 
 # Download the source files if we must. If we must extract the source archives,
 # then make sure the srcfile is not corrupt.
-srcfile = "ObjCryst-r1162.tgz"
-md5sum = "3597d75e194e35c355732a59bbf87893"
+srcfile = "ObjCryst-r1164.tgz"
+md5sum = "66926b4ec5469bb0c1617cdc3930cd4b"
 
 # FIXME - use SCons to do this!
 import os.path

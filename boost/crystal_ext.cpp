@@ -20,7 +20,6 @@
 * - CalcDynPopCorr is not enabled, as the API states that this is for internal
 *   use only.
 *
-*   FIXME - Print causes a seg-fault when dummy atoms are present.
 *
 * $Id$
 *
@@ -91,13 +90,13 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
     CrystalWrap() : Crystal() 
     {
         SetDeleteSubObjInDestructor(false);
-        SetUseDynPopCorr(0);
+        SetDeleteRefParInDestructor(false);
     }
 
     CrystalWrap(const CrystalWrap& c) : Crystal(c) 
     {
         SetDeleteSubObjInDestructor(false);
-        SetUseDynPopCorr(0);
+        SetDeleteRefParInDestructor(false);
     }
 
     CrystalWrap(const float a, const float b, const float c , 
@@ -105,7 +104,7 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
         : Crystal(a, b, c, sg) 
     {
         SetDeleteSubObjInDestructor(false);
-        SetUseDynPopCorr(0);
+        SetDeleteRefParInDestructor(false);
     }
 
     CrystalWrap(const float a, const float b, const float c , 
@@ -114,7 +113,16 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
         : Crystal(a, b, c, alpha, beta, gamma, sg) 
     {
         SetDeleteSubObjInDestructor(false);
-        SetUseDynPopCorr(0);
+        SetDeleteRefParInDestructor(false);
+    }
+    
+    ~CrystalWrap()
+    {
+        std::cout << "deleting crystal" << std::endl;
+        std::cout << GetNbScatterer() << std::endl;
+        Scatterer& scat = GetScatt(0);
+        scat.Print();
+        
     }
 
     const ScatteringComponentList& default_GetScatteringComponentList() const
@@ -152,7 +160,7 @@ BOOST_PYTHON_MODULE(_crystal)
         .def(init<const CrystalWrap&>((bp::arg("oldCryst"))))
         /* Methods */
         .def("AddScatterer", &Crystal::AddScatterer,
-            with_custodian_and_ward<1,2>())
+            with_custodian_and_ward<1,2,with_custodian_and_ward<2,1> >())
         .def("RemoveScatterer", &_RemoveScatterer)
         .def("GetNbScatterer", &Crystal::GetNbScatterer)
         .def("GetScatt", 
@@ -174,7 +182,7 @@ BOOST_PYTHON_MODULE(_crystal)
             (Crystal::*) ()) &Crystal::GetScatteringPowerRegistry,
             return_internal_reference<>())
         .def("AddScatteringPower", &Crystal::AddScatteringPower,
-            with_custodian_and_ward<1,2>())
+            with_custodian_and_ward<1,2,with_custodian_and_ward<2,1> >())
         .def("RemoveScatteringPower", &_RemoveScatteringPower)
         .def("GetScatteringPower", 
             (ScatteringPower& (Crystal::*)(const std::string&)) 

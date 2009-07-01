@@ -129,9 +129,9 @@ MolAtom* _getItemMAV(const MolAtomVec& mav, size_t i)
     return mav[i];
 }
 
-MolAtom* _setItemMAV(MolAtomVec& mav, size_t i, MolAtom* a)
+void _setItemMAV(MolAtomVec& mav, size_t i, MolAtom* a)
 {
-    return mav[i] = a;
+    mav[i] = a;
 }
 
 void _deleteMAV(MolAtomVec& mav, size_t i)
@@ -213,8 +213,7 @@ BOOST_PYTHON_MODULE(_registerconverters)
         .def("contains", &_containsMAV)
         .def("delete", &_deleteMAV)
         .def("__getitem__", &_getItemMAV, return_internal_reference<>())
-        // FIXME - can't get this to work
-        //.def("__setitem__", &_setItemMAV, with_custodian_and_ward<1,2>())
+        .def("__setitem__", &_setItemMAV, with_custodian_and_ward<1,2>())
         .def("__len__", &MolAtomVec::size)
         ;
 
