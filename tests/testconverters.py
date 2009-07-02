@@ -19,20 +19,20 @@ This verifies results from tests built into the _registerconverters module.
 """
 
 import unittest
-import pyobjcryst.registerconverters as converters
+from pyobjcryst._pyobjcryst import getTestVector, getTestMatrix
 import numpy
 
 class TestConverters(unittest.TestCase):
 
     def testVector(self):
         tv = numpy.array(range(3), dtype=float)
-        v = converters.getTestVector()
+        v = getTestVector()
         self.assertTrue( numpy.array_equal(tv, v) )
         return
 
     def testMatrix(self):
         tm = numpy.array(range(6), dtype=float).reshape(3,2)
-        m = converters.getTestMatrix()
+        m = getTestMatrix()
         self.assertTrue( numpy.array_equal(tm, m) )
         return
 

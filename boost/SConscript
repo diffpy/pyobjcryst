@@ -21,7 +21,7 @@ else:
     wrapperenv['SHLIBSUFFIX']='.so'
 
 # Append objcryst libraries and required boost library
-wrapperenv.Append(LIBS = ["objcryst", "boost_python"])
+wrapperenv.Append(LIBS = ["boost_python"])
 
 # Identify the headers for ObjCryst
 wrapperenv.Append(CPPPATH = "../src/ObjCryst")
@@ -29,14 +29,17 @@ wrapperenv.Append(CPPPATH = "../src/ObjCryst")
 # Get the modules
 modfiles = Glob("*_ext.cpp")
 
-for fileobj in modfiles:
-    filename = str(fileobj)
-    libname = "_" + filename[:-8]
-    wrapper = wrapperenv.LoadableModule("../pyobjcryst/%s"%libname, fileobj)
-    Alias("build", wrapper)
+# Build them
+wrapobjs = wrapperenv.SharedObject(modfiles)
+wrapobjs += wrapperenv.SharedObject("registerconverters.cpp")
 
-# Make sure _registerconverters.so is built
-wrapper = wrapperenv.LoadableModule( "../pyobjcryst/_registerconverters",
-        "registerconverters.cpp")
+# Get all of the built cctbx objects
+newmatobjs = env["newmatobjs"]
+cctbxobjs = env["cctbxobjs"]
+objcrystobjs = env["objcrystobjs"]
+
+# Create the monlithic wrapper
+wrapper = wrapperenv.LoadableModule("../pyobjcryst/_pyobjcryst",
+        ["pyobjcryst.cpp"] + wrapobjs + objcrystobjs + cctbxobjs + newmatobjs )
+
 Alias("build", wrapper)
-

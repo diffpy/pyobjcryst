@@ -29,7 +29,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
@@ -54,7 +53,7 @@ std::string __str__(MolAtom& a)
 } // namespace
 
 
-BOOST_PYTHON_MODULE(_molatom)
+void wrap_molatom()
 {
 
     class_<MolAtom> ("MolAtom", init<const MolAtom&>())

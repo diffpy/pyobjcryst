@@ -24,7 +24,6 @@
 
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 
 #include "RefinableObj/RefinableObj.h"
@@ -82,7 +81,7 @@ void SetEqual(RefinableObjClock& c1, const RefinableObjClock& c2)
 
 } // anonymous namespace
 
-BOOST_PYTHON_MODULE(_refinableobjclock)
+void wrap_refinableobjclock()
 {
 
     class_<RefinableObjClock>

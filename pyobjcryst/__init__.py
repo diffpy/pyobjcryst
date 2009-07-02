@@ -40,9 +40,6 @@ Enums:
 # The modules below are organized according to header file in the ObjCryst
 # source.
 
-# Register convereters
-from registerconverters import *
-
 # General
 from general import *
 

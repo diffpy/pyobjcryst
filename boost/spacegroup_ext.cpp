@@ -22,7 +22,6 @@
 
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
@@ -58,7 +57,7 @@ CrystMatrix<float> GetTranslationVectors(const SpaceGroup& sg)
 }
 
 
-BOOST_PYTHON_MODULE(_spacegroup)
+void wrap_spacegroup()
 {
 
     class_<SpaceGroup> ("SpaceGroup", init<>() )

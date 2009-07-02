@@ -29,7 +29,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
@@ -41,7 +40,7 @@ namespace {
 
 }
 
-BOOST_PYTHON_MODULE(_zatom)
+void wrap_zatom()
 {
 
     /* This class is created internally by a ZScatterer, so it does not have an

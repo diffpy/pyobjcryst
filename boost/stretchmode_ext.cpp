@@ -30,7 +30,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 #include <boost/python/make_constructor.hpp>
@@ -181,7 +180,7 @@ MolAtom* _GetAtom2(T& mode)
 } // namespace
 
 
-BOOST_PYTHON_MODULE(_stretchmode)
+void wrap_stretchmode()
 {
 
     class_<StretchModeWrap, boost::noncopyable> ("StretchMode", no_init )

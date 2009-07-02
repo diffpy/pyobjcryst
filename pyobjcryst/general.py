@@ -18,4 +18,4 @@
 __all__ = ["RadiationType"]
 
 
-from _general import *
+from _pyobjcryst import *

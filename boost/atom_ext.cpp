@@ -30,7 +30,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
@@ -40,7 +39,7 @@ namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
-BOOST_PYTHON_MODULE(_atom)
+void wrap_atom()
 {
 
     class_<Atom, bases<Scatterer> >("Atom", init<const Atom&>((bp::arg("old"))))

@@ -24,7 +24,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 
 #include <string>
@@ -130,7 +129,7 @@ float _getgamma(UnitCell& u)
 
 }
 
-BOOST_PYTHON_MODULE(_unitcell)
+void wrap_unitcell()
 {
 
     class_<UnitCell, bases<RefinableObj> > 

@@ -21,7 +21,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/to_python_converter.hpp>
 
@@ -42,7 +41,7 @@ bool __eq__(const RefParType* rpt1, const RefParType* rpt2)
 } // anonymous namespace
 
 
-BOOST_PYTHON_MODULE(_refpartype)
+void wrap_refpartype()
 {
 
     class_<RefParType>("RefParType", init<const string&>())

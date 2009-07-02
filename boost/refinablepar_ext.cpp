@@ -40,7 +40,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
@@ -95,7 +94,7 @@ class PyRefinablePar : public RefinablePar
 } // anonymous namespace
 
 
-BOOST_PYTHON_MODULE(_refinablepar)
+void wrap_refinablepar()
 {
 
     enum_<RefParDerivStepModel>("RefParDerivStepModel")

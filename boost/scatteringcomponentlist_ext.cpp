@@ -24,7 +24,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 
 #include "helpers.hpp"
@@ -61,7 +60,7 @@ namespace
 
 }
 
-BOOST_PYTHON_MODULE(_scatteringcomponentlist)
+void wrap_scatteringcomponentlist()
 {
 
     class_<ScatteringComponentList>

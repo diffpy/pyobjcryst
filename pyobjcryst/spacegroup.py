@@ -15,8 +15,10 @@
 
 """Python wrapping of SpaceGroup and AsymmetricUnit."""
 
-__all__ = ["AsymmetricUnit", "SpaceGroup"]
+__all__ = [
+        "AsymmetricUnit", 
+        "SpaceGroup"
+        ]
 
 
-from _asymmetricunit import *
-from _spacegroup import *
+from _pyobjcryst import *

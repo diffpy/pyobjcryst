@@ -15,7 +15,10 @@
 
 """Python wrapping of Crystal."""
 
-__all__ = ["Crystal","BumpMergePar"]
+__all__ = [
+        "Crystal",
+        "BumpMergePar"
+        ]
 
 
-from _crystal import *
+from _pyobjcryst import *

@@ -27,7 +27,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
@@ -67,7 +66,7 @@ MolAtom& _GetAtom(MolDihedralAngle& mb, size_t i)
 } // namespace
 
 
-BOOST_PYTHON_MODULE(_moldihedralangle)
+void wrap_moldihedralangle()
 {
 
     class_<MolDihedralAngle, bases<Restraint> > ("MolDihedralAngle", no_init)

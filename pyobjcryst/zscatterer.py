@@ -15,8 +15,11 @@
 
 """Python wrapping of Zscatterer."""
 
-__all__ = ["ZAtom", "ZPolyhedron", "ZScatterer", "RegularPolyhedraType"]
+__all__ = [
+        "ZAtom",
+        "ZPolyhedron",
+        "ZScatterer",
+        "RegularPolyhedraType",
+        ]
 
-from _zscatterer import *
-from _zatom import *
-from _zpolyhedron import *
+from _pyobjcryst import *

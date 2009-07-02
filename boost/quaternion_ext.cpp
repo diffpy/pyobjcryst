@@ -26,7 +26,6 @@
 
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/args.hpp>
 
 #include <set>
@@ -79,7 +78,7 @@ void setQ3(Quaternion& q, float val)
 
 } // namespace
 
-BOOST_PYTHON_MODULE(_quaternion)
+void wrap_quaternion()
 {
 
     class_<Quaternion>("Quaternion")

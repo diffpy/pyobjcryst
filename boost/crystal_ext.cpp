@@ -34,7 +34,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/implicit.hpp>
 
@@ -142,7 +141,7 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
 } // namespace
 
 
-BOOST_PYTHON_MODULE(_crystal)
+void wrap_crystal()
 {
 
     class_<CrystalWrap, bases<UnitCell>, boost::noncopyable > 

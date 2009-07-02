@@ -26,7 +26,6 @@
 
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 
 #include <set>
 
@@ -42,7 +41,7 @@ namespace {
 } // namespace
 
 
-BOOST_PYTHON_MODULE(_rigidgroup)
+void wrap_rigidgroup()
 {
 
     class_<RigidGroup, bases<MolAtomSet> >("RigidGroup", init<>())

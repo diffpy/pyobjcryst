@@ -29,11 +29,4 @@ __all__ = [
         "ZAtomRegistry"
         ]
 
-
-from _refpartype import *
-from _refinableobjclock import *
-from _restraint import *
-from _refinablepar import *
-from _refinableobj import *
-from _refobjopt import *
-from _objregistry import *
+from _pyobjcryst import *

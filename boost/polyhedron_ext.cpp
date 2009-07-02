@@ -23,7 +23,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 #include <boost/python/make_constructor.hpp>
@@ -32,14 +31,7 @@ namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
-// FIXME - put the argument names in
-
-namespace {
-
-} // namespace
-
-
-BOOST_PYTHON_MODULE(_polyhedron)
+void wrap_polyhedron()
 {
 
     def("MakeTetrahedron", &MakeTetrahedron,

@@ -58,7 +58,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 #include <boost/python/make_constructor.hpp>
@@ -559,7 +558,7 @@ float _getQ3(Molecule& m)
 } // namespace
 
 
-BOOST_PYTHON_MODULE(_molecule)
+void wrap_molecule()
 {
 
     class_<Molecule, bases<Scatterer> > ("Molecule", 

@@ -18,4 +18,4 @@
 __all__ = ["UnitCell"]
 
 
-from _unitcell import *
+from _pyobjcryst import *

@@ -21,7 +21,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 
 #include <string>
@@ -168,7 +167,7 @@ class ScatteringPowerWrap : public ScatteringPower,
 } // anonymous namespace
 
 
-BOOST_PYTHON_MODULE(_scatteringpower)
+void wrap_scatteringpower()
 {
 
     // By making this non-copyable ScatteringPower can be passed from c++ when

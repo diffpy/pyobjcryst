@@ -24,7 +24,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 
 #include "RefinableObj/RefinableObj.h"
@@ -58,7 +57,7 @@ class RefObjOptWrap : public RefObjOpt,
 } // anonymous namespace
 
 
-BOOST_PYTHON_MODULE(_refobjopt)
+void wrap_refobjopt()
 {
 
     class_<RefObjOptWrap, boost::noncopyable>("RefObjOpt")

@@ -24,10 +24,4 @@ __all__ = [
         "GlobalScatteringPower"
         ]
 
-
-from _scatterer import *
-from _scatteringcomponent import *
-from _scatteringpower import *
-from _scatteringpoweratom import *
-from _scatteringpowersphere import *
-from _globalscatteringpower import *
+from _pyobjcryst import *

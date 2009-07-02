@@ -40,7 +40,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/to_python_converter.hpp>
 #include <boost/python/args.hpp>
@@ -390,7 +389,7 @@ void _RemovePar(RefinableObj &obj, RefinablePar* refpar)
 } // anonymous namespace
 
 
-BOOST_PYTHON_MODULE(_refinableobj)
+void wrap_refinableobj()
 {
 
     class_<RefinableObjWrap, boost::noncopyable>("RefinableObj")

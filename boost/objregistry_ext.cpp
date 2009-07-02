@@ -28,7 +28,6 @@
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/to_python_converter.hpp>
 
@@ -94,7 +93,7 @@ wrapClass(class_<ObjRegistry<T> > & c)
 } // end namespace
 
 
-BOOST_PYTHON_MODULE(_objregistry)
+void wrap_objregistry()
 {
 
     // ObjRegistry<RefinableObj>

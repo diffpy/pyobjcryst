@@ -17,4 +17,4 @@
 
 __all__ = ["Atom"]
 
-from _atom import *
+from _pyobjcryst import *

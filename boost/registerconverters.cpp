@@ -19,7 +19,6 @@
 *****************************************************************************/
 
 #include <boost/python.hpp>
-#include <boost/python/module.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/suite/indexing/map_indexing_suite.hpp>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
@@ -180,7 +179,7 @@ CrystMatrix<float> getTestMatrix()
 } // namespace
 
 
-BOOST_PYTHON_MODULE(_registerconverters)
+void wrap_registerconverters()
 {
 
     import_array();
