@@ -45,7 +45,6 @@ void wrap_rigidgroup();
 void wrap_scatterer();
 void wrap_scatteringcomponent();
 void wrap_scatteringcomponentlist();
-void wrap_scatteringdata();
 void wrap_scatteringpoweratom();
 void wrap_scatteringpower();
 void wrap_scatteringpowersphere();
@@ -96,7 +95,6 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
     wrap_rigidgroup();
     wrap_scatteringcomponent();
     wrap_scatteringcomponentlist();
-    wrap_scatteringdata();
     wrap_stretchmode();
     wrap_zatom();
     wrap_zpolyhedron();
