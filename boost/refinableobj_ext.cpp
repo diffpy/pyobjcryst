@@ -19,7 +19,7 @@
 * functions that are also bound into python.
 * 
 * Changes from ObjCryst++
-* - GetPar that takes a const float* is not exposed, as it is designed for
+* - GetPar that takes a const double* is not exposed, as it is designed for
 *   internal use.
 * - GetParamSet returns a copy of the internal data so that no indirect
 *   manipulation can take place from python.
@@ -213,11 +213,11 @@ class RefinableObjWrap : public RefinableObj,
         default_RandomizeConfiguration();
     }
 
-    void default_GlobalOptRandomMove(const float mutationAmplitude,
+    void default_GlobalOptRandomMove(const double mutationAmplitude,
             const RefParType *type)
     { this->RefinableObj::GlobalOptRandomMove(mutationAmplitude, type);}
 
-    void GlobalOptRandomMove(const float mutationAmplitude,
+    void GlobalOptRandomMove(const double mutationAmplitude,
             const RefParType *type)
     {
         if (override GlobalOptRandomMove = this->get_override("GlobalOptRandomMove")) 
@@ -225,10 +225,10 @@ class RefinableObjWrap : public RefinableObj,
         default_GlobalOptRandomMove(mutationAmplitude, type);
     }
 
-    float default_GetLogLikelihood() const
+    double default_GetLogLikelihood() const
     { return this->RefinableObj::GetLogLikelihood(); }
 
-    float GetLogLikelihood() const
+    double GetLogLikelihood() const
     {
         if (override GetLogLikelihood = this->get_override("GetLogLikelihood")) 
             return GetLogLikelihood();
@@ -245,41 +245,41 @@ class RefinableObjWrap : public RefinableObj,
         return default_GetNbLSQFunction();
     }
 
-    const CrystVector<float>& default_GetLSQCalc(const unsigned int i) const 
+    const CrystVector<double>& default_GetLSQCalc(const unsigned int i) const 
     { return this->RefinableObj::GetLSQCalc(i); }
 
-    const CrystVector<float>& GetLSQCalc(const unsigned int i) const 
+    const CrystVector<double>& GetLSQCalc(const unsigned int i) const 
     {
         if (override GetLSQCalc = this->get_override("GetLSQCalc")) 
             return GetLSQCalc(i);
         return default_GetLSQCalc(i);
     }
 
-    const CrystVector<float>& default_GetLSQObs(const unsigned int i) const 
+    const CrystVector<double>& default_GetLSQObs(const unsigned int i) const 
     { return this->RefinableObj::GetLSQObs(i); }
 
-    const CrystVector<float>& GetLSQObs(const unsigned int i) const 
+    const CrystVector<double>& GetLSQObs(const unsigned int i) const 
     {
         if (override GetLSQObs = this->get_override("GetLSQObs")) 
             return GetLSQObs(i);
         return default_GetLSQObs(i);
     }
 
-    const CrystVector<float>& default_GetLSQWeight(const unsigned int i) const 
+    const CrystVector<double>& default_GetLSQWeight(const unsigned int i) const 
     { return this->RefinableObj::GetLSQWeight(i); }
 
-    const CrystVector<float>& GetLSQWeight(const unsigned int i) const 
+    const CrystVector<double>& GetLSQWeight(const unsigned int i) const 
     {
         if (override GetLSQWeight = this->get_override("GetLSQWeight")) 
             return GetLSQWeight(i);
         return default_GetLSQWeight(i);
     }
 
-    const CrystVector<float>& default_GetLSQDeriv(const unsigned int i,
+    const CrystVector<double>& default_GetLSQDeriv(const unsigned int i,
             RefinablePar &rp)
     { return this->RefinableObj::GetLSQDeriv(i, rp); }
 
-    const CrystVector<float>& GetLSQDeriv(const unsigned int i,
+    const CrystVector<double>& GetLSQDeriv(const unsigned int i,
             RefinablePar &rp)
     {
         if (override GetLSQDeriv = this->get_override("GetLSQDeriv")) 
@@ -333,10 +333,10 @@ class RefinableObjWrap : public RefinableObj,
         default_UpdateDisplay();
     }
 
-    float default_GetRestraintCost() const
+    double default_GetRestraintCost() const
     { return this->RefinableObj::GetRestraintCost();}
 
-    float GetRestraintCost() const
+    double GetRestraintCost() const
     {
         if (override GetRestraintCost = this->get_override("GetRestraintCost")) 
             return GetRestraintCost();
@@ -373,7 +373,7 @@ class RefinableObjWrap : public RefinableObj,
 
     std::map<unsigned long, 
         std::pair<
-            CrystVector<float>, std::string>
+            CrystVector<double>, std::string>
         >::iterator
         FindParamSet(unsigned long id) const
         { return RefinableObj::FindParamSet(id); }
@@ -430,7 +430,7 @@ void wrap_refinableobj()
         .def("ClearParamSet", &RefinableObj::ClearParamSet)
         .def("SaveParamSet", &RefinableObj::SaveParamSet)
         .def("RestoreParamSet", &RefinableObj::RestoreParamSet)
-        .def("GetParamSet", (const CrystVector<float>& (RefinableObj::*)
+        .def("GetParamSet", (const CrystVector<double>& (RefinableObj::*)
             (const unsigned long) const) &RefinableObj::GetParamSet,
             return_value_policy<copy_const_reference>())
         .def("GetParamSet_ParNotFixedHumanValue", 
@@ -439,22 +439,22 @@ void wrap_refinableobj()
         .def("GetParamSetName", &RefinableObj::GetParamSetName,
             return_value_policy<copy_const_reference>())
         .def("SetLimitsAbsolute", ( void (RefinableObj::*)
-            (const std::string&, const float, const float) ) 
+            (const std::string&, const double, const double) ) 
             &RefinableObj::SetLimitsAbsolute)
         .def("SetLimitsAbsolute", ( void (RefinableObj::*)
-            (const RefParType*, const float, const float) ) 
+            (const RefParType*, const double, const double) ) 
             &RefinableObj::SetLimitsAbsolute)
         .def("SetLimitsRelative", ( void (RefinableObj::*)
-            (const std::string&, const float, const float) ) 
+            (const std::string&, const double, const double) ) 
             &RefinableObj::SetLimitsRelative)
         .def("SetLimitsRelative", ( void (RefinableObj::*)
-            (const RefParType*, const float, const float) ) 
+            (const RefParType*, const double, const double) ) 
             &RefinableObj::SetLimitsRelative)
         .def("SetLimitsProportional", ( void (RefinableObj::*)
-            (const std::string&, const float, const float) ) 
+            (const std::string&, const double, const double) ) 
             &RefinableObj::SetLimitsProportional)
         .def("SetLimitsProportional", ( void (RefinableObj::*)
-            (const RefParType*, const float, const float) ) 
+            (const RefParType*, const double, const double) ) 
             &RefinableObj::SetLimitsProportional)
         .def("SetGlobalOptimStep", &RefinableObj::SetGlobalOptimStep)
         .def("GetSubObjRegistry", ( ObjRegistry<RefinableObj>& 

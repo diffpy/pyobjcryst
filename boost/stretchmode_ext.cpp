@@ -68,12 +68,12 @@ class StretchModeWrap : public StretchMode,
         this->get_override("CalcDeriv")(derivllk);
     }
 
-    void Stretch(const float change)
+    void Stretch(const double change)
     {
         this->get_override("Stretch")(change);
     }
 
-    void RandomStretch(const float change)
+    void RandomStretch(const double change)
     {
         this->get_override("RandomStretch")(change);
     }

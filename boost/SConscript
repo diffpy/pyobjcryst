@@ -23,6 +23,9 @@ else:
 # Append objcryst libraries and required boost library
 wrapperenv.Append(LIBS = ["boost_python"])
 
+# Make sure that we are using REAL=double in the ObjCryst headers.
+wrapperenv.Append(CPPFLAGS = " -DREAL=double")
+
 # Identify the headers for ObjCryst
 wrapperenv.Append(CPPPATH = "../src/ObjCryst")
 

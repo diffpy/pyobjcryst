@@ -15,6 +15,7 @@ objcrystenv = env.Clone()
 # Add some necessary flags and libraries
 objcrystenv.Append(CPPFLAGS = " -O3 -w -ffast-math -fstrict-aliasing") 
 objcrystenv.Append(CPPFLAGS = " -pipe -fomit-frame-pointer -funroll-loops")
+objcrystenv.Append(CPPFLAGS = " -DREAL=double")
 
 # Source directories
 objcrystenv.Append(CPPPATH = [".", "./ObjCryst"])

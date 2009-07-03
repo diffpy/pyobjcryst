@@ -61,7 +61,7 @@ void _RemoveScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
 }
 
 void _PrintMinDistanceTable(const Crystal& crystal, 
-        const float minDistance = 0.1)
+        const double minDistance = 0.1)
 {
 
     crystal.PrintMinDistanceTable(minDistance);
@@ -98,7 +98,7 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
         SetDeleteRefParInDestructor(false);
     }
 
-    CrystalWrap(const float a, const float b, const float c , 
+    CrystalWrap(const double a, const double b, const double c , 
             const std::string& sg) 
         : Crystal(a, b, c, sg) 
     {
@@ -106,8 +106,8 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
         SetDeleteRefParInDestructor(false);
     }
 
-    CrystalWrap(const float a, const float b, const float c , 
-            const float alpha, const float beta, const float gamma,
+    CrystalWrap(const double a, const double b, const double c , 
+            const double alpha, const double beta, const double gamma,
             const std::string& sg) 
         : Crystal(a, b, c, alpha, beta, gamma, sg) 
     {
@@ -147,11 +147,11 @@ void wrap_crystal()
     class_<CrystalWrap, bases<UnitCell>, boost::noncopyable > 
         ("Crystal", init<>())
         /* Constructors */
-        .def(init<const float, const float, const float, const std::string&>(
+        .def(init<const double, const double, const double, const std::string&>(
             (bp::arg("a"), bp::arg("b"), bp::arg("c"),
             bp::arg("SpaceGroupId"))))
-        .def(init<const float, const float, const float, 
-            const float, const float, const float, 
+        .def(init<const double, const double, const double, 
+            const double, const double, const double, 
             const std::string&>(
             (bp::arg("a"), bp::arg("b"), bp::arg("c"),
             bp::arg("alpha"), bp::arg("beta"), bp::arg("gamma"),
@@ -205,14 +205,14 @@ void wrap_crystal()
         .def("SetUseDynPopCorr", &Crystal::SetUseDynPopCorr)
         .def("GetBumpMergeCost", &Crystal::GetBumpMergeCost)
         .def("SetBumpMergeDistance", 
-            (void (Crystal::*)(const ScatteringPower&, const ScatteringPower&, const float))
+            (void (Crystal::*)(const ScatteringPower&, const ScatteringPower&, const double))
              &Crystal::SetBumpMergeDistance,
              (bp::arg("scatt1"), 
               bp::arg("scatt2"), 
               bp::arg("dist")=1.5))
         .def("SetBumpMergeDistance", 
             (void (Crystal::*)
-            (const ScatteringPower&, const ScatteringPower&, const float, const
+            (const ScatteringPower&, const ScatteringPower&, const double, const
              bool))
              &Crystal::SetBumpMergeDistance,
              (bp::arg("scatt1"), 
@@ -229,7 +229,7 @@ void wrap_crystal()
         .def("RemoveBondValenceRo", &Crystal::AddBondValenceRo)
         .def("GetBondValenceCost", &Crystal::GetBondValenceCost)
         .def("GetBondValenceRoList", 
-            (std::map< pair< const ScatteringPower *, const ScatteringPower * >, float > &
+            (std::map< pair< const ScatteringPower *, const ScatteringPower * >, double > &
             (Crystal::*)()) &Crystal::GetBondValenceRoList,
             return_internal_reference<>())
         ;

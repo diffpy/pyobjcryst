@@ -46,7 +46,7 @@ namespace {
 
 typedef std::pair< ScatteringPower const*, ScatteringPower const* > sppair;
 
-typedef std::map< sppair, float > mapsppairtofloat;
+typedef std::map< sppair, double > mapsppairtodouble;
 
 typedef std::map< sppair, Crystal::BumpMergePar > mapsppairtobmp; 
 
@@ -143,12 +143,12 @@ void _deleteMAV(MolAtomVec& mav, size_t i)
 // For testing
 //
 
-CrystVector<float> getTestVector()
+CrystVector<double> getTestVector()
 { 
     /* Should produce
      * 0 1 2
      */
-    CrystVector<float> tv(3);
+    CrystVector<double> tv(3);
     for(int i=0;i<3;i++)
     {
         tv(i) = i;
@@ -156,14 +156,14 @@ CrystVector<float> getTestVector()
     return tv;
 }
 
-CrystMatrix<float> getTestMatrix()
+CrystMatrix<double> getTestMatrix()
 { 
     /* Should produce
      * 0    1
      * 2    3
      * 4    5
      */
-    CrystMatrix<float> tm(3,2);
+    CrystMatrix<double> tm(3,2);
     int counter = 0;
     for(int i=0;i<3;i++)
     {
@@ -183,14 +183,14 @@ void wrap_registerconverters()
 {
 
     import_array();
-    to_python_converter< CrystVector<float>, CrystVector_REAL_to_ndarray >();
-    to_python_converter< CrystMatrix<float>, CrystMatrix_REAL_to_ndarray >();
+    to_python_converter< CrystVector<double>, CrystVector_REAL_to_ndarray >();
+    to_python_converter< CrystMatrix<double>, CrystMatrix_REAL_to_ndarray >();
     // From boost sources
     std_pair_to_python_converter
         <ScatteringPower const *, ScatteringPower const * >();
-    // Semi-converter for mapsppairtofloat
-    class_<mapsppairtofloat>("mapsppairtofloat", no_init)
-        .def(map_indexing_suite<mapsppairtofloat>());
+    // Semi-converter for mapsppairtodouble
+    class_<mapsppairtodouble>("mapsppairtodouble", no_init)
+        .def(map_indexing_suite<mapsppairtodouble>());
     // Semi-converter for mapsppairtobmp
     class_<mapsppairtobmp>("mapsppairtobmp", no_init)
         .def(map_indexing_suite<mapsppairtobmp>());

@@ -65,10 +65,10 @@ class ScattererWrap : public Scatterer,
 
     ScattererWrap(const ScattererWrap& S) : Scatterer(S) {}
 
-    void default_SetX(const float x) 
+    void default_SetX(const double x) 
     { this->Scatterer::SetX(x);}
 
-    void SetX(const float x)
+    void SetX(const double x)
     {
         if (override SetX = this->get_override("SetX")) 
         {
@@ -78,10 +78,10 @@ class ScattererWrap : public Scatterer,
         default_SetX(x);
     }
 
-    void default_SetY(const float y) 
+    void default_SetY(const double y) 
     { this->Scatterer::SetY(y);}
 
-    void SetY(const float y)
+    void SetY(const double y)
     {
         if (override SetY = this->get_override("SetY")) 
         {
@@ -91,10 +91,10 @@ class ScattererWrap : public Scatterer,
         default_SetY(y);
     }
 
-    void default_SetZ(const float z) 
+    void default_SetZ(const double z) 
     { this->Scatterer::SetZ(z);}
 
-    void SetZ(const float z)
+    void SetZ(const double z)
     {
         if (override SetZ = this->get_override("SetZ")) 
         {
@@ -104,10 +104,10 @@ class ScattererWrap : public Scatterer,
         default_SetZ(z);
     }
 
-    void default_SetOccupancy(const float occ) 
+    void default_SetOccupancy(const double occ) 
     { this->Scatterer::SetOccupancy(occ);}
 
-    void SetOccupancy(const float occ)
+    void SetOccupancy(const double occ)
     {
         if (override SetOccupancy = this->get_override("SetOccupancy")) 
         {
@@ -151,9 +151,9 @@ class ScattererWrap : public Scatterer,
     }
 
     void GLInitDisplayList(const bool noSymmetrics,
-            const float xMin, const float xMax,
-            const float yMin, const float yMax,
-            const float zMin, const float zMax,
+            const double xMin, const double xMax,
+            const double yMin, const double yMax,
+            const double zMin, const double zMax,
             const bool displayEnantiomer,
             const bool displayNames) const
     {

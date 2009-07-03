@@ -39,7 +39,7 @@ void wrap_scatteringpowersphere()
 
     class_<ScatteringPowerSphere, bases<ScatteringPower> > 
         ("ScatteringPowerSphere", init<>())
-        .def(init<const std::string&, const float, optional<const float> >())
+        .def(init<const std::string&, const double, optional<const double> >())
         .def("Init", &ScatteringPowerSphere::Init,
                 (boost::python::arg("name"),
                 boost::python::arg("radius"),

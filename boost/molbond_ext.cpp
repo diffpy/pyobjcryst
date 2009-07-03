@@ -68,16 +68,16 @@ void wrap_molbond()
 {
 
     class_<MolBond, bases<Restraint> > ("MolBond", no_init)
-        //init<MolAtom&, MolAtom&, const float, const float, const float, 
-        //Molecule&, const float>())
+        //init<MolAtom&, MolAtom&, const double, const double, const double, 
+        //Molecule&, const double>())
         .def("GetMolecule", (Molecule& (MolBond::*)()) 
             &MolBond::GetMolecule, 
             return_internal_reference<>())
         .def("GetLogLikelihood", 
-            (float (MolBond::*)() const) 
+            (double (MolBond::*)() const) 
             &MolBond::GetLogLikelihood) 
         .def("GetLogLikelihood", 
-            (float (MolBond::*)(const bool, const bool) const) 
+            (double (MolBond::*)(const bool, const bool) const) 
             &MolBond::GetLogLikelihood) 
         .def("GetName", &MolBond::GetName)
         .def("GetAtom1", (MolAtom& (MolBond::*)()) &MolBond::GetAtom1,

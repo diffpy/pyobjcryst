@@ -386,9 +386,9 @@ class TestMolecule(unittest.TestCase):
         for i in range(len(self.m)):
             xyzi = xyz[i]
             newxyz = numpy.dot(rm, xyzi)
-            self.assertAlmostEquals(newxyz[0], self.m[i].X)
-            self.assertAlmostEquals(newxyz[1], self.m[i].Y)
-            self.assertAlmostEquals(newxyz[2], self.m[i].Z)
+            self.assertAlmostEquals(newxyz[0], self.m[i].X, 6)
+            self.assertAlmostEquals(newxyz[1], self.m[i].Y, 6)
+            self.assertAlmostEquals(newxyz[2], self.m[i].Z, 6)
 
         return
 

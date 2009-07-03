@@ -75,10 +75,10 @@ void wrap_moldihedralangle()
             return_internal_reference<>())
         .def("GetName", &MolDihedralAngle::GetName)
         .def("GetLogLikelihood", 
-            (float (MolDihedralAngle::*)() const) 
+            (double (MolDihedralAngle::*)() const) 
             &MolDihedralAngle::GetLogLikelihood) 
         .def("GetLogLikelihood", 
-            (float (MolDihedralAngle::*)(const bool, const bool) const) 
+            (double (MolDihedralAngle::*)(const bool, const bool) const) 
             &MolDihedralAngle::GetLogLikelihood) 
         .def("GetAngle", &MolDihedralAngle::GetAngle)
         .def("GetAngle0", &MolDihedralAngle::GetAngle0)

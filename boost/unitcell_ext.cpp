@@ -37,28 +37,28 @@ using namespace ObjCryst;
 namespace {
 
 tuple FractionalToOrthonormalCoords(const UnitCell &uc, 
-        float x, float y, float z)
+        double x, double y, double z)
 {
     uc.FractionalToOrthonormalCoords(x,y,z);
     return make_tuple(x,y,z);
 }
 
 tuple OrthonormalToFractionalCoords(const UnitCell &uc, 
-        float x, float y, float z)
+        double x, double y, double z)
 {
     uc.OrthonormalToFractionalCoords(x,y,z);
     return make_tuple(x,y,z);
 }
 
 tuple MillerToOrthonormalCoords(const UnitCell &uc, 
-        float x, float y, float z)
+        double x, double y, double z)
 {
     uc.MillerToOrthonormalCoords(x,y,z);
     return make_tuple(x,y,z);
 }
 
 tuple OrthonormalToMillerCoords(const UnitCell &uc, 
-        float x, float y, float z)
+        double x, double y, double z)
 {
     uc.OrthonormalToMillerCoords(x,y,z);
     return make_tuple(x,y,z);
@@ -66,62 +66,62 @@ tuple OrthonormalToMillerCoords(const UnitCell &uc,
 
 // Setter for the lattice parameters.
 
-void _seta(UnitCell& u, float val)
+void _seta(UnitCell& u, double val)
 {
     u.GetPar("a").SetValue(val);
 }
 
-float _geta(UnitCell& u)
+double _geta(UnitCell& u)
 {
     return u.GetLatticePar(0);
 }
 
-void _setb(UnitCell& u, float val)
+void _setb(UnitCell& u, double val)
 {
     u.GetPar("b").SetValue(val);
 }
 
-float _getb(UnitCell& u)
+double _getb(UnitCell& u)
 {
     return u.GetLatticePar(1);
 }
 
-void _setc(UnitCell& u, float val)
+void _setc(UnitCell& u, double val)
 {
     u.GetPar("c").SetValue(val);
 }
 
-float _getc(UnitCell& u)
+double _getc(UnitCell& u)
 {
     return u.GetLatticePar(2);
 }
 
-void _setalpha(UnitCell& u, float val)
+void _setalpha(UnitCell& u, double val)
 {
     u.GetPar("alpha").SetValue(val);
 }
 
-float _getalpha(UnitCell& u)
+double _getalpha(UnitCell& u)
 {
     return u.GetLatticePar(3);
 }
 
-void _setbeta(UnitCell& u, float val)
+void _setbeta(UnitCell& u, double val)
 {
     u.GetPar("beta").SetValue(val);
 }
 
-float _getbeta(UnitCell& u)
+double _getbeta(UnitCell& u)
 {
     return u.GetLatticePar(4);
 }
 
-void _setgamma(UnitCell& u, float val)
+void _setgamma(UnitCell& u, double val)
 {
     u.GetPar("gamma").SetValue(val);
 }
 
-float _getgamma(UnitCell& u)
+double _getgamma(UnitCell& u)
 {
     return u.GetLatticePar(5);
 }
@@ -135,15 +135,15 @@ void wrap_unitcell()
     class_<UnitCell, bases<RefinableObj> > 
         ("UnitCell", init<>())
         // Constructors
-        .def(init<const float, const float, const float, const std::string&>())
-        .def(init<const float, const float, const float, 
-            const float, const float, const float,
+        .def(init<const double, const double, const double, const std::string&>())
+        .def(init<const double, const double, const double, 
+            const double, const double, const double,
             const std::string&>())
         .def(init<const UnitCell&>())
         .def("GetLatticePar", 
-            (CrystVector<float> (UnitCell::*)() const) &UnitCell::GetLatticePar)
+            (CrystVector<double> (UnitCell::*)() const) &UnitCell::GetLatticePar)
         .def("GetLatticePar", 
-            (float (UnitCell::*)(const int) const) &UnitCell::GetLatticePar)
+            (double (UnitCell::*)(const int) const) &UnitCell::GetLatticePar)
         .def("GetClockLatticePar", &UnitCell::GetClockLatticePar,
                 return_value_policy<copy_const_reference>())
         .def("GetBMatrix", &UnitCell::GetBMatrix,

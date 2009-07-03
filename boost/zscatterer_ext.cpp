@@ -47,8 +47,8 @@ void wrap_zscatterer()
     class_<ZScatterer, bases<Scatterer> > 
         ("ZScatterer", init<const ZScatterer&>((bp::arg("old"))))
         /* Constructors */
-        .def(init<const string&, Crystal&, float, float, float, float, float,
-            float>
+        .def(init<const string&, Crystal&, double, double, double, double, double,
+            double>
             ((bp::arg("name"), bp::arg("cryst"), bp::arg("x")=0, bp::arg("y")=0,
               bp::arg("z")=0, bp::arg("phi")=0, bp::arg("chi")=0,
               bp::arg("psi")=0)

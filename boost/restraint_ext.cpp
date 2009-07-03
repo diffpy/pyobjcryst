@@ -79,12 +79,12 @@ class RestraintWrap : public Restraint,
         return;
     }
 
-    float default_GetLogLikelihood() const
+    double default_GetLogLikelihood() const
     {
         return this->Restraint::GetLogLikelihood();
     }
 
-    float GetLogLikelihood() const
+    double GetLogLikelihood() const
     {
         if( override GetLogLikelihood = this->get_override("GetLogLikelihood"))
         {

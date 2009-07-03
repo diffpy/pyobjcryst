@@ -44,8 +44,8 @@ void wrap_atom()
 
     class_<Atom, bases<Scatterer> >("Atom", init<const Atom&>((bp::arg("old"))))
         // Constructors
-        .def(init<const float, const float, const float, const std::string&, 
-            const ObjCryst::ScatteringPower*, optional<const float> >(
+        .def(init<const double, const double, const double, const std::string&, 
+            const ObjCryst::ScatteringPower*, optional<const double> >(
             (bp::arg("x"), bp::arg("y"), bp::arg("z"), bp::arg("name"),
              bp::arg("pow"), bp::arg("popu")))
             [with_custodian_and_ward<1,6>()])

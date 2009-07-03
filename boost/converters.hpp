@@ -39,10 +39,10 @@
 namespace bp = boost::python;
 
 // Make an array out of a data pointer and a dimension vector
-PyObject* makeNdArray(float * data, std::vector<int>& dims)
+PyObject* makeNdArray(double * data, std::vector<int>& dims)
 {
     PyObject* pyarray = PyArray_SimpleNewFromData
-                (dims.size(), &dims[0], PyArray_FLOAT, (void *) data);
+                (dims.size(), &dims[0], PyArray_DOUBLE, (void *) data);
     PyObject* pyarraycopy = PyArray_Copy( (PyArrayObject*) pyarray );
     return bp::incref(pyarraycopy);
 }
@@ -51,16 +51,16 @@ PyObject* makeNdArray(float * data, std::vector<int>& dims)
 struct CrystVector_REAL_to_ndarray
 {
 
-    static PyObject* convert(CrystVector<float> const &cv)
+    static PyObject* convert(CrystVector<double> const &cv)
     {
         std::vector<int> dims(1);
         dims[0] = cv.numElements();
-        return makeNdArray((float *) cv.data(), dims);
+        return makeNdArray((double *) cv.data(), dims);
     }
 
     static PyTypeObject const* get_pytype()
     {
-        return &PyFloatArrType_Type;
+        return &PyDoubleArrType_Type;
     }
 
 };
@@ -69,17 +69,17 @@ struct CrystVector_REAL_to_ndarray
 struct CrystMatrix_REAL_to_ndarray
 {
 
-    static PyObject* convert(CrystMatrix<float> const &cm)
+    static PyObject* convert(CrystMatrix<double> const &cm)
     {
         std::vector<int> dims(2);
         dims[0] = cm.rows();
         dims[1] = cm.cols();
-        return makeNdArray((float *) cm.data(), dims);
+        return makeNdArray((double *) cm.data(), dims);
     }
 
     static PyTypeObject const* get_pytype()
     {
-        return &PyFloatArrType_Type;
+        return &PyDoubleArrType_Type;
     }
 
 };

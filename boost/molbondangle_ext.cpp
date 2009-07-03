@@ -79,10 +79,10 @@ void wrap_molbondangle()
             return_internal_reference<>())
         .def("GetName", &MolBondAngle::GetName)
         .def("GetLogLikelihood", 
-            (float (MolBondAngle::*)() const) 
+            (double (MolBondAngle::*)() const) 
             &MolBondAngle::GetLogLikelihood) 
         .def("GetLogLikelihood", 
-            (float (MolBondAngle::*)(const bool, const bool) const) 
+            (double (MolBondAngle::*)(const bool, const bool) const) 
             &MolBondAngle::GetLogLikelihood) 
         .def("GetAngle", &MolBondAngle::GetAngle)
         .def("GetAngle0", &MolBondAngle::GetAngle0)

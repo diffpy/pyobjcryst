@@ -45,9 +45,9 @@ void wrap_zpolyhedron()
     class_<ZPolyhedron, bases<ZScatterer> > 
         ("ZPolyhedron", init<const ZPolyhedron&>())
         /* Constructors */
-        .def(init<const RegularPolyhedraType, Crystal&, float, float, float,
+        .def(init<const RegularPolyhedraType, Crystal&, double, double, double,
             const string&, const ScatteringPower*, const ScatteringPower*,
-            float, float, float, float, float>(
+            double, double, double, double, double>(
             (bp::arg("type"), bp::arg("cryst"), bp::arg("x"),
              bp::arg("y"), bp::arg("z"), bp::arg("name"),
              bp::arg("centralAtomPow"), bp::arg("periphAtomPow"),

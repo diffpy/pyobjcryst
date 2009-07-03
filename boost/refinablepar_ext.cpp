@@ -16,16 +16,16 @@
 * ObjCryst::RefParDerivStepModel.
 * 
 * Changes from ObjCryst++
-* * The constructor has been changed to accept a float,
-*   rather than a pointer to a float. 
+* * The constructor has been changed to accept a double,
+*   rather than a pointer to a double. 
 * * The copy and default constructors and Init are not wrapped in order to avoid
-*   memory corruption. Since boost cannot implicitly handle float* object, a
+*   memory corruption. Since boost cannot implicitly handle double* object, a
 *   wrapper class had to be created. However, this wrapper class cannot be used
 *   to convert RefinablePar objected created in c++.  Thus,
 *   ObjCryst::RefinablePar objects created in c++ are passed into python as
 *   instances of _RefinablePar, which is a python wrapper around
 *   ObjCryst::RefinablePar. The RefinablePar python class is a wrapper around
-*   the c++ class PyRefinablePar, which manages its own float*.  These python
+*   the c++ class PyRefinablePar, which manages its own double*.  These python
 *   classes are interchangable once instantiated, so users should not notice.
 * * XML input/output are on hold until a general stream adapter is developed.
 *
@@ -54,7 +54,7 @@ using namespace ObjCryst;
 
 namespace {
 
-/* A little wrapper around the initializers since python floats and float* don't
+/* A little wrapper around the initializers since python doubles and double* don't
  * get along.
  */
 
@@ -65,13 +65,13 @@ class PyRefinablePar : public RefinablePar
 
     PyRefinablePar() : RefinablePar(),  pval(0) {};
 
-    PyRefinablePar(const string &name, float value, const float min, const
-        float max, const RefParType *type, RefParDerivStepModel
+    PyRefinablePar(const string &name, double value, const double min, const
+        double max, const RefParType *type, RefParDerivStepModel
         derivMode=REFPAR_DERIV_STEP_RELATIVE, const bool hasLimits=true, const
         bool isFixed=false, const bool isUsed=true, const bool isPeriodic=false,
-        const float humanScale=1., float period=1.) : RefinablePar()
+        const double humanScale=1., double period=1.) : RefinablePar()
     {
-        pval = new float(value);
+        pval = new double(value);
         RefinablePar::Init(name, pval, min, max, type, derivMode, hasLimits,
             isFixed, isUsed, isPeriodic, humanScale, period);
     }
@@ -86,7 +86,7 @@ class PyRefinablePar : public RefinablePar
 
     private:
 
-    float* pval;
+    double* pval;
 
 
 };
@@ -154,9 +154,9 @@ void wrap_refinablepar()
     // Class for creating new RefinablePar instances
     class_<PyRefinablePar, bases<RefinablePar> >
         ("RefinablePar", //...
-        init<const string&, float, const float, const float, const RefParType*,
+        init<const string&, double, const double, const double, const RefParType*,
             RefParDerivStepModel, const bool, const bool, const bool, const
-            bool, const float, float >((
+            bool, const double, double >((
                 bp::arg("name"), bp::arg("value"), bp::arg("min"),
                 bp::arg("max"), bp::arg("type"),
                 bp::arg("derivMode")=REFPAR_DERIV_STEP_RELATIVE,

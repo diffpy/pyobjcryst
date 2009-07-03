@@ -47,36 +47,36 @@ class ScatteringPowerWrap : public ScatteringPower,
 
     // Pure Virtual functions
 
-    CrystVector<float> GetScatteringFactor(
+    CrystVector<double> GetScatteringFactor(
             const ScatteringData &data, const int spgSymPosIndex) const
     {
         return this->get_override("GetScatteringFactor")();
     }
 
-    float GetForwardScatteringFactor(const RadiationType) const
+    double GetForwardScatteringFactor(const RadiationType) const
     {
         return this->get_override("GetForwardScatteringFactor")();
     }
 
-    CrystVector<float> GetTemperatureFactor(
+    CrystVector<double> GetTemperatureFactor(
             const ScatteringData &data, const int spgSymPosIndex) const
     {
         return this->get_override("GetTemperatureFactor")();
     }
 
-    CrystMatrix<float> GetResonantScattFactReal(
+    CrystMatrix<double> GetResonantScattFactReal(
             const ScatteringData &data, const int spgSymPosIndex) const
     {
         return this->get_override("GetResonantScattFactReal")();
     }
 
-    CrystMatrix<float> GetResonantScattFactImag(
+    CrystMatrix<double> GetResonantScattFactImag(
             const ScatteringData &data, const int spgSymPosIndex) const
     {
         return this->get_override("GetResonantScattFactImag")();
     }
 
-    float GetRadius() const
+    double GetRadius() const
     {
         return this->get_override("GetRadius")();
     }
@@ -123,30 +123,30 @@ class ScatteringPowerWrap : public ScatteringPower,
         return default_GetSymbol();
     }
 
-    void default_SetBiso(const float newB)
+    void default_SetBiso(const double newB)
     { ScatteringPower::SetBiso(newB); }
 
-    void SetBiso(const float newB)
+    void SetBiso(const double newB)
     {
         if (override SetBiso = this->get_override("SetBiso")) 
             SetBiso(newB);
         default_SetBiso(newB);
     }
 
-    float default_GetFormalCharge() const
+    double default_GetFormalCharge() const
     { return ScatteringPower::GetFormalCharge(); }
 
-    float GetFormalCharge() const
+    double GetFormalCharge() const
     {
         if (override GetFormalCharge = this->get_override("GetFormalCharge")) 
             return GetFormalCharge();
         return default_GetFormalCharge();
     }
 
-    void default_SetFormalCharge(const float charge)
+    void default_SetFormalCharge(const double charge)
     { ScatteringPower::SetFormalCharge(charge); }
 
-    void SetFormalCharge(const float charge)
+    void SetFormalCharge(const double charge)
     {
         if (override SetFormalCharge = this->get_override("SetFormalCharge")) 
             SetFormalCharge(charge);
@@ -208,7 +208,7 @@ void wrap_scatteringpower()
             &ScatteringPowerWrap::default_GetSymbol,
             return_value_policy<copy_const_reference>())
         .def("GetBiso", 
-                (float (ScatteringPower::*)()const) &ScatteringPower::GetBiso)
+                (double (ScatteringPower::*)()const) &ScatteringPower::GetBiso)
         .def("SetBiso", &ScatteringPower::SetBiso,
             &ScatteringPowerWrap::default_SetBiso)
         .def("IsIsotropic", &ScatteringPower::IsIsotropic)
@@ -235,7 +235,7 @@ void wrap_scatteringpower()
         .def("SetFormalCharge", 
             &ScatteringPower::SetFormalCharge,
             &ScatteringPowerWrap::default_SetFormalCharge)
-        .add_property("Biso", (float (ScatteringPower::*)()const)
+        .add_property("Biso", (double (ScatteringPower::*)()const)
                 &ScatteringPower::GetBiso, &ScatteringPower::SetBiso)
         ;
 }

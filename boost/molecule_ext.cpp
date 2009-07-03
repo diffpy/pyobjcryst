@@ -81,7 +81,7 @@ namespace {
 
 
 // Overloaded to return added object and manage the lifetime of the object.
-MolAtom& _AddAtom(Molecule& m, const float x, const float y, const float z,
+MolAtom& _AddAtom(Molecule& m, const double x, const double y, const double z,
         const ScatteringPower* pow, const std::string& name,
         const bool updateDisplay=true)
 {
@@ -91,8 +91,8 @@ MolAtom& _AddAtom(Molecule& m, const float x, const float y, const float z,
     return *v.back();
 }
 
-MolBond& _AddBond(Molecule& m, MolAtom& atom1, MolAtom& atom2, const float
-        length, const float sigma, const float delta, const float bondOrder =
+MolBond& _AddBond(Molecule& m, MolAtom& atom1, MolAtom& atom2, const double
+        length, const double sigma, const double delta, const double bondOrder =
         1., const bool updateDisplay = true)
 {
     m.AddBond(atom1, atom2, length, sigma, delta, bondOrder, updateDisplay);
@@ -102,7 +102,7 @@ MolBond& _AddBond(Molecule& m, MolAtom& atom1, MolAtom& atom2, const float
 }
 
 MolBondAngle& _AddBondAngle(Molecule& m, MolAtom& atom1, MolAtom& atom2,
-        MolAtom& atom3, const float angle, const float sigma, const float
+        MolAtom& atom3, const double angle, const double sigma, const double
         delta, const bool updateDisplay = true)
 {
     m.AddBondAngle(atom1, atom2, atom3, angle, sigma, delta, updateDisplay);
@@ -112,8 +112,8 @@ MolBondAngle& _AddBondAngle(Molecule& m, MolAtom& atom1, MolAtom& atom2,
 }
 
 MolDihedralAngle& _AddDihedralAngle(Molecule& m, MolAtom& atom1, MolAtom&
-        atom2, MolAtom& atom3, MolAtom& atom4, const float angle, const float
-        sigma, const float delta, const bool updateDisplay = true)
+        atom2, MolAtom& atom3, MolAtom& atom4, const double angle, const double
+        sigma, const double delta, const bool updateDisplay = true)
 {
     m.AddDihedralAngle(atom1, atom2, atom3, atom4, angle, sigma, delta,
             updateDisplay);
@@ -438,15 +438,15 @@ bp::list _GetRigidGroupList(const Molecule& m)
 // done with converters, but there are issues with pointers. Perhaps another
 // day...
 void _RotateAtomGroup(Molecule &m, const MolAtom& at1, const MolAtom& at2,
-    const bp::object& atoms, const float angle, const bool keepCenter=true)
+    const bp::object& atoms, const double angle, const bool keepCenter=true)
 {
 
     std::set<MolAtom*> catoms = pyIterableToSet<MolAtom*>(atoms);
     m.RotateAtomGroup(at1, at2, catoms, angle, keepCenter);
 }
 
-void _RotateAtomGroupVec(Molecule &m, const MolAtom& at1, const float vx,
-    const float vy, const float vz, const bp::object& atoms, const float angle,
+void _RotateAtomGroupVec(Molecule &m, const MolAtom& at1, const double vx,
+    const double vy, const double vz, const bp::object& atoms, const double angle,
     const bool keepCenter=true)
 {
 
@@ -456,25 +456,25 @@ void _RotateAtomGroupVec(Molecule &m, const MolAtom& at1, const float vx,
 
 // A new method for three-tuples
 void _RotateAtomGroup2Vec(Molecule &m, bp::object& v1, bp::object& v2,
-    const bp::object& atoms, const float angle,
+    const bp::object& atoms, const double angle,
     const bool keepCenter=true)
 {
 
-    float x, y, z;
-    x = extract<float>(v1[0]);
-    y = extract<float>(v1[1]);
-    z = extract<float>(v1[2]);
+    double x, y, z;
+    x = extract<double>(v1[0]);
+    y = extract<double>(v1[1]);
+    z = extract<double>(v1[2]);
     MolAtom&a = _AddAtom(m, x, y, z, 0, "_rag2vectemp", false);
-    x = extract<float>(v2[0]);
-    y = extract<float>(v2[1]);
-    z = extract<float>(v2[2]);
+    x = extract<double>(v2[0]);
+    y = extract<double>(v2[1]);
+    z = extract<double>(v2[2]);
     _RotateAtomGroupVec(m, a, x, y, z, atoms, angle, keepCenter);
     m.RemoveAtom(a, true);
     return;
 }
 
-void _TranslateAtomGroup(Molecule &m, const bp::object& atoms, const float dx,
-    const float dy, const float dz, const bool keepCenter=true)
+void _TranslateAtomGroup(Molecule &m, const bp::object& atoms, const double dx,
+    const double dy, const double dz, const bool keepCenter=true)
 {
 
     std::set<MolAtom*> catoms = pyIterableToSet<MolAtom*>(atoms);
@@ -514,42 +514,42 @@ bp::list _AsZMatrix(const Molecule& m, const bool keeporder)
 }
 
 // Setters and getters for position
-void _setQ0(Molecule& m, float val)
+void _setQ0(Molecule& m, double val)
 {
     m.GetPar(m.GetName()+"Q0").SetValue(val);
 }
 
-float _getQ0(Molecule& m)
+double _getQ0(Molecule& m)
 {
     return m.GetPar(m.GetName()+"Q0").GetValue();
 }
 
-void _setQ1(Molecule& m, float val)
+void _setQ1(Molecule& m, double val)
 {
     m.GetPar(m.GetName()+"Q1").SetValue(val);
 }
 
-float _getQ1(Molecule& m)
+double _getQ1(Molecule& m)
 {
     return m.GetPar(m.GetName()+"Q1").GetValue();
 }
 
-void _setQ2(Molecule& m, float val)
+void _setQ2(Molecule& m, double val)
 {
     m.GetPar(m.GetName()+"Q2").SetValue(val);
 }
 
-float _getQ2(Molecule& m)
+double _getQ2(Molecule& m)
 {
     return m.GetPar(m.GetName()+"Q2").GetValue();
 }
 
-void _setQ3(Molecule& m, float val)
+void _setQ3(Molecule& m, double val)
 {
     m.GetPar(m.GetName()+"Q3").SetValue(val);
 }
 
-float _getQ3(Molecule& m)
+double _getQ3(Molecule& m)
 {
     return m.GetPar(m.GetName()+"Q3").GetValue();
 }

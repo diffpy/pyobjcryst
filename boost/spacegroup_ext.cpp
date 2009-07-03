@@ -34,7 +34,7 @@ using namespace ObjCryst;
 namespace {
 
 // We'll use a CrystMatrix and let the converter we wrote take care of the rest.
-CrystMatrix<float> GetTranslationVectors(const SpaceGroup& sg)
+CrystMatrix<double> GetTranslationVectors(const SpaceGroup& sg)
 {
 
     std::vector<SpaceGroup::TRx> tv = sg.GetTranslationVectors();
@@ -43,7 +43,7 @@ CrystMatrix<float> GetTranslationVectors(const SpaceGroup& sg)
     std::vector<int> dims(2);
     dims[0] = tv.size();
     dims[1] = 3;
-    CrystMatrix<float> data(dims[0], dims[1]);
+    CrystMatrix<double> data(dims[0], dims[1]);
     for(int row = 0; row < dims[0]; ++row)
     {
         for(int col = 0; col < dims[1]; ++col)

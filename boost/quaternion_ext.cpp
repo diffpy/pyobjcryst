@@ -36,42 +36,42 @@ using namespace ObjCryst;
 
 namespace {
 
-float getQ0(const Quaternion& q)
+double getQ0(const Quaternion& q)
 {
     return q.Q0();
 }
 
-float getQ1(const Quaternion& q)
+double getQ1(const Quaternion& q)
 {
     return q.Q1();
 }
 
-float getQ2(const Quaternion& q)
+double getQ2(const Quaternion& q)
 {
     return q.Q2();
 }
 
-float getQ3(const Quaternion& q)
+double getQ3(const Quaternion& q)
 {
     return q.Q3();
 }
 
-void setQ0(Quaternion& q, float val)
+void setQ0(Quaternion& q, double val)
 {
     q.Q0() = val;
 }
 
-void setQ1(Quaternion& q, float val)
+void setQ1(Quaternion& q, double val)
 {
     q.Q1() = val;
 }
 
-void setQ2(Quaternion& q, float val)
+void setQ2(Quaternion& q, double val)
 {
     q.Q2() = val;
 }
 
-void setQ3(Quaternion& q, float val)
+void setQ3(Quaternion& q, double val)
 {
     q.Q3() = val;
 }
@@ -82,7 +82,7 @@ void wrap_quaternion()
 {
 
     class_<Quaternion>("Quaternion")
-        .def(init<const float, const float, const float, const float, bool>(
+        .def(init<const double, const double, const double, const double, bool>(
             (bp::arg("q0"), bp::arg("q1"), bp::arg("q2"), bp::arg("q3"),
              bp::arg("unit")=true
             ))
