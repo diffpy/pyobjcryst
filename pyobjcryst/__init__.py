@@ -37,37 +37,37 @@ Modules
 """
 
 # Atom
-from atom import *
+import atom
 
 # Crystal
-from crystal import *
+import crystal
 
 # Molecule
-from molecule import *
+import molecule
 
 # RefinableObj
-from refinableobj import *
+import refinableobj
 
 # General
-from general import *
+import general
 
 # Scatterer
-from scatterer import *
+import scatterer
 
 # ScatteringPower
-from scatteringpower import *
+import scatteringpower
 
 # ScatteringPowerSphere
-from scatteringpowersphere import *
+import scatteringpowersphere
 
 # SpaceGroup
-from spacegroup import *
+import spacegroup
 
 # UnitCell
-from unitcell import *
+import unitcell
 
 # ZScatterer
-from zscatterer import *
+import zscatterer
 
 from version import __version__
 

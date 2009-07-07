@@ -4,9 +4,10 @@
 import pkg_resources
 pkg_resources.require('pyobjcryst')
 
-from pyobjcryst import *
-from utils import *
 import unittest
+
+from pyobjcryst.molecule import *
+from pyobjcryst.refinableobj import RefParType, RefinablePar
 
 from utils import *
 from numpy import pi

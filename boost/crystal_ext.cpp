@@ -115,15 +115,6 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
         SetDeleteRefParInDestructor(false);
     }
     
-    ~CrystalWrap()
-    {
-        std::cout << "deleting crystal" << std::endl;
-        std::cout << GetNbScatterer() << std::endl;
-        Scatterer& scat = GetScatt(0);
-        scat.Print();
-        
-    }
-
     const ScatteringComponentList& default_GetScatteringComponentList() const
     { return this->Crystal::GetScatteringComponentList(); }
 

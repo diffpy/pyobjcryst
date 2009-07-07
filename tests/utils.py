@@ -1,7 +1,14 @@
 #!/usr/bin/env python
 """Utilities for tests."""
 
-from pyobjcryst import *
+import pkg_resources
+pkg_resources.require('pyobjcryst')
+
+from pyobjcryst.atom import Atom
+from pyobjcryst.molecule import Molecule, MakeOctahedron
+from pyobjcryst.crystal import Crystal
+from pyobjcryst.scatteringpower import ScatteringPowerAtom
+
 from numpy import pi
 
 def makeScatterer():

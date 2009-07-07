@@ -1,5 +1,3 @@
-0) Install ObjCryst shared library so that python objects can be used from c++.
-
 1) Go through all bindings and make sure they are correct. List completed files
 here.
 
