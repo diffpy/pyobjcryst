@@ -13,15 +13,15 @@
 #
 ########################################################################
 
-"""Python wrapping of UnitCell.h
+"""Python wrapping of ScatteringPowerSphere.h
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 Classes:
-    UnitCell
+    ScatteringPowerSphere
 
 """
 
-from _pyobjcryst import UnitCell
+from _pyobjcryst import ScatteringPowerSphere
 
 __id__ = "$Id$"

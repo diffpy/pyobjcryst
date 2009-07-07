@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 """Tests for crystal module."""
 
+import pkg_resources
+pkg_resources.require('pyobjcryst')
+
+
 from pyobjcryst import *
 import unittest
 

@@ -13,15 +13,15 @@
 #
 ########################################################################
 
-"""Python wrapping of Scatterer."""
+"""Python wrapping of Scatterer.h
 
-__all__ = [
-        "Scatterer", 
-        "ScatteringComponent", 
-        "ScatteringPower",
-        "ScatteringPowerAtom",
-        "ScatteringPowerSphere",
-        "GlobalScatteringPower"
-        ]
+See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-from _pyobjcryst import *
+Classes:
+    Scatterer
+
+"""
+
+from _pyobjcryst import Scatterer 
+
+__id__ = "$Id$"

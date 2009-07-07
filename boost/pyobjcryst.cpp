@@ -55,48 +55,49 @@ void wrap_zatom();
 void wrap_zpolyhedron();
 void wrap_zscatterer();
 
+// Wrappers must be called according to inheritance hierarchy
 BOOST_PYTHON_MODULE(_pyobjcryst)
 {
-    // General functions and base classes
-    wrap_registerconverters();
+    // General stuff
     wrap_general();
     wrap_objregistry();
+    wrap_quaternion();
     wrap_refinableobjclock();
+    wrap_refobjopt();
     wrap_refpartype();
+    wrap_registerconverters();
+
+    // Core objects
     wrap_restraint();
     wrap_refinablepar();
     wrap_refinableobj();
 
-    // Scatter objects
+    // Other base classes
     wrap_scatterer();
-
-    wrap_atom();
-    wrap_molecule();
-    wrap_zscatterer();
-
-    wrap_asymmetricunit();
-    wrap_spacegroup();
-    wrap_unitcell();
-    wrap_crystal();
-
     wrap_scatteringpower();
-    wrap_scatteringpoweratom();
-    wrap_globalscatteringpower();
-    wrap_scatteringpowersphere();
+    wrap_zscatterer();
+    wrap_unitcell();
 
+    // Other stuff in no particular order.
+    wrap_asymmetricunit();
+    wrap_atom();
+    wrap_crystal();
+    wrap_globalscatteringpower();
     wrap_molatom();
-    wrap_molbondangle();
     wrap_molbond();
+    wrap_molbondangle();
     wrap_moldihedralangle();
-    
+    wrap_molecule();
     wrap_polyhedron();
-    wrap_quaternion();
-    wrap_refobjopt();
     wrap_rigidgroup();
     wrap_scatteringcomponent();
     wrap_scatteringcomponentlist();
+    wrap_scatteringpoweratom();
+    wrap_scatteringpowersphere();
+    wrap_spacegroup();
     wrap_stretchmode();
     wrap_zatom();
     wrap_zpolyhedron();
+
 }
 

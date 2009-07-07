@@ -13,12 +13,17 @@
 #
 ########################################################################
 
-"""Python wrapping of SpaceGroup and AsymmetricUnit."""
+"""Python wrapping of SpaceGroup.h.
 
-__all__ = [
-        "AsymmetricUnit", 
-        "SpaceGroup"
-        ]
+See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
+Classes:
+    SpaceGroup
+    AsymmetricUnit
 
-from _pyobjcryst import *
+"""
+
+from _pyobjcryst import SpaceGroup
+from _pyobjcryst import AsymmetricUnit
+
+__id__ = "$Id$"

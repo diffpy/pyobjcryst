@@ -13,8 +13,15 @@
 #
 ########################################################################
 
-"""Python wrapping of Atom."""
+"""Python wrapping of Atom.h
 
-__all__ = ["Atom"]
+See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-from _pyobjcryst import *
+Classes:
+    Atom
+
+"""
+
+from _pyobjcryst import Atom
+
+__id__ = "$Id$"

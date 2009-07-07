@@ -13,50 +13,31 @@
 #
 ########################################################################
 
+# FIXME - Remove imports and import only the modules.
+
 """Python wrapping of ObjCryst++.
 
-Classes:
+Objects are wrapped according to their header file in the ObjCryst source. 
 
-    FIXME -- Many not listed
-    Atom                --  Atom class
-    AsymmetricUnit      --  AsymmetricUnit class
-    BumpMergePar        --  Class used by Crystal
-    Crystal             --  Crystal class
-    RefinableObj        --  Base class for refinable objects
-    RefinableObjClock   --  Clock class for tracking changes
-    RefinableObjOpt     --  Options class for refinable objects
-    Scatterer           --  Base class for scatterers
-    ScatteringComponent --  Scattering component container
-    ScatteringPower     --  Base class for scattering power
-    SpaceGroup          --  Class for space group info and operations
-    UnitCell            --  Unit cell class
+See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-Enums:
-
-    RadiationType       --  Radiation type identifiers
+Modules
+    atom                    --  Wrapping of Atom.h
+    crystal                 --  Wrapping of Crystal.h
+    molecule                --  Wrapping of Molecule.h
+    refinableobj            --  Wrapping of RefinableObj.h
+    general                 --  Wrapping of General.h
+    scatterer               --  Wrapping of Scatterer.h
+    scatteringpower         --  Wrapping of ScatteringPower.h
+    scatteringpowersphere   --  Wrapping of ScatteringPowerSphere.h
+    spacegroup              --  Wrapping of SpaceGroup.h
+    unitcell                --  Wrapping of UnitCell.h
+    zscatterer              --  Wrapping of ZScatterer.h
 
 """
 
-# The modules below are organized according to header file in the ObjCryst
-# source.
-
-# General
-from general import *
-
-# RefinableObj
-from refinableobj import *
-
-# Scatterer
-from scatterer import *
-
 # Atom
 from atom import *
-
-# UnitCell
-from unitcell import *
-
-# SpaceGroup
-from spacegroup import *
 
 # Crystal
 from crystal import *
@@ -64,5 +45,30 @@ from crystal import *
 # Molecule
 from molecule import *
 
+# RefinableObj
+from refinableobj import *
+
+# General
+from general import *
+
+# Scatterer
+from scatterer import *
+
+# ScatteringPower
+from scatteringpower import *
+
+# ScatteringPowerSphere
+from scatteringpowersphere import *
+
+# SpaceGroup
+from spacegroup import *
+
+# UnitCell
+from unitcell import *
+
 # ZScatterer
 from zscatterer import *
+
+from version import __version__
+
+__id__ = "$Id$"

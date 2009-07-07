@@ -13,13 +13,25 @@
 #
 ########################################################################
 
-"""Python wrapping of Zscatterer."""
+"""Python wrapping of Zscatterer.
 
-__all__ = [
-        "ZAtom",
-        "ZPolyhedron",
-        "ZScatterer",
-        "RegularPolyhedraType",
-        ]
+See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-from _pyobjcryst import *
+Classes:
+    ZScatterer
+    ZAtom
+    ZPolyhedron
+    GlobalScatteringPower
+
+Enums:
+    RegularPolyhedraType
+
+"""
+
+from _pyobjcryst import ZScatterer
+from _pyobjcryst import ZAtom
+from _pyobjcryst import ZPolyhedron
+from _pyobjcryst import RegularPolyhedraType
+from _pyobjcryst import GlobalScatteringPower
+
+__id__ = "$Id$"

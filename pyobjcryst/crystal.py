@@ -13,12 +13,17 @@
 #
 ########################################################################
 
-"""Python wrapping of Crystal."""
+"""Python wrapping of Crystal.h.
 
-__all__ = [
-        "Crystal",
-        "BumpMergePar"
-        ]
+See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
+Classes:
+    Crystal
+    BumpMergePar
 
-from _pyobjcryst import *
+"""
+
+from _pyobjcryst import Crystal
+from _pyobjcryst import BumpMergePar
+
+__id__ = "$Id$"

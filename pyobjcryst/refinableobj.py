@@ -13,20 +13,35 @@
 #
 ########################################################################
 
-"""Python wrapping of RefinableObj."""
+"""Python wrapping of RefinableObj.h
 
-__all__ = [
-        "RefinableObjClock", 
-        "RefinableObj", 
-        "RefObjOpt",
-        "RefinableObjRegistry",
-        "RefParType", 
-        "RefParDerivStepModel",
-        "RefinablePar",
-        "Restraint",
-        "ScattererRegistry",
-        "ScatteringPowerRegistry",
-        "ZAtomRegistry"
-        ]
+See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-from _pyobjcryst import *
+Classes:
+    RefinableObjClock 
+    RefinableObj 
+    RefObjOpt
+    RefinableObjRegistry
+    RefParType 
+    RefParDerivStepModel
+    RefinablePar
+    Restraint
+    ScattererRegistry
+    ScatteringPowerRegistry
+    ZAtomRegistry
+
+"""
+
+from _pyobjcryst import RefinableObjClock 
+from _pyobjcryst import RefinableObj 
+from _pyobjcryst import RefObjOpt
+from _pyobjcryst import RefinableObjRegistry
+from _pyobjcryst import RefParType 
+from _pyobjcryst import RefParDerivStepModel
+from _pyobjcryst import RefinablePar
+from _pyobjcryst import Restraint
+from _pyobjcryst import ScattererRegistry
+from _pyobjcryst import ScatteringPowerRegistry
+from _pyobjcryst import ZAtomRegistry
+
+__id__ = "$Id$"

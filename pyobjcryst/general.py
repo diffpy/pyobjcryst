@@ -13,9 +13,15 @@
 #
 ########################################################################
 
-"""Python wrapping of things from General.h."""
+"""Python wrapping of things from General.h.
 
-__all__ = ["RadiationType"]
+See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
+Enums:
+    RadiationType
 
-from _pyobjcryst import *
+"""
+
+from _pyobjcryst import RadiationType
+
+__id__ = "$Id$"

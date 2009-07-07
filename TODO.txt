@@ -1,3 +1,5 @@
+0) Install ObjCryst shared library so that python objects can be used from c++.
+
 1) Go through all bindings and make sure they are correct. List completed files
 here.
 
@@ -10,7 +12,6 @@ RefinablePar
 2) Add bindings that are required for creating and using crystals. List here
 what is missing.
 
-All Molecule stuff
 
 3) Anything else?
 * Wrap classes needed for calculating a diffraction pattern.
