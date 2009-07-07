@@ -22,11 +22,14 @@ dist =  setup(
         setup_requires = ['openalea.deploy'],
         dependency_links = ['http://openalea.gforge.inria.fr/pi'],
 
+        # This tells openalea.deploy where to put and find the shared libraries
+        # modules.
+        lib_dirs = { 'lib' : 'lib' },
+
         # This tells openalea.deploy where to put and find binaries.  Instead
-        # of binaries, we're using it to move the compiled modules into the
-        # package directory so that they get installed with the python files,
-        # and don't clutter the shared library directory.
-        bin_dirs = { 'pyobjcryst' : 'pyobjcryst'},
+        # of binaries, we're using it to move the compiled module into the
+        # package directory so that it gets installed with the python files.
+        bin_dirs = { 'pyobjcryst' : 'pyobjcryst' },
 
         # This is a must, since the shared libraries are in the egg.
         zip_safe = False,

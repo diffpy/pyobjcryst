@@ -4,4 +4,4 @@ Export('env')
 
 SConscript(["src/SConscript", "boost/SConscript"])
 
-Default("build")
+Default("install")
