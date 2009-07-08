@@ -6,9 +6,6 @@ valgrind --tool=memcheck --leak-check=full /usr/bin/python ./pyobjcrysttest.py
 
 """
 
-import pkg_resources
-pkg_resources.require('pyobjcryst')
-
 from pyobjcryst.atom import Atom
 from pyobjcryst.crystal import Crystal
 from pyobjcryst.scatteringpower import ScatteringPowerAtom

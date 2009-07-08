@@ -18,9 +18,6 @@
 This verifies results from tests built into the _registerconverters module.
 """
 
-import pkg_resources
-pkg_resources.require('pyobjcryst')
-
 import unittest
 from pyobjcryst._pyobjcryst import getTestVector, getTestMatrix
 import numpy

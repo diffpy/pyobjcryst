@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 """Utilities for tests."""
 
-import pkg_resources
-pkg_resources.require('pyobjcryst')
-
 from pyobjcryst.atom import Atom
 from pyobjcryst.molecule import Molecule, MakeOctahedron
 from pyobjcryst.crystal import Crystal

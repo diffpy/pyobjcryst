@@ -19,7 +19,7 @@ dist =  setup(
         # openalea.deploy extends setuptools in order to support scons setups,
         # and various other features.  These will allow us to use the OpenAlea
         # build system without considerable effort.
-        setup_requires = ['openalea.deploy'],
+        setup_requires = ['scons', 'openalea.deploy'],
         dependency_links = ['http://openalea.gforge.inria.fr/pi'],
 
         # This tells openalea.deploy where to put and find the shared libraries
