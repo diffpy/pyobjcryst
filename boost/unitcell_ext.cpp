@@ -27,7 +27,6 @@
 #include <boost/python/def.hpp>
 
 #include <string>
-#include <iostream>
 
 #include "helpers.hpp"
 

@@ -19,6 +19,9 @@
 *
 * $Id$
 *
+* FIXME This file is deprecated. All of this has been moved to
+* registerconverters.cpp. This file will be removed in the next release.
+*
 *****************************************************************************/
 
 #ifndef _CONVERTERS_HPP

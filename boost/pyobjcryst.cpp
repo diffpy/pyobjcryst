@@ -12,8 +12,6 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::AsymmetricUnit.
-*
 * $Id$
 *
 *****************************************************************************/
@@ -26,16 +24,17 @@ void wrap_atom();
 void wrap_crystal();
 void wrap_general();
 void wrap_globalscatteringpower();
+void wrap_io();
 void wrap_molatom();
-void wrap_molbondangle();
 void wrap_molbond();
+void wrap_molbondangle();
 void wrap_moldihedralangle();
 void wrap_molecule();
 void wrap_objregistry();
 void wrap_polyhedron();
 void wrap_quaternion();
-void wrap_refinableobjclock();
 void wrap_refinableobj();
+void wrap_refinableobjclock();
 void wrap_refinablepar();
 void wrap_refobjopt();
 void wrap_refpartype();
@@ -45,8 +44,8 @@ void wrap_rigidgroup();
 void wrap_scatterer();
 void wrap_scatteringcomponent();
 void wrap_scatteringcomponentlist();
-void wrap_scatteringpoweratom();
 void wrap_scatteringpower();
+void wrap_scatteringpoweratom();
 void wrap_scatteringpowersphere();
 void wrap_spacegroup();
 void wrap_stretchmode();
@@ -60,6 +59,7 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
 {
     // General stuff
     wrap_general();
+    wrap_io();
     wrap_objregistry();
     wrap_quaternion();
     wrap_refinableobjclock();

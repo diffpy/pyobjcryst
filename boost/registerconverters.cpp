@@ -19,16 +19,18 @@
 *****************************************************************************/
 
 #include <boost/python.hpp>
+#include <boost/python/numeric.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/suite/indexing/map_indexing_suite.hpp>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
+#include <boost/python/to_python_converter.hpp>
 
 #include <string>
 #include <vector>
 #include <iostream>
 #include <algorithm>
 
-#include "converters.hpp"
+#include <numpy/noprefix.h>
 #include <numpy/arrayobject.h>
 
 #include "CrystVector/CrystVector.h"
@@ -37,12 +39,15 @@
 #include "ObjCryst/SpaceGroup.h"
 #include "ObjCryst/Molecule.h"
 
+#include "python_file_stream.hpp"
+
+
 using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
-// for testing
 
+namespace bp = boost::python;
 
 typedef std::pair< ScatteringPower const*, ScatteringPower const* > sppair;
 
@@ -53,6 +58,89 @@ typedef std::map< sppair, Crystal::BumpMergePar > mapsppairtobmp;
 typedef std::set<MolAtom*> MolAtomSet;
 
 typedef std::vector<MolAtom*> MolAtomVec;
+
+
+// Make an array out of a data pointer and a dimension vector
+PyObject* makeNdArray(double * data, std::vector<int>& dims)
+{
+    PyObject* pyarray = PyArray_SimpleNewFromData
+                (dims.size(), &dims[0], PyArray_DOUBLE, (void *) data);
+    PyObject* pyarraycopy = PyArray_Copy( (PyArrayObject*) pyarray );
+    return bp::incref(pyarraycopy);
+}
+
+// CrystVector to ndarray
+struct CrystVector_REAL_to_ndarray
+{
+
+    static PyObject* convert(CrystVector<double> const &cv)
+    {
+        std::vector<int> dims(1);
+        dims[0] = cv.numElements();
+        return makeNdArray((double *) cv.data(), dims);
+    }
+
+    static PyTypeObject const* get_pytype()
+    {
+        return &PyDoubleArrType_Type;
+    }
+
+};
+
+// CrystVector to ndarray
+struct CrystMatrix_REAL_to_ndarray
+{
+
+    static PyObject* convert(CrystMatrix<double> const &cm)
+    {
+        std::vector<int> dims(2);
+        dims[0] = cm.rows();
+        dims[1] = cm.cols();
+        return makeNdArray((double *) cm.data(), dims);
+    }
+
+    static PyTypeObject const* get_pytype()
+    {
+        return &PyDoubleArrType_Type;
+    }
+
+};
+
+// std::pair to tuple
+template <typename T1, typename T2>
+struct std_pair_to_tuple
+{
+
+    static PyObject* convert(std::pair<T1, T2> const& p)
+    {
+        bp::object tpl = bp::make_tuple(p.first, p.second);
+        PyObject* rv = tpl.ptr();
+        return bp::incref(rv);
+    }
+
+    static PyTypeObject const* get_pytype() 
+    {
+        return &PyTuple_Type; 
+    }
+
+};
+
+// Helper for convenience.
+template <typename T1, typename T2>
+struct std_pair_to_python_converter
+{
+
+std_pair_to_python_converter()
+{
+    bp::to_python_converter<
+        std::pair<T1, T2>,
+        std_pair_to_tuple<T1, T2>
+    >();
+}
+
+};
+
+/* For MolAtomSet */
 
 void _addMAS(MolAtomSet& mas, MolAtom* a) 
 { 
@@ -105,6 +193,7 @@ void _removeMAS(MolAtomSet& mas,  MolAtom* a)
 }
 
 /* For MolAtomVec */
+
 void _appendMAV(MolAtomVec& mav, MolAtom* a) 
 { 
     mav.push_back(a); 
@@ -137,7 +226,6 @@ void _deleteMAV(MolAtomVec& mav, size_t i)
 {
     mav.erase(mav.begin()+i);
 }
-
 
 //
 // For testing
@@ -179,6 +267,63 @@ CrystMatrix<double> getTestMatrix()
 } // namespace
 
 
+// From cctbx. See python_file_buffer.hpp for copyright.
+namespace boost_adaptbx { namespace file_conversion {
+
+  std::size_t python_file_buffer::buffer_size = 1024;
+
+  // Boost.Python conversion dark magic
+  struct python_file_to_stream_buffer
+  {
+    static void register_conversion() {
+      using namespace boost::python;
+      converter::registry::push_back(
+        &convertible,
+        &construct,
+        type_id<python_file_buffer>());
+    }
+
+    static void *convertible(PyObject *obj_ptr) {
+      using namespace boost::python;
+      if (!(   PyObject_HasAttrString(obj_ptr, "read")
+            && PyObject_HasAttrString(obj_ptr, "readline")
+            && PyObject_HasAttrString(obj_ptr, "readlines"))
+          &&
+          !(   PyObject_HasAttrString(obj_ptr, "write")
+            && PyObject_HasAttrString(obj_ptr, "writelines"))) return 0;
+      return obj_ptr;
+    }
+
+    static void construct(
+      PyObject *obj_ptr,
+      boost::python::converter::rvalue_from_python_stage1_data *data)
+    {
+      using namespace boost::python;
+      typedef converter::rvalue_from_python_storage<python_file_buffer> rvalue_t;
+      void *storage = ((rvalue_t *) data)->storage.bytes;
+      object python_file((handle<>(borrowed(obj_ptr))));
+      new (storage) python_file_buffer(python_file);
+      data->convertible = storage;
+    }
+  };
+
+  struct python_file_buffer_wrapper
+  {
+    typedef python_file_buffer wt;
+
+    static void wrap() {
+      using namespace boost::python;
+      class_<wt, boost::noncopyable>("buffer", no_init)
+        .def_readwrite("size", wt::buffer_size,
+                       "The size of the buffer sitting "
+                       "between a Python file object and a C++ stream.")
+      ;
+    }
+  };
+
+}} // boost_adaptbx::file_conversions
+
+
 void wrap_registerconverters()
 {
 
@@ -216,6 +361,12 @@ void wrap_registerconverters()
         .def("__len__", &MolAtomVec::size)
         ;
 
+    // Python file stuff
+    boost_adaptbx::file_conversion::python_file_to_stream_buffer::register_conversion();
+    boost_adaptbx::file_conversion::python_file_to_stream_buffer::register_conversion();
+    boost_adaptbx::file_conversion::python_file_buffer_wrapper::wrap();
+
+    
     // some tests
     def("getTestVector", &getTestVector);
     def("getTestMatrix", &getTestMatrix);

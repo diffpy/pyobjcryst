@@ -24,12 +24,13 @@ See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 Modules
     atom                    --  Wrapping of Atom.h
     crystal                 --  Wrapping of Crystal.h
+    general                 --  Wrapping of General.h
+    io                      --  Wrapping of IO.h
     molecule                --  Wrapping of Molecule.h
     refinableobj            --  Wrapping of RefinableObj.h
-    general                 --  Wrapping of General.h
     scatterer               --  Wrapping of Scatterer.h
-    scatteringpower         --  Wrapping of ScatteringPower.h
     scatteringpowersphere   --  Wrapping of ScatteringPowerSphere.h
+    scatteringpower         --  Wrapping of ScatteringPower.h
     spacegroup              --  Wrapping of SpaceGroup.h
     unitcell                --  Wrapping of UnitCell.h
     zscatterer              --  Wrapping of ZScatterer.h
@@ -68,6 +69,9 @@ import unitcell
 
 # ZScatterer
 import zscatterer
+
+# IO
+import io
 
 from version import __version__
 

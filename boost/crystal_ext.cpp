@@ -31,6 +31,8 @@
 #include "RefinableObj/RefinableObj.h"
 #include "CrystVector/CrystVector.h"
 
+#include "python_file_stream.hpp"
+
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
@@ -79,6 +81,16 @@ bp::list _GetScatteringComponentList(Crystal &c)
 
     return l;
 }
+
+
+void _CIFOutput(Crystal &c, 
+        boost_adaptbx::file_conversion::python_file_buffer const &output)
+{
+    boost_adaptbx::file_conversion::ostream os(&output);
+    c.CIFOutput(os);
+    os.flush();
+}
+
 
 // wrap the virtual functions that need it
 class CrystalWrap : public Crystal, public wrapper<Crystal>
@@ -215,7 +227,7 @@ void wrap_crystal()
             &Crystal::GetBumpMergeParList, return_internal_reference<>())
         .def("GetClockScattererList", &Crystal::GetClockScattererList,
                 return_value_policy<copy_const_reference>())
-        .def("CIFOutput", &Crystal::CIFOutput)
+        .def("CIFOutput", &_CIFOutput)
         .def("AddBondValenceRo", &Crystal::AddBondValenceRo)
         .def("RemoveBondValenceRo", &Crystal::AddBondValenceRo)
         .def("GetBondValenceCost", &Crystal::GetBondValenceCost)

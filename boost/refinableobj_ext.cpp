@@ -27,7 +27,7 @@
 *   python class and the parameter accessors.
 * - SetDeleteRefParInDestructor is not exposed.
 * - RemovePar is overloaded to return None.
-* - XMLOutput and XMLInput are not wrapped (yet).
+* - XMLInput is not wrapped (yet).
 *
 * $Id$
 *
@@ -41,13 +41,14 @@
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
-#include <boost/python/to_python_converter.hpp>
 #include <boost/python/args.hpp>
 
 #include "RefinableObj/RefinableObj.h"
+#include "RefinableObj/IO.h"
 #include "CrystVector/CrystVector.h"
 
 #include "helpers.hpp"
+#include "python_file_stream.hpp"
 
 namespace bp = boost::python;
 using namespace boost::python;
@@ -386,6 +387,27 @@ void _RemovePar(RefinableObj &obj, RefinablePar* refpar)
     return;
 }
 
+void _XMLOutput(
+        const RefinableObj& r, 
+        boost_adaptbx::file_conversion::python_file_buffer const &output,
+        int indent = 0)
+{
+    boost_adaptbx::file_conversion::ostream os(&output);
+    r.XMLOutput(os, indent);
+    os.flush();
+}
+
+void _XMLInput(
+        RefinableObj& r, 
+        boost_adaptbx::file_conversion::python_file_buffer const &input,
+        XMLCrystTag &tag)
+{
+    boost_adaptbx::file_conversion::istream in(&input);
+    r.XMLInput(in, tag);
+    in.sync();
+}
+
+
 } // anonymous namespace
 
 
@@ -525,12 +547,12 @@ void wrap_refinableobj()
         .def("GetLSQDeriv", &RefinableObj::GetLSQDeriv, 
             &RefinableObjWrap::default_GetLSQDeriv,
             return_value_policy<copy_const_reference>())
-        // FIXME - Need to deal with the ostream argument
-        //.def("XMLOutput", &RefinableObj::XMLOutput, 
-        //    &RefinableObjWrap::default_XMLOutput)
-        // FIXME - Need to deal with the istream argument
-        //.def("XMLInput", &RefinableObj::XMLInput, 
-        //    &RefinableObjWrap::default_XMLInput)
+        .def("XMLOutput", &_XMLOutput, (bp::arg("file"), bp::arg("indent")=0))
+        .def("XMLOutput", &RefinableObj::XMLOutput, 
+            &RefinableObjWrap::default_XMLOutput)
+        .def("XMLInput", &_XMLInput, (bp::arg("file"), bp::arg("tag")))
+        .def("XMLInput", &RefinableObj::XMLInput, 
+            &RefinableObjWrap::default_XMLInput)
         .def("GetGeneGroup", &RefinableObj::GetGeneGroup, 
             &RefinableObjWrap::default_GetGeneGroup)
         .def("GetRestraintCost", &RefinableObj::GetRestraintCost, 

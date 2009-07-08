@@ -19,13 +19,8 @@
 *
 *****************************************************************************/
 
-#include <boost/utility.hpp>
 #include <boost/python.hpp>
-#include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
-
-#include <string>
-#include <iostream>
 
 #include "ObjCryst/General.h"
 
