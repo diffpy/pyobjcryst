@@ -36,6 +36,7 @@ class TestMolecule(unittest.TestCase):
         self.m.Occupancy *= 1.001
         return
 
+
     def testContainment(self):
         """Make sure we can still use the molecule if the crystal is out of
         scope."""
@@ -73,6 +74,7 @@ class TestMolecule(unittest.TestCase):
             self.assertEqual(a1.GetName(), "C%i"%i)
 
         a = self.m.GetAtom(0)
+        x = a.X
         sp = a.GetScatteringPower()
 
         self.assertTrue(60, self.m.GetNbAtoms())
@@ -81,12 +83,16 @@ class TestMolecule(unittest.TestCase):
 
         self.assertTrue(59, self.m.GetNbAtoms())
 
+        # Make sure the atom is still valid. We don't RemoveAtom deleting the
+        # memory for an object we still have access to.
+        self.assertEquals(a.X, x)
+
         # Check to see if a is in our list
         for i in xrange(59):
             self.assertNotEqual(a.GetName(), self.m.GetAtom(i))
 
         # What happens if we try to remove an atom that is not in the molecule?
-        # First, try the same atom again. This will throw a cctbx error.
+        # First, try the same atom again. This will throw an objcryst error.
         # FIXME - change this once exceptions are wrapped
         self.assertRaises(RuntimeError, self.m.RemoveAtom, a)
 
@@ -96,10 +102,8 @@ class TestMolecule(unittest.TestCase):
         self.assertRaises(RuntimeError, self.m.RemoveAtom, m.GetAtom(1))
 
         # Remove all the atoms.
-        atoms = self.m.GetAtomList()
-        for a in atoms:
+        for a in self.m[:]:
             self.m.RemoveAtom(a)
-        del atoms
 
         atoms = self.m.GetAtomList()
         self.assertEquals(0, len(atoms))
@@ -794,18 +798,16 @@ class TestStretchModeTorsion(unittest.TestCase):
 
     def testDummy(self):
         """Test adding a dummy atom."""
-        return
 
-        # FIXME - uncomment once the changes to the ObjCryst source are brought
-        # into this package.
-        
-
-        # In this past, dummy atoms would cause seg-faults in crystal::Print
+        # In this past, dummy atoms would cause seg-faults in crystal::Print.
+        # We test that here.
         self.m.AddAtom(0, 0, 0, None, "center")
+
+        sp = self.m[-1].GetScatteringPower()
+        self.assertTrue(sp is None)
 
         import tempfile
         t = tempfile.TemporaryFile()
-
 
         print >> t, self.m
 

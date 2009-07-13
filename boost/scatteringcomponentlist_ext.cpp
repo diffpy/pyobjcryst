@@ -23,6 +23,7 @@
 
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
+#include <boost/python/slice.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
 
@@ -35,28 +36,36 @@ using namespace ObjCryst;
 namespace
 {
 
-    const ScatteringComponent& 
-    getItem(const ScatteringComponentList &scl, long idx)
+const ScatteringComponent& 
+getItem(const ScatteringComponentList &scl, long idx)
+{
+    long n = scl.GetNbComponent();
+    if(idx < 0) idx += n;
+    if(idx < 0 || idx >= n)
     {
-        long n = scl.GetNbComponent();
-        if(idx < 0) idx += n;
-        if(idx < 0 || idx >= n)
-        {
-            PyErr_SetString(PyExc_IndexError, "index out of range");
-            throw_error_already_set();
-        }
-        return scl(idx);
+        PyErr_SetString(PyExc_IndexError, "index out of range");
+        throw_error_already_set();
     }
+    return scl(idx);
+}
 
-    bool contains(const ScatteringComponentList &scl,
-            const ScatteringComponent &sc)
+bool contains(const ScatteringComponentList &scl,
+        const ScatteringComponent &sc)
+{
+    for(long i=0; i < scl.GetNbComponent(); ++i)
     {
-        for(long i=0; i < scl.GetNbComponent(); ++i)
-        {
-            if( scl(i) == sc ) return true;
-        }
-        return false;
+        if( scl(i) == sc ) return true;
     }
+    return false;
+}
+
+// Get slices directly from the boost python object
+bp::object getSCSlice(bp::object & scl, bp::slice& s)
+{
+    bp::list l = list(scl);
+    return l[s];
+}
+
 
 }
 
@@ -77,6 +86,8 @@ void wrap_scatteringcomponentlist()
         // Container-type things
         .def("__len__", &ScatteringComponentList::GetNbComponent)
         .def("__getitem__", &getItem, return_internal_reference<>())
+        .def("__getitem__", &getSCSlice,
+                with_custodian_and_ward_postcall<1,0>())
         .def("__contains__", &contains)
         ;
 }

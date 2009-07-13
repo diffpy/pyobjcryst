@@ -38,6 +38,7 @@
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/implicit.hpp>
+#include <boost/python/slice.hpp>
 
 #include <string>
 #include <map>
@@ -90,7 +91,6 @@ void _CIFOutput(Crystal &c,
     c.CIFOutput(os);
     os.flush();
 }
-
 
 // wrap the virtual functions that need it
 class CrystalWrap : public Crystal, public wrapper<Crystal>

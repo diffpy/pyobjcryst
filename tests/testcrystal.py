@@ -5,8 +5,7 @@ import unittest
 
 from utils import *
 
-# FIXME - getting segfault when multiple references to a crystal are floating
-# around, but no references to the sub-objects.
+from pyobjcryst.atom import Atom
 
 
 class TestCrystal(unittest.TestCase):
@@ -60,7 +59,18 @@ class TestCrystal(unittest.TestCase):
         sp, atom = makeScatterer()
         c = makeCrystal(sp, atom)
         scl = c.GetScatteringComponentList()
-        self.assertTrue(1, len(scl))
+        self.assertEquals(1, len(scl))
+
+        sclcopy = scl[:]
+        self.assertEquals(1, len(scl))
+
+        del sclcopy[0]
+        self.assertEquals(0, len(sclcopy))
+        self.assertEquals(1, len(scl))
+
+        del scl[0]
+        self.assertEquals(0, len(scl))
+
         return
 
     def testGetScatterer(self):
@@ -71,9 +81,18 @@ class TestCrystal(unittest.TestCase):
             c.GetScatterer(i)
         return
 
+    def testDummyAtom(self):
+        """Test dummy atoms."""
+        c = makeCrystal(*makeScatterer())
+
+        c.AddScatterer(Atom(0, 0, 0, "dummy", None))
+
+        d = c.GetScatterer("dummy")
+        self.assertTrue(d.GetScatteringPower() is None)
+        return
+
     def testEmbedding(self):
         """Test integrity of mutually-embedded objects."""
-        # July 1, 2009 - this will segfault
 
         c = makeCrystal(*makeScatterer())
 
@@ -90,11 +109,11 @@ class TestCrystal(unittest.TestCase):
 
         l1 = Level1(c)
 
-        return
+        del l1
 
+        return
 
 
 if __name__ == "__main__":
     unittest.main()
-
 

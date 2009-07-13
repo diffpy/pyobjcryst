@@ -60,7 +60,7 @@
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
-#include <boost/python/make_constructor.hpp>
+#include <boost/python/slice.hpp>
 
 #include <iostream>
 #include <vector>
@@ -434,6 +434,13 @@ bp::list _GetRigidGroupList(const Molecule& m)
     return l;
 }
 
+// Get atoms by slice
+bp::object getAtomSlice(Molecule& m, bp::slice& s)
+{
+    bp::list l = _GetAtomList(m);
+    return l[s];
+}
+
 // Overloaded to accept a python iterable instead of a std::set. Again, could be
 // done with converters, but there are issues with pointers. Perhaps another
 // day...
@@ -728,7 +735,10 @@ void wrap_molecule()
             &Molecule::BuildStretchModeGroups)
         .def("UpdateScattCompList", &Molecule::UpdateScattCompList)
         .def("InitOptions", &Molecule::InitOptions)
-        .def("__getitem__", &_GetAtomIdx, return_internal_reference<>())
+        .def("__getitem__", &getAtomSlice,
+                with_custodian_and_ward_postcall<1,0>())
+        .def("__getitem__", &_GetAtomIdx,
+                return_internal_reference<>())
         .def("__len__", &_GetNbAtoms)
         // Properties for molecule position
         .add_property("Q0", &_getQ0, &_setQ0)
