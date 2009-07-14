@@ -12,7 +12,7 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::AsymmetricUnit.
+* boost::python bindings for various conversions used in pyobjcryst.
 *
 * $Id$
 *
@@ -34,6 +34,7 @@
 #include <numpy/arrayobject.h>
 
 #include "CrystVector/CrystVector.h"
+#include "ObjCryst/General.h"
 #include "ObjCryst/Crystal.h"
 #include "ObjCryst/ScatteringPower.h"
 #include "ObjCryst/SpaceGroup.h"
@@ -44,6 +45,7 @@
 
 using namespace boost::python;
 using namespace ObjCryst;
+
 
 namespace {
 
@@ -140,7 +142,7 @@ std_pair_to_python_converter()
 
 };
 
-/* For MolAtomSet */
+/* For MolAtomSet (std::set<MolAtom*>) */
 
 void _addMAS(MolAtomSet& mas, MolAtom* a) 
 { 
@@ -227,6 +229,17 @@ void _deleteMAV(MolAtomVec& mav, size_t i)
     mav.erase(mav.begin()+i);
 }
 
+/* Exception translation */
+PyObject* pyobjcryst_ObjCrystException = 
+    PyErr_NewException((char*)"pyobjcryst.ObjCrystException", 0, 0);
+
+
+void translateException(const ObjCrystException& e)
+{
+    PyErr_SetString(pyobjcryst_ObjCrystException, "ObjCrystException");
+}
+
+
 //
 // For testing
 //
@@ -267,7 +280,8 @@ CrystMatrix<double> getTestMatrix()
 } // namespace
 
 
-// From cctbx. See python_file_buffer.hpp for copyright.
+// From cctbx. Used to convert python file-type objects to c++ streams.  
+// See python_file_buffer.hpp for copyright.
 namespace boost_adaptbx { namespace file_conversion {
 
   std::size_t python_file_buffer::buffer_size = 1024;
@@ -327,6 +341,14 @@ namespace boost_adaptbx { namespace file_conversion {
 void wrap_registerconverters()
 {
 
+    /* Exceptions */
+    register_exception_translator<ObjCrystException>(translateException);
+
+    // Put ObjCrystException in module namespace
+    scope().attr("ObjCrystException") = 
+        object(handle<>(pyobjcryst_ObjCrystException));
+
+    /* Data type converters */
     import_array();
     to_python_converter< CrystVector<double>, CrystVector_REAL_to_ndarray >();
     to_python_converter< CrystMatrix<double>, CrystMatrix_REAL_to_ndarray >();
@@ -362,9 +384,10 @@ void wrap_registerconverters()
         ;
 
     // Python file stuff
-    boost_adaptbx::file_conversion::python_file_to_stream_buffer::register_conversion();
-    boost_adaptbx::file_conversion::python_file_to_stream_buffer::register_conversion();
-    boost_adaptbx::file_conversion::python_file_buffer_wrapper::wrap();
+    namespace bafc = boost_adaptbx::file_conversion;
+    bafc::python_file_to_stream_buffer::register_conversion();
+    bafc::python_file_to_stream_buffer::register_conversion();
+    bafc::python_file_buffer_wrapper::wrap();
 
     
     // some tests

@@ -23,5 +23,6 @@ Enums:
 """
 
 from _pyobjcryst import RadiationType
+from _pyobjcryst import ObjCrystException
 
 __id__ = "$Id$"

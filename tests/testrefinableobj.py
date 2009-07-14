@@ -2,6 +2,7 @@
 """Tests for refinableobj module."""
 
 from pyobjcryst.refinableobj import *
+from pyobjcryst import ObjCrystException
 
 import unittest
 import numpy
@@ -315,9 +316,7 @@ class TestRefinableObj(unittest.TestCase):
 
     def testParmSets(self):
         """Test creation of parameter sets."""
-        # This creates an exception, but it is not easily tranlatable to python.
-        # I'll use the default boost RuntimeError for now.
-        self.assertRaises(RuntimeError, self.r.SaveParamSet, 3)
+        self.assertRaises(ObjCrystException, self.r.SaveParamSet, 3)
         p1, p2 = self._getPars()
         r = self.r
 
@@ -342,9 +341,9 @@ class TestRefinableObj(unittest.TestCase):
 
         # Delete parameter sets
         r.ClearParamSet(save2)
-        self.assertRaises(RuntimeError, r.SaveParamSet, save2)
+        self.assertRaises(ObjCrystException, r.SaveParamSet, save2)
         r.EraseAllParamSet()
-        self.assertRaises(RuntimeError, r.SaveParamSet, save1)
+        self.assertRaises(ObjCrystException, r.SaveParamSet, save1)
 
         return
 

@@ -4,6 +4,7 @@
 import unittest
 
 from pyobjcryst.molecule import *
+from pyobjcryst import ObjCrystException
 from pyobjcryst.refinableobj import RefParType, RefinablePar
 
 from utils import *
@@ -83,8 +84,8 @@ class TestMolecule(unittest.TestCase):
 
         self.assertTrue(59, self.m.GetNbAtoms())
 
-        # Make sure the atom is still valid. We don't RemoveAtom deleting the
-        # memory for an object we still have access to.
+        # Make sure the atom is still valid. We don't want RemoveAtom deleting
+        # the memory for an object we still have access to.
         self.assertEquals(a.X, x)
 
         # Check to see if a is in our list
@@ -93,13 +94,12 @@ class TestMolecule(unittest.TestCase):
 
         # What happens if we try to remove an atom that is not in the molecule?
         # First, try the same atom again. This will throw an objcryst error.
-        # FIXME - change this once exceptions are wrapped
-        self.assertRaises(RuntimeError, self.m.RemoveAtom, a)
+        self.assertRaises(ObjCrystException, self.m.RemoveAtom, a)
 
         ## Try to remove an atom from another molecule
         c = makeC60()
         m = c.GetScatterer("c60")
-        self.assertRaises(RuntimeError, self.m.RemoveAtom, m.GetAtom(1))
+        self.assertRaises(ObjCrystException, self.m.RemoveAtom, m.GetAtom(1))
 
         # Remove all the atoms.
         for a in self.m[:]:

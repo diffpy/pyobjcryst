@@ -37,6 +37,9 @@ Modules
 
 """
 
+# Let's put this on the package level
+from general import ObjCrystException
+
 # Atom
 import atom
 

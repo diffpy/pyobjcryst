@@ -67,6 +67,7 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
     wrap_refpartype();
     wrap_registerconverters();
 
+
     // Core objects
     wrap_restraint();
     wrap_refinablepar();
