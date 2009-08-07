@@ -5,7 +5,6 @@ Import('env')
 srcfile = "ObjCryst-r1165.tgz"
 md5sum = "017735760f131e2fb0b35099ceb1c410"
 
-# FIXME - use SCons to do this!
 import os.path
 if not (os.path.exists("cctbx") or os.path.exists("cctbx.tar.bz2")) \
     or not (os.path.exists("newmat") or os.path.exists("newmat.tar.bz2"))\

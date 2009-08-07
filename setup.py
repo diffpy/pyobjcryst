@@ -25,11 +25,9 @@ dist =  setup(
         # This tells openalea.deploy where to put and find the shared libraries
         # modules.
         lib_dirs = { 'lib' : 'lib' },
-
-        # This tells openalea.deploy where to put and find binaries.  Instead
-        # of binaries, we're using it to move the compiled module into the
-        # package directory so that it gets installed with the python files.
-        bin_dirs = { 'pyobjcryst' : 'pyobjcryst' },
+        # And the library header files
+        inc_dirs = { 'include' : 'include' },
+        package_data = {'' : ['_pyobjcryst.pyd', '_pyobjcryst.so'],},
 
         # This is a must, since the shared libraries are in the egg.
         zip_safe = False,
