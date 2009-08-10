@@ -572,7 +572,7 @@ void wrap_molecule()
         init<const Molecule&>((bp::arg("oldMolecule"))))
         /* Constructors */
         .def(init<Crystal&, const std::string&>(
-            (bp::arg("cryst"), bp::arg("name"))))
+            (bp::arg("cryst"), bp::arg("name")="")))
         /* Methods */
         .def("AddAtom", &_AddAtom,
             (bp::arg("x"), bp::arg("y"), bp::arg("z"), bp::arg("pPow"),

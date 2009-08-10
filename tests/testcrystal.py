@@ -29,6 +29,17 @@ class TestCrystal(unittest.TestCase):
         sp3 = sp2
         return
 
+    def testNullData(self):
+        """Make sure we get an error when trying to add or remove Null."""
+        from pyobjcryst.crystal import Crystal
+        c = Crystal()
+        self.assertRaises(ValueError, c.AddScatterer, None)
+        self.assertRaises(ValueError, c.RemoveScatterer, None)
+        self.assertRaises(ValueError, c.AddScatteringPower, None)
+        self.assertRaises(ValueError, c.RemoveScatteringPower, None)
+        return
+
+
     def testRemoveFunctions(self):
         """Test the RemoveScatterer and RemoveScatteringPower method."""
         sp, atom = makeScatterer()

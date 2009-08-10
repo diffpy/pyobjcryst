@@ -50,16 +50,53 @@ using namespace ObjCryst;
 
 namespace {
 
+// Overloaded so that AddScatterer does not add NULL
+void _AddScatterer(Crystal& crystal, Scatterer* scatt)
+{
+    if(NULL == scatt)
+    {
+        PyErr_SetString(PyExc_ValueError, 
+                "Cannot add nonexistant Scatterer");
+        throw_error_already_set();
+    }
+    crystal.AddScatterer(scatt);
+}
+
 // Overloaded so that RemoveScatterer cannot delete the passed scatterer
 void _RemoveScatterer(Crystal& crystal, Scatterer* scatt)
 {
+    if(NULL == scatt)
+    {
+        PyErr_SetString(PyExc_ValueError, 
+                "Cannot remove nonexistant Scatterer");
+        throw_error_already_set();
+    }
     crystal.RemoveScatterer(scatt, false);
 }
+
+// Overloaded so that AddScatteringPower does not add NULL
+void _AddScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
+{
+    if(NULL == scattpow)
+    {
+        PyErr_SetString(PyExc_ValueError, 
+                "Cannot add nonexistant ScatteringPower");
+        throw_error_already_set();
+    }
+    crystal.AddScatteringPower(scattpow);
+}
+
 
 // Overloaded so that RemoveScatteringPower cannot delete the passed
 // scatteringpower 
 void _RemoveScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
 {
+    if(NULL == scattpow)
+    {
+        PyErr_SetString(PyExc_ValueError, 
+                "Cannot remove nonexistant ScatteringPower");
+        throw_error_already_set();
+    }
     crystal.RemoveScatteringPower(scattpow, false);
 }
 
@@ -161,7 +198,7 @@ void wrap_crystal()
             bp::arg("SpaceGroupId"))))
         .def(init<const CrystalWrap&>((bp::arg("oldCryst"))))
         /* Methods */
-        .def("AddScatterer", &Crystal::AddScatterer,
+        .def("AddScatterer", &_AddScatterer,
             with_custodian_and_ward<1,2,with_custodian_and_ward<2,1> >())
         .def("RemoveScatterer", &_RemoveScatterer)
         .def("GetNbScatterer", &Crystal::GetNbScatterer)
@@ -183,7 +220,7 @@ void wrap_crystal()
         .def("GetScatteringPowerRegistry", ( ObjRegistry<ScatteringPower>& 
             (Crystal::*) ()) &Crystal::GetScatteringPowerRegistry,
             return_internal_reference<>())
-        .def("AddScatteringPower", &Crystal::AddScatteringPower,
+        .def("AddScatteringPower", &_AddScatteringPower,
             with_custodian_and_ward<1,2,with_custodian_and_ward<2,1> >())
         .def("RemoveScatteringPower", &_RemoveScatteringPower)
         .def("GetScatteringPower", 
