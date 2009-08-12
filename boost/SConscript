@@ -4,8 +4,26 @@ Import("env")
 wrapperenv = env.Clone()
 
 # Make sure we use the proper python build options
-wrapperenv.ParseConfig("python-config --includes")
-wrapperenv.ParseConfig("python-config --ldflags")
+# FIXME - doesn't work on windows
+from distutils import sysconfig
+import sys
+# includes
+includes = [sysconfig.get_python_inc(),
+    sysconfig.get_python_inc(plat_specific=True)]
+wrapperenv.AppendUnique(CPPPATH=includes)
+# libs
+pyver = sysconfig.get_config_var('VERSION')
+getvar = sysconfig.get_config_var
+libs = getvar('LIBS').split() + getvar('SYSLIBS').split()
+libs = [lib[2:] for lib in libs]
+libs.append('python' + pyver + (sys.pydebug and "_d" or ""))
+wrapperenv.AppendUnique(LIBS = libs)
+# ldflags
+if not getvar('Py_ENABLE_SHARED'):
+    path = getvar('LIBPL')
+    if path:
+        wrapperenv.AppendUnique(CPPPATH = path)
+
 
 # Look here for our shared library
 wrapperenv.Append(LIBPATH = "./")
@@ -21,7 +39,7 @@ else:
     wrapperenv['SHLIBSUFFIX']='.so'
 
 # Append objcryst libraries and required boost library
-wrapperenv.Append(LIBS = ["objcryst", "boost_python"])
+wrapperenv.Prepend(LIBS = ["objcryst", "boost_python"])
 
 # Make sure that we are using REAL=double in the ObjCryst headers.
 wrapperenv.Append(CPPFLAGS = " -DREAL=double")

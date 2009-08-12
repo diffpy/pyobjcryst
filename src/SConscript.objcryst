@@ -9,12 +9,12 @@ if not os.path.exists("ObjCryst"):
     tf.extractall()
     tf.close()
 
-# Extract the headers
-if not os.path.exists("../include"):
+    # Extract the headers
+    from shutil import rmtree, copytree
     print "Copying header files"
-    from shutil import copytree, ignore_patterns
-    copytree("ObjCryst", "../include/ObjCryst",
-            ignore=ignore_patterns('*.cpp'))
+    if os.path.exists("../include/ObjCryst"):
+        rmtree("../include/ObjCryst")
+    copytree("ObjCryst", "../include/ObjCryst")
 
 
 # Define the what we need to install objcryst
