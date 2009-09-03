@@ -6,7 +6,7 @@ import fix_setuptools_chmod
 import glob
 
 module = Extension('pyobjcryst._pyobjcryst', 
-        glob.glob("boost/*.cpp"),
+        glob.glob("extensions/*.cpp"),
         include_dirs = ['include/ObjCryst', 'boost'],
         library_dirs = ["lib"],
         libraries = ["objcryst", "boost_python"],
@@ -28,18 +28,14 @@ dist =  setup(
         ext_modules = [module],
 
         # danse.deploy extends setuptools in order to support scons setups, and
-        # various other features.  These will allow us to use the OpenAlea
-        # build system without considerable effort.
+        # various other features.
         setup_requires = ['danse.deploy'],
         dependency_links = ['http://dev.danse.us/packages'],
 
-        # This tells danse.deploy where to put and find the shared libraries
-        # modules.
+        # This tells danse.deploy where to put and find the shared libraries.
         lib_dirs = { 'lib' : 'lib' },
         # And the library header files
         inc_dirs = { 'include' : 'include' },
-        # And the extension module
-        #package_data = {'' : ['_pyobjcryst.pyd', '_pyobjcryst.so'],},
 
         # This is a must, since the shared libraries are in the egg.
         zip_safe = False,
