@@ -54,10 +54,4 @@ cctbxobjs = env["cctbxobjs"]
 objcrystobjs = env["objcrystobjs"]
 
 # This builds the shared library
-sl = env.SharedLibrary("objcryst", objcrystobjs + cctbxobjs + newmatobjs)
-build = Alias("build", sl)
-
-# Put this in the pyobjcryst directory
-inst1 = env.Install("../boost", sl)
-inst2 = env.Install("../lib", sl)
-Alias("install", [build, inst1, inst2])
+sl = env.SharedLibrary("../lib/objcryst", objcrystobjs + cctbxobjs + newmatobjs)

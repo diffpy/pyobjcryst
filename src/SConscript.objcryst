@@ -10,11 +10,12 @@ if not os.path.exists("ObjCryst"):
     tf.close()
 
     # Extract the headers
-    from shutil import rmtree, copytree
+    from copytree import rmtree, copytree, ignore_patterns
     print "Copying header files"
     if os.path.exists("../include/ObjCryst"):
         rmtree("../include/ObjCryst")
-    copytree("ObjCryst", "../include/ObjCryst")
+    copytree("ObjCryst", "../include/ObjCryst",
+            ignore=ignore_patterns('*.cpp'))
 
 
 # Define the what we need to install objcryst
@@ -41,7 +42,7 @@ objects = objcrystenv.SharedObject(srcfiles)
 # Let the build system know that we can clean the source directory when clean
 # is called.
 Clean(objects, "ObjCryst")
-Clean(objects, "../include")
+Clean(objects, "../include/ObjCryst")
 Clean(objects, archive)
 
 # Put this back into the global environment

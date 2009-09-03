@@ -9,6 +9,15 @@ if not os.path.exists("newmat"):
     tf.extractall()
     tf.close()
 
+    # Extract the headers
+    from copytree import rmtree, copytree, ignore_patterns
+    print "Copying header files"
+    if os.path.exists("../include/newmat"):
+        rmtree("../include/newmat")
+    copytree("newmat", "../include/newmat",
+            ignore=ignore_patterns('*.cpp'))
+
+
 # Define the what we need to install cctbx
 newmatenv = env.Clone()
 
@@ -30,6 +39,7 @@ objects = newmatenv.SharedObject(srcfiles)
 # Let the build system know that we can clean the source directory when clean
 # is called.
 Clean(objects, "newmat")
+Clean(objects, "../include/newmat")
 Clean(objects, archive)
 
 # Put this back into the global environment

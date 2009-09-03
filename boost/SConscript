@@ -8,7 +8,7 @@ wrapperenv.ParseConfig("python-config --includes")
 wrapperenv.ParseConfig("python-config --ldflags")
 
 # Look here for our shared library
-wrapperenv.Append(LIBPATH = "./")
+wrapperenv.Append(LIBPATH = "../lib")
 
 # Get rid of the lib prefix
 wrapperenv["SHLIBPREFIX"]=""
@@ -37,7 +37,5 @@ wrapobjs = wrapperenv.SharedObject(modfiles)
 wrapobjs += wrapperenv.SharedObject("registerconverters.cpp")
 
 # Create the monlithic wrapper
-wrapper = wrapperenv.LoadableModule("../pyobjcryst/_pyobjcryst",
+wrapperenv.LoadableModule("../pyobjcryst/_pyobjcryst",
         ["pyobjcryst.cpp"] + wrapobjs)
-
-Alias("build", wrapper)

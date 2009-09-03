@@ -19,14 +19,17 @@ dist =  setup(
         # openalea.deploy extends setuptools in order to support scons setups,
         # and various other features.  These will allow us to use the OpenAlea
         # build system without considerable effort.
-        setup_requires = ['openalea.deploy'],
-        dependency_links = ['http://openalea.gforge.inria.fr/pi'],
+        #setup_requires = ['openalea.deploy'],
+        #dependency_links = ['http://openalea.gforge.inria.fr/pi'],
+        setup_requires = ['danse.deploy'],
+        dependency_links = ['http://dev.danse.us/packages'],
 
-        # This tells openalea.deploy where to put and find the shared libraries
+        # This tells danse.deploy where to put and find the shared libraries
         # modules.
         lib_dirs = { 'lib' : 'lib' },
         # And the library header files
         inc_dirs = { 'include' : 'include' },
+        # And the extension module
         package_data = {'' : ['_pyobjcryst.pyd', '_pyobjcryst.so'],},
 
         # This is a must, since the shared libraries are in the egg.

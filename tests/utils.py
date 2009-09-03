@@ -156,8 +156,6 @@ def makeMnO6():
 def toxyz(crystal, filename):
     """Write a crystal to an xyz file."""
 
-    eps = 1e-6
-
     scl = crystal.GetScatteringComponentList()
 
     f = file(filename, 'w')
