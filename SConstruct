@@ -2,4 +2,4 @@ env = DefaultEnvironment()
 
 Export('env')
 
-SConscript(["src/SConscript", "boost/SConscript"])
+SConscript(["src/SConscript"])
