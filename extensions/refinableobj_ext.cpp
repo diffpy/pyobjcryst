@@ -117,7 +117,13 @@ class RefinableObjWrap : public RefinableObj,
     const std::string& GetClassName() const
     {
         if (override GetClassName = this->get_override("GetClassName")) 
+#ifdef _MSC_VER
+            return call<const std::string&>( 
+                    GetClassName.ptr() 
+                    );
+#else
             return GetClassName();
+#endif
         return default_GetClassName();
     }
 
@@ -127,6 +133,13 @@ class RefinableObjWrap : public RefinableObj,
     const std::string& GetName() const
     {
         if (override GetName = this->get_override("GetName")) 
+#ifdef _MSC_VER
+            return call<const std::string&>( 
+                    GetName.ptr() 
+                    );
+#else
+            return GetName();
+#endif
             return GetName();
         return default_GetName();
     }
@@ -177,7 +190,13 @@ class RefinableObjWrap : public RefinableObj,
     ObjRegistry< RefinableObj >& GetClientRegistry()
     {
         if (override GetClientRegistry = this->get_override("GetClientRegistry")) 
+#ifdef _MSC_VER
+            return call<ObjRegistry< RefinableObj >& >( 
+                    GetClientRegistry.ptr() 
+                    );
+#else
             return GetClientRegistry();
+#endif
         return default_GetClientRegistry();
     }
 
@@ -232,7 +251,13 @@ class RefinableObjWrap : public RefinableObj,
     double GetLogLikelihood() const
     {
         if (override GetLogLikelihood = this->get_override("GetLogLikelihood")) 
+#ifdef _MSC_VER
+            return call<double>( 
+                    GetLogLikelihood.ptr()
+                    );
+#else
             return GetLogLikelihood();
+#endif
         return default_GetLogLikelihood();
     }
 
@@ -242,7 +267,13 @@ class RefinableObjWrap : public RefinableObj,
     unsigned int GetNbLSQFunction() const
     {
         if (override GetNbLSQFunction = this->get_override("GetNbLSQFunction")) 
+#ifdef _MSC_VER
+            return call<unsigned int>(
+                    GetNbLSQFunction.ptr()
+                    );
+#else
             return GetNbLSQFunction();
+#endif
         return default_GetNbLSQFunction();
     }
 
@@ -252,7 +283,13 @@ class RefinableObjWrap : public RefinableObj,
     const CrystVector<double>& GetLSQCalc(const unsigned int i) const 
     {
         if (override GetLSQCalc = this->get_override("GetLSQCalc")) 
+#ifdef _MSC_VER
+            return call<const CrystVector<double>&>(
+                    GetLSQCalc.ptr(), i
+                    );
+#else
             return GetLSQCalc(i);
+#endif
         return default_GetLSQCalc(i);
     }
 
@@ -262,7 +299,13 @@ class RefinableObjWrap : public RefinableObj,
     const CrystVector<double>& GetLSQObs(const unsigned int i) const 
     {
         if (override GetLSQObs = this->get_override("GetLSQObs")) 
+#ifdef _MSC_VER
+            return call<const CrystVector<double>&>(
+                    GetLSQObs.ptr(), i
+                    );
+#else
             return GetLSQObs(i);
+#endif
         return default_GetLSQObs(i);
     }
 
@@ -272,7 +315,13 @@ class RefinableObjWrap : public RefinableObj,
     const CrystVector<double>& GetLSQWeight(const unsigned int i) const 
     {
         if (override GetLSQWeight = this->get_override("GetLSQWeight")) 
+#ifdef _MSC_VER
+            return call<const CrystVector<double>&>(
+                    GetLSQWeight.ptr(), i
+                    );
+#else
             return GetLSQWeight(i);
+#endif
         return default_GetLSQWeight(i);
     }
 
@@ -284,7 +333,13 @@ class RefinableObjWrap : public RefinableObj,
             RefinablePar &rp)
     {
         if (override GetLSQDeriv = this->get_override("GetLSQDeriv")) 
+#ifdef _MSC_VER
+            return call<const CrystVector<double>&>(
+                    GetLSQDeriv.ptr(), i, rp
+                    );
+#else
             return GetLSQDeriv(i, rp);
+#endif
         return default_GetLSQDeriv(i, rp);
     }
 
@@ -340,7 +395,13 @@ class RefinableObjWrap : public RefinableObj,
     double GetRestraintCost() const
     {
         if (override GetRestraintCost = this->get_override("GetRestraintCost")) 
+#ifdef _MSC_VER
+            return call<double>(
+                    GetRestraintCost.ptr()
+                    );
+#else
             return GetRestraintCost();
+#endif
         return default_GetRestraintCost();
     }
 

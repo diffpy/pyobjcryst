@@ -17,9 +17,18 @@ if not os.path.exists("newmat"):
     copytree("newmat", "../include/newmat",
             ignore=ignore_patterns('*.cpp'))
 
-
 # Define the what we need to install cctbx
 newmatenv = env.Clone()
+
+# Add some flags
+compiler_type = env["compiler_type"]
+flags = []
+if compiler_type in ("unix", "cygwin", "mingw32"):
+    flags = ["-O3"]
+elif compiler_type == "msvc":
+    flags = ["/Ox", "/Oy"]
+newmatenv.AppendUnique(CXXFLAGS = flags)
+
 
 # Define the requires source files
 srcfiles = [ "fft.cpp", "evalue.cpp", "submat.cpp", "cholesky.cpp",

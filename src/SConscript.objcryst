@@ -9,7 +9,6 @@ if not os.path.exists("ObjCryst"):
     tf.extractall()
     tf.close()
 
-    # Extract the headers
     from copytree import rmtree, copytree, ignore_patterns
     print "Copying header files"
     if os.path.exists("../include/ObjCryst"):
@@ -17,14 +16,19 @@ if not os.path.exists("ObjCryst"):
     copytree("ObjCryst", "../include/ObjCryst",
             ignore=ignore_patterns('*.cpp'))
 
-
 # Define the what we need to install objcryst
 objcrystenv = env.Clone()
 
-# Add some necessary flags and libraries
-objcrystenv.Append(CPPFLAGS = " -O3 -w -ffast-math -fstrict-aliasing") 
-objcrystenv.Append(CPPFLAGS = " -pipe -fomit-frame-pointer -funroll-loops")
-objcrystenv.Append(CPPFLAGS = " -DREAL=double")
+# Add some flags
+compiler_type = env["compiler_type"]
+flags = []
+if compiler_type in ("unix", "cygwin", "mingw32"):
+    flags = ["-O3","-w", "-ffast-math", "-pipe", "-funroll-loops"]
+elif compiler_type == "msvc":
+    flags = ["/Ox", "/Oy"]
+objcrystenv.AppendUnique(CXXFLAGS = flags)
+
+objcrystenv.AppendUnique(CPPDEFINES='REAL=double')
 
 # Source directories
 objcrystenv.Append(CPPPATH = [".", "./ObjCryst"])

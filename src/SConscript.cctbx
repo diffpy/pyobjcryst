@@ -19,8 +19,15 @@ if not os.path.exists("cctbx"):
 # Define the what we need to install cctbx
 cctbxenv = env.Clone()
 
-# Add some necessary flags
-cctbxenv.Append(CPPFLAGS = "-O3 -pedantic")
+# Add some flags
+compiler_type = env["compiler_type"]
+flags = []
+if compiler_type in ("unix", "cygwin", "mingw32"):
+    flags = ["-O3", "-pedantic"]
+elif compiler_type == "msvc":
+    flags = ["/O2"]
+cctbxenv.AppendUnique(CXXFLAGS = flags)
+
 # Source path
 cctbxenv.Append(CPPPATH = ["./cctbx/cctbx/include", "./cctbx/scitbx/include"])
 

@@ -50,35 +50,76 @@ class ScatteringPowerWrap : public ScatteringPower,
     CrystVector<double> GetScatteringFactor(
             const ScatteringData &data, const int spgSymPosIndex) const
     {
-        return this->get_override("GetScatteringFactor")();
+#ifdef _MSC_VER
+        return call<CrystVector<double> >(
+                this->get_override("GetScatteringFactor").ptr(), 
+                data, spgSymPosIndex
+                );
+#else
+        return this->get_override("GetScatteringFactor")(data, spgSymPosIndex);
+#endif
     }
 
-    double GetForwardScatteringFactor(const RadiationType) const
+    double GetForwardScatteringFactor(const RadiationType type) const
     {
-        return this->get_override("GetForwardScatteringFactor")();
+#ifdef _MSC_VER
+        return call<double>(
+                this->get_override("GetForwardScatteringFactor").ptr(),
+                type
+                );
+#else
+        return this->get_override("GetForwardScatteringFactor")(type);
+#endif
     }
 
     CrystVector<double> GetTemperatureFactor(
             const ScatteringData &data, const int spgSymPosIndex) const
     {
-        return this->get_override("GetTemperatureFactor")();
+#ifdef _MSC_VER
+        return call<CrystVector<double> >(
+                this->get_override("GetTemperatureFactor").ptr(),
+                data, spgSymPosIndex
+                );
+#else
+        return this->get_override("GetTemperatureFactor")(data, spgSymPosIndex);
+#endif
     }
 
     CrystMatrix<double> GetResonantScattFactReal(
             const ScatteringData &data, const int spgSymPosIndex) const
     {
-        return this->get_override("GetResonantScattFactReal")();
+#ifdef _MSC_VER
+        return call<CrystMatrix<double> >(
+                this->get_override("GetResonantScattFactReal").ptr(), 
+                data, spgSymPosIndex
+             );
+#else
+        return this->get_override("GetResonantScattFactReal")(data,
+                spgSymPosIndex);
+#endif
     }
 
     CrystMatrix<double> GetResonantScattFactImag(
             const ScatteringData &data, const int spgSymPosIndex) const
     {
-        return this->get_override("GetResonantScattFactImag")();
+#ifdef _MSC_VER
+        return call<CrystMatrix<double> >(
+                this->get_override("GetResonantScattFactImag").ptr(),
+                data, spgSymPosIndex
+                );
+#else
+        return this->get_override("GetResonantScattFactImag")(data,
+                spgSymPosIndex);
+#endif
     }
 
     double GetRadius() const
     {
+#ifdef _MSC_VER
+        return call<double>(this->get_override("GetRadius").ptr());
+#else
         return this->get_override("GetRadius")();
+#endif
     }
 
     // Just plain virtual functions
@@ -89,7 +130,13 @@ class ScatteringPowerWrap : public ScatteringPower,
     bool IsScatteringFactorAnisotropic() const
     {
         if (override IsScatteringFactorAnisotropic = this->get_override("IsScatteringFactorAnisotropic")) 
+#ifdef _MSC_VER
+            return call<bool>(
+                    IsScatteringFactorAnisotropic.ptr()
+                    );
+#else
             return IsScatteringFactorAnisotropic();
+#endif
         return default_IsScatteringFactorAnisotropic();
     }
 
@@ -99,7 +146,13 @@ class ScatteringPowerWrap : public ScatteringPower,
     bool IsTemperatureFactorAnisotropic() const
     {
         if (override IsTemperatureFactorAnisotropic = this->get_override("IsTemperatureFactorAnisotropic")) 
+#ifdef _MSC_VER
+            return call<bool>(
+                    IsTemperatureFactorAnisotropic.ptr()
+                    );
+#else
             return IsTemperatureFactorAnisotropic();
+#endif
         return default_IsTemperatureFactorAnisotropic();
     }
 
@@ -109,7 +162,13 @@ class ScatteringPowerWrap : public ScatteringPower,
     bool IsResonantScatteringAnisotropic() const
     {
         if (override IsResonantScatteringAnisotropic = this->get_override("IsResonantScatteringAnisotropic")) 
+#ifdef _MSC_VER
+            return call<bool>(
+                    IsResonantScatteringAnisotropic.ptr()
+                    );
+#else
             return IsResonantScatteringAnisotropic();
+#endif
         return default_IsResonantScatteringAnisotropic();
     }
 
@@ -119,7 +178,13 @@ class ScatteringPowerWrap : public ScatteringPower,
     const std::string& GetSymbol() const
     {
         if (override GetSymbol = this->get_override("GetSymbol")) 
+#ifdef _MSC_VER
+            return call<const std::string&>(
+                    GetSymbol.ptr()
+                    );
+#else
             return GetSymbol();
+#endif
         return default_GetSymbol();
     }
 
@@ -139,7 +204,13 @@ class ScatteringPowerWrap : public ScatteringPower,
     double GetFormalCharge() const
     {
         if (override GetFormalCharge = this->get_override("GetFormalCharge")) 
+#ifdef _MSC_VER
+            return call<double>(
+                    GetFormalCharge.ptr()
+                    );
+#else
             return GetFormalCharge();
+#endif
         return default_GetFormalCharge();
     }
 

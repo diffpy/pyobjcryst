@@ -121,22 +121,41 @@ class ScattererWrap : public Scatterer,
     
     Scatterer* CreateCopy() const
     {
+#ifdef _MSC_VER
+        return call<Scatterer*>(this->get_override("CreateCopy").ptr());
+#else
         return this->get_override("CreateCopy")();
+#endif
     }
 
     int GetNbComponent() const
     {
+#ifdef _MSC_VER
+        return call<int>(this->get_override("GetNbComponent").ptr());
+#else
         return this->get_override("GetNbComponent")();
+#endif
     }
 
     const ScatteringComponentList& GetScatteringComponentList() const
     {
+#ifdef _MSC_VER
+        return call<const ScatteringComponentList&>(
+                this->get_override("GetScatteringComponentList").ptr());
+#else
         return this->get_override("GetScatteringComponentList")();
+#endif
     }
 
     std::string GetComponentName(const int i) const
     {
-        return this->get_override("GetComponentName")();
+#ifdef _MSC_VER
+        return call<std::string>(
+                this->get_override("GetComponentName").ptr(), i
+                );
+#else
+        return this->get_override("GetComponentName")(i);
+#endif
     }
 
     void Print() const
@@ -147,7 +166,12 @@ class ScattererWrap : public Scatterer,
     std::ostream& POVRayDescription(std::ostream& os, 
             const CrystalPOVRayOptions& options) const
     {
-        return this->get_override("POVRayDescription")();
+#ifdef _MSC_VER
+        return call<std::ostream&>(
+                this->get_override("POVRayDescription").ptr(), os, options);
+#else
+        return this->get_override("POVRayDescription")(os, options);
+#endif
     }
 
     void GLInitDisplayList(const bool noSymmetrics,
