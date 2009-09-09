@@ -32,7 +32,7 @@ if not (os.path.exists("cctbx") or os.path.exists("cctbx.tar.bz2")) \
             raise e
 
     # Verify the download
-    f = file(srcfile, 'r')
+    f = file(srcfile, 'rb')
     import hashlib
     checksum = hashlib.md5(f.read()).hexdigest()
     f.close()
