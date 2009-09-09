@@ -20,12 +20,7 @@ if not os.path.exists("cctbx"):
 cctbxenv = env.Clone()
 
 # Add some flags
-compiler_type = env["compiler_type"]
-flags = []
-if compiler_type in ("unix", "cygwin", "mingw32"):
-    flags = ["-O3", "-pedantic"]
-elif compiler_type == "msvc":
-    flags = ["/O2"]
+flags = ["-O3", "-pedantic"]
 cctbxenv.AppendUnique(CXXFLAGS = flags)
 
 # Source path
