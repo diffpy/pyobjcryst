@@ -20,7 +20,7 @@ if not os.path.exists("cctbx"):
 cctbxenv = env.Clone()
 
 # Add some flags
-flags = ["-O3", "-pedantic"]
+flags = ["-O3"]
 cctbxenv.AppendUnique(CXXFLAGS = flags)
 
 # Source path
