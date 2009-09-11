@@ -12,7 +12,6 @@ include_dirs = get_numpy_include_dirs()
 include_dirs.extend(['include/ObjCryst'])
 
 # Compiler args
-extra_compile_args = ["-DREAL=double"]
 
 # Define the extension
 module = Extension('pyobjcryst._pyobjcryst', 
@@ -20,7 +19,7 @@ module = Extension('pyobjcryst._pyobjcryst',
         include_dirs = include_dirs,
         library_dirs = ["lib"],
         libraries = ["objcryst", "boost_python"],
-        extra_compile_args = extra_compile_args
+        define_macros = [("REAL","double")]
         )
 
 # define distribution
