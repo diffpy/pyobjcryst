@@ -9,13 +9,6 @@ if not os.path.exists("cctbx"):
     tf.extractall()
     tf.close()
 
-    from copytree import rmtree, copytree, ignore_patterns
-    print "Copying header files"
-    if os.path.exists("../include/cctbx"):
-        rmtree("../include/cctbx")
-    copytree("cctbx", "../include/cctbx",
-            ignore=ignore_patterns('*.cpp'))
-
 # Define the what we need to install cctbx
 cctbxenv = env.Clone()
 
@@ -41,7 +34,6 @@ objects = cctbxenv.SharedObject(srcfiles)
 # Let the build system know that we can clean the source directory when clean
 # is called.
 Clean(objects, "cctbx")
-Clean(objects, "../include/cctbx")
 Clean(objects, archive)
 
 # Put this back into the global environment

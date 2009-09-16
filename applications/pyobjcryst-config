@@ -1,0 +1,52 @@
+#! /usr/bin/env python
+
+import sys
+import os
+import getopt
+import pkg_resources
+import danse.deploy
+
+valid_opts = ['includes', 'libs', 'cflags', 'ldflags', 'help']
+
+def exit_with_usage(code=1):
+    print >>sys.stderr, "Usage: %s [%s]" % (sys.argv[0], 
+                                            '|'.join('--'+opt for opt in valid_opts))
+    sys.exit(code)
+
+def main():
+
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], '', valid_opts)
+    except getopt.error:
+        exit_with_usage()
+
+    if not opts:
+        exit_with_usage()
+
+    opt = opts[0][0]
+
+
+    basedir = danse.deploy.get_base_dir("pyobjcryst")
+
+    if opt == '--help':
+        exit_with_usage(0)
+
+    elif opt in ('--includes', '--cflags'):
+        reldirs = list(danse.deploy.get_inc_dirs("pyobjcryst"))
+        absdirs = [os.path.join(basedir, d) for d in reldirs]
+        flags = [ "-I" + d for d in absdirs ]
+        if opt == '--cflags':
+            flags.append("-DREAL=double")
+        print ' '.join(flags)
+
+    elif opt in ('--libs', '--ldflags'):
+        libs = ["-lobjcryst"]
+        if opt == '--ldflags':
+            reldirs = list(danse.deploy.get_lib_dirs("pyobjcryst"))
+            absdirs = [os.path.join(basedir, d) for d in reldirs]
+            flags = [ "-L" + d for d in absdirs ]
+            libs = flags + libs
+        print ' '.join(libs)
+
+if __name__ == "__main__":
+    main()

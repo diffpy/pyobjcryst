@@ -35,6 +35,7 @@ dist =  setup(
         # What we're installing
         packages = ['pyobjcryst'],
         ext_modules = [module],
+        scripts = ['applications/pyobjcryst-config'],
 
         # danse.deploy extends setuptools in order to support scons setups, and
         # various other features.
@@ -44,7 +45,7 @@ dist =  setup(
         # This tells danse.deploy where to put and find the shared libraries.
         lib_dirs = { 'lib' : 'lib' },
         # And the library header files
-        inc_dirs = { 'include' : 'include' },
+        inc_dirs = { 'include/ObjCryst' : 'include/ObjCryst' },
 
         # This is a must, since the shared libraries are in the egg.
         zip_safe = False,
