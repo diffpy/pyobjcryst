@@ -140,7 +140,6 @@ class RefinableObjWrap : public RefinableObj,
 #else
             return GetName();
 #endif
-            return GetName();
         return default_GetName();
     }
 

@@ -230,13 +230,14 @@ void _deleteMAV(MolAtomVec& mav, size_t i)
 }
 
 /* Exception translation */
+
 PyObject* pyobjcryst_ObjCrystException = 
     PyErr_NewException((char*)"pyobjcryst.ObjCrystException", 0, 0);
 
 
 void translateException(const ObjCrystException& e)
 {
-    PyErr_SetString(pyobjcryst_ObjCrystException, "ObjCrystException");
+    PyErr_SetString(pyobjcryst_ObjCrystException, e.message.c_str());
 }
 
 
@@ -279,6 +280,8 @@ CrystMatrix<double> getTestMatrix()
 
 } // namespace
 
+// We want silent exceptions
+bool ObjCrystException::verbose = false;
 
 // From cctbx. Used to convert python file-type objects to c++ streams.  
 // See python_file_buffer.hpp for copyright.
