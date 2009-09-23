@@ -15,7 +15,12 @@ from numpy import pi
 def makeScatterer():
     sp = ScatteringPowerAtom("Ni", "Ni")
     sp.SetBiso(8*pi*pi*0.003)
+    sp.B11 = 8*pi*pi*0.003
+    sp.SetBij(2, 2, 8*pi*pi*0.003)
+    sp.SetBij(3, 3, 8*pi*pi*0.003)
     atom = Atom(0, 0, 0, "Ni", sp)
+
+    print sp.B11
     return sp, atom
 
 def makeCrystal(sp, atom):

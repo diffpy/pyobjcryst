@@ -29,6 +29,14 @@ class TestCrystal(unittest.TestCase):
         sp3 = sp2
         return
 
+    def testScattererB(self):
+        """Test Biso and Bij of scatterer."""
+        sp1, junk = makeScatterer()
+        self.assertTrue(sp1.IsIsotropic())
+        sp2, junk = makeScattererAnisotropic()
+        self.assertFalse(sp2.IsIsotropic())
+        return
+
     def testNullData(self):
         """Make sure we get an error when trying to add or remove Null."""
         from pyobjcryst.crystal import Crystal

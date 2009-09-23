@@ -198,6 +198,16 @@ class ScatteringPowerWrap : public ScatteringPower,
         default_SetBiso(newB);
     }
 
+    void default_SetBij(const size_t& i, const size_t& j, const double newB)
+    { ScatteringPower::SetBij(i, j, newB); }
+
+    void SetBij(const size_t& i, const size_t& j, const double newB)
+    {
+        if (override SetBij = this->get_override("SetBij")) 
+            SetBij(i, j, newB);
+        default_SetBij(i, j, newB);
+    }
+
     double default_GetFormalCharge() const
     { return ScatteringPower::GetFormalCharge(); }
 
@@ -234,6 +244,22 @@ class ScatteringPowerWrap : public ScatteringPower,
 
 
 }; // ScatteringPowerWrap
+
+
+// Accessors for Bij parameters
+
+template <size_t i, size_t j>
+double _GetBij(ScatteringPower& sp)
+{
+    return sp.GetBij(i, j);
+}
+
+template <size_t i, size_t j>
+void _SetBij(ScatteringPower& sp, const double newB)
+{
+    return sp.SetBij(i, j, newB);
+}
+
 
 } // anonymous namespace
 
@@ -282,6 +308,13 @@ void wrap_scatteringpower()
                 (double (ScatteringPower::*)()const) &ScatteringPower::GetBiso)
         .def("SetBiso", &ScatteringPower::SetBiso,
             &ScatteringPowerWrap::default_SetBiso)
+        .def("GetBij", 
+                (double (ScatteringPower::*)(const size_t&, const size_t&) const) 
+                &ScatteringPower::GetBij)
+        .def("SetBij", (void (ScatteringPower::*)
+            (const size_t&, const size_t&, const double))
+            &ScatteringPower::SetBij,
+            &ScatteringPowerWrap::default_SetBij)
         .def("IsIsotropic", &ScatteringPower::IsIsotropic)
         .def("GetDynPopCorrIndex", &ScatteringPower::GetDynPopCorrIndex)
         .def("GetNbScatteringPower", &ScatteringPower::GetNbScatteringPower)
@@ -308,5 +341,11 @@ void wrap_scatteringpower()
             &ScatteringPowerWrap::default_SetFormalCharge)
         .add_property("Biso", (double (ScatteringPower::*)()const)
                 &ScatteringPower::GetBiso, &ScatteringPower::SetBiso)
+        .add_property("B11", &_GetBij<1,1>, &_SetBij<1,1>)
+        .add_property("B22", &_GetBij<2,2>, &_SetBij<2,2>)
+        .add_property("B33", &_GetBij<3,3>, &_SetBij<3,3>)
+        .add_property("B12", &_GetBij<1,2>, &_SetBij<1,2>)
+        .add_property("B13", &_GetBij<1,3>, &_SetBij<1,3>)
+        .add_property("B23", &_GetBij<2,3>, &_SetBij<2,3>)
         ;
 }

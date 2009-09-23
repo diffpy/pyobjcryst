@@ -14,6 +14,13 @@ def makeScatterer():
     atom = Atom(0, 0, 0, "Ni", sp)
     return sp, atom
 
+def makeScattererAnisotropic():
+    sp = ScatteringPowerAtom("Ni", "Ni")
+    sp.B11 = sp.B22 = sp.B33 = 8*pi*pi*0.003
+    sp.B12 = sp.B13 = sp.B23 = 0
+    atom = Atom(0, 0, 0, "Ni", sp)
+    return sp, atom
+
 def makeCrystal(sp, atom):
     c = Crystal(3.52, 3.52, 3.52, "225")
     c.AddScatterer(atom)
