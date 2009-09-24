@@ -1,0 +1,197 @@
+
+###########################################################################
+#
+#                 Cambridge Crystallographic Data Centre
+#                                CCDC 
+# 
+###########################################################################
+#
+#  This CIF contains data generated directly from one or more entries in
+#  the Cambridge Structural Database and will include bibliographic, 
+#  chemical, crystal, experimental, refinement, and atomic coordinate data,
+#  as available.
+#     
+#  Copyright  2008  The Cambridge Crystallographic Data Centre
+# 
+#  This CIF is provided on the understanding that it is used for bona fide 
+#  research purposes only.  It may contain copyright material of the CCDC
+#  or of third parties, and may not be copied or further disseminated in 
+#  any form, whether machine-readable or not, except for the purpose of 
+#  generating routine backup copies on your local computer system.
+# 
+#  For further information about the CCDC, data deposition and data 
+#  retrieval see <www.ccdc.cam.ac.uk>. Bona fide researchers may freely 
+#  download  Mercury and enCIFer from this site to visualise CIF-encoded 
+#  structures and to carry out CIF format checking respectively.
+#
+###########################################################################
+
+data_CSD_CIF_BAVLOZ
+_audit_creation_date 1999-11-09
+_audit_creation_method CSD-ConQuest-V1
+_database_code_CSD BAVLOZ
+_database_code_depnum_ccdc_archive 'CCDC 112473'
+_chemical_formula_sum 'C10 H20 O1'
+_chemical_formula_moiety
+;
+C10 H20 O1
+;
+_journal_coden_Cambridge 643
+_journal_volume 214
+_journal_year 1999
+_journal_page_first 420
+_journal_name_full 'Z.Kristallogr. '
+loop_
+_publ_author_name
+"R.Bombicz"
+"J.Bushmann"
+"P.Luger"
+"Nguyen Xuan Dung"
+"Chu Ba Nam"
+_chemical_name_systematic
+;
+(1R,2S,5R)-2-Isopropyl-5-methyl-cyclohexanol
+;
+_chemical_name_common
+;
+(-)-Menthol
+;
+_cell_volume   2342.774
+_exptl_crystal_colour 'colorless'
+_exptl_crystal_density_diffrn 0.997
+_exptl_crystal_description 'spherical'
+_exptl_crystal_preparation 'sublimation'
+_diffrn_ambient_temperature 143
+#These two values have been output from a single CSD field.
+_refine_ls_R_factor_gt 0.0493
+_refine_ls_wR_factor_gt 0.0493
+_chemical_compound_source
+;
+Mentha arvensis Linner
+;
+loop_
+_citation_database_id_CSD
+_citation_special_details
+ZZZVKO "is a stereoisomer of this entry"
+_symmetry_cell_setting hexagonal
+_symmetry_space_group_name_H-M 'P 31'
+_symmetry_Int_Tables_number 144
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 -y,x-y,1/3+z
+3 -x+y,-x,-1/3+z
+_cell_length_a 21.262(10)
+_cell_length_b 21.262(10)
+_cell_length_c 5.984(5)
+_cell_angle_alpha 90
+_cell_angle_beta 90
+_cell_angle_gamma 120
+_cell_formula_units_Z 9
+loop_
+_atom_type_symbol
+_atom_type_radius_bond
+C 0.68
+H 0.23
+O 0.68
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+O1 O 0.37146(10) 0.65092(10) 0.9395(4)
+H1 H 0.3443(14) 0.6420(5) 0.808(7)
+C1 C 0.38031(14) 0.58919(14) 0.9644(5)
+H2 H 0.38138(14) 0.5718(7) 0.816(5)
+C2 C 0.45365(14) 0.61401(14) 1.0766(5)
+H3 H 0.4483(2) 0.6320(5) 1.231(4)
+C3 C 0.46333(16) 0.54821(16) 1.1125(6)
+H4 H 0.5104(11) 0.5641(4) 1.201(2)
+H5 H 0.46270(16) 0.5285(5) 0.958(4)
+C4 C 0.40047(16) 0.48765(16) 1.2387(6)
+H6 H 0.4063(2) 0.4416(10) 1.2448(6)
+H7 H 0.4067(2) 0.5026(3) 1.385(3)
+C5 C 0.32861(15) 0.46470(14) 1.1311(6)
+H8 H 0.32875(15) 0.4500(6) 0.983(6)
+C6 C 0.31921(15) 0.53020(15) 1.0946(6)
+H9 H 0.2670(11) 0.5201(2) 1.0326(13)
+H10 H 0.31573(17) 0.5487(4) 1.250(3)
+C7 C 0.51699(14) 0.67640(15) 0.9526(5)
+H11 H 0.4983(6) 0.7097(10) 0.9530(5)
+C8 C 0.5294(2) 0.65836(19) 0.7184(6)
+H12 H 0.5427(3) 0.6226(7) 0.7176(6)
+H13 H 0.4954(7) 0.6395(4) 0.6332(19)
+H14 H 0.5726(9) 0.7006(8) 0.6318(19)
+C9 C 0.58688(16) 0.70847(18) 1.0852(6)
+H15 H 0.6033(4) 0.6810(6) 1.1258(11)
+H16 H 0.58179(17) 0.7161(3) 1.243(3)
+H17 H 0.6217(8) 0.7521(9) 1.0279(13)
+C10 C 0.26618(18) 0.40587(17) 1.2654(8)
+H18 H 0.2618(2) 0.4197(3) 1.425(3)
+H19 H 0.2742(2) 0.3603(9) 1.3113(12)
+H20 H 0.2199(9) 0.3936(3) 1.2146(12)
+O2 O 0.61871(10) 0.33263(10) 1.7282(4)
+H21 H 0.63150 0.31570 1.83440
+C11 C 0.54132(14) 0.29096(15) 1.7029(5)
+H22 H 0.5188(9) 0.2770(6) 1.866(7)
+C12 C 0.51694(15) 0.34008(15) 1.5954(5)
+H23 H 0.5394(10) 0.3566(7) 1.452(6)
+C13 C 0.43570(15) 0.29649(17) 1.5465(6)
+H24 H 0.4285(3) 0.334(1) 1.454(2)
+H25 H 0.4081(7) 0.2797(4) 1.676(3)
+C14 C 0.41487(16) 0.22984(17) 1.4121(6)
+H26 H 0.3571(13) 0.2006(7) 1.3632(13)
+H27 H 0.4391(6) 0.2457(4) 1.261(3)
+C15 C 0.43777(17) 0.18004(16) 1.5254(7)
+H28 H 0.4155(9) 0.1730(3) 1.663(6)
+C16 C 0.51935(17) 0.22355(16) 1.5667(6)
+H29 H 0.5415(6) 0.1972(6) 1.6466(19)
+H30 H 0.5426(6) 0.2344(3) 1.437(3)
+C17 C 0.54148(18) 0.41027(17) 1.7278(5)
+H31 H 0.5978(17) 0.4393(9) 1.7558(10)
+C18 C 0.5068(2) 0.3969(2) 1.9590(6)
+H32 H 0.5178(3) 0.4416(9) 2.0213(15)
+H33 H 0.5180(3) 0.3608(8) 2.0168(14)
+H34 H 0.4478(13) 0.3713(6) 1.9417(7)
+C19 C 0.5299(2) 0.46466(19) 1.6000(6)
+H35 H 0.5600(6) 0.5153(11) 1.6679(15)
+H36 H 0.4873(9) 0.4615(2) 1.5956(7)
+H37 H 0.5533(5) 0.4684(2) 1.429(4)
+C20 C 0.4163(2) 0.11125(19) 1.3898(10)
+H38 H 0.4343(4) 0.0733(8) 1.495(2)
+H39 H 0.3666(10) 0.0970(4) 1.3422(15)
+H40 H 0.4397(5) 0.1270(4) 1.229(3)
+O3 O 0.95934(13) 0.01303(10) 1.0155(4)
+H41 H 0.9928(19) 0.0231(6) 0.933(5)
+C21 C 0.94181(14) 0.06935(15) 1.0332(5)
+H42 H 0.94005(16) 0.0879(6) 0.880(5)
+C22 C 0.86769(15) 0.03840(15) 1.1368(5)
+H43 H 0.8718(2) 0.0201(6) 1.290(5)
+C23 C 0.84879(17) 0.09790(17) 1.1709(6)
+H44 H 0.8062(12) 0.0806(5) 1.256(2)
+H45 H 0.84817(18) 0.1221(7) 1.031(4)
+C24 C 0.90666(17) 0.16171(17) 1.3016(7)
+H46 H 0.8883(5) 0.1945(8) 1.3127(8)
+H47 H 0.9141(2) 0.1434(5) 1.455(4)
+C25 C 0.98112(18) 0.19258(17) 1.1951(8)
+H48 H 0.9836(2) 0.2127(9) 1.050(7)
+C26 C 0.99937(17) 0.13232(16) 1.1660(6)
+H49 H 1.0457(11) 0.1472(4) 1.077(2)
+H50 H 0.99482(18) 0.1107(5) 1.336(4)
+C27 C 0.80878(15) -0.02745(16) 1.0092(6)
+H51 H 0.8255(6) -0.0657(13) 0.9962(7)
+C28 C 0.7978(2) -0.0092(2) 0.7705(7)
+H52 H 0.8510(12) 0.0059(4) 0.7203(14)
+H53 H 0.7781(5) 0.0343(10) 0.8111(10)
+H54 H 0.7690(7) -0.0565(11) 0.6991(18)
+C29 C 0.73654(19) -0.0649(2) 1.1288(7)
+H55 H 0.7011(7) -0.1084(9) 1.0480(17)
+H56 H 0.7471(3) -0.0731(3) 1.292(3)
+H57 H 0.7214(4) -0.0217(9) 1.1442(7)
+C30 C 1.0374(2) 0.2554(2) 1.3337(11)
+H58 H 1.0663(9) 0.2628(3) 1.262(3)
+H59 H 1.0249(4) 0.2953(12) 1.3559(12)
+H60 H 1.0457(4) 0.2370(5) 1.449(3)
+#END

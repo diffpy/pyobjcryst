@@ -1,0 +1,101 @@
+#------------------------------------------------------------------------------
+#$Date: 2008-01-26 13:05:32 +0000 (Sat, 26 Jan 2008) $
+#$Revision: 19 $
+#$URL: svn://cod.ibt.lt/cod/cif/2/2100202.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_2100202
+_journal_name_full  'Acta Crystallographica, Section B'
+_journal_year  2005
+_journal_volume  61
+_journal_page_first  329
+_journal_page_last  334
+_publ_section_title
+;
+Ab initio structure determination of the high temperature phase
+ of anhydrous caffeine by X-ray powder diffraction.
+;
+loop_
+_publ_author_name
+  'Derollez, Patrick'
+  'Correia, Nat\'alia T.'
+  'Dan\`ede, Florence'
+  'Capet, Fr\'ed\'eric'
+  'Affouard, Fr\'ed\'eric'
+  'Lefebvre, Jacques'
+  'Descamps, Marc'
+_chemical_name_common  'caffeine'
+_chemical_formula_moiety  'C8 H10 N4 O2'
+_chemical_formula_sum  'C8 H10 N4 O2'
+_chemical_formula_weight  194.20
+_symmetry_cell_setting  Trigonal
+_symmetry_space_group_name_H-M  'R 3 c'
+_symmetry_space_group_name_Hall  'R 3 -2"C'
+loop_
+_symmetry_equiv_pos_as_xyz
+  'x,y,z'
+  '-y,x-y,z'
+  '-x+y,-x,z'
+  '-y,-x,z+1/2'
+  '-x+y,y,z+1/2'
+  'x,x-y,z+1/2'
+  'x+2/3,y+1/3,z+1/3'
+  '-y+2/3,x-y+1/3,z+1/3'
+  '-x+y+2/3,-x+1/3,z+1/3'
+  '-y+2/3,-x+1/3,z+5/6'
+  '-x+y+2/3,y+1/3,z+5/6'
+  'x+2/3,x-y+1/3,z+5/6'
+  'x+1/3,y+2/3,z+2/3'
+  '-y+1/3,x-y+2/3,z+2/3'
+  '-x+y+1/3,-x+2/3,z+2/3'
+  '-y+1/3,-x+2/3,z+1/6'
+  '-x+y+1/3,y+2/3,z+1/6'
+  'x+1/3,x-y+2/3,z+1/6'
+_cell_length_a  14.9372(5)
+_cell_length_b  14.9372(5)
+_cell_length_c  6.8980(2)
+_cell_angle_alpha  90.00000
+_cell_angle_beta  90.00000
+_cell_angle_gamma  120.00000
+_cell_volume  1332.88(7)
+_cell_formula_units_Z  6
+_cell_measurement_temperature  278
+loop_
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+_atom_site_adp_type
+_atom_site_occupancy
+_atom_site_type_symbol
+  C5 -0.06613 -0.06314 0.09562 0.00000 Uiso 1.00000 C
+  C4 0.02779 -0.05534 0.10000 0.00000 Uiso 1.00000 C
+  N3 0.11676 0.04116 0.08226 0.00000 Uiso 1.00000 N
+  C2 0.10866 0.12960 0.06000 0.00000 Uiso 1.00000 C
+  O11 0.18634 0.21385 0.04451 0.00000 Uiso 1.00000 O
+  N1 0.01159 0.12154 0.05547 0.00000 Uiso 1.00000 N
+  C6 -0.07738 0.02504 0.07321 0.00000 Uiso 1.00000 C
+  O13 -0.16212 0.01800 0.06926 0.00000 Uiso 1.00000 O
+  N7 -0.13793 -0.16353 0.11547 0.00000 Uiso 1.00000 N
+  N9 0.01389 -0.15092 0.12255 0.00000 Uiso 1.00000 N
+  C8 -0.08863 -0.21778 0.13210 0.00000 Uiso 1.00000 C
+  C14 -0.25110 -0.20663 0.11847 0.00000 Uiso 1.00000 C
+  C12 0.21968 0.04971 0.08706 0.00000 Uiso 1.00000 C
+  C10 0.00300 0.21530 0.03186 0.00000 Uiso 1.00000 C
+  H8 -0.12146 -0.29285 0.14834 0.00000 Uiso 1.00000 H
+  H14a -0.27317 -0.19028 -0.00382 0.00000 Uiso 1.00000 H
+  H14b -0.28567 -0.28182 0.13462 0.00000 Uiso 1.00000 H
+  H14c -0.26951 -0.17639 0.22660 0.00000 Uiso 1.00000 H
+  H12a 0.22513 0.00926 -0.01943 0.00000 Uiso 1.00000 H
+  H12b 0.27338 0.12237 0.07281 0.00000 Uiso 1.00000 H
+  H12c 0.22878 0.02315 0.21098 0.00000 Uiso 1.00000 H
+  H10a 0.03488 0.24909 -0.09109 0.00000 Uiso 1.00000 H
+  H10b -0.07008 0.19602 0.03170 0.00000 Uiso 1.00000 H
+  H10c 0.03791 0.26293 0.13930 0.00000 Uiso 1.00000 H

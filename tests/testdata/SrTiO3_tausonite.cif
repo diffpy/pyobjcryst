@@ -1,0 +1,85 @@
+data_9006864
+_chemical_name 'Tausonite'
+loop_
+_publ_author_name
+'Mitchell R H'
+'Chakhmouradian A R'
+'Woodward P M'
+_journal_name_full "Physics and Chemistry of Minerals"
+_journal_volume 27
+_journal_year 2000
+_journal_page_first 583
+_journal_page_last 589
+_publ_section_title
+;
+ Crystal chemistry of perovskite-type compounds in the
+ tausonite-loparite series, (Sr1-2xNaxLax)TiO3
+ Sample: x = 0.00
+;
+_chemical_formula_sum 'Sr Ti O3'
+_cell_length_a 3.90528
+_cell_length_b 3.90528
+_cell_length_c 3.90528
+_cell_angle_alpha 90
+_cell_angle_beta 90
+_cell_angle_gamma 90
+_cell_volume 59.560
+_symmetry_space_group_name_H-M 'P m -3 m'
+loop_
+_symmetry_equiv_pos_as_xyz
+  'x,y,z'
+  'z,-x,y'
+  '-y,z,-x'
+  'x,-y,z'
+  '-z,x,-y'
+  'y,-z,x'
+  '-x,y,-z'
+  'x,-z,-y'
+  '-z,y,x'
+  'y,-x,-z'
+  '-x,z,y'
+  'z,-y,-x'
+  '-y,x,z'
+  'x,z,y'
+  '-z,-y,-x'
+  'y,x,z'
+  '-x,-z,-y'
+  'z,y,x'
+  '-y,-x,-z'
+  'z,x,-y'
+  '-y,-z,x'
+  'x,y,-z'
+  '-z,-x,y'
+  'y,z,-x'
+  '-x,-y,z'
+  '-z,x,y'
+  'y,-z,-x'
+  '-x,y,z'
+  'z,-x,-y'
+  '-y,z,x'
+  'x,-y,-z'
+  '-x,z,-y'
+  'z,-y,x'
+  '-y,x,-z'
+  'x,-z,y'
+  '-z,y,-x'
+  'y,-x,z'
+  '-x,-z,y'
+  'z,y,-x'
+  '-y,-x,z'
+  'x,z,-y'
+  '-z,-y,x'
+  'y,x,-z'
+  '-z,-x,-y'
+  'y,z,x'
+  '-x,-y,-z'
+  'z,x,y'
+  '-y,-z,-x'
+loop_
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Sr   0.50000   0.50000   0.50000
+Ti   0.00000   0.00000   0.00000
+O   0.50000   0.00000   0.00000

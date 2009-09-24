@@ -1,0 +1,131 @@
+
+###########################################################################
+#
+#                 Cambridge Crystallographic Data Centre
+#                                CCDC 
+# 
+###########################################################################
+#
+#  This CIF contains data generated directly from one or more entries in
+#  the Cambridge Structural Database and will include bibliographic, 
+#  chemical, crystal, experimental, refinement, and atomic coordinate data,
+#  as available.
+#     
+#  Copyright  2008  The Cambridge Crystallographic Data Centre
+# 
+#  This CIF is provided on the understanding that it is used for bona fide 
+#  research purposes only.  It may contain copyright material of the CCDC
+#  or of third parties, and may not be copied or further disseminated in 
+#  any form, whether machine-readable or not, except for the purpose of 
+#  generating routine backup copies on your local computer system.
+# 
+#  For further information about the CCDC, data deposition and data 
+#  retrieval see <www.ccdc.cam.ac.uk>. Bona fide researchers may freely 
+#  download  Mercury and enCIFer from this site to visualise CIF-encoded 
+#  structures and to carry out CIF format checking respectively.
+#
+###########################################################################
+
+data_CSD_CIF_OMISIM
+_audit_creation_date 2004-03-18
+_audit_creation_method CSD-ConQuest-V1
+_database_code_CSD OMISIM
+_database_code_depnum_ccdc_archive 'CCDC 218910'
+_chemical_formula_sum 'C9 H13 N1 O3'
+_chemical_formula_moiety
+;
+C8 H9 N1 O2,C1 H4 O1
+;
+_journal_coden_Cambridge 182
+_journal_year 2003
+_journal_page_first 3004
+_journal_name_full 'Chem.Commun. '
+loop_
+_publ_author_name
+"F.P.A.Fabbiani"
+"D.R.Allan"
+"A.Dawson"
+"W.I.F.David"
+"P.A.McGregor"
+"I.D.H.Oswald"
+"S.Parsons"
+"C.R.Pulham"
+_chemical_name_systematic
+;
+Paracetamol methanol solvate
+;
+_chemical_name_common
+;
+Acetaminophen methanol solvate; 4-acetamidophenol methanol solvate
+;
+_cell_volume    873.419
+_exptl_crystal_colour 'colorless'
+_exptl_crystal_density_diffrn 1.393
+_exptl_special_details
+;
+analgesic drug
+
+;
+_exptl_crystal_description 'block'
+_diffrn_ambient_temperature 293
+_diffrn_ambient_pressure 620000.0
+#These two values have been output from a single CSD field.
+_refine_ls_R_factor_gt 0.1347
+_refine_ls_wR_factor_gt 0.1347
+_symmetry_cell_setting monoclinic
+_symmetry_space_group_name_H-M 'P 21/c'
+_symmetry_Int_Tables_number 14
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 x,1/2-y,1/2+z
+3 -x,-y,-z
+4 -x,-1/2+y,-1/2-z
+_cell_length_a 7.630(2)
+_cell_length_b 17.209(3)
+_cell_length_c 7.3710(11)
+_cell_angle_alpha 90
+_cell_angle_beta 115.52(3)
+_cell_angle_gamma 90
+_cell_formula_units_Z 4
+loop_
+_atom_type_symbol
+_atom_type_radius_bond
+C 0.68
+H 0.23
+N 0.68
+O 0.68
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+O1 O 1.418(4) 0.2012(8) 0.453(2)
+H1 H 1.482(4) 0.1617(9) 0.447(3)
+O2 O 0.619(4) 0.0236(8) -0.131(2)
+N1 N 0.626(4) 0.1452(7) -0.007(2)
+C1 C 0.829(4) 0.1566(6) 0.106(2)
+C2 C 0.971(4) 0.1085(6) 0.094(2)
+C3 C 1.167(4) 0.1244(7) 0.212(2)
+C4 C 1.223(4) 0.1874(6) 0.343(2)
+C5 C 1.080(4) 0.2343(6) 0.358(3)
+C6 C 0.886(4) 0.2188(7) 0.241(3)
+C7 C 0.534(4) 0.0831(8) -0.118(2)
+C8 C 0.316(4) 0.091(1) -0.227(3)
+O3 O 0.351(7) -0.0905(13) -0.448(4)
+C9 C 0.157(7) -0.078(2) -0.566(6)
+H2 H 0.93070 0.06300 -0.00050
+H3 H 1.26670 0.08980 0.19910
+H4 H 1.12070 0.27850 0.45480
+H5 H 0.78560 0.25250 0.25430
+H6 H 0.27470 0.14380 -0.19560
+H7 H 0.27160 0.08660 -0.37390
+H8 H 0.25180 0.05000 -0.17920
+H9 H 0.54050 0.18950 -0.00190
+H10 H 0.43370 -0.05220 -0.35210
+H11 H 0.10260 -0.12820 -0.65570
+H12 H 0.12860 -0.03390 -0.65280
+H13 H 0.08500 -0.07650 -0.47850
+#END

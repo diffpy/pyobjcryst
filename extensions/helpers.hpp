@@ -12,8 +12,8 @@
 *
 ******************************************************************************
 *
-* This is home to converters that are explicitly applied within the extensions,
-* rather than registered in registerconverters.cpp.
+* This is home to converters and utility functions that are explicitly applied
+* within the extensions, rather than registered in registerconverters.cpp.
 *
 * $Id$
 *
@@ -31,24 +31,25 @@
 
 namespace bp = boost::python;
 
-// This function will help convert a class Print statement into a __str__
-// statement. See refinableobjclock_ext.cpp for an example.
+// Switch stdout with another stream. To get things back the right way, just
+// switch again with the same stream.
+void swapstdout(std::ostream& buf);
+
 template <class T>
 std::string __str__(const T &obj)
 {
     // Switch the stream buffer with std::cout, which is used by Print.
-    ostringstream outbuf;
-    streambuf* cout_strbuf(cout.rdbuf());
-    std::cout.rdbuf(outbuf.rdbuf());
+    std::ostringstream outbuf;
+    swapstdout(outbuf);
     // Call Print()
     obj.Print();
     // Switch the stream buffer back
-    cout.rdbuf(cout_strbuf);
+    swapstdout(outbuf);
 
-    string outstr = outbuf.str();
+    std::string outstr = outbuf.str();
     // Remove the trailing newline
     size_t idx = outstr.find_last_not_of("\n");
-    if (idx != string::npos)
+    if (idx != std::string::npos)
         outstr.erase(idx+1);
 
     return outstr;
@@ -103,5 +104,6 @@ bp::list setToPyList(std::set<T>& v)
 {
     return containerToPyList< typename std::set<T> >(v);
 }
+
 
 #endif

@@ -25,5 +25,6 @@ Classes:
 
 from _pyobjcryst import Crystal
 from _pyobjcryst import BumpMergePar
+from _pyobjcryst import CreateCrystalFromCIF
 
 __id__ = "$Id$"

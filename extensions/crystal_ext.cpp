@@ -19,19 +19,24 @@
 *   reference, or a constant interal reference are not wrapped.
 * - CalcDynPopCorr is not enabled, as the API states that this is for internal
 *   use only.
+* - CreateCrystalFromCIF placed here instead of in a seperate CIF module. This
+*   method accepts a python file rather than a CIF object.
 *
 *
 * $Id$
 *
 *****************************************************************************/
 
+#include "ObjCryst/General.h"
 #include "ObjCryst/Crystal.h"
+#include "ObjCryst/CIF.h"
 #include "ObjCryst/UnitCell.h"
 #include "ObjCryst/Atom.h"
 #include "RefinableObj/RefinableObj.h"
 #include "CrystVector/CrystVector.h"
 
 #include "python_file_stream.hpp"
+#include "helpers.hpp"
 
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
@@ -41,6 +46,7 @@
 #include <boost/python/slice.hpp>
 
 #include <string>
+#include <sstream>
 #include <map>
 #include <set>
 
@@ -183,6 +189,43 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
 
 };
 
+// Easier than exposing all the CIF classes
+Crystal*
+_CreateCrystalFromCIF(boost_adaptbx::file_conversion::python_file_buffer const
+        &input)
+{
+    // Reading a cif file creates some output. Let's redirect stdout to a junk
+    // stream and then throw it away.
+    ostringstream junk;
+    swapstdout(junk);
+
+    // FIXME - call hangs when the file is of the wrong type
+    boost_adaptbx::file_conversion::istream in(&input);
+    ObjCryst::CIF cif(in);
+
+
+    int idx0 = gCrystalRegistry.GetNb();
+
+    ObjCryst::CreateCrystalFromCIF(cif);
+
+    int idx = gCrystalRegistry.GetNb();
+
+    // Switch the stream buffer back
+    swapstdout(junk);
+
+    if(idx == idx0)
+    {
+        throw ObjCryst::ObjCrystException("Cannot create crystal from CIF");
+    }
+    idx--;
+
+    ObjCryst::Crystal* c = &gCrystalRegistry.GetObj( idx );
+    c->SetDeleteSubObjInDestructor(false);
+    c->SetDeleteRefParInDestructor(false);
+
+    return c;
+}
+
 
 } // namespace
 
@@ -285,4 +328,7 @@ void wrap_crystal()
         .def_readwrite("mDist2", &Crystal::BumpMergePar::mDist2)
         .def_readwrite("mCanOverlap", &Crystal::BumpMergePar::mCanOverlap)
         ;
+
+    def("CreateCrystalFromCIF", &_CreateCrystalFromCIF, ((bp::arg("file"))),
+            return_value_policy<manage_new_object>());
 }
