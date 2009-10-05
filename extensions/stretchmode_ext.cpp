@@ -34,13 +34,7 @@
 #include <boost/python/args.hpp>
 #include <boost/python/make_constructor.hpp>
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <list>
 #include <set>
-#include <map>
-#include <algorithm>
 
 #include "helpers.hpp"
 

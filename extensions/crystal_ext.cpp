@@ -46,9 +46,7 @@
 #include <boost/python/slice.hpp>
 
 #include <string>
-#include <sstream>
 #include <map>
-#include <set>
 
 namespace bp = boost::python;
 using namespace boost::python;
@@ -199,10 +197,8 @@ _CreateCrystalFromCIF(boost_adaptbx::file_conversion::python_file_buffer const
     ostringstream junk;
     swapstdout(junk);
 
-    // FIXME - call hangs when the file is of the wrong type
     boost_adaptbx::file_conversion::istream in(&input);
     ObjCryst::CIF cif(in);
-
 
     int idx0 = gCrystalRegistry.GetNb();
 

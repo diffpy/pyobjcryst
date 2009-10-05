@@ -34,11 +34,6 @@
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
-#include <string>
-#include <sstream>
-#include <map>
-#include <set>
-
 namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;

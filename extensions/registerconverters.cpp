@@ -25,10 +25,8 @@
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 #include <boost/python/to_python_converter.hpp>
 
-#include <string>
 #include <vector>
 #include <iostream>
-#include <algorithm>
 
 #include <numpy/noprefix.h>
 #include <numpy/arrayobject.h>
