@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -14,8 +14,8 @@
 *
 * boost::python bindings to ObjCryst::Quaternion.  
 * 
-* Changes from ObjCryst++
-* - IO is not wrapped yet
+* Changes from ObjCryst::Quaternion
+* - IO is not wrapped
 * - Q0, Q1, Q2 and Q3 are wrapped as properties, rather than functions.
 *
 * $Id$

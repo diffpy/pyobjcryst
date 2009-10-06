@@ -18,9 +18,6 @@
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-Classes:
-    ScatteringPowerSphere
-
 """
 
 from _pyobjcryst import ScatteringPowerSphere

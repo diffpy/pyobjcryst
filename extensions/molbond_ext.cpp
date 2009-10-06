@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -14,7 +14,7 @@
 *
 * boost::python bindings to ObjCryst::MolBond.  
 * 
-* Changes from ObjCryst++
+* Changes from ObjCryst::MolBond
 * - Added __getitem__ access for MolAtoms.
 * - File IO is disabled
 * - GetDeriv and CalcGradient are not wrapped.

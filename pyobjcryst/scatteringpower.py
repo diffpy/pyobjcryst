@@ -18,15 +18,17 @@
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-Classes:
-    ScatteringPower
-    ScatteringComponent 
-    ScatteringPowerAtom
+Changes from ObjCryst::ScatteringComponent
+- Added attributes X, Y, Z, Occupancy to conform to MolAtom.
+
+Changes from ObjCryst::ScatteringComponentList
+- Wrapped as a to-python converter only (no constructor)
 
 """
 
 from _pyobjcryst import ScatteringPower
 from _pyobjcryst import ScatteringComponent 
 from _pyobjcryst import ScatteringPowerAtom
+from _pyobjcryst import ScatteringComponentList
 
 __id__ = "$Id$"

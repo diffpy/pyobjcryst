@@ -18,10 +18,6 @@
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-Classes:
-    SpaceGroup
-    AsymmetricUnit
-
 """
 
 from _pyobjcryst import SpaceGroup

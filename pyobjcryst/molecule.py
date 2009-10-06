@@ -18,32 +18,62 @@
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-Classes:
-    Molecule
-    MolAtom
-    MolBond
-    MolBondAngle
-    MolDihedralAngle
-    Quaternion
-    RigidGroup
-    StretchMode
-    StretchModeBondLength
-    StretchModeBondAngle
-    StretchModeTorsion
-    StretchModeTwist
+Changes from ObjCryst::Molecule
+- The public data are not wrapped.
+- Added __getitem__ access for MolAtoms.
+- AddAtom returns the added MolAtom
+- AddBond returns the added MolBond
+- AddBondAngle returns the added MolBondAngle
+- AddDihedralAngle returns the added MolDihedralAngle
+- RemoveAtom returns None, has an indexed version
+- RemoveBond returns None, has an indexed version
+- RemoveBondAngle returns None, has an indexed version
+- RemoveDihedralAngle returns None, has an indexed version
+- RemoveRigidGroup returns None
+- Added GetNbAtoms
+- Added GetNbBonds
+- Added GetNbBondAngles
+- Added GetNbDihedralAngles
+- Added GetNbRigidGroups
+- Added GetBond
+- Added GetBondAngle
+- Added GetDihedralAngle
+- Added GetRigidGroup
+- FindBond returns the bond if found, None otherwise
+- FindBondAngle returns the bond angle if found, None otherwise
+- FindDihedralAngle returns the dihedral angle if found, None otherwise
+- FindAtom is identical to GetAtom.
+- FlipAtomGroup is not wrapped.
+- FlipGroup, RotorGroup and StretchModeGroup are not wrapped.
+- StretchMode getters are not wrapped
 
-Methods:
-    GetBondLength
-    GetBondAngle
-    GetDihedralAngle
-    MakeTetrahedron
-    MakeOctahedron
-    MakeSquarePlane
-    MakeCube
-    MakeAntiPrismTetragonal
-    MakePrismTrigonal
-    MakeIcosahedron
-    MakeTriangle
+Changes from ObjCryst::MolAtom
+- Wrapped as a to-python converter only (no constructor)
+- File IO is disabled
+- X, Y and Z are wrapped as properties rather than methods.
+
+Changes from ObjCryst::MolBondAngle
+- Wrapped as a to-python converter only (no constructor)
+- Added __getitem__ access for MolAtoms.
+- File IO is disabled
+- GetDeriv and CalcGradient are not wrapped.
+- Angle0, AngleDelta and AngleSigma are wrapped as properties rather than
+  methods.
+- IsFlexible and SetFlexible are not wrapped, as they are not implemented in
+  the library.
+
+Changes from ObjCryst::MolDihedralAngle
+- Wrapped as a to-python converter only (no constructor)
+- Added __getitem__ access for MolAtoms.
+
+Changes from ObjCryst::Quaternion
+- IO is not wrapped
+- Q0, Q1, Q2 and Q3 are wrapped as properties, rather than functions.
+
+Changes from ObjCryst::RigidGroup
+- RigidGroup is wrapped to have python-set methods rather than stl::set
+  methods.
+
 
 """
 
@@ -64,13 +94,5 @@ from _pyobjcryst import StretchModeBondLength
 from _pyobjcryst import StretchModeBondAngle
 from _pyobjcryst import StretchModeTorsion
 from _pyobjcryst import StretchModeTwist
-from _pyobjcryst import MakeTetrahedron
-from _pyobjcryst import MakeOctahedron
-from _pyobjcryst import MakeSquarePlane
-from _pyobjcryst import MakeCube
-from _pyobjcryst import MakeAntiPrismTetragonal
-from _pyobjcryst import MakePrismTrigonal
-from _pyobjcryst import MakeIcosahedron
-from _pyobjcryst import MakeTriangle
         
 __id__ = "$Id$"

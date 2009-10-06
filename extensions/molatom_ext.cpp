@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -13,9 +13,9 @@
 ******************************************************************************
 *
 * boost::python bindings to ObjCryst::MolAtom.  
-* This class is wrapped as a to-python converter only.
 * 
-* Changes from ObjCryst++
+* Changes from ObjCryst::MolAtom
+* - Wrapped as a to-python converter only.
 * - File IO is disabled
 * - X, Y and Z are wrapped as properties rather than methods.
 *

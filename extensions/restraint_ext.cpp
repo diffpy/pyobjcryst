@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -12,15 +12,12 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::RefinablePar and
-* ObjCryst::RefParDerivStepModel.
-* 
-* Changes from ObjCryst++
-* * The default and copy constructors are not wrapped, nor is Init.
-* * GetType returns a non-const reference to the RefParType.  This should be a
+* Changes from ObjCryst::Restraint
+* - The default and copy constructors are not wrapped, nor is Init.
+* - GetType returns a non-const reference to the RefParType.  This should be a
 *   no-no, but RefParType has no mutating methods, so this should no lead to
 *   trouble.
-* * XML input/output are on hold until a general stream adapter is developed.
+* - XML input/output are not exposed.
 *
 * $Id$
 *

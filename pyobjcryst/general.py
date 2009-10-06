@@ -18,9 +18,6 @@
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-Enums:
-    RadiationType
-
 """
 
 from _pyobjcryst import RadiationType

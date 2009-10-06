@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -15,7 +15,7 @@
 * boost::python bindings to ObjCryst::ZScatterer. 
 *
 * Changes from ObjCryst++
-* - Input and output not wrapped yet.
+* - XMLOutput and Input are not wrapped.
 *
 * $Id$
 * - Import and output is not implemented yet.

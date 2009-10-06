@@ -28,6 +28,7 @@ Modules
     general                 --  Wrapping of General.h
     io                      --  Wrapping of IO.h
     molecule                --  Wrapping of Molecule.h
+    polyhedron              --  Wrapping of Polyhedron.h
     refinableobj            --  Wrapping of RefinableObj.h
     scatterer               --  Wrapping of Scatterer.h
     scatteringpowersphere   --  Wrapping of ScatteringPowerSphere.h
@@ -35,6 +36,14 @@ Modules
     spacegroup              --  Wrapping of SpaceGroup.h
     unitcell                --  Wrapping of UnitCell.h
     zscatterer              --  Wrapping of ZScatterer.h
+
+General Changes
+- C++ methods that can return const or non-const objects return non-const
+  objects in python.
+- Classes with a Print() method have the output of this method exposed in the
+  __str__ python method. Thus, obj.Print() == print obj.
+- CrystVector and CrystMatrix are converted to numpy arrays.
+- Indexing methods raise IndexError when index is out of bounds.
 
 """
 
@@ -49,6 +58,9 @@ import crystal
 
 # Molecule
 import molecule
+
+# Polyhedron
+import polyhedron
 
 # RefinableObj
 import refinableobj

@@ -13,14 +13,18 @@
 #
 ##############################################################################
 
-
 """Python wrapping of Crystal.h.
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-Classes:
-    Crystal
-    BumpMergePar
+Changes from ObjCryst::Crystal
+- CIFOutput accepts a python file-like object
+- CalcDynPopCorr is not enabled, as the API states that this is for internal
+  use only.
+
+Other Changes
+- CreateCrystalFromCIF is placed here instead of in a seperate CIF module. This
+  method accepts a python file rather than a CIF object.
 
 """
 

@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -11,6 +11,8 @@
 * See LICENSE.txt for license information.
 *
 ******************************************************************************
+*
+* Implementation of non-template binding-specific helper functions.
 *
 * $Id$
 *

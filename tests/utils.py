@@ -2,7 +2,8 @@
 """Utilities for tests."""
 
 from pyobjcryst.atom import Atom
-from pyobjcryst.molecule import Molecule, MakeOctahedron
+from pyobjcryst.molecule import Molecule
+from pyobjcryst.polyhedron import MakeOctahedron
 from pyobjcryst.crystal import Crystal
 from pyobjcryst.scatteringpower import ScatteringPowerAtom
 

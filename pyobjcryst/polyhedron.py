@@ -13,23 +13,19 @@
 #
 ##############################################################################
 
-
-"""Python wrapping of Zscatterer.
+"""Python wrapping of Polyhedron.h
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-Changes from ObjCryst::ZAtom
-- XMLOutput and Input are not wrapped.
-
-Changes from ObjCryst++
-- XMLOutput and Input are not wrapped.
-
 """
 
-from _pyobjcryst import ZScatterer
-from _pyobjcryst import ZAtom
-from _pyobjcryst import ZPolyhedron
-from _pyobjcryst import RegularPolyhedraType
-from _pyobjcryst import GlobalScatteringPower
+from _pyobjcryst import MakeTetrahedron
+from _pyobjcryst import MakeOctahedron
+from _pyobjcryst import MakeSquarePlane
+from _pyobjcryst import MakeCube
+from _pyobjcryst import MakeAntiPrismTetragonal
+from _pyobjcryst import MakePrismTrigonal
+from _pyobjcryst import MakeIcosahedron
+from _pyobjcryst import MakeTriangle
 
 __id__ = "$Id$"

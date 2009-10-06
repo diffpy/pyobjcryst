@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -14,8 +14,8 @@
 *
 * boost::python bindings to ObjCryst::ScatteringComponent.
 *
-* Changes from ObjCryst++
-* - Added accessors X, Y, Z, Occupancy to conform to MolAtom.
+* Changes from ObjCryst::ScatteringComponent
+* - Added attributes X, Y, Z, Occupancy to conform to MolAtom.
 *
 * $Id$
 *

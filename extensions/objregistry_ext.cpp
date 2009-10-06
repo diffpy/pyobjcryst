@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -14,7 +14,7 @@
 *
 * boost::python bindings to ObjCryst::ObjRegistry template class.
 *
-* Changes from ObjCryst++
+* Changes from ObjCryst::ObjRegistry
 * - DeleteAll not wrapped
 * - GetObj(const unsigned int i) not wrapped. Documentation says that this is
 *   for internal use only.

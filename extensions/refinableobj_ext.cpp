@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -18,7 +18,8 @@
 * RefinableObj derivatives can be created in python and will work in c++
 * functions that are also bound into python.
 * 
-* Changes from ObjCryst++
+* Changes from ObjCryst::RefinableObj
+* - XMLOutput and XMLInput accept python file-like objects.
 * - GetPar that takes a const double* is not exposed, as it is designed for
 *   internal use.
 * - GetParamSet returns a copy of the internal data so that no indirect
@@ -27,7 +28,6 @@
 *   python class and the parameter accessors.
 * - SetDeleteRefParInDestructor is not exposed.
 * - RemovePar is overloaded to return None.
-* - XMLInput is not wrapped (yet).
 *
 * $Id$
 *

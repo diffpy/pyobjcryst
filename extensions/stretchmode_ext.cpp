@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -16,8 +16,6 @@
 *
 * Note that all indices are zero-based.
 * 
-* Changes from ObjCryst++
-*
 * $Id$
 *
 *****************************************************************************/

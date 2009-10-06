@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -16,13 +16,10 @@
 * can be derived from in python. These bindings are used by ObjCryst objects
 * that inherit from Scatterer (see for example atom_ext.cpp).
 *
-* Changes from ObjCryst++
-*
+* Changes from ObjCryst::Scatterer
 * - C++ methods that can return const or non-const objects return non-const
 *   objects in python.
 * - Operator string() is not exposed.
-* - The output of Print() can be accessed from __str__(). This means that 
-*   'print scatterer' is equivalent to scatterer.Print().
 * - Internal use only methods have not been exposed.
 * - InitRefParList is not exposed, as it is not used inside of Scatterer.
 * - GetClockScattCompList is exposed using a workaround, because it is not

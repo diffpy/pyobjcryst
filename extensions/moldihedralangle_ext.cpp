@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -12,9 +12,10 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::DihedralAngle.  
+* boost::python bindings to ObjCryst::MolDihedralAngle.  
 * 
-* Changes from ObjCryst++
+* Changes from ObjCryst::MolDihedralAngle
+* - Wrapped as a to-python converter only (no constructor)
 * - Added __getitem__ access for MolAtoms.
 *
 * $Id$

@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -14,12 +14,13 @@
 *
 * boost::python bindings to ObjCryst::Crystal.  
 * 
-* Changes from ObjCryst++
-* - The const-version of overloaded methods that can return either an internal
-*   reference, or a constant interal reference are not wrapped.
+* Changes from ObjCryst::Crystal
+* - CIFOutput accepts a python file-like object
 * - CalcDynPopCorr is not enabled, as the API states that this is for internal
 *   use only.
-* - CreateCrystalFromCIF placed here instead of in a seperate CIF module. This
+*
+* Other Changes
+* - CreateCrystalFromCIF is placed here instead of in a seperate CIF module. This
 *   method accepts a python file rather than a CIF object.
 *
 *

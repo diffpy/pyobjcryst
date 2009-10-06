@@ -13,13 +13,12 @@
 #
 ##############################################################################
 
-
 """Python wrapping of IO.h
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-Classes:
-    XMLCrystTag
+Changes from ObjCryst::XMLCrystTag
+- The istream constructor of XMLCrystTag is not wrapped.
 
 """
 

@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -15,19 +15,19 @@
 * boost::python bindings to ObjCryst::RefinablePar and
 * ObjCryst::RefParDerivStepModel.
 * 
-* Changes from ObjCryst++
-* * The constructor has been changed to accept a double,
+* Changes from ObjCryst::RefinablePar
+* - The constructor has been changed to accept a double,
 *   rather than a pointer to a double. 
-* * The copy and default constructors and Init are not wrapped in order to avoid
+* - The copy and default constructors and Init are not wrapped in order to avoid
 *   memory corruption. Since boost cannot implicitly handle double* object, a
 *   wrapper class had to be created. However, this wrapper class cannot be used
 *   to convert RefinablePar objected created in c++.  Thus,
 *   ObjCryst::RefinablePar objects created in c++ are passed into python as
 *   instances of _RefinablePar, which is a python wrapper around
 *   ObjCryst::RefinablePar. The RefinablePar python class is a wrapper around
-*   the c++ class PyRefinablePar, which manages its own double*.  These python
+*   the C++ class PyRefinablePar, which manages its own double*.  These python
 *   classes are interchangable once instantiated, so users should not notice.
-* * XML input/output are on hold until a general stream adapter is developed.
+* - XML input/output are not exposed.
 *
 * $Id$
 *

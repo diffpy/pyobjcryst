@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        by DANSE Diffraction group
+* PyObjCryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
 *                   (c) 2009 Trustees of the Columbia University
 *                   in the City of New York.  All rights reserved.
@@ -16,8 +16,8 @@
 *
 * Note that all indices are zero-based.
 * 
-* Changes from ObjCryst++
-* - The public data are not wrapped. Accessors will be added as needed.
+* Changes from ObjCryst::Molecule
+* - The public data are not wrapped.
 * - Added __getitem__ access for MolAtoms.
 * - AddAtom returns the added MolAtom
 * - AddBond returns the added MolBond
@@ -41,7 +41,6 @@
 * - FindBondAngle returns the bond angle if found, None otherwise
 * - FindDihedralAngle returns the dihedral angle if found, None otherwise
 * - FindAtom is identical to GetAtom.
-*   FIXME
 * - FlipAtomGroup is not wrapped.
 * - FlipGroup, RotorGroup and StretchModeGroup are not wrapped.
 * - StretchMode getters are not wrapped
