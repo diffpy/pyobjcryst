@@ -45,6 +45,8 @@ General Changes
 - CrystVector and CrystMatrix are converted to numpy arrays.
 - Indexing methods raise IndexError when index is out of bounds.
 
+See the modules' documentation for specific changes.
+
 """
 
 # Let's put this on the package level
