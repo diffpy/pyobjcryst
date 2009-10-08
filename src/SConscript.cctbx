@@ -17,7 +17,7 @@ flags = ["-O3"]
 cctbxenv.AppendUnique(CXXFLAGS = flags)
 
 # Source path
-cctbxenv.Append(CPPPATH = ["./cctbx/include"])
+cctbxenv.PrependUnique(CPPPATH = ["./cctbx/include"])
 
 # Idenfity the required source files
 srcfiles  = Glob("./cctbx/cctbx/eltbx/*.cpp")

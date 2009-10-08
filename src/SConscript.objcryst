@@ -26,8 +26,8 @@ objcrystenv.AppendUnique(CXXFLAGS = flags)
 objcrystenv.AppendUnique(CPPDEFINES='REAL=double')
 
 # Source directories
-objcrystenv.Append(CPPPATH = [".", "./ObjCryst"])
-objcrystenv.Append(CPPPATH = ["./cctbx/include"])
+objcrystenv.PrependUnique(CPPPATH = [".", "./ObjCryst"])
+objcrystenv.PrependUnique(CPPPATH = ["./cctbx/include"])
 
 # Idenfity the required source files
 srcfiles  = Glob("./ObjCryst/ObjCryst/*.cpp")
