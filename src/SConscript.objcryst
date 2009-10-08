@@ -20,7 +20,7 @@ if not os.path.exists("ObjCryst"):
 objcrystenv = env.Clone()
 
 # Add some flags
-flags = ["-O3", "-ffast-math", "-pipe", "-funroll-loops"]
+flags = ["-O3", "-pipe", "-funroll-loops"] + env['fast_optimflags']
 objcrystenv.AppendUnique(CXXFLAGS = flags)
 
 objcrystenv.AppendUnique(CPPDEFINES='REAL=double')
