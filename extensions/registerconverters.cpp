@@ -61,7 +61,7 @@ typedef std::vector<MolAtom*> MolAtomVec;
 
 
 // Make an array out of a data pointer and a dimension vector
-PyObject* makeNdArray(double * data, std::vector<int>& dims)
+PyObject* makeNdArray(double * data, std::vector<intp>& dims)
 {
     PyObject* pyarray = PyArray_SimpleNewFromData
                 (dims.size(), &dims[0], PyArray_DOUBLE, (void *) data);
@@ -75,7 +75,7 @@ struct CrystVector_REAL_to_ndarray
 
     static PyObject* convert(CrystVector<double> const &cv)
     {
-        std::vector<int> dims(1);
+        std::vector<intp> dims(1);
         dims[0] = cv.numElements();
         return makeNdArray((double *) cv.data(), dims);
     }
@@ -93,7 +93,7 @@ struct CrystMatrix_REAL_to_ndarray
 
     static PyObject* convert(CrystMatrix<double> const &cm)
     {
-        std::vector<int> dims(2);
+        std::vector<intp> dims(2);
         dims[0] = cm.rows();
         dims[1] = cm.cols();
         return makeNdArray((double *) cm.data(), dims);
