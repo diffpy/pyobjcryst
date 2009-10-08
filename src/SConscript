@@ -2,8 +2,8 @@ Import('env')
 
 # Download the source files if we must. If we must extract the source archives,
 # then make sure the srcfile is not corrupt.
-srcfile = "ObjCryst-r1174.tgz"
-md5sum = "33a6be544508a4d03dacfdd3b3d4d1cc"
+srcfile = "ObjCryst-r1180.tgz"
+md5sum = "18ea44a0d64e1c1ab182ee24035bd8a2"
 
 import os.path
 if not (os.path.exists("cctbx") or os.path.exists("cctbx.tar.bz2")) \
