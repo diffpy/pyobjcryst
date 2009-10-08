@@ -43,23 +43,25 @@ using namespace ObjCryst;
 
 namespace {
 
-MolAtom& _GetAtom(MolBondAngle& mb, size_t i)
+MolAtom* _GetAtom(MolBondAngle& mb, size_t i)
 {
+    MolAtom* rv = NULL;
     switch(i)
     {
         case 0:
-            return mb.GetAtom1();
+            rv = &(mb.GetAtom1());
             break;
         case 1:
-            return mb.GetAtom2();
+            rv = &(mb.GetAtom2());
             break;
         case 2:
-            return mb.GetAtom3();
+            rv = &(mb.GetAtom3());
             break;
         default:
             PyErr_SetString(PyExc_IndexError, "Index out of range");
             throw_error_already_set();
     }
+    return rv;
 }
 
 
