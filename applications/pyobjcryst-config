@@ -4,7 +4,6 @@ import sys
 import os
 import getopt
 import pkg_resources
-import danse.deploy
 
 valid_opts = ['includes', 'libs', 'cflags', 'ldflags', 'help']
 
@@ -25,7 +24,8 @@ def main():
     if not opts:
         exit_with_usage()
 
-    basedir = danse.deploy.get_base_dir("pyobjcryst")
+    dist = pkg_resources.get_distribution('pyobjcryst')
+    basedir = dist.location
 
     def prependBaseDir(relpaths):
         rv = [os.path.normpath(os.path.join(basedir, d))
@@ -38,7 +38,7 @@ def main():
     for opt, ignored_value in opts:
 
         if opt in ('--includes', '--cflags'):
-            reldirs = danse.deploy.get_inc_dirs("pyobjcryst")
+            reldirs = dist.get_metadata('inc_dirs.txt').strip().split('\n')
             absdirs = prependBaseDir(reldirs)
             flags = [ "-I" + d for d in absdirs ]
             if opt == '--cflags':
@@ -48,7 +48,7 @@ def main():
         elif opt in ('--libs', '--ldflags'):
             libs = ["-lobjcryst"]
             if opt == '--ldflags':
-                reldirs = danse.deploy.get_lib_dirs("pyobjcryst")
+                reldirs = dist.get_metadata('lib_dirs.txt').strip().split('\n')
                 absdirs = prependBaseDir(reldirs)
                 flags = [ "-L" + d for d in absdirs ]
                 libs = flags + libs
