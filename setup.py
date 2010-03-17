@@ -18,7 +18,7 @@ module = Extension('pyobjcryst._pyobjcryst',
         glob.glob("extensions/*.cpp"),
         include_dirs = include_dirs,
         library_dirs = ["lib"],
-        libraries = ["objcryst", "boost_python"],
+        libraries = ["objcryst", "boost_python-mt"],
         define_macros = [("REAL","double")]
         )
 
