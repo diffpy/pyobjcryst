@@ -31,12 +31,12 @@
 #include <numpy/noprefix.h>
 #include <numpy/arrayobject.h>
 
-#include "CrystVector/CrystVector.h"
-#include "ObjCryst/General.h"
-#include "ObjCryst/Crystal.h"
-#include "ObjCryst/ScatteringPower.h"
-#include "ObjCryst/SpaceGroup.h"
-#include "ObjCryst/Molecule.h"
+#include "ObjCryst/CrystVector/CrystVector.h"
+#include "ObjCryst/ObjCryst/General.h"
+#include "ObjCryst/ObjCryst/Crystal.h"
+#include "ObjCryst/ObjCryst/ScatteringPower.h"
+#include "ObjCryst/ObjCryst/SpaceGroup.h"
+#include "ObjCryst/ObjCryst/Molecule.h"
 
 #include "python_file_stream.hpp"
 

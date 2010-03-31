@@ -43,8 +43,8 @@
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
-#include "RefinableObj/RefinableObj.h"
-#include "CrystVector/CrystVector.h"
+#include "ObjCryst/RefinableObj/RefinableObj.h"
+#include "ObjCryst/CrystVector/CrystVector.h"
 
 #include "helpers.hpp"
 

@@ -12,7 +12,7 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to RefinableObj/IO.h.
+* boost::python bindings to ObjCryst/RefinableObj/IO.h.
 *
 * Changes from ObjCryst::XMLCrystTag
 * - The istream constructor of XMLCrystTag is not wrapped.
@@ -21,8 +21,8 @@
 *
 *****************************************************************************/
 
-#include "RefinableObj/IO.h"
-#include "CrystVector/CrystVector.h"
+#include "ObjCryst/RefinableObj/IO.h"
+#include "ObjCryst/CrystVector/CrystVector.h"
 
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>

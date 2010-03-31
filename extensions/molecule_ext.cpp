@@ -49,10 +49,10 @@
 *
 *****************************************************************************/
 
-#include "RefinableObj/RefinableObj.h"
-#include "ObjCryst/Molecule.h"
-#include "ObjCryst/Crystal.h"
-#include "ObjCryst/ScatteringPower.h"
+#include "ObjCryst/RefinableObj/RefinableObj.h"
+#include "ObjCryst/ObjCryst/Molecule.h"
+#include "ObjCryst/ObjCryst/Crystal.h"
+#include "ObjCryst/ObjCryst/ScatteringPower.h"
 
 #include <boost/utility.hpp>
 #include <boost/python.hpp>

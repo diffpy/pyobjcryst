@@ -33,10 +33,10 @@
 
 #include <string>
 
-#include "RefinableObj/RefinableObj.h"
-#include "ObjCryst/Scatterer.h"
-#include "ObjCryst/DiffractionDataSingleCrystal.h"
-#include "ObjCryst/ZScatterer.h"
+#include "ObjCryst/RefinableObj/RefinableObj.h"
+#include "ObjCryst/ObjCryst/Scatterer.h"
+#include "ObjCryst/ObjCryst/DiffractionDataSingleCrystal.h"
+#include "ObjCryst/ObjCryst/ZScatterer.h"
 
 #include "helpers.hpp"
 

@@ -25,10 +25,10 @@
 
 #include <string>
 
-#include "ObjCryst/ScatteringPower.h"
-#include "ObjCryst/ScatteringPowerSphere.h"
-#include "RefinableObj/RefinableObj.h"
-#include "CrystVector/CrystVector.h"
+#include "ObjCryst/ObjCryst/ScatteringPower.h"
+#include "ObjCryst/ObjCryst/ScatteringPowerSphere.h"
+#include "ObjCryst/RefinableObj/RefinableObj.h"
+#include "ObjCryst/CrystVector/CrystVector.h"
 
 using namespace boost::python;
 using namespace ObjCryst;

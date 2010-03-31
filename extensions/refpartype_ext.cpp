@@ -26,7 +26,7 @@
 
 #include <string>
 
-#include "RefinableObj/RefinableObj.h"
+#include "ObjCryst/RefinableObj/RefinableObj.h"
 
 using namespace ObjCryst;
 using namespace boost::python;

@@ -39,9 +39,9 @@
 #include <string>
 #include <iostream>
 
-#include "RefinableObj/RefinableObj.h"
-#include "ObjCryst/General.h"
-#include "ObjCryst/Scatterer.h"
+#include "ObjCryst/RefinableObj/RefinableObj.h"
+#include "ObjCryst/ObjCryst/General.h"
+#include "ObjCryst/ObjCryst/Scatterer.h"
 
 #include "helpers.hpp"
 

@@ -22,7 +22,7 @@
 *
 *****************************************************************************/
 
-#include "ObjCryst/Molecule.h"
+#include "ObjCryst/ObjCryst/Molecule.h"
 
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>

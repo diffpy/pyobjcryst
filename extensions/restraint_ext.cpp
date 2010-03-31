@@ -29,7 +29,7 @@
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
-#include "RefinableObj/RefinableObj.h"
+#include "ObjCryst/RefinableObj/RefinableObj.h"
 
 namespace bp = boost::python;
 using namespace boost::python;

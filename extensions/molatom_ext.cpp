@@ -23,8 +23,8 @@
 *
 *****************************************************************************/
 
-#include "ObjCryst/Molecule.h"
-#include "ObjCryst/ScatteringPower.h"
+#include "ObjCryst/ObjCryst/Molecule.h"
+#include "ObjCryst/ObjCryst/ScatteringPower.h"
 
 #include <boost/utility.hpp>
 #include <boost/python.hpp>

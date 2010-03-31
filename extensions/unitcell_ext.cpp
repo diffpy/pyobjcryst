@@ -18,8 +18,8 @@
 *
 *****************************************************************************/
 
-#include "ObjCryst/UnitCell.h"
-#include "CrystVector/CrystVector.h"
+#include "ObjCryst/ObjCryst/UnitCell.h"
+#include "ObjCryst/CrystVector/CrystVector.h"
 
 #include <boost/utility.hpp>
 #include <boost/python.hpp>

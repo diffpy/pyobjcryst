@@ -27,8 +27,8 @@
 #include <string>
 #include <iostream>
 
-#include "ObjCryst/General.h"
-#include "ObjCryst/ZScatterer.h"
+#include "ObjCryst/ObjCryst/General.h"
+#include "ObjCryst/ObjCryst/ZScatterer.h"
 
 #include "helpers.hpp"
 

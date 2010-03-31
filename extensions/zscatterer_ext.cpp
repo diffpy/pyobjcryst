@@ -31,9 +31,9 @@
 #include <string>
 #include <iostream>
 
-#include "ObjCryst/General.h"
-#include "ObjCryst/Scatterer.h"
-#include "ObjCryst/ZScatterer.h"
+#include "ObjCryst/ObjCryst/General.h"
+#include "ObjCryst/ObjCryst/Scatterer.h"
+#include "ObjCryst/ObjCryst/ZScatterer.h"
 
 #include "helpers.hpp"
 

@@ -28,8 +28,8 @@
 *
 *****************************************************************************/
 
-#include "ObjCryst/Molecule.h"
-#include "RefinableObj/RefinableObj.h"
+#include "ObjCryst/ObjCryst/Molecule.h"
+#include "ObjCryst/RefinableObj/RefinableObj.h"
 
 #include <boost/utility.hpp>
 #include <boost/python.hpp>

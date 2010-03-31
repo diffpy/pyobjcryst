@@ -22,10 +22,10 @@
 *
 *****************************************************************************/
 
-#include "ObjCryst/Atom.h"
-#include "ObjCryst/Scatterer.h"
-#include "ObjCryst/ScatteringPower.h"
-#include "CrystVector/CrystVector.h"
+#include "ObjCryst/ObjCryst/Atom.h"
+#include "ObjCryst/ObjCryst/Scatterer.h"
+#include "ObjCryst/ObjCryst/ScatteringPower.h"
+#include "ObjCryst/CrystVector/CrystVector.h"
 
 #include <boost/utility.hpp>
 #include <boost/python.hpp>

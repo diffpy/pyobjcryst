@@ -13,7 +13,7 @@
 ******************************************************************************
 *
 * boost::python bindings to general structures and objects defined in
-* ObjCryst/General.h
+* ObjCryst/ObjCryst/General.h
 *
 * $Id$
 *
@@ -22,7 +22,7 @@
 #include <boost/python.hpp>
 #include <boost/python/def.hpp>
 
-#include "ObjCryst/General.h"
+#include "ObjCryst/ObjCryst/General.h"
 
 using namespace boost::python;
 using namespace ObjCryst;

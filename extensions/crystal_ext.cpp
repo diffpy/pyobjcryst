@@ -28,13 +28,13 @@
 *
 *****************************************************************************/
 
-#include "ObjCryst/General.h"
-#include "ObjCryst/Crystal.h"
-#include "ObjCryst/CIF.h"
-#include "ObjCryst/UnitCell.h"
-#include "ObjCryst/Atom.h"
-#include "RefinableObj/RefinableObj.h"
-#include "CrystVector/CrystVector.h"
+#include "ObjCryst/ObjCryst/General.h"
+#include "ObjCryst/ObjCryst/Crystal.h"
+#include "ObjCryst/ObjCryst/CIF.h"
+#include "ObjCryst/ObjCryst/UnitCell.h"
+#include "ObjCryst/ObjCryst/Atom.h"
+#include "ObjCryst/RefinableObj/RefinableObj.h"
+#include "ObjCryst/CrystVector/CrystVector.h"
 
 #include "python_file_stream.hpp"
 #include "helpers.hpp"

@@ -13,7 +13,7 @@
 ******************************************************************************
 *
 * boost::python bindings to ObjCryst::GlobalScatteringPower from
-* ObjCryst/ZScatterer.h
+* ObjCryst/ObjCryst/ZScatterer.h
 *
 * $Id$
 *
@@ -27,10 +27,10 @@
 #include <string>
 #include <iostream>
 
-#include "ObjCryst/ScatteringPower.h"
-#include "ObjCryst/ZScatterer.h"
-#include "RefinableObj/RefinableObj.h"
-#include "CrystVector/CrystVector.h"
+#include "ObjCryst/ObjCryst/ScatteringPower.h"
+#include "ObjCryst/ObjCryst/ZScatterer.h"
+#include "ObjCryst/RefinableObj/RefinableObj.h"
+#include "ObjCryst/CrystVector/CrystVector.h"
 
 using namespace boost::python;
 using namespace ObjCryst;
