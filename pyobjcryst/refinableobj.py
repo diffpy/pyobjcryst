@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -29,8 +28,8 @@ Changes from ObjCryst::RefinableObj
 - RemovePar is overloaded to return None.
 
 Changes from ObjCryst::RefinablePar
-- The constructor has been changed to accept a double,
-  rather than a pointer to a double. 
+- The constructor has been changed to accept a double, rather than a pointer to
+  a double. 
 - The copy and default constructors and Init are not wrapped in order to avoid
   memory corruption. Since boost cannot implicitly handle double* object, a
   wrapper class had to be created. However, this wrapper class cannot be used

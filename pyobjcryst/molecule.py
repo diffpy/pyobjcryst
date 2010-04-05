@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -12,7 +11,6 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
 
 """Python wrapping of Molecule.h
 
@@ -73,7 +71,6 @@ Changes from ObjCryst::Quaternion
 Changes from ObjCryst::RigidGroup
 - RigidGroup is wrapped to have python-set methods rather than stl::set
   methods.
-
 
 """
 

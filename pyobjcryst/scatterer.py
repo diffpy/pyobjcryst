@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -13,7 +12,6 @@
 #
 ##############################################################################
 
-
 """Python wrapping of Scatterer.h
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
@@ -27,7 +25,6 @@ Changes from ObjCryst::Scatterer
 - GetClockScattCompList is exposed using a workaround, because it is not
   implemented in the library.
 - Methods related to visualization are not exposed.
-
 
 """
 

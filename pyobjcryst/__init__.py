@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -12,9 +11,6 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
-
-# FIXME - Remove imports and import only the modules.
 
 """Python wrapping of ObjCryst++.
 

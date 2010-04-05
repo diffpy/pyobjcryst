@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group

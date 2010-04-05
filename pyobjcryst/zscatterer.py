@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -12,7 +11,6 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
 
 """Python wrapping of Zscatterer.
 
