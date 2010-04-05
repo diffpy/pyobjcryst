@@ -16,7 +16,7 @@ include_dirs = get_numpy_include_dirs()
 module = Extension('pyobjcryst._pyobjcryst', 
         glob.glob("extensions/*.cpp"),
         include_dirs = include_dirs,
-        libraries = ["ObjCryst", "newmat", "cctbx", "boost_python-mt"],
+        libraries = ["ObjCryst", "boost_python-mt"],
         define_macros = [("REAL","double")]
         )
 
@@ -33,6 +33,7 @@ dist =  setup(
         # What we're installing
         packages = ['pyobjcryst'],
         ext_modules = [module],
+        zip_safe = True,
 
 )
 
