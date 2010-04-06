@@ -19,6 +19,7 @@ class TestCif(unittest.TestCase):
 
         import glob
         for fname in glob.glob("%s/*.cif"%testdata_dir):
+        #for fname in glob.glob("%s/TiO2_rutile.cif"%testdata_dir):
             c = CreateCrystalFromCIF(file(fname))
             self.assertTrue(c is not None)
 
@@ -72,6 +73,33 @@ class TestCif(unittest.TestCase):
                     self.assertAlmostEquals(float(z), s.Z, 6)
                     self.assertAlmostEquals(float(occ), s.Occupancy, 6)
 
+            # Check ADPs
+            if fname.endswith("CaTiO3.cif"):
+                s = c.GetScatt(0)
+                name = s.GetName()
+                sp = c.GetScatteringPower(name)
+                self.assertEquals(name, "Ca1")
+                self.assertFalse(sp.IsIsotropic())
+                utob = 8 * pi**2
+                self.assertAlmostEquals(utob * 0.0077, sp.B11)
+                self.assertAlmostEquals(utob * 0.0079, sp.B22)
+                self.assertAlmostEquals(utob * 0.0077, sp.B33)
+                self.assertAlmostEquals(-utob * 0.0013, sp.B12)
+                self.assertAlmostEquals(0, sp.B13)
+                self.assertAlmostEquals(0, sp.B23)
+                self.assertAlmostEquals(-0.00676, s.X, 5)
+                self.assertAlmostEquals(0.03602, s.Y, 5)
+                self.assertAlmostEquals(0.25, s.Z, 2)
+                self.assertAlmostEquals(1, s.Occupancy)
+
+            if fname.endswith("TiO2_rutile.cif"):
+                s = c.GetScatt(0)
+                name = s.GetName()
+                sp = c.GetScatteringPower(name)
+                self.assertEquals(name, "Ti")
+                self.assertTrue(sp.IsIsotropic())
+                utob = 8 * pi**2
+                self.assertAlmostEquals(utob * 0.00532, sp.Biso, 5)
         return
 
 
@@ -80,11 +108,6 @@ class TestCif(unittest.TestCase):
         from pyobjcryst import ObjCrystException
 
         fname = "%s/ni.stru"%testdata_dir
-        infile = file(fname)
-        self.assertRaises(ObjCrystException, CreateCrystalFromCIF, infile)
-        infile.close()
-
-        fname = "%s/lysine.cif.bad"%testdata_dir
         infile = file(fname)
         self.assertRaises(ObjCrystException, CreateCrystalFromCIF, infile)
         infile.close()

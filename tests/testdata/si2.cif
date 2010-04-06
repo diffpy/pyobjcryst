@@ -1,0 +1,281 @@
+#------------------------------------------------------------------------------
+#$Date: 2008-04-05 08:13:02 +0000 (Sat, 05 Apr 2008) $
+#$Revision: 340 $
+#$URL: svn://cod.ibt.lt/cod/cif/2/2102763.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/. The original data for this entry
+# were provided by IUCr Journals, http://journals.iucr.org/.
+#
+# The file may be used within the scientific community so long as
+# proper attribution is given to the journal article from which the
+# data were obtained.
+#
+data_2102763
+loop_
+_publ_author_name
+'Wu, Hui'
+'Hartman, Michael R.'
+'Udovic, Terrence J.'
+'Rush, John J.'
+'Zhou, Wei'
+'Bowman Jr, Robert C.'
+'Vajo, John J.'
+_publ_section_title
+;
+ Structure of the novel ternary hydrides Li~4~<i>Tt</i>~2~D (<i>Tt</i>
+ = Si and Ge)
+;
+_journal_issue                   1
+_journal_name_full               'Acta Crystallographica Section B'
+_journal_page_first              63
+_journal_page_last               68
+_journal_volume                  63
+_journal_year                    2007
+_chemical_formula_sum            Si
+_chemical_formula_weight         28.09
+_chemical_name_systematic        ' ?'
+_symmetry_cell_setting           cubic
+_symmetry_space_group_name_H-M   'F d -3 m'
+_cell_angle_alpha                90.0
+_cell_angle_beta                 90.0
+_cell_angle_gamma                90.0
+_cell_formula_units_Z            8
+_cell_length_a                   5.42712(9)
+_cell_length_b                   5.42712
+_cell_length_c                   5.42712
+_cell_volume                     159.849(8)
+_[local]_cod_data_source_file    ws5053.cif
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 +x,+y,+z
+2 +z,+x,+y
+3 +y,+z,+x
+4 +x+1/4,+y+1/4,-z
+5 -z,+x+1/4,+y+1/4
+6 +y+1/4,-z,+x+1/4
+7 -z+1/4,+x+1/2,-y+3/4
+8 -y+3/4,-z+1/4,+x+1/2
+9 +y+1/2,-z+1/4,-x+3/4
+10 -x+3/4,+y+1/2,-z+1/4
+11 -z+1/4,-x+3/4,+y+1/2
+12 +x+1/2,-y+3/4,-z+1/4
+13 +y,+x,+z
+14 +z,+y,+x
+15 +x,+z,+y
+16 +y+1/4,+x+1/4,-z
+17 -z,+y+1/4,+x+1/4
+18 +x+1/4,-z,+y+1/4
+19 -z+1/4,+y+1/2,-x+3/4
+20 -x+3/4,-z+1/4,+y+1/2
+21 +x+1/2,-z+1/4,-y+3/4
+22 -y+3/4,+x+1/2,-z+1/4
+23 -z+1/4,-y+3/4,+x+1/2
+24 +y+1/2,-x+3/4,-z+1/4
+-1 -x,-y,-z
+-2 -z,-x,-y
+-3 -y,-z,-x
+-4 -x+3/4,-y+3/4,+z
+-5 +z,-x+3/4,-y+3/4
+-6 -y+3/4,+z,-x+3/4
+-7 +z+3/4,-x+1/2,+y+1/4
+-8 +y+1/4,+z+3/4,-x+1/2
+-9 -y+1/2,+z+3/4,+x+1/4
+-10 +x+1/4,-y+1/2,+z+3/4
+-11 +z+3/4,+x+1/4,-y+1/2
+-12 -x+1/2,+y+1/4,+z+3/4
+-13 -y,-x,-z
+-14 -z,-y,-x
+-15 -x,-z,-y
+-16 -y+3/4,-x+3/4,+z
+-17 +z,-y+3/4,-x+3/4
+-18 -x+3/4,+z,-y+3/4
+-19 +z+3/4,-y+1/2,+x+1/4
+-20 +x+1/4,+z+3/4,-y+1/2
+-21 -x+1/2,+z+3/4,+y+1/4
+-22 +y+1/4,-x+1/2,+z+3/4
+-23 +z+3/4,+y+1/4,-x+1/2
+-24 -y+1/2,+x+1/4,+z+3/4
+101 +x,+y+1/2,+z+1/2
+102 +z,+x+1/2,+y+1/2
+103 +y,+z+1/2,+x+1/2
+104 +x+1/4,+y+3/4,-z+1/2
+105 -z,+x+3/4,+y+3/4
+106 +y+1/4,-z+1/2,+x+3/4
+107 -z+1/4,+x,-y+1/4
+108 -y+3/4,-z+3/4,+x
+109 +y+1/2,-z+3/4,-x+1/4
+110 -x+3/4,+y,-z+3/4
+111 -z+1/4,-x+1/4,+y
+112 +x+1/2,-y+1/4,-z+3/4
+113 +y,+x+1/2,+z+1/2
+114 +z,+y+1/2,+x+1/2
+115 +x,+z+1/2,+y+1/2
+116 +y+1/4,+x+3/4,-z+1/2
+117 -z,+y+3/4,+x+3/4
+118 +x+1/4,-z+1/2,+y+3/4
+119 -z+1/4,+y,-x+1/4
+120 -x+3/4,-z+3/4,+y
+121 +x+1/2,-z+3/4,-y+1/4
+122 -y+3/4,+x,-z+3/4
+123 -z+1/4,-y+1/4,+x
+124 +y+1/2,-x+1/4,-z+3/4
+-101 -x,-y+1/2,-z+1/2
+-102 -z,-x+1/2,-y+1/2
+-103 -y,-z+1/2,-x+1/2
+-104 -x+3/4,-y+1/4,+z+1/2
+-105 +z,-x+1/4,-y+1/4
+-106 -y+3/4,+z+1/2,-x+1/4
+-107 +z+3/4,-x,+y+3/4
+-108 +y+1/4,+z+1/4,-x
+-109 -y+1/2,+z+1/4,+x+3/4
+-110 +x+1/4,-y,+z+1/4
+-111 +z+3/4,+x+3/4,-y
+-112 -x+1/2,+y+3/4,+z+1/4
+-113 -y,-x+1/2,-z+1/2
+-114 -z,-y+1/2,-x+1/2
+-115 -x,-z+1/2,-y+1/2
+-116 -y+3/4,-x+1/4,+z+1/2
+-117 +z,-y+1/4,-x+1/4
+-118 -x+3/4,+z+1/2,-y+1/4
+-119 +z+3/4,-y,+x+3/4
+-120 +x+1/4,+z+1/4,-y
+-121 -x+1/2,+z+1/4,+y+3/4
+-122 +y+1/4,-x,+z+1/4
+-123 +z+3/4,+y+3/4,-x
+-124 -y+1/2,+x+3/4,+z+1/4
+201 +x+1/2,+y,+z+1/2
+202 +z+1/2,+x,+y+1/2
+203 +y+1/2,+z,+x+1/2
+204 +x+3/4,+y+1/4,-z+1/2
+205 -z+1/2,+x+1/4,+y+3/4
+206 +y+3/4,-z,+x+3/4
+207 -z+3/4,+x+1/2,-y+1/4
+208 -y+1/4,-z+1/4,+x
+209 +y,-z+1/4,-x+1/4
+210 -x+1/4,+y+1/2,-z+3/4
+211 -z+3/4,-x+3/4,+y
+212 +x,-y+3/4,-z+3/4
+213 +y+1/2,+x,+z+1/2
+214 +z+1/2,+y,+x+1/2
+215 +x+1/2,+z,+y+1/2
+216 +y+3/4,+x+1/4,-z+1/2
+217 -z+1/2,+y+1/4,+x+3/4
+218 +x+3/4,-z,+y+3/4
+219 -z+3/4,+y+1/2,-x+1/4
+220 -x+1/4,-z+1/4,+y
+221 +x,-z+1/4,-y+1/4
+222 -y+1/4,+x+1/2,-z+3/4
+223 -z+3/4,-y+3/4,+x
+224 +y,-x+3/4,-z+3/4
+-201 -x+1/2,-y,-z+1/2
+-202 -z+1/2,-x,-y+1/2
+-203 -y+1/2,-z,-x+1/2
+-204 -x+1/4,-y+3/4,+z+1/2
+-205 +z+1/2,-x+3/4,-y+1/4
+-206 -y+1/4,+z,-x+1/4
+-207 +z+1/4,-x+1/2,+y+3/4
+-208 +y+3/4,+z+3/4,-x
+-209 -y,+z+3/4,+x+3/4
+-210 +x+3/4,-y+1/2,+z+1/4
+-211 +z+1/4,+x+1/4,-y
+-212 -x,+y+1/4,+z+1/4
+-213 -y+1/2,-x,-z+1/2
+-214 -z+1/2,-y,-x+1/2
+-215 -x+1/2,-z,-y+1/2
+-216 -y+1/4,-x+3/4,+z+1/2
+-217 +z+1/2,-y+3/4,-x+1/4
+-218 -x+1/4,+z,-y+1/4
+-219 +z+1/4,-y+1/2,+x+3/4
+-220 +x+3/4,+z+3/4,-y
+-221 -x,+z+3/4,+y+3/4
+-222 +y+3/4,-x+1/2,+z+1/4
+-223 +z+1/4,+y+1/4,-x
+-224 -y,+x+1/4,+z+1/4
+301 +x+1/2,+y+1/2,+z
+302 +z+1/2,+x+1/2,+y
+303 +y+1/2,+z+1/2,+x
+304 +x+3/4,+y+3/4,-z
+305 -z+1/2,+x+3/4,+y+1/4
+306 +y+3/4,-z+1/2,+x+1/4
+307 -z+3/4,+x,-y+3/4
+308 -y+1/4,-z+3/4,+x+1/2
+309 +y,-z+3/4,-x+3/4
+310 -x+1/4,+y,-z+1/4
+311 -z+3/4,-x+1/4,+y+1/2
+312 +x,-y+1/4,-z+1/4
+313 +y+1/2,+x+1/2,+z
+314 +z+1/2,+y+1/2,+x
+315 +x+1/2,+z+1/2,+y
+316 +y+3/4,+x+3/4,-z
+317 -z+1/2,+y+3/4,+x+1/4
+318 +x+3/4,-z+1/2,+y+1/4
+319 -z+3/4,+y,-x+3/4
+320 -x+1/4,-z+3/4,+y+1/2
+321 +x,-z+3/4,-y+3/4
+322 -y+1/4,+x,-z+1/4
+323 -z+3/4,-y+1/4,+x+1/2
+324 +y,-x+1/4,-z+1/4
+-301 -x+1/2,-y+1/2,-z
+-302 -z+1/2,-x+1/2,-y
+-303 -y+1/2,-z+1/2,-x
+-304 -x+1/4,-y+1/4,+z
+-305 +z+1/2,-x+1/4,-y+3/4
+-306 -y+1/4,+z+1/2,-x+3/4
+-307 +z+1/4,-x,+y+1/4
+-308 +y+3/4,+z+1/4,-x+1/2
+-309 -y,+z+1/4,+x+1/4
+-310 +x+3/4,-y,+z+3/4
+-311 +z+1/4,+x+3/4,-y+1/2
+-312 -x,+y+3/4,+z+3/4
+-313 -y+1/2,-x+1/2,-z
+-314 -z+1/2,-y+1/2,-x
+-315 -x+1/2,-z+1/2,-y
+-316 -y+1/4,-x+1/4,+z
+-317 +z+1/2,-y+1/4,-x+3/4
+-318 -x+1/4,+z+1/2,-y+3/4
+-319 +z+1/4,-y,+x+1/4
+-320 +x+3/4,+z+1/4,-y+1/2
+-321 -x,+z+1/4,+y+1/4
+-322 +y+3/4,-x,+z+3/4
+-323 +z+1/4,+y+3/4,-x+1/2
+-324 -y,+x+3/4,+z+3/4
+loop_
+_atom_type_symbol
+Si
+loop_
+_atom_site_type_symbol
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+_atom_site_thermal_displace_type
+_atom_site_occupancy
+Si Si 0.125 0.125 0.125 0.0072(4) Uiso 1.0
+loop_
+_geom_bond_atom_site_label_1
+_geom_bond_atom_site_label_2
+_geom_bond_site_symmetry_2
+_geom_bond_distance
+_geom_bond_publ_flag
+Si Si 4_555 2.35001(3) N
+Si Si 5_555 2.35001(3) N
+Si Si 6_555 2.35001(3) N
+Si Si -1_555 2.35001(3) N
+loop_
+_geom_angle_atom_site_label_1
+_geom_angle_atom_site_label_2
+_geom_angle_atom_site_label_3
+_geom_angle_site_symmetry_1
+_geom_angle_site_symmetry_3
+_geom_angle
+_geom_angle_publ_flag
+Si Si Si 4_555 5_555 109.4712(6) N
+Si Si Si 4_555 6_555 109.4712(6) N
+Si Si Si 4_555 -1_555 109.4712(12) N
+Si Si Si 5_555 6_555 109.4712(12) N
+Si Si Si 5_555 -1_555 109.4712(6) N
+Si Si Si 6_555 -1_555 109.4712(6) N

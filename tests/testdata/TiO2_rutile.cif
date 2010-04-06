@@ -47,6 +47,6 @@ _atom_site_label
 _atom_site_fract_x
 _atom_site_fract_y
 _atom_site_fract_z
-_atom_site_Uiso_or_equiv
+_atom_site_U_iso_or_equiv
 Ti   0.00000   0.00000   0.00000   0.00532
 O   0.30510   0.30510   0.00000   0.00760
