@@ -1,0 +1,23 @@
+Import('env')
+
+# Define the what we need to install cctbx
+cctbxenv = env.Clone()
+
+# Source path
+cctbxenv.PrependUnique(CPPPATH = ["./cctbx/include"])
+
+# Idenfity the required source files
+srcfiles  = Glob("./cctbx/cctbx/eltbx/*.cpp")
+srcfiles += Glob("./cctbx/cctbx/eltbx/xray_scattering/*.cpp")
+srcfiles += Glob("./cctbx/cctbx/sgtbx/*.cpp")
+srcfiles += Glob("./cctbx/cctbx/sgtbx/reference_settings/*.cpp")
+srcfiles += Glob("./cctbx/cctbx/miller/*.cpp")
+srcfiles += Glob("./cctbx/cctbx/uctbx/*.cpp")
+
+# Make the library object
+objects = cctbxenv.SharedObject(srcfiles)
+Clean(objects, "cctbx")
+
+# Put this back into the global environment
+env["cctbxobjs"] = objects
+

@@ -18,8 +18,9 @@ class TestCif(unittest.TestCase):
         """Make sure we can read all cif files."""
 
         import glob
+        print
         for fname in glob.glob("%s/*.cif"%testdata_dir):
-        #for fname in glob.glob("%s/TiO2_rutile.cif"%testdata_dir):
+            print "reading cif", os.path.basename(fname)
             c = CreateCrystalFromCIF(file(fname))
             self.assertTrue(c is not None)
 
@@ -77,8 +78,8 @@ class TestCif(unittest.TestCase):
             if fname.endswith("CaTiO3.cif"):
                 s = c.GetScatt(0)
                 name = s.GetName()
-                sp = c.GetScatteringPower(name)
                 self.assertEquals(name, "Ca1")
+                sp = c.GetScatteringPower(name)
                 self.assertFalse(sp.IsIsotropic())
                 utob = 8 * pi**2
                 self.assertAlmostEquals(utob * 0.0077, sp.B11)
