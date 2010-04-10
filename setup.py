@@ -17,7 +17,6 @@ module = Extension('pyobjcryst._pyobjcryst',
         glob.glob("extensions/*.cpp"),
         include_dirs = include_dirs,
         libraries = ["ObjCryst", "boost_python-mt"],
-        define_macros = [("REAL","double")]
         )
 
 # define distribution

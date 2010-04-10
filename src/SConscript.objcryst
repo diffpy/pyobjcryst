@@ -1,10 +1,46 @@
 Import('env')
 
+# Define REAL as double
+def defineREAL():
+    """Edit ObjCryst/ObjCryst/General.h to define REAL as double."""
+    # Do this safely. Read the file. Close. Edit. Write. Close.
+
+    try:
+        ifile = file("ObjCryst/ObjCryst/General.h", 'r')
+        fold = ifile.read()
+        ifile.close()
+    except IOError:
+        print "Cannot read ObjCryst/ObjCryst/General.h"
+        Exit(1)
+
+    oldline = "#define REAL float"
+    idx = fold.find(oldline)
+    if idx == -1:
+        return
+
+    print "Hard-coding REAL as double"
+
+    newline = "// Changed from float to double by pyobjcryst\n#define REAL double"
+    fnew = fold[:idx]
+    fnew += newline
+    fnew += fold[len(oldline)+idx:]
+
+    try:
+        ofile = file("ObjCryst/ObjCryst/General.h", 'w')
+        ofile.write(fnew)
+        ofile.close()
+    except IOError:
+        print "Cannot write ObjCryst/ObjCryst/General.h"
+        Exit(1)
+
+    return 
+
 # Define the what we need to install objcryst
 objcrystenv = env.Clone()
 
-# Add some flags
-objcrystenv.AppendUnique(CPPDEFINES=[('REAL','double')])
+# hardcode REAL as double
+if not (GetOption('clean') or env.GetOption('help')):
+    defineREAL()
 
 # Source directories
 objcrystenv.PrependUnique(CPPPATH = ["."])
