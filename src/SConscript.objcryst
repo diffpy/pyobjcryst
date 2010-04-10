@@ -1,46 +1,14 @@
 Import('env')
 
-# Define REAL as double
-def defineREAL():
-    """Edit ObjCryst/ObjCryst/General.h to define REAL as double."""
-    # Do this safely. Read the file. Close. Edit. Write. Close.
-
-    try:
-        ifile = file("ObjCryst/ObjCryst/General.h", 'r')
-        fold = ifile.read()
-        ifile.close()
-    except IOError:
-        print "Cannot read ObjCryst/ObjCryst/General.h"
-        Exit(1)
-
-    oldline = "#define REAL float"
-    idx = fold.find(oldline)
-    if idx == -1:
-        return
-
-    print "Hard-coding REAL as double"
-
-    newline = "// Changed from float to double by pyobjcryst\n#define REAL double"
-    fnew = fold[:idx]
-    fnew += newline
-    fnew += fold[len(oldline)+idx:]
-
-    try:
-        ofile = file("ObjCryst/ObjCryst/General.h", 'w')
-        ofile.write(fnew)
-        ofile.close()
-    except IOError:
-        print "Cannot write ObjCryst/ObjCryst/General.h"
-        Exit(1)
-
-    return 
+# initialize custom builder BuildDefineREAL
+SConscript('SConscript.definereal')
 
 # Define the what we need to install objcryst
 objcrystenv = env.Clone()
 
-# hardcode REAL as double
-if not (GetOption('clean') or env.GetOption('help')):
-    defineREAL()
+# We take care of REAL for good here.
+objcrystenv.BuildDefineREAL(['ObjCryst/ObjCryst/General.h'],
+        Value(env['REAL']))
 
 # Source directories
 objcrystenv.PrependUnique(CPPPATH = ["."])
@@ -64,3 +32,5 @@ env['lib_includes']  = Glob("./ObjCryst/ObjCryst/*.h")
 env['lib_includes'] += Glob("./ObjCryst/RefinableObj/*.h")
 env['lib_includes'] += Glob("./ObjCryst/CrystVector/*.h")
 env['lib_includes'] += Glob("./ObjCryst/Quirks/*.h")
+
+# vim: ft=python

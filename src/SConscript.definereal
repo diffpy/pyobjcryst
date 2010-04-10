@@ -1,0 +1,21 @@
+# Add new builder BuildDefineREAL to the environment.
+
+Import('env')
+
+def build_defineREAL(target, source, env):
+    import re
+    # target contains the header to be changed.  We need to read
+    # the srcnode, but write the target in the build directory.
+    infile = str(target[0].srcnode())
+    outfile = str(target[0])
+    # source contains the value to be used for REAL
+    value = str(source[0])
+    headercode = open(infile).read()
+    fixedcode = re.sub(r'(?m)^#define\s+REAL\s+[^\\]*?$',
+            "#define REAL " + value, headercode)
+    open(outfile, 'w').write(fixedcode)
+    return
+
+env.Append(BUILDERS={'BuildDefineREAL' : Builder(action=build_defineREAL)})
+
+# vim: ft=python
