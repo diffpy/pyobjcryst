@@ -62,7 +62,7 @@ std::set<T> pyIterableToSet(const bp::object& l)
     std::set<T> cl;
     T typeobj;
 
-    for(size_t i=0; i < len(l); ++i)
+    for(int i=0; i < len(l); ++i)
     {
         typeobj = bp::extract<T>(l[i]);
         cl.insert(typeobj);

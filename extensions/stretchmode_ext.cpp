@@ -80,7 +80,7 @@ void _AddAtomSMBL(StretchModeBondLength& mode, MolAtom& a)
 
 void _AddAtomsSMBL(StretchModeBondLength& mode, bp::object& l)
 {
-    for(size_t i=0; i < len(l); ++i)
+    for(int i=0; i < len(l); ++i)
     {
         MolAtom* a = extract<MolAtom*>(l[i]);
         mode.mvTranslatedAtomList.insert(a);
@@ -119,7 +119,7 @@ void _AddAtom(T& mode, MolAtom& a)
 template <class T>
 void _AddAtoms(T& mode, bp::object& l)
 {
-    for(size_t i=0; i < len(l); ++i)
+    for(int i=0; i < len(l); ++i)
     {
         MolAtom* a = extract<MolAtom*>(l[i]);
         mode.mvRotatedAtomList.insert(a);

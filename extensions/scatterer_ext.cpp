@@ -50,8 +50,6 @@ using namespace boost::python;
 
 namespace {
 
-const char* scattererdoc = "Generic type of scatterer: can be an atom, or a more complex assembly of atoms.  A Scatterer is able to give its position (in fractionnal coordinates) in the unit cell, and more generally the position of all point scattering centers (ScatteringComponent), along with the ScatteringPower associated with each position.  For simple atoms, there is only one scattering position with the associated scattering power (scattering factor, anomalous, thermic). For complex scatterers (molecules: ZScatterer) there are as many positions as atoms.  A scatterer also has a few functions to display itself in 3D. This is an abstract base class.";
-
 class ScattererWrap : public Scatterer, 
                       public wrapper<Scatterer>
 {
@@ -198,7 +196,7 @@ bp::list _GetScatteringComponentList(Scatterer &s)
 {
     const ScatteringComponentList& scl = s.GetScatteringComponentList();
     bp::list l;
-    for(size_t i = 0; i < scl.GetNbComponent(); ++i)
+    for(int i = 0; i < scl.GetNbComponent(); ++i)
     {
         l.append(scl(i));
     }

@@ -117,7 +117,7 @@ bp::list _GetScatteringComponentList(Crystal &c)
 {
     const ScatteringComponentList& scl = c.GetScatteringComponentList();
     bp::list l;
-    for(size_t i = 0; i < scl.GetNbComponent(); ++i)
+    for(int i = 0; i < scl.GetNbComponent(); ++i)
     {
         l.append(scl(i));
     }

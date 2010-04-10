@@ -156,7 +156,7 @@ MolAtom& _GetAtomIdx(Molecule& m, int idx)
 {
     std::vector<MolAtom*>& v = m.GetAtomList();
     if(idx < 0) idx += v.size();
-    if(0 == v.size() || idx < 0 || idx >= v.size())
+    if(0 == v.size() || idx < 0 || idx >= (int) v.size())
     {
         PyErr_SetString(PyExc_IndexError, "Index out of range");
         throw_error_already_set();
@@ -168,7 +168,7 @@ MolBond& _GetBondIdx(Molecule& m, int idx)
 {
     std::vector<MolBond*>& v = m.GetBondList();
     if(idx < 0) idx += v.size();
-    if(0 == v.size() || idx < 0 || idx >= v.size())
+    if(0 == v.size() || idx < 0 || idx >= (int) v.size())
     {
         PyErr_SetString(PyExc_IndexError, "Index out of range");
         throw_error_already_set();
@@ -180,7 +180,7 @@ MolBondAngle& _GetBondAngleIdx(Molecule& m, int idx)
 {
     std::vector<MolBondAngle*>& v = m.GetBondAngleList();
     if(idx < 0) idx += v.size();
-    if(0 == v.size() || idx < 0 || idx >= v.size())
+    if(0 == v.size() || idx < 0 || idx >= (int) v.size())
     {
         PyErr_SetString(PyExc_IndexError, "Index out of range");
         throw_error_already_set();
@@ -192,7 +192,7 @@ MolDihedralAngle& _GetDihedralAngleIdx(Molecule& m, int idx)
 {
     std::vector<MolDihedralAngle*>& v = m.GetDihedralAngleList();
     if(idx < 0) idx += v.size();
-    if(0 == v.size() || idx < 0 || idx >= v.size())
+    if(0 == v.size() || idx < 0 || idx >= (int) v.size())
     {
         PyErr_SetString(PyExc_IndexError, "Index out of range");
         throw_error_already_set();
@@ -256,7 +256,7 @@ RigidGroup& _AddRigidGroupIterable(Molecule& m, bp::object& l, const bool ud=tru
     // convert l to a rigid group
     RigidGroup* r = new RigidGroup();
 
-    for(size_t i=0; i < len(l); ++i)
+    for(int i=0; i < len(l); ++i)
     {
         MolAtom* a = extract<MolAtom*>(l[i]);
         r->insert(a);
