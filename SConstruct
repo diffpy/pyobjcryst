@@ -7,14 +7,16 @@
 
 import os
 
+def subdictionary(d, keyset):
+    return dict([kv for kv in d.items() if kv[0] in keyset])
+
 # copy system environment variables related to compilation
-extenv = {
-        'CPPPATH' : os.environ.get('CPLUS_INCLUDE_PATH', '').split(os.pathsep),
-        'LIBPATH' : os.environ.get('LIBRARY_PATH', '').split(os.pathsep)
-                  + os.environ.get('LD_LIBRARY_PATH', '').split(os.pathsep),
-        }
-extenv['RPATH'] = extenv['LIBPATH']
-DefaultEnvironment(**extenv)
+DefaultEnvironment(ENV=subdictionary(os.environ, [
+    'PATH', 'PYTHONPATH',
+    'CPATH', 'CPLUS_INCLUDE_PATH',
+    'LD_LIBRARY_PATH', 'LIBRARY_PATH',
+    ])
+)
 
 # Create construction environment
 env = DefaultEnvironment().Clone()
