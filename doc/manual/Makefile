@@ -14,7 +14,7 @@ doc:
 upload:
 	rsync -ruvz --delete pyobjcryst $(TARGET):$(DOCROOT)
 	ssh $(TARGET) "rm -rf $(DOCROOT)/pyobjcryst-$(RELEASE)"
-	ssh $(TARGET) "ln -s $(DOCROOT)/pyobjcryst $(DOCROOT)/pyobjcryst-$(RELEASE)"
+	ssh $(TARGET) "cp -r $(DOCROOT)/pyobjcryst $(DOCROOT)/pyobjcryst-$(RELEASE)"
 
 .PHONY : clean
 clean:

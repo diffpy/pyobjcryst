@@ -16,7 +16,7 @@ doc:
 upload:
 	rsync -ruvz --delete pyobjcrystapi $(TARGET):$(DOCROOT)
 	ssh $(TARGET) "rm -rf $(DOCROOT)/pyobjcrystapi-$(RELEASE)"
-	ssh $(TARGET) "ln -s $(DOCROOT)/pyobjcrystapi $(DOCROOT)/pyobjcrystapi-$(RELEASE)"
+	ssh $(TARGET) "cp -r $(DOCROOT)/pyobjcrystapi $(DOCROOT)/pyobjcrystapi-$(RELEASE)"
 	$(MAKE) -C manual $@
 
 .PHONY : clean
