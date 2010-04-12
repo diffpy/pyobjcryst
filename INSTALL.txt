@@ -2,7 +2,7 @@ Dependencies
 -------------------------
 
 The following programs must be installed on your system before you can install
-pyobjcryst.
+PyObjCryst.
 
 Python >= 2.5, < 3.0
  * http://www.python.org
@@ -10,42 +10,50 @@ Python >= 2.5, < 3.0
 python-setuptools >= 0.6c9
  * http://pypi.python.org/pypi/setuptools 
 
+SCons
+ * http://www.scons.org
+
 Boost C++ libraries >= 1.39
  * http://www.boost.org/
 
 ObjCryst++ (see below)
- * http://vincefn.net/ObjCryst/
- * Newmat C++ matrix library > 10
-   * http://www.robertnz.net/nm_intro.htm
- * cctbx installed as shared libraries
-   * http://cctbx.sourceforge.net/
-
-
-Installing pyobjcryst
--------------------------
-To install pyobjcryst, you must have ObjCryst++ installed as a shared library
-(see below). Once this is done, type the following from the command line :
-
-> python setup.py install
-
-For installation options, type :
-
-> python setup.py --help install
+ * http://vincefn.net/ObjCryst
 
 Installing ObjCryst++
 -------------------------
-We provide scons build script and source bundle to make it easier to build
-ObjCryst++ and its dependencies as a shared library. Here's how to install.
+We provide a SCons build script and ObjCryst++ source bundle to make it easier
+to build ObjCryst++ and its dependencies (cctbx and newmat) as a shared
+library. Here's how to install.
 
- 1. Download ObjCryst-latest.tar.gz from http://dev.danse.us/packages/.
- 2. Extract the archive to the 'libobjcryst' directory :
+ 1. Download ObjCryst-latest.tar.gz from http://dev.danse.us/packages/. ::
+
+    > wget http://dev.danse.us/packages/ObjCryst-latest.tar.gz
+
+ 2. Extract the archive to the libobjcryst directory ::
   
     > tar xzvf ObjCryst-latest.tar.gz -C libobjcryst
  
- 4. Move into the libobjcryst directory and run the following command :
+ 3. Move into the libobjcryst directory and run the following command ::
 
     > scons build=fast install
 
-    Run `scons -h` for other installation options.
+    This will build and install the shared libraries, and header files to
+    standard system-dependent locations.  Run `scons -h` for other installation
+    options.
 
-Once you have done this, you can install pyobjcryst as indicated above.
+This build method has been tested on Linux platforms with recent GNU and Intel
+C++ compilers.
+
+Once you have done this, you can install PyObjCryst as instructed below.
+
+Installing PyObjCryst
+-------------------------
+To install PyObjCryst, you must have ObjCryst++ installed as a shared library
+(see below). Once this is done, type the following from the command line ::
+
+> python setup.py install
+
+For installation options, type ::
+
+> python setup.py --help install
+

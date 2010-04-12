@@ -1,5 +1,4 @@
-The focus of the bindings are on structure creation and introspection. Please
-contact the author <farrowch@gmail.com> with questions, requests and concerns.
+PyObjCryst - Python bindings to ObjCryst++ Object-Oriented Crystallographic Library
 
-Installation: See INSTALL.txt
-
+The documentation for this release of PyObjCryst can be found on-line at
+http://docs.danse.us/diffraction/pyobjcryst-beta0/.
