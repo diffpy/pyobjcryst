@@ -34,18 +34,18 @@ For installation options, type :
 
 Installing ObjCryst++
 -------------------------
-We have provided a scons build script to make it easier to build ObjCryst++ and
-its dependencies as a shared library. Here's how to install.
+We provide scons build script and source bundle to make it easier to build
+ObjCryst++ and its dependencies as a shared library. Here's how to install.
 
  1. Download ObjCryst-latest.tar.gz from http://dev.danse.us/packages/.
- 2. Extract the archive to the 'src' directory :
+ 2. Extract the archive to the 'libobjcryst' directory :
   
-    tar xzvf ObjCryst-latest.tar.gz -C src
+    > tar xzvf ObjCryst-latest.tar.gz -C libobjcryst
  
- 4. Install. We recommend the following command
+ 4. Move into the libobjcryst directory and run the following command :
 
-    scons build=fast install
+    > scons build=fast install
 
-    Run scons -h for other installation options.
+    Run `scons -h` for other installation options.
 
 Once you have done this, you can install pyobjcryst as indicated above.
