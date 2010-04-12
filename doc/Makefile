@@ -9,19 +9,18 @@ PKGROOT = ~/dev_danse_us/
 .PHONY : doc
 doc:
 	epydoc pyobjcryst --html -vvv -o pyobjcrystapi -n pyobjcryst \
---include-log --introspect $@
+--include-log --show-imports $@
 	$(MAKE) -C manual $@
 
 .PHONY : upload
 upload:
 	rsync -ruvz --delete pyobjcrystapi $(TARGET):$(DOCROOT)
 	ssh $(TARGET) "rm -rf $(DOCROOT)/pyobjcrystapi-$(RELEASE)"
-	ssh $(TARGET) "cp -r $(DOCROOT)/pyobjcrystapi $(DOCROOT)/pyobjcrystapi-$(RELEASE)"
-	rsync -ruv srfit_examples.zip $(TARGET):$(PKGROOT)
-	$(MAKE) -C devmanual $@
+	ssh $(TARGET) "ln -s $(DOCROOT)/pyobjcrystapi $(DOCROOT)/pyobjcrystapi-$(RELEASE)"
+	$(MAKE) -C manual $@
 
 .PHONY : clean
 clean:
 	rm -rf pyobjcrystapi
-	$(MAKE) -C devmanual $@
+	$(MAKE) -C manual $@
 
