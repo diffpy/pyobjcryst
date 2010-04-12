@@ -18,8 +18,6 @@ upload:
 	ssh $(TARGET) "rm -rf $(DOCROOT)/pyobjcrystapi-$(RELEASE)"
 	ssh $(TARGET) "cp -r $(DOCROOT)/pyobjcrystapi $(DOCROOT)/pyobjcrystapi-$(RELEASE)"
 	rsync -ruv srfit_examples.zip $(TARGET):$(PKGROOT)
-	ssh $(TARGET) "rm -rf $(PKGROOT)/srfit_examples-$(RELEASE).zip"
-	ssh $(TARGET) "cp -r $(PKGROOT)/srfit_examples.zip $(PKGROOT)/srfit_examples-$(RELEASE).zip"
 	$(MAKE) -C devmanual $@
 
 .PHONY : clean
