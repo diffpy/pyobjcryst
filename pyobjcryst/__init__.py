@@ -27,8 +27,8 @@ Modules
     polyhedron              --  Wrapping of Polyhedron.h
     refinableobj            --  Wrapping of RefinableObj.h
     scatterer               --  Wrapping of Scatterer.h
-    scatteringpowersphere   --  Wrapping of ScatteringPowerSphere.h
     scatteringpower         --  Wrapping of ScatteringPower.h
+    scatteringpowersphere   --  Wrapping of ScatteringPowerSphere.h
     spacegroup              --  Wrapping of SpaceGroup.h
     unitcell                --  Wrapping of UnitCell.h
     zscatterer              --  Wrapping of ZScatterer.h
