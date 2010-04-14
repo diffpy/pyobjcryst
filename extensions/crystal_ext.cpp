@@ -16,6 +16,7 @@
 * 
 * Changes from ObjCryst::Crystal
 * - CIFOutput accepts a python file-like object
+* - CIFOutput has default mindist = 0, rather than 0.5
 * - CalcDynPopCorr is not enabled, as the API states that this is for internal
 *   use only.
 *
@@ -126,11 +127,11 @@ bp::list _GetScatteringComponentList(Crystal &c)
 }
 
 
-void _CIFOutput(Crystal &c, 
-        boost_adaptbx::file_conversion::python_file_buffer const &output)
+void _CIFOutput(Crystal &c, boost_adaptbx::file_conversion::python_file_buffer
+        const &output, double mindist)
 {
     boost_adaptbx::file_conversion::ostream os(&output);
-    c.CIFOutput(os);
+    c.CIFOutput(os, mindist);
     os.flush();
 }
 
@@ -310,7 +311,7 @@ void wrap_crystal()
             &Crystal::GetBumpMergeParList, return_internal_reference<>())
         .def("GetClockScattererList", &Crystal::GetClockScattererList,
                 return_value_policy<copy_const_reference>())
-        .def("CIFOutput", &_CIFOutput)
+        .def("CIFOutput", &_CIFOutput, (bp::arg("file"), bp::arg("mindist")=0))
         .def("AddBondValenceRo", &Crystal::AddBondValenceRo)
         .def("RemoveBondValenceRo", &Crystal::AddBondValenceRo)
         .def("GetBondValenceCost", &Crystal::GetBondValenceCost)
