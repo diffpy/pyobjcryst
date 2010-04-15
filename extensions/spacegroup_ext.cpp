@@ -18,7 +18,7 @@
 *
 *****************************************************************************/
 
-#include "ObjCryst/ObjCryst/SpaceGroup.h"
+#include <ObjCryst/ObjCryst/SpaceGroup.h>
 
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>

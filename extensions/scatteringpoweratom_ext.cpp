@@ -27,9 +27,9 @@
 #include <string>
 #include <iostream>
 
-#include "ObjCryst/ObjCryst/ScatteringPower.h"
-#include "ObjCryst/RefinableObj/RefinableObj.h"
-#include "ObjCryst/CrystVector/CrystVector.h"
+#include <ObjCryst/ObjCryst/ScatteringPower.h>
+#include <ObjCryst/RefinableObj/RefinableObj.h>
+#include <ObjCryst/CrystVector/CrystVector.h>
 
 namespace bp = boost::python;
 using namespace boost::python;

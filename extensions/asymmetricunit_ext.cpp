@@ -17,7 +17,7 @@
 * $Id$
 *
 *****************************************************************************/
-#include "ObjCryst/ObjCryst/SpaceGroup.h"
+#include <ObjCryst/ObjCryst/SpaceGroup.h>
 
 #include <boost/utility.hpp>
 #include <boost/python.hpp>

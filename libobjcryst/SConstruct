@@ -47,7 +47,7 @@ vars.Add(PathVariable('includedir',
 vars.Update(env)
 env.Help(vars.GenerateHelpText(env))
 
-builddir = env.Dir('../build/' + env['build'])
+builddir = env.Dir('build/' + env['build'])
 
 Export('env')
 

@@ -22,7 +22,7 @@
 #include <boost/python.hpp>
 #include <boost/python/def.hpp>
 
-#include "ObjCryst/ObjCryst/General.h"
+#include <ObjCryst/ObjCryst/General.h>
 
 using namespace boost::python;
 using namespace ObjCryst;

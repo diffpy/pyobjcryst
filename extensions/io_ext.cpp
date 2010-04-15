@@ -21,8 +21,8 @@
 *
 *****************************************************************************/
 
-#include "ObjCryst/RefinableObj/IO.h"
-#include "ObjCryst/CrystVector/CrystVector.h"
+#include <ObjCryst/RefinableObj/IO.h>
+#include <ObjCryst/CrystVector/CrystVector.h>
 
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>

@@ -26,7 +26,7 @@
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
 
-#include "ObjCryst/RefinableObj/RefinableObj.h"
+#include <ObjCryst/RefinableObj/RefinableObj.h>
 
 using namespace boost::python;
 using namespace ObjCryst;

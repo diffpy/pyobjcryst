@@ -21,7 +21,7 @@
 *
 *****************************************************************************/
 
-#include "ObjCryst/ObjCryst/ScatteringPower.h"
+#include <ObjCryst/ObjCryst/ScatteringPower.h>
 
 #include <boost/utility.hpp>
 #include <boost/python.hpp>

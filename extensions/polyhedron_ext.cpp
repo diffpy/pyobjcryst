@@ -18,7 +18,7 @@
 *
 *****************************************************************************/
 
-#include "ObjCryst/ObjCryst/Polyhedron.h"
+#include <ObjCryst/ObjCryst/Polyhedron.h>
 
 #include <boost/utility.hpp>
 #include <boost/python.hpp>

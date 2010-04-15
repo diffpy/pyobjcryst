@@ -29,13 +29,13 @@
 *
 *****************************************************************************/
 
-#include "ObjCryst/ObjCryst/General.h"
-#include "ObjCryst/ObjCryst/Crystal.h"
-#include "ObjCryst/ObjCryst/CIF.h"
-#include "ObjCryst/ObjCryst/UnitCell.h"
-#include "ObjCryst/ObjCryst/Atom.h"
-#include "ObjCryst/RefinableObj/RefinableObj.h"
-#include "ObjCryst/CrystVector/CrystVector.h"
+#include <ObjCryst/ObjCryst/General.h>
+#include <ObjCryst/ObjCryst/Crystal.h>
+#include <ObjCryst/ObjCryst/CIF.h>
+#include <ObjCryst/ObjCryst/UnitCell.h>
+#include <ObjCryst/ObjCryst/Atom.h>
+#include <ObjCryst/RefinableObj/RefinableObj.h>
+#include <ObjCryst/CrystVector/CrystVector.h>
 
 #include "python_file_stream.hpp"
 #include "helpers.hpp"
@@ -290,6 +290,7 @@ void wrap_crystal()
         //         bp::arg("mergeDist")=0.0))
         .def("ResetDynPopCorr", &Crystal::ResetDynPopCorr)
         .def("SetUseDynPopCorr", &Crystal::SetUseDynPopCorr)
+        .def("GetUseDynPopCorr", &Crystal::GetUseDynPopCorr)
         .def("GetBumpMergeCost", &Crystal::GetBumpMergeCost)
         .def("SetBumpMergeDistance", 
             (void (Crystal::*)(const ScatteringPower&, const ScatteringPower&, const double))

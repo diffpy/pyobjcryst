@@ -21,10 +21,10 @@
 *
 *****************************************************************************/
 
-#include "ObjCryst/ObjCryst/Scatterer.h"
-#include "ObjCryst/ObjCryst/ZScatterer.h"
-#include "ObjCryst/ObjCryst/ScatteringPower.h"
-#include "ObjCryst/CrystVector/CrystVector.h"
+#include <ObjCryst/ObjCryst/Scatterer.h>
+#include <ObjCryst/ObjCryst/ZScatterer.h>
+#include <ObjCryst/ObjCryst/ScatteringPower.h>
+#include <ObjCryst/CrystVector/CrystVector.h>
 
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
