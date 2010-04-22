@@ -709,7 +709,7 @@ void wrap_molecule()
         // Memory management shouldn't be necessary here, but there is the
         // possibility that a MolAtom that was created in another Molecule is
         // passed to this one. This could lead to memory corruption if the
-        // original Molecule were to be deleted before this one, hence the
+        // original Molecule was to be deleted before this one, hence the
         // with_custodian_and_ward.
         .def("SetCenterAtom", &Molecule::SetCenterAtom,
             with_custodian_and_ward<1,2>())
