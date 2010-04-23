@@ -18,13 +18,12 @@ def putAtomsInMolecule(crystal, alist = None, name = None):
 
     Selected atoms are put into a new Molecule object, which is then placed
     inside of the Crystal. The atoms are then removed from the crystal. The
-    position of the molecule is placed at the center of mass of the moved
-    atoms. If any cartesian positions are negative, a shift is applied so that
-    they become positive, and this offset is applied to the center of mass.
+    molecule is placed at the center of mass of the moved atoms. 
 
     crystal --  The crystal containing the atoms.
-    idxlist --  A list of indices or names identifying the atoms. If idxlist is None
-                (default), all atoms from the crystal are placed into a molecule.
+    idxlist --  A list of indices or names identifying the atoms. If idxlist is
+                None (default), all atoms from the crystal are placed into a
+                molecule.
     name    --  A name for the molecule. If name is None (default), the name
                 m_cname will be given, where cname is substituted for the
                 crystal's name.
