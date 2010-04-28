@@ -60,9 +60,9 @@ class StretchModeWrap : public StretchMode,
         this->get_override("CalcDeriv")(derivllk);
     }
 
-    void Stretch(const double change)
+    void Stretch(const double change, const bool keepCenter)
     {
-        this->get_override("Stretch")(change);
+        this->get_override("Stretch")(change, keepCenter);
     }
 
     void RandomStretch(const double change)
@@ -179,7 +179,7 @@ void wrap_stretchmode()
         .def("CalcDeriv", pure_virtual(&StretchMode::CalcDeriv), 
             (bp::arg("derivllk")=true))
         .def("Stretch", pure_virtual(&StretchMode::Stretch),
-            (bp::arg("amplitude")))
+            (bp::arg("amplitude"), bp::arg("keepCenter")=true))
         .def("RandomStretch", pure_virtual(&StretchMode::RandomStretch),
             (bp::arg("amplitude")))
         ;
