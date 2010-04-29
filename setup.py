@@ -22,7 +22,7 @@ module = Extension('pyobjcryst._pyobjcryst',
 # define distribution
 dist =  setup(
         name = "pyobjcryst",
-        version = "1.0b0",
+        version = "1.0b1",
         author = "Christopher L. Farrow",
         author_email = "clf2121@columbia.edu",
         description = "Bindings of ObjCryst++ into python",

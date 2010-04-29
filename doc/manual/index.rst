@@ -47,5 +47,5 @@ Installation
 API
 ======================================
 
-The API for PyObjCryst is at <http://docs.danse.us/diffraction/pyobjcrystapi-beta0/>.
+The API for PyObjCryst is at <http://docs.danse.us/diffraction/pyobjcrystapi-beta1/>.
 
