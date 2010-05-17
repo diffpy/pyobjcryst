@@ -13,6 +13,54 @@
 ##############################################################################
 """Utilities for crystals."""
 
+def crystalToDiffpyStructure(crystal):
+    """Create a diffpy.Structure.Structure from a crystal.
+
+    This requires diffpy.Structure to be installed. This uses file IO transfer
+    data, so there is some inherent precision loss.
+
+    Note that the resulting structure will be in P1 symmetry.
+
+    """
+
+    # Write the crystal to string and load it into a diffpy Structure
+
+    from cStringIO import StringIO
+    buf = StringIO()
+    crystal.CIFOutput(buf)
+
+    from diffpy.Structure import Structure
+    stru = Structure()
+
+    s = buf.getvalue()
+    stru.readStr(s)
+    buf.close()
+
+    return stru
+
+def expandSymmetry(crystal):
+    """Expand a crystal to P1 symmetry.
+
+    This requires diffpy.Structure to be installed. This uses file IO transfer
+    data, so there is some inherent precision loss.
+
+    This returns a new structure.
+
+    """
+
+    # Create a string from a diffpy Structure, which is in P1 symmetry, and
+    # load this as a Crystal.
+    stru = crystalToDiffpyStructure(crystal)
+
+    cifstr = stru.writeStr(format = "cif")
+    from cStringIO import StringIO
+    buf = StringIO(cifstr)
+
+    from pyobjcryst.crystal import CreateCrystalFromCIF
+    p1 = CreateCrystalFromCIF(buf)
+    return p1
+
+
 def putAtomsInMolecule(crystal, alist = None, name = None):
     """Place atoms from a crystal into a molecule inside the crystal.
 
