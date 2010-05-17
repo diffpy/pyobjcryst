@@ -13,6 +13,8 @@
 ##############################################################################
 """Utilities for crystals."""
 
+__id__ = "$Id$"
+
 def crystalToDiffpyStructure(crystal):
     """Create a diffpy.Structure.Structure from a crystal.
 
@@ -169,3 +171,4 @@ def writexyz(crystal, filename):
     f.write(out)
     f.close()
     return
+
