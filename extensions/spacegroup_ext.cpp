@@ -33,25 +33,53 @@ using namespace ObjCryst;
 
 namespace {
 
-// We'll use a CrystMatrix and let the converter we wrote take care of the rest.
-CrystMatrix<double> GetTranslationVectors(const SpaceGroup& sg)
+// This returns a list of translation operations
+bp::list GetTranslationVectors(const SpaceGroup& sg)
 {
 
-    std::vector<SpaceGroup::TRx> tv = sg.GetTranslationVectors();
+    const std::vector<SpaceGroup::TRx>& tv = sg.GetTranslationVectors();
 
-
-    std::vector<int> dims(2);
-    dims[0] = tv.size();
-    dims[1] = 3;
-    CrystMatrix<double> data(dims[0], dims[1]);
-    for(int row = 0; row < dims[0]; ++row)
+    bp::list outlist;
+    std::vector<SpaceGroup::TRx>::const_iterator vec;
+    for(vec = tv.begin(); vec != tv.end(); ++vec)
     {
-        for(int col = 0; col < dims[1]; ++col)
+        CrystVector<double> translation(3);
+        for(int idx = 0; idx < 3; ++idx)
         {
-            data(row, col) = tv[row].tr[col];
+            translation(idx) = vec->tr[idx];
         }
+        outlist.append(translation);
     }
-    return data;
+    return outlist;
+}
+
+
+// Returns a list of (translation vector, rotation) tuples
+bp::list GetSymmetryOperations(const SpaceGroup& sg)
+{
+
+    const std::vector<SpaceGroup::SMx>& sv = sg.GetSymmetryOperations();
+
+    bp::list outlist;
+    int r, c;
+    std::vector<SpaceGroup::SMx>::const_iterator tup;
+    for(tup = sv.begin(); tup != sv.end(); ++tup)
+    {
+        CrystVector<double> translation(3);
+        for(int idx = 0; idx < 3; ++idx)
+        {
+            translation(idx) = tup->tr[idx];
+        }
+        CrystMatrix<double> rotation(3,3);
+        for(int idx = 0; idx < 9; ++idx)
+        {
+            r = idx/3;
+            c = idx%3;
+            rotation(r,c) = tup->mx[idx];
+        }
+        outlist.append(bp::make_tuple(translation, rotation));
+    }
+    return outlist;
 }
 
 }
@@ -76,6 +104,7 @@ void wrap_spacegroup()
         .def("IsCentrosymmetric", &SpaceGroup::IsCentrosymmetric)
         .def("GetNbTranslationVectors", &SpaceGroup::GetNbTranslationVectors)
         .def("GetTranslationVectors", &GetTranslationVectors)
+        .def("GetSymmetryOperations", &GetSymmetryOperations)
         .def("GetAllSymmetrics", &SpaceGroup::GetAllSymmetrics,
                 (bp::arg("h"), 
                  bp::arg("k"), 
