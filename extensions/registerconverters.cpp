@@ -87,7 +87,7 @@ struct CrystVector_REAL_to_ndarray
 
 };
 
-// CrystVector to ndarray
+// CrystMatrix to ndarray
 struct CrystMatrix_REAL_to_ndarray
 {
 

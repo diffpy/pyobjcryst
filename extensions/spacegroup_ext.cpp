@@ -115,6 +115,7 @@ void wrap_spacegroup()
         .def("GetNbSymmetrics", &SpaceGroup::GetNbSymmetrics,
                  (bp::arg("noCenter")=false, 
                  bp::arg("noTransl")=false))
+        .def("GetInversionCenter", &SpaceGroup::GetInversionCenter)
         .def("Print", &SpaceGroup::Print)
         .def("HasInversionCenter", &SpaceGroup::HasInversionCenter)
         .def("IsInversionCenterAtOrigin", 
