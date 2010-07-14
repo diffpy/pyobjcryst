@@ -17,6 +17,7 @@
 * Changes from ObjCryst::Quaternion
 * - IO is not wrapped
 * - Q0, Q1, Q2 and Q3 are wrapped as properties, rather than functions.
+* - RotateVector overloaded to return tuple of the mutated arguments.
 *
 * $Id$
 *
@@ -74,6 +75,15 @@ void setQ3(Quaternion& q, double val)
     q.Q3() = val;
 }
 
+// Overloaded to return a tuple
+bp::tuple _RotateVector( const Quaternion& q, double v1, double v2, double v3 )
+{
+
+    q.RotateVector(v1, v2, v3);
+    return bp::make_tuple(v1, v2, v3);
+
+}
+
 } // namespace
 
 void wrap_quaternion()
@@ -86,7 +96,9 @@ void wrap_quaternion()
             ))
             )
         .def("GetConjugate", &Quaternion::GetConjugate)
-        .def("RotateVector", &Quaternion::RotateVector,
+        //.def("RotateVector", &Quaternion::RotateVector,
+        //    (bp::arg("v1"), bp::arg("v2"), bp::arg("v3")))
+        .def("RotateVector", &_RotateVector,
             (bp::arg("v1"), bp::arg("v2"), bp::arg("v3")))
         .def("Normalize", &Quaternion::Normalize)
         .def("GetNorm", &Quaternion::GetNorm)
