@@ -43,7 +43,8 @@
 * - FindAtom is identical to GetAtom.
 * - FlipAtomGroup is not wrapped.
 * - FlipGroup, RotorGroup and StretchModeGroup are not wrapped.
-* - StretchMode getters are not wrapped
+* - StretchMode getters are not wrapped.
+* - Quaternion ordinates Q0, Q1, Q2 and Q3 wrapped as properties.
 *
 * $Id$
 *
