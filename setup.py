@@ -10,13 +10,49 @@ import glob
 from numpy.distutils.misc_util import get_numpy_include_dirs
 include_dirs = get_numpy_include_dirs()
 
-# Compiler args
+
+# Figure out which boost library to use. This doesn't appear to consult
+# LD_LIBRARY_PATH.
+def get_boost_libraries():
+    """Check for installed boost_python shared library.
+
+    Returns list of required boost_python shared libraries that are installed
+    on the system. If required libraries are not found, an Exception will be
+    thrown.
+
+    """
+    baselib = "boost_python"
+    boostlibtags = ['-mt', '']
+    from ctypes.util import find_library
+    for tag in boostlibtags:
+        lib = baselib + tag
+        found = find_library(lib)
+        if found: break
+
+    # Raise Exception if we don't find anything
+    if not found:
+        raise Exception("Cannot find shared boost_library library")
+
+    libs = [lib]
+
+    # Check for version 1.35. If this is the version, then add boost_system to
+    # the list of required libraries.
+    if lib.find("1.35") >= 0:
+        found = find_library("boost_system")
+        if not found:
+            raise Exception("Cannot find shared boost_system library")
+        libs.append("boost_system")
+
+    return libs
+
 
 # Define the extension
+libraries = ["ObjCryst"]
+libraries += get_boost_libraries()
 module = Extension('pyobjcryst._pyobjcryst', 
         glob.glob("extensions/*.cpp"),
         include_dirs = include_dirs,
-        libraries = ["ObjCryst", "boost_python-mt"],
+        libraries = libraries
         )
 
 # define distribution
