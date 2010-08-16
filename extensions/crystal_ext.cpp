@@ -19,6 +19,7 @@
 * - CIFOutput has default mindist = 0, rather than 0.5
 * - CalcDynPopCorr is not enabled, as the API states that this is for internal
 *   use only.
+* - GetScatteringComponentList returns an actual list.
 *
 * Other Changes
 * - CreateCrystalFromCIF is placed here instead of in a seperate CIF module. This
@@ -277,8 +278,7 @@ void wrap_crystal()
         .def("GetMasterClockScatteringPower",
             &Crystal::GetMasterClockScatteringPower,
             return_value_policy<copy_const_reference>())
-        .def("GetScatteringComponentList", &_GetScatteringComponentList,
-            with_custodian_and_ward_postcall<1,0>())
+        .def("GetScatteringComponentList", &_GetScatteringComponentList)
         .def("GetClockScattCompList", &Crystal::GetClockScattCompList,
                 return_value_policy<copy_const_reference>())
         .def("GetMinDistanceTable", &Crystal::GetMinDistanceTable,
