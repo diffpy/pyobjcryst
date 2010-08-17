@@ -467,6 +467,39 @@ void _XMLInput(
     in.sync();
 }
 
+struct RefinableObj_pickle_suite : bp::pickle_suite
+{
+    static
+    bp::tuple
+    getstate(const RefinableObj& cryst)
+    {
+        std::ostringstream outstream;
+        cryst.XMLOutput(outstream);
+        return bp::make_tuple(outstream.str());
+    }
+
+    static
+    void
+    setstate(RefinableObj& cryst, boost::python::tuple state)
+    {
+        if (len(state) != 1)
+        {
+          PyErr_SetObject(PyExc_ValueError,
+                          ("expected 1-tuple in call to __setstate__; got %s"
+                           % state).ptr()
+              );
+          throw_error_already_set();
+        }
+        
+        string xml = extract<string>(state[0]);
+        std::istringstream instream;
+        instream.str(xml);
+        ObjCryst::XMLCrystTag tag(instream);
+        cryst.XMLInput(instream, tag);
+        return;
+    }
+
+};
 
 } // anonymous namespace
 
@@ -621,5 +654,6 @@ void wrap_refinableobj()
             &RefinableObjWrap::default_TagNewBestConfig)
         // Additional methods for python only
         .def("__str__", &__str__<RefinableObj>)
+        .def_pickle(RefinableObj_pickle_suite());
         ;
 }
