@@ -71,7 +71,7 @@ def putAtomsInMolecule(crystal, alist = None, name = None):
     molecule is placed at the center of mass of the moved atoms. 
 
     crystal --  The crystal containing the atoms.
-    idxlist --  A list of indices or names identifying the atoms. If idxlist is
+    alist   --  A list of indices or names identifying the atoms. If alist is
                 None (default), all atoms from the crystal are placed into a
                 molecule.
     name    --  A name for the molecule. If name is None (default), the name
@@ -171,4 +171,7 @@ def writexyz(crystal, filename):
     f.write(out)
     f.close()
     return
+
+def moleculeFromDiffpyStructure(crystal, stru):
+    """Create and return a molecule from a diffpy.Structure object."""
 

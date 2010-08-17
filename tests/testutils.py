@@ -13,7 +13,7 @@ testdata_dir = os.path.join(tests_dir, 'testdata')
 
 class TestPutAtomsInMolecule(unittest.TestCase):
 
-    def testPutAtomsInMolecule(self):
+    def _testPutAtomsInMolecule(self):
         """Make sure this utility method is correct."""
 
         from math import floor
