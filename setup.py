@@ -34,15 +34,6 @@ def get_boost_libraries():
         raise Exception("Cannot find shared boost_library library")
 
     libs = [lib]
-
-    # Check for version 1.35. If this is the version, then add boost_system to
-    # the list of required libraries.
-    if lib.find("1.35") >= 0:
-        found = find_library("boost_system")
-        if not found:
-            raise Exception("Cannot find shared boost_system library")
-        libs.append("boost_system")
-
     return libs
 
 
