@@ -476,17 +476,17 @@ struct RefinableObj_pickle_suite : bp::pickle_suite
 {
     static
     bp::tuple
-    getstate(const RefinableObj& cryst)
+    getstate(const RefinableObj& refobj)
     {
         std::ostringstream outstream;
         outstream.precision(doublelim.digits10);
-        cryst.XMLOutput(outstream);
+        refobj.XMLOutput(outstream);
         return bp::make_tuple(outstream.str());
     }
 
     static
     void
-    setstate(RefinableObj& cryst, boost::python::tuple state)
+    setstate(RefinableObj& refobj, boost::python::tuple state)
     {
         if (len(state) != 1)
         {
@@ -497,11 +497,16 @@ struct RefinableObj_pickle_suite : bp::pickle_suite
           throw_error_already_set();
         }
         
-        string xml = extract<string>(state[0]);
+        std::string xml = extract<string>(state[0]);
+        if( xml.size() == 0 )
+        {
+          PyErr_SetString(PyExc_ValueError, "bad pickle");
+          throw_error_already_set();
+        }
         std::istringstream instream;
         instream.str(xml);
         ObjCryst::XMLCrystTag tag(instream);
-        cryst.XMLInput(instream, tag);
+        refobj.XMLInput(instream, tag);
         return;
     }
 
