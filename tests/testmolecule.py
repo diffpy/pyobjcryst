@@ -411,11 +411,10 @@ class TestMolecule(unittest.TestCase):
         self.assertAlmostEquals(m.Y, m2.Y, 15)
         self.assertAlmostEquals(m.Z, m2.Z, 15)
 
-        # why only precision of 5?
         for a, a2 in zip(m, m2):
-            self.assertAlmostEquals(a.X, a2.X, 5)
-            self.assertAlmostEquals(a.Y, a2.Y, 5)
-            self.assertAlmostEquals(a.Z, a2.Z, 5)
+            self.assertAlmostEquals(a.X, a2.X, 15)
+            self.assertAlmostEquals(a.Y, a2.Y, 15)
+            self.assertAlmostEquals(a.Z, a2.Z, 15)
 
         return
 
