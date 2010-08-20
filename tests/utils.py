@@ -106,9 +106,9 @@ def makeC60():
     m = Molecule(c, "c60")
 
     c.AddScatterer(m)
-
     sp = ScatteringPowerAtom("C", "C")
     sp.SetBiso(8*pi*pi*0.003)
+    c.AddScatteringPower(sp)
 
     for i, l in enumerate(c60xyz.strip().splitlines()):
         x, y, z = map(float, l.split())

@@ -397,6 +397,28 @@ class TestMolecule(unittest.TestCase):
 
         return
 
+    def testPickling(self):
+        """Test pickling of a crystal."""
+        m = self.m
+
+        import pickle
+        p = pickle.dumps(m)
+        m2 = pickle.loads(p)
+
+        self.assertEquals(m.GetNbComponent(), m2.GetNbComponent())
+
+        self.assertAlmostEquals(m.X, m2.X, 15)
+        self.assertAlmostEquals(m.Y, m2.Y, 15)
+        self.assertAlmostEquals(m.Z, m2.Z, 15)
+
+        # why only precision of 5?
+        for a, a2 in zip(m, m2):
+            self.assertAlmostEquals(a.X, a2.X, 5)
+            self.assertAlmostEquals(a.Y, a2.Y, 5)
+            self.assertAlmostEquals(a.Z, a2.Z, 5)
+
+        return
+
 
 # Test how changing a name to one that is already taken messes things up.
 
@@ -814,6 +836,7 @@ class TestStretchModeTorsion(unittest.TestCase):
         print >> t, self.c
 
         return
+
 
 # End class TestStretchTorsion
 

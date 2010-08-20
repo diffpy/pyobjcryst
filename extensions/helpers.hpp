@@ -26,10 +26,13 @@
 #include <set>
 #include <sstream>
 #include <iostream>
+#include <limits>
 
 #include <boost/python.hpp>
 
 namespace bp = boost::python;
+
+typedef std::numeric_limits<double> doublelim;
 
 // Switch stdout with another stream. To get things back the right way, just
 // switch again with the same stream.

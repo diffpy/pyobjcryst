@@ -94,4 +94,27 @@ from _pyobjcryst import StretchModeBondAngle
 from _pyobjcryst import StretchModeTorsion
 from _pyobjcryst import StretchModeTwist
         
+# Make Molecule objects pickleable
+class _Construct(object):
+    def __call__(self, name, pstr):
+        import cPickle as pickle
+        cryst = pickle.loads(pstr)
+        mol = cryst.GetScatt(name)
+        return mol
+
+_construct = _Construct()
+
+def _reduce(mol):
+    """Reduce a molecule for pickling."""
+    import cPickle as pickle
+    cryst = mol.GetCrystal()
+    pstr = pickle.dumps(cryst)
+    name = mol.GetName()
+
+    return (_construct, (name, pstr))
+
+import copy_reg
+copy_reg.constructor(_construct)
+copy_reg.pickle(Molecule, _reduce)
+
 __id__ = "$Id$"

@@ -36,7 +36,6 @@
 #include <string>
 #include <map>
 #include <iostream>
-#include <limits>
 
 #include <boost/utility.hpp>
 #include <boost/python.hpp>
@@ -57,8 +56,6 @@ using namespace ObjCryst;
 
 namespace {
 
-// Used a couple of places below
-numeric_limits<double> doublelim;
 
 // Workaround to SetDeleteRefParInDestructor(0) when a parameter is added
 
@@ -457,7 +454,7 @@ void _XMLOutput(
         int indent = 0)
 {
     boost_adaptbx::file_conversion::ostream os(&output);
-    os.precision(doublelim.digits10);
+    os.precision(doublelim::digits10);
     r.XMLOutput(os, indent);
     os.flush();
 }
@@ -479,7 +476,7 @@ struct RefinableObj_pickle_suite : bp::pickle_suite
     getstate(const RefinableObj& refobj)
     {
         std::ostringstream outstream;
-        outstream.precision(doublelim.digits10);
+        outstream.precision(doublelim::digits10);
         refobj.XMLOutput(outstream);
         return bp::make_tuple(outstream.str());
     }
@@ -497,7 +494,7 @@ struct RefinableObj_pickle_suite : bp::pickle_suite
           throw_error_already_set();
         }
         
-        std::string xml = extract<string>(state[0]);
+        std::string xml = extract<std::string>(state[0]);
         if( xml.size() == 0 )
         {
           PyErr_SetString(PyExc_ValueError, "bad pickle");

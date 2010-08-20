@@ -47,7 +47,6 @@ class TestCrystal(unittest.TestCase):
         self.assertRaises(ValueError, c.RemoveScatteringPower, None)
         return
 
-
     def testRemoveFunctions(self):
         """Test the RemoveScatterer and RemoveScatteringPower method."""
         sp, atom = makeScatterer()
@@ -130,6 +129,34 @@ class TestCrystal(unittest.TestCase):
 
         del l1
 
+        return
+
+    def testPickling(self):
+        """Test pickling of a crystal."""
+        c = makeCrystal(*makeScatterer())
+
+        import pickle
+        p = pickle.dumps(c)
+        c2 = pickle.loads(p)
+
+        self.assertAlmostEquals(c.a, c2.a, 15)
+        self.assertAlmostEquals(c.b, c2.b, 15)
+        self.assertAlmostEquals(c.c, c2.c, 15)
+        self.assertAlmostEquals(c.alpha, c2.alpha, 15)
+        self.assertAlmostEquals(c.beta, c2.beta, 15)
+        self.assertAlmostEquals(c.gamma, c2.gamma, 15)
+
+        self.assertEquals(c.GetNbScatterer(), c2.GetNbScatterer())
+
+        s = c.GetScatterer("Ni")
+        s2 = c2.GetScatterer("Ni")
+        self.assertAlmostEquals(s.X, s2.X, 15)
+        self.assertAlmostEquals(s.Y, s2.Y, 15)
+        self.assertAlmostEquals(s.Z, s2.Z, 15)
+
+        sp = c.GetScatteringPower("Ni")
+        sp2 = c2.GetScatteringPower("Ni")
+        self.assertAlmostEquals(sp.Biso, sp2.Biso, 15)
         return
 
 
