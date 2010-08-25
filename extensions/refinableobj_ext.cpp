@@ -473,8 +473,25 @@ struct RefinableObj_pickle_suite : bp::pickle_suite
 {
     static
     bp::tuple
-    getstate(const RefinableObj& refobj)
+    getstate(RefinableObj& refobj)
     {
+        // FIXME - To make sure that all parameters get transferred properly,
+        // we must set them as not limited. 
+        for(long i=0; i < refobj.GetNbPar(); ++i)
+        {
+            refobj.GetPar(i).SetIsLimited(0);
+        }
+        typedef ObjRegistry<RefinableObj> RefObjReg;
+        RefObjReg& refobjreg = refobj.GetSubObjRegistry();
+        for(long j=0; j < refobjreg.GetNb(); ++j)
+        {
+            RefinableObj& ro = refobjreg.GetObj(j);
+            for(long i=0; i < ro.GetNbPar(); ++i)
+            {
+                ro.GetPar(i).SetIsLimited(0);
+            }
+        }
+
         std::ostringstream outstream;
         outstream.precision(doublelim::digits10);
         refobj.XMLOutput(outstream);

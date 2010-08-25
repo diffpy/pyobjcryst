@@ -16,8 +16,6 @@
 *
 * Changes from ObjCryst::ObjRegistry
 * - DeleteAll not wrapped
-* - GetObj(const unsigned int i) not wrapped. Documentation says that this is
-*   for internal use only.
 * - C++ methods that can return const or non-const objects return non-const
 *   objects in python.
 *
@@ -60,9 +58,9 @@ wrapClass(class_<ObjRegistry<T> > & c)
     .def("DeRegisterAll", &ObjRegistry<T>::DeRegisterAll)
     // Dangerous and not wrapped
     //.def("DeleteAll", &ObjRegistry<T>::DeleteAll)
-    //.def("GetObj", (T& (ObjRegistry<T>::*)(const unsigned int)) 
-    //    &ObjRegistry<T>::GetObj,
-    //    return_internal_reference<>())
+    .def("GetObj", (T& (ObjRegistry<T>::*)(const unsigned int)) 
+        &ObjRegistry<T>::GetObj,
+        return_internal_reference<>())
     .def("GetObj", 
         (T& (ObjRegistry<T>::*)(const string&)) &ObjRegistry<T>::GetObj,
         return_internal_reference<>())
