@@ -397,28 +397,6 @@ class TestMolecule(unittest.TestCase):
 
         return
 
-    def testPickling(self):
-        """Test pickling of a crystal."""
-        m = self.m
-
-        import pickle
-        p = pickle.dumps(m)
-        m2 = pickle.loads(p)
-
-        self.assertEquals(m.GetNbComponent(), m2.GetNbComponent())
-
-        self.assertAlmostEquals(m.X, m2.X, 15)
-        self.assertAlmostEquals(m.Y, m2.Y, 15)
-        self.assertAlmostEquals(m.Z, m2.Z, 15)
-
-        for a, a2 in zip(m, m2):
-            self.assertAlmostEquals(a.X, a2.X, 15)
-            self.assertAlmostEquals(a.Y, a2.Y, 15)
-            self.assertAlmostEquals(a.Z, a2.Z, 15)
-
-        return
-
-
 # Test how changing a name to one that is already taken messes things up.
 
 class TestMolAtom(unittest.TestCase):

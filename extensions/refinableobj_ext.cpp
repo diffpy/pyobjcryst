@@ -469,63 +469,6 @@ void _XMLInput(
     in.sync();
 }
 
-struct RefinableObj_pickle_suite : bp::pickle_suite
-{
-    static
-    bp::tuple
-    getstate(RefinableObj& refobj)
-    {
-        // FIXME - To make sure that all parameters get transferred properly,
-        // we must set them as not limited. 
-        for(long i=0; i < refobj.GetNbPar(); ++i)
-        {
-            refobj.GetPar(i).SetIsLimited(0);
-        }
-        typedef ObjRegistry<RefinableObj> RefObjReg;
-        RefObjReg& refobjreg = refobj.GetSubObjRegistry();
-        for(long j=0; j < refobjreg.GetNb(); ++j)
-        {
-            RefinableObj& ro = refobjreg.GetObj(j);
-            for(long i=0; i < ro.GetNbPar(); ++i)
-            {
-                ro.GetPar(i).SetIsLimited(0);
-            }
-        }
-
-        std::ostringstream outstream;
-        outstream.precision(doublelim::digits10);
-        refobj.XMLOutput(outstream);
-        return bp::make_tuple(outstream.str());
-    }
-
-    static
-    void
-    setstate(RefinableObj& refobj, boost::python::tuple state)
-    {
-        if (len(state) != 1)
-        {
-          PyErr_SetObject(PyExc_ValueError,
-                          ("expected 1-tuple in call to __setstate__; got %s"
-                           % state).ptr()
-              );
-          throw_error_already_set();
-        }
-        
-        std::string xml = extract<std::string>(state[0]);
-        if( xml.size() == 0 )
-        {
-          PyErr_SetString(PyExc_ValueError, "bad pickle");
-          throw_error_already_set();
-        }
-        std::istringstream instream;
-        instream.str(xml);
-        ObjCryst::XMLCrystTag tag(instream);
-        refobj.XMLInput(instream, tag);
-        return;
-    }
-
-};
-
 } // anonymous namespace
 
 
@@ -679,6 +622,5 @@ void wrap_refinableobj()
             &RefinableObjWrap::default_TagNewBestConfig)
         // Additional methods for python only
         .def("__str__", &__str__<RefinableObj>)
-        .def_pickle(RefinableObj_pickle_suite());
         ;
 }
