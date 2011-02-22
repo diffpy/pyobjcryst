@@ -3,7 +3,7 @@
 
 import unittest
 
-from utils import *
+from pyobjcrysttestutils import *
 
 from pyobjcryst.atom import Atom
 
@@ -131,6 +131,6 @@ class TestCrystal(unittest.TestCase):
 
         return
 
+
 if __name__ == "__main__":
     unittest.main()
-

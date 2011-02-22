@@ -7,7 +7,7 @@ from pyobjcryst.molecule import *
 from pyobjcryst import ObjCrystException
 from pyobjcryst.refinableobj import RefParType, RefinablePar
 
-from utils import *
+from pyobjcrysttestutils import *
 from numpy import pi
 
 numplaces = 6
@@ -819,5 +819,3 @@ class TestStretchModeTorsion(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-

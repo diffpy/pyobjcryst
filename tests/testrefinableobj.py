@@ -7,7 +7,7 @@ from pyobjcryst import ObjCrystException
 import unittest
 import numpy
 
-from utils import makeScatterer, makeCrystal
+from pyobjcrysttestutils import makeScatterer, makeCrystal
 
 class TestRefinableObjClock(unittest.TestCase):
 
@@ -409,6 +409,4 @@ class TestRefinableObj(unittest.TestCase):
 
 
 if __name__ == "__main__":
-
     unittest.main()
-

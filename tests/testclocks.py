@@ -3,7 +3,7 @@
 
 import unittest
 
-from utils import *
+from pyobjcrysttestutils import makeC60
 
 from pyobjcryst.refinableobj import RefinableObjClock
 
@@ -43,6 +43,6 @@ class TestClocks(unittest.TestCase):
         ref.Click()
         self.assertFalse( mclock > ref )
 
+
 if __name__ == "__main__":
     unittest.main()
-

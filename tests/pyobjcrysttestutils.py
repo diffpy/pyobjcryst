@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """Utilities for tests."""
 
+import os
 from pyobjcryst.atom import Atom
 from pyobjcryst.molecule import Molecule
 from pyobjcryst.polyhedron import MakeOctahedron
@@ -8,6 +9,11 @@ from pyobjcryst.crystal import Crystal
 from pyobjcryst.scatteringpower import ScatteringPowerAtom
 
 from numpy import pi
+
+# path variables
+thisfile = locals().get('__file__', 'file.py')
+tests_dir = os.path.dirname(os.path.abspath(thisfile))
+testdata_dir = os.path.join(tests_dir, 'testdata')
 
 def makeScatterer():
     sp = ScatteringPowerAtom("Ni", "Ni")
@@ -187,3 +193,15 @@ def toxyz(crystal, filename):
     f.close()
 
     return
+
+
+def datafile(filename):
+    rv = os.path.join(testdata_dir, filename)
+    return rv
+
+
+def loadcifdata(filename):
+    from pyobjcryst.crystal import CreateCrystalFromCIF
+    fullpath = datafile(filename)
+    crst = CreateCrystalFromCIF(open(fullpath))
+    return crst
