@@ -1,0 +1,42 @@
+import sys
+import os
+from distutils.core import Distribution
+from distutils.command.build import build
+
+Import('env')
+
+# configure the boost_python library, which may have different extensions
+if not (GetOption('clean') or env.GetOption('help')):
+    SConscript('SConscript.configure')
+
+# python extension module
+module = env.SharedLibrary('_pyobjcryst', Glob('*.cpp'), SHLIBPREFIX='')
+Alias('module', module)
+
+# install in a development mode
+develop = Alias('develop', Install('#/pyobjcryst', module))
+
+test = env.Alias('test', develop, 'alltests.py tests')
+AlwaysBuild(test)
+
+# normal install - trick distutils into using this module.
+bcmd = build(Distribution())
+bcmd.finalize_options()
+distmodfile = os.path.join(bcmd.build_platlib,
+    'pyobjcryst', os.path.basename(str(module[0])))
+cmd_build_ext = sys.executable + ' setup.py build_ext'
+cmd_install = sys.executable + ' setup.py install' + (
+        'prefix' in env and (' --prefix=' + env['prefix']) or '')
+install = env.Alias('install', module, [
+    Mkdir(os.path.dirname(distmodfile)),
+    Touch(distmodfile),
+    cmd_build_ext,
+    Copy(distmodfile, '$SOURCE'),
+    cmd_install,
+    ])
+AlwaysBuild(install)
+
+# default targets:
+Default(module)
+
+# vim: ft=python
