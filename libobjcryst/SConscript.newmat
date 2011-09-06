@@ -25,3 +25,5 @@ Clean(objects, "newmat")
 
 # Put this back into the global environment
 env["newmatobjs"] = objects
+
+# vim: ft=python

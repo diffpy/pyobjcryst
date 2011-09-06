@@ -33,6 +33,8 @@ vars.Add(EnumVariable('build',
 vars.Add(BoolVariable('profile',
     'build with profiling information', False))
 vars.Add('REAL', 'floating point type', 'double')
+vars.Add(BoolVariable('with_shared_cctbx',
+    'compile and link with the shared cctbx library', None))
 vars.Add(PathVariable('prefix',
     'installation prefix directory', '/usr/local'))
 vars.Update(env)

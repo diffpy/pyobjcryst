@@ -51,7 +51,7 @@ cctbxobjs = env["cctbxobjs"]
 objcrystobjs = env["objcrystobjs"]
 
 # This builds the shared library
-libobjcryst = env.SharedLibrary("libObjCryst", 
+libobjcryst = env.SharedLibrary("libObjCryst",
         objcrystobjs + cctbxobjs + newmatobjs)
 Alias('lib', libobjcryst)
 

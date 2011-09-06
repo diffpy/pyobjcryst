@@ -1,23 +1,44 @@
 Import('env')
 
-# Define the what we need to install cctbx
-cctbxenv = env.Clone()
+# Determine if we should use shared installation of cctbx
+if 'with_shared_cctbx' in env:
+    has_shared_cctbx = env['with_shared_cctbx']
+else:
+    conf = Configure(env)
+    has_shared_cctbx = conf.CheckLibWithHeader('cctbx', '''
+        cctbx/sgtbx/space_group.h
+        cctbx/miller/sym_equiv.h
+        cctbx/miller/index_generator.h
+        cctbx/eltbx/wavelengths.h
+        cctbx/eltbx/xray_scattering.h
+        cctbx/eltbx/tiny_pse.h
+        cctbx/eltbx/icsd_radii.h
+        cctbx/eltbx/henke.h
+        cctbx/eltbx/neutron.h
+        cctbx/sgtbx/brick.h
+        '''.split(), language='C++', autoadd=False)
+    env = conf.Finish()
 
-# Source path
-cctbxenv.PrependUnique(CPPPATH = ["./cctbx/include"])
+# setup cctbx according to has_shared_cctbx flag
+if has_shared_cctbx:
+    env.AppendUnique(LIBS='cctbx')
+else:
+    # statically link in the included cctbx sources
+    # Define the what we need for the cctbx
+    cctbxenv = env.Clone()
+    # Source path
+    cctbxenv.PrependUnique(CPPPATH = ["./cctbx/include"])
+    # Idenfity the required source files
+    srcfiles  = Glob("./cctbx/cctbx/eltbx/*.cpp")
+    srcfiles += Glob("./cctbx/cctbx/eltbx/xray_scattering/*.cpp")
+    srcfiles += Glob("./cctbx/cctbx/sgtbx/*.cpp")
+    srcfiles += Glob("./cctbx/cctbx/sgtbx/reference_settings/*.cpp")
+    srcfiles += Glob("./cctbx/cctbx/miller/*.cpp")
+    srcfiles += Glob("./cctbx/cctbx/uctbx/*.cpp")
+    # Make the library object
+    objects = cctbxenv.SharedObject(srcfiles)
+    Clean(objects, "cctbx")
+    # Put this back into the global environment
+    env["cctbxobjs"] = objects
 
-# Idenfity the required source files
-srcfiles  = Glob("./cctbx/cctbx/eltbx/*.cpp")
-srcfiles += Glob("./cctbx/cctbx/eltbx/xray_scattering/*.cpp")
-srcfiles += Glob("./cctbx/cctbx/sgtbx/*.cpp")
-srcfiles += Glob("./cctbx/cctbx/sgtbx/reference_settings/*.cpp")
-srcfiles += Glob("./cctbx/cctbx/miller/*.cpp")
-srcfiles += Glob("./cctbx/cctbx/uctbx/*.cpp")
-
-# Make the library object
-objects = cctbxenv.SharedObject(srcfiles)
-Clean(objects, "cctbx")
-
-# Put this back into the global environment
-env["cctbxobjs"] = objects
-
+# vim: ft=python
