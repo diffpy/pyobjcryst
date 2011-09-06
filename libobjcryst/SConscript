@@ -26,6 +26,7 @@ if env['build'] == 'debug':
 elif env['build'] == 'fast':
     env.AppendUnique(CCFLAGS=['-O3'] + fast_optimflags)
     env.AppendUnique(CPPDEFINES=['NDEBUG'])
+    env.AppendUnique(LINKFLAGS='-s')
 
 if env['profile']:
     env.AppendUnique(CCFLAGS='-pg')
@@ -55,6 +56,7 @@ libobjcryst = env.SharedLibrary("libObjCryst",
 Alias('lib', libobjcryst)
 
 # Installation targets.
+
 prefix = env['prefix']
 
 # install-lib
@@ -75,3 +77,5 @@ Alias('install-include', InstallAs(include_targets, env['lib_includes']))
 
 # install
 Alias('install', ['install-include', 'install-lib'])
+
+# vim: ft=python
