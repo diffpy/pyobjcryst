@@ -5,6 +5,10 @@ from distutils.command.build import build
 
 Import('env')
 
+# make sure numpy headers are available
+from numpy.distutils.misc_util import get_numpy_include_dirs
+env.AppendUnique(CPPPATH=get_numpy_include_dirs())
+
 # configure the boost_python library, which may have different extensions
 if not (GetOption('clean') or env.GetOption('help')):
     SConscript('SConscript.configure')
