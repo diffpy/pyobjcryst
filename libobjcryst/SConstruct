@@ -13,8 +13,8 @@ def subdictionary(d, keyset):
 # copy system environment variables related to compilation
 DefaultEnvironment(ENV=subdictionary(os.environ, [
     'PATH', 'PYTHONPATH',
-    'CPATH', 'CPLUS_INCLUDE_PATH',
-    'LD_LIBRARY_PATH', 'LIBRARY_PATH',
+    'CPATH', 'CPLUS_INCLUDE_PATH', 'LIBRARY_PATH',
+    'LD_LIBRARY_PATH', 'DYLD_LIBRARY_PATH',
     ])
 )
 

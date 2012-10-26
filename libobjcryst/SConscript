@@ -61,7 +61,11 @@ prefix = env['prefix']
 
 # install-lib
 libdir = env.get('libdir', os.path.join(prefix, 'lib'))
-Alias('install-lib', Install(libdir, libobjcryst))
+libinstall = Install(libdir, libobjcryst)
+if env['PLATFORM'] == 'darwin':
+    env.AddPostAction(libinstall,
+            'install_name_tool -id $TARGET.abspath $TARGET')
+Alias('install-lib', libinstall)
 
 # install-includes
 includedir = env.get('includedir', os.path.join(env['prefix'], 'include'))
