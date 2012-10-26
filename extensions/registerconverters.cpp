@@ -278,9 +278,6 @@ CrystMatrix<double> getTestMatrix()
 
 } // namespace
 
-// We want silent exceptions
-bool ObjCrystException::verbose = false;
-
 // From cctbx. Used to convert python file-type objects to c++ streams.  
 // See python_file_buffer.hpp for copyright.
 namespace boost_adaptbx { namespace file_conversion {
@@ -344,6 +341,9 @@ void wrap_registerconverters()
 
     /* Exceptions */
     register_exception_translator<ObjCrystException>(translateException);
+    // We want silent exceptions
+    ObjCrystException::verbose = false;
+
 
     // Put ObjCrystException in module namespace
     scope().attr("ObjCrystException") = 
