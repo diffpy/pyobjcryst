@@ -6,6 +6,7 @@
 # install-lib       -- install shared library object
 
 import os
+import platform
 
 def subdictionary(d, keyset):
     return dict([kv for kv in d.items() if kv[0] in keyset])
@@ -49,7 +50,7 @@ vars.Add(PathVariable('includedir',
 vars.Update(env)
 env.Help(vars.GenerateHelpText(env))
 
-builddir = env.Dir('build/' + env['build'])
+builddir = env.Dir('build/%s-%s' % (env['build'], platform.machine()))
 
 Export('env')
 
