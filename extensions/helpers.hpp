@@ -97,7 +97,7 @@ bp::list ptrcontainerToPyList(T& v)
 
     for(typename T::const_iterator it = v.begin(); it != v.end(); ++it)
     {
-        l.append(ptr(*it));
+        l.append(bp::ptr(*it));
     }
     return l;
 }
