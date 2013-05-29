@@ -65,6 +65,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <sstream>
 #include <set>
 #include <map>
 #include <algorithm>
@@ -519,45 +520,84 @@ bp::list _AsZMatrix(const Molecule& m, const bool keeporder)
     return l;
 }
 
+std::string quatparname(const Molecule& m, int idx)
+{
+    using namespace std;
+    static bool didseparator = false;
+    static bool prefixmolname = false;
+    static string separator;
+    if (!didseparator)
+    {
+        map<string,int> qnames;
+        for (long i = 0; i < m.GetNbPar(); ++i)
+        {
+            const string& pname = m.GetPar(i).GetName();
+            size_t n = pname.size();
+            if (n < 2)  continue;
+            if (pname[n - 2] != 'Q')  continue;
+            if (pname.find_last_of("0123", n - 1) == string::npos)  continue;
+            qnames[pname.substr(0, n - 2)] += 1;
+        }
+        map<string,int>::iterator qni;
+        const string& mname = m.GetName();
+        for (qni = qnames.begin(); qni != qnames.end(); ++qni)
+        {
+            if (qni->second == 4)
+            {
+                const string& qnm = qni->first;
+                prefixmolname = (qnm.size() >= mname.size() &&
+                        qnm.substr(0, mname.size()) == mname);
+                size_t p0 = prefixmolname ? mname.size() : 0;
+                separator = qnm.substr(p0);
+                didseparator = true;
+            }
+        }
+    }
+    ostringstream rv;
+    rv << (prefixmolname ? m.GetName() : "") << separator << 'Q' << idx;
+    return rv.str();
+}
+
+
 // Setters and getters for position
 void _setQ0(Molecule& m, double val)
 {
-    m.GetPar(m.GetName()+"Q0").SetValue(val);
+    m.GetPar(quatparname(m, 0)).SetValue(val);
 }
 
 double _getQ0(Molecule& m)
 {
-    return m.GetPar(m.GetName()+"Q0").GetValue();
+    return m.GetPar(quatparname(m, 0)).GetValue();
 }
 
 void _setQ1(Molecule& m, double val)
 {
-    m.GetPar(m.GetName()+"Q1").SetValue(val);
+    m.GetPar(quatparname(m, 1)).SetValue(val);
 }
 
 double _getQ1(Molecule& m)
 {
-    return m.GetPar(m.GetName()+"Q1").GetValue();
+    return m.GetPar(quatparname(m, 1)).GetValue();
 }
 
 void _setQ2(Molecule& m, double val)
 {
-    m.GetPar(m.GetName()+"Q2").SetValue(val);
+    m.GetPar(quatparname(m, 2)).SetValue(val);
 }
 
 double _getQ2(Molecule& m)
 {
-    return m.GetPar(m.GetName()+"Q2").GetValue();
+    return m.GetPar(quatparname(m, 2)).GetValue();
 }
 
 void _setQ3(Molecule& m, double val)
 {
-    m.GetPar(m.GetName()+"Q3").SetValue(val);
+    m.GetPar(quatparname(m, 3)).SetValue(val);
 }
 
 double _getQ3(Molecule& m)
 {
-    return m.GetPar(m.GetName()+"Q3").GetValue();
+    return m.GetPar(quatparname(m, 3)).GetValue();
 }
 
 
