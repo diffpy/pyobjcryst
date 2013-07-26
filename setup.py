@@ -22,7 +22,7 @@ def get_boost_libraries():
 
     """
     baselib = "boost_python"
-    boostlibtags = ['-mt', '']
+    boostlibtags = ['', '-mt']
     from ctypes.util import find_library
     for tag in boostlibtags:
         lib = baselib + tag
@@ -40,7 +40,7 @@ def get_boost_libraries():
 # Define the extension
 libraries = ["ObjCryst"]
 libraries += get_boost_libraries()
-module = Extension('pyobjcryst._pyobjcryst', 
+module = Extension('pyobjcryst._pyobjcryst',
         glob.glob("extensions/*.cpp"),
         include_dirs = include_dirs,
         libraries = libraries

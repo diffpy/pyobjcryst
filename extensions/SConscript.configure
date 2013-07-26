@@ -2,7 +2,7 @@ Import('env')
 
 # Helper functions -----------------------------------------------------------
 
-boostlibtags = ['-mt', '']
+boostlibtags = ['', '-mt']
 def configure_boost_library(libname):
     '''Add a boost library to the configured environment allowing for any
     of the boostlibtags name extensions.
