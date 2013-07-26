@@ -38,6 +38,10 @@ vars.Add(BoolVariable('profile',
 vars.Update(env)
 env.Help(vars.GenerateHelpText(env))
 
+# Insert LIBRARY_PATH explicitly because some compilers
+# ignore it in the system environemnt.
+env.PrependUnique(LIBPATH=env['ENV'].get('LIBRARY_PATH', '').split(':'))
+
 # Use Intel C++ compiler when it is available
 icpc = env.WhereIs('icpc')
 if icpc:
