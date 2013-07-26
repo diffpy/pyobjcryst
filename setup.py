@@ -59,7 +59,7 @@ dist =  setup(
         # What we're installing
         packages = ['pyobjcryst'],
         ext_modules = [module],
-        zip_safe = True,
+        zip_safe = False,
 
 )
 
