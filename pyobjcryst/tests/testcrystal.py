@@ -3,7 +3,7 @@
 
 import unittest
 
-from pyobjcrysttestutils import *
+from pyobjcryst.tests.pyobjcrysttestutils import *
 
 from pyobjcryst.atom import Atom
 

@@ -5,7 +5,7 @@ import unittest
 
 from pyobjcryst.crystal import CreateCrystalFromCIF
 from numpy import pi
-from pyobjcrysttestutils import loadcifdata, datafile
+from pyobjcryst.tests.pyobjcrysttestutils import loadcifdata, datafile
 
 
 class TestCif(unittest.TestCase):

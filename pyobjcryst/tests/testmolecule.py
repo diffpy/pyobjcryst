@@ -7,7 +7,7 @@ from pyobjcryst.molecule import *
 from pyobjcryst import ObjCrystException
 from pyobjcryst.refinableobj import RefParType, RefinablePar
 
-from pyobjcrysttestutils import *
+from pyobjcryst.tests.pyobjcrysttestutils import *
 from numpy import pi
 
 numplaces = 6

@@ -3,7 +3,7 @@
 
 import unittest
 
-from pyobjcrysttestutils import makeC60
+from pyobjcryst.tests.pyobjcrysttestutils import makeC60
 
 from pyobjcryst.refinableobj import RefinableObjClock
 
