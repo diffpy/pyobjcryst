@@ -14,7 +14,8 @@ if not (GetOption('clean') or env.GetOption('help')):
     SConscript('SConscript.configure')
 
 # python extension module
-module = env.SharedLibrary('_pyobjcryst', Glob('*.cpp'), SHLIBPREFIX='')
+module = env.SharedLibrary('_pyobjcryst', Glob('*.cpp'),
+        SHLIBPREFIX='', SHLIBSUFFIX='.so')
 Alias('module', module)
 
 # install in a development mode
