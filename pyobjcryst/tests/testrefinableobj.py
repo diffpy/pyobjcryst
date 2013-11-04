@@ -13,7 +13,7 @@ class TestRefinableObjClock(unittest.TestCase):
 
     def testRelations(self):
         """Test clicking!
-        
+
         Chances are that someone will someday read this code for an example on
         how to use clocks. If not, then I've wasted my time writing this.
         Anyway, clocks are more complex then they appear. This is because
@@ -50,7 +50,7 @@ class TestRefinableObjClock(unittest.TestCase):
         self.assertTrue( parent > c1 )
         self.assertTrue( parent > c2 )
         self.assertTrue( c1 > c2 )
-        
+
         # Clicking parent leaves the children
         ref.SetEqual(c1)
         parent.Click()

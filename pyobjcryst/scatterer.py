@@ -29,4 +29,4 @@ Changes from ObjCryst::Scatterer
 
 """
 
-from _pyobjcryst import Scatterer 
+from _pyobjcryst import Scatterer

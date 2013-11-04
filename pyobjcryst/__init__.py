@@ -15,7 +15,7 @@
 
 """Python wrapping of ObjCryst++.
 
-Objects are wrapped according to their header file in the ObjCryst source. 
+Objects are wrapped according to their header file in the ObjCryst source.
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 

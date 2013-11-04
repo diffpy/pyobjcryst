@@ -47,7 +47,7 @@ def testCrystalScope():
     print atom
     print repr(atom.GetCrystal())
     return
-    
+
 def testMultiAdd():
     """Test exception for multi-crystal additions."""
     sp, atom = makeScatterer()

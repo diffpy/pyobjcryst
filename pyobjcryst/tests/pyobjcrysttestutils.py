@@ -179,7 +179,7 @@ def toxyz(crystal, filename):
     f.write("\n\n")
 
     import numpy
-    
+
     uc = numpy.array(
             crystal.FractionalToOrthonormalCoords(1, 1, 1))
 

@@ -20,7 +20,7 @@ class TestCrystal(unittest.TestCase):
         self.assertEqual("Ni", sp.GetName())
         self.assertEqual("Ni", atom.GetName())
         return
-    
+
     def testScattererScope(self):
         """Test when atoms go out of scope before crystal."""
         c = makeCrystal(*makeScatterer())

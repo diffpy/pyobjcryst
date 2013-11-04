@@ -67,7 +67,7 @@ def putAtomsInMolecule(crystal, alist = None, name = None):
 
     Selected atoms are put into a new Molecule object, which is then placed
     inside of the Crystal. The atoms are then removed from the crystal. The
-    molecule is placed at the center of mass of the moved atoms. 
+    molecule is placed at the center of mass of the moved atoms.
 
     crystal --  The crystal containing the atoms.
     alist   --  A list of indices or names identifying the atoms. If alist is

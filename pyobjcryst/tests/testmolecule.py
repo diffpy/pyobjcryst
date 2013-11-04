@@ -67,7 +67,7 @@ class TestMolecule(unittest.TestCase):
 
         This tests AddAtom by association.
         This tests GetAtom.
-        
+
         """
         self.assertTrue(60, self.m.GetNbAtoms())
         for i in range(60):
@@ -189,7 +189,7 @@ class TestMolecule(unittest.TestCase):
         self.assertEquals(0, self.m.GetNbBonds())
 
         return
-    
+
     def testBondAngles(self):
         """Test the BondAngle accessors."""
         a1 = self.m.GetAtom(0)
@@ -261,7 +261,7 @@ class TestMolecule(unittest.TestCase):
         self.m.RemoveAtom(a)
         self.assertEquals(0, self.m.GetNbBondAngles())
         return
-    
+
     def testDihedralAngles(self):
         """Test the FindDihedralAngle method."""
         a1 = self.m.GetAtom(0)
@@ -329,7 +329,7 @@ class TestMolecule(unittest.TestCase):
         # Try to remove that atom
         self.m.RemoveAtom(a)
         self.assertEquals(0, self.m.GetNbDihedralAngles())
-    
+
         return
 
     def testRigidGroup(self):
@@ -342,7 +342,7 @@ class TestMolecule(unittest.TestCase):
         rgl = self.m.GetRigidGroupList()
         self.assertEquals(1, len(rgl))
         self.assertEquals(60, len(rgl[0]))
-        
+
         # We would like to check to see if the atoms are the same, but the
         # rigid group is a set, not a list.
 
@@ -431,12 +431,12 @@ class TestMolAtom(unittest.TestCase):
         a.y = 0.68
         a.z = 0.1
         a.occ = 1.02
-        
+
         self.assertAlmostEquals(3.40, a.x, numplaces)
         self.assertAlmostEquals(0.68, a.y, numplaces)
         self.assertAlmostEquals(0.1, a.z, numplaces)
         self.assertAlmostEquals(1.02, a.occ, numplaces)
-        
+
         # Test GetMolecule. We can't expect the python object to be the same as
         # our molecule above. However, we can verify that it points to the same
         # object.
