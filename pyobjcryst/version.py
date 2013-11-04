@@ -13,7 +13,7 @@
 #
 ##############################################################################
 
-"""Definition of __version__ and __date__ for pyobjcryst.
+"""Definition of __version__, __date__, __gitsha__ for pyobjcryst.
 """
 
 # obtain version information
@@ -24,5 +24,7 @@ __version__ = get_distribution('pyobjcryst').version
 __date__ = __version__[-8:-4] + '-' + \
            __version__[-4:-2] + '-' + __version__[-2:]
 
+# GIT SHA hash is the second last component in the version string
+__gitsha__ = __version__.rsplit('-', 2)[-2][1:]
 
 # End of file
