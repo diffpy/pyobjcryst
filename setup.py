@@ -2,8 +2,6 @@
 
 from setuptools import setup, find_packages
 from setuptools import Extension
-import fix_setuptools_chmod
-import sys
 import glob
 
 # Include directories
@@ -19,7 +17,6 @@ def get_boost_libraries():
     Returns list of required boost_python shared libraries that are installed
     on the system. If required libraries are not found, an Exception will be
     thrown.
-
     """
     baselib = "boost_python"
     boostlibtags = ['', '-mt']
@@ -60,7 +57,6 @@ dist =  setup(
         packages = ['pyobjcryst'],
         ext_modules = [module],
         zip_safe = False,
-
 )
 
 # End of file

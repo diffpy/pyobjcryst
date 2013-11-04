@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -14,9 +15,6 @@
 
 """Definition of __version__ and __date__ for pyobjcryst.
 """
-
-# module version
-__id__ = "$Id$"
 
 # obtain version information
 from pkg_resources import get_distribution

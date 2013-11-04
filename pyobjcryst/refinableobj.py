@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -70,5 +71,3 @@ from _pyobjcryst import Restraint
 from _pyobjcryst import ScattererRegistry
 from _pyobjcryst import ScatteringPowerRegistry
 from _pyobjcryst import ZAtomRegistry
-
-__id__ = "$Id$"

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -30,5 +31,3 @@ Other Changes
 from _pyobjcryst import Crystal
 from _pyobjcryst import BumpMergePar
 from _pyobjcryst import CreateCrystalFromCIF
-
-__id__ = "$Id$"

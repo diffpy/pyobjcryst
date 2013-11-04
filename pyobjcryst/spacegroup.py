@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -20,5 +21,3 @@ See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 from _pyobjcryst import SpaceGroup
 from _pyobjcryst import AsymmetricUnit
-
-__id__ = "$Id$"

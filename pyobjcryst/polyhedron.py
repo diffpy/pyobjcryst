@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -26,5 +27,3 @@ from _pyobjcryst import MakeAntiPrismTetragonal
 from _pyobjcryst import MakePrismTrigonal
 from _pyobjcryst import MakeIcosahedron
 from _pyobjcryst import MakeTriangle
-
-__id__ = "$Id$"

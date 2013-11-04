@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -93,5 +94,3 @@ from _pyobjcryst import StretchModeBondLength
 from _pyobjcryst import StretchModeBondAngle
 from _pyobjcryst import StretchModeTorsion
 from _pyobjcryst import StretchModeTwist
-        
-__id__ = "$Id$"

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -29,5 +30,3 @@ from _pyobjcryst import ZAtom
 from _pyobjcryst import ZPolyhedron
 from _pyobjcryst import RegularPolyhedraType
 from _pyobjcryst import GlobalScatteringPower
-
-__id__ = "$Id$"

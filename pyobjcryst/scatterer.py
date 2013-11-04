@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -29,5 +30,3 @@ Changes from ObjCryst::Scatterer
 """
 
 from _pyobjcryst import Scatterer 
-
-__id__ = "$Id$"

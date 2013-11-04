@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -28,5 +29,3 @@ from _pyobjcryst import ScatteringPower
 from _pyobjcryst import ScatteringComponent 
 from _pyobjcryst import ScatteringPowerAtom
 from _pyobjcryst import ScatteringComponentList
-
-__id__ = "$Id$"

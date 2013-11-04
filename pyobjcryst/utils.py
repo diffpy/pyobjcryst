@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -12,8 +13,6 @@
 #
 ##############################################################################
 """Utilities for crystals."""
-
-__id__ = "$Id$"
 
 def crystalToDiffpyStructure(crystal):
     """Create a diffpy.Structure.Structure from a crystal.

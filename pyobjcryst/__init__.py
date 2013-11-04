@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -88,5 +89,3 @@ import zscatterer
 import io
 
 from version import __version__
-
-__id__ = "$Id$"

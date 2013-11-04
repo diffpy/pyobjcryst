@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -22,5 +23,3 @@ Changes from ObjCryst::XMLCrystTag
 """
 
 from _pyobjcryst import XMLCrystTag
-        
-__id__ = "$Id$"

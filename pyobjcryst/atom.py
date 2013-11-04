@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##############################################################################
 #
 # PyObjCryst        by DANSE Diffraction group
@@ -23,5 +24,3 @@ Changes from ObjCryst::Atom
 """
 
 from _pyobjcryst import Atom
-
-__id__ = "$Id$"
