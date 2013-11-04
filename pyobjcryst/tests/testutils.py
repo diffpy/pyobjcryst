@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 """Tests for crystal module."""
 
+import os
 import unittest
 
 from pyobjcryst.crystal import CreateCrystalFromCIF
 from pyobjcryst.utils import putAtomsInMolecule
 
-import os
-thisfile = locals().get('__file__', 'file.py')
-tests_dir = os.path.dirname(os.path.abspath(thisfile))
-testdata_dir = os.path.join(tests_dir, 'testdata')
 
 class TestPutAtomsInMolecule(unittest.TestCase):
 
@@ -18,9 +15,11 @@ class TestPutAtomsInMolecule(unittest.TestCase):
 
         from math import floor
         f = lambda v: v - floor(v)
-
         import glob
-        for fname in glob.glob("%s/*.cif"%testdata_dir):
+        from pyobjcryst.tests.pyobjcrysttestutils import datafile
+        pat = os.path.join(datafile(''), '*.cif')
+
+        for fname in glob.glob(pat):
             print fname
 
             c = CreateCrystalFromCIF(file(fname))

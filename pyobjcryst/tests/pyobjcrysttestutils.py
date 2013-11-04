@@ -10,11 +10,6 @@ from pyobjcryst.scatteringpower import ScatteringPowerAtom
 
 from numpy import pi
 
-# path variables
-thisfile = locals().get('__file__', 'file.py')
-tests_dir = os.path.dirname(os.path.abspath(thisfile))
-testdata_dir = os.path.join(tests_dir, 'testdata')
-
 def makeScatterer():
     sp = ScatteringPowerAtom("Ni", "Ni")
     sp.SetBiso(8*pi*pi*0.003)
@@ -196,7 +191,8 @@ def toxyz(crystal, filename):
 
 
 def datafile(filename):
-    rv = os.path.join(testdata_dir, filename)
+    from pkg_resources import resource_filename
+    rv = resource_filename(__name__, "testdata/" + filename)
     return rv
 
 
