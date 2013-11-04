@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from setuptools import setup, find_packages
+from setuptools import setup
 from setuptools import Extension
 import glob
 
@@ -82,7 +82,9 @@ dist =  setup(
         url = "http://www.diffpy.org/",
 
         # What we're installing
-        packages = ['pyobjcryst'],
+        packages = ['pyobjcryst', 'pyobjcryst.tests'],
+        test_suite = 'pyobjcryst.tests',
+        include_package_data = True,
         ext_modules = [module],
         zip_safe = False,
 )
