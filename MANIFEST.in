@@ -1,0 +1,6 @@
+recursive-include pyobjcryst *
+recursive-include extensions *
+include SConstruct
+include AUTHORS.txt LICENSE.txt README.txt
+exclude MANIFEST.in
+exclude pyobjcryst/_pyobjcryst.so
