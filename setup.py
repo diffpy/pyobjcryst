@@ -4,6 +4,10 @@ from setuptools import setup
 from setuptools import Extension
 import glob
 
+# versioncfgfile holds version data for git commit hash and date.
+# It must reside in the same directory as version.py.
+versioncfgfile = 'pyobjcryst/version.cfg'
+
 # Include directories
 from numpy.distutils.misc_util import get_numpy_include_dirs
 include_dirs = get_numpy_include_dirs()
@@ -43,33 +47,35 @@ module = Extension('pyobjcryst._pyobjcryst',
         libraries = libraries
         )
 
-def gitversion():
+
+def gitinfo():
     from subprocess import Popen, PIPE
     proc = Popen(['git', 'describe'], stdout=PIPE)
-    desc = proc.stdout.read().strip()
-    proc = Popen(['git', 'log', '-1', '--format=%ai'], stdout=PIPE)
-    isodate = proc.stdout.read()
-    date = isodate.split()[0].replace('-', '')
-    rv = desc + '-' + date
+    desc = proc.stdout.read()
+    proc = Popen(['git', 'log', '-1', '--format=%H %ai'], stdout=PIPE)
+    glog = proc.stdout.read()
+    rv = {}
+    rv['version'] = '-'.join(desc.strip().split('-')[:2])
+    rv['commit'], rv['date'] = glog.strip().split(None, 1)
     return rv
 
 
-def getsetupcfg():
-    cfgfile = 'setup.cfg'
+def getversioncfg():
     import os
     from ConfigParser import SafeConfigParser
     cp = SafeConfigParser()
-    cp.read(cfgfile)
+    cp.read(versioncfgfile)
     if not os.path.isdir('.git'):  return cp
     d = cp.defaults()
-    vcfg = d.get('version', '')
-    vgit = gitversion()
-    if vgit != vcfg:
-        cp.set('DEFAULT', 'version', vgit)
-        cp.write(open(cfgfile, 'w'))
+    g = gitinfo()
+    if g['commit'] != d.get('commit'):
+        cp.set('DEFAULT', 'version', g['version'])
+        cp.set('DEFAULT', 'commit', g['commit'])
+        cp.set('DEFAULT', 'date', g['date'])
+        cp.write(open(versioncfgfile, 'w'))
     return cp
 
-cp = getsetupcfg()
+cp = getversioncfg()
 
 # define distribution
 dist =  setup(
