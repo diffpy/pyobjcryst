@@ -21,7 +21,8 @@ Alias('module', module)
 # install in a development mode
 develop = Alias('develop', Install('#/pyobjcryst', module))
 
-test = env.Alias('test', develop, 'alltests.py tests')
+test = env.Alias('test', develop,
+        sys.executable + ' -m pyobjcryst.tests.run')
 AlwaysBuild(test)
 
 # normal install - trick distutils into using this module.
