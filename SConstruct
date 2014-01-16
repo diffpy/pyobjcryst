@@ -59,6 +59,12 @@ env.Replace(CPPDEFINES='')
 # Note: ObjCryst and boost_python are added from SConscript.configure
 env.ParseConfig("python-config --ldflags")
 
+fast_linkflags = ['-s']
+
+# Platform specific intricacies.
+if env['PLATFORM'] == 'darwin':
+    fast_linkflags[:] = []
+
 # Compiler specific options
 if icpc:
     # options for Intel C++ compiler on hpc dev-intel07
@@ -76,7 +82,7 @@ if env['build'] == 'debug':
 elif env['build'] == 'fast':
     env.AppendUnique(CCFLAGS=['-O3'] + fast_optimflags)
     env.AppendUnique(CPPDEFINES='NDEBUG')
-    env.AppendUnique(LINKFLAGS='-s')
+    env.AppendUnique(LINKFLAGS=fast_linkflags)
 
 if env['profile']:
     env.AppendUnique(CCFLAGS='-pg')
