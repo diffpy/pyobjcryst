@@ -38,7 +38,7 @@ using namespace ObjCryst;
 void wrap_globalscatteringpower()
 {
 
-    class_<GlobalScatteringPower, bases<ScatteringPower> > ("GlobalScatteringPower", 
+    class_<GlobalScatteringPower, bases<ScatteringPower> > ("GlobalScatteringPower",
         init<>())
         .def(init<const ZScatterer &>())
         .def(init<const GlobalScatteringPower&>())

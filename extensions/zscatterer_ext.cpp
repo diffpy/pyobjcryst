@@ -12,7 +12,7 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::ZScatterer. 
+* boost::python bindings to ObjCryst::ZScatterer.
 *
 * Changes from ObjCryst++
 * - XMLOutput and Input are not wrapped.
@@ -44,7 +44,7 @@ using namespace ObjCryst;
 void wrap_zscatterer()
 {
 
-    class_<ZScatterer, bases<Scatterer> > 
+    class_<ZScatterer, bases<Scatterer> >
         ("ZScatterer", init<const ZScatterer&>((bp::arg("old"))))
         /* Constructors */
         .def(init<const string&, Crystal&, double, double, double, double, double,

@@ -12,8 +12,8 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::MolBondAngle.  
-* 
+* boost::python bindings to ObjCryst::MolBondAngle.
+*
 * Changes from ObjCryst::MolBondAngle
 * - Wrapped as a to-python converter only (no constructor)
 * - Added __getitem__ access for MolAtoms.
@@ -72,16 +72,16 @@ void wrap_molbondangle()
 {
 
     class_<MolBondAngle, bases<Restraint> > ("MolBondAngle", no_init)
-        .def("GetMolecule", (Molecule& (MolBondAngle::*)()) 
-            &MolBondAngle::GetMolecule, 
+        .def("GetMolecule", (Molecule& (MolBondAngle::*)())
+            &MolBondAngle::GetMolecule,
             return_internal_reference<>())
         .def("GetName", &MolBondAngle::GetName)
-        .def("GetLogLikelihood", 
-            (double (MolBondAngle::*)() const) 
-            &MolBondAngle::GetLogLikelihood) 
-        .def("GetLogLikelihood", 
-            (double (MolBondAngle::*)(const bool, const bool) const) 
-            &MolBondAngle::GetLogLikelihood) 
+        .def("GetLogLikelihood",
+            (double (MolBondAngle::*)() const)
+            &MolBondAngle::GetLogLikelihood)
+        .def("GetLogLikelihood",
+            (double (MolBondAngle::*)(const bool, const bool) const)
+            &MolBondAngle::GetLogLikelihood)
         .def("GetAngle", &MolBondAngle::GetAngle)
         .def("GetAngle0", &MolBondAngle::GetAngle0)
         .def("GetAngleDelta", &MolBondAngle::GetAngleDelta)

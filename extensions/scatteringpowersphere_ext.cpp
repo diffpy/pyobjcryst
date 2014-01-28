@@ -37,7 +37,7 @@ using namespace ObjCryst;
 void wrap_scatteringpowersphere()
 {
 
-    class_<ScatteringPowerSphere, bases<ScatteringPower> > 
+    class_<ScatteringPowerSphere, bases<ScatteringPower> >
         ("ScatteringPowerSphere", init<>())
         .def(init<const std::string&, const double, optional<const double> >())
         .def("Init", &ScatteringPowerSphere::Init,

@@ -41,7 +41,7 @@ void wrap_io()
 
     class_<XMLCrystTag>
         ("XMLCrystTag", init<const std::string&, const bool, const bool>
-         ((bp::arg("tagName"), 
+         ((bp::arg("tagName"),
            bp::arg("isEndTag")=false,
            bp::arg("isEmptyTag")=false)))
         .def("GetName", &XMLCrystTag::GetName,

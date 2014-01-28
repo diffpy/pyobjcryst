@@ -12,8 +12,8 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::Quaternion.  
-* 
+* boost::python bindings to ObjCryst::Quaternion.
+*
 * Changes from ObjCryst::Quaternion
 * - IO is not wrapped
 * - Q0, Q1, Q2 and Q3 are wrapped as properties, rather than functions.

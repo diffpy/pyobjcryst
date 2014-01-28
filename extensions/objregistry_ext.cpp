@@ -50,22 +50,22 @@ wrapClass(class_<ObjRegistry<T> > & c)
 {
     /* Functions */
     c.def("Register", &ObjRegistry<T>::Register)
-    .def("DeRegister", (void (ObjRegistry<T>::*)(T&)) 
+    .def("DeRegister", (void (ObjRegistry<T>::*)(T&))
         &ObjRegistry<T>::DeRegister)
-    .def("DeRegister", 
-        (void (ObjRegistry<T>::*)(const string&)) 
+    .def("DeRegister",
+        (void (ObjRegistry<T>::*)(const string&))
         &ObjRegistry<T>::DeRegister)
     .def("DeRegisterAll", &ObjRegistry<T>::DeRegisterAll)
     // Dangerous and not wrapped
     //.def("DeleteAll", &ObjRegistry<T>::DeleteAll)
-    .def("GetObj", (T& (ObjRegistry<T>::*)(const unsigned int)) 
+    .def("GetObj", (T& (ObjRegistry<T>::*)(const unsigned int))
         &ObjRegistry<T>::GetObj,
         return_internal_reference<>())
-    .def("GetObj", 
+    .def("GetObj",
         (T& (ObjRegistry<T>::*)(const string&)) &ObjRegistry<T>::GetObj,
         return_internal_reference<>())
-    .def("GetObj", 
-        (T& (ObjRegistry<T>::*)(const string&, const string&)) 
+    .def("GetObj",
+        (T& (ObjRegistry<T>::*)(const string&, const string&))
         &ObjRegistry<T>::GetObj,
         return_internal_reference<>())
     .def("GetNb", &ObjRegistry<T>::GetNb)
@@ -73,13 +73,13 @@ wrapClass(class_<ObjRegistry<T> > & c)
     .def("SetName", &ObjRegistry<T>::SetName)
     .def("GetName", &ObjRegistry<T>::GetName,
         return_value_policy<copy_const_reference>())
-    .def("Find", (long (ObjRegistry<T>::*)(const string&) const) 
+    .def("Find", (long (ObjRegistry<T>::*)(const string&) const)
         &ObjRegistry<T>::Find)
-    .def("Find", 
+    .def("Find",
         (long (ObjRegistry<T>::*)
-        (const string&, const string&, const bool) const) 
+        (const string&, const string&, const bool) const)
         &ObjRegistry<T>::Find)
-    .def("Find", (long (ObjRegistry<T>::*)(const T&) const) 
+    .def("Find", (long (ObjRegistry<T>::*)(const T&) const)
         &ObjRegistry<T>::Find)
     .def("GetRegistryClock", &ObjRegistry<T>::GetRegistryClock,
         return_value_policy<copy_const_reference>())
@@ -96,25 +96,25 @@ void wrap_objregistry()
 
     // ObjRegistry<RefinableObj>
     class_< ObjRegistry<RefinableObj> >
-        RefinableObjRegistry("RefinableObjRegistry", 
+        RefinableObjRegistry("RefinableObjRegistry",
         init<const string&>());
     wrapClass<RefinableObj>(RefinableObjRegistry);
 
     // ObjRegistry<Scatterer>
     class_< ObjRegistry<Scatterer> >
-        ScattererRegistry("ScattererRegistry", 
+        ScattererRegistry("ScattererRegistry",
         init<const string&>());
     wrapClass<Scatterer>(ScattererRegistry);
 
     // ObjRegistry<ScatteringPower>
     class_< ObjRegistry<ScatteringPower> >
-        ScatteringPowerRegistry("ScatteringPowerRegistry", 
+        ScatteringPowerRegistry("ScatteringPowerRegistry",
         init<const string&>());
     wrapClass<ScatteringPower>(ScatteringPowerRegistry);
 
     // ObjRegistry<ZAtom>
     class_< ObjRegistry<ZAtom> >
-        ZAtomRegistry("ZAtomRegistry", 
+        ZAtomRegistry("ZAtomRegistry",
         init<const string&>());
     wrapClass<ZAtom>(ZAtomRegistry);
 }

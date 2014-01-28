@@ -33,11 +33,11 @@ using namespace ObjCryst;
 
 namespace {
 
-class RefObjOptWrap : public RefObjOpt, 
+class RefObjOptWrap : public RefObjOpt,
                  public wrapper<RefObjOpt>
 {
 
-    public: 
+    public:
 
     void default_SetChoice(const int choice)
     {
@@ -46,8 +46,8 @@ class RefObjOptWrap : public RefObjOpt,
 
     void SetChoice(const int choice)
     {
-        if (override SetChoice = 
-                this->get_override("SetChoice")) 
+        if (override SetChoice =
+                this->get_override("SetChoice"))
             SetChoice(choice);
         default_SetChoice(choice);
     }

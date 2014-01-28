@@ -41,7 +41,7 @@ void wrap_asymmetricunit()
         .def(init<const SpaceGroup&>((bp::arg("spg"))))
         // Methods
         .def("SetSpaceGroup", &AsymmetricUnit::SetSpaceGroup, (bp::arg("spg")))
-        .def("IsInAsymmetricUnit", &AsymmetricUnit::IsInAsymmetricUnit, 
+        .def("IsInAsymmetricUnit", &AsymmetricUnit::IsInAsymmetricUnit,
             (bp::arg("x"), bp::arg("y"), bp::arg("z")))
         .def("Xmin", &AsymmetricUnit::Xmin)
         .def("Xmax", &AsymmetricUnit::Xmax)

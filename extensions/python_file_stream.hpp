@@ -64,7 +64,7 @@ derivative works thereof, in binary and source code form.
 ******************************************************************************/
 
 /******************************************************************************
-CHANGELOG: 
+CHANGELOG:
 2009-07-07 - CLF Added license notice
 2009-07-07 - CLF Changed file extension to hpp
 2009-07-07 - Removed buffer_size, to be defined within the wrapper.

@@ -12,7 +12,7 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::Polyhedron module.  
+* boost::python bindings to ObjCryst::Polyhedron module.
 *
 * $Id$
 *

@@ -59,8 +59,8 @@ void wrap_scatteringcomponent()
         .def_readonly("mDynPopCorr", &ScatteringComponent::mDynPopCorr)
         // Workaround to give attribute access. Again, returning the object,
         // where it should be read-only.
-        .add_property("mpScattPow", 
-            make_function( &_getScatteringPower, 
+        .add_property("mpScattPow",
+            make_function( &_getScatteringPower,
             return_internal_reference<>()))
         .def("__str__", &__str__<ScatteringComponent>)
         ;

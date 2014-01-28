@@ -50,22 +50,22 @@ using namespace boost::python;
 
 namespace {
 
-class ScattererWrap : public Scatterer, 
+class ScattererWrap : public Scatterer,
                       public wrapper<Scatterer>
 {
 
-    public: 
+    public:
 
     ScattererWrap() : Scatterer() {}
 
     ScattererWrap(const ScattererWrap& S) : Scatterer(S) {}
 
-    void default_SetX(const double x) 
+    void default_SetX(const double x)
     { this->Scatterer::SetX(x);}
 
     void SetX(const double x)
     {
-        if (override SetX = this->get_override("SetX")) 
+        if (override SetX = this->get_override("SetX"))
         {
             SetX(x);
             return;
@@ -73,12 +73,12 @@ class ScattererWrap : public Scatterer,
         default_SetX(x);
     }
 
-    void default_SetY(const double y) 
+    void default_SetY(const double y)
     { this->Scatterer::SetY(y);}
 
     void SetY(const double y)
     {
-        if (override SetY = this->get_override("SetY")) 
+        if (override SetY = this->get_override("SetY"))
         {
             SetY(y);
             return;
@@ -86,12 +86,12 @@ class ScattererWrap : public Scatterer,
         default_SetY(y);
     }
 
-    void default_SetZ(const double z) 
+    void default_SetZ(const double z)
     { this->Scatterer::SetZ(z);}
 
     void SetZ(const double z)
     {
-        if (override SetZ = this->get_override("SetZ")) 
+        if (override SetZ = this->get_override("SetZ"))
         {
             SetZ(z);
             return;
@@ -99,12 +99,12 @@ class ScattererWrap : public Scatterer,
         default_SetZ(z);
     }
 
-    void default_SetOccupancy(const double occ) 
+    void default_SetOccupancy(const double occ)
     { this->Scatterer::SetOccupancy(occ);}
 
     void SetOccupancy(const double occ)
     {
-        if (override SetOccupancy = this->get_override("SetOccupancy")) 
+        if (override SetOccupancy = this->get_override("SetOccupancy"))
         {
             SetOccupancy(occ);
             return;
@@ -113,7 +113,7 @@ class ScattererWrap : public Scatterer,
     }
 
     // Pure virtual
-    
+
     Scatterer* CreateCopy() const
     {
 #ifdef _MSC_VER
@@ -158,7 +158,7 @@ class ScattererWrap : public Scatterer,
         this->get_override("Print")();
     }
 
-    std::ostream& POVRayDescription(std::ostream& os, 
+    std::ostream& POVRayDescription(std::ostream& os,
             const CrystalPOVRayOptions& options) const
     {
 #ifdef _MSC_VER
@@ -224,21 +224,21 @@ void wrap_scatterer()
         .def("SetX", &Scatterer::SetX, &ScattererWrap::default_SetX)
         .def("SetY", &Scatterer::SetY, &ScattererWrap::default_SetY)
         .def("SetZ", &Scatterer::SetZ, &ScattererWrap::default_SetZ)
-        .def("SetOccupancy", &ObjCryst::Scatterer::SetOccupancy, 
+        .def("SetOccupancy", &ObjCryst::Scatterer::SetOccupancy,
             &ScattererWrap::default_SetOccupancy)
-        .def("GetClockScatterer", 
+        .def("GetClockScatterer",
             (RefinableObjClock & (Scatterer::*)())
             &Scatterer::GetClockScatterer,
             return_internal_reference<>())
         .def("SetCrystal", &Scatterer::SetCrystal,
             with_custodian_and_ward<1,2>())
-        .def("GetCrystal", (Crystal &(Scatterer::*)()) 
+        .def("GetCrystal", (Crystal &(Scatterer::*)())
             &Scatterer::GetCrystal,
             return_internal_reference<>())
         // pure virtual methods
         .def("GetNbComponent", pure_virtual(&Scatterer::GetNbComponent))
         .def("GetComponentName", pure_virtual(&Scatterer::GetComponentName))
-        //.def("GetScatteringComponentList", 
+        //.def("GetScatteringComponentList",
         //    pure_virtual(&Scatterer::GetScatteringComponentList),
         //    return_value_policy<copy_const_reference>())
         .def("GetScatteringComponentList", &_GetScatteringComponentList,
@@ -246,7 +246,7 @@ void wrap_scatterer()
         .def("Print", pure_virtual(&Scatterer::Print))
         .def("__str__", &__str__<Scatterer>)
         // protected methods
-        .def("GetClockScattCompList", 
+        .def("GetClockScattCompList",
             &ScattererWrap::_GetClockScattCompList,
             return_value_policy<copy_const_reference>())
         // Properties - to be compatible with MolAtom

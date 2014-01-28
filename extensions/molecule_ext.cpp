@@ -12,10 +12,10 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::Molecule.  
+* boost::python bindings to ObjCryst::Molecule.
 *
 * Note that all indices are zero-based.
-* 
+*
 * Changes from ObjCryst::Molecule
 * - The public data are not wrapped.
 * - Added __getitem__ access for MolAtoms.
@@ -127,31 +127,31 @@ size_t _GetNbAtoms(Molecule& m)
 {
     std::vector<MolAtom*>& v = m.GetAtomList();
     return v.size();
-} 
+}
 
 size_t _GetNbBonds(Molecule& m)
 {
     std::vector<MolBond*>& v = m.GetBondList();
     return v.size();
-} 
+}
 
 size_t _GetNbBondAngles(Molecule& m)
 {
     std::vector<MolBondAngle*>& v = m.GetBondAngleList();
     return v.size();
-} 
+}
 
 size_t _GetNbDihedralAngles(Molecule& m)
 {
     std::vector<MolDihedralAngle*>& v = m.GetDihedralAngleList();
     return v.size();
-} 
+}
 
 size_t _GetNbRigidGroups(Molecule& m)
 {
     std::vector<RigidGroup*>& v = m.GetRigidGroupList();
     return v.size();
-} 
+}
 
 // Overloaded for safety
 MolAtom& _GetAtomIdx(Molecule& m, int idx)
@@ -164,7 +164,7 @@ MolAtom& _GetAtomIdx(Molecule& m, int idx)
         throw_error_already_set();
     }
     return *v[idx];
-} 
+}
 
 MolBond& _GetBondIdx(Molecule& m, int idx)
 {
@@ -176,7 +176,7 @@ MolBond& _GetBondIdx(Molecule& m, int idx)
         throw_error_already_set();
     }
     return *v[idx];
-} 
+}
 
 MolBondAngle& _GetBondAngleIdx(Molecule& m, int idx)
 {
@@ -188,7 +188,7 @@ MolBondAngle& _GetBondAngleIdx(Molecule& m, int idx)
         throw_error_already_set();
     }
     return *v[idx];
-} 
+}
 
 MolDihedralAngle& _GetDihedralAngleIdx(Molecule& m, int idx)
 {
@@ -200,18 +200,18 @@ MolDihedralAngle& _GetDihedralAngleIdx(Molecule& m, int idx)
         throw_error_already_set();
     }
     return *v[idx];
-} 
+}
 
 // Overloaded for void return type and index access.
 void _RemoveAtom(Molecule& m, MolAtom& ma)
 {
     m.RemoveAtom(ma, false);
-} 
+}
 
 void _RemoveAtomIdx(Molecule& m, int idx)
 {
     m.RemoveAtom(_GetAtomIdx(m, idx), false);
-} 
+}
 
 void _RemoveBond(Molecule& m, const MolBond& mb)
 {
@@ -294,7 +294,7 @@ PyObject* _FindBond(const Molecule& m, const MolAtom& ma1, const MolAtom& ma2)
     {
         reference_existing_object::apply<MolBond*>::type converter;
         retval = converter(*mbi);
-        
+
     }
     bp::incref(retval);
     return retval;
@@ -321,12 +321,12 @@ PyObject* _FindBondAngle(const Molecule& m, const MolAtom& ma1, const MolAtom&
     return retval;
 }
 
-PyObject* _FindDihedralAngle(const Molecule& m, const MolAtom& ma1, 
+PyObject* _FindDihedralAngle(const Molecule& m, const MolAtom& ma1,
     const MolAtom& ma2, const MolAtom& ma3, const MolAtom& ma4)
 {
     std::vector<MolDihedralAngle*>::const_iterator mdai;
     mdai = m.FindDihedralAngle(ma1, ma2, ma3, ma4);
-    const std::vector<MolDihedralAngle*>& dihedralanglelist 
+    const std::vector<MolDihedralAngle*>& dihedralanglelist
         = m.GetDihedralAngleList();
     PyObject *retval;
     if(dihedralanglelist.end() == mdai)
@@ -491,7 +491,7 @@ void _TranslateAtomGroup(Molecule &m, const bp::object& atoms, const double dx,
 bp::dict _GetConnectivityTable(Molecule &m)
 {
 
-    const std::map<MolAtom*, std::set<MolAtom*> >& ct 
+    const std::map<MolAtom*, std::set<MolAtom*> >& ct
         = m.GetConnectivityTable();
 
     std::map<MolAtom*, std::set<MolAtom*> >::const_iterator miter;
@@ -607,7 +607,7 @@ double _getQ3(Molecule& m)
 void wrap_molecule()
 {
 
-    class_<Molecule, bases<Scatterer> > ("Molecule", 
+    class_<Molecule, bases<Scatterer> > ("Molecule",
         init<const Molecule&>((bp::arg("oldMolecule"))))
         /* Constructors */
         .def(init<Crystal&, const std::string&>(
@@ -623,35 +623,35 @@ void wrap_molecule()
             (bp::arg("atom1"), bp::arg("atom2"), bp::arg("length"),
              bp::arg("sigma"), bp::arg("delta"), bp::arg("bondOrder")=1,
              bp::arg("updateDisplay")=true),
-            with_custodian_and_ward<1,2, 
-            with_custodian_and_ward<1,3, 
+            with_custodian_and_ward<1,2,
+            with_custodian_and_ward<1,3,
             return_internal_reference<> > >())
         .def("RemoveBond", &_RemoveBond)
         .def("RemoveBond", &_RemoveBondIdx)
         .def("GetBond", &_GetBondIdx, return_internal_reference<>())
-        .def("FindBond", &_FindBond, 
+        .def("FindBond", &_FindBond,
             with_custodian_and_ward_postcall<1,0>())
-        .def("AddBondAngle", &_AddBondAngle, 
+        .def("AddBondAngle", &_AddBondAngle,
             (bp::arg("atom1"), bp::arg("atom2"), bp::arg("atom3"),
              bp::arg("angle"), bp::arg("sigma"), bp::arg("delta"),
              bp::arg("updateDisplay")=true),
-            with_custodian_and_ward<1,2, 
-            with_custodian_and_ward<1,3, 
-            with_custodian_and_ward<1,4, 
+            with_custodian_and_ward<1,2,
+            with_custodian_and_ward<1,3,
+            with_custodian_and_ward<1,4,
             return_internal_reference<> > > >())
         .def("RemoveBondAngle", &_RemoveBondAngle)
         .def("RemoveBondAngle", &_RemoveBondAngleIdx)
         .def("GetBondAngle", &_GetBondAngleIdx, return_internal_reference<>())
         .def("FindBondAngle", &_FindBondAngle,
             with_custodian_and_ward_postcall<1,0>())
-        .def("AddDihedralAngle", &_AddDihedralAngle, 
+        .def("AddDihedralAngle", &_AddDihedralAngle,
             (bp::arg("atom1"), bp::arg("atom2"), bp::arg("atom3"),
              bp::arg("atom4"), bp::arg("angle"), bp::arg("sigma"),
              bp::arg("delta"), bp::arg("updateDisplay")=true),
-            with_custodian_and_ward<1,2, 
-            with_custodian_and_ward<1,3, 
-            with_custodian_and_ward<1,4, 
-            with_custodian_and_ward<1,5, 
+            with_custodian_and_ward<1,2,
+            with_custodian_and_ward<1,3,
+            with_custodian_and_ward<1,4,
+            with_custodian_and_ward<1,5,
             return_internal_reference<> > > > >())
         .def("RemoveDihedralAngle", &_RemoveDihedralAngle)
         .def("RemoveDihedralAngle", &_RemoveDihedralAngleIdx)
@@ -659,7 +659,7 @@ void wrap_molecule()
             return_internal_reference<>())
         .def("FindDihedralAngle", &_FindDihedralAngle,
             with_custodian_and_ward_postcall<1,0>())
-        .def("AddRigidGroup", &_AddRigidGroup, 
+        .def("AddRigidGroup", &_AddRigidGroup,
             (bp::arg("group"), bp::arg("updateDisplay") = true),
             return_internal_reference<>())
         .def("AddRigidGroup", &_AddRigidGroupIterable,
@@ -668,15 +668,15 @@ void wrap_molecule()
         .def("RemoveRigidGroup", &_RemoveRigidGroup,
                 (bp::arg("group"), bp::arg("updateDisplay") = true))
         .def("GetAtom", &_GetAtomIdx, return_internal_reference<>())
-        .def("GetAtom", 
-            (MolAtom& (Molecule::*)(const string&)) &Molecule::GetAtom, 
+        .def("GetAtom",
+            (MolAtom& (Molecule::*)(const string&)) &Molecule::GetAtom,
             return_internal_reference<>())
-        .def("FindAtom", 
-            (MolAtom& (Molecule::*)(const string&)) &Molecule::GetAtom, 
+        .def("FindAtom",
+            (MolAtom& (Molecule::*)(const string&)) &Molecule::GetAtom,
             return_internal_reference<>())
         .def("OptimizeConformation", &Molecule::OptimizeConformation,
             (bp::arg("nbTrial")=10000, bp::arg("stopCost")=0))
-        .def("OptimizeConformationSteepestDescent", 
+        .def("OptimizeConformationSteepestDescent",
             &Molecule::OptimizeConformationSteepestDescent,
             (bp::arg("maxStep")=0.1, bp::arg("nbSteps")=1))
         .def("GetNbAtoms", &_GetNbAtoms)
@@ -700,7 +700,7 @@ void wrap_molecule()
             with_custodian_and_ward_postcall<1,0>())
         .def("GetStretchModeTorsionList", &_GetStretchModeTorsionList,
             with_custodian_and_ward_postcall<1,0>())
-        .def("RotateAtomGroup", &_RotateAtomGroup, 
+        .def("RotateAtomGroup", &_RotateAtomGroup,
             (bp::arg("at1"), bp::arg("at2"), bp::arg("atoms"), bp::arg("angle"),
              bp::arg("keepCenter")=true
              )
@@ -720,7 +720,7 @@ void wrap_molecule()
              bp::arg("keepCenter")=true
              )
             )
-        .def("GetConnectivityTable", &_GetConnectivityTable, 
+        .def("GetConnectivityTable", &_GetConnectivityTable,
             with_custodian_and_ward_postcall<1,0>())
         .def("GetBondListClock", (RefinableObjClock& (Molecule::*)())
             &Molecule::GetBondListClock,
@@ -731,7 +731,7 @@ void wrap_molecule()
         .def("GetRigidGroupClock", (RefinableObjClock& (Molecule::*)())
             &Molecule::GetRigidGroupClock,
             return_internal_reference<>())
-        .def("RigidifyWithDihedralAngles", 
+        .def("RigidifyWithDihedralAngles",
             &Molecule::RigidifyWithDihedralAngles)
         .def("BondLengthRandomChange", &Molecule::BondLengthRandomChange,
             (bp::arg("mode"), bp::arg("amplitude"),
@@ -759,18 +759,18 @@ void wrap_molecule()
         .def("BuildRingList", &Molecule::BuildRingList)
         .def("BuildConnectivityTable", &Molecule::BuildConnectivityTable)
         .def("BuildRotorGroup", &Molecule::BuildRotorGroup)
-        .def("TuneGlobalOptimRotationAmplitude", 
+        .def("TuneGlobalOptimRotationAmplitude",
             &Molecule::TuneGlobalOptimRotationAmplitude)
         .def("BuildFlipGroup", &Molecule::BuildFlipGroup)
-        .def("BuildStretchModeBondLength", 
+        .def("BuildStretchModeBondLength",
             &Molecule::BuildStretchModeBondLength)
-        .def("BuildStretchModeBondAngle", 
+        .def("BuildStretchModeBondAngle",
             &Molecule::BuildStretchModeBondAngle)
-        .def("BuildStretchModeTorsion", 
+        .def("BuildStretchModeTorsion",
             &Molecule::BuildStretchModeTorsion)
-        .def("BuildStretchModeTwist", 
+        .def("BuildStretchModeTwist",
             &Molecule::BuildStretchModeTwist)
-        .def("BuildStretchModeGroups", 
+        .def("BuildStretchModeGroups",
             &Molecule::BuildStretchModeGroups)
         .def("UpdateScattCompList", &Molecule::UpdateScattCompList)
         .def("InitOptions", &Molecule::InitOptions)

@@ -39,7 +39,7 @@ using namespace ObjCryst;
 namespace
 {
 
-const ScatteringComponent& 
+const ScatteringComponent&
 getItem(const ScatteringComponentList &scl, long idx)
 {
     long n = scl.GetNbComponent();

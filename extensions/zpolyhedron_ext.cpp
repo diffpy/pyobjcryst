@@ -12,7 +12,7 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::ZPolyhedron. 
+* boost::python bindings to ObjCryst::ZPolyhedron.
 *
 * $Id$
 *
@@ -40,7 +40,7 @@ using namespace ObjCryst;
 void wrap_zpolyhedron()
 {
 
-    class_<ZPolyhedron, bases<ZScatterer> > 
+    class_<ZPolyhedron, bases<ZScatterer> >
         ("ZPolyhedron", init<const ZPolyhedron&>())
         /* Constructors */
         .def(init<const RegularPolyhedraType, Crystal&, double, double, double,

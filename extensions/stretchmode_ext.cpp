@@ -12,10 +12,10 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::StretchMode and its derivatives.  
+* boost::python bindings to ObjCryst::StretchMode and its derivatives.
 *
 * Note that all indices are zero-based.
-* 
+*
 * $Id$
 *
 *****************************************************************************/
@@ -45,7 +45,7 @@ namespace {
 
 typedef std::set<MolAtom*> MolAtomSet;
 
-class StretchModeWrap : public StretchMode, 
+class StretchModeWrap : public StretchMode,
                         public wrapper<StretchMode>
 {
     public:
@@ -54,7 +54,7 @@ class StretchModeWrap : public StretchMode,
     StretchModeWrap(const StretchModeWrap& sm) : StretchMode(sm) {}
 
     // Pure virtual
-    
+
     void CalcDeriv(const bool derivllk=true)
     {
         this->get_override("CalcDeriv")(derivllk);
@@ -176,7 +176,7 @@ void wrap_stretchmode()
 {
 
     class_<StretchModeWrap, boost::noncopyable> ("StretchMode", no_init )
-        .def("CalcDeriv", pure_virtual(&StretchMode::CalcDeriv), 
+        .def("CalcDeriv", pure_virtual(&StretchMode::CalcDeriv),
             (bp::arg("derivllk")=true))
         .def("Stretch", pure_virtual(&StretchMode::Stretch),
             (bp::arg("amplitude"), bp::arg("keepCenter")=true))
@@ -185,7 +185,7 @@ void wrap_stretchmode()
         ;
 
     class_<StretchModeBondLength, bases<StretchMode> >
-        ("StretchModeBondLength", 
+        ("StretchModeBondLength",
         init<MolAtom&, MolAtom&, MolBond*>
         ((bp::arg("at0"), bp::arg("at1"), bp::arg("pBond")=0))
         [with_custodian_and_ward<1,2,
@@ -200,15 +200,15 @@ void wrap_stretchmode()
         .def("GetAtoms", &_GetAtomsSMBL,
             with_custodian_and_ward_postcall<1,0>())
         .add_property("mpAtom0",
-            make_function( &_GetAtom0<StretchModeBondLength>, 
+            make_function( &_GetAtom0<StretchModeBondLength>,
             return_internal_reference<>()))
         .add_property("mpAtom1",
-            make_function( &_GetAtom1<StretchModeBondLength>, 
+            make_function( &_GetAtom1<StretchModeBondLength>,
             return_internal_reference<>()))
         ;
 
     class_<StretchModeBondAngle, bases<StretchMode> >
-        ("StretchModeBondAngle", 
+        ("StretchModeBondAngle",
         init<MolAtom&, MolAtom&, MolAtom&, MolBondAngle*>
         ((bp::arg("at0"), bp::arg("at1"), bp::arg("at2"),
           bp::arg("pBondAngle")=0))
@@ -225,18 +225,18 @@ void wrap_stretchmode()
         .def("GetAtoms", &_GetAtoms<StretchModeBondAngle>,
             with_custodian_and_ward_postcall<1,0>())
         .add_property("mpAtom0",
-            make_function( &_GetAtom0<StretchModeBondAngle>, 
+            make_function( &_GetAtom0<StretchModeBondAngle>,
             return_internal_reference<>()))
         .add_property("mpAtom1",
-            make_function( &_GetAtom1<StretchModeBondAngle>, 
+            make_function( &_GetAtom1<StretchModeBondAngle>,
             return_internal_reference<>()))
         .add_property("mpAtom2",
-            make_function( &_GetAtom2<StretchModeBondAngle>, 
+            make_function( &_GetAtom2<StretchModeBondAngle>,
             return_internal_reference<>()))
         ;
 
     class_<StretchModeTorsion, bases<StretchMode> >
-        ("StretchModeTorsion", 
+        ("StretchModeTorsion",
         init<MolAtom&, MolAtom&, MolDihedralAngle*>
         ((bp::arg("at0"), bp::arg("at1"), bp::arg("pDihedralAngle")=0))
         [with_custodian_and_ward<1,2,
@@ -251,15 +251,15 @@ void wrap_stretchmode()
         .def("GetAtoms", &_GetAtoms<StretchModeTorsion>,
             with_custodian_and_ward_postcall<1,0>())
         .add_property("mpAtom1",
-            make_function( &_GetAtom1<StretchModeTorsion>, 
+            make_function( &_GetAtom1<StretchModeTorsion>,
             return_internal_reference<>()))
         .add_property("mpAtom2",
-            make_function( &_GetAtom2<StretchModeTorsion>, 
+            make_function( &_GetAtom2<StretchModeTorsion>,
             return_internal_reference<>()))
         ;
 
     class_<StretchModeTwist, bases<StretchMode> >
-        ("StretchModeTwist", 
+        ("StretchModeTwist",
         init<MolAtom&, MolAtom&>
         ((bp::arg("at0"), bp::arg("at1")))
         [with_custodian_and_ward<1,2,
@@ -273,10 +273,10 @@ void wrap_stretchmode()
         .def("GetAtoms", &_GetAtoms<StretchModeTwist>,
             with_custodian_and_ward_postcall<1,0>())
         .add_property("mpAtom1",
-            make_function( &_GetAtom1<StretchModeTwist>, 
+            make_function( &_GetAtom1<StretchModeTwist>,
             return_internal_reference<>()))
         .add_property("mpAtom2",
-            make_function( &_GetAtom2<StretchModeTwist>, 
+            make_function( &_GetAtom2<StretchModeTwist>,
             return_internal_reference<>()))
         ;
 }

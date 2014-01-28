@@ -35,11 +35,11 @@ using namespace ObjCryst;
 
 namespace {
 
-class ScatteringPowerWrap : public ScatteringPower, 
+class ScatteringPowerWrap : public ScatteringPower,
                  public wrapper<ScatteringPower>
 {
 
-    public: 
+    public:
 
     ScatteringPowerWrap() : ScatteringPower() {}
     ScatteringPowerWrap(const ScatteringPower &S) : ScatteringPower(S) {}
@@ -52,7 +52,7 @@ class ScatteringPowerWrap : public ScatteringPower,
     {
 #ifdef _MSC_VER
         return call<CrystVector<double> >(
-                this->get_override("GetScatteringFactor").ptr(), 
+                this->get_override("GetScatteringFactor").ptr(),
                 data, spgSymPosIndex
                 );
 #else
@@ -90,7 +90,7 @@ class ScatteringPowerWrap : public ScatteringPower,
     {
 #ifdef _MSC_VER
         return call<CrystMatrix<double> >(
-                this->get_override("GetResonantScattFactReal").ptr(), 
+                this->get_override("GetResonantScattFactReal").ptr(),
                 data, spgSymPosIndex
              );
 #else
@@ -129,7 +129,7 @@ class ScatteringPowerWrap : public ScatteringPower,
 
     bool IsScatteringFactorAnisotropic() const
     {
-        if (override IsScatteringFactorAnisotropic = this->get_override("IsScatteringFactorAnisotropic")) 
+        if (override IsScatteringFactorAnisotropic = this->get_override("IsScatteringFactorAnisotropic"))
 #ifdef _MSC_VER
             return call<bool>(
                     IsScatteringFactorAnisotropic.ptr()
@@ -145,7 +145,7 @@ class ScatteringPowerWrap : public ScatteringPower,
 
     bool IsTemperatureFactorAnisotropic() const
     {
-        if (override IsTemperatureFactorAnisotropic = this->get_override("IsTemperatureFactorAnisotropic")) 
+        if (override IsTemperatureFactorAnisotropic = this->get_override("IsTemperatureFactorAnisotropic"))
 #ifdef _MSC_VER
             return call<bool>(
                     IsTemperatureFactorAnisotropic.ptr()
@@ -161,7 +161,7 @@ class ScatteringPowerWrap : public ScatteringPower,
 
     bool IsResonantScatteringAnisotropic() const
     {
-        if (override IsResonantScatteringAnisotropic = this->get_override("IsResonantScatteringAnisotropic")) 
+        if (override IsResonantScatteringAnisotropic = this->get_override("IsResonantScatteringAnisotropic"))
 #ifdef _MSC_VER
             return call<bool>(
                     IsResonantScatteringAnisotropic.ptr()
@@ -177,7 +177,7 @@ class ScatteringPowerWrap : public ScatteringPower,
 
     const std::string& GetSymbol() const
     {
-        if (override GetSymbol = this->get_override("GetSymbol")) 
+        if (override GetSymbol = this->get_override("GetSymbol"))
 #ifdef _MSC_VER
             return call<const std::string&>(
                     GetSymbol.ptr()
@@ -193,7 +193,7 @@ class ScatteringPowerWrap : public ScatteringPower,
 
     void SetBiso(const double newB)
     {
-        if (override SetBiso = this->get_override("SetBiso")) 
+        if (override SetBiso = this->get_override("SetBiso"))
             SetBiso(newB);
         default_SetBiso(newB);
     }
@@ -203,7 +203,7 @@ class ScatteringPowerWrap : public ScatteringPower,
 
     void SetBij(const size_t& i, const size_t& j, const double newB)
     {
-        if (override SetBij = this->get_override("SetBij")) 
+        if (override SetBij = this->get_override("SetBij"))
             SetBij(i, j, newB);
         default_SetBij(i, j, newB);
     }
@@ -213,7 +213,7 @@ class ScatteringPowerWrap : public ScatteringPower,
 
     double GetFormalCharge() const
     {
-        if (override GetFormalCharge = this->get_override("GetFormalCharge")) 
+        if (override GetFormalCharge = this->get_override("GetFormalCharge"))
 #ifdef _MSC_VER
             return call<double>(
                     GetFormalCharge.ptr()
@@ -229,7 +229,7 @@ class ScatteringPowerWrap : public ScatteringPower,
 
     void SetFormalCharge(const double charge)
     {
-        if (override SetFormalCharge = this->get_override("SetFormalCharge")) 
+        if (override SetFormalCharge = this->get_override("SetFormalCharge"))
             SetFormalCharge(charge);
         default_SetFormalCharge(charge);
     }
@@ -273,43 +273,43 @@ void wrap_scatteringpower()
     class_<ScatteringPowerWrap, boost::noncopyable, bases<RefinableObj> >
         ("ScatteringPower", init<>())
         .def(init<const ScatteringPowerWrap&>())
-        .def("GetScatteringFactor", 
+        .def("GetScatteringFactor",
             pure_virtual(&ScatteringPower::GetScatteringFactor),
             (boost::python::arg("data"),
             boost::python::arg("spgSymPosIndex")=-1))
-        .def("GetForwardScatteringFactor", 
+        .def("GetForwardScatteringFactor",
             pure_virtual(&ScatteringPower::GetForwardScatteringFactor))
-        .def("GetTemperatureFactor", 
+        .def("GetTemperatureFactor",
             pure_virtual(&ScatteringPower::GetTemperatureFactor),
             (boost::python::arg("data"),
             boost::python::arg("spgSymPosIndex")=-1))
-        .def("GetResonantScattFactReal", 
+        .def("GetResonantScattFactReal",
             pure_virtual(&ScatteringPower::GetResonantScattFactReal),
             (boost::python::arg("data"),
             boost::python::arg("spgSymPosIndex")=-1))
-        .def("GetResonantScattFactImag", 
+        .def("GetResonantScattFactImag",
             pure_virtual(&ScatteringPower::GetResonantScattFactImag),
             (boost::python::arg("data"),
             boost::python::arg("spgSymPosIndex")=-1))
-        .def("IsScatteringFactorAnisotropic", 
+        .def("IsScatteringFactorAnisotropic",
             &ScatteringPower::IsScatteringFactorAnisotropic,
             &ScatteringPowerWrap::default_IsScatteringFactorAnisotropic)
-        .def("IsTemperatureFactorAnisotropic", 
+        .def("IsTemperatureFactorAnisotropic",
             &ScatteringPower::IsTemperatureFactorAnisotropic,
             &ScatteringPowerWrap::default_IsTemperatureFactorAnisotropic)
-        .def("IsResonantScatteringAnisotropic", 
+        .def("IsResonantScatteringAnisotropic",
             &ScatteringPower::IsResonantScatteringAnisotropic,
             &ScatteringPowerWrap::default_IsResonantScatteringAnisotropic)
-        .def("GetSymbol", 
+        .def("GetSymbol",
             &ScatteringPower::GetSymbol,
             &ScatteringPowerWrap::default_GetSymbol,
             return_value_policy<copy_const_reference>())
-        .def("GetBiso", 
+        .def("GetBiso",
                 (double (ScatteringPower::*)()const) &ScatteringPower::GetBiso)
         .def("SetBiso", &ScatteringPower::SetBiso,
             &ScatteringPowerWrap::default_SetBiso)
-        .def("GetBij", 
-                (double (ScatteringPower::*)(const size_t&, const size_t&) const) 
+        .def("GetBij",
+                (double (ScatteringPower::*)(const size_t&, const size_t&) const)
                 &ScatteringPower::GetBij)
         .def("SetBij", (void (ScatteringPower::*)
             (const size_t&, const size_t&, const double))
@@ -320,23 +320,23 @@ void wrap_scatteringpower()
         .def("GetNbScatteringPower", &ScatteringPower::GetNbScatteringPower)
         .def("GetLastChangeClock", &ScatteringPower::GetLastChangeClock,
                 return_value_policy<copy_const_reference>())
-        .def("GetRadius", 
+        .def("GetRadius",
             pure_virtual(&ScatteringPower::GetRadius))
-        .def("GetMaximumLikelihoodPositionError", 
+        .def("GetMaximumLikelihoodPositionError",
             pure_virtual(&ScatteringPower::GetMaximumLikelihoodPositionError))
-        .def("SetMaximumLikelihoodPositionError", 
+        .def("SetMaximumLikelihoodPositionError",
             pure_virtual(&ScatteringPower::SetMaximumLikelihoodPositionError))
-        .def("GetMaximumLikelihoodNbGhostAtom", 
+        .def("GetMaximumLikelihoodNbGhostAtom",
             pure_virtual(&ScatteringPower::GetMaximumLikelihoodNbGhostAtom))
-        .def("SetMaximumLikelihoodNbGhostAtom", 
+        .def("SetMaximumLikelihoodNbGhostAtom",
             pure_virtual(&ScatteringPower::SetMaximumLikelihoodNbGhostAtom))
-        .def("GetMaximumLikelihoodParClock", 
+        .def("GetMaximumLikelihoodParClock",
                 &ScatteringPower::GetMaximumLikelihoodParClock,
                 return_value_policy<copy_const_reference>())
-        .def("GetFormalCharge", 
+        .def("GetFormalCharge",
             &ScatteringPower::GetFormalCharge,
             &ScatteringPowerWrap::default_GetFormalCharge)
-        .def("SetFormalCharge", 
+        .def("SetFormalCharge",
             &ScatteringPower::SetFormalCharge,
             &ScatteringPowerWrap::default_SetFormalCharge)
         .add_property("Biso", (double (ScatteringPower::*)()const)

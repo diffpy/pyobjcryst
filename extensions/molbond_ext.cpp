@@ -12,8 +12,8 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::MolBond.  
-* 
+* boost::python bindings to ObjCryst::MolBond.
+*
 * Changes from ObjCryst::MolBond
 * - Added __getitem__ access for MolAtoms.
 * - File IO is disabled
@@ -68,17 +68,17 @@ void wrap_molbond()
 {
 
     class_<MolBond, bases<Restraint> > ("MolBond", no_init)
-        //init<MolAtom&, MolAtom&, const double, const double, const double, 
+        //init<MolAtom&, MolAtom&, const double, const double, const double,
         //Molecule&, const double>())
-        .def("GetMolecule", (Molecule& (MolBond::*)()) 
-            &MolBond::GetMolecule, 
+        .def("GetMolecule", (Molecule& (MolBond::*)())
+            &MolBond::GetMolecule,
             return_internal_reference<>())
-        .def("GetLogLikelihood", 
-            (double (MolBond::*)() const) 
-            &MolBond::GetLogLikelihood) 
-        .def("GetLogLikelihood", 
-            (double (MolBond::*)(const bool, const bool) const) 
-            &MolBond::GetLogLikelihood) 
+        .def("GetLogLikelihood",
+            (double (MolBond::*)() const)
+            &MolBond::GetLogLikelihood)
+        .def("GetLogLikelihood",
+            (double (MolBond::*)(const bool, const bool) const)
+            &MolBond::GetLogLikelihood)
         .def("GetName", &MolBond::GetName)
         .def("GetAtom1", (MolAtom& (MolBond::*)()) &MolBond::GetAtom1,
             return_internal_reference<>())

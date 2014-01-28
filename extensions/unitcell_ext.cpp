@@ -35,28 +35,28 @@ using namespace ObjCryst;
 
 namespace {
 
-tuple FractionalToOrthonormalCoords(const UnitCell &uc, 
+tuple FractionalToOrthonormalCoords(const UnitCell &uc,
         double x, double y, double z)
 {
     uc.FractionalToOrthonormalCoords(x,y,z);
     return make_tuple(x,y,z);
 }
 
-tuple OrthonormalToFractionalCoords(const UnitCell &uc, 
+tuple OrthonormalToFractionalCoords(const UnitCell &uc,
         double x, double y, double z)
 {
     uc.OrthonormalToFractionalCoords(x,y,z);
     return make_tuple(x,y,z);
 }
 
-tuple MillerToOrthonormalCoords(const UnitCell &uc, 
+tuple MillerToOrthonormalCoords(const UnitCell &uc,
         double x, double y, double z)
 {
     uc.MillerToOrthonormalCoords(x,y,z);
     return make_tuple(x,y,z);
 }
 
-tuple OrthonormalToMillerCoords(const UnitCell &uc, 
+tuple OrthonormalToMillerCoords(const UnitCell &uc,
         double x, double y, double z)
 {
     uc.OrthonormalToMillerCoords(x,y,z);
@@ -131,17 +131,17 @@ double _getgamma(UnitCell& u)
 void wrap_unitcell()
 {
 
-    class_<UnitCell, bases<RefinableObj> > 
+    class_<UnitCell, bases<RefinableObj> >
         ("UnitCell", init<>())
         // Constructors
         .def(init<const double, const double, const double, const std::string&>())
-        .def(init<const double, const double, const double, 
+        .def(init<const double, const double, const double,
             const double, const double, const double,
             const std::string&>())
         .def(init<const UnitCell&>())
-        .def("GetLatticePar", 
+        .def("GetLatticePar",
             (CrystVector<double> (UnitCell::*)() const) &UnitCell::GetLatticePar)
-        .def("GetLatticePar", 
+        .def("GetLatticePar",
             (double (UnitCell::*)(const int) const) &UnitCell::GetLatticePar)
         .def("GetClockLatticePar", &UnitCell::GetClockLatticePar,
                 return_value_policy<copy_const_reference>())
@@ -153,16 +153,16 @@ void wrap_unitcell()
                 return_value_policy<copy_const_reference>())
         .def("GetOrthonormalCoords", &UnitCell::GetOrthonormalCoords)
         // Modified to return a tuple
-        .def("OrthonormalToFractionalCoords", 
+        .def("OrthonormalToFractionalCoords",
                 &OrthonormalToFractionalCoords)
         // Modified to return a tuple
-        .def("FractionalToOrthonormalCoords", 
+        .def("FractionalToOrthonormalCoords",
                 &FractionalToOrthonormalCoords)
         // Modified to return a tuple
-        .def("MillerToOrthonormalCoords", 
+        .def("MillerToOrthonormalCoords",
                 &MillerToOrthonormalCoords)
         // Modified to return a tuple
-        .def("OrthonormalToMillerCoords", 
+        .def("OrthonormalToMillerCoords",
                 &OrthonormalToMillerCoords)
         .def("GetSpaceGroup", (SpaceGroup& (UnitCell::*)()) &UnitCell::GetSpaceGroup,
                 return_internal_reference<>())

@@ -12,8 +12,8 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::MolAtom.  
-* 
+* boost::python bindings to ObjCryst::MolAtom.
+*
 * Changes from ObjCryst::MolAtom
 * - Wrapped as a to-python converter only.
 * - File IO is disabled
@@ -54,12 +54,12 @@ void wrap_molatom()
 {
 
     class_<MolAtom> ("MolAtom", init<const MolAtom&>())
-        .def("GetName", (const std::string& (MolAtom::*)() const) 
-            &MolAtom::GetName, 
+        .def("GetName", (const std::string& (MolAtom::*)() const)
+            &MolAtom::GetName,
             return_value_policy<copy_const_reference>())
         .def("SetName", &MolAtom::SetName)
-        .def("GetMolecule", (Molecule& (MolAtom::*)()) 
-            &MolAtom::GetMolecule, 
+        .def("GetMolecule", (Molecule& (MolAtom::*)())
+            &MolAtom::GetMolecule,
             return_internal_reference<>())
         .def("GetX", &MolAtom::GetX)
         .def("GetY", &MolAtom::GetY)

@@ -93,7 +93,7 @@ void wrap_spacegroup()
         .def(init<const std::string&>((bp::arg("spgId"))))
         // Methods
         .def("ChangeSpaceGroup", &SpaceGroup::ChangeSpaceGroup)
-        .def("GetName", &SpaceGroup::GetName, 
+        .def("GetName", &SpaceGroup::GetName,
                 return_value_policy<copy_const_reference>())
         .def("IsInAsymmetricUnit", &SpaceGroup::IsInAsymmetricUnit)
         .def("ChangeToAsymmetricUnit", &SpaceGroup::ChangeToAsymmetricUnit)
@@ -106,19 +106,19 @@ void wrap_spacegroup()
         .def("GetTranslationVectors", &GetTranslationVectors)
         .def("GetSymmetryOperations", &GetSymmetryOperations)
         .def("GetAllSymmetrics", &SpaceGroup::GetAllSymmetrics,
-                (bp::arg("h"), 
-                 bp::arg("k"), 
-                 bp::arg("l"), 
-                 bp::arg("noCenter")=false, 
+                (bp::arg("h"),
+                 bp::arg("k"),
+                 bp::arg("l"),
+                 bp::arg("noCenter")=false,
                  bp::arg("noTransl")=false,
                  bp::arg("noIdentical")=false))
         .def("GetNbSymmetrics", &SpaceGroup::GetNbSymmetrics,
-                 (bp::arg("noCenter")=false, 
+                 (bp::arg("noCenter")=false,
                  bp::arg("noTransl")=false))
         .def("GetInversionCenter", &SpaceGroup::GetInversionCenter)
         .def("Print", &SpaceGroup::Print)
         .def("HasInversionCenter", &SpaceGroup::HasInversionCenter)
-        .def("IsInversionCenterAtOrigin", 
+        .def("IsInversionCenterAtOrigin",
                 &SpaceGroup::IsInversionCenterAtOrigin)
         // Requires cctbx? Forward declaration doesn't work
         //.def("GetCCTbxSpg", &SpaceGroup::GetCCTbxSpg,
@@ -127,11 +127,11 @@ void wrap_spacegroup()
                 return_value_policy<copy_const_reference>())
         .def("GetUniqueAxis", &SpaceGroup::GetUniqueAxis)
         .def("GetExtension", &SpaceGroup::GetExtension)
-        .def("GetAllEquivRefl", &SpaceGroup::GetAllEquivRefl, 
-                (bp::arg("h"), 
-                 bp::arg("k"), 
-                 bp::arg("l"), 
-                 bp::arg("excludeFriedelMate")=false, 
+        .def("GetAllEquivRefl", &SpaceGroup::GetAllEquivRefl,
+                (bp::arg("h"),
+                 bp::arg("k"),
+                 bp::arg("l"),
+                 bp::arg("excludeFriedelMate")=false,
                  bp::arg("forceFriedelLaw")=false))
         .def("IsReflSystematicAbsent", &SpaceGroup::IsReflSystematicAbsent)
         .def("IsReflCentric", &SpaceGroup::IsReflCentric)

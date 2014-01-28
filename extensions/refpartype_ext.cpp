@@ -50,7 +50,7 @@ void wrap_refpartype()
         /* Functions */
         .def("IsDescendantFromOrSameAs", &RefParType::IsDescendantFromOrSameAs)
         .def("__eq__", &__eq__)
-        .def("GetName", &RefParType::GetName, 
+        .def("GetName", &RefParType::GetName,
             return_value_policy<copy_const_reference>())
         ;
 }

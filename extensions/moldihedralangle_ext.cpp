@@ -12,8 +12,8 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::MolDihedralAngle.  
-* 
+* boost::python bindings to ObjCryst::MolDihedralAngle.
+*
 * Changes from ObjCryst::MolDihedralAngle
 * - Wrapped as a to-python converter only (no constructor)
 * - Added __getitem__ access for MolAtoms.
@@ -36,7 +36,7 @@ using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
-    
+
 MolAtom* _GetAtom(MolDihedralAngle& mb, size_t i)
 {
     MolAtom* rv = NULL;
@@ -69,16 +69,16 @@ void wrap_moldihedralangle()
 {
 
     class_<MolDihedralAngle, bases<Restraint> > ("MolDihedralAngle", no_init)
-        .def("GetMolecule", (Molecule& (MolDihedralAngle::*)()) 
-            &MolDihedralAngle::GetMolecule, 
+        .def("GetMolecule", (Molecule& (MolDihedralAngle::*)())
+            &MolDihedralAngle::GetMolecule,
             return_internal_reference<>())
         .def("GetName", &MolDihedralAngle::GetName)
-        .def("GetLogLikelihood", 
-            (double (MolDihedralAngle::*)() const) 
-            &MolDihedralAngle::GetLogLikelihood) 
-        .def("GetLogLikelihood", 
-            (double (MolDihedralAngle::*)(const bool, const bool) const) 
-            &MolDihedralAngle::GetLogLikelihood) 
+        .def("GetLogLikelihood",
+            (double (MolDihedralAngle::*)() const)
+            &MolDihedralAngle::GetLogLikelihood)
+        .def("GetLogLikelihood",
+            (double (MolDihedralAngle::*)(const bool, const bool) const)
+            &MolDihedralAngle::GetLogLikelihood)
         .def("GetAngle", &MolDihedralAngle::GetAngle)
         .def("GetAngle0", &MolDihedralAngle::GetAngle0)
         .def("GetAngleDelta", &MolDihedralAngle::GetAngleDelta)

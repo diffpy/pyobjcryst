@@ -12,8 +12,8 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::RigidGroup.  
-* 
+* boost::python bindings to ObjCryst::RigidGroup.
+*
 * Changes from ObjCryst::RigidGroup
 * - RigidGroup is wrapped to have python-set methods rather than stl::set
 *   methods.

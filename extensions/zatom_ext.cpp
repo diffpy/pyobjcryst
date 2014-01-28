@@ -47,7 +47,7 @@ void wrap_zatom()
      * init function
      */
     class_<ZAtom>("ZAtom", no_init)
-        //init<ZScatterer&, const ScatteringPower*, const long, const double, 
+        //init<ZScatterer&, const ScatteringPower*, const long, const double,
         //const long, const double, const long, const double, const double, const
         //string& >(
         //    (bp::arg("scatt"), bp::arg("pow"), bp::arg("atomBond")=0,

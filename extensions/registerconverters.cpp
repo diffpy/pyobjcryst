@@ -53,7 +53,7 @@ typedef std::pair< ScatteringPower const*, ScatteringPower const* > sppair;
 
 typedef std::map< sppair, double > mapsppairtodouble;
 
-typedef std::map< sppair, Crystal::BumpMergePar > mapsppairtobmp; 
+typedef std::map< sppair, Crystal::BumpMergePar > mapsppairtobmp;
 
 typedef std::set<MolAtom*> MolAtomSet;
 
@@ -118,9 +118,9 @@ struct std_pair_to_tuple
         return bp::incref(rv);
     }
 
-    static PyTypeObject const* get_pytype() 
+    static PyTypeObject const* get_pytype()
     {
-        return &PyTuple_Type; 
+        return &PyTuple_Type;
     }
 
 };
@@ -142,9 +142,9 @@ std_pair_to_python_converter()
 
 /* For MolAtomSet (std::set<MolAtom*>) */
 
-void _addMAS(MolAtomSet& mas, MolAtom* a) 
-{ 
-    mas.insert(a); 
+void _addMAS(MolAtomSet& mas, MolAtom* a)
+{
+    mas.insert(a);
 }
 
 void _updateMAS(MolAtomSet& mas, const MolAtomSet& other)
@@ -160,8 +160,8 @@ bool _containsMAS(const MolAtomSet& mas, MolAtom* a)
 MolAtom* _getItemMAS(const MolAtomSet& mas, size_t i)
 {
     // Look for size violation
-    if (i >= mas.size()) 
-    {        
+    if (i >= mas.size())
+    {
         PyErr_SetString(PyExc_IndexError, "index out of range");
         throw_error_already_set();
     }
@@ -194,9 +194,9 @@ void _removeMAS(MolAtomSet& mas,  MolAtom* a)
 
 /* For MolAtomVec */
 
-void _appendMAV(MolAtomVec& mav, MolAtom* a) 
-{ 
-    mav.push_back(a); 
+void _appendMAV(MolAtomVec& mav, MolAtom* a)
+{
+    mav.push_back(a);
 }
 
 void _extendMAV(MolAtomVec& mav, const MolAtomVec& other)
@@ -229,7 +229,7 @@ void _deleteMAV(MolAtomVec& mav, size_t i)
 
 /* Exception translation */
 
-PyObject* pyobjcryst_ObjCrystException = 
+PyObject* pyobjcryst_ObjCrystException =
     PyErr_NewException((char*)"pyobjcryst.ObjCrystException", 0, 0);
 
 
@@ -244,7 +244,7 @@ void translateException(const ObjCrystException& e)
 //
 
 CrystVector<double> getTestVector()
-{ 
+{
     /* Should produce
      * 0 1 2
      */
@@ -257,7 +257,7 @@ CrystVector<double> getTestVector()
 }
 
 CrystMatrix<double> getTestMatrix()
-{ 
+{
     /* Should produce
      * 0    1
      * 2    3
@@ -278,7 +278,7 @@ CrystMatrix<double> getTestMatrix()
 
 } // namespace
 
-// From cctbx. Used to convert python file-type objects to c++ streams.  
+// From cctbx. Used to convert python file-type objects to c++ streams.
 // See python_file_buffer.hpp for copyright.
 namespace boost_adaptbx { namespace file_conversion {
 
@@ -346,7 +346,7 @@ void wrap_registerconverters()
 
 
     // Put ObjCrystException in module namespace
-    scope().attr("ObjCrystException") = 
+    scope().attr("ObjCrystException") =
         object(handle<>(pyobjcryst_ObjCrystException));
 
     /* Data type converters */
@@ -390,7 +390,7 @@ void wrap_registerconverters()
     bafc::python_file_to_stream_buffer::register_conversion();
     bafc::python_file_buffer_wrapper::wrap();
 
-    
+
     // some tests
     def("getTestVector", &getTestVector);
     def("getTestMatrix", &getTestMatrix);

@@ -113,7 +113,7 @@ void wrap_restraint()
            return_internal_reference<>())
         .def("SetType", &Restraint::SetType, &RestraintWrap::default_SetType,
             with_custodian_and_ward<1,2>())
-        .def("GetLogLikelihood", &Restraint::GetLogLikelihood, 
+        .def("GetLogLikelihood", &Restraint::GetLogLikelihood,
             &RestraintWrap::default_GetLogLikelihood)
         ;
 }

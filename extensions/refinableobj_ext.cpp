@@ -17,7 +17,7 @@
 * that inherit from RefinableObj (see for example unitcell_ext.cpp).
 * RefinableObj derivatives can be created in python and will work in c++
 * functions that are also bound into python.
-* 
+*
 * Changes from ObjCryst::RefinableObj
 * - XMLOutput and XMLInput accept python file-like objects.
 * - GetPar that takes a const double* is not exposed, as it is designed for
@@ -90,14 +90,14 @@ RefinablePar& _GetParNotFixedLong(RefinableObj& obj, const long i)
 }
 
 
-class RefinableObjWrap : public RefinableObj, 
+class RefinableObjWrap : public RefinableObj,
                  public wrapper<RefinableObj>
 {
 
-    public: 
+    public:
 
     /* alias the constructors from RefinableObj */
-    RefinableObjWrap() : RefinableObj() 
+    RefinableObjWrap() : RefinableObj()
     {
         RefinableObj::SetDeleteRefParInDestructor(false);
     }
@@ -117,10 +117,10 @@ class RefinableObjWrap : public RefinableObj,
 
     const std::string& GetClassName() const
     {
-        if (override GetClassName = this->get_override("GetClassName")) 
+        if (override GetClassName = this->get_override("GetClassName"))
 #ifdef _MSC_VER
-            return call<const std::string&>( 
-                    GetClassName.ptr() 
+            return call<const std::string&>(
+                    GetClassName.ptr()
                     );
 #else
             return GetClassName();
@@ -133,10 +133,10 @@ class RefinableObjWrap : public RefinableObj,
 
     const std::string& GetName() const
     {
-        if (override GetName = this->get_override("GetName")) 
+        if (override GetName = this->get_override("GetName"))
 #ifdef _MSC_VER
-            return call<const std::string&>( 
-                    GetName.ptr() 
+            return call<const std::string&>(
+                    GetName.ptr()
                     );
 #else
             return GetName();
@@ -149,7 +149,7 @@ class RefinableObjWrap : public RefinableObj,
 
     void SetName(const std::string &name)
     {
-        if (override SetName = this->get_override("SetName")) 
+        if (override SetName = this->get_override("SetName"))
             SetName(name);
         default_SetName(name);
     }
@@ -159,27 +159,27 @@ class RefinableObjWrap : public RefinableObj,
 
     void Print() const
     {
-        if (override Print = this->get_override("Print")) 
+        if (override Print = this->get_override("Print"))
             Print();
         default_Print();
     }
 
-    void default_RegisterClient(RefinableObj& client) const 
+    void default_RegisterClient(RefinableObj& client) const
     { this->RefinableObj::RegisterClient(client); }
 
     void RegisterClient(RefinableObj& client) const
     {
-        if (override RegisterClient = this->get_override("RegisterClient")) 
+        if (override RegisterClient = this->get_override("RegisterClient"))
             RegisterClient(client);
         default_RegisterClient(client);
     }
 
-    void default_DeRegisterClient(RefinableObj& client) const 
+    void default_DeRegisterClient(RefinableObj& client) const
     { this->RefinableObj::DeRegisterClient(client); }
 
     void DeRegisterClient(RefinableObj& client) const
     {
-        if (override DeRegisterClient = this->get_override("DeRegisterClient")) 
+        if (override DeRegisterClient = this->get_override("DeRegisterClient"))
             DeRegisterClient(client);
         default_DeRegisterClient(client);
     }
@@ -189,10 +189,10 @@ class RefinableObjWrap : public RefinableObj,
 
     ObjRegistry< RefinableObj >& GetClientRegistry()
     {
-        if (override GetClientRegistry = this->get_override("GetClientRegistry")) 
+        if (override GetClientRegistry = this->get_override("GetClientRegistry"))
 #ifdef _MSC_VER
-            return call<ObjRegistry< RefinableObj >& >( 
-                    GetClientRegistry.ptr() 
+            return call<ObjRegistry< RefinableObj >& >(
+                    GetClientRegistry.ptr()
                     );
 #else
             return GetClientRegistry();
@@ -200,14 +200,14 @@ class RefinableObjWrap : public RefinableObj,
         return default_GetClientRegistry();
     }
 
-    void default_BeginOptimization(const bool allowApproximations, 
-            const bool enableRestraints) 
+    void default_BeginOptimization(const bool allowApproximations,
+            const bool enableRestraints)
     { this->RefinableObj::BeginOptimization(allowApproximations, enableRestraints); }
 
-    void BeginOptimization(const bool allowApproximations, 
-            const bool enableRestraints) 
+    void BeginOptimization(const bool allowApproximations,
+            const bool enableRestraints)
     {
-        if (override BeginOptimization = this->get_override("BeginOptimization")) 
+        if (override BeginOptimization = this->get_override("BeginOptimization"))
             BeginOptimization(allowApproximations, enableRestraints);
         default_BeginOptimization(allowApproximations, enableRestraints);
     }
@@ -217,7 +217,7 @@ class RefinableObjWrap : public RefinableObj,
 
     void EndOptimization()
     {
-        if (override EndOptimization = this->get_override("EndOptimization")) 
+        if (override EndOptimization = this->get_override("EndOptimization"))
             EndOptimization();
         default_EndOptimization();
     }
@@ -227,8 +227,8 @@ class RefinableObjWrap : public RefinableObj,
 
     void RandomizeConfiguration()
     {
-        if (override RandomizeConfiguration = 
-                this->get_override("RandomizeConfiguration")) 
+        if (override RandomizeConfiguration =
+                this->get_override("RandomizeConfiguration"))
             RandomizeConfiguration();
         default_RandomizeConfiguration();
     }
@@ -240,7 +240,7 @@ class RefinableObjWrap : public RefinableObj,
     void GlobalOptRandomMove(const double mutationAmplitude,
             const RefParType *type)
     {
-        if (override GlobalOptRandomMove = this->get_override("GlobalOptRandomMove")) 
+        if (override GlobalOptRandomMove = this->get_override("GlobalOptRandomMove"))
             GlobalOptRandomMove(mutationAmplitude, type);
         default_GlobalOptRandomMove(mutationAmplitude, type);
     }
@@ -250,9 +250,9 @@ class RefinableObjWrap : public RefinableObj,
 
     double GetLogLikelihood() const
     {
-        if (override GetLogLikelihood = this->get_override("GetLogLikelihood")) 
+        if (override GetLogLikelihood = this->get_override("GetLogLikelihood"))
 #ifdef _MSC_VER
-            return call<double>( 
+            return call<double>(
                     GetLogLikelihood.ptr()
                     );
 #else
@@ -266,7 +266,7 @@ class RefinableObjWrap : public RefinableObj,
 
     unsigned int GetNbLSQFunction() const
     {
-        if (override GetNbLSQFunction = this->get_override("GetNbLSQFunction")) 
+        if (override GetNbLSQFunction = this->get_override("GetNbLSQFunction"))
 #ifdef _MSC_VER
             return call<unsigned int>(
                     GetNbLSQFunction.ptr()
@@ -277,12 +277,12 @@ class RefinableObjWrap : public RefinableObj,
         return default_GetNbLSQFunction();
     }
 
-    const CrystVector<double>& default_GetLSQCalc(const unsigned int i) const 
+    const CrystVector<double>& default_GetLSQCalc(const unsigned int i) const
     { return this->RefinableObj::GetLSQCalc(i); }
 
-    const CrystVector<double>& GetLSQCalc(const unsigned int i) const 
+    const CrystVector<double>& GetLSQCalc(const unsigned int i) const
     {
-        if (override GetLSQCalc = this->get_override("GetLSQCalc")) 
+        if (override GetLSQCalc = this->get_override("GetLSQCalc"))
 #ifdef _MSC_VER
             return call<const CrystVector<double>&>(
                     GetLSQCalc.ptr(), i
@@ -293,12 +293,12 @@ class RefinableObjWrap : public RefinableObj,
         return default_GetLSQCalc(i);
     }
 
-    const CrystVector<double>& default_GetLSQObs(const unsigned int i) const 
+    const CrystVector<double>& default_GetLSQObs(const unsigned int i) const
     { return this->RefinableObj::GetLSQObs(i); }
 
-    const CrystVector<double>& GetLSQObs(const unsigned int i) const 
+    const CrystVector<double>& GetLSQObs(const unsigned int i) const
     {
-        if (override GetLSQObs = this->get_override("GetLSQObs")) 
+        if (override GetLSQObs = this->get_override("GetLSQObs"))
 #ifdef _MSC_VER
             return call<const CrystVector<double>&>(
                     GetLSQObs.ptr(), i
@@ -309,12 +309,12 @@ class RefinableObjWrap : public RefinableObj,
         return default_GetLSQObs(i);
     }
 
-    const CrystVector<double>& default_GetLSQWeight(const unsigned int i) const 
+    const CrystVector<double>& default_GetLSQWeight(const unsigned int i) const
     { return this->RefinableObj::GetLSQWeight(i); }
 
-    const CrystVector<double>& GetLSQWeight(const unsigned int i) const 
+    const CrystVector<double>& GetLSQWeight(const unsigned int i) const
     {
-        if (override GetLSQWeight = this->get_override("GetLSQWeight")) 
+        if (override GetLSQWeight = this->get_override("GetLSQWeight"))
 #ifdef _MSC_VER
             return call<const CrystVector<double>&>(
                     GetLSQWeight.ptr(), i
@@ -332,7 +332,7 @@ class RefinableObjWrap : public RefinableObj,
     const CrystVector<double>& GetLSQDeriv(const unsigned int i,
             RefinablePar &rp)
     {
-        if (override GetLSQDeriv = this->get_override("GetLSQDeriv")) 
+        if (override GetLSQDeriv = this->get_override("GetLSQDeriv"))
 #ifdef _MSC_VER
             return call<const CrystVector<double>&>(
                     GetLSQDeriv.ptr(), i, rp
@@ -348,19 +348,19 @@ class RefinableObjWrap : public RefinableObj,
 
     void XMLOutput(std::ostream &os, int indent) const
     {
-        if (override XMLOutput = this->get_override("XMLOutput")) 
+        if (override XMLOutput = this->get_override("XMLOutput"))
             XMLOutput(os, indent);
         default_XMLOutput(os, indent);
     }
 
-    void default_XMLInput(std::istream &is, 
+    void default_XMLInput(std::istream &is,
             const ObjCryst::XMLCrystTag &tag)
     { this->RefinableObj::XMLInput(is, tag); }
 
-    void XMLInput(std::istream &is, 
+    void XMLInput(std::istream &is,
             const ObjCryst::XMLCrystTag &tag)
     {
-        if (override XMLInput = this->get_override("XMLInput")) 
+        if (override XMLInput = this->get_override("XMLInput"))
             XMLInput(is, tag);
         default_XMLInput(is, tag);
     }
@@ -374,7 +374,7 @@ class RefinableObjWrap : public RefinableObj,
             CrystVector<unsigned int> &groupIndex,
             unsigned int &firstGroup) const
     {
-        if (override GetGeneGroup = this->get_override("GetGeneGroup")) 
+        if (override GetGeneGroup = this->get_override("GetGeneGroup"))
             GetGeneGroup(obj, groupIndex, firstGroup);
         default_GetGeneGroup(obj, groupIndex, firstGroup);
     }
@@ -384,7 +384,7 @@ class RefinableObjWrap : public RefinableObj,
 
     void UpdateDisplay() const
     {
-        if (override UpdateDisplay = this->get_override("UpdateDisplay")) 
+        if (override UpdateDisplay = this->get_override("UpdateDisplay"))
             UpdateDisplay();
         default_UpdateDisplay();
     }
@@ -394,7 +394,7 @@ class RefinableObjWrap : public RefinableObj,
 
     double GetRestraintCost() const
     {
-        if (override GetRestraintCost = this->get_override("GetRestraintCost")) 
+        if (override GetRestraintCost = this->get_override("GetRestraintCost"))
 #ifdef _MSC_VER
             return call<double>(
                     GetRestraintCost.ptr()
@@ -410,19 +410,19 @@ class RefinableObjWrap : public RefinableObj,
 
     void TagNewBestConfig() const
     {
-        if (override TagNewBestConfig = this->get_override("TagNewBestConfig")) 
+        if (override TagNewBestConfig = this->get_override("TagNewBestConfig"))
             TagNewBestConfig();
         default_TagNewBestConfig();
     }
 
     // Protected methods
 
-    void default_Prepare() 
+    void default_Prepare()
     { RefinableObj::Prepare();}
-    
-    void Prepare() 
+
+    void Prepare()
     {
-        if (override Prepare = this->get_override("Prepare")) 
+        if (override Prepare = this->get_override("Prepare"))
             Prepare();
         default_Prepare();
     }
@@ -433,7 +433,7 @@ class RefinableObjWrap : public RefinableObj,
     void AddOption(RefObjOpt *opt)
     { RefinableObj::AddOption(opt); }
 
-    std::map<unsigned long, 
+    std::map<unsigned long,
         std::pair<
             CrystVector<double>, std::string>
         >::iterator
@@ -449,7 +449,7 @@ void _RemovePar(RefinableObj &obj, RefinablePar* refpar)
 }
 
 void _XMLOutput(
-        const RefinableObj& r, 
+        const RefinableObj& r,
         boost_adaptbx::file_conversion::python_file_buffer const &output,
         int indent = 0)
 {
@@ -460,7 +460,7 @@ void _XMLOutput(
 }
 
 void _XMLInput(
-        RefinableObj& r, 
+        RefinableObj& r,
         boost_adaptbx::file_conversion::python_file_buffer const &input,
         XMLCrystTag &tag)
 {
@@ -516,35 +516,35 @@ void wrap_refinableobj()
         .def("GetParamSet", (const CrystVector<double>& (RefinableObj::*)
             (const unsigned long) const) &RefinableObj::GetParamSet,
             return_value_policy<copy_const_reference>())
-        .def("GetParamSet_ParNotFixedHumanValue", 
+        .def("GetParamSet_ParNotFixedHumanValue",
             &RefinableObj::GetParamSet_ParNotFixedHumanValue)
         .def("EraseAllParamSet", &RefinableObjWrap::EraseAllParamSet)
         .def("GetParamSetName", &RefinableObj::GetParamSetName,
             return_value_policy<copy_const_reference>())
         .def("SetLimitsAbsolute", ( void (RefinableObj::*)
-            (const std::string&, const double, const double) ) 
+            (const std::string&, const double, const double) )
             &RefinableObj::SetLimitsAbsolute)
         .def("SetLimitsAbsolute", ( void (RefinableObj::*)
-            (const RefParType*, const double, const double) ) 
+            (const RefParType*, const double, const double) )
             &RefinableObj::SetLimitsAbsolute)
         .def("SetLimitsRelative", ( void (RefinableObj::*)
-            (const std::string&, const double, const double) ) 
+            (const std::string&, const double, const double) )
             &RefinableObj::SetLimitsRelative)
         .def("SetLimitsRelative", ( void (RefinableObj::*)
-            (const RefParType*, const double, const double) ) 
+            (const RefParType*, const double, const double) )
             &RefinableObj::SetLimitsRelative)
         .def("SetLimitsProportional", ( void (RefinableObj::*)
-            (const std::string&, const double, const double) ) 
+            (const std::string&, const double, const double) )
             &RefinableObj::SetLimitsProportional)
         .def("SetLimitsProportional", ( void (RefinableObj::*)
-            (const RefParType*, const double, const double) ) 
+            (const RefParType*, const double, const double) )
             &RefinableObj::SetLimitsProportional)
         .def("SetGlobalOptimStep", &RefinableObj::SetGlobalOptimStep)
-        .def("GetSubObjRegistry", ( ObjRegistry<RefinableObj>& 
+        .def("GetSubObjRegistry", ( ObjRegistry<RefinableObj>&
             (RefinableObj::*) ()) &RefinableObj::GetSubObjRegistry,
             return_internal_reference<>())
         .def("IsBeingRefined", &RefinableObj::IsBeingRefined)
-        .def("BeginGlobalOptRandomMove", 
+        .def("BeginGlobalOptRandomMove",
             &RefinableObj::BeginGlobalOptRandomMove)
         .def("ResetParList", &RefinableObj::ResetParList)
         .def("GetNbOption", &RefinableObj::GetNbOption)
@@ -552,7 +552,7 @@ void wrap_refinableobj()
             &RefinableObj::GetOption,
             return_internal_reference<>())
         // Not exposed, as we want python to manage the objects
-        //.def("SetDeleteRefParInDestructor", 
+        //.def("SetDeleteRefParInDestructor",
         //    &RefinableObj::SetDeleteRefParInDestructor)
         .def("GetRefParListClock", &RefinableObj::GetRefParListClock,
             return_value_policy<copy_const_reference>())
@@ -562,63 +562,63 @@ void wrap_refinableobj()
         .def("GetClockMaster", &RefinableObj::GetClockMaster,
             return_value_policy<copy_const_reference>())
         // Virtual
-        .def("GetClassName", &RefinableObj::GetClassName, 
+        .def("GetClassName", &RefinableObj::GetClassName,
             &RefinableObjWrap::default_GetClassName,
             return_value_policy<copy_const_reference>())
-        .def("GetName", &RefinableObj::GetName, 
+        .def("GetName", &RefinableObj::GetName,
             &RefinableObjWrap::default_GetName,
             return_value_policy<copy_const_reference>())
-        .def("SetName", &RefinableObj::SetName, 
+        .def("SetName", &RefinableObj::SetName,
             &RefinableObjWrap::default_SetName)
-        .def("Print", &RefinableObj::Print, 
+        .def("Print", &RefinableObj::Print,
             &RefinableObjWrap::default_Print)
-        .def("RegisterClient", &RefinableObj::RegisterClient, 
+        .def("RegisterClient", &RefinableObj::RegisterClient,
             &RefinableObjWrap::default_RegisterClient,
             with_custodian_and_ward<1,2>())
-        .def("DeRegisterClient", &RefinableObj::DeRegisterClient, 
+        .def("DeRegisterClient", &RefinableObj::DeRegisterClient,
             &RefinableObjWrap::default_DeRegisterClient)
-        .def("GetClientRegistry", ( ObjRegistry<RefinableObj>& 
+        .def("GetClientRegistry", ( ObjRegistry<RefinableObj>&
             (RefinableObj::*) ()) &RefinableObj::GetClientRegistry,
             &RefinableObjWrap::default_GetClientRegistry,
             return_internal_reference<>())
-        .def("BeginOptimization", &RefinableObj::BeginOptimization, 
+        .def("BeginOptimization", &RefinableObj::BeginOptimization,
             &RefinableObjWrap::default_BeginOptimization,
-            (bp::arg("allowApproximations")=false, 
+            (bp::arg("allowApproximations")=false,
              bp::arg("enableRestraints")=false))
-        .def("EndOptimization", &RefinableObj::EndOptimization, 
+        .def("EndOptimization", &RefinableObj::EndOptimization,
             &RefinableObjWrap::default_EndOptimization)
-        .def("RandomizeConfiguration", &RefinableObj::RandomizeConfiguration, 
+        .def("RandomizeConfiguration", &RefinableObj::RandomizeConfiguration,
             &RefinableObjWrap::default_RandomizeConfiguration)
-        .def("GlobalOptRandomMove", &RefinableObj::GlobalOptRandomMove, 
+        .def("GlobalOptRandomMove", &RefinableObj::GlobalOptRandomMove,
             &RefinableObjWrap::default_GlobalOptRandomMove,
             (bp::arg("mutationAmplitude"), bp::arg("type")=gpRefParTypeObjCryst))
-        .def("GetLogLikelihood", &RefinableObj::GetLogLikelihood, 
+        .def("GetLogLikelihood", &RefinableObj::GetLogLikelihood,
             &RefinableObjWrap::default_GetLogLikelihood)
-        .def("GetNbLSQFunction", &RefinableObj::GetNbLSQFunction, 
+        .def("GetNbLSQFunction", &RefinableObj::GetNbLSQFunction,
             &RefinableObjWrap::default_GetNbLSQFunction)
-        .def("GetLSQCalc", &RefinableObj::GetLSQCalc, 
+        .def("GetLSQCalc", &RefinableObj::GetLSQCalc,
             &RefinableObjWrap::default_GetLSQCalc,
             return_value_policy<copy_const_reference>())
-        .def("GetLSQObs", &RefinableObj::GetLSQObs, 
+        .def("GetLSQObs", &RefinableObj::GetLSQObs,
             &RefinableObjWrap::default_GetLSQObs,
             return_value_policy<copy_const_reference>())
-        .def("GetLSQWeight", &RefinableObj::GetLSQWeight, 
+        .def("GetLSQWeight", &RefinableObj::GetLSQWeight,
             &RefinableObjWrap::default_GetLSQWeight,
             return_value_policy<copy_const_reference>())
-        .def("GetLSQDeriv", &RefinableObj::GetLSQDeriv, 
+        .def("GetLSQDeriv", &RefinableObj::GetLSQDeriv,
             &RefinableObjWrap::default_GetLSQDeriv,
             return_value_policy<copy_const_reference>())
         .def("XMLOutput", &_XMLOutput, (bp::arg("file"), bp::arg("indent")=0))
-        .def("XMLOutput", &RefinableObj::XMLOutput, 
+        .def("XMLOutput", &RefinableObj::XMLOutput,
             &RefinableObjWrap::default_XMLOutput)
         .def("XMLInput", &_XMLInput, (bp::arg("file"), bp::arg("tag")))
-        .def("XMLInput", &RefinableObj::XMLInput, 
+        .def("XMLInput", &RefinableObj::XMLInput,
             &RefinableObjWrap::default_XMLInput)
-        .def("GetGeneGroup", &RefinableObj::GetGeneGroup, 
+        .def("GetGeneGroup", &RefinableObj::GetGeneGroup,
             &RefinableObjWrap::default_GetGeneGroup)
-        .def("GetRestraintCost", &RefinableObj::GetRestraintCost, 
+        .def("GetRestraintCost", &RefinableObj::GetRestraintCost,
             &RefinableObjWrap::default_GetRestraintCost)
-        .def("TagNewBestConfig", &RefinableObj::TagNewBestConfig, 
+        .def("TagNewBestConfig", &RefinableObj::TagNewBestConfig,
             &RefinableObjWrap::default_TagNewBestConfig)
         // Additional methods for python only
         .def("__str__", &__str__<RefinableObj>)

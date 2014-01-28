@@ -12,8 +12,8 @@
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::Crystal.  
-* 
+* boost::python bindings to ObjCryst::Crystal.
+*
 * Changes from ObjCryst::Crystal
 * - CIFOutput accepts a python file-like object
 * - CIFOutput has default mindist = 0, rather than 0.5
@@ -62,7 +62,7 @@ void _AddScatterer(Crystal& crystal, Scatterer* scatt)
 {
     if(NULL == scatt)
     {
-        PyErr_SetString(PyExc_ValueError, 
+        PyErr_SetString(PyExc_ValueError,
                 "Cannot add nonexistant Scatterer");
         throw_error_already_set();
     }
@@ -74,7 +74,7 @@ void _RemoveScatterer(Crystal& crystal, Scatterer* scatt)
 {
     if(NULL == scatt)
     {
-        PyErr_SetString(PyExc_ValueError, 
+        PyErr_SetString(PyExc_ValueError,
                 "Cannot remove nonexistant Scatterer");
         throw_error_already_set();
     }
@@ -86,7 +86,7 @@ void _AddScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
 {
     if(NULL == scattpow)
     {
-        PyErr_SetString(PyExc_ValueError, 
+        PyErr_SetString(PyExc_ValueError,
                 "Cannot add nonexistant ScatteringPower");
         throw_error_already_set();
     }
@@ -95,19 +95,19 @@ void _AddScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
 
 
 // Overloaded so that RemoveScatteringPower cannot delete the passed
-// scatteringpower 
+// scatteringpower
 void _RemoveScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
 {
     if(NULL == scattpow)
     {
-        PyErr_SetString(PyExc_ValueError, 
+        PyErr_SetString(PyExc_ValueError,
                 "Cannot remove nonexistant ScatteringPower");
         throw_error_already_set();
     }
     crystal.RemoveScatteringPower(scattpow, false);
 }
 
-void _PrintMinDistanceTable(const Crystal& crystal, 
+void _PrintMinDistanceTable(const Crystal& crystal,
         const double minDistance = 0.1)
 {
 
@@ -140,47 +140,47 @@ void _CIFOutput(Crystal &c, boost_adaptbx::file_conversion::python_file_buffer
 class CrystalWrap : public Crystal, public wrapper<Crystal>
 {
 
-    public: 
+    public:
 
-    CrystalWrap() : Crystal() 
+    CrystalWrap() : Crystal()
     {
         SetDeleteSubObjInDestructor(false);
         SetDeleteRefParInDestructor(false);
     }
 
-    CrystalWrap(const Crystal& c) : Crystal(c) 
+    CrystalWrap(const Crystal& c) : Crystal(c)
     {
         SetDeleteSubObjInDestructor(false);
         SetDeleteRefParInDestructor(false);
     }
 
-    CrystalWrap(const double a, const double b, const double c , 
-            const std::string& sg) 
-        : Crystal(a, b, c, sg) 
+    CrystalWrap(const double a, const double b, const double c ,
+            const std::string& sg)
+        : Crystal(a, b, c, sg)
     {
         SetDeleteSubObjInDestructor(false);
         SetDeleteRefParInDestructor(false);
     }
 
-    CrystalWrap(const double a, const double b, const double c , 
+    CrystalWrap(const double a, const double b, const double c ,
             const double alpha, const double beta, const double gamma,
-            const std::string& sg) 
-        : Crystal(a, b, c, alpha, beta, gamma, sg) 
+            const std::string& sg)
+        : Crystal(a, b, c, alpha, beta, gamma, sg)
     {
         SetDeleteSubObjInDestructor(false);
         SetDeleteRefParInDestructor(false);
     }
-    
+
     const ScatteringComponentList& default_GetScatteringComponentList() const
     { return this->Crystal::GetScatteringComponentList(); }
 
     const ScatteringComponentList& GetScatteringComponentList() const
     {
-        if (override GetScatteringComponentList = 
-                this->get_override("GetScatteringComponentList")) 
+        if (override GetScatteringComponentList =
+                this->get_override("GetScatteringComponentList"))
 #ifdef _MSC_VER
-            return call<const ScatteringComponentList&>( 
-                    GetScatteringComponentList.ptr() 
+            return call<const ScatteringComponentList&>(
+                    GetScatteringComponentList.ptr()
                     );
 #else
             return GetScatteringComponentList();
@@ -232,14 +232,14 @@ _CreateCrystalFromCIF(boost_adaptbx::file_conversion::python_file_buffer const
 void wrap_crystal()
 {
 
-    class_<CrystalWrap, bases<UnitCell>, boost::noncopyable > 
+    class_<CrystalWrap, bases<UnitCell>, boost::noncopyable >
         ("Crystal", init<>())
         /* Constructors */
         .def(init<const double, const double, const double, const std::string&>(
             (bp::arg("a"), bp::arg("b"), bp::arg("c"),
             bp::arg("SpaceGroupId"))))
-        .def(init<const double, const double, const double, 
-            const double, const double, const double, 
+        .def(init<const double, const double, const double,
+            const double, const double, const double,
             const std::string&>(
             (bp::arg("a"), bp::arg("b"), bp::arg("c"),
             bp::arg("alpha"), bp::arg("beta"), bp::arg("gamma"),
@@ -250,30 +250,30 @@ void wrap_crystal()
             with_custodian_and_ward<1,2,with_custodian_and_ward<2,1> >())
         .def("RemoveScatterer", &_RemoveScatterer)
         .def("GetNbScatterer", &Crystal::GetNbScatterer)
-        .def("GetScatt", 
-            (Scatterer& (Crystal::*)(const std::string&)) &Crystal::GetScatt, 
+        .def("GetScatt",
+            (Scatterer& (Crystal::*)(const std::string&)) &Crystal::GetScatt,
             return_internal_reference<>())
-        .def("GetScatt", 
-            (Scatterer& (Crystal::*)(const long)) &Crystal::GetScatt, 
+        .def("GetScatt",
+            (Scatterer& (Crystal::*)(const long)) &Crystal::GetScatt,
             return_internal_reference<>())
-        .def("GetScatterer", 
-            (Scatterer& (Crystal::*)(const std::string&)) &Crystal::GetScatt, 
+        .def("GetScatterer",
+            (Scatterer& (Crystal::*)(const std::string&)) &Crystal::GetScatt,
             return_internal_reference<>())
-        .def("GetScatterer", 
-            (Scatterer& (Crystal::*)(const long)) &Crystal::GetScatt, 
+        .def("GetScatterer",
+            (Scatterer& (Crystal::*)(const long)) &Crystal::GetScatt,
             return_internal_reference<>())
-        .def("GetScattererRegistry", ( ObjRegistry<Scatterer>& 
+        .def("GetScattererRegistry", ( ObjRegistry<Scatterer>&
             (Crystal::*) ()) &Crystal::GetScattererRegistry,
             return_internal_reference<>())
-        .def("GetScatteringPowerRegistry", ( ObjRegistry<ScatteringPower>& 
+        .def("GetScatteringPowerRegistry", ( ObjRegistry<ScatteringPower>&
             (Crystal::*) ()) &Crystal::GetScatteringPowerRegistry,
             return_internal_reference<>())
         .def("AddScatteringPower", &_AddScatteringPower,
             with_custodian_and_ward<1,2,with_custodian_and_ward<2,1> >())
         .def("RemoveScatteringPower", &_RemoveScatteringPower)
-        .def("GetScatteringPower", 
-            (ScatteringPower& (Crystal::*)(const std::string&)) 
-            &Crystal::GetScatteringPower, 
+        .def("GetScatteringPower",
+            (ScatteringPower& (Crystal::*)(const std::string&))
+            &Crystal::GetScatteringPower,
             return_internal_reference<>())
         .def("GetMasterClockScatteringPower",
             &Crystal::GetMasterClockScatteringPower,
@@ -286,26 +286,26 @@ void wrap_crystal()
         .def("PrintMinDistanceTable", &_PrintMinDistanceTable,
                 (bp::arg("minDistance")=1.0))
         //.def("CalcDynPopCorr", &Crystal::CalcDynPopCorr,
-        //        (bp::arg("overlapDist")=1.0, 
+        //        (bp::arg("overlapDist")=1.0,
         //         bp::arg("mergeDist")=0.0))
         .def("ResetDynPopCorr", &Crystal::ResetDynPopCorr)
         .def("SetUseDynPopCorr", &Crystal::SetUseDynPopCorr)
         .def("GetUseDynPopCorr", &Crystal::GetUseDynPopCorr)
         .def("GetBumpMergeCost", &Crystal::GetBumpMergeCost)
-        .def("SetBumpMergeDistance", 
+        .def("SetBumpMergeDistance",
             (void (Crystal::*)(const ScatteringPower&, const ScatteringPower&, const double))
              &Crystal::SetBumpMergeDistance,
-             (bp::arg("scatt1"), 
-              bp::arg("scatt2"), 
+             (bp::arg("scatt1"),
+              bp::arg("scatt2"),
               bp::arg("dist")=1.5))
-        .def("SetBumpMergeDistance", 
+        .def("SetBumpMergeDistance",
             (void (Crystal::*)
             (const ScatteringPower&, const ScatteringPower&, const double, const
              bool))
              &Crystal::SetBumpMergeDistance,
-             (bp::arg("scatt1"), 
-              bp::arg("scatt2"), 
-              bp::arg("dist"), 
+             (bp::arg("scatt1"),
+              bp::arg("scatt2"),
+              bp::arg("dist"),
               bp::arg("allowMerge")))
         .def("RemoveBumpMergeDistance", &Crystal::RemoveBumpMergeDistance)
         .def("GetBumpMergeParList", (Crystal::VBumpMergePar& (Crystal::*)())
@@ -316,7 +316,7 @@ void wrap_crystal()
         .def("AddBondValenceRo", &Crystal::AddBondValenceRo)
         .def("RemoveBondValenceRo", &Crystal::AddBondValenceRo)
         .def("GetBondValenceCost", &Crystal::GetBondValenceCost)
-        .def("GetBondValenceRoList", 
+        .def("GetBondValenceRoList",
             (std::map< pair< const ScatteringPower *, const ScatteringPower * >, double > &
             (Crystal::*)()) &Crystal::GetBondValenceRoList,
             return_internal_reference<>())
