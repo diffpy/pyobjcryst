@@ -207,9 +207,9 @@ class python_file_buffer : public std::basic_streambuf<char>
         py_seek (getattr(python_file, "seek",  python::object())),
         py_tell (getattr(python_file, "tell",  python::object())),
         write_buffer(0),
+        farthest_pptr(0),
         pos_of_read_buffer_end_in_py_file(0),
-        pos_of_write_buffer_end_in_py_file(buffer_size),
-        farthest_pptr(0)
+        pos_of_write_buffer_end_in_py_file(buffer_size)
     {
 
 
