@@ -30,6 +30,16 @@
 *
 *****************************************************************************/
 
+#include <boost/python.hpp>
+#include <boost/utility.hpp>
+#include <boost/python/class.hpp>
+#include <boost/python/def.hpp>
+#include <boost/python/implicit.hpp>
+#include <boost/python/slice.hpp>
+
+#include <string>
+#include <map>
+
 #include <ObjCryst/ObjCryst/General.h>
 #include <ObjCryst/ObjCryst/Crystal.h>
 #include <ObjCryst/ObjCryst/CIF.h>
@@ -40,16 +50,6 @@
 
 #include "python_file_stream.hpp"
 #include "helpers.hpp"
-
-#include <boost/utility.hpp>
-#include <boost/python.hpp>
-#include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
-#include <boost/python/implicit.hpp>
-#include <boost/python/slice.hpp>
-
-#include <string>
-#include <map>
 
 namespace bp = boost::python;
 using namespace boost::python;

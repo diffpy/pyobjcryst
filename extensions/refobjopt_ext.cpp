@@ -18,13 +18,13 @@
 *
 *****************************************************************************/
 
-#include <string>
-#include <iostream>
-
-#include <boost/utility.hpp>
 #include <boost/python.hpp>
+#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
+
+#include <string>
+#include <iostream>
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 

@@ -17,16 +17,17 @@
 * $Id$
 *
 *****************************************************************************/
-#include <ObjCryst/ObjCryst/SpaceGroup.h>
 
-#include <boost/utility.hpp>
 #include <boost/python.hpp>
+#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
 #include <string>
 #include <iostream>
+
+#include <ObjCryst/ObjCryst/SpaceGroup.h>
 
 namespace bp = boost::python;
 using namespace boost::python;

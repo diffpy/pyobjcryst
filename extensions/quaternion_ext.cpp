@@ -23,11 +23,11 @@
 *
 *****************************************************************************/
 
-#include <ObjCryst/ObjCryst/Molecule.h>
-
 #include <boost/python.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/args.hpp>
+
+#include <ObjCryst/ObjCryst/Molecule.h>
 
 namespace bp = boost::python;
 using namespace boost::python;

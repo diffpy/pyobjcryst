@@ -18,8 +18,8 @@
 *
 *****************************************************************************/
 
-#include <iostream>
 #include "helpers.hpp"
+#include <iostream>
 
 namespace bp = boost::python;
 

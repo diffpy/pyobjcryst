@@ -23,16 +23,16 @@
 *
 *****************************************************************************/
 
-#include <ObjCryst/ObjCryst/Molecule.h>
-#include <ObjCryst/ObjCryst/ScatteringPower.h>
-
-#include <boost/utility.hpp>
 #include <boost/python.hpp>
+#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
 #include <string>
+
+#include <ObjCryst/ObjCryst/Molecule.h>
+#include <ObjCryst/ObjCryst/ScatteringPower.h>
 
 namespace bp = boost::python;
 using namespace boost::python;

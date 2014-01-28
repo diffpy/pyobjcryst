@@ -22,13 +22,13 @@
 #ifndef HELPERS_HPP
 #define HELPERS_HPP
 
+#include <boost/python.hpp>
+
 #include <string>
 #include <set>
 #include <sstream>
 #include <iostream>
 #include <limits>
-
-#include <boost/python.hpp>
 
 namespace bp = boost::python;
 

@@ -50,13 +50,8 @@
 *
 *****************************************************************************/
 
-#include <ObjCryst/RefinableObj/RefinableObj.h>
-#include <ObjCryst/ObjCryst/Molecule.h>
-#include <ObjCryst/ObjCryst/Crystal.h>
-#include <ObjCryst/ObjCryst/ScatteringPower.h>
-
-#include <boost/utility.hpp>
 #include <boost/python.hpp>
+#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
@@ -69,6 +64,11 @@
 #include <set>
 #include <map>
 #include <algorithm>
+
+#include <ObjCryst/RefinableObj/RefinableObj.h>
+#include <ObjCryst/ObjCryst/Molecule.h>
+#include <ObjCryst/ObjCryst/Crystal.h>
+#include <ObjCryst/ObjCryst/ScatteringPower.h>
 
 #include "helpers.hpp"
 
