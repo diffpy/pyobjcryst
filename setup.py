@@ -4,15 +4,16 @@ import os
 import glob
 from setuptools import setup
 from setuptools import Extension
-
-# versioncfgfile holds version data for git commit hash and date.
-# It must reside in the same directory as version.py.
-MYDIR = os.path.dirname(os.path.abspath(__file__))
-versioncfgfile = os.path.join(MYDIR, 'pyobjcryst/version.cfg')
-
-# Include directories
 from numpy.distutils.misc_util import get_numpy_include_dirs
-include_dirs = get_numpy_include_dirs()
+
+
+# define extension arguments here
+ext_kws = {
+        'libraries' : ['ObjCryst'],
+        'extra_compile_args' : [],
+        'extra_link_args' : [],
+        'include_dirs' : get_numpy_include_dirs(),
+}
 
 
 # Figure out which boost library to use. This doesn't appear to consult
@@ -40,15 +41,21 @@ def get_boost_libraries():
     return libs
 
 
-# Define the extension
-libraries = ["ObjCryst"]
-libraries += get_boost_libraries()
-module = Extension('pyobjcryst._pyobjcryst',
-        glob.glob("extensions/*.cpp"),
-        include_dirs = include_dirs,
-        libraries = libraries
-        )
+def create_extensions():
+    "Initialize Extension objects for the setup function."
+    blibs = [n for n in get_boost_libraries()
+            if not n in ext_kws['libraries']]
+    ext_kws['libraries'] += blibs
+    ext = Extension('pyobjcryst._pyobjcryst',
+            glob.glob("extensions/*.cpp"),
+            **ext_kws)
+    return [ext]
 
+
+# versioncfgfile holds version data for git commit hash and date.
+# It must reside in the same directory as version.py.
+MYDIR = os.path.dirname(os.path.abspath(__file__))
+versioncfgfile = os.path.join(MYDIR, 'pyobjcryst/version.cfg')
 
 def gitinfo():
     from subprocess import Popen, PIPE
@@ -94,11 +101,11 @@ setup_args = dict(
         packages = ['pyobjcryst', 'pyobjcryst.tests'],
         test_suite = 'pyobjcryst.tests',
         include_package_data = True,
-        ext_modules = [module],
         zip_safe = False,
 )
 
 if __name__ == '__main__':
+    setup_args['ext_modules'] = create_extensions()
     setup(**setup_args)
 
 # End of file
