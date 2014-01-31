@@ -8,13 +8,13 @@ Software version |release|.
 
 Last updated |today|.
 
-.. include:: ../../README.txt
+.. include:: ../../../README.txt
 
 ===================
 Disclaimer
 ===================
 
-.. include:: ../../LICENSE.txt
+.. include:: ../../../LICENSE.txt
 
 ================
 Acknowledgments
@@ -25,7 +25,7 @@ Developers
 
 PyObjCryst is developed and maintained by
 
-.. literalinclude:: ../../AUTHORS.txt
+.. literalinclude:: ../../../AUTHORS.txt
 
 Funding
 -----------
@@ -41,11 +41,10 @@ reflect the views of the respective funding bodies.
 Installation
 ======================================
 
-.. include:: ../../INSTALL.txt
+.. include:: ../../../INSTALL.txt
 
 ======================================
 API
 ======================================
 
 The API for PyObjCryst is at <http://docs.danse.us/diffraction/pyobjcrystapi-beta1/>.
-
