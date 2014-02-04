@@ -91,8 +91,10 @@ versiondata = getversioncfg()
 setup_args = dict(
         name = "pyobjcryst",
         version = versiondata.get('DEFAULT', 'version'),
-        author = "Christopher L. Farrow",
-        author_email = "farrowch@gmail.com",
+        author = "Simon J.L. Billinge",
+        author_email = "sb2896@columbia.edu",
+        maintainer = 'Christopher L. Farrow',
+        maintainer_email = 'farrowch@gmail.com',
         description = "Bindings of ObjCryst++ into python",
         license = "BSD",
         url = "http://www.diffpy.org/",
@@ -102,6 +104,19 @@ setup_args = dict(
         test_suite = 'pyobjcryst.tests',
         include_package_data = True,
         zip_safe = False,
+        
+        classifiers = [
+            # List of possible values at
+            # http://pypi.python.org/pypi?:action=list_classifiers
+            'Development Status :: 3 - Alpha',
+            'Environment :: Console',
+            'Intended Audience :: Science/Research',
+            'Operating System :: MacOS',
+            'Operating System :: Microsoft :: Windows',
+            'Operating System :: POSIX',
+            'Programming Language :: Python :: 2.6',
+            'Topic :: Scientific/Engineering :: Physics',
+        ],
 )
 
 if __name__ == '__main__':
