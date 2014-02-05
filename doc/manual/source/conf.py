@@ -35,7 +35,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'PyObjCryst'
-copyright = u'%Y, Trustees of Columbia University in the City of New York, all rights reserved'
+copyright = u'%Y, Brookhaven National Laboratory'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -168,7 +168,7 @@ html_split_index = True
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'SrFitdoc'
+htmlhelp_basename = 'PyObjCrystdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
