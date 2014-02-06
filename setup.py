@@ -60,12 +60,12 @@ versioncfgfile = os.path.join(MYDIR, 'pyobjcryst/version.cfg')
 def gitinfo():
     from subprocess import Popen, PIPE
     kw = dict(stdout=PIPE, cwd=MYDIR)
-    proc = Popen(['git', 'describe'], **kw)
+    proc = Popen(['git', 'describe', '--match=v[[:digit:]]*'], **kw)
     desc = proc.stdout.read()
     proc = Popen(['git', 'log', '-1', '--format=%H %ai'], **kw)
     glog = proc.stdout.read()
     rv = {}
-    rv['version'] = '-'.join(desc.strip().split('-')[:2])
+    rv['version'] = '-'.join(desc.strip().split('-')[:2]).lstrip('v')
     rv['commit'], rv['date'] = glog.strip().split(None, 1)
     return rv
 
@@ -104,7 +104,7 @@ setup_args = dict(
         test_suite = 'pyobjcryst.tests',
         include_package_data = True,
         zip_safe = False,
-        
+
         classifiers = [
             # List of possible values at
             # http://pypi.python.org/pypi?:action=list_classifiers
