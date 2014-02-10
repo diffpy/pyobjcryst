@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 
+# Installation script for pyobjcryst
+
+"""pyobjcryst - Python bindings to ObjCryst++ Object-Oriented Crystallographic 
+Library
+
+Packages:   pyobjcryst
+"""
+
 import os
 import glob
 from setuptools import setup
@@ -93,11 +101,11 @@ setup_args = dict(
         version = versiondata.get('DEFAULT', 'version'),
         author = "Simon J.L. Billinge",
         author_email = "sb2896@columbia.edu",
-        maintainer = 'Christopher L. Farrow',
-        maintainer_email = 'farrowch@gmail.com',
+        maintainer = 'Pavol Juhas',
+        maintainer_email = 'pavol.juhas@gmail.com',
         description = "Bindings of ObjCryst++ into python",
-        license = "BSD",
-        url = "http://www.diffpy.org/",
+        license = "BSD, see LICENSE.txt",
+        url = "https://github.com/diffpy/pyobjcryst",
 
         # What we're installing
         packages = ['pyobjcryst', 'pyobjcryst.tests'],
@@ -105,17 +113,23 @@ setup_args = dict(
         include_package_data = True,
         zip_safe = False,
 
+        keywords = "objcryst atom structure Crystallography"
         classifiers = [
             # List of possible values at
             # http://pypi.python.org/pypi?:action=list_classifiers
-            'Development Status :: 3 - Alpha',
+            'Development Status :: 5 - Production/Stable',
             'Environment :: Console',
+            'Intended Audience :: Developers',
             'Intended Audience :: Science/Research',
-            'Operating System :: MacOS',
-            'Operating System :: Microsoft :: Windows',
+            'License :: OSI Approved :: BSD License',
+            'Operating System :: MacOS :: MacOS X',
             'Operating System :: POSIX',
+            'Operating System :: Unix',
             'Programming Language :: Python :: 2.6',
+            'Programming Language :: Python :: 2.7',
+            'Topic :: Scientific/Engineering :: Chemistry',
             'Topic :: Scientific/Engineering :: Physics',
+            'Topic :: Software Development :: Libraries',
         ],
 )
 
