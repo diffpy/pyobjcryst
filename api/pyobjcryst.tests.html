@@ -1,0 +1,904 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tests Package &mdash; PyObjCryst 1.0b3-6 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0b3-6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="top" title="PyObjCryst 1.0b3-6 documentation" href="../index.html" />
+    <link rel="up" title="pyobjcryst Package" href="pyobjcryst.html" />
+    <link rel="prev" title="pyobjcryst Package" href="pyobjcryst.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pyobjcryst.html" title="pyobjcryst Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyObjCryst 1.0b3-6 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >pyobjcryst</a> &raquo;</li>
+          <li><a href="pyobjcryst.html" accesskey="U">pyobjcryst Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tests-package">
+<h1>tests Package<a class="headerlink" href="#tests-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">tests</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pyobjcryst.tests"></span><p>Unit tests for pyobjcryst.</p>
+<dl class="function">
+<dt id="pyobjcryst.tests.test">
+<tt class="descclassname">pyobjcryst.tests.</tt><tt class="descname">test</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute all unit tests for the pyobjcryst package.
+Return a unittest TestResult object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.testsuite">
+<tt class="descclassname">pyobjcryst.tests.</tt><tt class="descname">testsuite</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testsuite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a unit tests suite for the pyobjcryst package.</p>
+<p>Return a unittest.TestSuite object.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyobjcryst.tests.pyobjcrysttest">
+<span id="pyobjcrysttest-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">pyobjcrysttest</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.tests.pyobjcrysttest" title="Permalink to this headline">¶</a></h2>
+<p>Small tests for pyobjcryst.</p>
+<p>To check for memory leaks, run
+valgrind &#8211;tool=memcheck &#8211;leak-check=full /usr/bin/python ./pyobjcrysttest.py</p>
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttest.getScatterer">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttest.</tt><tt class="descname">getScatterer</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttest.getScatterer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a crystal and return scatterer from GetScatt.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttest.makeCrystal">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttest.</tt><tt class="descname">makeCrystal</tt><big>(</big><em>sp</em>, <em>atom</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttest.makeCrystal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttest.makeScatterer">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttest.</tt><tt class="descname">makeScatterer</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttest.makeScatterer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttest.parTest">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttest.</tt><tt class="descname">parTest</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttest.parTest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttest.test1">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttest.</tt><tt class="descname">test1</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttest.test1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run some tests.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttest.testCrystalScope">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttest.</tt><tt class="descname">testCrystalScope</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttest.testCrystalScope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test to see if the the crystal survives after it is out of scope.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttest.testMultiAdd">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttest.</tt><tt class="descname">testMultiAdd</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttest.testMultiAdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test exception for multi-crystal additions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttest.testRemoveFunctions">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttest.</tt><tt class="descname">testRemoveFunctions</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttest.testRemoveFunctions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the RemoveScatterer and RemoveScatteringPower method.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttest.testScattererScope">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttest.</tt><tt class="descname">testScattererScope</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttest.testScattererScope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test when atoms go out of scope before crystal.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyobjcryst.tests.pyobjcrysttestutils">
+<span id="pyobjcrysttestutils-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">pyobjcrysttestutils</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.tests.pyobjcrysttestutils" title="Permalink to this headline">¶</a></h2>
+<p>Utilities for tests.</p>
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttestutils.datafile">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttestutils.</tt><tt class="descname">datafile</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttestutils.datafile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttestutils.getScatterer">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttestutils.</tt><tt class="descname">getScatterer</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttestutils.getScatterer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a crystal and return scatterer from GetScatt.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttestutils.loadcifdata">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttestutils.</tt><tt class="descname">loadcifdata</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttestutils.loadcifdata" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttestutils.makeC60">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttestutils.</tt><tt class="descname">makeC60</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttestutils.makeC60" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttestutils.makeCrystal">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttestutils.</tt><tt class="descname">makeCrystal</tt><big>(</big><em>sp</em>, <em>atom</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttestutils.makeCrystal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttestutils.makeLaMnO3">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttestutils.</tt><tt class="descname">makeLaMnO3</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttestutils.makeLaMnO3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttestutils.makeMnO6">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttestutils.</tt><tt class="descname">makeMnO6</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttestutils.makeMnO6" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttestutils.makeScatterer">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttestutils.</tt><tt class="descname">makeScatterer</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttestutils.makeScatterer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttestutils.makeScattererAnisotropic">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttestutils.</tt><tt class="descname">makeScattererAnisotropic</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttestutils.makeScattererAnisotropic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.tests.pyobjcrysttestutils.toxyz">
+<tt class="descclassname">pyobjcryst.tests.pyobjcrysttestutils.</tt><tt class="descname">toxyz</tt><big>(</big><em>crystal</em>, <em>filename</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.pyobjcrysttestutils.toxyz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a crystal to an xyz file.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyobjcryst.tests.run">
+<span id="run-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">run</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.tests.run" title="Permalink to this headline">¶</a></h2>
+<p>Convenience module for executing all unit tests with</p>
+<p>python -m pyobjcryst.tests.run</p>
+</div>
+<div class="section" id="module-pyobjcryst.tests.testcif">
+<span id="testcif-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">testcif</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.tests.testcif" title="Permalink to this headline">¶</a></h2>
+<p>Tests for crystal module.</p>
+<dl class="class">
+<dt id="pyobjcryst.tests.testcif.TestCif">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testcif.</tt><tt class="descname">TestCif</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.testBadCif">
+<tt class="descname">testBadCif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.testBadCif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure we can read all cif files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_Ag_silver_cif">
+<tt class="descname">test_Ag_silver_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_Ag_silver_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of Ag_silver.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_BaTiO3_cif">
+<tt class="descname">test_BaTiO3_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_BaTiO3_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of BaTiO3.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_C_graphite_hex_cif">
+<tt class="descname">test_C_graphite_hex_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_C_graphite_hex_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of C_graphite_hex.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_CaF2_fluorite_cif">
+<tt class="descname">test_CaF2_fluorite_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_CaF2_fluorite_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of CaF2_fluorite.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_CaTiO3_cif">
+<tt class="descname">test_CaTiO3_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_CaTiO3_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of CaTiO3.cif and its ADPs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_CdSe_cadmoselite_cif">
+<tt class="descname">test_CdSe_cadmoselite_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_CdSe_cadmoselite_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of CdSe_cadmoselite.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_CeO2_cif">
+<tt class="descname">test_CeO2_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_CeO2_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of CeO2.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_NaCl_cif">
+<tt class="descname">test_NaCl_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_NaCl_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of NaCl.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_Ni_cif">
+<tt class="descname">test_Ni_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_Ni_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of Ni.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_PbS_galena_cif">
+<tt class="descname">test_PbS_galena_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_PbS_galena_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of PbS_galena.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_PbTe_cif">
+<tt class="descname">test_PbTe_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_PbTe_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of PbTe.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_Si_cif">
+<tt class="descname">test_Si_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_Si_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of Si.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_Si_setting2_cif">
+<tt class="descname">test_Si_setting2_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_Si_setting2_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of Si_setting2.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_SrTiO3_tausonite_cif">
+<tt class="descname">test_SrTiO3_tausonite_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_SrTiO3_tausonite_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of SrTiO3_tausonite.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_TiO2_anatase_cif">
+<tt class="descname">test_TiO2_anatase_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_TiO2_anatase_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of TiO2_anatase.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_TiO2_rutile_cif">
+<tt class="descname">test_TiO2_rutile_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_TiO2_rutile_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of TiO2_rutile.cif and its ADP data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_ZnS_sphalerite_cif">
+<tt class="descname">test_ZnS_sphalerite_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_ZnS_sphalerite_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of ZnS_sphalerite.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_ZnS_wurtzite_cif">
+<tt class="descname">test_ZnS_wurtzite_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_ZnS_wurtzite_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of ZnS_wurtzite.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_Zn_zinc_cif">
+<tt class="descname">test_Zn_zinc_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_Zn_zinc_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of Zn_zinc.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_caffeine_cif">
+<tt class="descname">test_caffeine_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_caffeine_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of caffeine.cif and the data inside.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_menthol_cif">
+<tt class="descname">test_menthol_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_menthol_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of menthol.cif</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcif.TestCif.test_paracetamol_cif">
+<tt class="descname">test_paracetamol_cif</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcif.TestCif.test_paracetamol_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check loading of paracetamol.cif</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyobjcryst.tests.testclocks">
+<span id="testclocks-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">testclocks</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.tests.testclocks" title="Permalink to this headline">¶</a></h2>
+<p>Tests for crystal module.</p>
+<dl class="class">
+<dt id="pyobjcryst.tests.testclocks.TestClocks">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testclocks.</tt><tt class="descname">TestClocks</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testclocks.TestClocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testclocks.TestClocks.testClockIncrement">
+<tt class="descname">testClockIncrement</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testclocks.TestClocks.testClockIncrement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure that clocks increment properly.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyobjcryst.tests.testconverters">
+<span id="testconverters-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">testconverters</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.tests.testconverters" title="Permalink to this headline">¶</a></h2>
+<p>Test the converters.</p>
+<p>This verifies results from tests built into the _registerconverters module.</p>
+<dl class="class">
+<dt id="pyobjcryst.tests.testconverters.TestConverters">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testconverters.</tt><tt class="descname">TestConverters</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testconverters.TestConverters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testconverters.TestConverters.testMatrix">
+<tt class="descname">testMatrix</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testconverters.TestConverters.testMatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testconverters.TestConverters.testVector">
+<tt class="descname">testVector</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testconverters.TestConverters.testVector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyobjcryst.tests.testcrystal">
+<span id="testcrystal-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">testcrystal</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.tests.testcrystal" title="Permalink to this headline">¶</a></h2>
+<p>Tests for crystal module.</p>
+<dl class="class">
+<dt id="pyobjcryst.tests.testcrystal.TestCrystal">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testcrystal.</tt><tt class="descname">TestCrystal</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcrystal.TestCrystal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testcrystal.TestCrystal.testCrystalScope">
+<tt class="descname">testCrystalScope</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcrystal.TestCrystal.testCrystalScope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test to see if the the crystal survives after it is out of scope.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcrystal.TestCrystal.testDummyAtom">
+<tt class="descname">testDummyAtom</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcrystal.TestCrystal.testDummyAtom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test dummy atoms.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcrystal.TestCrystal.testEmbedding">
+<tt class="descname">testEmbedding</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcrystal.TestCrystal.testEmbedding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test integrity of mutually-embedded objects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcrystal.TestCrystal.testGetScatterer">
+<tt class="descname">testGetScatterer</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcrystal.TestCrystal.testGetScatterer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test GetScatterer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcrystal.TestCrystal.testGetScatteringComponentList">
+<tt class="descname">testGetScatteringComponentList</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcrystal.TestCrystal.testGetScatteringComponentList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the RemoveScatterer and RemoveScatteringPower method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcrystal.TestCrystal.testNullData">
+<tt class="descname">testNullData</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcrystal.TestCrystal.testNullData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure we get an error when trying to add or remove Null.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcrystal.TestCrystal.testRemoveFunctions">
+<tt class="descname">testRemoveFunctions</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcrystal.TestCrystal.testRemoveFunctions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the RemoveScatterer and RemoveScatteringPower method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcrystal.TestCrystal.testScattererB">
+<tt class="descname">testScattererB</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcrystal.TestCrystal.testScattererB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test Biso and Bij of scatterer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testcrystal.TestCrystal.testScattererScope">
+<tt class="descname">testScattererScope</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testcrystal.TestCrystal.testScattererScope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test when atoms go out of scope before crystal.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyobjcryst.tests.testmolecule">
+<span id="testmolecule-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">testmolecule</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.tests.testmolecule" title="Permalink to this headline">¶</a></h2>
+<p>Tests for molecule module.</p>
+<dl class="class">
+<dt id="pyobjcryst.tests.testmolecule.TestMolAtom">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testmolecule.</tt><tt class="descname">TestMolAtom</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolAtom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolAtom.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolAtom.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolAtom.tearDown">
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolAtom.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolAtom.testAccessors">
+<tt class="descname">testAccessors</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolAtom.testAccessors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyobjcryst.tests.testmolecule.TestMolBond">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testmolecule.</tt><tt class="descname">TestMolBond</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolBond" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolBond.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolBond.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolBond.tearDown">
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolBond.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolBond.testAccessors">
+<tt class="descname">testAccessors</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolBond.testAccessors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyobjcryst.tests.testmolecule.TestMolBondAngle">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testmolecule.</tt><tt class="descname">TestMolBondAngle</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolBondAngle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolBondAngle.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolBondAngle.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolBondAngle.tearDown">
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolBondAngle.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolBondAngle.testAccessors">
+<tt class="descname">testAccessors</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolBondAngle.testAccessors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyobjcryst.tests.testmolecule.TestMolDihedralAngle">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testmolecule.</tt><tt class="descname">TestMolDihedralAngle</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolDihedralAngle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolDihedralAngle.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolDihedralAngle.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolDihedralAngle.tearDown">
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolDihedralAngle.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolDihedralAngle.testAccessors">
+<tt class="descname">testAccessors</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolDihedralAngle.testAccessors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyobjcryst.tests.testmolecule.TestMolecule">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testmolecule.</tt><tt class="descname">TestMolecule</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolecule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolecule.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolecule.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolecule.tearDown">
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolecule.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolecule.testAddPar">
+<tt class="descname">testAddPar</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolecule.testAddPar" title="Permalink to this definition">¶</a></dt>
+<dd><p>See if we crash if we add a parameter and delete the molecule.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolecule.testAtoms">
+<tt class="descname">testAtoms</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolecule.testAtoms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure the atoms are there.</p>
+<p>This tests AddAtom by association.
+This tests GetAtom.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolecule.testBondAngles">
+<tt class="descname">testBondAngles</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolecule.testBondAngles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the BondAngle accessors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolecule.testBonds">
+<tt class="descname">testBonds</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolecule.testBonds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Bond methods.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolecule.testContainment">
+<tt class="descname">testContainment</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolecule.testContainment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure we can still use the molecule if the crystal is out of
+scope.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolecule.testDihedralAngles">
+<tt class="descname">testDihedralAngles</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolecule.testDihedralAngles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the FindDihedralAngle method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolecule.testManipulation">
+<tt class="descname">testManipulation</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolecule.testManipulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test moving the atoms.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolecule.testProperties">
+<tt class="descname">testProperties</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolecule.testProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure we can access the python-only properties.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestMolecule.testRigidGroup">
+<tt class="descname">testRigidGroup</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestMolecule.testRigidGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test adding and manipulating a rigid group.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyobjcryst.tests.testmolecule.TestStretchModeBondAngle">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testmolecule.</tt><tt class="descname">TestStretchModeBondAngle</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestStretchModeBondAngle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestStretchModeBondAngle.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestStretchModeBondAngle.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestStretchModeBondAngle.tearDown">
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestStretchModeBondAngle.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestStretchModeBondAngle.testStretchModeBondAngle">
+<tt class="descname">testStretchModeBondAngle</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestStretchModeBondAngle.testStretchModeBondAngle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the StretchModeBondLength class.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyobjcryst.tests.testmolecule.TestStretchModeBondLength">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testmolecule.</tt><tt class="descname">TestStretchModeBondLength</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestStretchModeBondLength" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestStretchModeBondLength.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestStretchModeBondLength.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestStretchModeBondLength.tearDown">
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestStretchModeBondLength.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestStretchModeBondLength.testStretchModeBondLength">
+<tt class="descname">testStretchModeBondLength</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestStretchModeBondLength.testStretchModeBondLength" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the StretchModeBondLength class.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyobjcryst.tests.testmolecule.TestStretchModeTorsion">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testmolecule.</tt><tt class="descname">TestStretchModeTorsion</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestStretchModeTorsion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestStretchModeTorsion.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestStretchModeTorsion.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestStretchModeTorsion.tearDown">
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestStretchModeTorsion.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestStretchModeTorsion.testDummy">
+<tt class="descname">testDummy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestStretchModeTorsion.testDummy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test adding a dummy atom.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testmolecule.TestStretchModeTorsion.testStretchModeTorsion">
+<tt class="descname">testStretchModeTorsion</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testmolecule.TestStretchModeTorsion.testStretchModeTorsion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the StretchModeBondLength class.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyobjcryst.tests.testrefinableobj">
+<span id="testrefinableobj-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">testrefinableobj</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.tests.testrefinableobj" title="Permalink to this headline">¶</a></h2>
+<p>Tests for refinableobj module.</p>
+<dl class="class">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObj">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testrefinableobj.</tt><tt class="descname">TestRefinableObj</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObj.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObj.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a RefinableObj and add some RefinablePars.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObj.tearDown">
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObj.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean up those pesky xml files.</p>
+<p>ObjCryst dumps save state into xml files when an exception is thrown.
+Clean those up.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObj.testAddParRefinableObj">
+<tt class="descname">testAddParRefinableObj</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObj.testAddParRefinableObj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test adding another object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObj.testAddParTwice">
+<tt class="descname">testAddParTwice</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObj.testAddParTwice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to add the same parameter twice.</p>
+<p>We could stop this in the bindings, but since RefinableObj doesn&#8217;t
+delete its parameters in the destructor, it shouldn&#8217;t lead to trouble.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObj.testFixUnFix">
+<tt class="descname">testFixUnFix</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObj.testFixUnFix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test FixAllPar.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObj.testGetPar">
+<tt class="descname">testGetPar</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObj.testGetPar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test GetPar.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObj.testLimits">
+<tt class="descname">testLimits</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObj.testLimits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the limit-setting functions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObj.testNames">
+<tt class="descname">testNames</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObj.testNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the naming methods.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObj.testOptimStep">
+<tt class="descname">testOptimStep</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObj.testOptimStep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test SetGlobalOptimStep.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObj.testParmSets">
+<tt class="descname">testParmSets</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObj.testParmSets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test creation of parameter sets.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObj.testUsedUnUsed">
+<tt class="descname">testUsedUnUsed</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObj.testUsedUnUsed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test FixAllPar.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObjClock">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testrefinableobj.</tt><tt class="descname">TestRefinableObjClock</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObjClock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObjClock.testRelations">
+<tt class="descname">testRelations</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObjClock.testRelations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test clicking!</p>
+<p>Chances are that someone will someday read this code for an example on
+how to use clocks. If not, then I&#8217;ve wasted my time writing this.
+Anyway, clocks are more complex then they appear. This is because
+ObjCryst++ has an internal clock that gets incremented whenever any
+clock is Clicked. So, one cannot trust that a clock will increment by
+only one value when it is clicked. Furthermore, clocks only alert their
+parents to a change. So, it is possible to decrease the value of a
+parent clock with SetEqual below the values of its children clocks.
+Callling Click on the parent or child will restore the proper parent &gt;
+child relationship.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinableObjClock.testRemoveChild">
+<tt class="descname">testRemoveChild</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinableObjClock.testRemoveChild" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the RemoveChild method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinablePar">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testrefinableobj.</tt><tt class="descname">TestRefinablePar</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinablePar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinablePar.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinablePar.setUp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinablePar.testGetType">
+<tt class="descname">testGetType</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinablePar.testGetType" title="Permalink to this definition">¶</a></dt>
+<dd><p>See if we can get the proper RefParType from a RefinablePar.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRefinablePar.testToFromPython">
+<tt class="descname">testToFromPython</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRefinablePar.testToFromPython" title="Permalink to this definition">¶</a></dt>
+<dd><p>See if refinable parameters can be created from within python and
+within c++.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRestraint">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testrefinableobj.</tt><tt class="descname">TestRestraint</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRestraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<dl class="method">
+<dt id="pyobjcryst.tests.testrefinableobj.TestRestraint.testEquality">
+<tt class="descname">testEquality</tt><big>(</big><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testrefinableobj.TestRestraint.testEquality" title="Permalink to this definition">¶</a></dt>
+<dd><p>See if we get back what we put in.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyobjcryst.tests.testutils">
+<span id="testutils-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">testutils</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.tests.testutils" title="Permalink to this headline">¶</a></h2>
+<p>Tests for crystal module.</p>
+<dl class="class">
+<dt id="pyobjcryst.tests.testutils.TestPutAtomsInMolecule">
+<em class="property">class </em><tt class="descclassname">pyobjcryst.tests.testutils.</tt><tt class="descname">TestPutAtomsInMolecule</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#pyobjcryst.tests.testutils.TestPutAtomsInMolecule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">tests Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">tests</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.tests.pyobjcrysttest"><tt class="docutils literal"><span class="pre">pyobjcrysttest</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.tests.pyobjcrysttestutils"><tt class="docutils literal"><span class="pre">pyobjcrysttestutils</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.tests.run"><tt class="docutils literal"><span class="pre">run</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.tests.testcif"><tt class="docutils literal"><span class="pre">testcif</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.tests.testclocks"><tt class="docutils literal"><span class="pre">testclocks</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.tests.testconverters"><tt class="docutils literal"><span class="pre">testconverters</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.tests.testcrystal"><tt class="docutils literal"><span class="pre">testcrystal</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.tests.testmolecule"><tt class="docutils literal"><span class="pre">testmolecule</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.tests.testrefinableobj"><tt class="docutils literal"><span class="pre">testrefinableobj</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.tests.testutils"><tt class="docutils literal"><span class="pre">testutils</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyobjcryst.html"
+                        title="previous chapter">pyobjcryst Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/pyobjcryst.tests.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pyobjcryst.html" title="pyobjcryst Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyObjCryst 1.0b3-6 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >pyobjcryst</a> &raquo;</li>
+          <li><a href="pyobjcryst.html" >pyobjcryst Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Brookhaven National Laboratory.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
