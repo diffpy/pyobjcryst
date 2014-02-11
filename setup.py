@@ -113,7 +113,7 @@ setup_args = dict(
         include_package_data = True,
         zip_safe = False,
 
-        keywords = "objcryst atom structure Crystallography"
+        keywords = "objcryst atom structure Crystallography",
         classifiers = [
             # List of possible values at
             # http://pypi.python.org/pypi?:action=list_classifiers

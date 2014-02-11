@@ -8,7 +8,11 @@ Software version |release|.
 
 Last updated |today|.
 
-.. include:: ../../../README.txt
+PyObjCryst - Python bindings to ObjCryst++ Object-Oriented Crystallographic Library
+
+The documentation for this release of PyObjCryst can be found on-line at
+    
+    http://diffpy.github.io/doc/pyobjcryst/
 
 ===================
 Disclaimer
@@ -31,7 +35,7 @@ PyObjCryst is developed and maintained by
 Installation
 ======================================
 
-.. include:: ../../../INSTALL.txt
+.. include:: install.rst
 
 ======================================
 API
