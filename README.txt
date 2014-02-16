@@ -62,7 +62,7 @@ computer. Here's how to install.
 
  3. From the libobjcryst directory run the following command ::
 
-    > scons build=fast install
+    > scons install
 
     This will build and install the shared libraries, and header files to
     standard system-dependent locations.  Run `scons -h` for other installation

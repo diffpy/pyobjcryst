@@ -30,14 +30,12 @@ bcmd = build(Distribution())
 bcmd.finalize_options()
 distmodfile = os.path.join(bcmd.build_platlib,
     'pyobjcryst', os.path.basename(str(module[0])))
-cmd_build_ext = sys.executable + ' setup.py build_ext'
 cmd_install = sys.executable + ' setup.py install' + (
         'prefix' in env and (' --prefix=' + env['prefix']) or '')
 install = env.Alias('install', module, [
     Mkdir(os.path.dirname(distmodfile)),
-    Touch(distmodfile),
-    cmd_build_ext,
     Copy(distmodfile, '$SOURCE'),
+    Touch(distmodfile),
     cmd_install,
     ])
 AlwaysBuild(install)
