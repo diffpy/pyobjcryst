@@ -35,6 +35,8 @@ vars.Add(EnumVariable('build',
     allowed_values=('debug', 'fast')))
 vars.Add(BoolVariable('profile',
     'build with profiling information', False))
+vars.Add('python',
+    'Python executable to use for installation.', 'python')
 vars.Update(env)
 env.Help(vars.GenerateHelpText(env))
 

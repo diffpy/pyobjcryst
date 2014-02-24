@@ -19,10 +19,12 @@ module = env.SharedLibrary('_pyobjcryst', Glob('*.cpp'),
 Alias('module', module)
 
 # install in a development mode
-develop = Alias('develop', Install('#/pyobjcryst', module))
+egginfo = env.Command('#/pyobjcryst.egg-info', None,
+        '$python setup.py egg_info')
+develop = Alias('develop', [egginfo, Install('#/pyobjcryst', module)])
 
 test = env.Alias('test', develop,
-        sys.executable + ' -m pyobjcryst.tests.run')
+        '$python -m pyobjcryst.tests.run')
 AlwaysBuild(test)
 
 # normal install - trick distutils into using this module.
@@ -30,8 +32,9 @@ bcmd = build(Distribution())
 bcmd.finalize_options()
 distmodfile = os.path.join(bcmd.build_platlib,
     'pyobjcryst', os.path.basename(str(module[0])))
-cmd_install = sys.executable + ' setup.py install' + (
-        'prefix' in env and (' --prefix=' + env['prefix']) or '')
+cmd_install = '$python setup.py install'
+if 'prefix' in env:
+    cmd_install += ' --prefix=' + env['prefix']
 install = env.Alias('install', module, [
     Mkdir(os.path.dirname(distmodfile)),
     Copy(distmodfile, '$SOURCE'),
