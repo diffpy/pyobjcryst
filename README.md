@@ -19,25 +19,20 @@ The diffpy.srreal requires Python 2.6 or 2.7 and the following software:
 Some of the required software may be available in the system package manager,
 for example, on Ubuntu Linux the dependencies can be installed as:
 
-```
-sudo apt-get install \
-    python-setuptools scons build-essential python-dev libboost-dev
-```
+    sudo apt-get install \
+        python-setuptools scons build-essential python-dev libboost-dev
+
 
 For Mac OS X machine with the MacPorts package manager one could do
 
-```
-sudo port install \
-    python27 py27-setuptools scons boost
-```
+    sudo port install \
+        python27 py27-setuptools scons boost
 
 When installing with MacPorts, make sure the MacPorts bin directory is the
 first in the system PATH and that python27 is selected as the default
 Python version in MacPorts:
 
-```
-sudo port select --set python python27
-```
+    sudo port select --set python python27
 
 For other required packages see their respective web pages for installation
 instructions.
@@ -60,21 +55,16 @@ computer. Here's how to install.
  1. Download ObjCryst-latest.tar.gz from http://dev.danse.us/packages/ to the
  directory containing INSTALL.txt ::
 
-```
-wget http://dev.danse.us/packages/ObjCryst-latest.tar.gz
-```
+        wget http://dev.danse.us/packages/ObjCryst-latest.tar.gz
 
  2. Extract the archive to the libobjcryst directory ::
 
-```
-tar xzvf ObjCryst-latest.tar.gz -C libobjcryst
-```
+        tar xzvf ObjCryst-latest.tar.gz -C libobjcryst
 
  3. From the libobjcryst directory run the following command ::
 
-```
-scons install
-```
+        scons install
+
 
 This will build and install the shared libraries, and header files to
 standard system-dependent locations.  Run `scons -h` for other installation
@@ -91,16 +81,11 @@ To install PyObjCryst, you must have ObjCryst++ installed as a shared library
 (see above). Once this is done, type the following from the command line from
 the directory containing README.txt ::
 
-```
-python setup.py install
-```
+    python setup.py install
 
 For installation options, type ::
 
-```
-python setup.py --help install
-```
-
+    python setup.py --help install
 
 ## DEVELOPMENT
 
@@ -114,10 +99,7 @@ Feel free to fork the project and contribute.  To install pyobjcryst
 in a development mode, where the sources are directly used by Python
 rather than copied to a system directory, use
 
-```
-python setup.py develop --user
-```
-
+    python setup.py develop --user
 
 ## CONTACTS
 
