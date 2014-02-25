@@ -18,6 +18,7 @@
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 Changes from ObjCryst::RefinableObj
+
 - XMLOutput and XMLInput accept python file-like objects.
 - GetPar that takes a const double* is not exposed, as it is designed for
   internal use.
@@ -29,6 +30,7 @@ Changes from ObjCryst::RefinableObj
 - RemovePar is overloaded to return None.
 
 Changes from ObjCryst::RefinablePar
+
 - The constructor has been changed to accept a double, rather than a pointer to
   a double.
 - The copy and default constructors and Init are not wrapped in order to avoid
@@ -43,21 +45,23 @@ Changes from ObjCryst::RefinablePar
 - XML input/output are not exposed.
 
 Changes from ObjCryst::RefinableObjClock
+
 - operator= is wrapped as the SetEqual method
   a.SetEqual(b) -> a = b
 
 Changes from ObjCryst::ObjRegistry
+
 - DeleteAll not wrapped
 - GetObj(const unsigned int i) not wrapped. Documentation says that this is
   for internal use only.
 
 Changes from ObjCryst::Restraint
+
 - The default and copy constructors are not wrapped, nor is Init.
 - GetType returns a non-const reference to the RefParType.  This should be a
   no-no, but RefParType has no mutating methods, so this should no lead to
   trouble.
 - XML input/output are not exposed.
-
 """
 
 from _pyobjcryst import RefinableObjClock

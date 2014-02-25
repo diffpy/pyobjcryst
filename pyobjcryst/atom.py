@@ -18,9 +18,9 @@
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 Changes from ObjCryst::Atom
+
 - The default constructor has been disabled. When not followed-up by Init, it
   will cause segmentation faults, even if it is printed.
-
 """
 
 from _pyobjcryst import Atom

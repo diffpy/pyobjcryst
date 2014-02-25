@@ -18,6 +18,7 @@
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 Changes from ObjCryst::Scatterer
+
 - C++ methods that can return const or non-const objects return non-const
   objects in python.
 - Operator string() is not exposed.
@@ -26,7 +27,6 @@ Changes from ObjCryst::Scatterer
 - GetClockScattCompList is exposed using a workaround, because it is not
   implemented in the library.
 - Methods related to visualization are not exposed.
-
 """
 
 from _pyobjcryst import Scatterer

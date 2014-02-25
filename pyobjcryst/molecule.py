@@ -18,6 +18,7 @@
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 Changes from ObjCryst::Molecule
+
 - The public data are not wrapped.
 - Added __getitem__ access for MolAtoms.
 - AddAtom returns the added MolAtom
@@ -48,11 +49,13 @@ Changes from ObjCryst::Molecule
 - Quaternion ordinates Q0, Q1, Q2 and Q3 wrapped as properties.
 
 Changes from ObjCryst::MolAtom
+
 - Wrapped as a to-python converter only (no constructor)
 - File IO is disabled
 - X, Y and Z are wrapped as properties rather than methods.
 
 Changes from ObjCryst::MolBondAngle
+
 - Wrapped as a to-python converter only (no constructor)
 - Added __getitem__ access for MolAtoms.
 - File IO is disabled
@@ -63,18 +66,20 @@ Changes from ObjCryst::MolBondAngle
   the library.
 
 Changes from ObjCryst::MolDihedralAngle
+
 - Wrapped as a to-python converter only (no constructor)
 - Added __getitem__ access for MolAtoms.
 
 Changes from ObjCryst::Quaternion
+
 - IO is not wrapped
 - Q0, Q1, Q2 and Q3 are wrapped as properties, rather than functions.
 - RotateVector overloaded to return tuple of the mutated arguments.
 
 Changes from ObjCryst::RigidGroup
+
 - RigidGroup is wrapped to have python-set methods rather than stl::set
   methods.
-
 """
 
 # TODO - MolRing

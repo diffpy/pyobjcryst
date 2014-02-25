@@ -20,21 +20,23 @@ Objects are wrapped according to their header file in the ObjCryst source.
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 Modules
-    atom                    --  Wrapping of Atom.h
-    crystal                 --  Wrapping of Crystal.h
-    general                 --  Wrapping of General.h
-    io                      --  Wrapping of IO.h
-    molecule                --  Wrapping of Molecule.h
-    polyhedron              --  Wrapping of Polyhedron.h
-    refinableobj            --  Wrapping of RefinableObj.h
-    scatterer               --  Wrapping of Scatterer.h
-    scatteringpower         --  Wrapping of ScatteringPower.h
-    scatteringpowersphere   --  Wrapping of ScatteringPowerSphere.h
-    spacegroup              --  Wrapping of SpaceGroup.h
-    unitcell                --  Wrapping of UnitCell.h
-    zscatterer              --  Wrapping of ZScatterer.h
+
+atom                    --  Wrapping of Atom.h
+crystal                 --  Wrapping of Crystal.h
+general                 --  Wrapping of General.h
+io                      --  Wrapping of IO.h
+molecule                --  Wrapping of Molecule.h
+polyhedron              --  Wrapping of Polyhedron.h
+refinableobj            --  Wrapping of RefinableObj.h
+scatterer               --  Wrapping of Scatterer.h
+scatteringpower         --  Wrapping of ScatteringPower.h
+scatteringpowersphere   --  Wrapping of ScatteringPowerSphere.h
+spacegroup              --  Wrapping of SpaceGroup.h
+unitcell                --  Wrapping of UnitCell.h
+zscatterer              --  Wrapping of ZScatterer.h
 
 General Changes
+
 - C++ methods that can return const or non-const objects return non-const
   objects in python.
 - Classes with a Print() method have the output of this method exposed in the
@@ -43,7 +45,6 @@ General Changes
 - Indexing methods raise IndexError when index is out of bounds.
 
 See the modules' documentation for specific changes.
-
 """
 
 # Let's put this on the package level
