@@ -1,11 +1,12 @@
-PyObjCryst - Python bindings to ObjCryst++ Object-Oriented Crystallographic Library
+#PyObjCryst
+
+Python bindings to ObjCryst++ Object-Oriented Crystallographic Library
 
 The documentation for this release of PyObjCryst can be found on-line at
     
     http://diffpy.github.io/doc/pyobjcryst/
 
-REQUIREMENTS
-================================
+## REQUIREMENTS
 
 The diffpy.srreal requires Python 2.6 or 2.7 and the following software:
 
@@ -35,8 +36,7 @@ Python version in MacPorts:
 For other required packages see their respective web pages for installation
 instructions.
 
-INSTALLATION
-================================
+## INSTALLATION
 
 The easiest option is to use the latest DiffPy-CMI release bundle from
 http://www.diffpy.org/, which comes with pyobjcryst and all other
@@ -73,8 +73,7 @@ C++ compilers.
 
 Once you have done this, you can install PyObjCryst as instructed below.
 
-Installing PyObjCryst
-================================
+## Installing PyObjCryst
 
 To install PyObjCryst, you must have ObjCryst++ installed as a shared library
 (see above). Once this is done, type the following from the command line from
@@ -87,8 +86,7 @@ For installation options, type ::
 > python setup.py --help install
 
 
-DEVELOPMENT
-================================
+## DEVELOPMENT
 
 pyobjcryst is an open-source software developed as a part of the
 DiffPy-CMI complex modeling initiative at the Brookhaven National
@@ -103,9 +101,7 @@ rather than copied to a system directory, use
     python setup.py develop --user
 
 
-
-CONTACTS
-================================
+## CONTACTS
 
 For more information on diffpy.srreal please visit the project web-page
 
