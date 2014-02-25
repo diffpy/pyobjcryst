@@ -1,8 +1,23 @@
 # This SConstruct is for faster parallel builds.
 # Use "setup.py" for normal installation.
-#
-# module     -- build the shared library object _pyobjcryst.so
-# develop    -- install _pyobjcryst.so under the pyobjcryst/ directory
+
+MY_SCONS_HELP = """\
+SCons rules for compiling and installing pyobjcryst.
+SCons build is much faster when run with parallel jobs (-j4).
+Usage: scons [target] [var=value]
+
+Targets:
+
+module      build Python extension module _pyobjcryst.so [default]
+install     install to default Python package location
+develop     copy extension module to pyobjcryst/ directory
+test        execute unit tests
+
+Build configuration variables:
+%s
+Variables can be also assigned in a user script sconsvars.py.
+SCons construction environment can be customized in sconscript.local script.
+"""
 
 import os
 import re
@@ -38,7 +53,7 @@ vars.Add(BoolVariable('profile',
 vars.Add('python',
     'Python executable to use for installation.', 'python')
 vars.Update(env)
-env.Help(vars.GenerateHelpText(env))
+env.Help(MY_SCONS_HELP % vars.GenerateHelpText(env))
 
 # Insert LIBRARY_PATH explicitly because some compilers
 # ignore it in the system environemnt.
