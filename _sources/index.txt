@@ -1,14 +1,11 @@
 .. _manual-index:
 
 ####################################################
-PyObjCryst documentation
+pyobjcryst documentation
 ####################################################
 
-Software version |release|.
-
-Last updated |today|.
-
-PyObjCryst - Python bindings to ObjCryst++ Object-Oriented Crystallographic Library
+pyobjcryst - Python bindings to the ObjCryst++ Object-Oriented
+Crystallographic Library
 
 ===================
 Disclaimer
@@ -17,21 +14,20 @@ Disclaimer
 .. include:: ../../../LICENSE.txt
 
 ================
-Acknowledgments
+Authors
 ================
 
-Developers
------------
+pyobjcryst was developed as part of the DANSE_ open-source project by
+Christopher Farrow, Pavol Juhás, and Simon J.L. Billinge.
 
-PyObjCryst is developed and maintained by
-
-.. literalinclude:: ../../../AUTHORS.txt
+.. _DANSE: http://danse.us/
 
 ======================================
 Installation
 ======================================
 
-.. include:: install.rst
+See the `README.md <https://github.com/diffpy/pyobjcryst#requirements>`_
+file included with the distribution.
 
 ======================================
 API
@@ -39,6 +35,9 @@ API
 
 .. toctree::
    :maxdepth: 3
-   
+
    api/modules.rst
+
 * :ref:`genindex`
+
+Last updated |today|.

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyobjcryst Package &mdash; PyObjCryst 1.0b3-15 documentation</title>
+    <title>pyobjcryst Package &mdash; PyObjCryst 1.0b3-30 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0b3-15',
+        VERSION:     '1.0b3-30',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
-    <link rel="top" title="PyObjCryst 1.0b3-15 documentation" href="../index.html" />
+    <link rel="top" title="PyObjCryst 1.0b3-30 documentation" href="../index.html" />
     <link rel="up" title="pyobjcryst" href="modules.html" />
     <link rel="prev" title="pyobjcryst" href="modules.html" /> 
   </head>
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="modules.html" title="pyobjcryst"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">PyObjCryst 1.0b3-15 documentation</a> &raquo;</li>
+        <li><a href="../index.html">PyObjCryst 1.0b3-30 documentation</a> &raquo;</li>
           <li><a href="modules.html" accesskey="U">pyobjcryst</a> &raquo;</li> 
       </ul>
     </div>  
@@ -60,9 +58,8 @@
 <span class="target" id="module-pyobjcryst.__init__"></span><p>Python wrapping of ObjCryst++.</p>
 <p>Objects are wrapped according to their header file in the ObjCryst source.</p>
 <p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
-<dl class="docutils">
-<dt>Modules</dt>
-<dd>atom                    &#8211;  Wrapping of Atom.h
+<p>Modules</p>
+<p>atom                    &#8211;  Wrapping of Atom.h
 crystal                 &#8211;  Wrapping of Crystal.h
 general                 &#8211;  Wrapping of General.h
 io                      &#8211;  Wrapping of IO.h
@@ -74,13 +71,11 @@ scatteringpower         &#8211;  Wrapping of ScatteringPower.h
 scatteringpowersphere   &#8211;  Wrapping of ScatteringPowerSphere.h
 spacegroup              &#8211;  Wrapping of SpaceGroup.h
 unitcell                &#8211;  Wrapping of UnitCell.h
-zscatterer              &#8211;  Wrapping of ZScatterer.h</dd>
-</dl>
-<p>General Changes
-- C++ methods that can return const or non-const objects return non-const</p>
-<blockquote>
-<div>objects in python.</div></blockquote>
+zscatterer              &#8211;  Wrapping of ZScatterer.h</p>
+<p>General Changes</p>
 <ul class="simple">
+<li>C++ methods that can return const or non-const objects return non-const
+objects in python.</li>
 <li>Classes with a Print() method have the output of this method exposed in the
 __str__ python method. Thus, obj.Print() == print obj.</li>
 <li>CrystVector and CrystMatrix are converted to numpy arrays.</li>
@@ -92,24 +87,27 @@ __str__ python method. Thus, obj.Print() == print obj.</li>
 <span id="atom-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">atom</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.atom" title="Permalink to this headline">¶</a></h2>
 <p>Python wrapping of Atom.h</p>
 <p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
-<p>Changes from ObjCryst::Atom
-- The default constructor has been disabled. When not followed-up by Init, it</p>
-<blockquote>
-<div>will cause segmentation faults, even if it is printed.</div></blockquote>
+<p>Changes from ObjCryst::Atom</p>
+<ul class="simple">
+<li>The default constructor has been disabled. When not followed-up by Init, it
+will cause segmentation faults, even if it is printed.</li>
+</ul>
 </div>
 <div class="section" id="module-pyobjcryst.crystal">
 <span id="crystal-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">crystal</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.crystal" title="Permalink to this headline">¶</a></h2>
 <p>Python wrapping of Crystal.h.</p>
 <p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
-<p>Changes from ObjCryst::Crystal
-- CIFOutput accepts a python file-like object
-- CalcDynPopCorr is not enabled, as the API states that this is for internal</p>
-<blockquote>
-<div>use only.</div></blockquote>
-<p>Other Changes
-- CreateCrystalFromCIF is placed here instead of in a seperate CIF module. This</p>
-<blockquote>
-<div>method accepts a python file rather than a CIF object.</div></blockquote>
+<p>Changes from ObjCryst::Crystal</p>
+<ul class="simple">
+<li>CIFOutput accepts a python file-like object</li>
+<li>CalcDynPopCorr is not enabled, as the API states that this is for internal
+use only.</li>
+</ul>
+<p>Other Changes</p>
+<ul class="simple">
+<li>CreateCrystalFromCIF is placed here instead of in a seperate CIF module. This
+method accepts a python file rather than a CIF object.</li>
+</ul>
 </div>
 <div class="section" id="module-pyobjcryst.general">
 <span id="general-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">general</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.general" title="Permalink to this headline">¶</a></h2>
@@ -127,62 +125,70 @@ __str__ python method. Thus, obj.Print() == print obj.</li>
 <span id="molecule-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">molecule</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.molecule" title="Permalink to this headline">¶</a></h2>
 <p>Python wrapping of Molecule.h</p>
 <p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
-<p>Changes from ObjCryst::Molecule
-- The public data are not wrapped.
-- Added __getitem__ access for MolAtoms.
-- AddAtom returns the added MolAtom
-- AddBond returns the added MolBond
-- AddBondAngle returns the added MolBondAngle
-- AddDihedralAngle returns the added MolDihedralAngle
-- RemoveAtom returns None, has an indexed version
-- RemoveBond returns None, has an indexed version
-- RemoveBondAngle returns None, has an indexed version
-- RemoveDihedralAngle returns None, has an indexed version
-- RemoveRigidGroup returns None
-- Added GetNbAtoms
-- Added GetNbBonds
-- Added GetNbBondAngles
-- Added GetNbDihedralAngles
-- Added GetNbRigidGroups
-- Added GetBond
-- Added GetBondAngle
-- Added GetDihedralAngle
-- Added GetRigidGroup
-- FindBond returns the bond if found, None otherwise
-- FindBondAngle returns the bond angle if found, None otherwise
-- FindDihedralAngle returns the dihedral angle if found, None otherwise
-- FindAtom is identical to GetAtom.
-- FlipAtomGroup is not wrapped.
-- FlipGroup, RotorGroup and StretchModeGroup are not wrapped.
-- StretchMode getters are not wrapped
-- Quaternion ordinates Q0, Q1, Q2 and Q3 wrapped as properties.</p>
-<p>Changes from ObjCryst::MolAtom
-- Wrapped as a to-python converter only (no constructor)
-- File IO is disabled
-- X, Y and Z are wrapped as properties rather than methods.</p>
-<p>Changes from ObjCryst::MolBondAngle
-- Wrapped as a to-python converter only (no constructor)
-- Added __getitem__ access for MolAtoms.
-- File IO is disabled
-- GetDeriv and CalcGradient are not wrapped.
-- Angle0, AngleDelta and AngleSigma are wrapped as properties rather than</p>
-<blockquote>
-<div>methods.</div></blockquote>
+<p>Changes from ObjCryst::Molecule</p>
 <ul class="simple">
+<li>The public data are not wrapped.</li>
+<li>Added __getitem__ access for MolAtoms.</li>
+<li>AddAtom returns the added MolAtom</li>
+<li>AddBond returns the added MolBond</li>
+<li>AddBondAngle returns the added MolBondAngle</li>
+<li>AddDihedralAngle returns the added MolDihedralAngle</li>
+<li>RemoveAtom returns None, has an indexed version</li>
+<li>RemoveBond returns None, has an indexed version</li>
+<li>RemoveBondAngle returns None, has an indexed version</li>
+<li>RemoveDihedralAngle returns None, has an indexed version</li>
+<li>RemoveRigidGroup returns None</li>
+<li>Added GetNbAtoms</li>
+<li>Added GetNbBonds</li>
+<li>Added GetNbBondAngles</li>
+<li>Added GetNbDihedralAngles</li>
+<li>Added GetNbRigidGroups</li>
+<li>Added GetBond</li>
+<li>Added GetBondAngle</li>
+<li>Added GetDihedralAngle</li>
+<li>Added GetRigidGroup</li>
+<li>FindBond returns the bond if found, None otherwise</li>
+<li>FindBondAngle returns the bond angle if found, None otherwise</li>
+<li>FindDihedralAngle returns the dihedral angle if found, None otherwise</li>
+<li>FindAtom is identical to GetAtom.</li>
+<li>FlipAtomGroup is not wrapped.</li>
+<li>FlipGroup, RotorGroup and StretchModeGroup are not wrapped.</li>
+<li>StretchMode getters are not wrapped</li>
+<li>Quaternion ordinates Q0, Q1, Q2 and Q3 wrapped as properties.</li>
+</ul>
+<p>Changes from ObjCryst::MolAtom</p>
+<ul class="simple">
+<li>Wrapped as a to-python converter only (no constructor)</li>
+<li>File IO is disabled</li>
+<li>X, Y and Z are wrapped as properties rather than methods.</li>
+</ul>
+<p>Changes from ObjCryst::MolBondAngle</p>
+<ul class="simple">
+<li>Wrapped as a to-python converter only (no constructor)</li>
+<li>Added __getitem__ access for MolAtoms.</li>
+<li>File IO is disabled</li>
+<li>GetDeriv and CalcGradient are not wrapped.</li>
+<li>Angle0, AngleDelta and AngleSigma are wrapped as properties rather than
+methods.</li>
 <li>IsFlexible and SetFlexible are not wrapped, as they are not implemented in
 the library.</li>
 </ul>
-<p>Changes from ObjCryst::MolDihedralAngle
-- Wrapped as a to-python converter only (no constructor)
-- Added __getitem__ access for MolAtoms.</p>
-<p>Changes from ObjCryst::Quaternion
-- IO is not wrapped
-- Q0, Q1, Q2 and Q3 are wrapped as properties, rather than functions.
-- RotateVector overloaded to return tuple of the mutated arguments.</p>
-<p>Changes from ObjCryst::RigidGroup
-- RigidGroup is wrapped to have python-set methods rather than stl::set</p>
-<blockquote>
-<div>methods.</div></blockquote>
+<p>Changes from ObjCryst::MolDihedralAngle</p>
+<ul class="simple">
+<li>Wrapped as a to-python converter only (no constructor)</li>
+<li>Added __getitem__ access for MolAtoms.</li>
+</ul>
+<p>Changes from ObjCryst::Quaternion</p>
+<ul class="simple">
+<li>IO is not wrapped</li>
+<li>Q0, Q1, Q2 and Q3 are wrapped as properties, rather than functions.</li>
+<li>RotateVector overloaded to return tuple of the mutated arguments.</li>
+</ul>
+<p>Changes from ObjCryst::RigidGroup</p>
+<ul class="simple">
+<li>RigidGroup is wrapped to have python-set methods rather than stl::set
+methods.</li>
+</ul>
 </div>
 <div class="section" id="module-pyobjcryst.polyhedron">
 <span id="polyhedron-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">polyhedron</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.polyhedron" title="Permalink to this headline">¶</a></h2>
@@ -193,12 +199,11 @@ the library.</li>
 <span id="refinableobj-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">refinableobj</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.refinableobj" title="Permalink to this headline">¶</a></h2>
 <p>Python wrapping of RefinableObj.h</p>
 <p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
-<p>Changes from ObjCryst::RefinableObj
-- XMLOutput and XMLInput accept python file-like objects.
-- GetPar that takes a const double* is not exposed, as it is designed for</p>
-<blockquote>
-<div>internal use.</div></blockquote>
+<p>Changes from ObjCryst::RefinableObj</p>
 <ul class="simple">
+<li>XMLOutput and XMLInput accept python file-like objects.</li>
+<li>GetPar that takes a const double* is not exposed, as it is designed for
+internal use.</li>
 <li>GetParamSet returns a copy of the internal data so that no indirect
 manipulation can take place from python.</li>
 <li>SetDeleteRefParInDestructor(false) is called in the constructors of the
@@ -206,11 +211,10 @@ python class and the parameter accessors.</li>
 <li>SetDeleteRefParInDestructor is not exposed.</li>
 <li>RemovePar is overloaded to return None.</li>
 </ul>
-<p>Changes from ObjCryst::RefinablePar
-- The constructor has been changed to accept a double, rather than a pointer to</p>
-<blockquote>
-<div>a double.</div></blockquote>
+<p>Changes from ObjCryst::RefinablePar</p>
 <ul class="simple">
+<li>The constructor has been changed to accept a double, rather than a pointer to
+a double.</li>
 <li>The copy and default constructors and Init are not wrapped in order to avoid
 memory corruption. Since boost cannot implicitly handle double* object, a
 wrapper class had to be created. However, this wrapper class cannot be used
@@ -222,22 +226,23 @@ the C++ class PyRefinablePar, which manages its own double*.  These python
 classes are interchangable once instantiated, so users should not notice.</li>
 <li>XML input/output are not exposed.</li>
 </ul>
-<p>Changes from ObjCryst::RefinableObjClock
-- operator= is wrapped as the SetEqual method</p>
-<blockquote>
-<div>a.SetEqual(b) -&gt; a = b</div></blockquote>
-<p>Changes from ObjCryst::ObjRegistry
-- DeleteAll not wrapped
-- GetObj(const unsigned int i) not wrapped. Documentation says that this is</p>
-<blockquote>
-<div>for internal use only.</div></blockquote>
-<p>Changes from ObjCryst::Restraint
-- The default and copy constructors are not wrapped, nor is Init.
-- GetType returns a non-const reference to the RefParType.  This should be a</p>
-<blockquote>
-<div>no-no, but RefParType has no mutating methods, so this should no lead to
-trouble.</div></blockquote>
+<p>Changes from ObjCryst::RefinableObjClock</p>
 <ul class="simple">
+<li>operator= is wrapped as the SetEqual method
+a.SetEqual(b) -&gt; a = b</li>
+</ul>
+<p>Changes from ObjCryst::ObjRegistry</p>
+<ul class="simple">
+<li>DeleteAll not wrapped</li>
+<li>GetObj(const unsigned int i) not wrapped. Documentation says that this is
+for internal use only.</li>
+</ul>
+<p>Changes from ObjCryst::Restraint</p>
+<ul class="simple">
+<li>The default and copy constructors are not wrapped, nor is Init.</li>
+<li>GetType returns a non-const reference to the RefParType.  This should be a
+no-no, but RefParType has no mutating methods, so this should no lead to
+trouble.</li>
 <li>XML input/output are not exposed.</li>
 </ul>
 </div>
@@ -245,11 +250,10 @@ trouble.</div></blockquote>
 <span id="scatterer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">scatterer</span></tt> Module<a class="headerlink" href="#module-pyobjcryst.scatterer" title="Permalink to this headline">¶</a></h2>
 <p>Python wrapping of Scatterer.h</p>
 <p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
-<p>Changes from ObjCryst::Scatterer
-- C++ methods that can return const or non-const objects return non-const</p>
-<blockquote>
-<div>objects in python.</div></blockquote>
+<p>Changes from ObjCryst::Scatterer</p>
 <ul class="simple">
+<li>C++ methods that can return const or non-const objects return non-const
+objects in python.</li>
 <li>Operator string() is not exposed.</li>
 <li>Internal use only methods have not been exposed.</li>
 <li>InitRefParList is not exposed, as it is not used inside of Scatterer.</li>
@@ -355,13 +359,6 @@ crystal&#8217;s name.</dd>
 <p>Changes from ObjCryst++
 - XMLOutput and Input are not wrapped.</p>
 </div>
-<div class="section" id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul class="simple">
-</ul>
-</div>
-</div>
 </div>
 
 
@@ -389,9 +386,6 @@ crystal&#8217;s name.</dd>
 <li><a class="reference internal" href="#module-pyobjcryst.utils"><tt class="docutils literal"><span class="pre">utils</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyobjcryst.version"><tt class="docutils literal"><span class="pre">version</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyobjcryst.zscatterer"><tt class="docutils literal"><span class="pre">zscatterer</span></tt> Module</a></li>
-<li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -433,13 +427,13 @@ crystal&#8217;s name.</dd>
         <li class="right" >
           <a href="modules.html" title="pyobjcryst"
              >previous</a> |</li>
-        <li><a href="../index.html">PyObjCryst 1.0b3-15 documentation</a> &raquo;</li>
+        <li><a href="../index.html">PyObjCryst 1.0b3-30 documentation</a> &raquo;</li>
           <li><a href="modules.html" >pyobjcryst</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2014, Brookhaven National Laboratory.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
     </div>
   </body>
 </html>

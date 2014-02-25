@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>PyObjCryst documentation &mdash; PyObjCryst 1.0b3-15 documentation</title>
+    <title>pyobjcryst documentation &mdash; PyObjCryst 1.0b3-30 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
-        VERSION:     '1.0b3-15',
+        URL_ROOT:    './',
+        VERSION:     '1.0b3-30',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
-    <link rel="top" title="PyObjCryst 1.0b3-15 documentation" href="#" />
+    <link rel="top" title="PyObjCryst 1.0b3-30 documentation" href="#" />
     <link rel="next" title="pyobjcryst" href="api/modules.html" /> 
   </head>
   <body>
@@ -42,7 +40,7 @@
         <li class="right" >
           <a href="api/modules.html" title="pyobjcryst"
              accesskey="N">next</a> |</li>
-        <li><a href="#">PyObjCryst 1.0b3-15 documentation</a> &raquo;</li> 
+        <li><a href="#">PyObjCryst 1.0b3-30 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -52,10 +50,9 @@
           <div class="body">
             
   <div class="section" id="pyobjcryst-documentation">
-<span id="manual-index"></span><h1>PyObjCryst documentation<a class="headerlink" href="#pyobjcryst-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Software version 1.0b3-15.</p>
-<p>Last updated February 18, 2014.</p>
-<p>PyObjCryst - Python bindings to ObjCryst++ Object-Oriented Crystallographic Library</p>
+<span id="manual-index"></span><h1>pyobjcryst documentation<a class="headerlink" href="#pyobjcryst-documentation" title="Permalink to this headline">¶</a></h1>
+<p>pyobjcryst - Python bindings to the ObjCryst++ Object-Oriented
+Crystallographic Library</p>
 <div class="section" id="disclaimer">
 <h2>Disclaimer<a class="headerlink" href="#disclaimer" title="Permalink to this headline">¶</a></h2>
 <p>This program is part of the DiffPy and DANSE open-source projects at Columbia
@@ -89,91 +86,15 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 </div>
-<div class="section" id="acknowledgments">
-<h2>Acknowledgments<a class="headerlink" href="#acknowledgments" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="developers">
-<h3>Developers<a class="headerlink" href="#developers" title="Permalink to this headline">¶</a></h3>
-<p>PyObjCryst is developed and maintained by</p>
-<div class="highlight-python"><pre>Pavol Juhas
-Chris Farrow
-Simon J.L. Billinge
-</pre>
-</div>
-</div>
+<div class="section" id="authors">
+<h2>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h2>
+<p>pyobjcryst was developed as part of the <a class="reference external" href="http://danse.us/">DANSE</a> open-source project by
+Christopher Farrow, Pavol Juhás, and Simon J.L. Billinge.</p>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>REQUIREMENTS</p>
-<p>The diffpy.srreal requires Python 2.6 or 2.7 and the following software:</p>
-<blockquote>
-<div>setuptools   &#8211; tools for installing Python packages
-scons        &#8211; software constructions tool (1.0 or later)
-python-dev   &#8211; header files for interfacing Python with C
-libboost-dev &#8211; Boost C++ libraries development files (1.43 or later)
-ObjCryst++   &#8211; Object-Oriented Crystallographic Library</div></blockquote>
-<p>Some of the required software may be available in the system package manager,
-for example, on Ubuntu Linux the dependencies can be installed as:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>sudo apt-get install </dt>
-<dd>python-setuptools scons build-essential python-dev libboost-dev</dd>
-</dl>
-</div></blockquote>
-<p>For Mac OS X machine with the MacPorts package manager one could do</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>sudo port install </dt>
-<dd>python27 py27-setuptools scons boost</dd>
-</dl>
-</div></blockquote>
-<p>When installing with MacPorts, make sure the MacPorts bin directory is the
-first in the system PATH and that python27 is selected as the default
-Python version in MacPorts:</p>
-<blockquote>
-<div>sudo port select &#8211;set python python27</div></blockquote>
-<p>For other required packages see their respective web pages for installation
-instructions.</p>
-<p>INSTALLATION</p>
-<p>The easiest option is to use the latest DiffPy-CMI release bundle from
-<a class="reference external" href="http://www.diffpy.org/">http://www.diffpy.org/</a>, which comes with pyobjcryst and all other
-dependencies included.</p>
-<p>If you prefer to install from sources:</p>
-<p>Installing ObjCryst++</p>
-<p>We provide a SCons build script and ObjCryst++ source bundle to make it easier
-to build ObjCryst++ and its dependencies (cctbx and newmat) as a shared
-library. This requires SCons (<a class="reference external" href="http://www.scons.org">http://www.scons.org</a>) to be installed on your
-computer. Here&#8217;s how to install.</p>
-<blockquote>
-<div><p>1. Download ObjCryst-latest.tar.gz from <a class="reference external" href="http://dev.danse.us/packages/">http://dev.danse.us/packages/</a> to the
-directory containing INSTALL.txt</p>
-<div class="highlight-python"><pre>&gt; wget http://dev.danse.us/packages/ObjCryst-latest.tar.gz</pre>
-</div>
-<ol class="arabic" start="2">
-<li><p class="first">Extract the archive to the libobjcryst directory</p>
-<div class="highlight-python"><pre>&gt; tar xzvf ObjCryst-latest.tar.gz -C libobjcryst</pre>
-</div>
-</li>
-<li><p class="first">From the libobjcryst directory run the following command</p>
-<div class="highlight-python"><pre>&gt; scons build=fast install</pre>
-</div>
-<p>This will build and install the shared libraries, and header files to
-standard system-dependent locations.  Run <cite>scons -h</cite> for other installation
-options.</p>
-</li>
-</ol>
-</div></blockquote>
-<p>This build method has been tested on Linux platforms with recent GNU and Intel
-C++ compilers.</p>
-<p>Once you have done this, you can install PyObjCryst as instructed below.</p>
-<p>Installing PyObjCryst</p>
-<p>To install PyObjCryst, you must have ObjCryst++ installed as a shared library
-(see above). Once this is done, type the following from the command line from
-the directory containing README.txt</p>
-<div class="highlight-python"><pre>&gt; python setup.py install</pre>
-</div>
-<p>For installation options, type</p>
-<div class="highlight-python"><pre>&gt; python setup.py --help install</pre>
-</div>
+<p>See the <a class="reference external" href="https://github.com/diffpy/pyobjcryst#requirements">README.md</a>
+file included with the distribution.</p>
 </div>
 <div class="section" id="api">
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
@@ -197,7 +118,6 @@ the directory containing README.txt</p>
 <li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.utils"><tt class="docutils literal"><span class="pre">utils</span></tt> Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.version"><tt class="docutils literal"><span class="pre">version</span></tt> Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.zscatterer"><tt class="docutils literal"><span class="pre">zscatterer</span></tt> Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#subpackages">Subpackages</a></li>
 </ul>
 </li>
 </ul>
@@ -207,6 +127,7 @@ the directory containing README.txt</p>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
 </ul>
+<p>Last updated February 25, 2014.</p>
 </div>
 </div>
 
@@ -218,16 +139,11 @@ the directory containing README.txt</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">PyObjCryst documentation</a><ul>
+<li><a class="reference internal" href="#">pyobjcryst documentation</a><ul>
 <li><a class="reference internal" href="#disclaimer">Disclaimer</a></li>
-<li><a class="reference internal" href="#acknowledgments">Acknowledgments</a><ul>
-<li><a class="reference internal" href="#developers">Developers</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#authors">Authors</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#api">API</a><ul>
-</ul>
-</li>
+<li><a class="reference internal" href="#api">API</a></li>
 </ul>
 </li>
 </ul>
@@ -269,12 +185,12 @@ the directory containing README.txt</p>
         <li class="right" >
           <a href="api/modules.html" title="pyobjcryst"
              >next</a> |</li>
-        <li><a href="#">PyObjCryst 1.0b3-15 documentation</a> &raquo;</li> 
+        <li><a href="#">PyObjCryst 1.0b3-30 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2014, Brookhaven National Laboratory.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
     </div>
   </body>
 </html>
