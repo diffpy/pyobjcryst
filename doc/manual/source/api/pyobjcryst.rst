@@ -128,11 +128,3 @@ pyobjcryst Package
     :members:
     :undoc-members:
     :show-inheritance:
-
-Subpackages
------------
-
-.. toctree::
-
-    pyobjcryst.tests
-
