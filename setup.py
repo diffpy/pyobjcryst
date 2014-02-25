@@ -2,7 +2,7 @@
 
 # Installation script for pyobjcryst
 
-"""pyobjcryst - Python bindings to ObjCryst++ Object-Oriented Crystallographic 
+"""pyobjcryst - Python bindings to ObjCryst++ Object-Oriented Crystallographic
 Library
 
 Packages:   pyobjcryst
@@ -114,18 +114,20 @@ setup_args = dict(
         include_package_data = True,
         zip_safe = False,
 
-        keywords = "objcryst atom structure Crystallography",
+        keywords = "objcryst atom structure crystallography",
         classifiers = [
             # List of possible values at
             # http://pypi.python.org/pypi?:action=list_classifiers
             'Development Status :: 5 - Production/Stable',
             'Environment :: Console',
             'Intended Audience :: Developers',
+            'Intended Audience :: Education',
             'Intended Audience :: Science/Research',
             'License :: OSI Approved :: BSD License',
             'Operating System :: MacOS :: MacOS X',
             'Operating System :: POSIX',
             'Operating System :: Unix',
+            'Programming Language :: C++',
             'Programming Language :: Python :: 2.6',
             'Programming Language :: Python :: 2.7',
             'Topic :: Scientific/Engineering :: Chemistry',
