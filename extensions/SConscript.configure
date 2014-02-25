@@ -1,4 +1,4 @@
-Import('env')
+Import('env', 'pyconfigvar')
 
 # Helper functions -----------------------------------------------------------
 
@@ -23,10 +23,17 @@ def configure_boost_library(libname):
 
 # Start configuration --------------------------------------------------------
 
+# Temporarily link with Python shared_library so that the check
+# for boost_python does not fail due to unresolved Python symbols.
+save_linkflags = env['LINKFLAGS']
+env.Prepend(LINKFLAGS=pyconfigvar('BLDLIBRARY'))
+
 conf = Configure(env)
 conf.CheckLib('ObjCryst', language='C++')
 configure_boost_library('boost_python')
-
 env = conf.Finish()
+
+# Restore the original LINKFLAGS.
+env.Replace(LINKFLAGS=save_linkflags)
 
 # vim: ft=python

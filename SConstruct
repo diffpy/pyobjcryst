@@ -21,17 +21,29 @@ SCons construction environment can be customized in sconscript.local script.
 
 import os
 import re
+import subprocess
 import platform
 
 def subdictionary(d, keyset):
     return dict([kv for kv in d.items() if kv[0] in keyset])
 
+def getsyspaths(*names):
+    s = os.pathsep.join(filter(None, map(os.environ.get, names)))
+    return filter(os.path.exists, s.split(os.pathsep))
+
+def pyconfigvar(name):
+    cmd = [env['python'], '-c', '\n'.join((
+            'from distutils.sysconfig import get_config_var',
+            'print get_config_var(%r)' % name))]
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+    out = proc.communicate()[0]
+    return out.rstrip()
+
 # copy system environment variables related to compilation
-DefaultEnvironment(ENV=subdictionary(os.environ, [
-    'PATH', 'PYTHONPATH',
-    'CPATH', 'CPLUS_INCLUDE_PATH',
-    'LD_LIBRARY_PATH', 'LIBRARY_PATH',
-    ])
+DefaultEnvironment(ENV=subdictionary(os.environ, '''
+    PATH PYTHONPATH
+    LD_LIBRARY_PATH DYLD_LIBRARY_PATH LIBRARY_PATH
+    '''.split())
 )
 
 # Create construction environment
@@ -55,31 +67,37 @@ vars.Add('python',
 vars.Update(env)
 env.Help(MY_SCONS_HELP % vars.GenerateHelpText(env))
 
-# Insert LIBRARY_PATH explicitly because some compilers
-# ignore it in the system environemnt.
-env.PrependUnique(LIBPATH=env['ENV'].get('LIBRARY_PATH', '').split(':'))
-
 # Use Intel C++ compiler when it is available
 icpc = env.WhereIs('icpc')
 if icpc:
     env.Tool('intelc', topdir=icpc[:icpc.rfind('/bin')])
 
-# Note: If we merge in libObjCryst scripts, this should apply
-# to a separate environment for Python modules.
 # Figure out compilation switches, filter away C-related items.
 good_python_flags = lambda n : (
+    not isinstance(n, basestring) or
     not re.match(r'(-g|-Wstrict-prototypes|-O\d)$', n))
 env.ParseConfig("python-config --cflags")
 env.Replace(CCFLAGS=filter(good_python_flags, env['CCFLAGS']))
 env.Replace(CPPDEFINES='')
+# the CPPPATH directories are checked by scons dependency scanner
+cpppath = getsyspaths('CPLUS_INCLUDE_PATH', 'CPATH')
+env.AppendUnique(CPPPATH=cpppath)
+# Insert LIBRARY_PATH explicitly because some compilers
+# ignore it in the system environment.
+env.PrependUnique(LIBPATH=getsyspaths('LIBRARY_PATH'))
 # Add shared libraries.
 # Note: ObjCryst and boost_python are added from SConscript.configure
-env.ParseConfig("python-config --ldflags")
 
 fast_linkflags = ['-s']
+fast_shlinkflags = pyconfigvar('LDSHARED').split()[1:]
 
 # Platform specific intricacies.
 if env['PLATFORM'] == 'darwin':
+    darwin_shlinkflags = [n for n in env['SHLINKFLAGS']
+            if n != '-dynamiclib']
+    env.Replace(SHLINKFLAGS=darwin_shlinkflags)
+    env.AppendUnique(SHLINKFLAGS=['-bundle'])
+    env.AppendUnique(SHLINKFLAGS=['-undefined', 'dynamic_lookup'])
     fast_linkflags[:] = []
 
 # Compiler specific options
@@ -100,13 +118,15 @@ elif env['build'] == 'fast':
     env.AppendUnique(CCFLAGS=['-O3'] + fast_optimflags)
     env.AppendUnique(CPPDEFINES='NDEBUG')
     env.AppendUnique(LINKFLAGS=fast_linkflags)
+    env.AppendUnique(SHLINKFLAGS=fast_shlinkflags)
 
 if env['profile']:
     env.AppendUnique(CCFLAGS='-pg')
     env.AppendUnique(LINKFLAGS='-pg')
 
 builddir = env.Dir('build/%s-%s' % (env['build'], platform.machine()))
-Export('env')
+
+Export('env', 'pyconfigvar')
 
 if os.path.isfile('sconscript.local'):
     env.SConscript('sconscript.local')
