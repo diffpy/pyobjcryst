@@ -13,11 +13,11 @@ REQUIREMENTS
 pyobjcryst requires Python 2.6 or 2.7, C++ compiler and the following
 software:
 
-* `libobjcryst` - Object-Oriented Crystallographic Library for C++,
+* **libobjcryst** - Object-Oriented Crystallographic Library for C++,
   https://github.com/diffpy/libobjcryst/
-* `setuptools`  - tools for installing Python packages
-* `python-dev` - header files for interfacing Python with C
-* `libboost-dev` - Boost C++ libraries development files
+* **setuptools**  - tools for installing Python packages
+* **python-dev** - header files for interfacing Python with C
+* **libboost-dev** - Boost C++ libraries development files
 
 With the exception of libobjcryst, the required software is commonly
 available in system package manager, for example, on Ubuntu Linux the
@@ -26,7 +26,7 @@ required software can be installed as::
     sudo apt-get install \
 	python-setuptools python-dev libboost-dev build-essential
 
-For Mac OS X machine with the MacPorts package manager the installation is:
+For Mac OS X machine with the MacPorts package manager the installation is::
 
     sudo port install \
 	python27 py27-setuptools scons boost
