@@ -42,7 +42,6 @@ copyright = u'%Y, Brookhaven National Laboratory'
 # built documents.
 sys.path.insert(0, os.path.abspath('../../..'))
 from setup import versiondata
-sys.path.remove(os.path.abspath('../../..'))
 fullversion = versiondata.get('DEFAULT', 'version')
 # The short X.Y version.
 version = '.'.join(fullversion.split('.')[:2])
