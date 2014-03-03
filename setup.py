@@ -105,7 +105,7 @@ setup_args = dict(
         maintainer = 'Pavol Juhas',
         maintainer_email = 'pavol.juhas@gmail.com',
         description = "Bindings of ObjCryst++ into python",
-        license = "BSD-style license, see LICENSE.txt",
+        license = "BSD-style license",
         url = "https://github.com/diffpy/pyobjcryst",
 
         # What we're installing
