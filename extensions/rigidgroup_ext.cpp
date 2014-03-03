@@ -18,8 +18,6 @@
 * - RigidGroup is wrapped to have python-set methods rather than stl::set
 *   methods.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

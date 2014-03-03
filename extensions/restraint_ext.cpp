@@ -19,8 +19,6 @@
 *   trouble.
 * - XML input/output are not exposed.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

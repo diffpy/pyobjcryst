@@ -15,8 +15,6 @@
 * boost::python bindings to ObjCryst::GlobalScatteringPower from
 * ObjCryst/ObjCryst/ZScatterer.h
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

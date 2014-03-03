@@ -19,8 +19,6 @@
 * - C++ methods that can return const or non-const objects return non-const
 *   objects in python.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

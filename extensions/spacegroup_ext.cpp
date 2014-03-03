@@ -14,8 +14,6 @@
 *
 * boost::python bindings to ObjCryst::SpaceGroup.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

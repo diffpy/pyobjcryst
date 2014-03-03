@@ -14,8 +14,6 @@
 *
 * boost::python bindings to ObjCryst::Polyhedron module.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

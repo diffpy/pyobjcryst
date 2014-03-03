@@ -24,8 +24,6 @@
 * - IsFlexible and SetFlexible are not wrapped, as they are not implemented in
 *   the library.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

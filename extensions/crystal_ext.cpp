@@ -25,9 +25,6 @@
 * - CreateCrystalFromCIF is placed here instead of in a seperate CIF module. This
 *   method accepts a python file rather than a CIF object.
 *
-*
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

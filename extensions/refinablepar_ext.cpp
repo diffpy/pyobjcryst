@@ -29,8 +29,6 @@
 *   classes are interchangable once instantiated, so users should not notice.
 * - XML input/output are not exposed.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

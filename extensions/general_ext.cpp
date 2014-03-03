@@ -15,8 +15,6 @@
 * boost::python bindings to general structures and objects defined in
 * ObjCryst/ObjCryst/General.h
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

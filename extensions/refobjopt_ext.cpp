@@ -14,8 +14,6 @@
 *
 * boost::python bindings to ObjCryst::RefObjOpt.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

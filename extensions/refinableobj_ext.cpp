@@ -29,8 +29,6 @@
 * - SetDeleteRefParInDestructor is not exposed.
 * - RemovePar is overloaded to return None.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

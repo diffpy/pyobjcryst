@@ -14,8 +14,6 @@
 *
 * boost::python bindings to ObjCryst::ScatteringPowerAtom.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

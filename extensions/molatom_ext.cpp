@@ -19,8 +19,6 @@
 * - File IO is disabled
 * - X, Y and Z are wrapped as properties rather than methods.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

@@ -17,8 +17,6 @@
 * Changes from ObjCryst::ZAtom
 * - XMLOutput and Input are not wrapped.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

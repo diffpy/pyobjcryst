@@ -15,8 +15,6 @@
 * This is home to converters and utility functions that are explicitly applied
 * within the extensions, rather than registered in registerconverters.cpp.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #ifndef HELPERS_HPP

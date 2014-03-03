@@ -19,8 +19,6 @@
 * - Q0, Q1, Q2 and Q3 are wrapped as properties, rather than functions.
 * - RotateVector overloaded to return tuple of the mutated arguments.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

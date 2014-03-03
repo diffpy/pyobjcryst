@@ -17,8 +17,6 @@
 * Changes from ObjCryst::ScatteringComponent
 * - Added attributes X, Y, Z, Occupancy to conform to MolAtom.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

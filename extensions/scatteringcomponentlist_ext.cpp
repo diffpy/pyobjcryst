@@ -18,8 +18,6 @@
 * - Wrapped as a to-python converter only (no constructor)
 * - Added python list-like access
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

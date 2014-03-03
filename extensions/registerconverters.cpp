@@ -14,8 +14,6 @@
 *
 * boost::python bindings for various conversions used in pyobjcryst.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

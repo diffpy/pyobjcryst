@@ -16,8 +16,6 @@
 *
 * Note that all indices are zero-based.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

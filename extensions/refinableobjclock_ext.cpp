@@ -18,8 +18,6 @@
 * - operator= is wrapped as the SetEqual method
 *   a.SetEqual(b) -> a = b
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

@@ -17,8 +17,6 @@
 * Changes from ObjCryst::XMLCrystTag
 * - The istream constructor of XMLCrystTag is not wrapped.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

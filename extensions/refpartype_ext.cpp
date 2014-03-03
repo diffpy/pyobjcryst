@@ -14,8 +14,6 @@
 *
 * boost::python bindings to ObjCryst::RefParType.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

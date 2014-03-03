@@ -14,8 +14,6 @@
 *
 * boost::python bindings to ObjCryst::ScatteringPowerSphere.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

@@ -21,8 +21,6 @@
 * - Length0, LengthDelta, LengthSigma and BondOrder are wrapped as properties
 *   rather than methods.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

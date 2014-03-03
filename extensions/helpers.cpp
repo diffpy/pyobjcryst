@@ -14,8 +14,6 @@
 *
 * Implementation of non-template binding-specific helper functions.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include "helpers.hpp"

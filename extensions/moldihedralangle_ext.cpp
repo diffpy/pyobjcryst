@@ -18,8 +18,6 @@
 * - Wrapped as a to-python converter only (no constructor)
 * - Added __getitem__ access for MolAtoms.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

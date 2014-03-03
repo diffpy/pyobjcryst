@@ -18,8 +18,6 @@
 * - The default constructor has been disabled. When not followed-up by Init, it
 *   will cause segmentation faults, even if it is printed.
 *
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>

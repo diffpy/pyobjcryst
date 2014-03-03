@@ -17,7 +17,6 @@
 * Changes from ObjCryst++
 * - XMLOutput and Input are not wrapped.
 *
-* $Id$
 * - Import and output is not implemented yet.
 *
 *****************************************************************************/

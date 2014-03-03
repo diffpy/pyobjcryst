@@ -26,9 +26,6 @@
 *   implemented in the library.
 * - Methods related to visualization are not exposed.
 *
-*
-* $Id$
-*
 *****************************************************************************/
 
 #include <boost/python.hpp>
