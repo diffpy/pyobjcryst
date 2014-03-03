@@ -2,7 +2,7 @@
 *
 * pyobjcryst        by DANSE Diffraction group
 *                   Simon J. L. Billinge
-*                   (c) 2009 Trustees of the Columbia University
+*                   (c) 2009 The Trustees of Columbia University
 *                   in the City of New York.  All rights reserved.
 *
 * File coded by:    Chris Farrow
