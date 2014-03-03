@@ -111,21 +111,21 @@ class TestCif(unittest.TestCase):
         '''
         c = loadcifdata('CaTiO3.cif')
         self.assertTrue(c is not None)
-        s = c.GetScatt(0)
+        s = c.GetScatt(3)
         name = s.GetName()
-        self.assertEquals(name, "Ca1")
+        self.assertEquals(name, "O2")
         sp = c.GetScatteringPower(name)
         self.assertFalse(sp.IsIsotropic())
         utob = 8 * pi**2
-        self.assertAlmostEquals(utob * 0.0077, sp.B11)
-        self.assertAlmostEquals(utob * 0.0079, sp.B22)
-        self.assertAlmostEquals(utob * 0.0077, sp.B33)
-        self.assertAlmostEquals(-utob * 0.0013, sp.B12)
-        self.assertAlmostEquals(0, sp.B13)
-        self.assertAlmostEquals(0, sp.B23)
-        self.assertAlmostEquals(-0.00676, s.X, 5)
-        self.assertAlmostEquals(0.03602, s.Y, 5)
-        self.assertAlmostEquals(0.25, s.Z, 2)
+        self.assertAlmostEquals(utob * 0.0065, sp.B11)
+        self.assertAlmostEquals(utob * 0.0060, sp.B22)
+        self.assertAlmostEquals(utob * 0.0095, sp.B33)
+        self.assertAlmostEquals(utob * 0.0020, sp.B12)
+        self.assertAlmostEquals(utob * -0.0008, sp.B13)
+        self.assertAlmostEquals(utob * -0.0010, sp.B23)
+        self.assertAlmostEquals(0.2897, s.X, 5)
+        self.assertAlmostEquals(0.2888, s.Y, 5)
+        self.assertAlmostEquals(0.0373, s.Z, 2)
         self.assertAlmostEquals(1, s.Occupancy)
         return
 
@@ -146,10 +146,10 @@ class TestCif(unittest.TestCase):
         return
 
 
-    def test_menthol_cif(self):
-        '''Check loading of menthol.cif
+    def test_lidocainementhol_cif(self):
+        '''Check loading of lidocainementhol.cif
         '''
-        c = loadcifdata('menthol.cif')
+        c = loadcifdata('lidocainementhol.cif')
         self.assertTrue(c is not None)
         return
 
