@@ -34,7 +34,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'PyObjCryst'
+project = u'pyobjcryst'
 copyright = u'%Y, Brookhaven National Laboratory'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -168,7 +168,7 @@ html_split_index = True
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'PyObjCrystdoc'
+htmlhelp_basename = 'pyobjcrystdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
