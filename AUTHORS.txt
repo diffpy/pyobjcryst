@@ -1,3 +1,9 @@
+Authors:
+
+Christopher L. Farrow
 Pavol Juhas
-Chris Farrow
 Simon J.L. Billinge
+
+Contributors:
+
+https://github.com/diffpy/pyobjcryst/graphs/contributors
