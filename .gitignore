@@ -44,3 +44,4 @@ nosetests.xml
 setup.cfg
 .gdb_history
 /pyobjcryst/version.cfg
+/.settings/*
