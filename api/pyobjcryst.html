@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyobjcryst Package &mdash; PyObjCryst 1.0b3-33 documentation</title>
+    <title>pyobjcryst package &mdash; pyobjcryst 1.0b4 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0b3-33',
+        VERSION:     '1.0b4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
-    <link rel="top" title="PyObjCryst 1.0b3-33 documentation" href="../index.html" />
+    <link rel="top" title="pyobjcryst 1.0b4 documentation" href="../index.html" />
     <link rel="up" title="pyobjcryst" href="modules.html" />
     <link rel="prev" title="pyobjcryst" href="modules.html" /> 
   </head>
@@ -36,9 +36,12 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="modules.html" title="pyobjcryst"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">PyObjCryst 1.0b3-33 documentation</a> &raquo;</li>
+        <li><a href="../index.html">pyobjcryst 1.0b4 documentation</a> &raquo;</li>
           <li><a href="modules.html" accesskey="U">pyobjcryst</a> &raquo;</li> 
       </ul>
     </div>  
@@ -49,54 +52,321 @@
           <div class="body">
             
   <div class="section" id="pyobjcryst-package">
-<h1>pyobjcryst Package<a class="headerlink" href="#pyobjcryst-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id1">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">pyobjcryst</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h1>pyobjcryst package<a class="headerlink" href="#pyobjcryst-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="atom-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">atom</span></tt> Module<a class="headerlink" href="#atom-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.atom">
+<span id="pyobjcryst-atom-module"></span><h2>pyobjcryst.atom module<a class="headerlink" href="#module-pyobjcryst.atom" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of Atom.h</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
+<p>Changes from ObjCryst::Atom</p>
+<ul class="simple">
+<li>The default constructor has been disabled. When not followed-up by Init, it
+will cause segmentation faults, even if it is printed.</li>
+</ul>
 </div>
-<div class="section" id="crystal-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">crystal</span></tt> Module<a class="headerlink" href="#crystal-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.crystal">
+<span id="pyobjcryst-crystal-module"></span><h2>pyobjcryst.crystal module<a class="headerlink" href="#module-pyobjcryst.crystal" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of Crystal.h.</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
+<p>Changes from ObjCryst::Crystal</p>
+<ul class="simple">
+<li>CIFOutput accepts a python file-like object</li>
+<li>CalcDynPopCorr is not enabled, as the API states that this is for internal
+use only.</li>
+</ul>
+<p>Other Changes</p>
+<ul class="simple">
+<li>CreateCrystalFromCIF is placed here instead of in a seperate CIF module. This
+method accepts a python file rather than a CIF object.</li>
+</ul>
 </div>
-<div class="section" id="general-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">general</span></tt> Module<a class="headerlink" href="#general-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.general">
+<span id="pyobjcryst-general-module"></span><h2>pyobjcryst.general module<a class="headerlink" href="#module-pyobjcryst.general" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of things from General.h.</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
 </div>
-<div class="section" id="io-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">io</span></tt> Module<a class="headerlink" href="#io-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.io">
+<span id="pyobjcryst-io-module"></span><h2>pyobjcryst.io module<a class="headerlink" href="#module-pyobjcryst.io" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of IO.h</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
+<p>Changes from ObjCryst::XMLCrystTag
+- The istream constructor of XMLCrystTag is not wrapped.</p>
 </div>
-<div class="section" id="molecule-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">molecule</span></tt> Module<a class="headerlink" href="#molecule-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.molecule">
+<span id="pyobjcryst-molecule-module"></span><h2>pyobjcryst.molecule module<a class="headerlink" href="#module-pyobjcryst.molecule" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of Molecule.h</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
+<p>Changes from ObjCryst::Molecule</p>
+<ul class="simple">
+<li>The public data are not wrapped.</li>
+<li>Added __getitem__ access for MolAtoms.</li>
+<li>AddAtom returns the added MolAtom</li>
+<li>AddBond returns the added MolBond</li>
+<li>AddBondAngle returns the added MolBondAngle</li>
+<li>AddDihedralAngle returns the added MolDihedralAngle</li>
+<li>RemoveAtom returns None, has an indexed version</li>
+<li>RemoveBond returns None, has an indexed version</li>
+<li>RemoveBondAngle returns None, has an indexed version</li>
+<li>RemoveDihedralAngle returns None, has an indexed version</li>
+<li>RemoveRigidGroup returns None</li>
+<li>Added GetNbAtoms</li>
+<li>Added GetNbBonds</li>
+<li>Added GetNbBondAngles</li>
+<li>Added GetNbDihedralAngles</li>
+<li>Added GetNbRigidGroups</li>
+<li>Added GetBond</li>
+<li>Added GetBondAngle</li>
+<li>Added GetDihedralAngle</li>
+<li>Added GetRigidGroup</li>
+<li>FindBond returns the bond if found, None otherwise</li>
+<li>FindBondAngle returns the bond angle if found, None otherwise</li>
+<li>FindDihedralAngle returns the dihedral angle if found, None otherwise</li>
+<li>FindAtom is identical to GetAtom.</li>
+<li>FlipAtomGroup is not wrapped.</li>
+<li>FlipGroup, RotorGroup and StretchModeGroup are not wrapped.</li>
+<li>StretchMode getters are not wrapped</li>
+<li>Quaternion ordinates Q0, Q1, Q2 and Q3 wrapped as properties.</li>
+</ul>
+<p>Changes from ObjCryst::MolAtom</p>
+<ul class="simple">
+<li>Wrapped as a to-python converter only (no constructor)</li>
+<li>File IO is disabled</li>
+<li>X, Y and Z are wrapped as properties rather than methods.</li>
+</ul>
+<p>Changes from ObjCryst::MolBondAngle</p>
+<ul class="simple">
+<li>Wrapped as a to-python converter only (no constructor)</li>
+<li>Added __getitem__ access for MolAtoms.</li>
+<li>File IO is disabled</li>
+<li>GetDeriv and CalcGradient are not wrapped.</li>
+<li>Angle0, AngleDelta and AngleSigma are wrapped as properties rather than
+methods.</li>
+<li>IsFlexible and SetFlexible are not wrapped, as they are not implemented in
+the library.</li>
+</ul>
+<p>Changes from ObjCryst::MolDihedralAngle</p>
+<ul class="simple">
+<li>Wrapped as a to-python converter only (no constructor)</li>
+<li>Added __getitem__ access for MolAtoms.</li>
+</ul>
+<p>Changes from ObjCryst::Quaternion</p>
+<ul class="simple">
+<li>IO is not wrapped</li>
+<li>Q0, Q1, Q2 and Q3 are wrapped as properties, rather than functions.</li>
+<li>RotateVector overloaded to return tuple of the mutated arguments.</li>
+</ul>
+<p>Changes from ObjCryst::RigidGroup</p>
+<ul class="simple">
+<li>RigidGroup is wrapped to have python-set methods rather than stl::set
+methods.</li>
+</ul>
 </div>
-<div class="section" id="polyhedron-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">polyhedron</span></tt> Module<a class="headerlink" href="#polyhedron-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.polyhedron">
+<span id="pyobjcryst-polyhedron-module"></span><h2>pyobjcryst.polyhedron module<a class="headerlink" href="#module-pyobjcryst.polyhedron" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of Polyhedron.h</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
 </div>
-<div class="section" id="refinableobj-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">refinableobj</span></tt> Module<a class="headerlink" href="#refinableobj-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.refinableobj">
+<span id="pyobjcryst-refinableobj-module"></span><h2>pyobjcryst.refinableobj module<a class="headerlink" href="#module-pyobjcryst.refinableobj" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of RefinableObj.h</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
+<p>Changes from ObjCryst::RefinableObj</p>
+<ul class="simple">
+<li>XMLOutput and XMLInput accept python file-like objects.</li>
+<li>GetPar that takes a const double* is not exposed, as it is designed for
+internal use.</li>
+<li>GetParamSet returns a copy of the internal data so that no indirect
+manipulation can take place from python.</li>
+<li>SetDeleteRefParInDestructor(false) is called in the constructors of the
+python class and the parameter accessors.</li>
+<li>SetDeleteRefParInDestructor is not exposed.</li>
+<li>RemovePar is overloaded to return None.</li>
+</ul>
+<p>Changes from ObjCryst::RefinablePar</p>
+<ul class="simple">
+<li>The constructor has been changed to accept a double, rather than a pointer to
+a double.</li>
+<li>The copy and default constructors and Init are not wrapped in order to avoid
+memory corruption. Since boost cannot implicitly handle double* object, a
+wrapper class had to be created. However, this wrapper class cannot be used
+to convert RefinablePar objected created in c++.  Thus,
+ObjCryst::RefinablePar objects created in c++ are passed into python as
+instances of _RefinablePar, which is a python wrapper around
+ObjCryst::RefinablePar. The RefinablePar python class is a wrapper around
+the C++ class PyRefinablePar, which manages its own double*.  These python
+classes are interchangable once instantiated, so users should not notice.</li>
+<li>XML input/output are not exposed.</li>
+</ul>
+<p>Changes from ObjCryst::RefinableObjClock</p>
+<ul class="simple">
+<li>operator= is wrapped as the SetEqual method
+a.SetEqual(b) -&gt; a = b</li>
+</ul>
+<p>Changes from ObjCryst::ObjRegistry</p>
+<ul class="simple">
+<li>DeleteAll not wrapped</li>
+<li>GetObj(const unsigned int i) not wrapped. Documentation says that this is
+for internal use only.</li>
+</ul>
+<p>Changes from ObjCryst::Restraint</p>
+<ul class="simple">
+<li>The default and copy constructors are not wrapped, nor is Init.</li>
+<li>GetType returns a non-const reference to the RefParType.  This should be a
+no-no, but RefParType has no mutating methods, so this should no lead to
+trouble.</li>
+<li>XML input/output are not exposed.</li>
+</ul>
 </div>
-<div class="section" id="scatterer-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">scatterer</span></tt> Module<a class="headerlink" href="#scatterer-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.scatterer">
+<span id="pyobjcryst-scatterer-module"></span><h2>pyobjcryst.scatterer module<a class="headerlink" href="#module-pyobjcryst.scatterer" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of Scatterer.h</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
+<p>Changes from ObjCryst::Scatterer</p>
+<ul class="simple">
+<li>C++ methods that can return const or non-const objects return non-const
+objects in python.</li>
+<li>Operator string() is not exposed.</li>
+<li>Internal use only methods have not been exposed.</li>
+<li>InitRefParList is not exposed, as it is not used inside of Scatterer.</li>
+<li>GetClockScattCompList is exposed using a workaround, because it is not
+implemented in the library.</li>
+<li>Methods related to visualization are not exposed.</li>
+</ul>
 </div>
-<div class="section" id="scatteringpower-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">scatteringpower</span></tt> Module<a class="headerlink" href="#scatteringpower-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.scatteringpower">
+<span id="pyobjcryst-scatteringpower-module"></span><h2>pyobjcryst.scatteringpower module<a class="headerlink" href="#module-pyobjcryst.scatteringpower" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of ScatteringPower.h</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
+<p>Changes from ObjCryst::ScatteringComponent
+- Added attributes X, Y, Z, Occupancy to conform to MolAtom.</p>
+<p>Changes from ObjCryst::ScatteringComponentList
+- Wrapped as a to-python converter only (no constructor)</p>
 </div>
-<div class="section" id="scatteringpowersphere-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">scatteringpowersphere</span></tt> Module<a class="headerlink" href="#scatteringpowersphere-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.scatteringpowersphere">
+<span id="pyobjcryst-scatteringpowersphere-module"></span><h2>pyobjcryst.scatteringpowersphere module<a class="headerlink" href="#module-pyobjcryst.scatteringpowersphere" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of ScatteringPowerSphere.h</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
 </div>
-<div class="section" id="spacegroup-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">spacegroup</span></tt> Module<a class="headerlink" href="#spacegroup-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.spacegroup">
+<span id="pyobjcryst-spacegroup-module"></span><h2>pyobjcryst.spacegroup module<a class="headerlink" href="#module-pyobjcryst.spacegroup" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of SpaceGroup.h.</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
 </div>
-<div class="section" id="unitcell-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">unitcell</span></tt> Module<a class="headerlink" href="#unitcell-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.unitcell">
+<span id="pyobjcryst-unitcell-module"></span><h2>pyobjcryst.unitcell module<a class="headerlink" href="#module-pyobjcryst.unitcell" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of UnitCell.h</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
 </div>
-<div class="section" id="utils-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">utils</span></tt> Module<a class="headerlink" href="#utils-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.utils">
+<span id="pyobjcryst-utils-module"></span><h2>pyobjcryst.utils module<a class="headerlink" href="#module-pyobjcryst.utils" title="Permalink to this headline">¶</a></h2>
+<p>Utilities for crystals.</p>
+<dl class="function">
+<dt id="pyobjcryst.utils.crystalToDiffpyStructure">
+<tt class="descclassname">pyobjcryst.utils.</tt><tt class="descname">crystalToDiffpyStructure</tt><big>(</big><em>crystal</em><big>)</big><a class="headerlink" href="#pyobjcryst.utils.crystalToDiffpyStructure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a diffpy.Structure.Structure from a crystal.</p>
+<p>This requires diffpy.Structure to be installed. This uses file IO transfer
+data, so there is some inherent precision loss.</p>
+<p>Note that the resulting structure will be in P1 symmetry.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.utils.expandSymmetry">
+<tt class="descclassname">pyobjcryst.utils.</tt><tt class="descname">expandSymmetry</tt><big>(</big><em>crystal</em><big>)</big><a class="headerlink" href="#pyobjcryst.utils.expandSymmetry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expand a crystal to P1 symmetry.</p>
+<p>This requires diffpy.Structure to be installed. This uses file IO transfer
+data, so there is some inherent precision loss.</p>
+<p>This returns a new structure.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.utils.moleculeFromDiffpyStructure">
+<tt class="descclassname">pyobjcryst.utils.</tt><tt class="descname">moleculeFromDiffpyStructure</tt><big>(</big><em>crystal</em>, <em>stru</em><big>)</big><a class="headerlink" href="#pyobjcryst.utils.moleculeFromDiffpyStructure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and return a molecule from a diffpy.Structure object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.utils.printxyz">
+<tt class="descclassname">pyobjcryst.utils.</tt><tt class="descname">printxyz</tt><big>(</big><em>crystal</em><big>)</big><a class="headerlink" href="#pyobjcryst.utils.printxyz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a crystal in xyz format.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.utils.putAtomsInMolecule">
+<tt class="descclassname">pyobjcryst.utils.</tt><tt class="descname">putAtomsInMolecule</tt><big>(</big><em>crystal</em>, <em>alist=None</em>, <em>name=None</em><big>)</big><a class="headerlink" href="#pyobjcryst.utils.putAtomsInMolecule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Place atoms from a crystal into a molecule inside the crystal.</p>
+<p>Selected atoms are put into a new Molecule object, which is then placed
+inside of the Crystal. The atoms are then removed from the crystal. The
+molecule is placed at the center of mass of the moved atoms.</p>
+<p>crystal &#8211;  The crystal containing the atoms.
+alist   &#8211;  A list of indices or names identifying the atoms. If alist is</p>
+<blockquote>
+<div>None (default), all atoms from the crystal are placed into a
+molecule.</div></blockquote>
+<dl class="docutils">
+<dt>name    &#8211;  A name for the molecule. If name is None (default), the name</dt>
+<dd>m_cname will be given, where cname is substituted for the
+crystal&#8217;s name.</dd>
+</dl>
+<p>Raises TypeError if idxlist identifies a non-atom.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.utils.writexyz">
+<tt class="descclassname">pyobjcryst.utils.</tt><tt class="descname">writexyz</tt><big>(</big><em>crystal</em>, <em>filename</em><big>)</big><a class="headerlink" href="#pyobjcryst.utils.writexyz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a crystal to an xyz file.</p>
+</dd></dl>
+
 </div>
-<div class="section" id="version-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">version</span></tt> Module<a class="headerlink" href="#version-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.version">
+<span id="pyobjcryst-version-module"></span><h2>pyobjcryst.version module<a class="headerlink" href="#module-pyobjcryst.version" title="Permalink to this headline">¶</a></h2>
+<p>Definition of __version__, __date__, __gitsha__ for pyobjcryst.</p>
 </div>
-<div class="section" id="zscatterer-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">zscatterer</span></tt> Module<a class="headerlink" href="#zscatterer-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyobjcryst.zscatterer">
+<span id="pyobjcryst-zscatterer-module"></span><h2>pyobjcryst.zscatterer module<a class="headerlink" href="#module-pyobjcryst.zscatterer" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of Zscatterer.</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
+<p>Changes from ObjCryst::ZAtom
+- XMLOutput and Input are not wrapped.</p>
+<p>Changes from ObjCryst++
+- XMLOutput and Input are not wrapped.</p>
+</div>
+<div class="section" id="module-pyobjcryst">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyobjcryst" title="Permalink to this headline">¶</a></h2>
+<p>Python wrapping of ObjCryst++.</p>
+<p>Objects are wrapped according to their header file in the ObjCryst source.</p>
+<p>See the online ObjCryst++ documentation (<a class="reference external" href="http://vincefn.net/ObjCryst/">http://vincefn.net/ObjCryst/</a>).</p>
+<p>Modules</p>
+<p>atom                    &#8211;  Wrapping of Atom.h
+crystal                 &#8211;  Wrapping of Crystal.h
+general                 &#8211;  Wrapping of General.h
+io                      &#8211;  Wrapping of IO.h
+molecule                &#8211;  Wrapping of Molecule.h
+polyhedron              &#8211;  Wrapping of Polyhedron.h
+refinableobj            &#8211;  Wrapping of RefinableObj.h
+scatterer               &#8211;  Wrapping of Scatterer.h
+scatteringpower         &#8211;  Wrapping of ScatteringPower.h
+scatteringpowersphere   &#8211;  Wrapping of ScatteringPowerSphere.h
+spacegroup              &#8211;  Wrapping of SpaceGroup.h
+unitcell                &#8211;  Wrapping of UnitCell.h
+zscatterer              &#8211;  Wrapping of ZScatterer.h</p>
+<p>General Changes</p>
+<ul class="simple">
+<li>C++ methods that can return const or non-const objects return non-const
+objects in python.</li>
+<li>Classes with a Print() method have the output of this method exposed in the
+__str__ python method. Thus, obj.Print() == print obj.</li>
+<li>CrystVector and CrystMatrix are converted to numpy arrays.</li>
+<li>Indexing methods raise IndexError when index is out of bounds.</li>
+</ul>
+<p>See the modules&#8217; documentation for specific changes.</p>
+<dl class="exception">
+<dt id="pyobjcryst.ObjCrystException">
+<em class="property">exception </em><tt class="descclassname">pyobjcryst.</tt><tt class="descname">ObjCrystException</tt><a class="headerlink" href="#pyobjcryst.ObjCrystException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -108,23 +378,24 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">pyobjcryst Package</a><ul>
-<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">pyobjcryst</span></tt> Package</a></li>
-<li><a class="reference internal" href="#atom-module"><tt class="docutils literal"><span class="pre">atom</span></tt> Module</a></li>
-<li><a class="reference internal" href="#crystal-module"><tt class="docutils literal"><span class="pre">crystal</span></tt> Module</a></li>
-<li><a class="reference internal" href="#general-module"><tt class="docutils literal"><span class="pre">general</span></tt> Module</a></li>
-<li><a class="reference internal" href="#io-module"><tt class="docutils literal"><span class="pre">io</span></tt> Module</a></li>
-<li><a class="reference internal" href="#molecule-module"><tt class="docutils literal"><span class="pre">molecule</span></tt> Module</a></li>
-<li><a class="reference internal" href="#polyhedron-module"><tt class="docutils literal"><span class="pre">polyhedron</span></tt> Module</a></li>
-<li><a class="reference internal" href="#refinableobj-module"><tt class="docutils literal"><span class="pre">refinableobj</span></tt> Module</a></li>
-<li><a class="reference internal" href="#scatterer-module"><tt class="docutils literal"><span class="pre">scatterer</span></tt> Module</a></li>
-<li><a class="reference internal" href="#scatteringpower-module"><tt class="docutils literal"><span class="pre">scatteringpower</span></tt> Module</a></li>
-<li><a class="reference internal" href="#scatteringpowersphere-module"><tt class="docutils literal"><span class="pre">scatteringpowersphere</span></tt> Module</a></li>
-<li><a class="reference internal" href="#spacegroup-module"><tt class="docutils literal"><span class="pre">spacegroup</span></tt> Module</a></li>
-<li><a class="reference internal" href="#unitcell-module"><tt class="docutils literal"><span class="pre">unitcell</span></tt> Module</a></li>
-<li><a class="reference internal" href="#utils-module"><tt class="docutils literal"><span class="pre">utils</span></tt> Module</a></li>
-<li><a class="reference internal" href="#version-module"><tt class="docutils literal"><span class="pre">version</span></tt> Module</a></li>
-<li><a class="reference internal" href="#zscatterer-module"><tt class="docutils literal"><span class="pre">zscatterer</span></tt> Module</a></li>
+<li><a class="reference internal" href="#">pyobjcryst package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.atom">pyobjcryst.atom module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.crystal">pyobjcryst.crystal module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.general">pyobjcryst.general module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.io">pyobjcryst.io module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.molecule">pyobjcryst.molecule module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.polyhedron">pyobjcryst.polyhedron module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.refinableobj">pyobjcryst.refinableobj module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.scatterer">pyobjcryst.scatterer module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.scatteringpower">pyobjcryst.scatteringpower module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.scatteringpowersphere">pyobjcryst.scatteringpowersphere module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.spacegroup">pyobjcryst.spacegroup module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.unitcell">pyobjcryst.unitcell module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.utils">pyobjcryst.utils module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.version">pyobjcryst.version module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst.zscatterer">pyobjcryst.zscatterer module</a></li>
+<li><a class="reference internal" href="#module-pyobjcryst">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -161,9 +432,12 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="modules.html" title="pyobjcryst"
              >previous</a> |</li>
-        <li><a href="../index.html">PyObjCryst 1.0b3-33 documentation</a> &raquo;</li>
+        <li><a href="../index.html">pyobjcryst 1.0b4 documentation</a> &raquo;</li>
           <li><a href="modules.html" >pyobjcryst</a> &raquo;</li> 
       </ul>
     </div>

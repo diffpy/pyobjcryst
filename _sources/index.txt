@@ -11,16 +11,18 @@ Crystallographic Library
 Disclaimer
 ===================
 
-.. include:: ../../../LICENSE.txt
+.. literalinclude:: ../../../LICENSE.txt
+
 
 ================
-Authors
+Acknowledgments
 ================
 
-pyobjcryst was developed as part of the DANSE_ open-source project by
-Christopher Farrow, Pavol Juhás, and Simon J.L. Billinge.
+Developers
+-----------
+pyobjcryst is developed and maintained by
 
-.. _DANSE: http://danse.us/
+.. literalinclude:: ../../../AUTHORS.txt
 
 ======================================
 Installation

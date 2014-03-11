@@ -1,130 +1,134 @@
-pyobjcryst Package
+pyobjcryst package
 ==================
 
-:mod:`pyobjcryst` Package
--------------------------
+Submodules
+----------
 
-.. automodule:: pyobjcryst.__init__
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`atom` Module
-------------------
+pyobjcryst.atom module
+----------------------
 
 .. automodule:: pyobjcryst.atom
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`crystal` Module
----------------------
+pyobjcryst.crystal module
+-------------------------
 
 .. automodule:: pyobjcryst.crystal
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`general` Module
----------------------
+pyobjcryst.general module
+-------------------------
 
 .. automodule:: pyobjcryst.general
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`io` Module
-----------------
+pyobjcryst.io module
+--------------------
 
 .. automodule:: pyobjcryst.io
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`molecule` Module
-----------------------
+pyobjcryst.molecule module
+--------------------------
 
 .. automodule:: pyobjcryst.molecule
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`polyhedron` Module
-------------------------
+pyobjcryst.polyhedron module
+----------------------------
 
 .. automodule:: pyobjcryst.polyhedron
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`refinableobj` Module
---------------------------
+pyobjcryst.refinableobj module
+------------------------------
 
 .. automodule:: pyobjcryst.refinableobj
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`scatterer` Module
------------------------
+pyobjcryst.scatterer module
+---------------------------
 
 .. automodule:: pyobjcryst.scatterer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`scatteringpower` Module
------------------------------
+pyobjcryst.scatteringpower module
+---------------------------------
 
 .. automodule:: pyobjcryst.scatteringpower
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`scatteringpowersphere` Module
------------------------------------
+pyobjcryst.scatteringpowersphere module
+---------------------------------------
 
 .. automodule:: pyobjcryst.scatteringpowersphere
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`spacegroup` Module
-------------------------
+pyobjcryst.spacegroup module
+----------------------------
 
 .. automodule:: pyobjcryst.spacegroup
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`unitcell` Module
-----------------------
+pyobjcryst.unitcell module
+--------------------------
 
 .. automodule:: pyobjcryst.unitcell
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`utils` Module
--------------------
+pyobjcryst.utils module
+-----------------------
 
 .. automodule:: pyobjcryst.utils
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`version` Module
----------------------
+pyobjcryst.version module
+-------------------------
 
 .. automodule:: pyobjcryst.version
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`zscatterer` Module
-------------------------
+pyobjcryst.zscatterer module
+----------------------------
 
 .. automodule:: pyobjcryst.zscatterer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: pyobjcryst
     :members:
     :undoc-members:
     :show-inheritance:
