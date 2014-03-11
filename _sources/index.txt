@@ -28,7 +28,7 @@ pyobjcryst is developed and maintained by
 Installation
 ======================================
 
-See the `README.md <https://github.com/diffpy/pyobjcryst#requirements>`_
+See the `README.rst <https://github.com/diffpy/pyobjcryst#requirements>`_
 file included with the distribution.
 
 ======================================
