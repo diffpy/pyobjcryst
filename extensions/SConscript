@@ -1,13 +1,14 @@
 import sys
 import os
-from distutils.core import Distribution
-from distutils.command.build import build
 
-Import('env')
+Import('env', 'pyoutput')
 
 # make sure numpy headers are available
-from numpy.distutils.misc_util import get_numpy_include_dirs
-env.AppendUnique(CPPPATH=get_numpy_include_dirs())
+npdirs = pyoutput(
+    'from numpy.distutils.misc_util import get_numpy_include_dirs\n'
+    'print "\\n".join(get_numpy_include_dirs())')
+npdirs = map(str.strip, npdirs.split('\n'))
+env.AppendUnique(CPPPATH=npdirs)
 
 # configure the boost_python library, which may have different extensions
 if not (GetOption('clean') or env.GetOption('help')):
@@ -28,9 +29,14 @@ test = env.Alias('test', develop,
 AlwaysBuild(test)
 
 # normal install - trick distutils into using this module.
-bcmd = build(Distribution())
-bcmd.finalize_options()
-distmodfile = os.path.join(bcmd.build_platlib,
+build_platlib = pyoutput('\n'.join([
+    "from distutils.core import Distribution",
+    "from distutils.command.build import build",
+    "bcmd = build(Distribution())",
+    "bcmd.finalize_options()",
+    "print bcmd.build_platlib",
+    ]))
+distmodfile = os.path.join(build_platlib,
     'pyobjcryst', os.path.basename(str(module[0])))
 cmd_install = '$python setup.py install'
 if 'prefix' in env:
