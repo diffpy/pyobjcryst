@@ -15,14 +15,18 @@ Disclaimer
 
 
 ================
-Acknowledgments
+Authors
 ================
 
-Developers
------------
-pyobjcryst is developed and maintained by
+pyobjcryst was written as part of the DANSE_ open-source project by
+Christopher Farrow, Pavol Juhás, and Simon J.L. Billinge.
+The sources are now maintained as a part of the DiffPy-CMI complex
+modeling initiative at the Brookhaven National Laboratory.
 
-.. literalinclude:: ../../../AUTHORS.txt
+For a complete list of contributors, see
+https://github.com/diffpy/pyobjcryst/graphs/contributors.
+
+.. _DANSE: http://danse.us/
 
 ======================================
 Installation
