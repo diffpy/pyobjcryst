@@ -20,7 +20,8 @@ module = env.SharedLibrary('_pyobjcryst', Glob('*.cpp'),
 Alias('module', module)
 
 # install in a development mode
-egginfo = env.Command('#/pyobjcryst.egg-info', None,
+gheads = Glob('#/.git/HEAD') + Glob('#/.git/refs/heads/*')
+egginfo = env.Command(NoCache('#/pyobjcryst.egg-info/PKG-INFO'), gheads,
         '$python setup.py egg_info')
 develop = Alias('develop', [egginfo, Install('#/pyobjcryst', module)])
 
