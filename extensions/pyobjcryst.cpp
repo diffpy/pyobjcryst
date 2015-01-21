@@ -22,6 +22,7 @@
 void wrap_asymmetricunit();
 void wrap_atom();
 void wrap_crystal();
+void wrap_diffractiondatasinglecrystal();
 void wrap_general();
 void wrap_globalscatteringpower();
 void wrap_io();
@@ -85,6 +86,7 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
     wrap_asymmetricunit();
     wrap_atom();
     wrap_crystal();
+    wrap_diffractiondatasinglecrystal();
     wrap_globalscatteringpower();
     wrap_molatom();
     wrap_molbond();

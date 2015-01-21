@@ -80,11 +80,12 @@ class ScatteringDataWrap : public ScatteringData,
 void wrap_scatteringdata()
 {
 
-    class_<ScatteringDataWrap, boost::noncopyable>("ScatteringData")
+    class_<ScatteringDataWrap, bases<RefinableObj>,
+	boost::noncopyable>("ScatteringData", no_init)
         /* Methods */
         .def("SetCrystal", &ScatteringData::SetCrystal,
             &ScatteringDataWrap::default_SetCrystal)
         .def("GenHKLFullSpace2", &ScatteringData::GenHKLFullSpace2,
-            &ScatteringDataWrap::default_SetCrystal)
+            &ScatteringDataWrap::default_GenHKLFullSpace2)
 	;
 }
