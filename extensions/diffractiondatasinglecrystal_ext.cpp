@@ -42,7 +42,7 @@ void wrap_diffractiondatasinglecrystal()
 {
 
     class_<DiffractionDataSingleCrystal, bases<ScatteringData> > 
-	("DiffractionDataSingleCrystal", init<const DiffractionDataSingleCrystal&>())
+	("DiffractionDataSingleCrystal", init<>())
         /* Methods */
         .def("SetWavelength", (void (DiffractionDataSingleCrystal::*)(const double))
 		    &DiffractionDataSingleCrystal::SetWavelength)
