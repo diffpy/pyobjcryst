@@ -56,6 +56,7 @@ import atom
 # Crystal
 import crystal
 
+# DiffractionDataSingleCrystal
 import diffractiondatasinglecrystal
 
 # Molecule
