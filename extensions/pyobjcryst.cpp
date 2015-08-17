@@ -22,9 +22,12 @@
 void wrap_asymmetricunit();
 void wrap_atom();
 void wrap_crystal();
+void wrap_diffractiondatasinglecrystal();
 void wrap_general();
 void wrap_globalscatteringpower();
 void wrap_io();
+void wrap_lsqnumobj();
+void wrap_montecarloobj();
 void wrap_molatom();
 void wrap_molbond();
 void wrap_molbondangle();
@@ -32,6 +35,10 @@ void wrap_moldihedralangle();
 void wrap_molecule();
 void wrap_objregistry();
 void wrap_polyhedron();
+void wrap_powderpattern();
+void wrap_powderpatternbackground();
+void wrap_powderpatterncomponent();
+void wrap_powderpatterndiffraction();
 void wrap_quaternion();
 void wrap_refinableobj();
 void wrap_refinableobjclock();
@@ -78,18 +85,25 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
     wrap_scatteringpower();
     wrap_zscatterer();
     wrap_unitcell();
+    wrap_powderpatterncomponent();
 
     // Other stuff in no particular order.
     wrap_asymmetricunit();
     wrap_atom();
     wrap_crystal();
+    wrap_diffractiondatasinglecrystal();
     wrap_globalscatteringpower();
+    wrap_lsqnumobj();
     wrap_molatom();
     wrap_molbond();
     wrap_molbondangle();
     wrap_moldihedralangle();
     wrap_molecule();
     wrap_polyhedron();
+    wrap_montecarloobj();
+    wrap_powderpattern();
+    wrap_powderpatternbackground();
+    wrap_powderpatterndiffraction();
     wrap_rigidgroup();
     wrap_scatteringcomponent();
     wrap_scatteringcomponentlist();
@@ -99,6 +113,5 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
     wrap_stretchmode();
     wrap_zatom();
     wrap_zpolyhedron();
-
 }
 

@@ -1,0 +1,131 @@
+/*****************************************************************************
+*
+* pyobjcryst        
+*
+* File coded by:    Vincent Favre-Nicolin
+*
+* See AUTHORS.txt for a list of people who contributed.
+* See LICENSE_DANSE.txt for license information.
+*
+******************************************************************************
+*
+* boost::python bindings to ObjCryst::PowderPattern.
+*
+* Changes from ObjCryst::MonteCarloObj
+*
+* Other Changes
+*
+*****************************************************************************/
+
+#include <boost/python.hpp>
+#include <boost/utility.hpp>
+#include <boost/python/class.hpp>
+#include <boost/python/def.hpp>
+#include <boost/python/implicit.hpp>
+#include <boost/python/slice.hpp>
+
+#include <string>
+#include <map>
+
+#include <ObjCryst/ObjCryst/General.h>
+#include <ObjCryst/RefinableObj/RefinableObj.h>
+#include <ObjCryst/CrystVector/CrystVector.h>
+#include <ObjCryst/ObjCryst/PowderPattern.h>
+
+#include "python_file_stream.hpp"
+#include "helpers.hpp"
+
+namespace bp = boost::python;
+using namespace boost::python;
+using namespace ObjCryst;
+
+namespace {
+
+
+PowderPattern* _CreatePowderPatternFromCIF(boost_adaptbx::file_conversion::python_file_buffer const
+        &input)
+{
+    // Reading a cif file creates some output. Let's redirect stdout to a junk
+    // stream and then throw it away.
+    ostringstream junk;
+    swapstdout(junk);
+
+    boost_adaptbx::file_conversion::istream in(&input);
+    ObjCryst::CIF cif(in);
+
+    int idx0 = gPowderPatternRegistry.GetNb();
+
+    ObjCryst::CreatePowderPatternFromCIF(cif);
+
+    int idx = gPowderPatternRegistry.GetNb();
+
+    // Switch the stream buffer back
+    swapstdout(junk);
+
+    if(idx == idx0)
+    {
+        throw ObjCryst::ObjCrystException("Cannot create powder pattern from CIF");
+    }
+    idx--;
+
+    ObjCryst::PowderPattern* p = &gPowderPatternRegistry.GetObj( idx );
+
+    return p;
+}
+
+}   // namespace
+
+void wrap_powderpattern()
+{
+    class_<PowderPattern, bases<RefinableObj> >("PowderPattern", init<>())
+        .def("AddPowderPatternComponent", &PowderPattern::AddPowderPatternComponent,
+      	     with_custodian_and_ward<1,2>())
+        .def("GetNbPowderPatternComponent", &PowderPattern::GetNbPowderPatternComponent)
+        .def("GetPowderPatternComponent",
+             (PowderPatternComponent& (PowderPattern::*) (const int))
+             &PowderPattern::GetPowderPatternComponent,
+             return_value_policy<copy_non_const_reference>())
+        .def("GetScaleFactor",
+             (double (PowderPattern::*) (const int) const)
+             &PowderPattern::GetScaleFactor)
+        .def("SetScaleFactor",
+             (void (PowderPattern::*) (const int, double s))
+             &PowderPattern::SetScaleFactor)
+
+        .def("GetPowderPatternCalc", &PowderPattern::GetPowderPatternCalc,
+                return_value_policy<copy_const_reference>())
+        .def("GetPowderPatternObs", &PowderPattern::GetPowderPatternObs,
+                return_value_policy<copy_const_reference>())
+        .def("GetPowderPatternX", &PowderPattern::GetPowderPatternX,
+                return_value_policy<copy_const_reference>())
+        .def("SetWavelength", 
+             (void (PowderPattern::*) (const REAL ))
+             &PowderPattern::SetWavelength,(bp::arg("wavelength")))
+        .def("SetWavelength", 
+             (void (PowderPattern::*) (const string &,const REAL ))
+        	 &PowderPattern::SetWavelength,
+        	 (bp::arg("XRayTubeElementName"),bp::arg("alpha2Alpha2ratio")=0.5))
+        .def("SetEnergy", &DiffractionDataSingleCrystal::SetEnergy,(bp::arg("nrj_kev")))
+        .def("ImportPowderPatternFullprof", &PowderPattern::ImportPowderPatternFullprof, (bp::arg("filename")))
+        .def("ImportPowderPatternPSI_DMC", &PowderPattern::ImportPowderPatternPSI_DMC, (bp::arg("filename")))
+        .def("ImportPowderPatternILL_D1A5", &PowderPattern::ImportPowderPatternILL_D1A5, (bp::arg("filename")))
+        .def("ImportPowderPatternXdd", &PowderPattern::ImportPowderPatternXdd, (bp::arg("filename")))
+        .def("ImportPowderPatternSietronicsCPI", &PowderPattern::ImportPowderPatternSietronicsCPI, (bp::arg("filename")))
+        .def("ImportPowderPattern2ThetaObsSigma", &PowderPattern::ImportPowderPattern2ThetaObsSigma, (bp::arg("filename"),bp::arg("nbSkip")=0))
+        .def("ImportPowderPatternFullprof4", &PowderPattern::ImportPowderPatternFullprof4, (bp::arg("filename")))
+        .def("ImportPowderPatternMultiDetectorLLBG42", &PowderPattern::ImportPowderPatternMultiDetectorLLBG42, (bp::arg("filename")))
+        .def("ImportPowderPattern2ThetaObs", &PowderPattern::ImportPowderPattern2ThetaObs, (bp::arg("filename"),bp::arg("nbSkip")=0))
+        .def("ImportPowderPatternTOF_ISIS_XYSigma", &PowderPattern::ImportPowderPatternTOF_ISIS_XYSigma, (bp::arg("filename")))
+        .def("ImportPowderPatternGSAS", &PowderPattern::ImportPowderPatternGSAS, (bp::arg("filename")))
+        .def("SetPowderPatternObs", &PowderPattern::SetPowderPatternObs, (bp::arg("obs")))
+        .def("FitScaleFactorForR", &PowderPattern::FitScaleFactorForR)
+        .def("FitScaleFactorForIntegratedR", &PowderPattern::FitScaleFactorForIntegratedR)
+        .def("FitScaleFactorForRw", &PowderPattern::FitScaleFactorForRw)
+        .def("FitScaleFactorForIntegratedRw", &PowderPattern::FitScaleFactorForIntegratedRw)
+        .def("Prepare", &PowderPattern::Prepare)
+     	;
+    def("CreatePowderPatternFromCIF", 
+        &_CreatePowderPatternFromCIF, (bp::arg("file")),
+            return_value_policy<manage_new_object>());
+}
+
