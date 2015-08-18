@@ -76,5 +76,7 @@ void wrap_powderpatternbackground()
         .def("SetInterpPoints", _SetInterpPoints,
              (bp::arg("tth"),bp::arg("backgd")))
         .def("OptimizeBayesianBackground", &PowderPatternBackground::OptimizeBayesianBackground)
+        .def("FixParametersBeyondMaxresolution", 
+             &PowderPatternBackground::FixParametersBeyondMaxresolution,(bp::arg("obj")))
     	;
 }
