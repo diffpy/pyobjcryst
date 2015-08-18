@@ -122,6 +122,8 @@ void wrap_powderpattern()
         .def("FitScaleFactorForIntegratedR", &PowderPattern::FitScaleFactorForIntegratedR)
         .def("FitScaleFactorForRw", &PowderPattern::FitScaleFactorForRw)
         .def("FitScaleFactorForIntegratedRw", &PowderPattern::FitScaleFactorForIntegratedRw)
+        .def("SetMaxSinThetaOvLambda", &PowderPattern::SetMaxSinThetaOvLambda,(bp::arg("max")))
+        .def("GetMaxSinThetaOvLambda", &PowderPattern::GetMaxSinThetaOvLambda)
         .def("Prepare", &PowderPattern::Prepare)
      	;
     def("CreatePowderPatternFromCIF", 
