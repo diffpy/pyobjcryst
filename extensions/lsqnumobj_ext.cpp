@@ -73,7 +73,7 @@ void wrap_lsqnumobj()
       .def("SetRefinedObj", &LSQNumObj::SetRefinedObj,
            (bp::arg("obj"),bp::arg("LSQFuncIndex")=0,bp::arg("init")=true,bp::arg("recursive")=false))
       .def("GetCompiledRefinedObj",(RefinableObj& (LSQNumObj::*)()) &LSQNumObj::GetCompiledRefinedObj, 
-      	   return_value_policy<copy_non_const_reference>())
+      	   return_internal_reference<>())
       .def("PrintRefResults",&LSQNumObj::PrintRefResults)
       .def("PrepareRefParList",&LSQNumObj::PrepareRefParList,(bp::arg("copy_param")=false))
       .def("GetLSQCalc",&LSQNumObj::GetLSQCalc, return_value_policy<copy_const_reference>())
@@ -84,3 +84,5 @@ void wrap_lsqnumobj()
       .def("EndOptimization",&LSQNumObj::EndOptimization)
     	;
 }
+
+
