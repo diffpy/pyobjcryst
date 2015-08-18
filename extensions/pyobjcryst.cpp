@@ -43,6 +43,7 @@ void wrap_quaternion();
 void wrap_refinableobj();
 void wrap_refinableobjclock();
 void wrap_refinablepar();
+void wrap_reflectionprofile();
 void wrap_refobjopt();
 void wrap_refpartype();
 void wrap_registerconverters();
@@ -74,7 +75,6 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
     wrap_refpartype();
     wrap_registerconverters();
 
-
     // Core objects
     wrap_restraint();
     wrap_refinablepar();
@@ -86,6 +86,7 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
     wrap_zscatterer();
     wrap_unitcell();
     wrap_powderpatterncomponent();
+    wrap_reflectionprofile();
 
     // Other stuff in no particular order.
     wrap_asymmetricunit();

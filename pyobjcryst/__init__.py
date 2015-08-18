@@ -104,6 +104,9 @@ import powderpatternbackground
 # PowderPatternDiffraction
 import powderpatterndiffraction
 
+# ReflectionProfile
+import reflectionprofile
+
 #LSQNumObj
 import lsqnumobj
 

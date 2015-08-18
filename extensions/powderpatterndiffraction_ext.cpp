@@ -60,7 +60,12 @@ void wrap_powderpatterndiffraction()
         	 (bp::arg("type")=PROFILE_PSEUDO_VOIGT,bp::arg("fwhmCagliotiW")=1e-6,
         	  bp::arg("fwhmCagliotiU")=0,bp::arg("fwhmCagliotiV")=0,
               bp::arg("eta0")=0.5,bp::arg("eta1")=0))
-        //.def("GetProfile", (ReflectionProfile& (PowderPatternDiffraction::*)()) &PowderPatternDiffraction::GetProfile)
+        .def("GetProfile", (ReflectionProfile& (PowderPatternDiffraction::*)()) 
+                          &PowderPatternDiffraction::GetProfile,
+                          return_internal_reference<>())
+        .def("SetExtractionMode", &PowderPatternDiffraction::SetExtractionMode,(bp::arg("extract")=true,bp::arg("init")=false))
+        .def("GetExtractionMode", &PowderPatternDiffraction::GetExtractionMode)
+        .def("ExtractLeBail", &PowderPatternDiffraction::ExtractLeBail,(bp::arg("nbcycle")=1))
 
         //.def("Prepare",&PowderPatternDiffraction::Prepare) // protected
 
