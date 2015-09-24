@@ -45,7 +45,7 @@
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 #include <ObjCryst/CrystVector/CrystVector.h>
 
-#include "python_file_stream.hpp"
+#include "python_streambuf.hpp"
 #include "helpers.hpp"
 
 namespace bp = boost::python;
@@ -125,10 +125,10 @@ bp::list _GetScatteringComponentList(Crystal &c)
 }
 
 
-void _CIFOutput(Crystal &c, boost_adaptbx::file_conversion::python_file_buffer
-        const &output, double mindist)
+void _CIFOutput(Crystal &c, boost_adaptbx::python::streambuf&
+        output, double mindist)
 {
-    boost_adaptbx::file_conversion::ostream os(&output);
+    boost_adaptbx::python::streambuf::ostream os(output);
     c.CIFOutput(os, mindist);
     os.flush();
 }
@@ -189,15 +189,14 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
 
 // Easier than exposing all the CIF classes
 Crystal*
-_CreateCrystalFromCIF(boost_adaptbx::file_conversion::python_file_buffer const
-        &input)
+_CreateCrystalFromCIF(boost_adaptbx::python::streambuf& input)
 {
     // Reading a cif file creates some output. Let's redirect stdout to a junk
     // stream and then throw it away.
     ostringstream junk;
     swapstdout(junk);
 
-    boost_adaptbx::file_conversion::istream in(&input);
+    boost_adaptbx::python::streambuf::istream in(input);
     ObjCryst::CIF cif(in);
 
     int idx0 = gCrystalRegistry.GetNb();
