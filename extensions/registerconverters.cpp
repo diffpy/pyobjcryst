@@ -276,64 +276,6 @@ CrystMatrix<double> getTestMatrix()
 
 } // namespace
 
-// From cctbx. Used to convert python file-type objects to c++ streams.
-// See python_streambuf.hpp for copyright.
-namespace boost_adaptbx { namespace python {
-
-  // Boost.Python conversion dark magic
-  struct python_file_to_streambuf
-  {
-    static void register_conversion() {
-      using namespace boost::python;
-      converter::registry::push_back(
-        &convertible,
-        &construct,
-        type_id<streambuf>());
-    }
-
-    static void* convertible(PyObject* obj_ptr) {
-      using namespace boost::python;
-      const bool canread =
-          PyObject_HasAttrString(obj_ptr, "read") &&
-          PyObject_HasAttrString(obj_ptr, "readline") &&
-          PyObject_HasAttrString(obj_ptr, "readlines");
-      const bool canwrite =
-          PyObject_HasAttrString(obj_ptr, "write") &&
-          PyObject_HasAttrString(obj_ptr, "writelines");
-      void* rv = (canread || canwrite) ? obj_ptr : NULL;
-      return rv;
-    }
-
-    static void construct(
-      PyObject *obj_ptr,
-      boost::python::converter::rvalue_from_python_stage1_data* data)
-    {
-      using namespace boost::python;
-      typedef converter::rvalue_from_python_storage<streambuf> rvalue_t;
-      void *storage = ((rvalue_t *) data)->storage.bytes;
-      object python_file((handle<>(borrowed(obj_ptr))));
-      new (storage) streambuf(python_file);
-      data->convertible = storage;
-    }
-  };
-
-  struct python_file_buffer_wrapper
-  {
-    typedef streambuf wt;
-
-    static void wrap() {
-      using namespace boost::python;
-      class_<wt, boost::noncopyable>("buffer", no_init)
-        .def_readwrite("size", wt::default_buffer_size,
-                       "The size of the buffer sitting "
-                       "between a Python file object and a C++ stream.")
-      ;
-    }
-  };
-
-}} // boost_adaptbx::python
-
-
 void wrap_registerconverters()
 {
 
@@ -381,12 +323,6 @@ void wrap_registerconverters()
         .def("__setitem__", &_setItemMAV, with_custodian_and_ward<1,2>())
         .def("__len__", &MolAtomVec::size)
         ;
-
-    // Python file stuff
-    namespace bafc = boost_adaptbx::python;
-    bafc::python_file_to_streambuf::register_conversion();
-    bafc::python_file_buffer_wrapper::wrap();
-
 
     // some tests
     def("getTestVector", &getTestVector);

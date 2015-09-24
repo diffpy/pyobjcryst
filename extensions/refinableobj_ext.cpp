@@ -448,10 +448,10 @@ void _RemovePar(RefinableObj &obj, RefinablePar* refpar)
 
 void _XMLOutput(
         const RefinableObj& r,
-        boost_adaptbx::python::streambuf& output,
+        bp::object output,
         int indent = 0)
 {
-    boost_adaptbx::python::streambuf::ostream os(output);
+    boost_adaptbx::python::ostream os(output);
     os.precision(doublelim::digits10);
     r.XMLOutput(os, indent);
     os.flush();
@@ -459,10 +459,11 @@ void _XMLOutput(
 
 void _XMLInput(
         RefinableObj& r,
-        boost_adaptbx::python::streambuf& input,
+        bp::object input,
         XMLCrystTag &tag)
 {
-    boost_adaptbx::python::streambuf::istream in(input);
+    boost_adaptbx::python::streambuf sbuf(input);
+    boost_adaptbx::python::streambuf::istream in(sbuf);
     r.XMLInput(in, tag);
     in.sync();
 }
