@@ -62,7 +62,7 @@ def create_extensions():
 
 # Use this version when git data are not available, like in git zip archive.
 # Update when tagging a new release.
-FALLBACK_VERSION = '1.0.post0'
+FALLBACK_VERSION = '2.0a0.post0'
 
 # versioncfgfile holds version data for git commit hash and date.
 # It must reside in the same directory as version.py.
