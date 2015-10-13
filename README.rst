@@ -1,3 +1,9 @@
+.. image:: https://travis-ci.org/diffpy/pyobjcryst.svg?branch=dev2015
+   :target: https://travis-ci.org/diffpy/pyobjcryst
+
+.. image:: http://codecov.io/github/diffpy/pyobjcryst/coverage.svg?branch=dev2015
+   :target: http://codecov.io/github/diffpy/pyobjcryst?branch=dev2015
+
 pyobjcryst
 ==========
 
