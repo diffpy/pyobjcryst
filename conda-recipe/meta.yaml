@@ -3,8 +3,8 @@ package:
   version: "1.0.post12"
 
 source:
-  git_url: https://github.com/diffpy/pyobjcryst
-  git_rev: 4000dab3d5af7b6f7b4aea4c120d2bf94c18d949
+  # git_url: https://github.com/diffpy/pyobjcryst.git
+  git_url: ..
 
 build:
   preserve_egg_dir: True
