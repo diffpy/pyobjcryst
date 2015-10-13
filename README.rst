@@ -16,20 +16,22 @@ software:
 * ``libobjcryst`` - Object-Oriented Crystallographic Library for C++,
   https://github.com/diffpy/libobjcryst
 * ``setuptools``  - tools for installing Python packages
+* ``NumPy`` - library for scientific computing with Python
 * ``python-dev`` - header files for interfacing Python with C
-* ``libboost-dev`` - Boost C++ libraries development files
+* ``libboost-all-dev`` - Boost C++ libraries and development files
 
 With the exception of libobjcryst, the required software is commonly
 available in system package manager, for example, on Ubuntu Linux the
 required software can be installed as::
 
    sudo apt-get install \
-      python-setuptools python-dev libboost-dev build-essential
+      python-setuptools python-numpy scons \
+      build-essential python-dev libboost-all-dev
 
 For Mac OS X machine with the MacPorts package manager the installation is::
 
    sudo port install \
-      python27 py27-setuptools scons boost
+      python27 py27-setuptools py27-numpy scons boost
 
 When installing with MacPorts, make sure that MacPorts bin directory is the
 first in the system PATH and python27 is selected as the default Python
