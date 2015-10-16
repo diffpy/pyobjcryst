@@ -221,6 +221,41 @@ _CreateCrystalFromCIF(bp::object input)
     return c;
 }
 
+// Also allow oneScatteringPowerPerElement and connectAtoms
+Crystal*
+_CreateCrystalFromCIF(boost_adaptbx::file_conversion::python_file_buffer const
+        &input, const bool oneScatteringPowerPerElement, const bool connectAtoms)
+{
+    // Reading a cif file creates some output. Let's redirect stdout to a junk
+    // stream and then throw it away.
+    ostringstream junk;
+    swapstdout(junk);
+
+    boost_adaptbx::file_conversion::istream in(&input);
+    ObjCryst::CIF cif(in);
+
+    int idx0 = gCrystalRegistry.GetNb();
+
+    ObjCryst::CreateCrystalFromCIF(cif,false,true,oneScatteringPowerPerElement,connectAtoms);
+
+    int idx = gCrystalRegistry.GetNb();
+
+    // Switch the stream buffer back
+    swapstdout(junk);
+
+    if(idx == idx0)
+    {
+        throw ObjCryst::ObjCrystException("Cannot create crystal from CIF");
+    }
+    idx--;
+
+    ObjCryst::Crystal* c = &gCrystalRegistry.GetObj( idx );
+    c->SetDeleteSubObjInDestructor(false);
+    c->SetDeleteRefParInDestructor(false);
+
+    return c;
+}
+
 
 } // namespace
 
@@ -316,6 +351,8 @@ void wrap_crystal()
             (std::map< pair< const ScatteringPower *, const ScatteringPower * >, double > &
             (Crystal::*)()) &Crystal::GetBondValenceRoList,
             return_internal_reference<>())
+        .def("ConnectAtoms", &Crystal::ConnectAtoms,
+             (bp::arg("min_relat_dist")=0.4,bp::arg("max_relat_dist")=1.3,bp::arg("warnuser_fail")=false))
         ;
 
 
@@ -324,6 +361,14 @@ void wrap_crystal()
         .def_readwrite("mCanOverlap", &Crystal::BumpMergePar::mCanOverlap)
         ;
 
-    def("CreateCrystalFromCIF", &_CreateCrystalFromCIF, ((bp::arg("file"))),
+    def("CreateCrystalFromCIF", 
+        (Crystal* (*) (boost_adaptbx::file_conversion::python_file_buffer const&))
+        &_CreateCrystalFromCIF, (bp::arg("file")),
+            return_value_policy<manage_new_object>());
+    def("CreateCrystalFromCIF", 
+        (Crystal* (*) (boost_adaptbx::file_conversion::python_file_buffer const&, 
+         const bool , const bool ))
+        &_CreateCrystalFromCIF,
+        (bp::arg("file"),bp::arg("oneScatteringPowerPerElement"),bp::arg("connectAtoms")),
             return_value_policy<manage_new_object>());
 }

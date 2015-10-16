@@ -89,4 +89,25 @@ import zscatterer
 # IO
 import io
 
+# MonteCarlo
+import montecarloobj
+
+# DiffractionDataSingleCrystal
+import diffractiondatasinglecrystal
+
+# PowderPattern
+import powderpattern
+
+# PowderPatternBackground
+import powderpatternbackground
+
+# PowderPatternDiffraction
+import powderpatterndiffraction
+
+# ReflectionProfile
+import reflectionprofile
+
+#LSQNumObj
+import lsqnumobj
+
 from version import __version__

@@ -611,6 +611,7 @@ void wrap_molecule()
         .def(init<Crystal&, const std::string&>(
             (bp::arg("cryst"), bp::arg("name")="")))
         /* Methods */
+        .def("GetFormula", &Molecule::GetFormula)
         .def("AddAtom", &_AddAtom,
             (bp::arg("x"), bp::arg("y"), bp::arg("z"), bp::arg("pPow"),
              bp::arg("name"), bp::arg("updateDisplay")=true),
