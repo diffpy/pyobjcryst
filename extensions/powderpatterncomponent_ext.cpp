@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        
+* pyobjcryst
 *
 * File coded by:    Vincent Favre-Nicolin
 *
@@ -32,34 +32,30 @@
 #include <ObjCryst/CrystVector/CrystVector.h>
 #include <ObjCryst/ObjCryst/PowderPattern.h>
 
-#include "python_file_stream.hpp"
-#include "helpers.hpp"
-
 namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
-	class PowderPatternComponentWrap : public PowderPatternComponent, public wrapper<PowderPatternComponent>
-	{//:TODO: :KLUDGE: Dummy override of pure virtual functions
-		public:
-			PowderPatternComponentWrap():PowderPatternComponent(){}
-			virtual void SetParentPowderPattern(PowderPattern&){}
-      	    virtual const CrystVector_REAL& GetPowderPatternCalc()const{}
-      		virtual pair<const CrystVector_REAL*,const RefinableObjClock*> GetPowderPatternIntegratedCalc()const{}
-      		virtual const CrystVector_REAL& GetPowderPatternCalcVariance()const{}
-      		virtual pair<const CrystVector_REAL*,const RefinableObjClock*> GetPowderPatternIntegratedCalcVariance() const{}
-      		virtual bool HasPowderPatternCalcVariance()const{}
-      		virtual void CalcPowderPattern() const{};
-      		virtual const CrystVector_long& GetBraggLimits()const{}
-      		virtual void SetMaxSinThetaOvLambda(const REAL max){}
-      		virtual void Prepare(){}
-	};
+    class PowderPatternComponentWrap : public PowderPatternComponent, public wrapper<PowderPatternComponent>
+    {//:TODO: :KLUDGE: Dummy override of pure virtual functions
+        public:
+            PowderPatternComponentWrap():PowderPatternComponent(){}
+            virtual void SetParentPowderPattern(PowderPattern&){}
+            virtual const CrystVector_REAL& GetPowderPatternCalc()const{}
+            virtual pair<const CrystVector_REAL*, const RefinableObjClock*> GetPowderPatternIntegratedCalc()const{}
+            virtual const CrystVector_REAL& GetPowderPatternCalcVariance()const{}
+            virtual pair<const CrystVector_REAL*, const RefinableObjClock*> GetPowderPatternIntegratedCalcVariance() const{}
+            virtual bool HasPowderPatternCalcVariance()const{}
+            virtual void CalcPowderPattern() const{};
+            virtual const CrystVector_long& GetBraggLimits()const{}
+            virtual void SetMaxSinThetaOvLambda(const REAL max){}
+            virtual void Prepare(){}
+    };
 }   // namespace
 
 void wrap_powderpatterncomponent()
 {
     class_<PowderPatternComponentWrap, bases<RefinableObj> , boost::noncopyable>("PowderPatternComponent", init<>())
-    	;
+        ;
 }
-

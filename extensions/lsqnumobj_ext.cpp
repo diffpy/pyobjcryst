@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        
+* pyobjcryst
 *
 * File coded by:    Vincent Favre-Nicolin
 *
@@ -35,7 +35,6 @@
 #include <ObjCryst/CrystVector/CrystVector.h>
 #include <ObjCryst/RefinableObj/LSQNumObj.h>
 
-#include "python_file_stream.hpp"
 #include "helpers.hpp"
 
 namespace bp = boost::python;
@@ -49,40 +48,46 @@ namespace {
 void wrap_lsqnumobj()
 {
     class_<LSQNumObj>("LSQNumObj", init<>())
-      /// LSQNumObj::PrepareRefParList() must be called first!
-      .def("SetParIsFixed", 
-           (void (LSQNumObj::*)(const std::string& ,const bool)) &LSQNumObj::SetParIsFixed, 
-           (bp::arg("parName"),bp::arg("fix")))
-      .def("SetParIsFixed", 
-           (void (LSQNumObj::*)(const RefParType *,const bool)) &LSQNumObj::SetParIsFixed, 
-           (bp::arg("type"),bp::arg("fix")))
-      .def("SetParIsFixed", 
-           (void (LSQNumObj::*)(RefinablePar &,const bool)) &LSQNumObj::SetParIsFixed, 
-           (bp::arg("par"),bp::arg("fix")))
-      //void SetParIsFixed(RefinableObj &obj,const bool fix);
-      .def("UnFixAllPar", &LSQNumObj::UnFixAllPar)
-      //void SetParIsUsed(const std::string& parName,const bool use);
-      //void SetParIsUsed(const RefParType *type,const bool use);
-      .def("Refine", &LSQNumObj::Refine, 
-           (bp::arg("nbCycle")=1, bp::arg("useLevenbergMarquardt")=false,
-            bp::arg("silent")=false,bp::arg("callBeginEndOptimization")=true,
-            bp::arg("minChi2var")=0.01))
-      .def("Rfactor", &LSQNumObj::Rfactor)
-      .def("RwFactor", &LSQNumObj::RwFactor)
-      .def("ChiSquare", &LSQNumObj::ChiSquare)
-      .def("SetRefinedObj", &LSQNumObj::SetRefinedObj,
-           (bp::arg("obj"),bp::arg("LSQFuncIndex")=0,bp::arg("init")=true,bp::arg("recursive")=false))
-      .def("GetCompiledRefinedObj",(RefinableObj& (LSQNumObj::*)()) &LSQNumObj::GetCompiledRefinedObj, 
-      	   return_internal_reference<>())
-      .def("PrintRefResults",&LSQNumObj::PrintRefResults)
-      .def("PrepareRefParList",&LSQNumObj::PrepareRefParList,(bp::arg("copy_param")=false))
-      .def("GetLSQCalc",&LSQNumObj::GetLSQCalc, return_value_policy<copy_const_reference>())
-      .def("GetLSQObs",&LSQNumObj::GetLSQObs, return_value_policy<copy_const_reference>())
-      .def("GetLSQWeight",&LSQNumObj::GetLSQWeight, return_value_policy<copy_const_reference>())
-      .def("GetLSQDeriv",&LSQNumObj::GetLSQDeriv,(bp::arg("par")), return_value_policy<copy_const_reference>())
-      .def("BeginOptimization",&LSQNumObj::BeginOptimization,(bp::arg("allowApproximations")=false,bp::arg("enableRestraints")=false))
-      .def("EndOptimization",&LSQNumObj::EndOptimization)
-    	;
+        /// LSQNumObj::PrepareRefParList() must be called first!
+        .def("SetParIsFixed",
+                (void (LSQNumObj::*)(const std::string&, const bool))
+                &LSQNumObj::SetParIsFixed,
+                (bp::arg("parName"), bp::arg("fix")))
+        .def("SetParIsFixed",
+                (void (LSQNumObj::*)(const RefParType *, const bool))
+                &LSQNumObj::SetParIsFixed,
+                (bp::arg("type"), bp::arg("fix")))
+        .def("SetParIsFixed",
+                (void (LSQNumObj::*)(RefinablePar &, const bool)) &LSQNumObj::SetParIsFixed,
+                (bp::arg("par"), bp::arg("fix")))
+        //void SetParIsFixed(RefinableObj &obj, const bool fix);
+        .def("UnFixAllPar", &LSQNumObj::UnFixAllPar)
+        //void SetParIsUsed(const std::string& parName, const bool use);
+        //void SetParIsUsed(const RefParType *type, const bool use);
+        .def("Refine", &LSQNumObj::Refine,
+                (bp::arg("nbCycle")=1, bp::arg("useLevenbergMarquardt")=false,
+                 bp::arg("silent")=false, bp::arg("callBeginEndOptimization")=true,
+                 bp::arg("minChi2var")=0.01))
+        .def("Rfactor", &LSQNumObj::Rfactor)
+        .def("RwFactor", &LSQNumObj::RwFactor)
+        .def("ChiSquare", &LSQNumObj::ChiSquare)
+        .def("SetRefinedObj", &LSQNumObj::SetRefinedObj,
+                (bp::arg("obj"), bp::arg("LSQFuncIndex")=0,
+                 bp::arg("init")=true, bp::arg("recursive")=false))
+        .def("GetCompiledRefinedObj", (RefinableObj& (LSQNumObj::*)())
+                &LSQNumObj::GetCompiledRefinedObj,
+                return_internal_reference<>())
+        .def("PrintRefResults", &LSQNumObj::PrintRefResults)
+        .def("PrepareRefParList", &LSQNumObj::PrepareRefParList,
+                (bp::arg("copy_param")=false))
+        .def("GetLSQCalc", &LSQNumObj::GetLSQCalc,
+                return_value_policy<copy_const_reference>())
+        .def("GetLSQObs", &LSQNumObj::GetLSQObs,
+                return_value_policy<copy_const_reference>())
+        .def("GetLSQWeight", &LSQNumObj::GetLSQWeight,
+                return_value_policy<copy_const_reference>())
+        .def("GetLSQDeriv", &LSQNumObj::GetLSQDeriv, (bp::arg("par")), return_value_policy<copy_const_reference>())
+        .def("BeginOptimization", &LSQNumObj::BeginOptimization, (bp::arg("allowApproximations")=false, bp::arg("enableRestraints")=false))
+        .def("EndOptimization", &LSQNumObj::EndOptimization)
+        ;
 }
-
-

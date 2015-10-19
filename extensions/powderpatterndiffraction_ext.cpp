@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        
+* pyobjcryst
 *
 * File coded by:    Vincent Favre-Nicolin
 *
@@ -32,9 +32,6 @@
 #include <ObjCryst/CrystVector/CrystVector.h>
 #include <ObjCryst/ObjCryst/PowderPattern.h>
 
-#include "python_file_stream.hpp"
-#include "helpers.hpp"
-
 namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
@@ -56,46 +53,45 @@ void wrap_powderpatterndiffraction()
     class_<PowderPatternDiffraction, bases<PowderPatternComponent> >("PowderPatternDiffraction", init<>())
         .def("GetPowderPatternCalc", &PowderPatternDiffraction::GetPowderPatternCalc,
                 return_value_policy<copy_const_reference>())
-        .def("SetReflectionProfilePar",&PowderPatternDiffraction::SetReflectionProfilePar,
-        	 (bp::arg("type")=PROFILE_PSEUDO_VOIGT,bp::arg("fwhmCagliotiW")=1e-6,
-        	  bp::arg("fwhmCagliotiU")=0,bp::arg("fwhmCagliotiV")=0,
-              bp::arg("eta0")=0.5,bp::arg("eta1")=0))
-        .def("GetProfile", (ReflectionProfile& (PowderPatternDiffraction::*)()) 
-                          &PowderPatternDiffraction::GetProfile,
-                          return_internal_reference<>())
-        .def("SetExtractionMode", &PowderPatternDiffraction::SetExtractionMode,(bp::arg("extract")=true,bp::arg("init")=false))
+        .def("SetReflectionProfilePar", &PowderPatternDiffraction::SetReflectionProfilePar,
+                (bp::arg("type")=PROFILE_PSEUDO_VOIGT, bp::arg("fwhmCagliotiW")=1e-6,
+                 bp::arg("fwhmCagliotiU")=0, bp::arg("fwhmCagliotiV")=0,
+                 bp::arg("eta0")=0.5, bp::arg("eta1")=0))
+        .def("GetProfile", (ReflectionProfile& (PowderPatternDiffraction::*)())
+                &PowderPatternDiffraction::GetProfile,
+                return_internal_reference<>())
+        .def("SetExtractionMode", &PowderPatternDiffraction::SetExtractionMode, (bp::arg("extract")=true, bp::arg("init")=false))
         .def("GetExtractionMode", &PowderPatternDiffraction::GetExtractionMode)
-        .def("ExtractLeBail", &PowderPatternDiffraction::ExtractLeBail,(bp::arg("nbcycle")=1))
+        .def("ExtractLeBail", &PowderPatternDiffraction::ExtractLeBail, (bp::arg("nbcycle")=1))
 
-        //.def("Prepare",&PowderPatternDiffraction::Prepare) // protected
+        //.def("Prepare", &PowderPatternDiffraction::Prepare) // protected
 
-    	// From ScatteringData:
-    	.def("SetCrystal", &PowderPatternDiffraction::SetCrystal,(bp::arg("crystal")))
+        // From ScatteringData:
+        .def("SetCrystal", &PowderPatternDiffraction::SetCrystal, (bp::arg("crystal")))
         .def("GetNbRefl", &ScatteringData::GetNbRefl)
         .def("GetH", &ScatteringData::GetH,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetK", &ScatteringData::GetK,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetL", &ScatteringData::GetL,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetReflX", &ScatteringData::GetReflX,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetReflY", &ScatteringData::GetReflY,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetReflZ", &ScatteringData::GetReflZ,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetSinThetaOverLambda", &ScatteringData::GetSinThetaOverLambda,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetTheta", &ScatteringData::GetTheta,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetFhklCalcSq", &ScatteringData::GetFhklCalcSq,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetFhklCalcReal", &ScatteringData::GetFhklCalcReal,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetFhklCalcImag", &ScatteringData::GetFhklCalcImag,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetFhklObsSq", &ScatteringData::GetFhklObsSq,
-             return_value_policy<copy_const_reference>())
-    	;
+                return_value_policy<copy_const_reference>())
+        ;
 }
-

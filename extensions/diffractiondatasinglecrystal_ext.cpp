@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        
+* pyobjcryst
 *
 * File coded by:    Vincent Favre-Nicolin
 *
@@ -29,12 +29,8 @@
 
 #include <ObjCryst/ObjCryst/General.h>
 #include <ObjCryst/RefinableObj/RefinableObj.h>
-#include <ObjCryst/CrystVector/CrystVector.h>
 #include <ObjCryst/ObjCryst/ScatteringData.h>
 #include <ObjCryst/ObjCryst/DiffractionDataSingleCrystal.h>
-
-#include "python_file_stream.hpp"
-#include "helpers.hpp"
 
 namespace bp = boost::python;
 using namespace boost::python;
@@ -46,7 +42,9 @@ namespace {
 
 void wrap_diffractiondatasinglecrystal()
 {
-    class_<DiffractionDataSingleCrystal, bases<RefinableObj> >("DiffractionDataSingleCrystal", init<Crystal&, const bool>((bp::arg("cryst"),bp::arg("regist")=true)))
+    class_<DiffractionDataSingleCrystal, bases<RefinableObj> >(
+            "DiffractionDataSingleCrystal",
+            init<Crystal&, const bool>((bp::arg("cryst"), bp::arg("regist")=true)))
         .def("GetIcalc", &DiffractionDataSingleCrystal::GetIcalc,
                 return_value_policy<copy_const_reference>())
         .def("GetIobs", &DiffractionDataSingleCrystal::GetIobs,
@@ -60,48 +58,49 @@ void wrap_diffractiondatasinglecrystal()
         .def("SaveHKLIobsIcalc", &DiffractionDataSingleCrystal::SaveHKLIobsIcalc)
         .def("GetLogLikelihood", &DiffractionDataSingleCrystal::GetLogLikelihood)
         .def("ImportHklIobs", &DiffractionDataSingleCrystal::ImportHklIobs,
-            (bp::arg("fileName"), bp::arg("nbRefl"), bp::arg("skipLines")=0))
+                (bp::arg("fileName"), bp::arg("nbRefl"), bp::arg("skipLines")=0))
         .def("ImportHklIobsSigma", &DiffractionDataSingleCrystal::ImportHklIobsSigma,
-            (bp::arg("fileName"), bp::arg("nbRefl"), bp::arg("skipLines")=0))
+                (bp::arg("fileName"), bp::arg("nbRefl"), bp::arg("skipLines")=0))
         .def("ImportShelxHKLF4", &DiffractionDataSingleCrystal::ImportShelxHKLF4)
         .def("ImportCIF", &DiffractionDataSingleCrystal::ImportCIF)
-        .def("SetWavelength", 
-             (void (DiffractionDataSingleCrystal::*) (const REAL ))
-             &DiffractionDataSingleCrystal::SetWavelength,(bp::arg("wavelength")))
-        .def("SetWavelength", 
-             (void (DiffractionDataSingleCrystal::*) (const string &,const REAL ))
-        	 &DiffractionDataSingleCrystal::SetWavelength,
-        	 (bp::arg("XRayTubeElementName"),bp::arg("alpha2Alpha2ratio")=0.5))
-        .def("SetEnergy", &DiffractionDataSingleCrystal::SetEnergy,(bp::arg("nrj_kev")))
+        .def("SetWavelength",
+                (void(DiffractionDataSingleCrystal::*)(const REAL))
+                &DiffractionDataSingleCrystal::SetWavelength,
+                bp::arg("wavelength"))
+        .def("SetWavelength",
+                (void (DiffractionDataSingleCrystal::*)(const string&, const REAL))
+                &DiffractionDataSingleCrystal::SetWavelength,
+                (bp::arg("XRayTubeElementName"), bp::arg("alpha2Alpha2ratio")=0.5))
+        .def("SetEnergy", &DiffractionDataSingleCrystal::SetEnergy,
+                bp::arg("nrj_kev"))
         // Functions from ScatteringData
-    	.def("GenHKLFullSpace", &ScatteringData::GenHKLFullSpace,
-    	     (bp::arg("maxTheta"),bp::arg("unique")=false))
+        .def("GenHKLFullSpace", &ScatteringData::GenHKLFullSpace,
+                (bp::arg("maxTheta"), bp::arg("unique")=false))
         .def("GetNbRefl", &ScatteringData::GetNbRefl)
         .def("GetH", &ScatteringData::GetH,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetK", &ScatteringData::GetK,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetL", &ScatteringData::GetL,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetReflX", &ScatteringData::GetReflX,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetReflY", &ScatteringData::GetReflY,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetReflZ", &ScatteringData::GetReflZ,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetSinThetaOverLambda", &ScatteringData::GetSinThetaOverLambda,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetTheta", &ScatteringData::GetTheta,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetFhklCalcSq", &ScatteringData::GetFhklCalcSq,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetFhklCalcReal", &ScatteringData::GetFhklCalcReal,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetFhklCalcImag", &ScatteringData::GetFhklCalcImag,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetFhklObsSq", &ScatteringData::GetFhklObsSq,
-             return_value_policy<copy_const_reference>())
+                return_value_policy<copy_const_reference>())
         .def("GetWavelength", &ScatteringData::GetWavelength)
-    	;
+        ;
 }
-

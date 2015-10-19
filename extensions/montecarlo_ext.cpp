@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        
+* pyobjcryst
 *
 * File coded by:    Vincent Favre-Nicolin
 *
@@ -32,17 +32,14 @@
 #include <ObjCryst/CrystVector/CrystVector.h>
 #include <ObjCryst/RefinableObj/GlobalOptimObj.h>
 
-#include "python_file_stream.hpp"
-#include "helpers.hpp"
-
 namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
-    void _Optimize(MonteCarloObj &obj, long nbSteps,const bool silent,const double finalcost, const double maxTime)
+    void _Optimize(MonteCarloObj &obj, long nbSteps, const bool silent, const double finalcost, const double maxTime)
     {
-    	obj.Optimize(nbSteps,silent,finalcost,maxTime);
+        obj.Optimize(nbSteps, silent, finalcost, maxTime);
     }
 
 }   // namespace
@@ -50,17 +47,16 @@ namespace {
 void wrap_montecarloobj()
 {
     class_<MonteCarloObj >("MonteCarloObj", init<>()) //, bases<OptimizationObj>
-//        .def("GetBestCost", &MonteCarloObj::GetBestCost)
+        //        .def("GetBestCost", &MonteCarloObj::GetBestCost)
         .def("IsOptimizing", &MonteCarloObj::IsOptimizing)
-//        .add_property("Name", &MonteCarloObj::GetName, &MonteCarloObj::SetName)
+        //        .add_property("Name", &MonteCarloObj::GetName, &MonteCarloObj::SetName)
         .def("RandomizeStartingConfig", &MonteCarloObj::RandomizeStartingConfig)
         .def("Optimize", &_Optimize,
-            (bp::arg("nbSteps"), bp::arg("silent")=false, bp::arg("finalcost")=0.0, bp::arg("maxTime")=-1))
+                (bp::arg("nbSteps"), bp::arg("silent")=false, bp::arg("finalcost")=0.0, bp::arg("maxTime")=-1))
         //.def("RunParallelTempering", &MonteCarloObj::RunParallelTempering,
-        //	(bp::arg("nbSteps"),bp::arg("silent"),bp::arg("finalcost"),bp::arg("maxTime")))
+        //	(bp::arg("nbSteps"), bp::arg("silent"), bp::arg("finalcost"), bp::arg("maxTime")))
         // From OptimizationObj:
         .def("AddRefinableObj", &MonteCarloObj::AddRefinableObj)
-        .def("GetLogLikelihood",&MonteCarloObj::GetLogLikelihood)
-
-    	;
+        .def("GetLogLikelihood", &MonteCarloObj::GetLogLikelihood)
+        ;
 }

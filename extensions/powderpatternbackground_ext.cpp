@@ -1,6 +1,6 @@
 /*****************************************************************************
 *
-* pyobjcryst        
+* pyobjcryst
 *
 * File coded by:    Vincent Favre-Nicolin
 *
@@ -37,17 +37,14 @@
 #include <ObjCryst/CrystVector/CrystVector.h>
 #include <ObjCryst/ObjCryst/PowderPattern.h>
 
-#include "python_file_stream.hpp"
-#include "helpers.hpp"
-
 namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
-  void _SetInterpPoints(PowderPatternBackground &b,PyObject *tth, PyObject *backgd)
+  void _SetInterpPoints(PowderPatternBackground &b, PyObject *tth, PyObject *backgd)
   {
-     cout<<"_SetInterpPoints:"<<tth<<","<<backgd<<endl;
+     cout<<"_SetInterpPoints:"<<tth<<", "<<backgd<<endl;
 	 const unsigned long ndim=PyArray_NDIM((PyObject*)tth);
 	 cout<<"dimensions="<<ndim<<endl;
 	 const unsigned long nb=*(PyArray_DIMS((PyObject*)tth));
@@ -60,7 +57,7 @@ namespace {
 	 p=(double*) (PyArray_DATA(backgd));
 	 p2=(double*) (backgd2.data());
 	 for(unsigned long i=0;i<nb;i++) *p2++=*p++;
-	 b.SetInterpPoints(tth2,backgd2);
+	 b.SetInterpPoints(tth2, backgd2);
   }
 
 }   // namespace
@@ -72,11 +69,11 @@ void wrap_powderpatternbackground()
         .def("GetPowderPatternCalc", &PowderPatternBackground::GetPowderPatternCalc,
                 return_value_policy<copy_const_reference>())
         .def("ImportUserBackground", &PowderPatternBackground::ImportUserBackground,
-             (bp::arg("filename")))
+                (bp::arg("filename")))
         .def("SetInterpPoints", _SetInterpPoints,
-             (bp::arg("tth"),bp::arg("backgd")))
+                (bp::arg("tth"), bp::arg("backgd")))
         .def("OptimizeBayesianBackground", &PowderPatternBackground::OptimizeBayesianBackground)
-        .def("FixParametersBeyondMaxresolution", 
-             &PowderPatternBackground::FixParametersBeyondMaxresolution,(bp::arg("obj")))
-    	;
+        .def("FixParametersBeyondMaxresolution",
+                &PowderPatternBackground::FixParametersBeyondMaxresolution, (bp::arg("obj")))
+        ;
 }
