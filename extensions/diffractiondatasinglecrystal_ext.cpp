@@ -17,34 +17,21 @@
 *****************************************************************************/
 
 #include <boost/python.hpp>
-#include <boost/utility.hpp>
-#include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
-#include <boost/python/args.hpp>
-
-#include <string>
-#include <map>
-#include <iostream>
 
 #include <ObjCryst/ObjCryst/DiffractionDataSingleCrystal.h>
-#include <ObjCryst/RefinableObj/RefinableObj.h>
-#include <ObjCryst/RefinableObj/IO.h>
-#include <ObjCryst/CrystVector/CrystVector.h>
 
-#include "helpers.hpp"
-#include "python_file_stream.hpp"
-
-namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
+
 
 void wrap_diffractiondatasinglecrystal()
 {
 
-    class_<DiffractionDataSingleCrystal, bases<ScatteringData> > 
-	("DiffractionDataSingleCrystal", init<>())
+    class_<DiffractionDataSingleCrystal, bases<ScatteringData> >
+        ("DiffractionDataSingleCrystal")
         /* Methods */
-        .def("SetWavelength", (void (DiffractionDataSingleCrystal::*)(const double))
-		    &DiffractionDataSingleCrystal::SetWavelength)
-	;
+        .def("SetWavelength",
+                (void (DiffractionDataSingleCrystal::*)(const double))
+                &DiffractionDataSingleCrystal::SetWavelength)
+        ;
 }
