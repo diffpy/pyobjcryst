@@ -36,11 +36,14 @@ using namespace ObjCryst;
 void wrap_globalscatteringpower()
 {
 
+    typedef void (GlobalScatteringPower::*GSPInitType)(const ZScatterer&);
+    GSPInitType theinit = &GlobalScatteringPower::Init;
+
     class_<GlobalScatteringPower, bases<ScatteringPower> > ("GlobalScatteringPower",
         init<>())
         .def(init<const ZScatterer &>())
         .def(init<const GlobalScatteringPower&>())
-        .def("Init", &GlobalScatteringPower::Init)
+        .def("Init", theinit)
         .def("GetRadius", &GlobalScatteringPower::GetRadius)
         ;
 }

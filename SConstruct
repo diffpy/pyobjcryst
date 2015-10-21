@@ -46,7 +46,9 @@ def pyconfigvar(name):
 # copy system environment variables related to compilation
 DefaultEnvironment(ENV=subdictionary(os.environ, '''
     PATH PYTHONPATH GIT_DIR
-    LD_LIBRARY_PATH DYLD_LIBRARY_PATH LIBRARY_PATH
+    CPATH CPLUS_INCLUDE_PATH LIBRARY_PATH
+    LD_LIBRARY_PATH DYLD_LIBRARY_PATH DYLD_FALLBACK_LIBRARY_PATH
+    MACOSX_DEPLOYMENT_TARGET
     '''.split())
 )
 
@@ -75,6 +77,10 @@ env.Help(MY_SCONS_HELP % vars.GenerateHelpText(env))
 icpc = env.WhereIs('icpc')
 if icpc:
     env.Tool('intelc', topdir=icpc[:icpc.rfind('/bin')])
+
+# Apply CFLAGS, CXXFLAGS, LDFLAGS from the system environment.
+flagnames = 'CFLAGS CXXFLAGS LDFLAGS'.split()
+env.MergeFlags([os.environ.get(n, '') for n in flagnames])
 
 # Figure out compilation switches, filter away C-related items.
 good_python_flags = lambda n : (

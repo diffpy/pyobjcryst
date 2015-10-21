@@ -37,12 +37,16 @@ using namespace ObjCryst;
 void wrap_scatteringpoweratom()
 {
 
+    typedef void (ScatteringPowerAtom::*SPAInitType)(
+            const string&, const string&, const double);
+    SPAInitType theinit = &ScatteringPowerAtom::Init;
+
     class_<ScatteringPowerAtom, bases<ScatteringPower> > ("ScatteringPowerAtom",
             init<const ScatteringPowerAtom&>())
         .def(
             init<const std::string&, const std::string&, optional<const double> >
             ((bp::arg("name"), bp::arg("symbol"), bp::arg("bIso")=1.0)))
-        .def("Init", &ScatteringPowerAtom::Init,
+        .def("Init", theinit,
                 (bp::arg("name"),
                 bp::arg("symbol"),
                 bp::arg("biso")=1.0

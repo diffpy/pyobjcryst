@@ -53,7 +53,7 @@ class StretchModeWrap : public StretchMode,
 
     // Pure virtual
 
-    void CalcDeriv(const bool derivllk=true)
+    void CalcDeriv(const bool derivllk=true) const
     {
         this->get_override("CalcDeriv")(derivllk);
     }
@@ -63,7 +63,7 @@ class StretchModeWrap : public StretchMode,
         this->get_override("Stretch")(change, keepCenter);
     }
 
-    void RandomStretch(const double change)
+    void RandomStretch(const double change, const bool keepCenter)
     {
         this->get_override("RandomStretch")(change);
     }

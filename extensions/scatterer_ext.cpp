@@ -171,7 +171,8 @@ class ScattererWrap : public Scatterer,
             const double yMin, const double yMax,
             const double zMin, const double zMax,
             const bool displayEnantiomer,
-            const bool displayNames) const
+            const bool displayNames,
+            const bool hideHydrogens) const
     {
         this->get_override("GLInitDisplayList")();
     }

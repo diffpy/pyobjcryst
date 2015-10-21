@@ -23,17 +23,19 @@ def configure_boost_library(libname):
 
 # Start configuration --------------------------------------------------------
 
-# Temporarily link with Python shared_library so that the check
-# for boost_python does not fail due to unresolved Python symbols.
-save_linkflags = env['LINKFLAGS']
-env.Prepend(LINKFLAGS=pyconfigvar('BLDLIBRARY'))
+# Create configuration environment that links with Python shared_library, so
+# that the boost_python check does not fail due to unresolved Python symbols.
+ecfg = env.Clone()
+ecfg.Append(LIBS=[])
+ecfg.MergeFlags(pyconfigvar('BLDLIBRARY'))
+newlibsindex = len(ecfg['LIBS'])
 
-conf = Configure(env)
+conf = Configure(ecfg)
 conf.CheckLib('ObjCryst', language='C++')
 configure_boost_library('boost_python')
-env = conf.Finish()
+conf.Finish()
 
-# Restore the original LINKFLAGS.
-env.Replace(LINKFLAGS=save_linkflags)
+# Use libraries that were found in the configuration.
+env.AppendUnique(LIBS=ecfg['LIBS'][newlibsindex:])
 
 # vim: ft=python

@@ -46,7 +46,7 @@
 #include <ObjCryst/CrystVector/CrystVector.h>
 
 #include "helpers.hpp"
-#include "python_file_stream.hpp"
+#include "python_streambuf.hpp"
 
 namespace bp = boost::python;
 using namespace boost::python;
@@ -448,10 +448,10 @@ void _RemovePar(RefinableObj &obj, RefinablePar* refpar)
 
 void _XMLOutput(
         const RefinableObj& r,
-        boost_adaptbx::file_conversion::python_file_buffer const &output,
+        bp::object output,
         int indent = 0)
 {
-    boost_adaptbx::file_conversion::ostream os(&output);
+    boost_adaptbx::python::ostream os(output);
     os.precision(doublelim::digits10);
     r.XMLOutput(os, indent);
     os.flush();
@@ -459,10 +459,11 @@ void _XMLOutput(
 
 void _XMLInput(
         RefinableObj& r,
-        boost_adaptbx::file_conversion::python_file_buffer const &input,
+        bp::object input,
         XMLCrystTag &tag)
 {
-    boost_adaptbx::file_conversion::istream in(&input);
+    boost_adaptbx::python::streambuf sbuf(input);
+    boost_adaptbx::python::streambuf::istream in(sbuf);
     r.XMLInput(in, tag);
     in.sync();
 }

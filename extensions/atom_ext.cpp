@@ -37,6 +37,19 @@ namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
+namespace {
+
+// Helper function - avoid dereferencing NULL when Atom is dummy.
+
+const ScatteringPower* getscatteringpowerpointer(const Atom& a)
+{
+    const ScatteringPower* rv =
+        a.IsDummy() ? NULL : &(a.GetScatteringPower());
+    return rv;
+}
+
+}   // namespace
+
 void wrap_atom()
 {
 
@@ -58,7 +71,7 @@ void wrap_atom()
         // FIXME - this should be returned as a constant reference. However, I
         // can't get this to work. This returns it as an internal reference,
         // which is probably a bad idea.
-        .def("GetScatteringPower", &Atom::GetScatteringPower,
+        .def("GetScatteringPower", &getscatteringpowerpointer,
             return_internal_reference<>())
             //return_value_policy<copy_const_reference>())
         ;

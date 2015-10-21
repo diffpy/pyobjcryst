@@ -35,10 +35,14 @@ using namespace ObjCryst;
 void wrap_scatteringpowersphere()
 {
 
+    typedef void (ScatteringPowerSphere::*SPSInitType)(
+            const string&, const double, const double);
+    SPSInitType theinit = &ScatteringPowerSphere::Init;
+
     class_<ScatteringPowerSphere, bases<ScatteringPower> >
         ("ScatteringPowerSphere", init<>())
         .def(init<const std::string&, const double, optional<const double> >())
-        .def("Init", &ScatteringPowerSphere::Init,
+        .def("Init", theinit,
                 (boost::python::arg("name"),
                 boost::python::arg("radius"),
                 boost::python::arg("biso")=1.0

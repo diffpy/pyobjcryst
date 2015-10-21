@@ -1,0 +1,60 @@
+package:
+  name: pyobjcryst
+  ## Use __conda_version__.txt.
+  # version: "2.0a0"
+
+source:
+  # git_url: https://github.com/diffpy/pyobjcryst.git
+  git_url: ..
+
+build:
+  preserve_egg_dir: True
+
+  # If this is a new build for the same version, increment the build
+  # number. If you do not include this key, it defaults to 0.
+  number: 0
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - numpy 1.9.2
+    - libobjcryst 2015.1a0*
+    - boost 1.57.0              # [linux]
+    - boost 1.56.0 py27_2       # [osx]
+    - scons
+
+  run:
+    - python
+    - setuptools
+    - numpy >=1.9.2
+    - libobjcryst 2015.1a0*
+    - boost 1.57.0              # [linux]
+    - boost 1.56.0              # [osx]
+
+test:
+  # Python imports
+  imports:
+    - pyobjcryst
+    - pyobjcryst.tests
+
+  # commands:
+    # You can put test commands to be run here.  Use this to test that the
+    # entry points work.
+
+
+  # You can also put a file called run_test.py in the recipe that will be run
+  # at test time.
+
+  # requires:
+    # Put any additional test requirements here.  For example
+    # - nose
+
+about:
+  home: https://github.com/diffpy/pyobjcryst
+  summary: Python bindings to the ObjCryst++ crystallographic library.
+  license: Modified BSD License
+  license_file: LICENSE.txt
+
+# See http://docs.continuum.io/conda/build.html
+# for more information about meta.yaml.
