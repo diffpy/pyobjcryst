@@ -44,7 +44,8 @@ void wrap_diffractiondatasinglecrystal()
 {
     class_<DiffractionDataSingleCrystal, bases<RefinableObj> >(
             "DiffractionDataSingleCrystal",
-            init<Crystal&, const bool>((bp::arg("cryst"), bp::arg("regist")=true)))
+            init<Crystal&, const bool>((bp::arg("cryst"), bp::arg("regist")=true))
+            [with_custodian_and_ward<1,2>()])
         .def("GetIcalc", &DiffractionDataSingleCrystal::GetIcalc,
                 return_value_policy<copy_const_reference>())
         .def("GetIobs", &DiffractionDataSingleCrystal::GetIobs,
