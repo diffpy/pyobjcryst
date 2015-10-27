@@ -791,4 +791,3 @@ void wrap_molecule()
     def("GetDihedralAngle", &GetDihedralAngle);
 
 }
-

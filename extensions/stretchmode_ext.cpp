@@ -278,4 +278,3 @@ void wrap_stretchmode()
             return_internal_reference<>()))
         ;
 }
-

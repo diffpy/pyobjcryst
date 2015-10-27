@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 ##############################################################################
 #
-# pyobjcryst       
+# pyobjcryst
 #
 # File coded by:    Vincent Favre-Nicolin
 #

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 ##############################################################################
 #
-# pyobjcryst       
+# pyobjcryst
 #
 # File coded by:    Vincent Favre-Nicolin
 #
@@ -19,4 +19,4 @@ Changes from ObjCryst::PowderPatternDiffraction::
 
 """
 
-from _pyobjcryst import PowderPatternDiffraction,ReflectionProfileType
+from _pyobjcryst import PowderPatternDiffraction, ReflectionProfileType
