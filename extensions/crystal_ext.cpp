@@ -324,7 +324,8 @@ void wrap_crystal()
             (Crystal::*)()) &Crystal::GetBondValenceRoList,
             return_internal_reference<>())
         .def("ConnectAtoms", &Crystal::ConnectAtoms,
-             (bp::arg("min_relat_dist")=0.4,bp::arg("max_relat_dist")=1.3,bp::arg("warnuser_fail")=false))
+             (bp::arg("min_relat_dist")=0.4, bp::arg("max_relat_dist")=1.3,
+              bp::arg("warnuser_fail")=false))
         ;
 
 
@@ -333,8 +334,8 @@ void wrap_crystal()
         .def_readwrite("mCanOverlap", &Crystal::BumpMergePar::mCanOverlap)
         ;
 
-    def("CreateCrystalFromCIF",
-            &_CreateCrystalFromCIF, (bp::arg("file"),
-             bp::arg("oneScatteringPowerPerElement")=false, bp::arg("connectAtoms")=false),
+    def("CreateCrystalFromCIF", &_CreateCrystalFromCIF,
+            (bp::arg("file"), bp::arg("oneScatteringPowerPerElement")=false,
+             bp::arg("connectAtoms")=false),
             return_value_policy<manage_new_object>());
 }

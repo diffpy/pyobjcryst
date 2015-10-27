@@ -58,15 +58,18 @@ void wrap_lsqnumobj()
                 &LSQNumObj::SetParIsFixed,
                 (bp::arg("type"), bp::arg("fix")))
         .def("SetParIsFixed",
-                (void (LSQNumObj::*)(RefinablePar &, const bool)) &LSQNumObj::SetParIsFixed,
+                (void (LSQNumObj::*)(RefinablePar &, const bool))
+                &LSQNumObj::SetParIsFixed,
                 (bp::arg("par"), bp::arg("fix")))
         //void SetParIsFixed(RefinableObj &obj, const bool fix);
         .def("UnFixAllPar", &LSQNumObj::UnFixAllPar)
         //void SetParIsUsed(const std::string& parName, const bool use);
         //void SetParIsUsed(const RefParType *type, const bool use);
         .def("Refine", &LSQNumObj::Refine,
-                (bp::arg("nbCycle")=1, bp::arg("useLevenbergMarquardt")=false,
-                 bp::arg("silent")=false, bp::arg("callBeginEndOptimization")=true,
+                (bp::arg("nbCycle")=1,
+                 bp::arg("useLevenbergMarquardt")=false,
+                 bp::arg("silent")=false,
+                 bp::arg("callBeginEndOptimization")=true,
                  bp::arg("minChi2var")=0.01))
         .def("Rfactor", &LSQNumObj::Rfactor)
         .def("RwFactor", &LSQNumObj::RwFactor)
@@ -74,7 +77,8 @@ void wrap_lsqnumobj()
         .def("SetRefinedObj", &LSQNumObj::SetRefinedObj,
                 (bp::arg("obj"), bp::arg("LSQFuncIndex")=0,
                  bp::arg("init")=true, bp::arg("recursive")=false))
-        .def("GetCompiledRefinedObj", (RefinableObj& (LSQNumObj::*)())
+        .def("GetCompiledRefinedObj",
+                (RefinableObj& (LSQNumObj::*)())
                 &LSQNumObj::GetCompiledRefinedObj,
                 return_internal_reference<>())
         .def("PrintRefResults", &LSQNumObj::PrintRefResults)
@@ -86,8 +90,12 @@ void wrap_lsqnumobj()
                 return_value_policy<copy_const_reference>())
         .def("GetLSQWeight", &LSQNumObj::GetLSQWeight,
                 return_value_policy<copy_const_reference>())
-        .def("GetLSQDeriv", &LSQNumObj::GetLSQDeriv, (bp::arg("par")), return_value_policy<copy_const_reference>())
-        .def("BeginOptimization", &LSQNumObj::BeginOptimization, (bp::arg("allowApproximations")=false, bp::arg("enableRestraints")=false))
+        .def("GetLSQDeriv", &LSQNumObj::GetLSQDeriv,
+                (bp::arg("par")),
+                return_value_policy<copy_const_reference>())
+        .def("BeginOptimization", &LSQNumObj::BeginOptimization,
+                (bp::arg("allowApproximations")=false,
+                 bp::arg("enableRestraints")=false))
         .def("EndOptimization", &LSQNumObj::EndOptimization)
         ;
 }

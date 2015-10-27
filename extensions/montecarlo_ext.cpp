@@ -37,22 +37,26 @@ using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
-    void _Optimize(MonteCarloObj &obj, long nbSteps, const bool silent, const double finalcost, const double maxTime)
-    {
-        obj.Optimize(nbSteps, silent, finalcost, maxTime);
-    }
+
+void mcoptimize(MonteCarloObj &obj, long nbSteps, const bool silent,
+        const double finalcost, const double maxTime)
+{
+    obj.Optimize(nbSteps, silent, finalcost, maxTime);
+}
 
 }   // namespace
 
+
 void wrap_montecarloobj()
 {
-    class_<MonteCarloObj >("MonteCarloObj", init<>()) //, bases<OptimizationObj>
+    class_<MonteCarloObj>("MonteCarloObj", init<>()) //, bases<OptimizationObj>
         //        .def("GetBestCost", &MonteCarloObj::GetBestCost)
         .def("IsOptimizing", &MonteCarloObj::IsOptimizing)
         //        .add_property("Name", &MonteCarloObj::GetName, &MonteCarloObj::SetName)
         .def("RandomizeStartingConfig", &MonteCarloObj::RandomizeStartingConfig)
-        .def("Optimize", &_Optimize,
-                (bp::arg("nbSteps"), bp::arg("silent")=false, bp::arg("finalcost")=0.0, bp::arg("maxTime")=-1))
+        .def("Optimize", &mcoptimize,
+                (bp::arg("nbSteps"), bp::arg("silent")=false,
+                 bp::arg("finalcost")=0.0, bp::arg("maxTime")=-1))
         //.def("RunParallelTempering", &MonteCarloObj::RunParallelTempering,
         //	(bp::arg("nbSteps"), bp::arg("silent"), bp::arg("finalcost"), bp::arg("maxTime")))
         // From OptimizationObj:

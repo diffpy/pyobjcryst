@@ -115,4 +115,3 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
     wrap_zatom();
     wrap_zpolyhedron();
 }
-

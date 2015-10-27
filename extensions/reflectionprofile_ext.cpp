@@ -37,27 +37,34 @@ using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
-    class ReflectionProfileWrap : public ReflectionProfile, public wrapper<ReflectionProfile>
-    {//:TODO: :KLUDGE: Dummy override of pure virtual functions
-        public:
-            ReflectionProfileWrap():ReflectionProfile(){}
-            virtual ReflectionProfile* CreateCopy()const{}
-            virtual CrystVector_REAL GetProfile(const CrystVector_REAL &x, const REAL xcenter,
-                    const REAL h, const REAL k, const REAL l)const
-            {}
-            virtual REAL GetFullProfileWidth(const REAL relativeIntensity, const REAL xcenter,
-                    const REAL h, const REAL k, const REAL l)
-            {}
-            virtual void XMLOutput(ostream &os, int indent)const
-            {}
-            virtual void XMLInput(istream &is, const XMLCrystTag &tag)
-            {}
-    };
+
+class ReflectionProfileWrap :
+    public ReflectionProfile, public wrapper<ReflectionProfile>
+{
+    //:TODO: :KLUDGE: Dummy override of pure virtual functions
+    public:
+        ReflectionProfileWrap() : ReflectionProfile() {}
+        virtual ReflectionProfile* CreateCopy() const {}
+        virtual CrystVector_REAL GetProfile(
+                const CrystVector_REAL& x, const REAL xcenter,
+                const REAL h, const REAL k, const REAL l) const
+        {}
+        virtual REAL GetFullProfileWidth(
+                const REAL relativeIntensity, const REAL xcenter,
+                const REAL h, const REAL k, const REAL l)
+        {}
+        virtual void XMLOutput(ostream& os, int indent) const
+        {}
+        virtual void XMLInput(istream& is, const XMLCrystTag& tag)
+        {}
+};
 
 }   // namespace
 
+
 void wrap_reflectionprofile()
 {
-    class_<ReflectionProfileWrap, bases<RefinableObj>, boost::noncopyable>("ReflectionProfile", init<>())
+    class_<ReflectionProfileWrap, bases<RefinableObj>, boost::noncopyable>(
+            "ReflectionProfile")
         ;
 }
