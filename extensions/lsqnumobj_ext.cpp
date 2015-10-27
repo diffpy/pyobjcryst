@@ -47,7 +47,7 @@ namespace {
 
 void wrap_lsqnumobj()
 {
-    class_<LSQNumObj>("LSQNumObj", init<>())
+    class_<LSQNumObj>("LSQNumObj")
         /// LSQNumObj::PrepareRefParList() must be called first!
         .def("SetParIsFixed",
                 (void (LSQNumObj::*)(const std::string&, const bool))

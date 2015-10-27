@@ -34,7 +34,7 @@ using namespace ObjCryst;
 void wrap_asymmetricunit()
 {
 
-    class_<AsymmetricUnit> ("AsymmetricUnit", init<>() )
+    class_<AsymmetricUnit>("AsymmetricUnit")
         // Constructors
         .def(init<const SpaceGroup&>(bp::arg("spg")))
         // Methods

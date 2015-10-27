@@ -49,7 +49,7 @@ void mcoptimize(MonteCarloObj &obj, long nbSteps, const bool silent,
 
 void wrap_montecarloobj()
 {
-    class_<MonteCarloObj>("MonteCarloObj", init<>()) //, bases<OptimizationObj>
+    class_<MonteCarloObj>("MonteCarloObj") //, bases<OptimizationObj>
         //        .def("GetBestCost", &MonteCarloObj::GetBestCost)
         .def("IsOptimizing", &MonteCarloObj::IsOptimizing)
         //        .add_property("Name", &MonteCarloObj::GetName, &MonteCarloObj::SetName)

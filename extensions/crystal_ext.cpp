@@ -235,8 +235,7 @@ _CreateCrystalFromCIF(bp::object input,
 void wrap_crystal()
 {
 
-    class_<CrystalWrap, bases<UnitCell>, boost::noncopyable >
-        ("Crystal", init<>())
+    class_<CrystalWrap, bases<UnitCell>, boost::noncopyable>("Crystal")
         /* Constructors */
         .def(init<const double, const double, const double, const std::string&>(
             (bp::arg("a"), bp::arg("b"), bp::arg("c"),

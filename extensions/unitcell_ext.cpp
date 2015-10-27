@@ -130,7 +130,7 @@ void wrap_unitcell()
 {
 
     class_<UnitCell, bases<RefinableObj> >
-        ("UnitCell", init<>())
+        ("UnitCell")
         // Constructors
         .def(init<const double, const double, const double, const std::string&>())
         .def(init<const double, const double, const double,

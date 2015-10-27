@@ -40,7 +40,7 @@ void wrap_scatteringpowersphere()
     SPSInitType theinit = &ScatteringPowerSphere::Init;
 
     class_<ScatteringPowerSphere, bases<ScatteringPower> >
-        ("ScatteringPowerSphere", init<>())
+        ("ScatteringPowerSphere")
         .def(init<const std::string&, const double, optional<const double> >())
         .def("Init", theinit,
                 (boost::python::arg("name"),

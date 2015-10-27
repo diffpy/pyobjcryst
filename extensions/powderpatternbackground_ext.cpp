@@ -68,7 +68,7 @@ void _SetInterpPoints(PowderPatternBackground &b,
 void wrap_powderpatternbackground()
 {
     class_<PowderPatternBackground, bases<PowderPatternComponent> >(
-            "PowderPatternBackground", init<>())
+            "PowderPatternBackground")
         //.def("SetParentPowderPattern", &PowderPatternBackground::SetParentPowderPattern)
         .def("GetPowderPatternCalc",
                 &PowderPatternBackground::GetPowderPatternCalc,

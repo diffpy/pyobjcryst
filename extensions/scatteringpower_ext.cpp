@@ -269,7 +269,7 @@ void wrap_scatteringpower()
     // copy_const_reference is uses, but they are turned into RefinableObj
     // instances.
     class_<ScatteringPowerWrap, boost::noncopyable, bases<RefinableObj> >
-        ("ScatteringPower", init<>())
+        ("ScatteringPower")
         .def(init<const ScatteringPowerWrap&>())
         .def("GetScatteringFactor",
             pure_virtual(&ScatteringPower::GetScatteringFactor),

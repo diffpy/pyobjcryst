@@ -78,7 +78,7 @@ PowderPattern* _CreatePowderPatternFromCIF(bp::object input)
 
 void wrap_powderpattern()
 {
-    class_<PowderPattern, bases<RefinableObj> >("PowderPattern", init<>())
+    class_<PowderPattern, bases<RefinableObj> >("PowderPattern")
         .def("AddPowderPatternComponent",
                 &PowderPattern::AddPowderPatternComponent,
                 with_custodian_and_ward<1, 2>())

@@ -104,7 +104,7 @@ class RestraintWrap : public Restraint,
 void wrap_restraint()
 {
 
-    class_<RestraintWrap, boost::noncopyable>("Restraint", init<>())
+    class_<RestraintWrap, boost::noncopyable>("Restraint")
         .def(init<const RefParType*>((bp::arg("type")))[
             with_custodian_and_ward<1,2>()])
         .def("GetType", &Restraint::GetType, &RestraintWrap::default_GetType,

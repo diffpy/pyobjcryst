@@ -83,7 +83,7 @@ void wrap_refinableobjclock()
 {
 
     class_<RefinableObjClock>
-        ("RefinableObjClock", classdoc, init<>())
+        ("RefinableObjClock", classdoc)
         .def("AddChild", &RefinableObjClock::AddChild, addchilddoc,
                 with_custodian_and_ward<1,2>())
         .def("AddParent", &RefinableObjClock::AddParent, addparentdoc,
