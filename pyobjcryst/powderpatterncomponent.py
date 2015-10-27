@@ -15,7 +15,7 @@
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 Changes from ObjCryst::PowderPatternComponent::
-	In development !
+        In development !
 
 """
 
