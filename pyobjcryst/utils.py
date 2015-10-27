@@ -170,6 +170,3 @@ def writexyz(crystal, filename):
     f.write(out)
     f.close()
     return
-
-def moleculeFromDiffpyStructure(crystal, stru):
-    """Create and return a molecule from a diffpy.Structure object."""

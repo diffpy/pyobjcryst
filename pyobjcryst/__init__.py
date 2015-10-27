@@ -48,66 +48,6 @@ See the modules' documentation for specific changes.
 """
 
 # Let's put this on the package level
-from general import ObjCrystException
+from pyobjcryst.general import ObjCrystException
 
-# Atom
-import atom
-
-# Crystal
-import crystal
-
-# Molecule
-import molecule
-
-# Polyhedron
-import polyhedron
-
-# RefinableObj
-import refinableobj
-
-# General
-import general
-
-# Scatterer
-import scatterer
-
-# ScatteringPower
-import scatteringpower
-
-# ScatteringPowerSphere
-import scatteringpowersphere
-
-# SpaceGroup
-import spacegroup
-
-# UnitCell
-import unitcell
-
-# ZScatterer
-import zscatterer
-
-# IO
-import io
-
-# MonteCarlo
-import montecarloobj
-
-# DiffractionDataSingleCrystal
-import diffractiondatasinglecrystal
-
-# PowderPattern
-import powderpattern
-
-# PowderPatternBackground
-import powderpatternbackground
-
-# PowderPatternDiffraction
-import powderpatterndiffraction
-
-# ReflectionProfile
-import reflectionprofile
-
-#LSQNumObj
-import lsqnumobj
-
-from version import __version__
+from pyobjcryst.version import __version__
