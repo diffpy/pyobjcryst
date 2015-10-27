@@ -166,15 +166,8 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
 
     const ScatteringComponentList& GetScatteringComponentList() const
     {
-        if (override GetScatteringComponentList =
-                this->get_override("GetScatteringComponentList"))
-#ifdef _MSC_VER
-            return call<const ScatteringComponentList&>(
-                    GetScatteringComponentList.ptr()
-                    );
-#else
-            return GetScatteringComponentList();
-#endif
+        override f = this->get_override("GetScatteringComponentList");
+        if (f)  return f();
         return default_GetScatteringComponentList();
     }
 

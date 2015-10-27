@@ -111,14 +111,8 @@ class RefinableObjWrap : public RefinableObj,
 
     const std::string& GetClassName() const
     {
-        if (override GetClassName = this->get_override("GetClassName"))
-#ifdef _MSC_VER
-            return call<const std::string&>(
-                    GetClassName.ptr()
-                    );
-#else
-            return GetClassName();
-#endif
+        override f = this->get_override("GetClassName");
+        if (f)  return f();
         return default_GetClassName();
     }
 
@@ -127,14 +121,8 @@ class RefinableObjWrap : public RefinableObj,
 
     const std::string& GetName() const
     {
-        if (override GetName = this->get_override("GetName"))
-#ifdef _MSC_VER
-            return call<const std::string&>(
-                    GetName.ptr()
-                    );
-#else
-            return GetName();
-#endif
+        override f = this->get_override("GetName");
+        if (f)  return f();
         return default_GetName();
     }
 
@@ -143,9 +131,9 @@ class RefinableObjWrap : public RefinableObj,
 
     void SetName(const std::string &name)
     {
-        if (override SetName = this->get_override("SetName"))
-            SetName(name);
-        default_SetName(name);
+        override f = this->get_override("SetName");
+        if (f)  f(name);
+        else  default_SetName(name);
     }
 
     void default_Print() const
@@ -153,9 +141,9 @@ class RefinableObjWrap : public RefinableObj,
 
     void Print() const
     {
-        if (override Print = this->get_override("Print"))
-            Print();
-        default_Print();
+        override f = this->get_override("Print");
+        if (f)  f();
+        else  default_Print();
     }
 
     void default_RegisterClient(RefinableObj& client) const
@@ -163,9 +151,9 @@ class RefinableObjWrap : public RefinableObj,
 
     void RegisterClient(RefinableObj& client) const
     {
-        if (override RegisterClient = this->get_override("RegisterClient"))
-            RegisterClient(client);
-        default_RegisterClient(client);
+        override f = this->get_override("RegisterClient");
+        if (f)  f(client);
+        else  default_RegisterClient(client);
     }
 
     void default_DeRegisterClient(RefinableObj& client) const
@@ -173,9 +161,9 @@ class RefinableObjWrap : public RefinableObj,
 
     void DeRegisterClient(RefinableObj& client) const
     {
-        if (override DeRegisterClient = this->get_override("DeRegisterClient"))
-            DeRegisterClient(client);
-        default_DeRegisterClient(client);
+        override f = this->get_override("DeRegisterClient");
+        if (f)  f(client);
+        else  default_DeRegisterClient(client);
     }
 
     ObjRegistry< RefinableObj >& default_GetClientRegistry()
@@ -183,14 +171,8 @@ class RefinableObjWrap : public RefinableObj,
 
     ObjRegistry< RefinableObj >& GetClientRegistry()
     {
-        if (override GetClientRegistry = this->get_override("GetClientRegistry"))
-#ifdef _MSC_VER
-            return call<ObjRegistry< RefinableObj >& >(
-                    GetClientRegistry.ptr()
-                    );
-#else
-            return GetClientRegistry();
-#endif
+        override f = this->get_override("GetClientRegistry");
+        if (f)  return f();
         return default_GetClientRegistry();
     }
 
@@ -201,9 +183,9 @@ class RefinableObjWrap : public RefinableObj,
     void BeginOptimization(const bool allowApproximations,
             const bool enableRestraints)
     {
-        if (override BeginOptimization = this->get_override("BeginOptimization"))
-            BeginOptimization(allowApproximations, enableRestraints);
-        default_BeginOptimization(allowApproximations, enableRestraints);
+        override f = this->get_override("BeginOptimization");
+        if (f)  f(allowApproximations, enableRestraints);
+        else  default_BeginOptimization(allowApproximations, enableRestraints);
     }
 
     void default_EndOptimization()
@@ -211,9 +193,9 @@ class RefinableObjWrap : public RefinableObj,
 
     void EndOptimization()
     {
-        if (override EndOptimization = this->get_override("EndOptimization"))
-            EndOptimization();
-        default_EndOptimization();
+        override f = this->get_override("EndOptimization");
+        if (f)  f();
+        else  default_EndOptimization();
     }
 
     void default_RandomizeConfiguration()
@@ -221,10 +203,9 @@ class RefinableObjWrap : public RefinableObj,
 
     void RandomizeConfiguration()
     {
-        if (override RandomizeConfiguration =
-                this->get_override("RandomizeConfiguration"))
-            RandomizeConfiguration();
-        default_RandomizeConfiguration();
+        override f = this->get_override("RandomizeConfiguration");
+        if (f)  f();
+        else  default_RandomizeConfiguration();
     }
 
     void default_GlobalOptRandomMove(const double mutationAmplitude,
@@ -234,9 +215,9 @@ class RefinableObjWrap : public RefinableObj,
     void GlobalOptRandomMove(const double mutationAmplitude,
             const RefParType *type)
     {
-        if (override GlobalOptRandomMove = this->get_override("GlobalOptRandomMove"))
-            GlobalOptRandomMove(mutationAmplitude, type);
-        default_GlobalOptRandomMove(mutationAmplitude, type);
+        override f = this->get_override("GlobalOptRandomMove");
+        if (f)  f(mutationAmplitude, type);
+        else  default_GlobalOptRandomMove(mutationAmplitude, type);
     }
 
     double default_GetLogLikelihood() const
@@ -244,14 +225,8 @@ class RefinableObjWrap : public RefinableObj,
 
     double GetLogLikelihood() const
     {
-        if (override GetLogLikelihood = this->get_override("GetLogLikelihood"))
-#ifdef _MSC_VER
-            return call<double>(
-                    GetLogLikelihood.ptr()
-                    );
-#else
-            return GetLogLikelihood();
-#endif
+        override f = this->get_override("GetLogLikelihood");
+        if (f)  return f();
         return default_GetLogLikelihood();
     }
 
@@ -260,14 +235,8 @@ class RefinableObjWrap : public RefinableObj,
 
     unsigned int GetNbLSQFunction() const
     {
-        if (override GetNbLSQFunction = this->get_override("GetNbLSQFunction"))
-#ifdef _MSC_VER
-            return call<unsigned int>(
-                    GetNbLSQFunction.ptr()
-                    );
-#else
-            return GetNbLSQFunction();
-#endif
+        override f = this->get_override("GetNbLSQFunction");
+        if (f)  return f();
         return default_GetNbLSQFunction();
     }
 
@@ -276,14 +245,8 @@ class RefinableObjWrap : public RefinableObj,
 
     const CrystVector<double>& GetLSQCalc(const unsigned int i) const
     {
-        if (override GetLSQCalc = this->get_override("GetLSQCalc"))
-#ifdef _MSC_VER
-            return call<const CrystVector<double>&>(
-                    GetLSQCalc.ptr(), i
-                    );
-#else
-            return GetLSQCalc(i);
-#endif
+        override f = this->get_override("GetLSQCalc");
+        if (f)  return f(i);
         return default_GetLSQCalc(i);
     }
 
@@ -292,14 +255,8 @@ class RefinableObjWrap : public RefinableObj,
 
     const CrystVector<double>& GetLSQObs(const unsigned int i) const
     {
-        if (override GetLSQObs = this->get_override("GetLSQObs"))
-#ifdef _MSC_VER
-            return call<const CrystVector<double>&>(
-                    GetLSQObs.ptr(), i
-                    );
-#else
-            return GetLSQObs(i);
-#endif
+        override f = this->get_override("GetLSQObs");
+        if (f)  return f(i);
         return default_GetLSQObs(i);
     }
 
@@ -308,14 +265,8 @@ class RefinableObjWrap : public RefinableObj,
 
     const CrystVector<double>& GetLSQWeight(const unsigned int i) const
     {
-        if (override GetLSQWeight = this->get_override("GetLSQWeight"))
-#ifdef _MSC_VER
-            return call<const CrystVector<double>&>(
-                    GetLSQWeight.ptr(), i
-                    );
-#else
-            return GetLSQWeight(i);
-#endif
+        override f = this->get_override("GetLSQWeight");
+        if (f)  return f(i);
         return default_GetLSQWeight(i);
     }
 
@@ -326,14 +277,8 @@ class RefinableObjWrap : public RefinableObj,
     const CrystVector<double>& GetLSQDeriv(const unsigned int i,
             RefinablePar &rp)
     {
-        if (override GetLSQDeriv = this->get_override("GetLSQDeriv"))
-#ifdef _MSC_VER
-            return call<const CrystVector<double>&>(
-                    GetLSQDeriv.ptr(), i, rp
-                    );
-#else
-            return GetLSQDeriv(i, rp);
-#endif
+        override f = this->get_override("GetLSQDeriv");
+        if (f)  return f(i, rp);
         return default_GetLSQDeriv(i, rp);
     }
 
@@ -342,9 +287,9 @@ class RefinableObjWrap : public RefinableObj,
 
     void XMLOutput(std::ostream &os, int indent) const
     {
-        if (override XMLOutput = this->get_override("XMLOutput"))
-            XMLOutput(os, indent);
-        default_XMLOutput(os, indent);
+        override f = this->get_override("XMLOutput");
+        if (f)  f(os, indent);
+        else  default_XMLOutput(os, indent);
     }
 
     void default_XMLInput(std::istream &is,
@@ -354,9 +299,9 @@ class RefinableObjWrap : public RefinableObj,
     void XMLInput(std::istream &is,
             const ObjCryst::XMLCrystTag &tag)
     {
-        if (override XMLInput = this->get_override("XMLInput"))
-            XMLInput(is, tag);
-        default_XMLInput(is, tag);
+        override f = this->get_override("XMLInput");
+        if (f)  f(is, tag);
+        else  default_XMLInput(is, tag);
     }
 
     void default_GetGeneGroup(const ObjCryst::RefinableObj &obj,
@@ -368,9 +313,9 @@ class RefinableObjWrap : public RefinableObj,
             CrystVector<unsigned int> &groupIndex,
             unsigned int &firstGroup) const
     {
-        if (override GetGeneGroup = this->get_override("GetGeneGroup"))
-            GetGeneGroup(obj, groupIndex, firstGroup);
-        default_GetGeneGroup(obj, groupIndex, firstGroup);
+        override f = this->get_override("GetGeneGroup");
+        if (f)  f(obj, groupIndex, firstGroup);
+        else  default_GetGeneGroup(obj, groupIndex, firstGroup);
     }
 
     void default_UpdateDisplay() const
@@ -378,9 +323,9 @@ class RefinableObjWrap : public RefinableObj,
 
     void UpdateDisplay() const
     {
-        if (override UpdateDisplay = this->get_override("UpdateDisplay"))
-            UpdateDisplay();
-        default_UpdateDisplay();
+        override f = this->get_override("UpdateDisplay");
+        if (f)  f();
+        else  default_UpdateDisplay();
     }
 
     double default_GetRestraintCost() const
@@ -388,14 +333,8 @@ class RefinableObjWrap : public RefinableObj,
 
     double GetRestraintCost() const
     {
-        if (override GetRestraintCost = this->get_override("GetRestraintCost"))
-#ifdef _MSC_VER
-            return call<double>(
-                    GetRestraintCost.ptr()
-                    );
-#else
-            return GetRestraintCost();
-#endif
+        override f = this->get_override("GetRestraintCost");
+        if (f)  return f();
         return default_GetRestraintCost();
     }
 
@@ -404,9 +343,9 @@ class RefinableObjWrap : public RefinableObj,
 
     void TagNewBestConfig() const
     {
-        if (override TagNewBestConfig = this->get_override("TagNewBestConfig"))
-            TagNewBestConfig();
-        default_TagNewBestConfig();
+        override f = this->get_override("TagNewBestConfig");
+        if (f)  f();
+        else  default_TagNewBestConfig();
     }
 
     // Protected methods
@@ -416,9 +355,9 @@ class RefinableObjWrap : public RefinableObj,
 
     void Prepare()
     {
-        if (override Prepare = this->get_override("Prepare"))
-            Prepare();
-        default_Prepare();
+        override f = this->get_override("Prepare");
+        if (f)  f();
+        else  default_Prepare();
     }
 
     long FindPar(const std::string& name) const

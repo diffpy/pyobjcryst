@@ -47,15 +47,9 @@ class RestraintWrap : public Restraint,
 
     const RefParType* GetType() const
     {
-        if( override GetType = this->get_override("GetType"))
-#ifdef _MSC_VER
-            return call<const RefParType*>(
-                    GetType.ptr()
-                    );
-#else
-            return GetType();
-#endif
-        return default_GetType();
+        override f = this->get_override("GetType");
+        if(f)  return f();
+        return this->default_GetType();
     }
 
     void default_SetType(const RefParType* type)
@@ -66,13 +60,13 @@ class RestraintWrap : public Restraint,
 
     void SetType(const RefParType* type)
     {
-        if( override SetType = this->get_override("SetType"))
+        override f = this->get_override("SetType");
+        if(f)
         {
-            SetType(type);
+            f(type);
             return;
         }
-        default_SetType(type);
-        return;
+        return this->default_SetType(type);
     }
 
     double default_GetLogLikelihood() const
@@ -82,15 +76,9 @@ class RestraintWrap : public Restraint,
 
     double GetLogLikelihood() const
     {
-        if( override GetLogLikelihood = this->get_override("GetLogLikelihood"))
-#ifdef _MSC_VER
-            return call<double>(
-                    GetLogLikelihood.ptr()
-                    );
-#else
-            return GetLogLikelihood();
-#endif
-        return default_GetLogLikelihood();
+        override f = this->get_override("GetLogLikelihood");
+        if(f)  return f();
+        return this->default_GetLogLikelihood();
     }
 
 };

@@ -60,12 +60,9 @@ class ScattererWrap : public Scatterer,
 
     void SetX(const double x)
     {
-        if (override SetX = this->get_override("SetX"))
-        {
-            SetX(x);
-            return;
-        }
-        default_SetX(x);
+        override f = this->get_override("SetX");
+        if (f)  f(x);
+        else  default_SetX(x);
     }
 
     void default_SetY(const double y)
@@ -73,12 +70,9 @@ class ScattererWrap : public Scatterer,
 
     void SetY(const double y)
     {
-        if (override SetY = this->get_override("SetY"))
-        {
-            SetY(y);
-            return;
-        }
-        default_SetY(y);
+        override f = this->get_override("SetY");
+        if (f)  f(y);
+        else  default_SetY(y);
     }
 
     void default_SetZ(const double z)
@@ -86,12 +80,9 @@ class ScattererWrap : public Scatterer,
 
     void SetZ(const double z)
     {
-        if (override SetZ = this->get_override("SetZ"))
-        {
-            SetZ(z);
-            return;
-        }
-        default_SetZ(z);
+        override f = this->get_override("SetZ");
+        if (f)  f(z);
+        else  default_SetZ(z);
     }
 
     void default_SetOccupancy(const double occ)
@@ -99,53 +90,31 @@ class ScattererWrap : public Scatterer,
 
     void SetOccupancy(const double occ)
     {
-        if (override SetOccupancy = this->get_override("SetOccupancy"))
-        {
-            SetOccupancy(occ);
-            return;
-        }
-        default_SetOccupancy(occ);
+        override f = this->get_override("SetOccupancy");
+        if (f)  f(occ);
+        else  default_SetOccupancy(occ);
     }
 
     // Pure virtual
 
     Scatterer* CreateCopy() const
     {
-#ifdef _MSC_VER
-        return call<Scatterer*>(this->get_override("CreateCopy").ptr());
-#else
         return this->get_override("CreateCopy")();
-#endif
     }
 
     int GetNbComponent() const
     {
-#ifdef _MSC_VER
-        return call<int>(this->get_override("GetNbComponent").ptr());
-#else
         return this->get_override("GetNbComponent")();
-#endif
     }
 
     const ScatteringComponentList& GetScatteringComponentList() const
     {
-#ifdef _MSC_VER
-        return call<const ScatteringComponentList&>(
-                this->get_override("GetScatteringComponentList").ptr());
-#else
         return this->get_override("GetScatteringComponentList")();
-#endif
     }
 
     std::string GetComponentName(const int i) const
     {
-#ifdef _MSC_VER
-        return call<std::string>(
-                this->get_override("GetComponentName").ptr(), i
-                );
-#else
         return this->get_override("GetComponentName")(i);
-#endif
     }
 
     void Print() const
@@ -156,12 +125,7 @@ class ScattererWrap : public Scatterer,
     std::ostream& POVRayDescription(std::ostream& os,
             const CrystalPOVRayOptions& options) const
     {
-#ifdef _MSC_VER
-        return call<std::ostream&>(
-                this->get_override("POVRayDescription").ptr(), os, options);
-#else
         return this->get_override("POVRayDescription")(os, options);
-#endif
     }
 
     void GLInitDisplayList(const bool noSymmetrics,

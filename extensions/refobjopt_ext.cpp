@@ -41,10 +41,9 @@ class RefObjOptWrap : public RefObjOpt,
 
     void SetChoice(const int choice)
     {
-        if (override SetChoice =
-                this->get_override("SetChoice"))
-            SetChoice(choice);
-        default_SetChoice(choice);
+        override f = this->get_override("SetChoice");
+        if (f)  f(choice);
+        else  default_SetChoice(choice);
     }
 
 }; // AtomWrap
