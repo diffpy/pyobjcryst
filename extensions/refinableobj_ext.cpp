@@ -126,10 +126,10 @@ class RefinableObjWrap : public RefinableObj,
         return default_GetName();
     }
 
-    void default_SetName(const std::string &name)
+    void default_SetName(const std::string& name)
     { this->RefinableObj::SetName(name); }
 
-    void SetName(const std::string &name)
+    void SetName(const std::string& name)
     {
         override f = this->get_override("SetName");
         if (f)  f(name);
@@ -209,11 +209,11 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     void default_GlobalOptRandomMove(const double mutationAmplitude,
-            const RefParType *type)
+            const RefParType* type)
     { this->RefinableObj::GlobalOptRandomMove(mutationAmplitude, type);}
 
     void GlobalOptRandomMove(const double mutationAmplitude,
-            const RefParType *type)
+            const RefParType* type)
     {
         override f = this->get_override("GlobalOptRandomMove");
         if (f)  f(mutationAmplitude, type);
@@ -271,47 +271,47 @@ class RefinableObjWrap : public RefinableObj,
     }
 
     const CrystVector<double>& default_GetLSQDeriv(const unsigned int i,
-            RefinablePar &rp)
+            RefinablePar& rp)
     { return this->RefinableObj::GetLSQDeriv(i, rp); }
 
     const CrystVector<double>& GetLSQDeriv(const unsigned int i,
-            RefinablePar &rp)
+            RefinablePar& rp)
     {
         override f = this->get_override("GetLSQDeriv");
         if (f)  return f(i, rp);
         return default_GetLSQDeriv(i, rp);
     }
 
-    void default_XMLOutput(std::ostream &os, int indent) const
+    void default_XMLOutput(std::ostream& os, int indent) const
     { this->RefinableObj::XMLOutput(os, indent); }
 
-    void XMLOutput(std::ostream &os, int indent) const
+    void XMLOutput(std::ostream& os, int indent) const
     {
         override f = this->get_override("XMLOutput");
         if (f)  f(os, indent);
         else  default_XMLOutput(os, indent);
     }
 
-    void default_XMLInput(std::istream &is,
-            const ObjCryst::XMLCrystTag &tag)
+    void default_XMLInput(std::istream& is,
+            const ObjCryst::XMLCrystTag& tag)
     { this->RefinableObj::XMLInput(is, tag); }
 
-    void XMLInput(std::istream &is,
-            const ObjCryst::XMLCrystTag &tag)
+    void XMLInput(std::istream& is,
+            const ObjCryst::XMLCrystTag& tag)
     {
         override f = this->get_override("XMLInput");
         if (f)  f(is, tag);
         else  default_XMLInput(is, tag);
     }
 
-    void default_GetGeneGroup(const ObjCryst::RefinableObj &obj,
-            CrystVector<unsigned int> &groupIndex,
-            unsigned int &firstGroup) const
+    void default_GetGeneGroup(const ObjCryst::RefinableObj& obj,
+            CrystVector<unsigned int>& groupIndex,
+            unsigned int& firstGroup) const
     { this->RefinableObj::GetGeneGroup(obj, groupIndex, firstGroup);}
 
-    void GetGeneGroup(const ObjCryst::RefinableObj &obj,
-            CrystVector<unsigned int> &groupIndex,
-            unsigned int &firstGroup) const
+    void GetGeneGroup(const ObjCryst::RefinableObj& obj,
+            CrystVector<unsigned int>& groupIndex,
+            unsigned int& firstGroup) const
     {
         override f = this->get_override("GetGeneGroup");
         if (f)  f(obj, groupIndex, firstGroup);
@@ -363,7 +363,7 @@ class RefinableObjWrap : public RefinableObj,
     long FindPar(const std::string& name) const
     { return RefinableObj::FindPar(name); }
 
-    void AddOption(RefObjOpt *opt)
+    void AddOption(RefObjOpt* opt)
     { RefinableObj::AddOption(opt); }
 
     std::map<unsigned long,
@@ -375,7 +375,7 @@ class RefinableObjWrap : public RefinableObj,
 
 };
 
-void _RemovePar(RefinableObj &obj, RefinablePar* refpar)
+void _RemovePar(RefinableObj& obj, RefinablePar* refpar)
 {
     obj.RemovePar(refpar);
     return;
@@ -395,7 +395,7 @@ void _XMLOutput(
 void _XMLInput(
         RefinableObj& r,
         bp::object input,
-        XMLCrystTag &tag)
+        XMLCrystTag& tag)
 {
     boost_adaptbx::python::streambuf sbuf(input);
     boost_adaptbx::python::streambuf::istream in(sbuf);

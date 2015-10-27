@@ -32,8 +32,8 @@ using namespace ObjCryst;
 
 namespace {
 
-void _SetInterpPoints(PowderPatternBackground &b,
-        PyObject *tth, PyObject *backgd)
+void _SetInterpPoints(PowderPatternBackground& b,
+        PyObject* tth, PyObject* backgd)
 {
     // cout << "_SetInterpPoints:" << tth << ", " << backgd << endl;
     const unsigned long ndim = PyArray_NDIM((PyObject*)tth);
@@ -43,8 +43,8 @@ void _SetInterpPoints(PowderPatternBackground &b,
     CrystVector_REAL tth2(nb), backgd2(nb);
     // FIXME -- reuse some conversion function here
     //:TODO: We assume the arrays are contiguous & double (float64) !
-    double *p = (double*) (PyArray_DATA(tth));
-    double *p2 = (double*) (tth2.data());
+    double* p = (double*) (PyArray_DATA(tth));
+    double* p2 = (double*) (tth2.data());
     for (unsigned long i = 0; i < nb; i++) *p2++ = *p++;
     p = (double*) (PyArray_DATA(backgd));
     p2 = (double*) (backgd2.data());

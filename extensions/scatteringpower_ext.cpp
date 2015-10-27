@@ -36,13 +36,13 @@ class ScatteringPowerWrap : public ScatteringPower,
     public:
 
     ScatteringPowerWrap() : ScatteringPower() {}
-    ScatteringPowerWrap(const ScatteringPower &S) : ScatteringPower(S) {}
-    ScatteringPowerWrap(const ScatteringPowerWrap &S) : ScatteringPower(S) {}
+    ScatteringPowerWrap(const ScatteringPower& S) : ScatteringPower(S) {}
+    ScatteringPowerWrap(const ScatteringPowerWrap& S) : ScatteringPower(S) {}
 
     // Pure Virtual functions
 
     CrystVector<double> GetScatteringFactor(
-            const ScatteringData &data, const int spgSymPosIndex) const
+            const ScatteringData& data, const int spgSymPosIndex) const
     {
         return this->get_override("GetScatteringFactor")(data, spgSymPosIndex);
     }
@@ -53,20 +53,20 @@ class ScatteringPowerWrap : public ScatteringPower,
     }
 
     CrystVector<double> GetTemperatureFactor(
-            const ScatteringData &data, const int spgSymPosIndex) const
+            const ScatteringData& data, const int spgSymPosIndex) const
     {
         return this->get_override("GetTemperatureFactor")(data, spgSymPosIndex);
     }
 
     CrystMatrix<double> GetResonantScattFactReal(
-            const ScatteringData &data, const int spgSymPosIndex) const
+            const ScatteringData& data, const int spgSymPosIndex) const
     {
         return this->get_override("GetResonantScattFactReal")(data,
                 spgSymPosIndex);
     }
 
     CrystMatrix<double> GetResonantScattFactImag(
-            const ScatteringData &data, const int spgSymPosIndex) const
+            const ScatteringData& data, const int spgSymPosIndex) const
     {
         return this->get_override("GetResonantScattFactImag")(data,
                 spgSymPosIndex);

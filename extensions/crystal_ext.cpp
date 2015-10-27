@@ -106,7 +106,7 @@ void _PrintMinDistanceTable(const Crystal& crystal,
 }
 
 // We want to turn a ScatteringComponentList into an actual list
-bp::list _GetScatteringComponentList(Crystal &c)
+bp::list _GetScatteringComponentList(Crystal& c)
 {
     const ScatteringComponentList& scl = c.GetScatteringComponentList();
     bp::list l;
@@ -119,7 +119,7 @@ bp::list _GetScatteringComponentList(Crystal &c)
 }
 
 
-void _CIFOutput(Crystal &c, bp::object output, double mindist)
+void _CIFOutput(Crystal& c, bp::object output, double mindist)
 {
     boost_adaptbx::python::ostream os(output);
     c.CIFOutput(os, mindist);

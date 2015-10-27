@@ -36,7 +36,7 @@ namespace {
 MolAtom* _GetAtom(MolBond& mb, size_t i)
 {
 
-    MolAtom *rv = NULL;
+    MolAtom* rv = NULL;
     switch(i)
     {
         case 0:

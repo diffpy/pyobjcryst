@@ -32,28 +32,28 @@ using namespace ObjCryst;
 
 namespace {
 
-tuple FractionalToOrthonormalCoords(const UnitCell &uc,
+tuple FractionalToOrthonormalCoords(const UnitCell& uc,
         double x, double y, double z)
 {
     uc.FractionalToOrthonormalCoords(x,y,z);
     return make_tuple(x,y,z);
 }
 
-tuple OrthonormalToFractionalCoords(const UnitCell &uc,
+tuple OrthonormalToFractionalCoords(const UnitCell& uc,
         double x, double y, double z)
 {
     uc.OrthonormalToFractionalCoords(x,y,z);
     return make_tuple(x,y,z);
 }
 
-tuple MillerToOrthonormalCoords(const UnitCell &uc,
+tuple MillerToOrthonormalCoords(const UnitCell& uc,
         double x, double y, double z)
 {
     uc.MillerToOrthonormalCoords(x,y,z);
     return make_tuple(x,y,z);
 }
 
-tuple OrthonormalToMillerCoords(const UnitCell &uc,
+tuple OrthonormalToMillerCoords(const UnitCell& uc,
         double x, double y, double z)
 {
     uc.OrthonormalToMillerCoords(x,y,z);

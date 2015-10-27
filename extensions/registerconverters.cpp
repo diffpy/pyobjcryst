@@ -65,7 +65,7 @@ PyObject* makeNdArray(double * data, std::vector<npy_intp>& dims)
 struct CrystVector_REAL_to_ndarray
 {
 
-    static PyObject* convert(CrystVector<double> const &cv)
+    static PyObject* convert(const CrystVector<double>& cv)
     {
         std::vector<npy_intp> dims(1);
         dims[0] = cv.numElements();
@@ -83,7 +83,7 @@ struct CrystVector_REAL_to_ndarray
 struct CrystMatrix_REAL_to_ndarray
 {
 
-    static PyObject* convert(CrystMatrix<double> const &cm)
+    static PyObject* convert(const CrystMatrix<double>& cm)
     {
         std::vector<npy_intp> dims(2);
         dims[0] = cm.rows();

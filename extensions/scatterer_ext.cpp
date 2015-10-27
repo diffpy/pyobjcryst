@@ -152,7 +152,7 @@ class ScattererWrap : public Scatterer,
 }; // ScattererWrap
 
 // We want to turn a ScatteringComponentList into an actual list
-bp::list _GetScatteringComponentList(Scatterer &s)
+bp::list _GetScatteringComponentList(Scatterer& s)
 {
     const ScatteringComponentList& scl = s.GetScatteringComponentList();
     bp::list l;

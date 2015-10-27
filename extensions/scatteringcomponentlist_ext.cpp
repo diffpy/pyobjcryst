@@ -36,7 +36,7 @@ namespace
 {
 
 const ScatteringComponent&
-getItem(const ScatteringComponentList &scl, long idx)
+getItem(const ScatteringComponentList& scl, long idx)
 {
     long n = scl.GetNbComponent();
     if(idx < 0) idx += n;
@@ -48,8 +48,8 @@ getItem(const ScatteringComponentList &scl, long idx)
     return scl(idx);
 }
 
-bool contains(const ScatteringComponentList &scl,
-        const ScatteringComponent &sc)
+bool contains(const ScatteringComponentList& scl,
+        const ScatteringComponent& sc)
 {
     for(long i=0; i < scl.GetNbComponent(); ++i)
     {

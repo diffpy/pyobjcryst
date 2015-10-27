@@ -27,7 +27,7 @@ using namespace ObjCryst;
 
 namespace {
 
-void mcoptimize(MonteCarloObj &obj, long nbSteps, const bool silent,
+void mcoptimize(MonteCarloObj& obj, long nbSteps, const bool silent,
         const double finalcost, const double maxTime)
 {
     obj.Optimize(nbSteps, silent, finalcost, maxTime);

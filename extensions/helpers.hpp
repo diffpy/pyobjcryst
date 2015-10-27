@@ -39,7 +39,7 @@ typedef std::numeric_limits<double> doublelim;
 void swapstdout(std::ostream& buf);
 
 template <class T>
-std::string __str__(const T &obj)
+std::string __str__(const T& obj)
 {
     // Switch the stream buffer with std::cout, which is used by Print.
     std::ostringstream outbuf;

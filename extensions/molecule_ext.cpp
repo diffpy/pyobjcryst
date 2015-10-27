@@ -280,7 +280,7 @@ PyObject* _FindBond(const Molecule& m, const MolAtom& ma1, const MolAtom& ma2)
     std::vector<MolBond*>::const_iterator mbi;
     mbi = m.FindBond(ma1, ma2);
     const std::vector<MolBond*>& bondlist = m.GetBondList();
-    PyObject *retval;
+    PyObject* retval;
     if(bondlist.end() == mbi)
     {
         // return None
@@ -302,7 +302,7 @@ PyObject* _FindBondAngle(const Molecule& m, const MolAtom& ma1, const MolAtom&
     std::vector<MolBondAngle*>::const_iterator mbai;
     mbai = m.FindBondAngle(ma1, ma2, ma3);
     const std::vector<MolBondAngle*>& bondanglelist = m.GetBondAngleList();
-    PyObject *retval;
+    PyObject* retval;
     if(bondanglelist.end() == mbai)
     {
         // return None
@@ -324,7 +324,7 @@ PyObject* _FindDihedralAngle(const Molecule& m, const MolAtom& ma1,
     mdai = m.FindDihedralAngle(ma1, ma2, ma3, ma4);
     const std::vector<MolDihedralAngle*>& dihedralanglelist
         = m.GetDihedralAngleList();
-    PyObject *retval;
+    PyObject* retval;
     if(dihedralanglelist.end() == mdai)
     {
         // return None
@@ -440,7 +440,7 @@ bp::object getAtomSlice(Molecule& m, bp::slice& s)
 // Overloaded to accept a python iterable instead of a std::set. Again, could be
 // done with converters, but there are issues with pointers. Perhaps another
 // day...
-void _RotateAtomGroup(Molecule &m, const MolAtom& at1, const MolAtom& at2,
+void _RotateAtomGroup(Molecule& m, const MolAtom& at1, const MolAtom& at2,
     const bp::object& atoms, const double angle, const bool keepCenter=true)
 {
 
@@ -448,7 +448,7 @@ void _RotateAtomGroup(Molecule &m, const MolAtom& at1, const MolAtom& at2,
     m.RotateAtomGroup(at1, at2, catoms, angle, keepCenter);
 }
 
-void _RotateAtomGroupVec(Molecule &m, const MolAtom& at1, const double vx,
+void _RotateAtomGroupVec(Molecule& m, const MolAtom& at1, const double vx,
     const double vy, const double vz, const bp::object& atoms, const double angle,
     const bool keepCenter=true)
 {
@@ -458,7 +458,7 @@ void _RotateAtomGroupVec(Molecule &m, const MolAtom& at1, const double vx,
 }
 
 // A new method for three-tuples
-void _RotateAtomGroup2Vec(Molecule &m, bp::object& v1, bp::object& v2,
+void _RotateAtomGroup2Vec(Molecule& m, bp::object& v1, bp::object& v2,
     const bp::object& atoms, const double angle,
     const bool keepCenter=true)
 {
@@ -467,7 +467,7 @@ void _RotateAtomGroup2Vec(Molecule &m, bp::object& v1, bp::object& v2,
     x = extract<double>(v1[0]);
     y = extract<double>(v1[1]);
     z = extract<double>(v1[2]);
-    MolAtom&a = _AddAtom(m, x, y, z, 0, "_rag2vectemp", false);
+    MolAtom& a = _AddAtom(m, x, y, z, 0, "_rag2vectemp", false);
     x = extract<double>(v2[0]);
     y = extract<double>(v2[1]);
     z = extract<double>(v2[2]);
@@ -476,7 +476,7 @@ void _RotateAtomGroup2Vec(Molecule &m, bp::object& v1, bp::object& v2,
     return;
 }
 
-void _TranslateAtomGroup(Molecule &m, const bp::object& atoms, const double dx,
+void _TranslateAtomGroup(Molecule& m, const bp::object& atoms, const double dx,
     const double dy, const double dz, const bool keepCenter=true)
 {
 
@@ -484,7 +484,7 @@ void _TranslateAtomGroup(Molecule &m, const bp::object& atoms, const double dx,
     m.TranslateAtomGroup(catoms, dx, dy, dz, keepCenter);
 }
 
-bp::dict _GetConnectivityTable(Molecule &m)
+bp::dict _GetConnectivityTable(Molecule& m)
 {
 
     const std::map<MolAtom*, std::set<MolAtom*> >& ct
