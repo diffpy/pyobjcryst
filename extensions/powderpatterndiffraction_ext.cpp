@@ -17,19 +17,12 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
+#include <boost/python/enum.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
-#include <boost/python/implicit.hpp>
-#include <boost/python/slice.hpp>
-
-#include <string>
-#include <map>
+#include <boost/python/args.hpp>
+#include <boost/python/copy_const_reference.hpp>
 
 #include <ObjCryst/ObjCryst/General.h>
-#include <ObjCryst/RefinableObj/RefinableObj.h>
-#include <ObjCryst/CrystVector/CrystVector.h>
 #include <ObjCryst/ObjCryst/PowderPattern.h>
 
 namespace bp = boost::python;

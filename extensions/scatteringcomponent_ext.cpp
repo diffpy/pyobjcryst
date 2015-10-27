@@ -19,10 +19,7 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
 
 #include <ObjCryst/ObjCryst/ScatteringPower.h>
 

@@ -16,13 +16,10 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
+#include <boost/python/copy_const_reference.hpp>
 
 #include <string>
-#include <iostream>
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 

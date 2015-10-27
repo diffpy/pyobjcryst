@@ -20,7 +20,9 @@
 #ifndef HELPERS_HPP
 #define HELPERS_HPP
 
-#include <boost/python.hpp>
+#include <boost/python/object.hpp>
+#include <boost/python/list.hpp>
+#include <boost/python/extract.hpp>
 
 #include <string>
 #include <set>

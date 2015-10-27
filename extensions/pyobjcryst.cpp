@@ -16,7 +16,6 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
 #include <boost/python/module.hpp>
 
 void wrap_asymmetricunit();

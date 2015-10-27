@@ -20,18 +20,13 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 
 #include <string>
 
 #include <ObjCryst/ObjCryst/Atom.h>
-#include <ObjCryst/ObjCryst/Scatterer.h>
 #include <ObjCryst/ObjCryst/ScatteringPower.h>
-#include <ObjCryst/CrystVector/CrystVector.h>
 
 namespace bp = boost::python;
 using namespace boost::python;
@@ -52,7 +47,6 @@ const ScatteringPower* getscatteringpowerpointer(const Atom& a)
 
 void wrap_atom()
 {
-
     class_<Atom, bases<Scatterer> >("Atom", init<const Atom&>(bp::arg("old")))
         // Constructors
         .def(init<const double, const double, const double, const std::string&,
@@ -75,5 +69,4 @@ void wrap_atom()
             return_internal_reference<>())
             //return_value_policy<copy_const_reference>())
         ;
-
 }

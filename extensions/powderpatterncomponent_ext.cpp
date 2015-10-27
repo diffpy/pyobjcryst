@@ -17,17 +17,8 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
-#include <boost/python/implicit.hpp>
-#include <boost/python/slice.hpp>
 
-#include <string>
-#include <map>
-
-#include <ObjCryst/ObjCryst/General.h>
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 #include <ObjCryst/CrystVector/CrystVector.h>
 #include <ObjCryst/ObjCryst/PowderPattern.h>

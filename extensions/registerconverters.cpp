@@ -16,15 +16,12 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/python/numeric.hpp>
 #include <boost/python/class.hpp>
+#include <boost/python/def.hpp>
 #include <boost/python/suite/indexing/map_indexing_suite.hpp>
-#include <boost/python/suite/indexing/vector_indexing_suite.hpp>
-#include <boost/python/to_python_converter.hpp>
+#include <boost/python/exception_translator.hpp>
 
 #include <vector>
-#include <iostream>
 
 #include <numpy/noprefix.h>
 #include <numpy/arrayobject.h>
@@ -33,10 +30,7 @@
 #include <ObjCryst/ObjCryst/General.h>
 #include <ObjCryst/ObjCryst/Crystal.h>
 #include <ObjCryst/ObjCryst/ScatteringPower.h>
-#include <ObjCryst/ObjCryst/SpaceGroup.h>
 #include <ObjCryst/ObjCryst/Molecule.h>
-
-#include "python_streambuf.hpp"
 
 
 using namespace boost::python;

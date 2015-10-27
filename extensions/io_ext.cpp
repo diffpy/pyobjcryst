@@ -19,14 +19,12 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
+#include <boost/python/copy_const_reference.hpp>
 
 #include <string>
 
 #include <ObjCryst/RefinableObj/IO.h>
-#include <ObjCryst/CrystVector/CrystVector.h>
 
 #include "helpers.hpp"
 

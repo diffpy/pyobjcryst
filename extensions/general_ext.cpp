@@ -17,8 +17,7 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/python/def.hpp>
+#include <boost/python/enum.hpp>
 
 #include <ObjCryst/ObjCryst/General.h>
 

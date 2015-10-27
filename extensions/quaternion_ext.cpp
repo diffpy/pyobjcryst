@@ -21,9 +21,10 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/args.hpp>
+#include <boost/python/operators.hpp>
+#include <boost/python/tuple.hpp>
 
 #include <ObjCryst/ObjCryst/Molecule.h>
 

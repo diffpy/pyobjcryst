@@ -17,24 +17,13 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
-#include <boost/python/implicit.hpp>
-#include <boost/python/slice.hpp>
+#include <boost/python/args.hpp>
+#include <boost/python/copy_const_reference.hpp>
 
 #include <numpy/noprefix.h>
 #include <numpy/arrayobject.h>
-//#include "boost/python/extract.hpp"
-//#include "boost/python/numeric.hpp"
 
-#include <string>
-#include <map>
-
-#include <ObjCryst/ObjCryst/General.h>
-#include <ObjCryst/RefinableObj/RefinableObj.h>
-#include <ObjCryst/CrystVector/CrystVector.h>
 #include <ObjCryst/ObjCryst/PowderPattern.h>
 
 namespace bp = boost::python;

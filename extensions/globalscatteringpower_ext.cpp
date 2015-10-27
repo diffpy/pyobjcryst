@@ -17,18 +17,10 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
-
-#include <string>
-#include <iostream>
 
 #include <ObjCryst/ObjCryst/ScatteringPower.h>
 #include <ObjCryst/ObjCryst/ZScatterer.h>
-#include <ObjCryst/RefinableObj/RefinableObj.h>
-#include <ObjCryst/CrystVector/CrystVector.h>
 
 using namespace boost::python;
 using namespace ObjCryst;

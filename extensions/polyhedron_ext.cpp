@@ -16,12 +16,10 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
-#include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
-#include <boost/python/args.hpp>
-#include <boost/python/make_constructor.hpp>
+#include <boost/python/with_custodian_and_ward.hpp>
+#include <boost/python/return_value_policy.hpp>
+#include <boost/python/manage_new_object.hpp>
 
 #include <ObjCryst/ObjCryst/Polyhedron.h>
 

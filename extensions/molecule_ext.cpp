@@ -48,11 +48,10 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
+#include <boost/python/dict.hpp>
 #include <boost/python/slice.hpp>
 
 #include <iostream>
@@ -61,7 +60,6 @@
 #include <sstream>
 #include <set>
 #include <map>
-#include <algorithm>
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 #include <ObjCryst/ObjCryst/Molecule.h>
