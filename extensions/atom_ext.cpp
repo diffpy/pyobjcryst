@@ -53,7 +53,7 @@ const ScatteringPower* getscatteringpowerpointer(const Atom& a)
 void wrap_atom()
 {
 
-    class_<Atom, bases<Scatterer> >("Atom", init<const Atom&>((bp::arg("old"))))
+    class_<Atom, bases<Scatterer> >("Atom", init<const Atom&>(bp::arg("old")))
         // Constructors
         .def(init<const double, const double, const double, const std::string&,
             const ObjCryst::ScatteringPower*, optional<const double> >(

@@ -179,7 +179,7 @@ void wrap_stretchmode()
         .def("Stretch", pure_virtual(&StretchMode::Stretch),
             (bp::arg("amplitude"), bp::arg("keepCenter")=true))
         .def("RandomStretch", pure_virtual(&StretchMode::RandomStretch),
-            (bp::arg("amplitude")))
+            bp::arg("amplitude"))
         ;
 
     class_<StretchModeBondLength, bases<StretchMode> >

@@ -606,7 +606,7 @@ void wrap_molecule()
 {
 
     class_<Molecule, bases<Scatterer> > ("Molecule",
-        init<const Molecule&>((bp::arg("oldMolecule"))))
+        init<const Molecule&>(bp::arg("oldMolecule")))
         /* Constructors */
         .def(init<Crystal&, const std::string&>(
             (bp::arg("cryst"), bp::arg("name")="")))

@@ -501,7 +501,7 @@ void wrap_refinableobj()
         .def("GetParNotFixed", &_GetParNotFixedLong,
             return_internal_reference<>())
         .def("AddPar", &_AddPar,
-            (bp::arg("par")),
+            bp::arg("par"),
             with_custodian_and_ward<1,2>())
         .def("AddPar", &_AddParObj,
             (bp::arg("newRefParList"), bp::arg("copyParam")=false),

@@ -86,7 +86,7 @@ bp::list GetSymmetryOperations(const SpaceGroup& sg)
 void wrap_spacegroup()
 {
 
-    class_<SpaceGroup> ("SpaceGroup", init<>() )
+    class_<SpaceGroup>("SpaceGroup")
         // Constructors
         .def(init<const std::string&>((bp::arg("spgId"))))
         // Methods

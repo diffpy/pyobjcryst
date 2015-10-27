@@ -91,7 +91,7 @@ void wrap_lsqnumobj()
         .def("GetLSQWeight", &LSQNumObj::GetLSQWeight,
                 return_value_policy<copy_const_reference>())
         .def("GetLSQDeriv", &LSQNumObj::GetLSQDeriv,
-                (bp::arg("par")),
+                bp::arg("par"),
                 return_value_policy<copy_const_reference>())
         .def("BeginOptimization", &LSQNumObj::BeginOptimization,
                 (bp::arg("allowApproximations")=false,

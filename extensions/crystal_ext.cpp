@@ -247,7 +247,7 @@ void wrap_crystal()
             (bp::arg("a"), bp::arg("b"), bp::arg("c"),
             bp::arg("alpha"), bp::arg("beta"), bp::arg("gamma"),
             bp::arg("SpaceGroupId"))))
-        .def(init<const Crystal&>((bp::arg("oldCryst"))))
+        .def(init<const Crystal&>(bp::arg("oldCryst")))
         /* Methods */
         .def("AddScatterer", &_AddScatterer,
             with_custodian_and_ward<1,2,with_custodian_and_ward<2,1> >())

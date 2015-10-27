@@ -36,9 +36,9 @@ void wrap_asymmetricunit()
 
     class_<AsymmetricUnit> ("AsymmetricUnit", init<>() )
         // Constructors
-        .def(init<const SpaceGroup&>((bp::arg("spg"))))
+        .def(init<const SpaceGroup&>(bp::arg("spg")))
         // Methods
-        .def("SetSpaceGroup", &AsymmetricUnit::SetSpaceGroup, (bp::arg("spg")))
+        .def("SetSpaceGroup", &AsymmetricUnit::SetSpaceGroup, bp::arg("spg"))
         .def("IsInAsymmetricUnit", &AsymmetricUnit::IsInAsymmetricUnit,
             (bp::arg("x"), bp::arg("y"), bp::arg("z")))
         .def("Xmin", &AsymmetricUnit::Xmin)
