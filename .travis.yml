@@ -18,6 +18,10 @@ matrix:
     - os: osx
       env: MYUSEMC=false
 
+branches:
+  except:
+    - /^v[0-9]/
+
 before_install:
   - git fetch origin --unshallow --tags
   - if ${MYUSEMC}; then
