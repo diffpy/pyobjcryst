@@ -51,6 +51,7 @@ void wrap_rigidgroup();
 void wrap_scatterer();
 void wrap_scatteringcomponent();
 void wrap_scatteringcomponentlist();
+void wrap_scatteringdata();
 void wrap_scatteringpower();
 void wrap_scatteringpoweratom();
 void wrap_scatteringpowersphere();
@@ -80,6 +81,7 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
     wrap_refinableobj();
 
     // Other base classes
+    wrap_scatteringdata();
     wrap_scatterer();
     wrap_scatteringpower();
     wrap_zscatterer();
