@@ -41,8 +41,9 @@ void wrap_powderpatterndiffraction()
         .value("PROFILE_PEARSON_VII", PROFILE_PEARSON_VII)
         ;
 
-    class_<PowderPatternDiffraction, bases<PowderPatternComponent> >(
-            "PowderPatternDiffraction")
+    class_<PowderPatternDiffraction,
+        bases<PowderPatternComponent, ScatteringData> >(
+                "PowderPatternDiffraction")
         .def("GetPowderPatternCalc",
                 &PowderPatternDiffraction::GetPowderPatternCalc,
                 return_value_policy<copy_const_reference>())
@@ -65,50 +66,10 @@ void wrap_powderpatterndiffraction()
         .def("ExtractLeBail",
                 &PowderPatternDiffraction::ExtractLeBail,
                 (bp::arg("nbcycle")=1))
-
-        //.def("Prepare", &PowderPatternDiffraction::Prepare) // protected
-
-        // From ScatteringData:
         .def("SetCrystal",
                 &PowderPatternDiffraction::SetCrystal,
                 bp::arg("crystal"))
-        .def("GetNbRefl",
-                &ScatteringData::GetNbRefl)
-        .def("GetH",
-                &ScatteringData::GetH,
-                return_value_policy<copy_const_reference>())
-        .def("GetK",
-                &ScatteringData::GetK,
-                return_value_policy<copy_const_reference>())
-        .def("GetL",
-                &ScatteringData::GetL,
-                return_value_policy<copy_const_reference>())
-        .def("GetReflX",
-                &ScatteringData::GetReflX,
-                return_value_policy<copy_const_reference>())
-        .def("GetReflY",
-                &ScatteringData::GetReflY,
-                return_value_policy<copy_const_reference>())
-        .def("GetReflZ",
-                &ScatteringData::GetReflZ,
-                return_value_policy<copy_const_reference>())
-        .def("GetSinThetaOverLambda",
-                &ScatteringData::GetSinThetaOverLambda,
-                return_value_policy<copy_const_reference>())
-        .def("GetTheta",
-                &ScatteringData::GetTheta,
-                return_value_policy<copy_const_reference>())
-        .def("GetFhklCalcSq",
-                &ScatteringData::GetFhklCalcSq,
-                return_value_policy<copy_const_reference>())
-        .def("GetFhklCalcReal",
-                &ScatteringData::GetFhklCalcReal,
-                return_value_policy<copy_const_reference>())
-        .def("GetFhklCalcImag",
-                &ScatteringData::GetFhklCalcImag,
-                return_value_policy<copy_const_reference>())
-        .def("GetFhklObsSq",
-                &ScatteringData::GetFhklObsSq,
-                return_value_policy<copy_const_reference>())
+        .def("GetNbReflBelowMaxSinThetaOvLambda",
+                &PowderPatternDiffraction::GetNbReflBelowMaxSinThetaOvLambda)
         ;
 }
