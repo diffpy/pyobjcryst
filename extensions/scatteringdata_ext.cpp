@@ -65,8 +65,10 @@ void wrap_scatteringdata()
         //.def("GetRadiationType", &ScatteringData::GetRadiationType,
         //    return_value_policy<copy_const_reference>())
         .def("SetCrystal", &ScatteringData::SetCrystal)
-        //.def("GetCrystal", &ScatteringData::GetCrystal, return_internal_reference<>())
-        //.def("HasCrystal", &ScatteringData::HasCrystal)
+        .def("GetCrystal",
+                (Crystal& (ScatteringData::*)()) &ScatteringData::GetCrystal,
+                return_internal_reference<>())
+        .def("HasCrystal", &ScatteringData::HasCrystal)
         .def("GetNbRefl", &ScatteringData::GetNbRefl)
         .def("GetH", &ScatteringData::GetH,
                 return_value_policy<copy_const_reference>())
