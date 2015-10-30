@@ -90,6 +90,12 @@ void wrap_powderpattern()
         .def("SetScaleFactor",
                 (void (PowderPattern::*) (const int, REAL))
                 &PowderPattern::SetScaleFactor)
+        .def("SetPowderPatternPar",
+                &PowderPattern::SetPowderPatternPar,
+                (bp::arg("xmin"), bp::arg("xstep"), bp::arg("nbpoints")))
+        .def("SetPowderPatternX",
+                &PowderPattern::SetPowderPatternX,
+                bp::arg("x"))
         .def("GetPowderPatternCalc",
                 &PowderPattern::GetPowderPatternCalc,
                 return_value_policy<copy_const_reference>())
