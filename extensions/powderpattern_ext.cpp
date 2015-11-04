@@ -104,7 +104,7 @@ void wrap_powderpattern()
         .def("GetPowderPatternComponent",
                 (PowderPatternComponent& (PowderPattern::*) (const int))
                 &PowderPattern::GetPowderPatternComponent,
-                return_value_policy<copy_non_const_reference>())
+                return_internal_reference<>())
         .def("GetScaleFactor",
                 (REAL (PowderPattern::*) (const int) const)
                 &PowderPattern::GetScaleFactor)
