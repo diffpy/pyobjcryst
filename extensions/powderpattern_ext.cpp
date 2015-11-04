@@ -70,14 +70,35 @@ PowderPattern* _CreatePowderPatternFromCIF(bp::object input)
     return p;
 }
 
+
+PowderPatternBackground& addppbackground(PowderPattern& pp)
+{
+    PowderPatternBackground* ppc = new PowderPatternBackground();
+    pp.AddPowderPatternComponent(*ppc);
+    return *ppc;
+}
+
+
+PowderPatternDiffraction& addppdiffraction(PowderPattern& pp, Crystal& crst)
+{
+    PowderPatternDiffraction* ppc = new PowderPatternDiffraction();
+    ppc->SetCrystal(crst);
+    pp.AddPowderPatternComponent(*ppc);
+    return *ppc;
+}
+
+
 }   // namespace
 
 void wrap_powderpattern()
 {
     class_<PowderPattern, bases<RefinableObj> >("PowderPattern")
-        .def("AddPowderPatternComponent",
-                &PowderPattern::AddPowderPatternComponent,
-                with_custodian_and_ward<1, 2>())
+        .def("AddPowderPatternBackground",
+                &addppbackground,
+                return_internal_reference<>())
+        .def("AddPowderPatternDiffraction",
+                &addppdiffraction,
+                with_custodian_and_ward<2,1,return_internal_reference<> >())
         .def("GetNbPowderPatternComponent",
                 &PowderPattern::GetNbPowderPatternComponent)
         .def("GetPowderPatternComponent",

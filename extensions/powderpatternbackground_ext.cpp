@@ -56,8 +56,8 @@ void _SetInterpPoints(PowderPatternBackground& b,
 
 void wrap_powderpatternbackground()
 {
-    class_<PowderPatternBackground, bases<PowderPatternComponent> >(
-            "PowderPatternBackground")
+    class_<PowderPatternBackground, bases<PowderPatternComponent>, boost::noncopyable>(
+            "PowderPatternBackground", no_init)
         //.def("SetParentPowderPattern", &PowderPatternBackground::SetParentPowderPattern)
         .def("GetPowderPatternCalc",
                 &PowderPatternBackground::GetPowderPatternCalc,
