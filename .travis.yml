@@ -63,7 +63,7 @@ before_install:
   - $NOAPT || devutils/makesdist
   - $NOAPT || MYTARBUNDLE="$(ls -t "${PWD}"/dist/*.tar.gz | head -1)"
   - $NOAPT || pushd ~/pkgs
-  - $NOAPT || git clone -b dev2015 https://github.com/diffpy/libObjCryst.git
+  - $NOAPT || git clone https://github.com/diffpy/libObjCryst.git
   - $NOAPT || popd
 
 
