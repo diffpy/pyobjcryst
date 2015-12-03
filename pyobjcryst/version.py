@@ -32,4 +32,21 @@ __timestamp__ = cp.getint('DEFAULT', 'timestamp')
 
 del cp
 
+# version information on the active libObjCryst library ----------------------
+
+from collections import namedtuple
+from pyobjcryst._pyobjcryst import _get_libobjcryst_version_info_dict
+
+libobjcryst_version_info = namedtuple('libobjcryst_version_info',
+        "version version_number major minor date git_sha")
+vd = _get_libobjcryst_version_info_dict()
+libobjcryst_version_info = libobjcryst_version_info(
+        version = vd['version_str'],
+        version_number = vd['version'],
+        major = vd['major'],
+        minor = vd['minor'],
+        date = vd['date'],
+        git_sha = vd['git_sha'])
+del vd
+
 # End of file
