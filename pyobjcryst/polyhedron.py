@@ -19,11 +19,11 @@ See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 """
 
-from _pyobjcryst import MakeTetrahedron
-from _pyobjcryst import MakeOctahedron
-from _pyobjcryst import MakeSquarePlane
-from _pyobjcryst import MakeCube
-from _pyobjcryst import MakeAntiPrismTetragonal
-from _pyobjcryst import MakePrismTrigonal
-from _pyobjcryst import MakeIcosahedron
-from _pyobjcryst import MakeTriangle
+from pyobjcryst._pyobjcryst import MakeTetrahedron
+from pyobjcryst._pyobjcryst import MakeOctahedron
+from pyobjcryst._pyobjcryst import MakeSquarePlane
+from pyobjcryst._pyobjcryst import MakeCube
+from pyobjcryst._pyobjcryst import MakeAntiPrismTetragonal
+from pyobjcryst._pyobjcryst import MakePrismTrigonal
+from pyobjcryst._pyobjcryst import MakeIcosahedron
+from pyobjcryst._pyobjcryst import MakeTriangle

@@ -25,8 +25,8 @@ Changes from ObjCryst++
 
 """
 
-from _pyobjcryst import ZScatterer
-from _pyobjcryst import ZAtom
-from _pyobjcryst import ZPolyhedron
-from _pyobjcryst import RegularPolyhedraType
-from _pyobjcryst import GlobalScatteringPower
+from pyobjcryst._pyobjcryst import ZScatterer
+from pyobjcryst._pyobjcryst import ZAtom
+from pyobjcryst._pyobjcryst import ZPolyhedron
+from pyobjcryst._pyobjcryst import RegularPolyhedraType
+from pyobjcryst._pyobjcryst import GlobalScatteringPower

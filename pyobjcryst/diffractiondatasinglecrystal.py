@@ -22,4 +22,4 @@ Changes from ObjCryst::DiffractionDataSingleCrystal::
 
 """
 
-from _pyobjcryst import DiffractionDataSingleCrystal
+from pyobjcryst._pyobjcryst import DiffractionDataSingleCrystal

@@ -19,4 +19,4 @@ Changes from ObjCryst::MonteCarloObj::
 
 """
 
-from _pyobjcryst import MonteCarloObj
+from pyobjcryst._pyobjcryst import MonteCarloObj

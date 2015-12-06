@@ -19,5 +19,5 @@ Changes from ObjCryst::PowderPattern::
 
 """
 
-from _pyobjcryst import PowderPattern
-from _pyobjcryst import CreatePowderPatternFromCIF
+from pyobjcryst._pyobjcryst import PowderPattern
+from pyobjcryst._pyobjcryst import CreatePowderPatternFromCIF

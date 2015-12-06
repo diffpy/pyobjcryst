@@ -84,18 +84,18 @@ Changes from ObjCryst::RigidGroup
 
 # TODO - MolRing
 
-from _pyobjcryst import Molecule
-from _pyobjcryst import GetBondLength
-from _pyobjcryst import GetBondAngle
-from _pyobjcryst import GetDihedralAngle
-from _pyobjcryst import MolAtom
-from _pyobjcryst import MolBond
-from _pyobjcryst import MolBondAngle
-from _pyobjcryst import MolDihedralAngle
-from _pyobjcryst import Quaternion
-from _pyobjcryst import RigidGroup
-from _pyobjcryst import StretchMode
-from _pyobjcryst import StretchModeBondLength
-from _pyobjcryst import StretchModeBondAngle
-from _pyobjcryst import StretchModeTorsion
-from _pyobjcryst import StretchModeTwist
+from pyobjcryst._pyobjcryst import Molecule
+from pyobjcryst._pyobjcryst import GetBondLength
+from pyobjcryst._pyobjcryst import GetBondAngle
+from pyobjcryst._pyobjcryst import GetDihedralAngle
+from pyobjcryst._pyobjcryst import MolAtom
+from pyobjcryst._pyobjcryst import MolBond
+from pyobjcryst._pyobjcryst import MolBondAngle
+from pyobjcryst._pyobjcryst import MolDihedralAngle
+from pyobjcryst._pyobjcryst import Quaternion
+from pyobjcryst._pyobjcryst import RigidGroup
+from pyobjcryst._pyobjcryst import StretchMode
+from pyobjcryst._pyobjcryst import StretchModeBondLength
+from pyobjcryst._pyobjcryst import StretchModeBondAngle
+from pyobjcryst._pyobjcryst import StretchModeTorsion
+from pyobjcryst._pyobjcryst import StretchModeTwist

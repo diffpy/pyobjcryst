@@ -22,4 +22,4 @@ Changes from ObjCryst::XMLCrystTag
 
 """
 
-from _pyobjcryst import XMLCrystTag
+from pyobjcryst._pyobjcryst import XMLCrystTag

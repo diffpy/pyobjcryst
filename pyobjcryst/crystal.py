@@ -29,6 +29,6 @@ Other Changes
   method accepts a python file rather than a CIF object.
 """
 
-from _pyobjcryst import Crystal
-from _pyobjcryst import BumpMergePar
-from _pyobjcryst import CreateCrystalFromCIF
+from pyobjcryst._pyobjcryst import Crystal
+from pyobjcryst._pyobjcryst import BumpMergePar
+from pyobjcryst._pyobjcryst import CreateCrystalFromCIF

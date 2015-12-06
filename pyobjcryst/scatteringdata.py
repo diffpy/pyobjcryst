@@ -18,4 +18,4 @@
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 """
 
-from _pyobjcryst import ScatteringData
+from pyobjcryst._pyobjcryst import ScatteringData

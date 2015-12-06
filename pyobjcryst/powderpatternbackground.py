@@ -19,4 +19,4 @@ Changes from ObjCryst::PowderPatternBackground::
 
 """
 
-from _pyobjcryst import PowderPatternBackground
+from pyobjcryst._pyobjcryst import PowderPatternBackground

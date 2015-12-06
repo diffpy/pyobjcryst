@@ -19,4 +19,4 @@ Changes from ObjCryst::LSQNumObj::
 
 """
 
-from _pyobjcryst import LSQNumObj
+from pyobjcryst._pyobjcryst import LSQNumObj

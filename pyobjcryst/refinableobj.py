@@ -64,14 +64,14 @@ Changes from ObjCryst::Restraint
 - XML input/output are not exposed.
 """
 
-from _pyobjcryst import RefinableObjClock
-from _pyobjcryst import RefinableObj
-from _pyobjcryst import RefObjOpt
-from _pyobjcryst import RefinableObjRegistry
-from _pyobjcryst import RefParType
-from _pyobjcryst import RefParDerivStepModel
-from _pyobjcryst import RefinablePar
-from _pyobjcryst import Restraint
-from _pyobjcryst import ScattererRegistry
-from _pyobjcryst import ScatteringPowerRegistry
-from _pyobjcryst import ZAtomRegistry
+from pyobjcryst._pyobjcryst import RefinableObjClock
+from pyobjcryst._pyobjcryst import RefinableObj
+from pyobjcryst._pyobjcryst import RefObjOpt
+from pyobjcryst._pyobjcryst import RefinableObjRegistry
+from pyobjcryst._pyobjcryst import RefParType
+from pyobjcryst._pyobjcryst import RefParDerivStepModel
+from pyobjcryst._pyobjcryst import RefinablePar
+from pyobjcryst._pyobjcryst import Restraint
+from pyobjcryst._pyobjcryst import ScattererRegistry
+from pyobjcryst._pyobjcryst import ScatteringPowerRegistry
+from pyobjcryst._pyobjcryst import ZAtomRegistry

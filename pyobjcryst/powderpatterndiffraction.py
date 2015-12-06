@@ -19,4 +19,4 @@ Changes from ObjCryst::PowderPatternDiffraction::
 
 """
 
-from _pyobjcryst import PowderPatternDiffraction, ReflectionProfileType
+from pyobjcryst._pyobjcryst import PowderPatternDiffraction, ReflectionProfileType

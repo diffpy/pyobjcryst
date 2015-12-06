@@ -19,4 +19,4 @@ Changes from ObjCryst::ReflectionProfile::
 
 """
 
-from _pyobjcryst import ReflectionProfile
+from pyobjcryst._pyobjcryst import ReflectionProfile

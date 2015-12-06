@@ -23,4 +23,4 @@ Changes from ObjCryst::Atom
   will cause segmentation faults, even if it is printed.
 """
 
-from _pyobjcryst import Atom
+from pyobjcryst._pyobjcryst import Atom
