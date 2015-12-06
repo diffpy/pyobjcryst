@@ -5,13 +5,13 @@
 * File coded by:    Vincent Favre-Nicolin
 *
 * See AUTHORS.txt for a list of people who contributed.
-* See LICENSE_DANSE.txt for license information.
+* See LICENSE.txt for license information.
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::PowderPattern.
+* boost::python bindings to ObjCryst::PowderPatternDiffraction.
 *
-* Changes from ObjCryst::MonteCarloObj
+* Changes from ObjCryst::PowderPatternDiffraction
 *
 * Other Changes
 *

@@ -8,7 +8,7 @@
 * File coded by:    Vincent Favre-Nicolin, Kevin Knox
 *
 * See AUTHORS.txt for a list of people who contributed.
-* See LICENSE_DANSE.txt for license information.
+* See LICENSE.txt for license information.
 *
 ******************************************************************************
 *

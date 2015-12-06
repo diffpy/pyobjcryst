@@ -8,16 +8,13 @@
 * File coded by:    Kevin Knox
 *
 * See AUTHORS.txt for a list of people who contributed.
-* See LICENSE_DANSE.txt for license information.
+* See LICENSE.txt for license information.
 *
 ******************************************************************************
 *
-* boost::python bindings to ObjCryst::ScatteringData. This is a virtual class
-* that can be derived from in python. These bindings are used by ObjCryst
-* objects that inherit from ScatteringData (see, for example,
-* diffractiondatasinglecrystal_ext.cpp).  ScatteringData derivatives can be
-* created in python and will work in c++ functions that are also bound into
-* python.
+* boost::python bindings to ObjCryst::ScatteringData.  These bindings are
+* used by ObjCryst objects that inherit from ScatteringData (see, for example,
+* diffractiondatasinglecrystal_ext.cpp).
 *
 *****************************************************************************/
 
