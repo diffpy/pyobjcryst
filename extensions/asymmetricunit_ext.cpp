@@ -16,14 +16,9 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
-
-#include <string>
-#include <iostream>
 
 #include <ObjCryst/ObjCryst/SpaceGroup.h>
 
@@ -34,11 +29,11 @@ using namespace ObjCryst;
 void wrap_asymmetricunit()
 {
 
-    class_<AsymmetricUnit> ("AsymmetricUnit", init<>() )
+    class_<AsymmetricUnit>("AsymmetricUnit")
         // Constructors
-        .def(init<const SpaceGroup&>((bp::arg("spg"))))
+        .def(init<const SpaceGroup&>(bp::arg("spg")))
         // Methods
-        .def("SetSpaceGroup", &AsymmetricUnit::SetSpaceGroup, (bp::arg("spg")))
+        .def("SetSpaceGroup", &AsymmetricUnit::SetSpaceGroup, bp::arg("spg"))
         .def("IsInAsymmetricUnit", &AsymmetricUnit::IsInAsymmetricUnit,
             (bp::arg("x"), bp::arg("y"), bp::arg("z")))
         .def("Xmin", &AsymmetricUnit::Xmin)

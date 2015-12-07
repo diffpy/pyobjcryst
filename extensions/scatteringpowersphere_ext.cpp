@@ -16,17 +16,12 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
+#include <boost/python/args.hpp>
 
 #include <string>
 
-#include <ObjCryst/ObjCryst/ScatteringPower.h>
 #include <ObjCryst/ObjCryst/ScatteringPowerSphere.h>
-#include <ObjCryst/RefinableObj/RefinableObj.h>
-#include <ObjCryst/CrystVector/CrystVector.h>
 
 using namespace boost::python;
 using namespace ObjCryst;
@@ -35,10 +30,14 @@ using namespace ObjCryst;
 void wrap_scatteringpowersphere()
 {
 
+    typedef void (ScatteringPowerSphere::*SPSInitType)(
+            const string&, const double, const double);
+    SPSInitType theinit = &ScatteringPowerSphere::Init;
+
     class_<ScatteringPowerSphere, bases<ScatteringPower> >
-        ("ScatteringPowerSphere", init<>())
+        ("ScatteringPowerSphere")
         .def(init<const std::string&, const double, optional<const double> >())
-        .def("Init", &ScatteringPowerSphere::Init,
+        .def("Init", theinit,
                 (boost::python::arg("name"),
                 boost::python::arg("radius"),
                 boost::python::arg("biso")=1.0

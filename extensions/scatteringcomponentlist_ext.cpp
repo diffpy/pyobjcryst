@@ -20,11 +20,9 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
-#include <boost/python/slice.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
+#include <boost/python/operators.hpp>
+#include <boost/python/slice.hpp>
 
 #include <ObjCryst/ObjCryst/ScatteringPower.h>
 
@@ -38,7 +36,7 @@ namespace
 {
 
 const ScatteringComponent&
-getItem(const ScatteringComponentList &scl, long idx)
+getItem(const ScatteringComponentList& scl, long idx)
 {
     long n = scl.GetNbComponent();
     if(idx < 0) idx += n;
@@ -50,8 +48,8 @@ getItem(const ScatteringComponentList &scl, long idx)
     return scl(idx);
 }
 
-bool contains(const ScatteringComponentList &scl,
-        const ScatteringComponent &sc)
+bool contains(const ScatteringComponentList& scl,
+        const ScatteringComponent& sc)
 {
     for(long i=0; i < scl.GetNbComponent(); ++i)
     {

@@ -31,18 +31,14 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
+#include <boost/python/enum.hpp>
 #include <boost/python/args.hpp>
+#include <boost/python/copy_const_reference.hpp>
 
 #include <string>
-#include <map>
-#include <iostream>
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>
-#include <ObjCryst/CrystVector/CrystVector.h>
 
 #include "helpers.hpp"
 
@@ -63,8 +59,8 @@ class PyRefinablePar : public RefinablePar
 
     PyRefinablePar() : RefinablePar(),  pval(0) {};
 
-    PyRefinablePar(const string &name, double value, const double min, const
-        double max, const RefParType *type, RefParDerivStepModel
+    PyRefinablePar(const string& name, double value, const double min, const
+        double max, const RefParType* type, RefParDerivStepModel
         derivMode=REFPAR_DERIV_STEP_RELATIVE, const bool hasLimits=true, const
         bool isFixed=false, const bool isUsed=true, const bool isPeriodic=false,
         const double humanScale=1., double period=1.) : RefinablePar()

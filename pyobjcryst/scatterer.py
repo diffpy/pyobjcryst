@@ -29,4 +29,4 @@ Changes from ObjCryst::Scatterer
 - Methods related to visualization are not exposed.
 """
 
-from _pyobjcryst import Scatterer
+from pyobjcryst._pyobjcryst import Scatterer

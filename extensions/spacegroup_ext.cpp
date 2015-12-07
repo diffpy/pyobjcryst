@@ -16,10 +16,10 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
+#include <boost/python/copy_const_reference.hpp>
+#include <boost/python/tuple.hpp>
 
 #include <ObjCryst/ObjCryst/SpaceGroup.h>
 
@@ -86,7 +86,7 @@ bp::list GetSymmetryOperations(const SpaceGroup& sg)
 void wrap_spacegroup()
 {
 
-    class_<SpaceGroup> ("SpaceGroup", init<>() )
+    class_<SpaceGroup>("SpaceGroup")
         // Constructors
         .def(init<const std::string&>((bp::arg("spgId"))))
         // Methods

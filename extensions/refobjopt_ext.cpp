@@ -16,13 +16,10 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
+#include <boost/python/copy_const_reference.hpp>
 
 #include <string>
-#include <iostream>
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 
@@ -44,10 +41,9 @@ class RefObjOptWrap : public RefObjOpt,
 
     void SetChoice(const int choice)
     {
-        if (override SetChoice =
-                this->get_override("SetChoice"))
-            SetChoice(choice);
-        default_SetChoice(choice);
+        override f = this->get_override("SetChoice");
+        if (f)  f(choice);
+        else  default_SetChoice(choice);
     }
 
 }; // AtomWrap

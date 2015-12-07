@@ -48,45 +48,26 @@ See the modules' documentation for specific changes.
 """
 
 # Let's put this on the package level
-from general import ObjCrystException
+from pyobjcryst.general import ObjCrystException
 
-# Atom
-import atom
+# version data
+from pyobjcryst.version import __version__
 
-# Crystal
-import crystal
-
-# Molecule
-import molecule
-
-# Polyhedron
-import polyhedron
-
-# RefinableObj
-import refinableobj
-
-# General
-import general
-
-# Scatterer
-import scatterer
-
-# ScatteringPower
-import scatteringpower
-
-# ScatteringPowerSphere
-import scatteringpowersphere
-
-# SpaceGroup
-import spacegroup
-
-# UnitCell
-import unitcell
-
-# ZScatterer
-import zscatterer
-
-# IO
-import io
-
-from version import __version__
+# import submodules that only import from _pyobjcryst
+import pyobjcryst.atom
+import pyobjcryst.crystal
+import pyobjcryst.diffractiondatasinglecrystal
+import pyobjcryst.general
+import pyobjcryst.io
+import pyobjcryst.molecule
+import pyobjcryst.polyhedron
+import pyobjcryst.powderpattern
+import pyobjcryst.refinableobj
+import pyobjcryst.reflectionprofile
+import pyobjcryst.scatterer
+import pyobjcryst.scatteringdata
+import pyobjcryst.scatteringpower
+import pyobjcryst.scatteringpowersphere
+import pyobjcryst.spacegroup
+import pyobjcryst.unitcell
+import pyobjcryst.zscatterer

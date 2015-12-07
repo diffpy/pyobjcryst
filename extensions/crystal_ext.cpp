@@ -27,25 +27,19 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
-#include <boost/python/implicit.hpp>
-#include <boost/python/slice.hpp>
+#include <boost/python/copy_const_reference.hpp>
+#include <boost/python/manage_new_object.hpp>
 
 #include <string>
 #include <map>
 
-#include <ObjCryst/ObjCryst/General.h>
 #include <ObjCryst/ObjCryst/Crystal.h>
 #include <ObjCryst/ObjCryst/CIF.h>
 #include <ObjCryst/ObjCryst/UnitCell.h>
-#include <ObjCryst/ObjCryst/Atom.h>
-#include <ObjCryst/RefinableObj/RefinableObj.h>
-#include <ObjCryst/CrystVector/CrystVector.h>
 
-#include "python_file_stream.hpp"
+#include "python_streambuf.hpp"
 #include "helpers.hpp"
 
 namespace bp = boost::python;
@@ -112,7 +106,7 @@ void _PrintMinDistanceTable(const Crystal& crystal,
 }
 
 // We want to turn a ScatteringComponentList into an actual list
-bp::list _GetScatteringComponentList(Crystal &c)
+bp::list _GetScatteringComponentList(Crystal& c)
 {
     const ScatteringComponentList& scl = c.GetScatteringComponentList();
     bp::list l;
@@ -125,10 +119,9 @@ bp::list _GetScatteringComponentList(Crystal &c)
 }
 
 
-void _CIFOutput(Crystal &c, boost_adaptbx::file_conversion::python_file_buffer
-        const &output, double mindist)
+void _CIFOutput(Crystal& c, bp::object output, double mindist)
 {
-    boost_adaptbx::file_conversion::ostream os(&output);
+    boost_adaptbx::python::ostream os(output);
     c.CIFOutput(os, mindist);
     os.flush();
 }
@@ -173,36 +166,36 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
 
     const ScatteringComponentList& GetScatteringComponentList() const
     {
-        if (override GetScatteringComponentList =
-                this->get_override("GetScatteringComponentList"))
-#ifdef _MSC_VER
-            return call<const ScatteringComponentList&>(
-                    GetScatteringComponentList.ptr()
-                    );
-#else
-            return GetScatteringComponentList();
-#endif
+        override f = this->get_override("GetScatteringComponentList");
+        if (f)  return f();
         return default_GetScatteringComponentList();
     }
 
 };
 
 // Easier than exposing all the CIF classes
+// Also allow oneScatteringPowerPerElement and connectAtoms
+
 Crystal*
-_CreateCrystalFromCIF(boost_adaptbx::file_conversion::python_file_buffer const
-        &input)
+_CreateCrystalFromCIF(bp::object input,
+        const bool oneScatteringPowerPerElement=false,
+        const bool connectAtoms=false)
 {
     // Reading a cif file creates some output. Let's redirect stdout to a junk
     // stream and then throw it away.
     ostringstream junk;
     swapstdout(junk);
 
-    boost_adaptbx::file_conversion::istream in(&input);
+    boost_adaptbx::python::streambuf sbuf(input);
+    boost_adaptbx::python::streambuf::istream in(sbuf);
     ObjCryst::CIF cif(in);
 
     int idx0 = gCrystalRegistry.GetNb();
 
-    ObjCryst::CreateCrystalFromCIF(cif);
+    const bool verbose = false;
+    const bool checkSymAsXYZ = true;
+    ObjCryst::CreateCrystalFromCIF(cif, verbose, checkSymAsXYZ,
+            oneScatteringPowerPerElement, connectAtoms);
 
     int idx = gCrystalRegistry.GetNb();
 
@@ -229,8 +222,7 @@ _CreateCrystalFromCIF(boost_adaptbx::file_conversion::python_file_buffer const
 void wrap_crystal()
 {
 
-    class_<CrystalWrap, bases<UnitCell>, boost::noncopyable >
-        ("Crystal", init<>())
+    class_<CrystalWrap, bases<UnitCell>, boost::noncopyable>("Crystal")
         /* Constructors */
         .def(init<const double, const double, const double, const std::string&>(
             (bp::arg("a"), bp::arg("b"), bp::arg("c"),
@@ -241,7 +233,7 @@ void wrap_crystal()
             (bp::arg("a"), bp::arg("b"), bp::arg("c"),
             bp::arg("alpha"), bp::arg("beta"), bp::arg("gamma"),
             bp::arg("SpaceGroupId"))))
-        .def(init<const Crystal&>((bp::arg("oldCryst"))))
+        .def(init<const Crystal&>(bp::arg("oldCryst")))
         /* Methods */
         .def("AddScatterer", &_AddScatterer,
             with_custodian_and_ward<1,2,with_custodian_and_ward<2,1> >())
@@ -317,6 +309,9 @@ void wrap_crystal()
             (std::map< pair< const ScatteringPower *, const ScatteringPower * >, double > &
             (Crystal::*)()) &Crystal::GetBondValenceRoList,
             return_internal_reference<>())
+        .def("ConnectAtoms", &Crystal::ConnectAtoms,
+             (bp::arg("min_relat_dist")=0.4, bp::arg("max_relat_dist")=1.3,
+              bp::arg("warnuser_fail")=false))
         ;
 
 
@@ -325,6 +320,8 @@ void wrap_crystal()
         .def_readwrite("mCanOverlap", &Crystal::BumpMergePar::mCanOverlap)
         ;
 
-    def("CreateCrystalFromCIF", &_CreateCrystalFromCIF, ((bp::arg("file"))),
+    def("CreateCrystalFromCIF", &_CreateCrystalFromCIF,
+            (bp::arg("file"), bp::arg("oneScatteringPowerPerElement")=false,
+             bp::arg("connectAtoms")=false),
             return_value_policy<manage_new_object>());
 }

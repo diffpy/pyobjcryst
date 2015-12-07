@@ -23,14 +23,9 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
-#include <boost/python/args.hpp>
 
 #include <ObjCryst/ObjCryst/Molecule.h>
-#include <ObjCryst/RefinableObj/RefinableObj.h>
 
 namespace bp = boost::python;
 using namespace boost::python;
@@ -41,7 +36,7 @@ namespace {
 MolAtom* _GetAtom(MolBond& mb, size_t i)
 {
 
-    MolAtom *rv = NULL;
+    MolAtom* rv = NULL;
     switch(i)
     {
         case 0:

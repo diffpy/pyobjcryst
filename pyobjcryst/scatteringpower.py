@@ -25,7 +25,7 @@ Changes from ObjCryst::ScatteringComponentList
 
 """
 
-from _pyobjcryst import ScatteringPower
-from _pyobjcryst import ScatteringComponent
-from _pyobjcryst import ScatteringPowerAtom
-from _pyobjcryst import ScatteringComponentList
+from pyobjcryst._pyobjcryst import ScatteringPower
+from pyobjcryst._pyobjcryst import ScatteringComponent
+from pyobjcryst._pyobjcryst import ScatteringPowerAtom
+from pyobjcryst._pyobjcryst import ScatteringComponentList

@@ -16,19 +16,14 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
+#include <boost/python/enum.hpp>
 
 #include <string>
-#include <iostream>
 
-#include <ObjCryst/ObjCryst/General.h>
 #include <ObjCryst/ObjCryst/ZScatterer.h>
 
-#include "helpers.hpp"
 
 namespace bp = boost::python;
 using namespace boost::python;

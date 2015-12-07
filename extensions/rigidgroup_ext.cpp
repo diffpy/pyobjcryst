@@ -20,7 +20,6 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
 #include <boost/python/class.hpp>
 
 #include <set>
@@ -42,7 +41,7 @@ namespace {
 void wrap_rigidgroup()
 {
 
-    class_<RigidGroup, bases<MolAtomSet> >("RigidGroup", init<>())
+    class_<RigidGroup, bases<MolAtomSet> >("RigidGroup")
         .def(init<const RigidGroup&>())
         .def("GetName", &RigidGroup::GetName)
         ;

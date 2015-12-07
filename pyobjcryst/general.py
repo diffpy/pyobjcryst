@@ -19,5 +19,5 @@ See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 """
 
-from _pyobjcryst import RadiationType
-from _pyobjcryst import ObjCrystException
+from pyobjcryst._pyobjcryst import RadiationType
+from pyobjcryst._pyobjcryst import ObjCrystException

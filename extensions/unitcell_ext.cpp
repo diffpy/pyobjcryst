@@ -16,10 +16,9 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
+#include <boost/python/tuple.hpp>
+#include <boost/python/copy_const_reference.hpp>
 
 #include <string>
 
@@ -33,28 +32,28 @@ using namespace ObjCryst;
 
 namespace {
 
-tuple FractionalToOrthonormalCoords(const UnitCell &uc,
+tuple FractionalToOrthonormalCoords(const UnitCell& uc,
         double x, double y, double z)
 {
     uc.FractionalToOrthonormalCoords(x,y,z);
     return make_tuple(x,y,z);
 }
 
-tuple OrthonormalToFractionalCoords(const UnitCell &uc,
+tuple OrthonormalToFractionalCoords(const UnitCell& uc,
         double x, double y, double z)
 {
     uc.OrthonormalToFractionalCoords(x,y,z);
     return make_tuple(x,y,z);
 }
 
-tuple MillerToOrthonormalCoords(const UnitCell &uc,
+tuple MillerToOrthonormalCoords(const UnitCell& uc,
         double x, double y, double z)
 {
     uc.MillerToOrthonormalCoords(x,y,z);
     return make_tuple(x,y,z);
 }
 
-tuple OrthonormalToMillerCoords(const UnitCell &uc,
+tuple OrthonormalToMillerCoords(const UnitCell& uc,
         double x, double y, double z)
 {
     uc.OrthonormalToMillerCoords(x,y,z);
@@ -130,7 +129,7 @@ void wrap_unitcell()
 {
 
     class_<UnitCell, bases<RefinableObj> >
-        ("UnitCell", init<>())
+        ("UnitCell")
         // Constructors
         .def(init<const double, const double, const double, const std::string&>())
         .def(init<const double, const double, const double,

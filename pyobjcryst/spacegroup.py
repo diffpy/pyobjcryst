@@ -19,5 +19,5 @@ See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 """
 
-from _pyobjcryst import SpaceGroup
-from _pyobjcryst import AsymmetricUnit
+from pyobjcryst._pyobjcryst import SpaceGroup
+from pyobjcryst._pyobjcryst import AsymmetricUnit

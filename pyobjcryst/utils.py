@@ -88,8 +88,8 @@ def putAtomsInMolecule(crystal, alist = None, name = None):
     if alist is None:
         alist = range(c.GetNbScatterer())
 
-    from .molecule import Molecule
-    from .atom import Atom
+    from pyobjcryst.molecule import Molecule
+    from pyobjcryst.atom import Atom
     m = Molecule(c, name)
 
     # center of mass
@@ -170,7 +170,3 @@ def writexyz(crystal, filename):
     f.write(out)
     f.close()
     return
-
-def moleculeFromDiffpyStructure(crystal, stru):
-    """Create and return a molecule from a diffpy.Structure object."""
-

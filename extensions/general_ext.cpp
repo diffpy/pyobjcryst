@@ -17,13 +17,39 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
 #include <boost/python/def.hpp>
+#include <boost/python/dict.hpp>
+#include <boost/python/enum.hpp>
 
+#include <ObjCryst/version.h>
 #include <ObjCryst/ObjCryst/General.h>
 
 using namespace boost::python;
 using namespace ObjCryst;
+
+// wrappers ------------------------------------------------------------------
+
+namespace {
+
+const char* doc__get_libobjcryst_version_info_dict = "\
+Return dictionary with version data for the loaded libobjcryst library.\n\
+";
+
+dict get_libobjcryst_version_info_dict()
+{
+    dict rv;
+    rv["version"] = libobjcryst_version_info::version;
+    rv["version_str"] = libobjcryst_version_info::version_str;
+    rv["major"] = libobjcryst_version_info::major;
+    rv["minor"] = libobjcryst_version_info::minor;
+    rv["date"] = libobjcryst_version_info::date;
+    rv["git_sha"] = libobjcryst_version_info::git_sha;
+    return rv;
+}
+
+}   // namespace
+
+// ---------------------------------------------------------------------------
 
 void wrap_general()
 {
@@ -32,4 +58,8 @@ void wrap_general()
         .value("RAD_XRAY", RAD_XRAY)
         .value("RAD_ELECTRON", RAD_ELECTRON)
         ;
+
+    def("_get_libobjcryst_version_info_dict",
+            get_libobjcryst_version_info_dict,
+            doc__get_libobjcryst_version_info_dict);
 }

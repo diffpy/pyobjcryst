@@ -16,12 +16,12 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
 #include <boost/python/module.hpp>
 
 void wrap_asymmetricunit();
 void wrap_atom();
 void wrap_crystal();
+void wrap_diffractiondatasinglecrystal();
 void wrap_general();
 void wrap_globalscatteringpower();
 void wrap_io();
@@ -32,10 +32,15 @@ void wrap_moldihedralangle();
 void wrap_molecule();
 void wrap_objregistry();
 void wrap_polyhedron();
+void wrap_powderpattern();
+void wrap_powderpatternbackground();
+void wrap_powderpatterncomponent();
+void wrap_powderpatterndiffraction();
 void wrap_quaternion();
 void wrap_refinableobj();
 void wrap_refinableobjclock();
 void wrap_refinablepar();
+void wrap_reflectionprofile();
 void wrap_refobjopt();
 void wrap_refpartype();
 void wrap_registerconverters();
@@ -44,6 +49,7 @@ void wrap_rigidgroup();
 void wrap_scatterer();
 void wrap_scatteringcomponent();
 void wrap_scatteringcomponentlist();
+void wrap_scatteringdata();
 void wrap_scatteringpower();
 void wrap_scatteringpoweratom();
 void wrap_scatteringpowersphere();
@@ -67,22 +73,25 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
     wrap_refpartype();
     wrap_registerconverters();
 
-
     // Core objects
     wrap_restraint();
     wrap_refinablepar();
     wrap_refinableobj();
 
     // Other base classes
+    wrap_scatteringdata();
     wrap_scatterer();
     wrap_scatteringpower();
     wrap_zscatterer();
     wrap_unitcell();
+    wrap_powderpatterncomponent();
+    wrap_reflectionprofile();
 
     // Other stuff in no particular order.
     wrap_asymmetricunit();
     wrap_atom();
     wrap_crystal();
+    wrap_diffractiondatasinglecrystal();
     wrap_globalscatteringpower();
     wrap_molatom();
     wrap_molbond();
@@ -90,6 +99,9 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
     wrap_moldihedralangle();
     wrap_molecule();
     wrap_polyhedron();
+    wrap_powderpattern();
+    wrap_powderpatternbackground();
+    wrap_powderpatterndiffraction();
     wrap_rigidgroup();
     wrap_scatteringcomponent();
     wrap_scatteringcomponentlist();
@@ -99,6 +111,4 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
     wrap_stretchmode();
     wrap_zatom();
     wrap_zpolyhedron();
-
 }
-

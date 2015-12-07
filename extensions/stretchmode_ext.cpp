@@ -18,19 +18,15 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/utility.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
+#include <boost/python/list.hpp>
 #include <boost/python/make_constructor.hpp>
+#include <boost/python/pure_virtual.hpp>
 
 #include <set>
 
-#include <ObjCryst/RefinableObj/RefinableObj.h>
 #include <ObjCryst/ObjCryst/Molecule.h>
-#include <ObjCryst/ObjCryst/Crystal.h>
-#include <ObjCryst/ObjCryst/ScatteringPower.h>
 
 #include "helpers.hpp"
 
@@ -53,7 +49,7 @@ class StretchModeWrap : public StretchMode,
 
     // Pure virtual
 
-    void CalcDeriv(const bool derivllk=true)
+    void CalcDeriv(const bool derivllk=true) const
     {
         this->get_override("CalcDeriv")(derivllk);
     }
@@ -63,7 +59,7 @@ class StretchModeWrap : public StretchMode,
         this->get_override("Stretch")(change, keepCenter);
     }
 
-    void RandomStretch(const double change)
+    void RandomStretch(const double change, const bool keepCenter)
     {
         this->get_override("RandomStretch")(change);
     }
@@ -179,7 +175,7 @@ void wrap_stretchmode()
         .def("Stretch", pure_virtual(&StretchMode::Stretch),
             (bp::arg("amplitude"), bp::arg("keepCenter")=true))
         .def("RandomStretch", pure_virtual(&StretchMode::RandomStretch),
-            (bp::arg("amplitude")))
+            bp::arg("amplitude"))
         ;
 
     class_<StretchModeBondLength, bases<StretchMode> >
@@ -278,4 +274,3 @@ void wrap_stretchmode()
             return_internal_reference<>()))
         ;
 }
-

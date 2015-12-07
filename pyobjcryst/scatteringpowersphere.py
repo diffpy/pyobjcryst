@@ -19,4 +19,4 @@ See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 """
 
-from _pyobjcryst import ScatteringPowerSphere
+from pyobjcryst._pyobjcryst import ScatteringPowerSphere

@@ -34,16 +34,23 @@ def get_boost_libraries():
     thrown.
     """
     baselib = "boost_python"
-    boostlibtags = ['', '-mt']
+    boostlibtags = ['', '-mt'] + ['']
     from ctypes.util import find_library
     for tag in boostlibtags:
         lib = baselib + tag
         found = find_library(lib)
         if found: break
 
-    # Raise Exception if we don't find anything
+    # Show warning when library was not detected.
     if not found:
-        raise Exception("Cannot find shared boost_library library")
+        import platform
+        import warnings
+        ldevname = 'LD_LIBRARY_PATH'
+        if platform.system() == 'Darwin':
+            ldevname = 'DYLD_FALLBACK_LIBRARY_PATH'
+        wmsg = ("Cannot detect name suffix for the %r library.  "
+            "Consider setting %s.") % (baselib, ldevname)
+        warnings.warn(wmsg)
 
     libs = [lib]
     return libs
@@ -62,7 +69,7 @@ def create_extensions():
 
 # Use this version when git data are not available, like in git zip archive.
 # Update when tagging a new release.
-FALLBACK_VERSION = '1.0.post0'
+FALLBACK_VERSION = '2.0a0.post0'
 
 # versioncfgfile holds version data for git commit hash and date.
 # It must reside in the same directory as version.py.

@@ -20,9 +20,8 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
 #include <boost/python/class.hpp>
-#include <boost/python/def.hpp>
+#include <boost/python/operators.hpp>
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 
@@ -83,7 +82,7 @@ void wrap_refinableobjclock()
 {
 
     class_<RefinableObjClock>
-        ("RefinableObjClock", classdoc, init<>())
+        ("RefinableObjClock", classdoc)
         .def("AddChild", &RefinableObjClock::AddChild, addchilddoc,
                 with_custodian_and_ward<1,2>())
         .def("AddParent", &RefinableObjClock::AddParent, addparentdoc,

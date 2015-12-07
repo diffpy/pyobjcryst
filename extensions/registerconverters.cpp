@@ -16,15 +16,12 @@
 *
 *****************************************************************************/
 
-#include <boost/python.hpp>
-#include <boost/python/numeric.hpp>
 #include <boost/python/class.hpp>
+#include <boost/python/def.hpp>
 #include <boost/python/suite/indexing/map_indexing_suite.hpp>
-#include <boost/python/suite/indexing/vector_indexing_suite.hpp>
-#include <boost/python/to_python_converter.hpp>
+#include <boost/python/exception_translator.hpp>
 
 #include <vector>
-#include <iostream>
 
 #include <numpy/noprefix.h>
 #include <numpy/arrayobject.h>
@@ -33,10 +30,7 @@
 #include <ObjCryst/ObjCryst/General.h>
 #include <ObjCryst/ObjCryst/Crystal.h>
 #include <ObjCryst/ObjCryst/ScatteringPower.h>
-#include <ObjCryst/ObjCryst/SpaceGroup.h>
 #include <ObjCryst/ObjCryst/Molecule.h>
-
-#include "python_file_stream.hpp"
 
 
 using namespace boost::python;
@@ -71,7 +65,7 @@ PyObject* makeNdArray(double * data, std::vector<npy_intp>& dims)
 struct CrystVector_REAL_to_ndarray
 {
 
-    static PyObject* convert(CrystVector<double> const &cv)
+    static PyObject* convert(const CrystVector<double>& cv)
     {
         std::vector<npy_intp> dims(1);
         dims[0] = cv.numElements();
@@ -89,7 +83,7 @@ struct CrystVector_REAL_to_ndarray
 struct CrystMatrix_REAL_to_ndarray
 {
 
-    static PyObject* convert(CrystMatrix<double> const &cm)
+    static PyObject* convert(const CrystMatrix<double>& cm)
     {
         std::vector<npy_intp> dims(2);
         dims[0] = cm.rows();
@@ -276,64 +270,6 @@ CrystMatrix<double> getTestMatrix()
 
 } // namespace
 
-// From cctbx. Used to convert python file-type objects to c++ streams.
-// See python_file_buffer.hpp for copyright.
-namespace boost_adaptbx { namespace file_conversion {
-
-  std::size_t python_file_buffer::buffer_size = 1024;
-
-  // Boost.Python conversion dark magic
-  struct python_file_to_stream_buffer
-  {
-    static void register_conversion() {
-      using namespace boost::python;
-      converter::registry::push_back(
-        &convertible,
-        &construct,
-        type_id<python_file_buffer>());
-    }
-
-    static void *convertible(PyObject *obj_ptr) {
-      using namespace boost::python;
-      if (!(   PyObject_HasAttrString(obj_ptr, "read")
-            && PyObject_HasAttrString(obj_ptr, "readline")
-            && PyObject_HasAttrString(obj_ptr, "readlines"))
-          &&
-          !(   PyObject_HasAttrString(obj_ptr, "write")
-            && PyObject_HasAttrString(obj_ptr, "writelines"))) return 0;
-      return obj_ptr;
-    }
-
-    static void construct(
-      PyObject *obj_ptr,
-      boost::python::converter::rvalue_from_python_stage1_data *data)
-    {
-      using namespace boost::python;
-      typedef converter::rvalue_from_python_storage<python_file_buffer> rvalue_t;
-      void *storage = ((rvalue_t *) data)->storage.bytes;
-      object python_file((handle<>(borrowed(obj_ptr))));
-      new (storage) python_file_buffer(python_file);
-      data->convertible = storage;
-    }
-  };
-
-  struct python_file_buffer_wrapper
-  {
-    typedef python_file_buffer wt;
-
-    static void wrap() {
-      using namespace boost::python;
-      class_<wt, boost::noncopyable>("buffer", no_init)
-        .def_readwrite("size", wt::buffer_size,
-                       "The size of the buffer sitting "
-                       "between a Python file object and a C++ stream.")
-      ;
-    }
-  };
-
-}} // boost_adaptbx::file_conversions
-
-
 void wrap_registerconverters()
 {
 
@@ -381,13 +317,6 @@ void wrap_registerconverters()
         .def("__setitem__", &_setItemMAV, with_custodian_and_ward<1,2>())
         .def("__len__", &MolAtomVec::size)
         ;
-
-    // Python file stuff
-    namespace bafc = boost_adaptbx::file_conversion;
-    bafc::python_file_to_stream_buffer::register_conversion();
-    bafc::python_file_to_stream_buffer::register_conversion();
-    bafc::python_file_buffer_wrapper::wrap();
-
 
     // some tests
     def("getTestVector", &getTestVector);
