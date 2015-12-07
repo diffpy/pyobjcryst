@@ -59,7 +59,9 @@ import pyobjcryst.crystal
 import pyobjcryst.diffractiondatasinglecrystal
 import pyobjcryst.general
 import pyobjcryst.io
+import pyobjcryst.lsqnumobj
 import pyobjcryst.molecule
+import pyobjcryst.montecarloobj
 import pyobjcryst.polyhedron
 import pyobjcryst.powderpattern
 import pyobjcryst.refinableobj
