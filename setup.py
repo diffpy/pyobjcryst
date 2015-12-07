@@ -69,7 +69,7 @@ def create_extensions():
 
 # Use this version when git data are not available, like in git zip archive.
 # Update when tagging a new release.
-FALLBACK_VERSION = '2.0a0.post0'
+FALLBACK_VERSION = '2.0a1.post0'
 
 # versioncfgfile holds version data for git commit hash and date.
 # It must reside in the same directory as version.py.
@@ -101,7 +101,7 @@ def getversioncfg():
         g = cp0.defaults()
     # then try to obtain version data from git.
     gitdir = os.path.join(MYDIR, '.git')
-    if os.path.isdir(gitdir) or 'GIT_DIR' in os.environ:
+    if os.path.exists(gitdir) or 'GIT_DIR' in os.environ:
         try:
             g = gitinfo()
         except OSError:
