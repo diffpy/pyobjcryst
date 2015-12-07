@@ -50,4 +50,26 @@ See the modules' documentation for specific changes.
 # Let's put this on the package level
 from pyobjcryst.general import ObjCrystException
 
+# version data
 from pyobjcryst.version import __version__
+
+# import submodules that only import from _pyobjcryst
+import pyobjcryst.atom
+import pyobjcryst.crystal
+import pyobjcryst.diffractiondatasinglecrystal
+import pyobjcryst.general
+import pyobjcryst.io
+import pyobjcryst.lsqnumobj
+import pyobjcryst.molecule
+import pyobjcryst.montecarloobj
+import pyobjcryst.polyhedron
+import pyobjcryst.powderpattern
+import pyobjcryst.refinableobj
+import pyobjcryst.reflectionprofile
+import pyobjcryst.scatterer
+import pyobjcryst.scatteringdata
+import pyobjcryst.scatteringpower
+import pyobjcryst.scatteringpowersphere
+import pyobjcryst.spacegroup
+import pyobjcryst.unitcell
+import pyobjcryst.zscatterer
