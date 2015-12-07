@@ -43,7 +43,7 @@ void wrap_powderpatterndiffraction()
 
     class_<PowderPatternDiffraction,
         bases<PowderPatternComponent, ScatteringData> >(
-                "PowderPatternDiffraction")
+                "PowderPatternDiffraction", no_init)
         .def("GetPowderPatternCalc",
                 &PowderPatternDiffraction::GetPowderPatternCalc,
                 return_value_policy<copy_const_reference>())
