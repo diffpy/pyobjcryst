@@ -1,8 +1,8 @@
-.. image:: https://travis-ci.org/diffpy/pyobjcryst.svg?branch=dev2015
+.. image:: https://travis-ci.org/diffpy/pyobjcryst.svg?branch=master
    :target: https://travis-ci.org/diffpy/pyobjcryst
 
-.. image:: http://codecov.io/github/diffpy/pyobjcryst/coverage.svg?branch=dev2015
-   :target: http://codecov.io/github/diffpy/pyobjcryst?branch=dev2015
+.. image:: http://codecov.io/github/diffpy/pyobjcryst/coverage.svg?branch=master
+   :target: http://codecov.io/github/diffpy/pyobjcryst?branch=master
 
 pyobjcryst
 ==========
