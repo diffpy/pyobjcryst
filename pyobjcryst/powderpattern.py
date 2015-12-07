@@ -21,3 +21,7 @@ Changes from ObjCryst::PowderPattern::
 
 from pyobjcryst._pyobjcryst import PowderPattern
 from pyobjcryst._pyobjcryst import CreatePowderPatternFromCIF
+from pyobjcryst._pyobjcryst import PowderPatternBackground
+from pyobjcryst._pyobjcryst import PowderPatternComponent
+from pyobjcryst._pyobjcryst import PowderPatternDiffraction
+from pyobjcryst._pyobjcryst import ReflectionProfileType
