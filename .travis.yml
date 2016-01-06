@@ -26,6 +26,7 @@ branches:
     - /^v[0-9]/
 
 before_install:
+  - umask 022
   - git fetch origin --tags
   - if ${MYUSEMC}; then
         NOAPT=true; NOMC=false;
@@ -45,13 +46,14 @@ before_install:
     esac
 
   - mkdir -p ~/pkgs/
+  - mkdir -p ~/rundir/
 
   - $NOMC || pushd ~/pkgs/
   - $NOMC || wget --timestamping ${MYMCREPO}/${MYMCBUNDLE}
   - $NOMC || test -x ~/mc/bin/conda || bash ${MYMCBUNDLE} -b -f -p ~/mc
   - $NOMC || popd
   - $NOMC || export PATH="${HOME}/mc/bin:${PATH}"
-  - $NOMC || conda update conda --yes
+  - $NOMC || conda update --yes conda
   - $NOMC || conda install --yes python=${MYPYTHON_VERSION} conda-build jinja2
   - $NOMC || conda create --name=testenv --yes python=${MYPYTHON_VERSION} coverage
   - $NOMC || conda config --add channels pavoljuhas/channel/dev
@@ -80,15 +82,12 @@ install:
   - $NOAPT || sudo scons -C ~/pkgs/libObjCryst install
   - $NOAPT || easy_install --user "${MYTARBUNDLE}"
 
-  - cd
+  - cd ~/rundir
   - MYGIT_REV=$(python -c "import pyobjcryst.version as v; print(v.__gitsha__)")
   - if [[ "${TRAVIS_COMMIT}" != "${MYGIT_REV}" ]]; then
         echo "Version mismatch ${TRAVIS_COMMIT} vs ${MYGIT_REV}.";
         exit 1;
     fi
-
-before_script:
-  - cd
 
 script:
   - coverage run --source pyobjcryst -m pyobjcryst.tests.run
