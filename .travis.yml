@@ -54,10 +54,9 @@ before_install:
   - $NOMC || popd
   - $NOMC || export PATH="${HOME}/mc/bin:${PATH}"
   - $NOMC || conda update --yes conda
-  - $NOMC || conda install --yes python=${MYPYTHON_VERSION} conda-build jinja2
+  - $NOMC || conda install --yes conda-build jinja2
   - $NOMC || conda create --name=testenv --yes python=${MYPYTHON_VERSION} coverage
-  - $NOMC || conda config --add channels pavoljuhas/channel/dev
-  - $NOMC || conda config --add channels pavoljuhas
+  - $NOMC || conda config --add channels diffpy
 
   - $NOAPT || test "${TRAVIS_OS_NAME}" = "linux" || exit $?
   - $NOAPT || sudo apt-get update -qq
@@ -71,9 +70,8 @@ before_install:
   - $NOAPT || git clone https://github.com/diffpy/libObjCryst.git
   - $NOAPT || popd
 
-
 install:
-  - $NOMC || conda build conda-recipe
+  - $NOMC || CONDA_PY=${MYPYTHON_VERSION} conda build conda-recipe
   - $NOMC || conda list --name=_test --export pyobjcryst > /tmp/mypackage.txt
   - $NOMC || source activate testenv
   - $NOMC || conda install --yes --use-local --file=/tmp/mypackage.txt
