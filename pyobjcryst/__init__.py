@@ -71,3 +71,19 @@ import pyobjcryst.scatteringpowersphere
 import pyobjcryst.spacegroup
 import pyobjcryst.unitcell
 import pyobjcryst.zscatterer
+
+
+def loadCrystal(filename):
+    """Load pyobjcryst Crystal object from a CIF file.
+
+    filename -- CIF file to be loaded
+
+    Return a new Crystal object.
+
+    See pyobjcryst.crystal.CreateCrystalFromCIF for additional
+    options for constructing Crystal object from CIF data.
+    """
+    from pyobjcryst.crystal import CreateCrystalFromCIF
+    with open(filename) as fp:
+        rv = CreateCrystalFromCIF(fp)
+    return rv
