@@ -1,14 +1,13 @@
 package:
   name: pyobjcryst
   ## Use __conda_version__.txt.
-  # version: "2.0a0"
 
 source:
   # git_url: https://github.com/diffpy/pyobjcryst.git
   git_url: ..
 
 build:
-  preserve_egg_dir: True
+  #preserve_egg_dir: True
 
   # If this is a new build for the same version, increment the build
   # number. If you do not include this key, it defaults to 0.
@@ -19,7 +18,7 @@ requirements:
     - python
     - setuptools
     - numpy 1.9.2
-    - libobjcryst 2015.1a1*
+    - libobjcryst 2015.1
     - boost-all 1.59.0
     - scons
 
@@ -27,7 +26,7 @@ requirements:
     - python
     - setuptools
     - numpy >=1.9.2
-    - libobjcryst 2015.1a1*
+    - libobjcryst 2015.1
     - boost-all 1.59.0
 
 test:
