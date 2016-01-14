@@ -7,7 +7,7 @@
 pyobjcryst
 ==========
 
-Python bindings to ObjCryst++ Object-Oriented Crystallographic Library
+Python bindings to ObjCryst++, the Object-Oriented Crystallographic Library.
 
 The documentation for this release of pyobjcryst can be found on-line at
 http://diffpy.github.io/pyobjcryst.
@@ -16,8 +16,7 @@ http://diffpy.github.io/pyobjcryst.
 REQUIREMENTS
 ------------
 
-pyobjcryst requires Python 2.6 or 2.7, C++ compiler and the following
-software:
+pyobjcryst requires Python 2.7, C++ compiler and the following software:
 
 * ``libobjcryst`` - Object-Oriented Crystallographic Library for C++,
   https://github.com/diffpy/libobjcryst
@@ -26,55 +25,54 @@ software:
 * ``python-dev`` - header files for interfacing Python with C
 * ``libboost-all-dev`` - Boost C++ libraries and development files
 
-With the exception of libobjcryst, the required software is commonly
-available in system package manager, for example, on Ubuntu Linux the
-required software can be installed as::
+We recommend to use `Anaconda Python <https://www.continuum.io/downloads>`_
+as it allows to install all software dependencies together with
+pyobjcryst.  For other Python distributions it is necessary to
+install the required software separately.  As an example, on Ubuntu
+Linux the required software can be installed using ::
 
    sudo apt-get install \
       python-setuptools python-numpy scons \
       build-essential python-dev libboost-all-dev
 
-For Mac OS X machine with the MacPorts package manager the installation is::
-
-   sudo port install \
-      python27 py27-setuptools py27-numpy scons boost
-
-When installing with MacPorts, make sure that MacPorts bin directory is the
-first in the system PATH and python27 is selected as the default Python
-version in MacPorts::
-
-   sudo port select --set python python27
-
 
 INSTALLATION
 ------------
 
-The easiest option is to use the latest DiffPy-CMI release bundle from
-http://www.diffpy.org, which comes with pyobjcryst and all other
-dependencies included.
+The preferred method is to use Anaconda Python and install from the
+"diffpy" channel of Anaconda packages ::
 
-If you prefer to install from sources, you must first install the libobjcryst
-library as per the instructions at
+   conda config --add channels diffpy
+   conda install pyobjcryst
+
+pyobjcryst is also included in the "diffpy-cmi" collection
+of packages for structure analysis ::
+
+   conda install diffpy-cmi
+
+If you prefer to use other Python distribution or install from sources,
+you must first install the libobjcryst library as per the instructions at
 https://github.com/diffpy/libobjcryst.  Make sure other required
-software is in place as well and then run::
+software is also in place and then run::
 
-   sudo python setup.py install
+   python setup.py install
 
-This installs pyobjcryst for all users to the default system location.
-If administrator (root) access is not available, see the usage info from
-``python setup.py install --help`` for options for installing to a user-writable
-location.  The installation integrity can be verified by changing to
-the HOME directory and running::
+You may need to use ``sudo`` with system Python so the process is
+allowed to copy files to system directories.  If administrator (root)
+access is not available, see the usage information from
+``python setup.py install --help`` for options to install to
+a user-writable location.  The installation integrity can be verified by
+changing to the HOME directory and running ::
 
    python -m pyobjcryst.tests.run
 
 An alternative way of installing pyobjcryst is to use the SCons tool,
-which can speed up the process by compiling C++ files in parallel (-j4)::
+which can speed up the installation by compiling C++ files in several
+parallel jobs (-j4)::
 
-   sudo scons -j4 install
+   scons -j4 install
 
-See ``scons -h`` for description of build targets and options for
-choosing the installation directory.
+See ``scons -h`` for description of build targets and options.
 
 
 DEVELOPMENT
@@ -87,13 +85,13 @@ https://github.com/diffpy/pyobjcryst.
 
 Feel free to fork the project and contribute.  To install pyobjcryst
 in a development mode, where its sources are directly used by Python
-rather than copied to a system directory, use::
+rather than copied to a system directory, use ::
 
    python setup.py develop --user
 
 When developing it is preferable to compile the C++ files with
 SCons using the ``build=develop`` option, which compiles the extension
-module with debug information and C-assertions checks::
+module with debug information and C-assertions checks ::
 
    scons -j4 build=debug develop
 
