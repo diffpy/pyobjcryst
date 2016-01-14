@@ -18,7 +18,7 @@ requirements:
     - python
     - setuptools
     - numpy 1.9.2
-    - libobjcryst 2015.1
+    - libobjcryst 2015.1|2015.1.*
     - boost-all 1.59.0
     - scons
 
@@ -26,7 +26,7 @@ requirements:
     - python
     - setuptools
     - numpy >=1.9.2
-    - libobjcryst 2015.1
+    - libobjcryst 2015.1|2015.1.*
     - boost-all 1.59.0
 
 test:
