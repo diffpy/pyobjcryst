@@ -69,7 +69,7 @@ def create_extensions():
 
 # Use this version when git data are not available, like in git zip archive.
 # Update when tagging a new release.
-FALLBACK_VERSION = '2.0a1.post0'
+FALLBACK_VERSION = '2.0.post0'
 
 # versioncfgfile holds version data for git commit hash and date.
 # It must reside in the same directory as version.py.
@@ -130,7 +130,7 @@ setup_args = dict(
         author_email = "sb2896@columbia.edu",
         maintainer = 'Pavol Juhas',
         maintainer_email = 'pavol.juhas@gmail.com',
-        description = "Bindings of ObjCryst++ into python",
+        description = "Python bindings to the ObjCryst++ library.",
         license = "BSD-style license",
         url = "https://github.com/diffpy/pyobjcryst",
 
