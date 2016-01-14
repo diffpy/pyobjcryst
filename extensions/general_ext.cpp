@@ -42,6 +42,7 @@ dict get_libobjcryst_version_info_dict()
     rv["version_str"] = libobjcryst_version_info::version_str;
     rv["major"] = libobjcryst_version_info::major;
     rv["minor"] = libobjcryst_version_info::minor;
+    rv["micro"] = libobjcryst_version_info::micro;
     rv["date"] = libobjcryst_version_info::date;
     rv["git_sha"] = libobjcryst_version_info::git_sha;
     return rv;
