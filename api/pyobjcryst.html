@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyobjcryst package &mdash; pyobjcryst 1.0b4-6 documentation</title>
+    <title>pyobjcryst package &mdash; pyobjcryst 2.0 documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0b4-6',
+        VERSION:     '2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,12 +24,12 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
-    <link rel="top" title="pyobjcryst 1.0b4-6 documentation" href="../index.html" />
+    <link rel="top" title="pyobjcryst 2.0 documentation" href="../index.html" />
     <link rel="up" title="pyobjcryst" href="modules.html" />
     <link rel="prev" title="pyobjcryst" href="modules.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,15 +41,15 @@
         <li class="right" >
           <a href="modules.html" title="pyobjcryst"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">pyobjcryst 1.0b4-6 documentation</a> &raquo;</li>
-          <li><a href="modules.html" accesskey="U">pyobjcryst</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pyobjcryst 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">pyobjcryst</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="pyobjcryst-package">
 <h1>pyobjcryst package<a class="headerlink" href="#pyobjcryst-package" title="Permalink to this headline">¶</a></h1>
@@ -264,7 +264,7 @@ implemented in the library.</li>
 <p>Utilities for crystals.</p>
 <dl class="function">
 <dt id="pyobjcryst.utils.crystalToDiffpyStructure">
-<tt class="descclassname">pyobjcryst.utils.</tt><tt class="descname">crystalToDiffpyStructure</tt><big>(</big><em>crystal</em><big>)</big><a class="headerlink" href="#pyobjcryst.utils.crystalToDiffpyStructure" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyobjcryst.utils.</code><code class="descname">crystalToDiffpyStructure</code><span class="sig-paren">(</span><em>crystal</em><span class="sig-paren">)</span><a class="headerlink" href="#pyobjcryst.utils.crystalToDiffpyStructure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a diffpy.Structure.Structure from a crystal.</p>
 <p>This requires diffpy.Structure to be installed. This uses file IO transfer
 data, so there is some inherent precision loss.</p>
@@ -273,7 +273,7 @@ data, so there is some inherent precision loss.</p>
 
 <dl class="function">
 <dt id="pyobjcryst.utils.expandSymmetry">
-<tt class="descclassname">pyobjcryst.utils.</tt><tt class="descname">expandSymmetry</tt><big>(</big><em>crystal</em><big>)</big><a class="headerlink" href="#pyobjcryst.utils.expandSymmetry" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyobjcryst.utils.</code><code class="descname">expandSymmetry</code><span class="sig-paren">(</span><em>crystal</em><span class="sig-paren">)</span><a class="headerlink" href="#pyobjcryst.utils.expandSymmetry" title="Permalink to this definition">¶</a></dt>
 <dd><p>Expand a crystal to P1 symmetry.</p>
 <p>This requires diffpy.Structure to be installed. This uses file IO transfer
 data, so there is some inherent precision loss.</p>
@@ -281,20 +281,14 @@ data, so there is some inherent precision loss.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pyobjcryst.utils.moleculeFromDiffpyStructure">
-<tt class="descclassname">pyobjcryst.utils.</tt><tt class="descname">moleculeFromDiffpyStructure</tt><big>(</big><em>crystal</em>, <em>stru</em><big>)</big><a class="headerlink" href="#pyobjcryst.utils.moleculeFromDiffpyStructure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create and return a molecule from a diffpy.Structure object.</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="pyobjcryst.utils.printxyz">
-<tt class="descclassname">pyobjcryst.utils.</tt><tt class="descname">printxyz</tt><big>(</big><em>crystal</em><big>)</big><a class="headerlink" href="#pyobjcryst.utils.printxyz" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyobjcryst.utils.</code><code class="descname">printxyz</code><span class="sig-paren">(</span><em>crystal</em><span class="sig-paren">)</span><a class="headerlink" href="#pyobjcryst.utils.printxyz" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print a crystal in xyz format.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyobjcryst.utils.putAtomsInMolecule">
-<tt class="descclassname">pyobjcryst.utils.</tt><tt class="descname">putAtomsInMolecule</tt><big>(</big><em>crystal</em>, <em>alist=None</em>, <em>name=None</em><big>)</big><a class="headerlink" href="#pyobjcryst.utils.putAtomsInMolecule" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyobjcryst.utils.</code><code class="descname">putAtomsInMolecule</code><span class="sig-paren">(</span><em>crystal</em>, <em>alist=None</em>, <em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyobjcryst.utils.putAtomsInMolecule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Place atoms from a crystal into a molecule inside the crystal.</p>
 <p>Selected atoms are put into a new Molecule object, which is then placed
 inside of the Crystal. The atoms are then removed from the crystal. The
@@ -314,7 +308,7 @@ crystal&#8217;s name.</dd>
 
 <dl class="function">
 <dt id="pyobjcryst.utils.writexyz">
-<tt class="descclassname">pyobjcryst.utils.</tt><tt class="descname">writexyz</tt><big>(</big><em>crystal</em>, <em>filename</em><big>)</big><a class="headerlink" href="#pyobjcryst.utils.writexyz" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyobjcryst.utils.</code><code class="descname">writexyz</code><span class="sig-paren">(</span><em>crystal</em>, <em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyobjcryst.utils.writexyz" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write a crystal to an xyz file.</p>
 </dd></dl>
 
@@ -363,8 +357,18 @@ __str__ python method. Thus, obj.Print() == print obj.</li>
 <p>See the modules&#8217; documentation for specific changes.</p>
 <dl class="exception">
 <dt id="pyobjcryst.ObjCrystException">
-<em class="property">exception </em><tt class="descclassname">pyobjcryst.</tt><tt class="descname">ObjCrystException</tt><a class="headerlink" href="#pyobjcryst.ObjCrystException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<em class="property">exception </em><code class="descclassname">pyobjcryst.</code><code class="descname">ObjCrystException</code><a class="headerlink" href="#pyobjcryst.ObjCrystException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyobjcryst.loadCrystal">
+<code class="descclassname">pyobjcryst.</code><code class="descname">loadCrystal</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyobjcryst.loadCrystal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load pyobjcryst Crystal object from a CIF file.</p>
+<p>filename &#8211; CIF file to be loaded</p>
+<p>Return a new Crystal object.</p>
+<p>See pyobjcryst.crystal.CreateCrystalFromCIF for additional
+options for constructing Crystal object from CIF data.</p>
 </dd></dl>
 
 </div>
@@ -374,7 +378,7 @@ __str__ python method. Thus, obj.Print() == print obj.</li>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -403,12 +407,14 @@ __str__ python method. Thus, obj.Print() == print obj.</li>
   <h4>Previous topic</h4>
   <p class="topless"><a href="modules.html"
                         title="previous chapter">pyobjcryst</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/api/pyobjcryst.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/pyobjcryst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -425,7 +431,7 @@ __str__ python method. Thus, obj.Print() == print obj.</li>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -437,13 +443,13 @@ __str__ python method. Thus, obj.Print() == print obj.</li>
         <li class="right" >
           <a href="modules.html" title="pyobjcryst"
              >previous</a> |</li>
-        <li><a href="../index.html">pyobjcryst 1.0b4-6 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >pyobjcryst</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pyobjcryst 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >pyobjcryst</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2014, Brookhaven National Laboratory.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Brookhaven National Laboratory.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.3.
     </div>
   </body>
 </html>
