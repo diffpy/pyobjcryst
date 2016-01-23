@@ -38,7 +38,7 @@ from collections import namedtuple
 from pyobjcryst._pyobjcryst import _get_libobjcryst_version_info_dict
 
 libobjcryst_version_info = namedtuple('libobjcryst_version_info',
-        "version version_number major minor micro date git_sha")
+        "version version_number major minor micro patch date git_sha")
 vd = _get_libobjcryst_version_info_dict()
 libobjcryst_version_info = libobjcryst_version_info(
         version = vd['version_str'],
@@ -46,6 +46,7 @@ libobjcryst_version_info = libobjcryst_version_info(
         major = vd['major'],
         minor = vd['minor'],
         micro = vd['micro'],
+        patch = vd['patch'],
         date = vd['date'],
         git_sha = vd['git_sha'])
 del vd
