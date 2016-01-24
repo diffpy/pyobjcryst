@@ -36,8 +36,7 @@ void _SetInterpPoints(PowderPatternBackground& b,
         PyObject* tth, PyObject* backgd)
 {
     // cout << "_SetInterpPoints:" << tth << ", " << backgd << endl;
-    const unsigned long ndim = PyArray_NDIM((PyObject*)tth);
-    // cout << "dimensions = " << ndim << endl;
+    // cout << "dimensions = " << PyArray_NDIM(tth) << endl;
     const unsigned long nb = *(PyArray_DIMS((PyObject*)tth));
     // cout << "nbPoints = " << nb << endl;
     CrystVector_REAL tth2(nb), backgd2(nb);
