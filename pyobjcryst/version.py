@@ -13,7 +13,8 @@
 #
 ##############################################################################
 
-"""Definition of __version__, __date__, __gitsha__ for pyobjcryst.
+
+"""Definition of __version__, __date__, __gitsha__, libobjcryst_version_info.
 """
 
 from pkg_resources import resource_filename
