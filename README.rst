@@ -22,6 +22,7 @@ pyobjcryst requires Python 2.7, C++ compiler and the following software:
   https://github.com/diffpy/libobjcryst
 * ``setuptools``  - tools for installing Python packages
 * ``NumPy`` - library for scientific computing with Python
+* ``scons`` - software constructions tool (1.0 or later)
 * ``python-dev`` - header files for interfacing Python with C
 * ``libboost-all-dev`` - Boost C++ libraries and development files
 
@@ -100,6 +101,25 @@ can be used to permanently set the ``build`` variable.  The SCons
 construction environment can be further customized in a ``sconscript.local``
 script.  The package integrity can be verified by executing unit tests with
 ``scons -j4 test``.
+
+When developing with Anaconda Python it is essential to specify
+header path, library path and runtime library path for the active
+Anaconda environment.  This can be achieved by setting the ``CPATH``,
+``LIBRARY_PATH`` and ``LDFLAGS`` environment variables as follows::
+
+   # resolve the prefix directory P of the active Anaconda environment
+   P="$(conda info --json | grep default_prefix | cut -d\" -f4)"
+   export CPATH=$P/include
+   export LIBRARY_PATH=$P/lib
+   export LDFLAGS=-Wl,-rpath,$P/lib
+   # compile and re-install pyobjcryst
+   scons -j4 build=debug develop
+
+On Mac OS X the distributed Anaconda packages are built for operating
+system version 10.6, which may be incompatible with codes compiled on a
+newer OS.  To avoid this problem set the environment variable
+``MACOSX_DEPLOYMENT_TARGET=10.6``.  This allows to build pyobjcryst
+against the Anaconda package for the libobjcryst library.
 
 
 CONTACTS
