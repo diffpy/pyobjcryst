@@ -2,5 +2,4 @@ recursive-include pyobjcryst *
 recursive-include extensions *
 include SConstruct
 include AUTHORS.txt LICENSE*.txt README.rst
-exclude MANIFEST.in
 recursive-exclude pyobjcryst *.pyc *.so
