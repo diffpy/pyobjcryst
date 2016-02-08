@@ -22,6 +22,7 @@ valgrind --tool=memcheck --leak-check=full /usr/bin/python ./pyobjcrysttest.py
 
 from pyobjcryst.atom import Atom
 from pyobjcryst.crystal import Crystal
+from pyobjcryst.refinableobj import RefParType, RefinablePar
 from pyobjcryst.scatteringpower import ScatteringPowerAtom
 
 from numpy import pi

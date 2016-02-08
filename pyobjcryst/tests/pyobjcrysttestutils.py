@@ -15,7 +15,6 @@
 
 """Utilities for tests."""
 
-import os
 from pyobjcryst.atom import Atom
 from pyobjcryst.molecule import Molecule
 from pyobjcryst.polyhedron import MakeOctahedron
@@ -178,29 +177,17 @@ def makeMnO6():
 
 def toxyz(crystal, filename):
     """Write a crystal to an xyz file."""
-
     scl = crystal.GetScatteringComponentList()
-
     f = file(filename, 'w')
-
-
     f.write(str(len(scl)))
     f.write("\n\n")
-
-    import numpy
-
-    uc = numpy.array(
-            crystal.FractionalToOrthonormalCoords(1, 1, 1))
-
     for s in scl:
         el = s.mpScattPow.GetSymbol()
         xyz = numpy.array([s.X, s.Y, s.Z])
         xyz = numpy.array(crystal.FractionalToOrthonormalCoords(*xyz))
         x, y, z = xyz
         f.write("%s %f %f %f\n"%(el, x, y, z))
-
     f.close()
-
     return
 
 

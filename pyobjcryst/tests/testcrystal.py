@@ -40,7 +40,6 @@ class TestCrystal(unittest.TestCase):
         c = makeCrystal(*makeScatterer())
         sp2 = getScatterer()
         self.assertEqual("Ni", sp2.GetName())
-        sp3 = sp2
         return
 
     def testScattererB(self):

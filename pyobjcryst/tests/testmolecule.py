@@ -370,9 +370,9 @@ class TestMolecule(unittest.TestCase):
 
     def testManipulation(self):
         """Test moving the atoms."""
-        a = self.m.AddAtom(0, 0, 0, None, "center")
-        self.assertTrue(a.IsDummy())
-        self.m.SetCenterAtom(a)
+        ac = self.m.AddAtom(0, 0, 0, None, "center")
+        self.assertTrue(ac.IsDummy())
+        self.m.SetCenterAtom(ac)
 
         a0 = self.m.GetAtom(0)
         x = a0.X
