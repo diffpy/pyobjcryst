@@ -66,6 +66,9 @@ vars.Add(PathVariable('prefix',
 vars.Add(EnumVariable('build',
     'compiler settings', 'fast',
     allowed_values=('debug', 'fast')))
+vars.Add(EnumVariable('tool',
+    'C++ compiler toolkit to be used', 'default',
+    allowed_values=('default', 'intelc')))
 vars.Add(BoolVariable('profile',
     'build with profiling information', False))
 vars.Add('python',
@@ -73,9 +76,13 @@ vars.Add('python',
 vars.Update(env)
 env.Help(MY_SCONS_HELP % vars.GenerateHelpText(env))
 
-# Use Intel C++ compiler when it is available
-icpc = env.WhereIs('icpc')
-if icpc:
+# Use Intel C++ compiler if requested by the user.
+icpc = None
+if env['tool'] == 'intelc':
+    icpc = env.WhereIs('icpc')
+    if not icpc:
+        print("Cannot find the Intel C/C++ compiler 'icpc'.")
+        Exit(1)
     env.Tool('intelc', topdir=icpc[:icpc.rfind('/bin')])
 
 # Apply CFLAGS, CXXFLAGS, LDFLAGS from the system environment.
