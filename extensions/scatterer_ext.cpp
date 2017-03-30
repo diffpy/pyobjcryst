@@ -128,15 +128,28 @@ class ScattererWrap : public Scatterer,
         return this->get_override("POVRayDescription")(os, options);
     }
 
+    // interface prior to Fox version 2016.2
     void GLInitDisplayList(const bool noSymmetrics,
-            const double xMin, const double xMax,
-            const double yMin, const double yMax,
-            const double zMin, const double zMax,
+            const REAL xMin, const REAL xMax,
+            const REAL yMin, const REAL yMax,
+            const REAL zMin, const REAL zMax,
             const bool displayEnantiomer,
             const bool displayNames,
             const bool hideHydrogens) const
     {
-        this->get_override("GLInitDisplayList")();
+        // no operation
+    }
+
+    void GLInitDisplayList(const bool noSymmetrics,
+            const REAL xMin, const REAL xMax,
+            const REAL yMin, const REAL yMax,
+            const REAL zMin, const REAL zMax,
+            const bool displayEnantiomer,
+            const bool displayNames,
+            const bool hideHydrogens,
+            const REAL fadeDistance=0) const
+    {
+        // no operation
     }
 
     const RefinableObjClock& _GetClockScattCompList() const
