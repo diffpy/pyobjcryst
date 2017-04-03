@@ -27,7 +27,6 @@
 #include <ObjCryst/ObjCryst/PowderPattern.h>
 
 namespace bp = boost::python;
-using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
@@ -53,8 +52,10 @@ void _SetInterpPoints(PowderPatternBackground& b,
 
 }   // namespace
 
+
 void wrap_powderpatternbackground()
 {
+    using namespace boost::python;
     class_<PowderPatternBackground, bases<PowderPatternComponent>, boost::noncopyable>(
             "PowderPatternBackground", no_init)
         //.def("SetParentPowderPattern", &PowderPatternBackground::SetParentPowderPattern)
