@@ -7,11 +7,8 @@ os:
   - osx
 
 env:
-  global:
-    - MYPYTHON_VERSION=2.7
-  matrix:
-    - MYUSEMC=true
-    - MYUSEMC=false
+  - MYUSEMC=true MYPYTHON_VERSION=2.7
+  - MYUSEMC=false
 
 matrix:
   exclude:
