@@ -3,3 +3,4 @@ recursive-include extensions *
 include SConstruct
 include AUTHORS.txt LICENSE*.txt README.rst
 recursive-exclude pyobjcryst *.pyc *.so
+recursive-exclude * .gitattributes .gitignore .DS_Store
