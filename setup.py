@@ -127,41 +127,41 @@ versiondata = getversioncfg()
 
 # define distribution
 setup_args = dict(
-        name = "pyobjcryst",
-        version = versiondata.get('DEFAULT', 'version'),
-        author = "Simon J.L. Billinge",
-        author_email = "sb2896@columbia.edu",
-        maintainer = 'Pavol Juhas',
-        maintainer_email = 'pavol.juhas@gmail.com',
-        description = "Python bindings to the ObjCryst++ library.",
-        license = "BSD-style license",
-        url = "https://github.com/diffpy/pyobjcryst",
+    name = "pyobjcryst",
+    version = versiondata.get('DEFAULT', 'version'),
+    author = "Simon J.L. Billinge",
+    author_email = "sb2896@columbia.edu",
+    maintainer = 'Pavol Juhas',
+    maintainer_email = 'pavol.juhas@gmail.com',
+    description = "Python bindings to the ObjCryst++ library.",
+    license = "BSD-style license",
+    url = "https://github.com/diffpy/pyobjcryst",
 
-        # What we're installing
-        packages = ['pyobjcryst', 'pyobjcryst.tests'],
-        test_suite = 'pyobjcryst.tests',
-        include_package_data = True,
-        zip_safe = False,
+    # What we're installing
+    packages = ['pyobjcryst', 'pyobjcryst.tests'],
+    test_suite = 'pyobjcryst.tests',
+    include_package_data = True,
+    zip_safe = False,
 
-        keywords = "objcryst atom structure crystallography",
-        classifiers = [
-            # List of possible values at
-            # http://pypi.python.org/pypi?:action=list_classifiers
-            'Development Status :: 5 - Production/Stable',
-            'Environment :: Console',
-            'Intended Audience :: Developers',
-            'Intended Audience :: Education',
-            'Intended Audience :: Science/Research',
-            'License :: OSI Approved :: BSD License',
-            'Operating System :: MacOS :: MacOS X',
-            'Operating System :: POSIX',
-            'Operating System :: Unix',
-            'Programming Language :: C++',
-            'Programming Language :: Python :: 2.7',
-            'Topic :: Scientific/Engineering :: Chemistry',
-            'Topic :: Scientific/Engineering :: Physics',
-            'Topic :: Software Development :: Libraries',
-        ],
+    keywords = "objcryst atom structure crystallography",
+    classifiers = [
+        # List of possible values at
+        # http://pypi.python.org/pypi?:action=list_classifiers
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Education',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: POSIX',
+        'Operating System :: Unix',
+        'Programming Language :: C++',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Scientific/Engineering :: Chemistry',
+        'Topic :: Scientific/Engineering :: Physics',
+        'Topic :: Software Development :: Libraries',
+    ],
 )
 
 if __name__ == '__main__':
