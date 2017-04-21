@@ -65,15 +65,15 @@ def create_extensions():
             if not n in ext_kws['libraries']]
     ext_kws['libraries'] += blibs
     ext = Extension('pyobjcryst._pyobjcryst',
-            glob.glob("extensions/*.cpp"),
-            **ext_kws)
+                    glob.glob("src/extensions/*.cpp"),
+                    **ext_kws)
     return [ext]
 
 
 # versioncfgfile holds version data for git commit hash and date.
 # It must reside in the same directory as version.py.
 MYDIR = os.path.dirname(os.path.abspath(__file__))
-versioncfgfile = os.path.join(MYDIR, 'pyobjcryst/version.cfg')
+versioncfgfile = os.path.join(MYDIR, 'src/pyobjcryst/version.cfg')
 gitarchivecfgfile = versioncfgfile.replace('version.cfg', 'gitarchive.cfg')
 
 def gitinfo():
@@ -139,6 +139,7 @@ setup_args = dict(
 
     # What we're installing
     packages = ['pyobjcryst', 'pyobjcryst.tests'],
+    package_dir = {'' : 'src'},
     test_suite = 'pyobjcryst.tests',
     include_package_data = True,
     zip_safe = False,

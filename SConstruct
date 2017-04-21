@@ -148,6 +148,6 @@ Export('env', 'pyconfigvar', 'pyoutput')
 if os.path.isfile('sconscript.local'):
     env.SConscript('sconscript.local')
 
-env.SConscript('extensions/SConscript', variant_dir=builddir)
+env.SConscript('src/extensions/SConscript', variant_dir=builddir)
 
 # vim: ft=python

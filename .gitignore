@@ -44,5 +44,5 @@ nosetests.xml
 .pydevproject
 setup.cfg
 .gdb_history
-/pyobjcryst/version.cfg
+/src/pyobjcryst/version.cfg
 /.settings/*
