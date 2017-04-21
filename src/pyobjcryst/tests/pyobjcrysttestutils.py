@@ -130,36 +130,6 @@ def makeC60():
 
     return c
 
-def makeLaMnO3():
-
-    crystal = Crystal(5.486341, 5.619215, 7.628206, "P b n m")
-    crystal.SetName("LaMnO3")
-    # La1
-    sp = ScatteringPowerAtom("La1", "La")
-    sp.SetBiso(8*pi*pi*0.003)
-    atom = Atom(0.996096, 0.0321494, 0.25, "La1", sp)
-    crystal.AddScatteringPower(sp)
-    crystal.AddScatterer(atom)
-    # Mn1
-    sp = ScatteringPowerAtom("Mn1", "Mn")
-    sp.SetBiso(8*pi*pi*0.003)
-    atom = Atom(0, 0.5, 0, "Mn1", sp)
-    crystal.AddScatteringPower(sp)
-    crystal.AddScatterer(atom)
-    # O1
-    sp = ScatteringPowerAtom("O1", "O")
-    sp.SetBiso(8*pi*pi*0.003)
-    atom = Atom(0.0595746, 0.496164, 0.25, "O1", sp)
-    crystal.AddScatteringPower(sp)
-    crystal.AddScatterer(atom)
-    # O2
-    sp = ScatteringPowerAtom("O2", "O")
-    sp.SetBiso(8*pi*pi*0.003)
-    atom = Atom(0.720052, 0.289387, 0.0311126, "O2", sp)
-    crystal.AddScatteringPower(sp)
-    crystal.AddScatterer(atom)
-
-    return crystal
 
 def makeMnO6():
     a = 5.6
@@ -174,21 +144,6 @@ def makeMnO6():
     crystal.AddScatterer(m)
 
     return crystal
-
-def toxyz(crystal, filename):
-    """Write a crystal to an xyz file."""
-    scl = crystal.GetScatteringComponentList()
-    f = file(filename, 'w')
-    f.write(str(len(scl)))
-    f.write("\n\n")
-    for s in scl:
-        el = s.mpScattPow.GetSymbol()
-        xyz = numpy.array([s.X, s.Y, s.Z])
-        xyz = numpy.array(crystal.FractionalToOrthonormalCoords(*xyz))
-        x, y, z = xyz
-        f.write("%s %f %f %f\n"%(el, x, y, z))
-    f.close()
-    return
 
 
 def datafile(filename):
