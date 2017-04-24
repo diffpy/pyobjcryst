@@ -109,4 +109,9 @@ bp::list setToPyList(std::set<T>& v)
 }
 
 
+// Extract CrystVector from a Python object
+template <class T> class CrystVector;
+
+void assignCrystVector(CrystVector<double>& cv, bp::object obj);
+
 #endif

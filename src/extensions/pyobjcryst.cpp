@@ -18,6 +18,11 @@
 
 #include <boost/python/module.hpp>
 
+// Initialize numpy here.
+#include "pyobjcryst_numpy_setup.hpp"
+#include <numpy/arrayobject.h>
+
+
 void wrap_asymmetricunit();
 void wrap_atom();
 void wrap_crystal();
@@ -63,6 +68,9 @@ void wrap_zscatterer();
 // Wrappers must be called according to inheritance hierarchy
 BOOST_PYTHON_MODULE(_pyobjcryst)
 {
+    // initialize numpy module
+    import_array();
+
     // General stuff
     wrap_general();
     wrap_io();

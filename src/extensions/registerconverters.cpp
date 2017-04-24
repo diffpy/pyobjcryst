@@ -23,14 +23,16 @@
 
 #include <vector>
 
-#include <numpy/noprefix.h>
-#include <numpy/arrayobject.h>
-
 #include <ObjCryst/CrystVector/CrystVector.h>
 #include <ObjCryst/ObjCryst/General.h>
 #include <ObjCryst/ObjCryst/Crystal.h>
 #include <ObjCryst/ObjCryst/ScatteringPower.h>
 #include <ObjCryst/ObjCryst/Molecule.h>
+
+// Use numpy here, but initialize it later in the extension module.
+#include "pyobjcryst_numpy_setup.hpp"
+#define NO_IMPORT_ARRAY
+#include <numpy/arrayobject.h>
 
 
 using namespace boost::python;
@@ -56,7 +58,7 @@ typedef std::vector<MolAtom*> MolAtomVec;
 PyObject* makeNdArray(double * data, std::vector<npy_intp>& dims)
 {
     PyObject* pyarray = PyArray_SimpleNewFromData
-                (dims.size(), &dims[0], PyArray_DOUBLE, (void *) data);
+                (dims.size(), &dims[0], NPY_DOUBLE, (void *) data);
     PyObject* pyarraycopy = PyArray_Copy( (PyArrayObject*) pyarray );
     return bp::incref(pyarraycopy);
 }
@@ -284,7 +286,6 @@ void wrap_registerconverters()
         object(handle<>(pyobjcryst_ObjCrystException));
 
     /* Data type converters */
-    import_array();
     to_python_converter< CrystVector<double>, CrystVector_REAL_to_ndarray >();
     to_python_converter< CrystMatrix<double>, CrystMatrix_REAL_to_ndarray >();
     // From boost sources
