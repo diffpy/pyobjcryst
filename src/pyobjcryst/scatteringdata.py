@@ -18,4 +18,6 @@
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 """
 
+__all__ = ["ScatteringData"]
+
 from pyobjcryst._pyobjcryst import ScatteringData

@@ -22,8 +22,10 @@ Changes from ObjCryst::ZAtom
 
 Changes from ObjCryst++
 - XMLOutput and Input are not wrapped.
-
 """
+
+__all__ = ["ZScatterer", "ZAtom", "ZPolyhedron",
+           "RegularPolyhedraType", "GlobalScatteringPower"]
 
 from pyobjcryst._pyobjcryst import ZScatterer
 from pyobjcryst._pyobjcryst import ZAtom

@@ -17,8 +17,8 @@
 
 import unittest
 
-from pyobjcryst.tests.pyobjcrysttestutils import *
-
+from pyobjcryst.tests.pyobjcrysttestutils import (
+    makeScatterer, makeCrystal, getScatterer, makeScattererAnisotropic)
 from pyobjcryst.atom import Atom
 
 
@@ -37,7 +37,6 @@ class TestCrystal(unittest.TestCase):
 
     def testScattererScope(self):
         """Test when atoms go out of scope before crystal."""
-        c = makeCrystal(*makeScatterer())
         sp2 = getScatterer()
         self.assertEqual("Ni", sp2.GetName())
         return

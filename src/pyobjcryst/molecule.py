@@ -82,6 +82,12 @@ Changes from ObjCryst::RigidGroup
   methods.
 """
 
+__all__ = ["Molecule", "GetBondLength", "GetBondAngle",
+           "GetDihedralAngle", "MolAtom", "MolBond",
+           "MolBondAngle", "MolDihedralAngle", "Quaternion",
+           "RigidGroup", "StretchMode", "StretchModeBondLength",
+           "StretchModeBondAngle", "StretchModeTorsion", "StretchModeTwist"]
+
 # TODO - MolRing
 
 from pyobjcryst._pyobjcryst import Molecule

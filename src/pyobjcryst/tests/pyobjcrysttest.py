@@ -66,7 +66,7 @@ def testCrystalScope():
 def testMultiAdd():
     """Test exception for multi-crystal additions."""
     sp, atom = makeScatterer()
-    c = makeCrystal(sp, atom)
+    makeCrystal(sp, atom)
 
     # Force this exception
     try:

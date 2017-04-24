@@ -87,3 +87,9 @@ def loadCrystal(filename):
     with open(filename) as fp:
         rv = CreateCrystalFromCIF(fp)
     return rv
+
+
+# silence the pyflakes syntax checker
+assert ObjCrystException is not None
+assert __version__ or True
+assert pyobjcryst.zscatterer

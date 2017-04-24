@@ -16,8 +16,9 @@
 """Python wrapping of SpaceGroup.h.
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
-
 """
+
+__all__ = ["SpaceGroup", "AsymmetricUnit"]
 
 from pyobjcryst._pyobjcryst import SpaceGroup
 from pyobjcryst._pyobjcryst import AsymmetricUnit

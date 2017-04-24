@@ -16,8 +16,9 @@
 """Python wrapping of things from General.h.
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
-
 """
+
+__all__ = ["RadiationType", "ObjCrystException"]
 
 from pyobjcryst._pyobjcryst import RadiationType
 from pyobjcryst._pyobjcryst import ObjCrystException

@@ -15,7 +15,8 @@
 
 """Tests for refinableobj module."""
 
-from pyobjcryst.refinableobj import *
+from pyobjcryst.refinableobj import RefinableObjClock, RefParType, Restraint
+from pyobjcryst.refinableobj import RefinablePar, RefinableObj
 from pyobjcryst import ObjCrystException
 
 import unittest

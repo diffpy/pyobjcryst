@@ -16,7 +16,8 @@
 """Python wrapping of UnitCell.h
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
-
 """
+
+__all__ = ["UnitCell"]
 
 from pyobjcryst._pyobjcryst import UnitCell

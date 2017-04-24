@@ -16,7 +16,8 @@
 """Python wrapping of ScatteringPowerSphere.h
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
-
 """
+
+__all__ = ["ScatteringPowerSphere"]
 
 from pyobjcryst._pyobjcryst import ScatteringPowerSphere

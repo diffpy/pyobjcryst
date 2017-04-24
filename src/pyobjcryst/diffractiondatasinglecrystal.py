@@ -19,7 +19,8 @@ See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 Changes from ObjCryst::DiffractionDataSingleCrystal::
         In development !
-
 """
+
+__all__ = ["DiffractionDataSingleCrystal"]
 
 from pyobjcryst._pyobjcryst import DiffractionDataSingleCrystal

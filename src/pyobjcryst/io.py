@@ -19,7 +19,8 @@ See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 Changes from ObjCryst::XMLCrystTag
 - The istream constructor of XMLCrystTag is not wrapped.
-
 """
+
+__all__ = ["XMLCrystTag"]
 
 from pyobjcryst._pyobjcryst import XMLCrystTag

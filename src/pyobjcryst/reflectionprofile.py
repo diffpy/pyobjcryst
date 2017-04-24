@@ -16,7 +16,8 @@ See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 Changes from ObjCryst::ReflectionProfile::
         In development !
-
 """
+
+__all__ = ["ReflectionProfile"]
 
 from pyobjcryst._pyobjcryst import ReflectionProfile

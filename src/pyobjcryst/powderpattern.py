@@ -16,8 +16,11 @@ See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 Changes from ObjCryst::PowderPattern::
         In development !
-
 """
+
+__all__ = ["PowderPattern", "CreatePowderPatternFromCIF",
+           "PowderPatternBackground", "PowderPatternComponent",
+           "PowderPatternDiffraction", "ReflectionProfileType"]
 
 from pyobjcryst._pyobjcryst import PowderPattern
 from pyobjcryst._pyobjcryst import CreatePowderPatternFromCIF

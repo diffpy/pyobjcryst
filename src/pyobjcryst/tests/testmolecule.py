@@ -17,11 +17,14 @@
 
 import unittest
 
-from pyobjcryst.molecule import *
 from pyobjcryst import ObjCrystException
+from pyobjcryst.molecule import (
+    GetBondLength, StretchModeBondLength,
+    GetBondAngle, StretchModeBondAngle,
+    GetDihedralAngle, StretchModeTorsion)
 from pyobjcryst.refinableobj import RefParType, RefinablePar
+from pyobjcryst.tests.pyobjcrysttestutils import makeC60, makeMnO6
 
-from pyobjcryst.tests.pyobjcrysttestutils import *
 from numpy import pi
 
 numplaces = 6
@@ -81,7 +84,6 @@ class TestMolecule(unittest.TestCase):
 
         This tests AddAtom by association.
         This tests GetAtom.
-
         """
         self.assertEqual(60, self.m.GetNbAtoms())
         for i in range(60):
@@ -90,7 +92,6 @@ class TestMolecule(unittest.TestCase):
 
         a = self.m.GetAtom(0)
         x = a.X
-        sp = a.GetScatteringPower()
 
         self.assertEqual(60, self.m.GetNbAtoms())
 

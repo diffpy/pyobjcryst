@@ -16,8 +16,11 @@
 """Python wrapping of Polyhedron.h
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
-
 """
+
+__all__ = ["MakeTetrahedron", "MakeOctahedron", "MakeSquarePlane",
+           "MakeCube", "MakeAntiPrismTetragonal", "MakePrismTrigonal",
+           "MakeIcosahedron", "MakeTriangle"]
 
 from pyobjcryst._pyobjcryst import MakeTetrahedron
 from pyobjcryst._pyobjcryst import MakeOctahedron

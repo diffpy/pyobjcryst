@@ -23,4 +23,6 @@ Changes from ObjCryst::Atom
   will cause segmentation faults, even if it is printed.
 """
 
+__all__ = ["Atom"]
+
 from pyobjcryst._pyobjcryst import Atom
