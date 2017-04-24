@@ -83,7 +83,7 @@ class TestMolecule(unittest.TestCase):
         This tests GetAtom.
 
         """
-        self.assertTrue(60, self.m.GetNbAtoms())
+        self.assertEqual(60, self.m.GetNbAtoms())
         for i in range(60):
             a1 = self.m.GetAtom(i)
             self.assertEqual(a1.GetName(), "C%i"%i)
@@ -92,11 +92,11 @@ class TestMolecule(unittest.TestCase):
         x = a.X
         sp = a.GetScatteringPower()
 
-        self.assertTrue(60, self.m.GetNbAtoms())
+        self.assertEqual(60, self.m.GetNbAtoms())
 
         self.m.RemoveAtom(a)
 
-        self.assertTrue(59, self.m.GetNbAtoms())
+        self.assertEqual(59, self.m.GetNbAtoms())
 
         # Make sure the atom is still valid. We don't want RemoveAtom deleting
         # the memory for an object we still have access to.
@@ -431,9 +431,9 @@ class TestMolAtom(unittest.TestCase):
         a = self.a
 
         # Test name Get/Set
-        self.assertTrue(a.GetName(), "C0")
+        self.assertEqual("C0", a.GetName())
         a.SetName("test")
-        self.assertTrue(a.GetName(), "test")
+        self.assertEqual("test", a.GetName())
 
         # Test xyz & occ Get/Set
         self.assertAlmostEquals(3.451266498, a.X, numplaces)
@@ -508,7 +508,7 @@ class TestMolBond(unittest.TestCase):
         a2 = self.a2
 
         # Check the name
-        self.assertTrue("C0-C1", b.GetName())
+        self.assertEqual("C0-C1", b.GetName())
 
         # Get the atoms
         at1 = b.GetAtom1()
@@ -571,7 +571,7 @@ class TestMolBondAngle(unittest.TestCase):
         a3 = self.a3
 
         # Check the name
-        self.assertTrue("C0-C1-C2", ba.GetName())
+        self.assertEqual("C0-C1-C2", ba.GetName())
 
         # Get the atoms
         at1 = ba.GetAtom1()
@@ -637,7 +637,7 @@ class TestMolDihedralAngle(unittest.TestCase):
         a4 = self.a4
 
         # Check the name
-        self.assertTrue("C0-C1-C2-C3", da.GetName())
+        self.assertEqual("C0-C1-C2-C3", da.GetName())
 
         # Get the atoms
         at1 = da.GetAtom1()
