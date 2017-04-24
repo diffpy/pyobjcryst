@@ -21,7 +21,6 @@
 #include <boost/python/class.hpp>
 #include <boost/python/args.hpp>
 #include <boost/python/list.hpp>
-#include <boost/python/make_constructor.hpp>
 #include <boost/python/pure_virtual.hpp>
 
 #include <set>

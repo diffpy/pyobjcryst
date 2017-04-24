@@ -31,7 +31,6 @@
 #include <boost/python/class.hpp>
 #include <boost/python/pure_virtual.hpp>
 #include <boost/python/copy_const_reference.hpp>
-#include <boost/python/slice.hpp>
 
 #include <string>
 
