@@ -89,17 +89,17 @@ class TestCrystal(unittest.TestCase):
         sp, atom = makeScatterer()
         c = makeCrystal(sp, atom)
         scl = c.GetScatteringComponentList()
-        self.assertEquals(1, len(scl))
+        self.assertEqual(1, len(scl))
 
         sclcopy = scl[:]
-        self.assertEquals(1, len(scl))
+        self.assertEqual(1, len(scl))
 
         del sclcopy[0]
-        self.assertEquals(0, len(sclcopy))
-        self.assertEquals(1, len(scl))
+        self.assertEqual(0, len(sclcopy))
+        self.assertEqual(1, len(scl))
 
         del scl[0]
-        self.assertEquals(0, len(scl))
+        self.assertEqual(0, len(scl))
 
         return
 
