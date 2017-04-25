@@ -18,6 +18,7 @@
 *****************************************************************************/
 
 #include <boost/python/class.hpp>
+#undef B0
 
 #include <ObjCryst/ObjCryst/PowderPattern.h>
 

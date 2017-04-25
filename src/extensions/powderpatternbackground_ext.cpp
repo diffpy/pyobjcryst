@@ -21,6 +21,8 @@
 #include <boost/python/args.hpp>
 #include <boost/python/copy_const_reference.hpp>
 
+#undef B0
+
 #include <ObjCryst/ObjCryst/PowderPattern.h>
 
 #include "helpers.hpp"

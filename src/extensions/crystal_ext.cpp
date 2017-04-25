@@ -35,6 +35,7 @@
 #include <string>
 #include <map>
 
+#undef B0
 #include <ObjCryst/ObjCryst/Crystal.h>
 #include <ObjCryst/ObjCryst/CIF.h>
 #include <ObjCryst/ObjCryst/UnitCell.h>
