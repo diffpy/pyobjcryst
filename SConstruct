@@ -40,7 +40,7 @@ def pyoutput(cmd):
 def pyconfigvar(name):
     cmd = '\n'.join((
             'from distutils.sysconfig import get_config_var',
-            'print get_config_var(%r)' % name))
+            'print(get_config_var(%r))' % name))
     return pyoutput(cmd)
 
 # copy system environment variables related to compilation
@@ -93,7 +93,7 @@ env.MergeFlags([os.environ.get(n, '') for n in flagnames])
 good_python_flags = lambda n : (
     not isinstance(n, basestring) or
     not re.match(r'(-g|-Wstrict-prototypes|-O\d)$', n))
-env.ParseConfig("python-config --cflags")
+env.ParseConfig("python3-config --cflags")
 env.Replace(CCFLAGS=filter(good_python_flags, env['CCFLAGS']))
 env.Replace(CPPDEFINES='')
 # the CPPPATH directories are checked by scons dependency scanner

@@ -6,7 +6,7 @@ Import('env', 'pyoutput')
 # make sure numpy headers are available
 npdirs = pyoutput(
     'from numpy.distutils.misc_util import get_numpy_include_dirs\n'
-    'print "\\n".join(get_numpy_include_dirs())')
+    'print("\\n".join(get_numpy_include_dirs()))')
 npdirs = map(str.strip, npdirs.split('\n'))
 env.AppendUnique(CPPPATH=npdirs)
 
@@ -36,7 +36,7 @@ build_platlib = pyoutput('\n'.join([
     "from distutils.command.build import build",
     "bcmd = build(Distribution())",
     "bcmd.finalize_options()",
-    "print bcmd.build_platlib",
+    "print(bcmd.build_platlib)",
     ]))
 distmodfile = os.path.join(build_platlib,
     'pyobjcryst', os.path.basename(str(module[0])))
