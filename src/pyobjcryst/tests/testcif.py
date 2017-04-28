@@ -61,13 +61,13 @@ class TestCif(unittest.TestCase):
         '''
         c = loadcifdata('caffeine.cif')
         self.assertTrue(c is not None)
-        self.assertEquals(24, c.GetNbScatterer())
-        self.assertAlmostEquals(14.9372, c.a, 6)
-        self.assertAlmostEquals(14.9372, c.b, 6)
-        self.assertAlmostEquals(6.8980, c.c, 6)
-        self.assertAlmostEquals(pi/2, c.alpha, 6)
-        self.assertAlmostEquals(pi/2, c.beta, 6)
-        self.assertAlmostEquals(2*pi/3, c.gamma, 6)
+        self.assertEqual(24, c.GetNbScatterer())
+        self.assertAlmostEqual(14.9372, c.a, 6)
+        self.assertAlmostEqual(14.9372, c.b, 6)
+        self.assertAlmostEqual(6.8980, c.c, 6)
+        self.assertAlmostEqual(pi/2, c.alpha, 6)
+        self.assertAlmostEqual(pi/2, c.beta, 6)
+        self.assertAlmostEqual(2*pi/3, c.gamma, 6)
         cifdata = """
                 C5 -0.06613 -0.06314 0.09562 0.00000 Uiso 1.00000 C
                 C4 0.02779 -0.05534 0.10000 0.00000 Uiso 1.00000 C
@@ -94,15 +94,16 @@ class TestCif(unittest.TestCase):
                 H10b -0.07008 0.19602 0.03170 0.00000 Uiso 1.00000 H
                 H10c 0.03791 0.26293 0.13930 0.00000 Uiso 1.00000 H
         """
-        lines = filter(None, map(str.strip, cifdata.split('\n')))
+        lines = filter(None,
+                       (line.strip() for line in cifdata.split('\n')))
         for i, line in enumerate(lines):
             name, x, y, z, U, junk, occ, element = line.split()
             s = c.GetScatt(i)
-            self.assertEquals(name, s.GetName())
-            self.assertAlmostEquals(float(x), s.X, 6)
-            self.assertAlmostEquals(float(y), s.Y, 6)
-            self.assertAlmostEquals(float(z), s.Z, 6)
-            self.assertAlmostEquals(float(occ), s.Occupancy, 6)
+            self.assertEqual(name, s.GetName())
+            self.assertAlmostEqual(float(x), s.X, 6)
+            self.assertAlmostEqual(float(y), s.Y, 6)
+            self.assertAlmostEqual(float(z), s.Z, 6)
+            self.assertAlmostEqual(float(occ), s.Occupancy, 6)
         return
 
 
@@ -113,20 +114,20 @@ class TestCif(unittest.TestCase):
         self.assertTrue(c is not None)
         s = c.GetScatt(3)
         name = s.GetName()
-        self.assertEquals(name, "O2")
+        self.assertEqual(name, "O2")
         sp = c.GetScatteringPower(name)
         self.assertFalse(sp.IsIsotropic())
         utob = 8 * pi**2
-        self.assertAlmostEquals(utob * 0.0065, sp.B11)
-        self.assertAlmostEquals(utob * 0.0060, sp.B22)
-        self.assertAlmostEquals(utob * 0.0095, sp.B33)
-        self.assertAlmostEquals(utob * 0.0020, sp.B12)
-        self.assertAlmostEquals(utob * -0.0008, sp.B13)
-        self.assertAlmostEquals(utob * -0.0010, sp.B23)
-        self.assertAlmostEquals(0.2897, s.X, 5)
-        self.assertAlmostEquals(0.2888, s.Y, 5)
-        self.assertAlmostEquals(0.0373, s.Z, 2)
-        self.assertAlmostEquals(1, s.Occupancy)
+        self.assertAlmostEqual(utob * 0.0065, sp.B11)
+        self.assertAlmostEqual(utob * 0.0060, sp.B22)
+        self.assertAlmostEqual(utob * 0.0095, sp.B33)
+        self.assertAlmostEqual(utob * 0.0020, sp.B12)
+        self.assertAlmostEqual(utob * -0.0008, sp.B13)
+        self.assertAlmostEqual(utob * -0.0010, sp.B23)
+        self.assertAlmostEqual(0.2897, s.X, 5)
+        self.assertAlmostEqual(0.2888, s.Y, 5)
+        self.assertAlmostEqual(0.0373, s.Z, 2)
+        self.assertAlmostEqual(1, s.Occupancy)
         return
 
 
@@ -234,10 +235,10 @@ class TestCif(unittest.TestCase):
         s = c.GetScatt(0)
         name = s.GetName()
         sp = c.GetScatteringPower(name)
-        self.assertEquals(name, "Ti")
+        self.assertEqual(name, "Ti")
         self.assertTrue(sp.IsIsotropic())
         utob = 8 * pi**2
-        self.assertAlmostEquals(utob * 0.00532, sp.Biso, 5)
+        self.assertAlmostEqual(utob * 0.00532, sp.Biso, 5)
         return
 
 

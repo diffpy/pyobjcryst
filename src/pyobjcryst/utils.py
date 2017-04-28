@@ -26,7 +26,7 @@ def crystalToDiffpyStructure(crystal):
 
     # Write the crystal to string and load it into a diffpy Structure
 
-    from cStringIO import StringIO
+    from io import StringIO
     buf = StringIO()
     crystal.CIFOutput(buf)
 
@@ -54,7 +54,7 @@ def expandSymmetry(crystal):
     stru = crystalToDiffpyStructure(crystal)
 
     cifstr = stru.writeStr(format = "cif")
-    from cStringIO import StringIO
+    from io import StringIO
     buf = StringIO(cifstr)
 
     from pyobjcryst.crystal import CreateCrystalFromCIF
@@ -159,7 +159,7 @@ def _xyztostring(crystal):
 
 def printxyz(crystal):
     """Print a crystal in xyz format."""
-    print _xyztostring(crystal)
+    print(_xyztostring(crystal))
     return
 
 

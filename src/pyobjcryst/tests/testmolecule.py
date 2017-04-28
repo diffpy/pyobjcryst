@@ -60,9 +60,9 @@ class TestMolecule(unittest.TestCase):
         scope."""
         c = makeC60()
         m = self.c.GetScatterer("c60")
-        self.assertEquals("c60", m.GetName())
+        self.assertEqual("c60", m.GetName())
         del c
-        self.assertEquals("c60", m.GetName())
+        self.assertEqual("c60", m.GetName())
         return
 
     def testAddPar(self):
@@ -72,11 +72,11 @@ class TestMolecule(unittest.TestCase):
         rpt = RefParType("test")
         par = RefinablePar("testpar", 3, 0, 10, rpt)
         m.AddPar(par)
-        self.assertAlmostEquals(3, par.GetValue())
+        self.assertAlmostEqual(3, par.GetValue())
         del m
-        self.assertAlmostEquals(3, par.GetValue())
+        self.assertAlmostEqual(3, par.GetValue())
         del c
-        self.assertAlmostEquals(3, par.GetValue())
+        self.assertAlmostEqual(3, par.GetValue())
         return
 
     def testAtoms(self):
@@ -101,10 +101,10 @@ class TestMolecule(unittest.TestCase):
 
         # Make sure the atom is still valid. We don't want RemoveAtom deleting
         # the memory for an object we still have access to.
-        self.assertEquals(a.X, x)
+        self.assertEqual(a.X, x)
 
         # Check to see if a is in our list
-        for i in xrange(59):
+        for i in range(59):
             self.assertNotEqual(a.GetName(), self.m.GetAtom(i))
 
         # What happens if we try to remove an atom that is not in the molecule?
@@ -121,9 +121,9 @@ class TestMolecule(unittest.TestCase):
             self.m.RemoveAtom(a)
 
         atoms = self.m.GetAtomList()
-        self.assertEquals(0, len(atoms))
+        self.assertEqual(0, len(atoms))
 
-        self.assertEquals(0, self.m.GetNbAtoms())
+        self.assertEqual(0, self.m.GetNbAtoms())
 
         return
 
@@ -186,7 +186,7 @@ class TestMolecule(unittest.TestCase):
 
         # Remove the bond
         bonds = self.m.GetBondList()
-        self.assertEquals(1, len(bonds))
+        self.assertEqual(1, len(bonds))
         self.m.RemoveBond(bonds[0])
         # is the bond still in existance?
         self.assertEqual(name, bond8.GetName())
@@ -201,7 +201,7 @@ class TestMolecule(unittest.TestCase):
         a = bond10.GetAtom1()
         # Try to remove that atom
         self.m.RemoveAtom(a)
-        self.assertEquals(0, self.m.GetNbBonds())
+        self.assertEqual(0, self.m.GetNbBonds())
 
         return
 
@@ -259,7 +259,7 @@ class TestMolecule(unittest.TestCase):
 
         # Remove the bond angle
         angles = self.m.GetBondAngleList()
-        self.assertEquals(1, len(angles))
+        self.assertEqual(1, len(angles))
         self.m.RemoveBondAngle(angles[0])
         # is the object still in existance?
         self.assertEqual(name, ba8.GetName())
@@ -274,7 +274,7 @@ class TestMolecule(unittest.TestCase):
         a = ba10.GetAtom1()
         # Try to remove that atom
         self.m.RemoveAtom(a)
-        self.assertEquals(0, self.m.GetNbBondAngles())
+        self.assertEqual(0, self.m.GetNbBondAngles())
         return
 
     def testDihedralAngles(self):
@@ -328,7 +328,7 @@ class TestMolecule(unittest.TestCase):
 
         # Remove the dihedral angle
         angles = self.m.GetDihedralAngleList()
-        self.assertEquals(1, len(angles))
+        self.assertEqual(1, len(angles))
         self.m.RemoveDihedralAngle(angles[0])
         # is the object still in existance?
         self.assertEqual(name, da8.GetName())
@@ -343,29 +343,29 @@ class TestMolecule(unittest.TestCase):
         a = da10.GetAtom1()
         # Try to remove that atom
         self.m.RemoveAtom(a)
-        self.assertEquals(0, self.m.GetNbDihedralAngles())
+        self.assertEqual(0, self.m.GetNbDihedralAngles())
 
         return
 
     def testRigidGroup(self):
         """Test adding and manipulating a rigid group."""
         # A rigid group has the interface of a set
-        self.assertEquals(0, len(self.m.GetRigidGroupList()))
-        self.assertEquals(0, self.m.GetNbRigidGroups())
+        self.assertEqual(0, len(self.m.GetRigidGroupList()))
+        self.assertEqual(0, self.m.GetNbRigidGroups())
         rg = self.m.AddRigidGroup(self.m.GetAtomList())
-        self.assertEquals(1, self.m.GetNbRigidGroups())
+        self.assertEqual(1, self.m.GetNbRigidGroups())
         rgl = self.m.GetRigidGroupList()
-        self.assertEquals(1, len(rgl))
-        self.assertEquals(60, len(rgl[0]))
+        self.assertEqual(1, len(rgl))
+        self.assertEqual(60, len(rgl[0]))
 
         # We would like to check to see if the atoms are the same, but the
         # rigid group is a set, not a list.
 
         # Test to see if we can remove the list.
         self.m.RemoveRigidGroup(rg)
-        self.assertEquals(0, self.m.GetNbRigidGroups())
+        self.assertEqual(0, self.m.GetNbRigidGroups())
         rgl = self.m.GetRigidGroupList()
-        self.assertEquals(0, len(rgl))
+        self.assertEqual(0, len(rgl))
 
         return
 
@@ -384,15 +384,15 @@ class TestMolecule(unittest.TestCase):
 
         self.m.TranslateAtomGroup(self.m.GetAtomList(), 0, 0, 0.5)
 
-        self.assertAlmostEquals(x, a0.X)
-        self.assertAlmostEquals(y, a0.Y)
-        self.assertAlmostEquals(z+0.5, a0.Z)
+        self.assertAlmostEqual(x, a0.X)
+        self.assertAlmostEqual(y, a0.Y)
+        self.assertAlmostEqual(z+0.5, a0.Z)
 
         # Move them back
         self.m.TranslateAtomGroup(self.m.GetAtomList(), 0, 0, -0.5)
-        self.assertAlmostEquals(x, a0.X)
-        self.assertAlmostEquals(y, a0.Y)
-        self.assertAlmostEquals(z, a0.Z)
+        self.assertAlmostEqual(x, a0.X)
+        self.assertAlmostEqual(y, a0.Y)
+        self.assertAlmostEqual(z, a0.Z)
 
         # Rotate the atoms
 
@@ -406,9 +406,9 @@ class TestMolecule(unittest.TestCase):
         for i in range(len(self.m)):
             xyzi = xyz[i]
             newxyz = numpy.dot(rm, xyzi)
-            self.assertAlmostEquals(newxyz[0], self.m[i].X, 6)
-            self.assertAlmostEquals(newxyz[1], self.m[i].Y, 6)
-            self.assertAlmostEquals(newxyz[2], self.m[i].Z, 6)
+            self.assertAlmostEqual(newxyz[0], self.m[i].X, 6)
+            self.assertAlmostEqual(newxyz[1], self.m[i].Y, 6)
+            self.assertAlmostEqual(newxyz[2], self.m[i].Z, 6)
 
         return
 
@@ -437,38 +437,38 @@ class TestMolAtom(unittest.TestCase):
         self.assertEqual("test", a.GetName())
 
         # Test xyz & occ Get/Set
-        self.assertAlmostEquals(3.451266498, a.X, numplaces)
-        self.assertAlmostEquals(0.685, a.Y, numplaces)
-        self.assertAlmostEquals(0, a.Z, numplaces)
-        self.assertAlmostEquals(1.0, a.Occupancy, numplaces)
+        self.assertAlmostEqual(3.451266498, a.X, numplaces)
+        self.assertAlmostEqual(0.685, a.Y, numplaces)
+        self.assertAlmostEqual(0, a.Z, numplaces)
+        self.assertAlmostEqual(1.0, a.Occupancy, numplaces)
 
         a.x = 3.40
         a.y = 0.68
         a.z = 0.1
         a.occ = 1.02
 
-        self.assertAlmostEquals(3.40, a.x, numplaces)
-        self.assertAlmostEquals(0.68, a.y, numplaces)
-        self.assertAlmostEquals(0.1, a.z, numplaces)
-        self.assertAlmostEquals(1.02, a.occ, numplaces)
+        self.assertAlmostEqual(3.40, a.x, numplaces)
+        self.assertAlmostEqual(0.68, a.y, numplaces)
+        self.assertAlmostEqual(0.1, a.z, numplaces)
+        self.assertAlmostEqual(1.02, a.occ, numplaces)
 
         # Test GetMolecule. We can't expect the python object to be the same as
         # our molecule above. However, we can verify that it points to the same
         # object.
         m = a.GetMolecule()
-        self.assertEquals(m.GetName(), self.m.GetName())
+        self.assertEqual(m.GetName(), self.m.GetName())
         # Change something with the molecule, and check to see if it appears in
         # self.m
         m.GetAtom("C1").Occupancy = 0.1
-        self.assertAlmostEquals(0.1, self.m.GetAtom("C1").Occupancy, numplaces)
+        self.assertAlmostEqual(0.1, self.m.GetAtom("C1").Occupancy, numplaces)
 
         # Test IsDummy
         self.assertFalse(a.IsDummy())
 
         # Test GetScatteringPower
         sp = a.GetScatteringPower()
-        self.assertEquals("ScatteringPowerAtom", sp.GetClassName())
-        self.assertEquals("C", sp.GetName())
+        self.assertEqual("ScatteringPowerAtom", sp.GetClassName())
+        self.assertEqual("C", sp.GetName())
 
         # Test Ring Get/Set
         self.assertFalse(a.IsInRing())
@@ -707,8 +707,8 @@ class TestStretchModeBondLength(unittest.TestCase):
         sm = StretchModeBondLength(atop, abot, None)
         sm.AddAtom(abot)
 
-        self.assertEquals(sm.mpAtom0.GetName(), atop.GetName())
-        self.assertEquals(sm.mpAtom1.GetName(), abot.GetName())
+        self.assertEqual(sm.mpAtom0.GetName(), atop.GetName())
+        self.assertEqual(sm.mpAtom1.GetName(), abot.GetName())
 
         # Stretch the bond by 5%
         delta = 0.05 * d0
@@ -716,11 +716,11 @@ class TestStretchModeBondLength(unittest.TestCase):
 
         # Make sure this does what we expected
         d1 = GetBondLength(atop, abot)
-        self.assertAlmostEquals(d0+delta, d1, 6)
+        self.assertAlmostEqual(d0+delta, d1, 6)
 
         # Note that only the second atom has moved
         dc1 = GetBondLength(ac, atop)
-        self.assertAlmostEquals(dc0, dc1)
+        self.assertAlmostEqual(dc0, dc1)
 
         return
 
@@ -752,9 +752,9 @@ class TestStretchModeBondAngle(unittest.TestCase):
         sm = StretchModeBondAngle(a1, ac, a2, None)
         sm.AddAtom(a2)
 
-        self.assertEquals(sm.mpAtom0.GetName(), a1.GetName())
-        self.assertEquals(sm.mpAtom1.GetName(), ac.GetName())
-        self.assertEquals(sm.mpAtom2.GetName(), a2.GetName())
+        self.assertEqual(sm.mpAtom0.GetName(), a1.GetName())
+        self.assertEqual(sm.mpAtom1.GetName(), ac.GetName())
+        self.assertEqual(sm.mpAtom2.GetName(), a2.GetName())
 
 
         # Stretch the angle by 5%
@@ -763,7 +763,7 @@ class TestStretchModeBondAngle(unittest.TestCase):
 
         # Make sure this does what we expected
         angle1 = GetBondAngle(a1, ac, a2)
-        self.assertAlmostEquals(angle0+delta, angle1, 6)
+        self.assertAlmostEqual(angle0+delta, angle1, 6)
 
         return
 
@@ -797,8 +797,8 @@ class TestStretchModeTorsion(unittest.TestCase):
         # Add the last atom so it can rotate
         sm.AddAtom(a2)
 
-        self.assertEquals(sm.mpAtom1.GetName(), ac0.GetName())
-        self.assertEquals(sm.mpAtom2.GetName(), ac1.GetName())
+        self.assertEqual(sm.mpAtom1.GetName(), ac0.GetName())
+        self.assertEqual(sm.mpAtom2.GetName(), ac1.GetName())
 
         # Stretch the angle by 5%
         delta = 0.25 * angle0
@@ -806,7 +806,7 @@ class TestStretchModeTorsion(unittest.TestCase):
 
         # Make sure this does what we expected
         angle1 = GetDihedralAngle(a1, ac0, ac1, a2)
-        self.assertAlmostEquals(angle0+delta, angle1, 6)
+        self.assertAlmostEqual(angle0+delta, angle1, 6)
 
         return
 
@@ -823,9 +823,9 @@ class TestStretchModeTorsion(unittest.TestCase):
         import tempfile
         t = tempfile.TemporaryFile()
 
-        print >> t, self.m
+        print(self.m, file=t)
 
-        print >> t, self.c
+        print(self.c, file=t)
 
         return
 
