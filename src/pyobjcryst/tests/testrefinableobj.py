@@ -220,18 +220,6 @@ class TestRefinableObj(unittest.TestCase):
         self.r.AddPar(p2)
         return
 
-    def tearDown(self):
-        """Clean up those pesky xml files.
-
-        ObjCryst dumps save state into xml files when an exception is thrown.
-        Clean those up.
-        """
-        import glob
-        files = glob.glob("ObjCryst*.xml")
-        import os
-        map(os.remove, files)
-        return
-
     def _getPars(self):
         """Convenience function."""
         p1 = self.r.GetPar(0)
