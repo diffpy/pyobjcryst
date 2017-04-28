@@ -29,18 +29,18 @@ def subdictionary(d, keyset):
 
 def getsyspaths(*names):
     s = os.pathsep.join(filter(None, map(os.environ.get, names)))
-    return filter(os.path.exists, s.split(os.pathsep))
+    rv = [p for p in s.split(os.pathsep) if os.path.exists(p)]
+    return rv
 
 def pyoutput(cmd):
     proc = subprocess.Popen([env['python'], '-c', cmd],
-            stdout=subprocess.PIPE)
+                            stdout=subprocess.PIPE)
     out = proc.communicate()[0]
     return out.rstrip()
 
 def pyconfigvar(name):
-    cmd = '\n'.join((
-            'from distutils.sysconfig import get_config_var',
-            'print(get_config_var(%r))' % name))
+    cmd = ('from distutils.sysconfig import get_config_var\n'
+           'print(get_config_var(%r))\n') % name
     return pyoutput(cmd)
 
 # copy system environment variables related to compilation
@@ -93,7 +93,9 @@ env.MergeFlags([os.environ.get(n, '') for n in flagnames])
 good_python_flags = lambda n : (
     not isinstance(n, basestring) or
     not re.match(r'(-g|-Wstrict-prototypes|-O\d)$', n))
-env.ParseConfig("python3-config --cflags")
+pyver = pyoutput('import sys; print("%i.%i" % sys.version_info[:2])')
+pythonconfig = 'python' + pyver + '-config'
+env.ParseConfig(pythonconfig + " --cflags")
 env.Replace(CCFLAGS=filter(good_python_flags, env['CCFLAGS']))
 env.Replace(CPPDEFINES='')
 # the CPPPATH directories are checked by scons dependency scanner
