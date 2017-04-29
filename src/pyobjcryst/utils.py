@@ -12,6 +12,7 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
+
 """Utilities for crystals."""
 
 def crystalToDiffpyStructure(crystal):

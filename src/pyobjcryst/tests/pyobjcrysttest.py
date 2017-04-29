@@ -17,8 +17,9 @@
 
 To check for memory leaks, run
 valgrind --tool=memcheck --leak-check=full /usr/bin/python ./pyobjcrysttest.py
-
 """
+
+from __future__ import print_function
 
 from pyobjcryst.atom import Atom
 from pyobjcryst.crystal import Crystal
