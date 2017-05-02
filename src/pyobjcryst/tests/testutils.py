@@ -36,7 +36,7 @@ class TestPutAtomsInMolecule(unittest.TestCase):
         for fname in glob.glob(pat):
             print(fname)
 
-            c = CreateCrystalFromCIF(file(fname))
+            c = CreateCrystalFromCIF(open(fname))
 
             from diffpy.Structure import Structure
             s = Structure(filename = fname)

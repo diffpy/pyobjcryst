@@ -166,7 +166,7 @@ def printxyz(crystal):
 
 def writexyz(crystal, filename):
     """Write a crystal to an xyz file."""
-    f = file(filename, 'w')
+    f = open(filename, 'w')
     out = _xyztostring(crystal)
     f.write(out)
     f.close()
