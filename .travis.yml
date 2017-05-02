@@ -65,6 +65,8 @@ before_install:
   - $NOMC || cp ~/mc/bin/scons ~/bin/
   - $NOMC || conda create --name=testenv --yes python=${MYPYTHON_VERSION} coverage
   - $NOMC || conda config --add channels diffpy
+  # FIXME - keep just the "diffpy" channel for public release.
+  - $NOMC || conda config --add channels diffpy/channel/dev
 
   - $NOAPT || test "${TRAVIS_OS_NAME}" = "linux" || exit $?
   - $NOAPT || sudo apt-get update -qq
