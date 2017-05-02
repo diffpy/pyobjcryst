@@ -59,7 +59,10 @@ before_install:
   - $NOMC || popd
   - $NOMC || export PATH="${HOME}/mc/bin:${PATH}"
   - $NOMC || conda update --yes conda
-  - $NOMC || conda install --yes conda-build jinja2
+  - $NOMC || conda install --yes conda-build jinja2 scons
+  # Make scons available globally.
+  - $NOMC || mkdir -p ~/bin
+  - $NOMC || cp ~/mc/bin/scons ~/bin/
   - $NOMC || conda create --name=testenv --yes python=${MYPYTHON_VERSION} coverage
   - $NOMC || conda config --add channels diffpy
 
