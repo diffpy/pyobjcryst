@@ -18,7 +18,7 @@ def configure_boost_library(libname):
             boostlibtags[:] = [t]
             return
     # library not found here
-    print('This program requires %r library' % libname)
+    print('This program requires %r library.' % libname)
     Exit(1)
 
 # Start configuration --------------------------------------------------------
@@ -31,7 +31,9 @@ ecfg.MergeFlags(pyconfigvar('BLDLIBRARY'))
 newlibsindex = len(ecfg['LIBS'])
 
 conf = Configure(ecfg)
-conf.CheckLib('ObjCryst', language='C++')
+if not conf.CheckLib('ObjCryst', language='C++'):
+    print("This program requires 'libObjCryst' library.")
+    Exit(1)
 configure_boost_library('boost_python')
 conf.Finish()
 
