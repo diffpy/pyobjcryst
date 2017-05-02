@@ -84,7 +84,7 @@ def loadCrystal(filename):
     options for constructing Crystal object from CIF data.
     """
     from pyobjcryst.crystal import CreateCrystalFromCIF
-    with open(filename) as fp:
+    with open(filename, 'rb') as fp:
         rv = CreateCrystalFromCIF(fp)
     return rv
 

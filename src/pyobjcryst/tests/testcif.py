@@ -270,7 +270,7 @@ class TestCif(unittest.TestCase):
         """Make sure we can read all cif files."""
         from pyobjcryst import ObjCrystException
         fname = datafile('ni.stru')
-        infile = open(fname)
+        infile = open(fname, 'rb')
         self.assertRaises(ObjCrystException, CreateCrystalFromCIF, infile)
         infile.close()
         return
