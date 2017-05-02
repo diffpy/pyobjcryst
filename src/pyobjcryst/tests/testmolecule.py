@@ -15,8 +15,6 @@
 
 """Tests for molecule module."""
 
-from __future__ import print_function
-
 import unittest
 
 from pyobjcryst import ObjCrystException
@@ -814,7 +812,6 @@ class TestStretchModeTorsion(unittest.TestCase):
 
     def testDummy(self):
         """Test adding a dummy atom."""
-
         # In this past, dummy atoms would cause seg-faults in crystal::Print.
         # We test that here.
         self.m.AddAtom(0, 0, 0, None, "center")
@@ -822,15 +819,15 @@ class TestStretchModeTorsion(unittest.TestCase):
         sp = self.m[-1].GetScatteringPower()
         self.assertTrue(sp is None)
 
-        import tempfile
-        t = tempfile.TemporaryFile()
+        sm = str(self.m)
+        self.assertEqual(8, sm.count('Atom Name'))
 
-        print(self.m, file=t)
-
-        print(self.c, file=t)
+        sc = str(self.c)
+        sclines = sc.splitlines()
+        self.assertTrue(sclines[2].endswith(' 8'))
+        self.assertTrue('ScattPow: dummy' in sc)
 
         return
-
 
 # End class TestStretchTorsion
 
