@@ -8,12 +8,10 @@ os:
 
 env:
   - MYUSEMC=true MYPYTHON_VERSION=2.7
+  - MYUSEMC=true MYPYTHON_VERSION=3.4
+  - MYUSEMC=true MYPYTHON_VERSION=3.5
+  - MYUSEMC=true MYPYTHON_VERSION=3.6
   - MYUSEMC=false
-
-matrix:
-  exclude:
-    - os: osx
-      env: MYUSEMC=false
 
 git:
   depth: 999999
@@ -26,10 +24,17 @@ before_install:
   - MYNAME=pyobjcryst
   - umask 022
   - git fetch origin --tags
+  - MYPYTHON=python; MYPIP=pip
+  - NOAPT=true; NOBREW=true; NOMC=true
   - if ${MYUSEMC}; then
-        NOAPT=true; NOMC=false;
-    else
-        NOAPT=false; NOMC=true;
+        NOMC=false;
+    elif [[ ${TRAVIS_OS_NAME} == linux ]]; then
+        NOAPT=false;
+        MYPIPFLAGS="--user";
+    elif [[ ${TRAVIS_OS_NAME} == osx ]]; then
+        NOBREW=false;
+        MYPYTHON=python3;
+        MYPIP=pip3;
         MYPIPFLAGS="--user";
     fi
   - MYMCREPO=https://repo.continuum.io/miniconda
@@ -70,6 +75,19 @@ before_install:
   - $NOAPT || git clone https://github.com/diffpy/libObjCryst.git
   - $NOAPT || popd
 
+  - $NOBREW || test "${TRAVIS_OS_NAME}" = "osx" || exit $?
+  - $NOBREW || brew update
+  - $NOBREW || brew install scons
+  - $NOBREW || brew install python3
+  - $NOBREW || brew install boost-python --with-python3
+  - $NOBREW || brew tap homebrew/python
+  - $NOBREW || brew install numpy --without-python --with-python3
+  - $NOBREW || devutils/makesdist
+  - $NOBREW || MYTARBUNDLE="$(ls -t "${PWD}"/dist/*.tar.gz | head -1)"
+  - $NOBREW || pushd ~/pkgs
+  - $NOBREW || git clone https://github.com/diffpy/libObjCryst.git
+  - $NOBREW || popd
+
 install:
   - $NOMC || conda build --python=${MYPYTHON_VERSION} --dirty conda-recipe
   - $NOMC || MYCONDATESTENV="$(ls -td ~/mc/conda-bld/${MYNAME}_*/_t_env* | head -1)"
@@ -78,20 +96,28 @@ install:
   - $NOMC || source activate testenv
   - $NOMC || conda install --yes --use-local --file=/tmp/mypackage.txt
 
-  - $NOAPT || pip install $MYPIPFLAGS coverage
+  - $NOAPT || $MYPIP install $MYPIPFLAGS coverage
   - $NOAPT || sudo scons -C ~/pkgs/libObjCryst install
-  - $NOAPT || easy_install --user "${MYTARBUNDLE}"
+  - $NOAPT || $MYPIP install $MYPIPFLAGS --user "${MYTARBUNDLE}"
+
+  - $NOBREW || $MYPIP install $MYPIPFLAGS coverage
+  - $NOBREW || scons -C ~/pkgs/libObjCryst install
+  - $NOBREW || $MYPIP install $MYPIPFLAGS "${MYTARBUNDLE}"
 
   - cd ${MYRUNDIR}
-  - MYGIT_REV=$(python -c "import ${MYNAME}.version as v; print(v.__gitsha__)")
+  - MYGIT_REV=$($MYPYTHON -c "import ${MYNAME}.version as v; print(v.__gitsha__)")
   - if [[ "${TRAVIS_COMMIT}" != "${MYGIT_REV}" ]]; then
         echo "Version mismatch ${TRAVIS_COMMIT} vs ${MYGIT_REV}.";
         exit 1;
     fi
 
+before_script:
+  - $NOBREW || USER_BASE="$(python3 -c 'import site; print(site.USER_BASE)')"
+  - $NOBREW || PATH="${USER_BASE}/bin:${PATH}"
+
 script:
   - coverage run --source ${MYNAME} -m ${MYNAME}.tests.run
 
 after_success:
-  - pip install $MYPIPFLAGS codecov
+  - $MYPIP install $MYPIPFLAGS codecov
   - codecov
