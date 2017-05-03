@@ -31,15 +31,15 @@ test = env.Alias('test', develop,
 AlwaysBuild(test)
 
 # normal install - trick distutils into using this module.
-build_platlib = pyoutput('\n'.join([
-    "from distutils.core import Distribution",
-    "from distutils.command.build import build",
-    "bcmd = build(Distribution())",
+distmodfile = pyoutput('\n'.join([
+    "from setuptools import Distribution, Extension",
+    "ext = Extension('pyobjcryst._pyobjcryst', [])",
+    "attrs = dict(ext_modules=[ext])",
+    "dist = Distribution(attrs)",
+    "bcmd = dist.get_command_obj('build_ext')",
     "bcmd.finalize_options()",
-    "print(bcmd.build_platlib)",
+    "print(bcmd.get_ext_fullpath(ext.name))",
     ]))
-distmodfile = os.path.join(build_platlib,
-    'pyobjcryst', os.path.basename(str(module[0])))
 cmd_install = '$python setup.py install'
 if 'prefix' in env:
     cmd_install += ' --prefix=' + env['prefix']
