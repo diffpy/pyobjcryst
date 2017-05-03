@@ -93,8 +93,8 @@ env.MergeFlags([os.environ.get(n, '') for n in flagnames])
 good_python_flags = lambda n : (
     not isinstance(n, basestring) or
     not re.match(r'(-g|-Wstrict-prototypes|-O\d)$', n))
-pyver = pyoutput('import sys; print("%i.%i" % sys.version_info[:2])')
-pythonconfig = 'python' + pyver + '-config'
+pyversion = pyoutput('import sys; print("%i.%i" % sys.version_info[:2])')
+pythonconfig = 'python' + pyversion + '-config'
 env.ParseConfig(pythonconfig + " --cflags")
 env.Replace(CCFLAGS=filter(good_python_flags, env['CCFLAGS']))
 env.Replace(CPPDEFINES='')
@@ -145,7 +145,7 @@ if env['profile']:
 
 builddir = env.Dir('build/%s-%s' % (env['build'], platform.machine()))
 
-Export('env', 'pyconfigvar', 'pyoutput')
+Export('env', 'pyconfigvar', 'pyoutput', 'pyversion')
 
 if os.path.isfile('sconscript.local'):
     env.SConscript('sconscript.local')

@@ -28,6 +28,8 @@ ext_kws = {
         'include_dirs' : get_numpy_include_dirs(),
 }
 
+# determine if we run with Python 3.
+PY3 = (sys.version_info[0] == 3)
 
 # Figure out which boost library to use. This doesn't appear to consult
 # LD_LIBRARY_PATH.
@@ -38,7 +40,7 @@ def get_boost_libraries():
     on the system. If required libraries are not found, an Exception will be
     thrown.
     """
-    baselib = "boost_python"
+    baselib = "boost_python3" if PY3 else "boost_python"
     boostlibtags = ['', '-mt'] + ['']
     from ctypes.util import find_library
     for tag in boostlibtags:
@@ -54,7 +56,7 @@ def get_boost_libraries():
         if platform.system() == 'Darwin':
             ldevname = 'DYLD_FALLBACK_LIBRARY_PATH'
         wmsg = ("Cannot detect name suffix for the %r library.  "
-            "Consider setting %s.") % (baselib, ldevname)
+                "Consider setting %s.") % (baselib, ldevname)
         warnings.warn(wmsg)
 
     libs = [lib]
@@ -93,7 +95,7 @@ def gitinfo():
 
 
 def getversioncfg():
-    if sys.version_info[0] >= 3:
+    if PY3:
         from configparser import RawConfigParser
     else:
         from ConfigParser import RawConfigParser

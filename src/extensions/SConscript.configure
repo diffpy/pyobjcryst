@@ -1,4 +1,4 @@
-Import('env', 'pyconfigvar')
+Import('env', 'pyconfigvar', 'pyversion')
 
 # Helper functions -----------------------------------------------------------
 
@@ -11,6 +11,9 @@ def configure_boost_library(libname):
 
     Note: CheckLib function automatically adds library to the environment.
     '''
+    # adjust libname for boost_python
+    if libname == 'boost_python' and pyversion[0] == '3':
+        libname = 'boost_python3'
     # using global conf defined below
     for t in boostlibtags:
         libnamefull = libname + t
