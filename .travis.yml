@@ -59,7 +59,7 @@ before_install:
   - $NOMC || popd
   - $NOMC || export PATH="${HOME}/mc/bin:${PATH}"
   - $NOMC || conda update --yes conda
-  - $NOMC || conda install --yes conda-build jinja2 scons
+  - $NOMC || conda install --yes conda-build jinja2 scons numpy
   # Make scons available globally.
   - $NOMC || mkdir -p ~/bin
   - $NOMC || cp ~/mc/bin/scons ~/bin/
