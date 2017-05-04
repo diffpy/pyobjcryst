@@ -31,8 +31,7 @@ ext_kws = {
 # determine if we run with Python 3.
 PY3 = (sys.version_info[0] == 3)
 
-# Figure out which boost library to use. This doesn't appear to consult
-# LD_LIBRARY_PATH.
+# Figure out the tagged name of boost_python library.
 def get_boost_libraries():
     """Check for installed boost_python shared library.
 
@@ -52,7 +51,7 @@ def get_boost_libraries():
     if not found:
         import platform
         import warnings
-        ldevname = 'LD_LIBRARY_PATH'
+        ldevname = 'LIBRARY_PATH'
         if platform.system() == 'Darwin':
             ldevname = 'DYLD_FALLBACK_LIBRARY_PATH'
         wmsg = ("Cannot detect name suffix for the %r library.  "
