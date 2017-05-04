@@ -16,6 +16,8 @@
 """Utilities for crystals."""
 
 
+# FIXME: check if this function does any meaningful job.
+
 def putAtomsInMolecule(crystal, alist = None, name = None):
     """Place atoms from a crystal into a molecule inside the crystal.
 
@@ -54,8 +56,8 @@ def putAtomsInMolecule(crystal, alist = None, name = None):
     f = lambda v: v - floor(v)
 
     scat = []
-    for id in alist:
-        s = c.GetScatt(id)
+    for idx in alist:
+        s = c.GetScatt(idx)
         if not isinstance(s, Atom):
             raise TypeError("identifier '%s' does not specify an Atom")
         sp = s.GetScatteringPower()
@@ -86,6 +88,7 @@ def putAtomsInMolecule(crystal, alist = None, name = None):
     m.UpdateScattCompList()
 
     return
+
 
 def _xyztostring(crystal):
     """Helper function to write xyz coordinates of a crystal to a string."""

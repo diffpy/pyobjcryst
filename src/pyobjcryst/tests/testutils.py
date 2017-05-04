@@ -15,54 +15,33 @@
 
 """Tests for crystal module."""
 
-import os
 import unittest
+import numpy
 
-from pyobjcryst.crystal import CreateCrystalFromCIF
+from pyobjcryst.tests.pyobjcrysttestutils import loadcifdata
 from pyobjcryst.utils import putAtomsInMolecule
 
 
 class TestPutAtomsInMolecule(unittest.TestCase):
 
-    def _testPutAtomsInMolecule(self):
-        """Make sure this utility method is correct."""
-
-        from math import floor
-        f = lambda v: v - floor(v)
-        import glob
-        from pyobjcryst.tests.pyobjcrysttestutils import datafile
-        pat = os.path.join(datafile(''), '*.cif')
-
-        for fname in glob.glob(pat):
-            print(fname)
-
-            c = CreateCrystalFromCIF(open(fname))
-
-            # Get positions from unmodified structure
-            pos1 = []
-            scl = c.GetScatteringComponentList()
-            for s in scl:
-                xyz = [f(xi) for xi in (s.X, s.Y, s.Z)]
-                xyz = c.FractionalToOrthonormalCoords(*xyz)
-                pos1.append(xyz)
-
-            # Get positions from molecular structure
-            putAtomsInMolecule(c)
-            pos2 = []
-            scl = c.GetScatteringComponentList()
-            for s in scl:
-                xyz = [f(xi) for xi in (s.X, s.Y, s.Z)]
-                xyz = c.FractionalToOrthonormalCoords(*xyz)
-                pos2.append(xyz)
-
-            # Now compare positions
-            self.assertEqual(len(pos1), len(pos2))
-
-            for p1, p2 in zip(pos1, pos2):
-                for i in range(3):
-                    self.assertAlmostEqual(p1[i], p2[i])
-
+    def test_caffeine(self):
+        """Check molecule conversion for caffeine.
+        """
+        c = loadcifdata('caffeine.cif')
+        xyz0 = [(sc.X, sc.Y, sc.Z) for sc in c.GetScatteringComponentList()]
+        self.assertEqual(24, c.GetNbScatterer())
+        putAtomsInMolecule(c, name='espresso')
+        self.assertEqual(1, c.GetNbScatterer())
+        mol = c.GetScatterer(0)
+        self.assertEqual('espresso', mol.GetName())
+        self.assertEqual(24, mol.GetNbAtoms())
+        xyz1 = [(sc.X, sc.Y, sc.Z) for sc in c.GetScatteringComponentList()]
+        uc0 = numpy.array(xyz0) - numpy.floor(xyz0)
+        uc1 = numpy.array(xyz1) - numpy.floor(xyz1)
+        self.assertTrue(numpy.allclose(uc0, uc1))
         return
+
+# End of class TestPutAtomsInMolecule
 
 if __name__ == "__main__":
     unittest.main()
