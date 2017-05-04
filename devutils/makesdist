@@ -27,7 +27,8 @@ def inform(s):
     return
 
 inform('Run "setup.py sdist --formats=tar" ')
-cmd_sdist = [sys.executable] + 'setup.py sdist --formats=tar'.split()
+cmd_sdist = ([sys.executable, '-Wignore:Cannot detect name suffix'] +
+             'setup.py sdist --formats=tar'.split())
 ec = subprocess.call(cmd_sdist, cwd=BASEDIR, stdout=open(os.devnull, 'w'))
 if ec:  sys.exit(ec)
 inform("[done]\n")
