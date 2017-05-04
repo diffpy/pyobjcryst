@@ -12,6 +12,7 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
+
 """Utilities for crystals."""
 
 def crystalToDiffpyStructure(crystal):
@@ -26,7 +27,7 @@ def crystalToDiffpyStructure(crystal):
 
     # Write the crystal to string and load it into a diffpy Structure
 
-    from cStringIO import StringIO
+    from io import StringIO
     buf = StringIO()
     crystal.CIFOutput(buf)
 
@@ -54,7 +55,7 @@ def expandSymmetry(crystal):
     stru = crystalToDiffpyStructure(crystal)
 
     cifstr = stru.writeStr(format = "cif")
-    from cStringIO import StringIO
+    from io import StringIO
     buf = StringIO(cifstr)
 
     from pyobjcryst.crystal import CreateCrystalFromCIF
@@ -159,13 +160,13 @@ def _xyztostring(crystal):
 
 def printxyz(crystal):
     """Print a crystal in xyz format."""
-    print _xyztostring(crystal)
+    print(_xyztostring(crystal))
     return
 
 
 def writexyz(crystal, filename):
     """Write a crystal to an xyz file."""
-    f = file(filename, 'w')
+    f = open(filename, 'w')
     out = _xyztostring(crystal)
     f.write(out)
     f.close()

@@ -65,11 +65,21 @@ void wrap_zatom();
 void wrap_zpolyhedron();
 void wrap_zscatterer();
 
+namespace {
+
+#if PY_MAJOR_VERSION >= 3
+    void* initialize_numpy() { import_array(); return NULL; }
+#else
+    void initialize_numpy() { import_array(); }
+#endif
+
+}   // namespace
+
 // Wrappers must be called according to inheritance hierarchy
 BOOST_PYTHON_MODULE(_pyobjcryst)
 {
     // initialize numpy module
-    import_array();
+    initialize_numpy();
 
     // General stuff
     wrap_general();

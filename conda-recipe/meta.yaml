@@ -9,8 +9,6 @@ source:
   git_url: ..
 
 build:
-  #preserve_egg_dir: True
-
   # If this is a new build for the same version, increment the build
   # number. If you do not include this key, it defaults to 0.
   number: 0
@@ -19,17 +17,20 @@ requirements:
   build:
     - python
     - setuptools
-    - numpy 1.9.2
-    - libobjcryst 2015.1.*
-    - boost-all 1.59.0
-    - scons
+    - numpy 1.11.2
+    - libobjcryst 2015.1.*  # [py2k]
+    - boost-all 1.59.0      # [py2k]
+    - libobjcryst 2017.1.*  # [py3k]
+    - boost 1.61.0          # [py3k]
 
   run:
     - python
     - setuptools
-    - numpy >=1.9.2
-    - libobjcryst 2015.1.*
-    - boost-all 1.59.0
+    - numpy >=1.11.2
+    - libobjcryst 2015.1.*  # [py2k]
+    - boost-all 1.59.0      # [py2k]
+    - libobjcryst 2017.1.*  # [py3k]
+    - boost 1.61.0          # [py3k]
 
 test:
   # Python imports

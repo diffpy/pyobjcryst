@@ -1,0 +1,11 @@
+# Customize scons build environment.
+
+Import('env')
+
+import os
+
+# Silence copious warnings from the boost headers.
+P = os.environ['PREFIX']
+env.Prepend(CCFLAGS=['-isystem{}/include'.format(P)])
+
+# vim: ft=python

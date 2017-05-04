@@ -6,7 +6,7 @@ Import('env', 'pyoutput')
 # make sure numpy headers are available
 npdirs = pyoutput(
     'from numpy.distutils.misc_util import get_numpy_include_dirs\n'
-    'print "\\n".join(get_numpy_include_dirs())')
+    'print("\\n".join(get_numpy_include_dirs()))')
 npdirs = map(str.strip, npdirs.split('\n'))
 env.AppendUnique(CPPPATH=npdirs)
 
@@ -30,23 +30,28 @@ test = env.Alias('test', develop,
         '$python -m pyobjcryst.tests.run')
 AlwaysBuild(test)
 
-# normal install - trick distutils into using this module.
-build_platlib = pyoutput('\n'.join([
-    "from distutils.core import Distribution",
-    "from distutils.command.build import build",
-    "bcmd = build(Distribution())",
-    "bcmd.finalize_options()",
-    "print bcmd.build_platlib",
-    ]))
-distmodfile = os.path.join(build_platlib,
-    'pyobjcryst', os.path.basename(str(module[0])))
+def resolve_distutils_target(target, source, env):
+    tgt = pyoutput('\n'.join([
+        "from setuptools import Distribution, Extension",
+        "ext = Extension('pyobjcryst._pyobjcryst', [])",
+        "attrs = dict(ext_modules=[ext])",
+        "dist = Distribution(attrs)",
+        "bcmd = dist.get_command_obj('build_ext')",
+        "bcmd.finalize_options()",
+        "print(bcmd.get_ext_fullpath(ext.name))",
+        ]))
+    env['distsofile'] = env.File(tgt)
+    return 0
+
 cmd_install = '$python setup.py install'
 if 'prefix' in env:
-    cmd_install += ' --prefix=' + env['prefix']
+    cmd_install += ' --prefix=$prefix'
+
 install = env.Alias('install', module, [
-    Mkdir(os.path.dirname(distmodfile)),
-    Copy(distmodfile, '$SOURCE'),
-    Touch(distmodfile),
+    resolve_distutils_target,
+    Mkdir('$distsofile.dir'),
+    Copy('$distsofile', '$SOURCE'),
+    Touch('$distsofile'),
     cmd_install,
     ])
 AlwaysBuild(install)

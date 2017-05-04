@@ -22,6 +22,8 @@
 #include <boost/python/copy_const_reference.hpp>
 #include <boost/python/manage_new_object.hpp>
 
+#undef B0
+
 #include <string>
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>

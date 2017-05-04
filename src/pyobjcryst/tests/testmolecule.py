@@ -104,7 +104,7 @@ class TestMolecule(unittest.TestCase):
         self.assertEqual(a.X, x)
 
         # Check to see if a is in our list
-        for i in xrange(59):
+        for i in range(59):
             self.assertNotEqual(a.GetName(), self.m.GetAtom(i))
 
         # What happens if we try to remove an atom that is not in the molecule?
@@ -812,7 +812,6 @@ class TestStretchModeTorsion(unittest.TestCase):
 
     def testDummy(self):
         """Test adding a dummy atom."""
-
         # In this past, dummy atoms would cause seg-faults in crystal::Print.
         # We test that here.
         self.m.AddAtom(0, 0, 0, None, "center")
@@ -820,15 +819,15 @@ class TestStretchModeTorsion(unittest.TestCase):
         sp = self.m[-1].GetScatteringPower()
         self.assertTrue(sp is None)
 
-        import tempfile
-        t = tempfile.TemporaryFile()
+        sm = str(self.m)
+        self.assertEqual(8, sm.count('Atom Name'))
 
-        print >> t, self.m
-
-        print >> t, self.c
+        sc = str(self.c)
+        sclines = sc.splitlines()
+        self.assertTrue(sclines[2].endswith(' 8'))
+        self.assertTrue('ScattPow: dummy' in sc)
 
         return
-
 
 # End class TestStretchTorsion
 

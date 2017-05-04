@@ -17,8 +17,9 @@
 
 To check for memory leaks, run
 valgrind --tool=memcheck --leak-check=full /usr/bin/python ./pyobjcrysttest.py
-
 """
+
+from __future__ import print_function
 
 from pyobjcryst.atom import Atom
 from pyobjcryst.crystal import Crystal
@@ -35,7 +36,7 @@ def makeScatterer():
     sp.SetBij(3, 3, 8*pi*pi*0.003)
     atom = Atom(0, 0, 0, "Ni", sp)
 
-    print sp.B11
+    print(sp.B11)
     return sp, atom
 
 def makeCrystal(sp, atom):
@@ -58,9 +59,9 @@ def testCrystalScope():
     makeCrystal(sp, atom)
     # The crystal is out of scope. Since the lifetime of the atom and scatterer
     # are linked, the crystal should stay alive in memory.
-    print sp
-    print atom
-    print repr(atom.GetCrystal())
+    print(sp)
+    print(atom)
+    print(repr(atom.GetCrystal()))
     return
 
 def testMultiAdd():
@@ -71,79 +72,79 @@ def testMultiAdd():
     # Force this exception
     try:
         makeCrystal(sp, atom)
-        print sp
-        print atom
-        print repr(atom.GetCrystal())
-    except AttributeError, e:
-        print "Exception:", e
+        print(sp)
+        print(atom)
+        print(repr(atom.GetCrystal()))
+    except AttributeError as e:
+        print("Exception:", e)
     return
 
 def testScattererScope():
     """Test when atoms go out of scope before crystal."""
     c = makeCrystal(*makeScatterer())
-    print c
+    print(c)
     sp2 = getScatterer()
-    print sp2
+    print(sp2)
     return
 
 def testRemoveFunctions():
     """Test the RemoveScatterer and RemoveScatteringPower method."""
-    print "Making Crystal"
+    print("Making Crystal")
     sp, atom = makeScatterer()
     c = makeCrystal(sp, atom)
-    print atom
-    print sp
-    print c
+    print(atom)
+    print(sp)
+    print(c)
 
     # Try to add objects with same names
-    print "Testing name duplication"
+    print("Testing name duplication")
     sp2, atom2 = makeScatterer()
     try:
         c.AddScatterer(atom2)
-    except AttributeError, e:
-        print e
+    except AttributeError as e:
+        print(e)
     try:
         c.AddScatteringPower(sp2)
-    except AttributeError, e:
-        print e
+    except AttributeError as e:
+        print(e)
 
     # Remove the scatterers
-    print "remove scatterers"
+    print("remove scatterers")
     c.RemoveScatterer(atom)
     c.RemoveScatteringPower(sp)
-    print atom
-    print sp
-    print c
+    print(atom)
+    print(sp)
+    print(c)
 
     # Try to remove scatterers that are not in the crystal
     try:
         c.RemoveScatterer(atom2)
-    except AttributeError, e:
-        print e
+    except AttributeError as e:
+        print(e)
     try:
         c.RemoveScatteringPower(sp2)
-    except AttributeError, e:
-        print e
+    except AttributeError as e:
+        print(e)
 
     return
 
 def parTest():
     rpt = RefParType("default")
     testpar = RefinablePar("test", 3.0, 0, 10, rpt)
-    print testpar.__class__, testpar
+    print(testpar.__class__, testpar)
     sp, atom = makeScatterer()
     c = makeCrystal(sp, atom)
     par = c.GetPar(0)
-    print par.__class__, par
+    print(par.__class__, par)
 
     c.AddPar(testpar);
     testpar2 = c.GetPar("test")
-    print testpar2.__class__, testpar2
+    print(testpar2.__class__, testpar2)
 
     del sp, atom, c
 
     testpar2.SetValue(2.17)
-    print testpar.__class__, testpar
+    print(testpar.__class__, testpar)
     return
 
 def test1():

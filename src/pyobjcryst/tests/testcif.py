@@ -94,7 +94,8 @@ class TestCif(unittest.TestCase):
                 H10b -0.07008 0.19602 0.03170 0.00000 Uiso 1.00000 H
                 H10c 0.03791 0.26293 0.13930 0.00000 Uiso 1.00000 H
         """
-        lines = filter(None, map(str.strip, cifdata.split('\n')))
+        lines = filter(None,
+                       (line.strip() for line in cifdata.split('\n')))
         for i, line in enumerate(lines):
             name, x, y, z, U, junk, occ, element = line.split()
             s = c.GetScatt(i)
@@ -269,7 +270,7 @@ class TestCif(unittest.TestCase):
         """Make sure we can read all cif files."""
         from pyobjcryst import ObjCrystException
         fname = datafile('ni.stru')
-        infile = file(fname)
+        infile = open(fname, 'rb')
         self.assertRaises(ObjCrystException, CreateCrystalFromCIF, infile)
         infile.close()
         return

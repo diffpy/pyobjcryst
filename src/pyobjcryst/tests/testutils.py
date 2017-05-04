@@ -34,9 +34,9 @@ class TestPutAtomsInMolecule(unittest.TestCase):
         pat = os.path.join(datafile(''), '*.cif')
 
         for fname in glob.glob(pat):
-            print fname
+            print(fname)
 
-            c = CreateCrystalFromCIF(file(fname))
+            c = CreateCrystalFromCIF(open(fname))
 
             from diffpy.Structure import Structure
             s = Structure(filename = fname)
@@ -45,7 +45,7 @@ class TestPutAtomsInMolecule(unittest.TestCase):
             pos1 = []
             scl = c.GetScatteringComponentList()
             for s in scl:
-                xyz = map(f, [s.X, s.Y, s.Z])
+                xyz = [f(xi) for xi in (s.X, s.Y, s.Z)]
                 xyz = c.FractionalToOrthonormalCoords(*xyz)
                 pos1.append(xyz)
 
@@ -54,7 +54,7 @@ class TestPutAtomsInMolecule(unittest.TestCase):
             pos2 = []
             scl = c.GetScatteringComponentList()
             for s in scl:
-                xyz = map(f, [s.X, s.Y, s.Z])
+                xyz = [f(xi) for xi in (s.X, s.Y, s.Z)]
                 xyz = c.FractionalToOrthonormalCoords(*xyz)
                 pos2.append(xyz)
 

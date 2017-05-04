@@ -18,7 +18,13 @@
 """
 
 from pkg_resources import resource_filename
-from ConfigParser import RawConfigParser
+
+import sys
+if sys.version_info[0] >= 3:
+    from configparser import RawConfigParser
+else:
+    from ConfigParser import RawConfigParser
+del sys
 
 # obtain version information from the version.cfg file
 cp = RawConfigParser(dict(version='', date='', commit='', timestamp=0))

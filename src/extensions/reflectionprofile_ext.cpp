@@ -20,6 +20,7 @@
 #include <boost/python/class.hpp>
 #include <boost/python/manage_new_object.hpp>
 #include <boost/python/pure_virtual.hpp>
+#undef B0
 
 #include <iostream>
 
