@@ -38,9 +38,6 @@ class TestPutAtomsInMolecule(unittest.TestCase):
 
             c = CreateCrystalFromCIF(open(fname))
 
-            from diffpy.Structure import Structure
-            s = Structure(filename = fname)
-
             # Get positions from unmodified structure
             pos1 = []
             scl = c.GetScatteringComponentList()
