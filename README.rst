@@ -16,15 +16,16 @@ http://diffpy.github.io/pyobjcryst.
 REQUIREMENTS
 ------------
 
-pyobjcryst requires Python 2.7, C++ compiler and the following software:
+pyobjcryst requires Python 3.6, 3.5, 3.4 or 2.7, C++ compiler and
+the following software:
 
 * ``libobjcryst`` - Object-Oriented Crystallographic Library for C++,
   https://github.com/diffpy/libobjcryst
 * ``setuptools``  - tools for installing Python packages
 * ``NumPy`` - library for scientific computing with Python
-* ``scons`` - software constructions tool (1.0 or later)
 * ``python-dev`` - header files for interfacing Python with C
 * ``libboost-all-dev`` - Boost C++ libraries and development files
+* ``scons`` - software constructions tool (optional)
 
 We recommend to use `Anaconda Python <https://www.continuum.io/downloads>`_
 as it allows to install all software dependencies together with
@@ -62,13 +63,13 @@ You may need to use ``sudo`` with system Python so the process is
 allowed to copy files to system directories.  If administrator (root)
 access is not available, see the usage information from
 ``python setup.py install --help`` for options to install to
-a user-writable location.  The installation integrity can be verified by
-changing to the HOME directory and running ::
+a user-writable location.  The installation integrity can be
+verified by executing the included tests with ::
 
    python -m pyobjcryst.tests.run
 
 An alternative way of installing pyobjcryst is to use the SCons tool,
-which can speed up the installation by compiling C++ files in several
+which can speed up the process by compiling C++ files in several
 parallel jobs (-j4)::
 
    scons -j4 install
