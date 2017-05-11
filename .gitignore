@@ -16,15 +16,10 @@ sdist
 temp
 develop-eggs
 .installed.cfg
-.sconsign.dblite
 lib
 lib64
 tags
 errors.err
-sconscript.local
-sconsvars.py
-.sconf_temp
-config.log
 
 # Installer logs
 pip-log.txt
@@ -42,7 +37,16 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
-setup.cfg
+.settings
+
+# SCons build files
 .gdb_history
+.sconf_temp/
+.sconsign.dblite
+config.log
+/sconscript.local
+/sconsvars.py
+
+# version information
+setup.cfg
 /src/pyobjcryst/version.cfg
-/.settings/*
