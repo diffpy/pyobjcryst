@@ -10,7 +10,7 @@ Targets:
 
 module      build Python extension module _pyobjcryst.so [default]
 install     install to default Python package location
-develop     copy extension module to pyobjcryst/ directory
+develop     copy extension module to src/pyobjcryst/ directory
 test        execute unit tests
 
 Build configuration variables:
@@ -113,7 +113,7 @@ env.AppendUnique(CPPPATH=cpppath)
 # ignore it in the system environment.
 env.PrependUnique(LIBPATH=getsyspaths('LIBRARY_PATH'))
 # Add shared libraries.
-# Note: ObjCryst and boost_python are added from SConscript.configure
+# Note: ObjCryst and boost_python are added from SConscript.configure.
 
 fast_linkflags = ['-s']
 fast_shlinkflags = pyconfigvar('LDSHARED').split()[1:]
