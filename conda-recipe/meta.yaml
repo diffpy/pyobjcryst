@@ -18,19 +18,15 @@ requirements:
     - python
     - setuptools
     - numpy 1.11.2
-    - libobjcryst 2015.1.*  # [py2k]
-    - boost-all 1.59.0      # [py2k]
-    - libobjcryst 2017.1.*  # [py3k]
-    - boost 1.61.0          # [py3k]
+    - libobjcryst 2017.1.*
+    - boost 1.61.0
 
   run:
     - python
     - setuptools
     - numpy >=1.11.2
-    - libobjcryst 2015.1.*  # [py2k]
-    - boost-all 1.59.0      # [py2k]
-    - libobjcryst 2017.1.*  # [py3k]
-    - boost 1.61.0          # [py3k]
+    - libobjcryst 2017.1.*
+    - boost 1.61.0
 
 test:
   # Python imports
