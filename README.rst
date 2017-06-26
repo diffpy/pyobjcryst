@@ -25,7 +25,7 @@ the following software:
 * ``NumPy`` - library for scientific computing with Python
 * ``python-dev`` - header files for interfacing Python with C
 * ``libboost-all-dev`` - Boost C++ libraries and development files
-* ``scons`` - software constructions tool (optional)
+* ``scons`` - software construction tool (optional)
 
 We recommend to use `Anaconda Python <https://www.continuum.io/downloads>`_
 as it allows to install all software dependencies together with
