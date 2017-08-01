@@ -77,7 +77,7 @@ before_install:
   - $NOAPT || devutils/makesdist
   - $NOAPT || MYTARBUNDLE="$(ls -t "${PWD}"/dist/*.tar.gz | head -1)"
   - $NOAPT || pushd ~/pkgs
-  - $NOAPT || git clone https://github.com/diffpy/libObjCryst.git
+  - $NOAPT || git clone https://github.com/diffpy/libobjcryst.git
   - $NOAPT || popd
 
   - $NOBREW || test "${TRAVIS_OS_NAME}" = "osx" || exit $?
@@ -90,7 +90,7 @@ before_install:
   - $NOBREW || devutils/makesdist
   - $NOBREW || MYTARBUNDLE="$(ls -t "${PWD}"/dist/*.tar.gz | head -1)"
   - $NOBREW || pushd ~/pkgs
-  - $NOBREW || git clone https://github.com/diffpy/libObjCryst.git
+  - $NOBREW || git clone https://github.com/diffpy/libobjcryst.git
   - $NOBREW || popd
 
 install:
@@ -102,11 +102,11 @@ install:
   - $NOMC || conda install --yes --use-local --file=/tmp/mypackage.txt
 
   - $NOAPT || $MYPIP install $MYPIPFLAGS coverage
-  - $NOAPT || sudo scons -C ~/pkgs/libObjCryst install
+  - $NOAPT || sudo scons -C ~/pkgs/libobjcryst install
   - $NOAPT || $MYPIP install $MYPIPFLAGS --user "${MYTARBUNDLE}"
 
   - $NOBREW || $MYPIP install $MYPIPFLAGS coverage
-  - $NOBREW || scons -C ~/pkgs/libObjCryst install
+  - $NOBREW || scons -C ~/pkgs/libobjcryst install
   - $NOBREW || $MYPIP install $MYPIPFLAGS "${MYTARBUNDLE}"
 
   - cd ${MYRUNDIR}
