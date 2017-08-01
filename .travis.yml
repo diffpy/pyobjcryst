@@ -20,6 +20,7 @@ branches:
   except:
     - /^v[0-9]/
 
+
 before_install:
   - MYNAME=pyobjcryst
   - umask 022
@@ -49,11 +50,11 @@ before_install:
     esac
   - MYRUNDIR=${PWD}/build/rundir
 
-  - mkdir -p ~/pkgs/
+  - mkdir -p ~/pkgs
   - mkdir -p ${MYRUNDIR}
   - cp .coveragerc ${MYRUNDIR}/
 
-  - $NOMC || pushd ~/pkgs/
+  - $NOMC || pushd ~/pkgs
   - $NOMC || wget --timestamping ${MYMCREPO}/${MYMCBUNDLE}
   - $NOMC || test -x ~/mc/bin/conda || bash ${MYMCBUNDLE} -b -f -p ~/mc
   - $NOMC || popd
@@ -115,12 +116,15 @@ install:
         exit 1;
     fi
 
+
 before_script:
   - $NOBREW || USER_BASE="$(python3 -c 'import site; print(site.USER_BASE)')"
   - $NOBREW || PATH="${USER_BASE}/bin:${PATH}"
 
+
 script:
   - coverage run --source ${MYNAME} -m ${MYNAME}.tests.run
+
 
 after_success:
   - $MYPIP install $MYPIPFLAGS codecov
