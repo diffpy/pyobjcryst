@@ -61,7 +61,7 @@ bool contains(const ScatteringComponentList& scl,
 // Get slices directly from the boost python object
 bp::object getSCSlice(bp::object & scl, bp::slice& s)
 {
-    bp::list l = list(scl);
+    bp::list l(scl);
     return l[s];
 }
 
