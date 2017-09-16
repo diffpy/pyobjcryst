@@ -70,8 +70,9 @@ before_install:
   - $NOMC || conda config --add channels diffpy/channel/dev
 
   - $NOAPT || test "${TRAVIS_OS_NAME}" = "linux" || exit $?
-  - $NOAPT || PATH="$(echo "$PATH" | sed 's,:/opt/python/[^:]*,,g')"
-  - $NOAPT || test "$(which python)" = "/usr/bin/python" || exit $?
+  - $NOAPT || PATH="$(echo "$PATH" | sed 's,:/opt/pyenv/[^:]*,,g')"
+  - $NOAPT || test "$(which python)" = "/usr/bin/python" || (
+                  which python; exit 1)
   - $NOAPT || sudo apt-get update -qq
   - $NOAPT || sudo apt-get install -y
                   python-setuptools python-numpy scons
