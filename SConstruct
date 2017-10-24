@@ -25,7 +25,7 @@ import subprocess
 import platform
 
 def subdictionary(d, keyset):
-    return dict([kv for kv in d.items() if kv[0] in keyset])
+    return dict(kv for kv in d.items() if kv[0] in keyset)
 
 def getsyspaths(*names):
     s = os.pathsep.join(filter(None, map(os.environ.get, names)))
