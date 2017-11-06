@@ -2,6 +2,18 @@ Import('env', 'pyconfigvar', 'pyversion')
 
 # Helper functions -----------------------------------------------------------
 
+def CheckOptimizerFlag(context, flag):
+    ccflags_save = context.env['CCFLAGS']
+    context.Message('Checking if compiler allows {!r}... '.format(flag))
+    context.env.Replace(CCFLAGS=[flag])
+    result = context.TryCompile('int a;\n', '.cpp')
+    context.Result(result)
+    if not result:
+        ccflags_save.remove(flag)
+    context.env.Replace(CCFLAGS=ccflags_save)
+    return result
+
+
 boostlibtags = ['', '-mt']
 def configure_boost_library(libname):
     '''Add a boost library to the configured environment allowing for any
@@ -25,6 +37,17 @@ def configure_boost_library(libname):
     Exit(1)
 
 # Start configuration --------------------------------------------------------
+
+# Anaconda Python is compiled with super fancy gcc optimizer flags.
+# Remove any flags that are not supported by the current compiler.
+
+custom_tests = {'CheckOptimizerFlag' : CheckOptimizerFlag}
+conf = Configure(env, custom_tests=custom_tests)
+optflags = [o for o in env['CCFLAGS']
+            if o[:2] in ('-f', '-m')]
+for o in optflags:
+    conf.CheckOptimizerFlag(o)
+conf.Finish()
 
 # Create configuration environment that links with Python shared_library, so
 # that the boost_python check does not fail due to unresolved Python symbols.
