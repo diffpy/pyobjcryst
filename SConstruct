@@ -92,7 +92,7 @@ env.MergeFlags([os.environ.get(n, '') for n in flagnames])
 # Figure out compilation switches, filter away C-related items.
 good_python_flags = lambda n : (
     not isinstance(n, basestring) or
-    not re.match(r'(-g|-Wstrict-prototypes|-O\d)$', n))
+    not re.match(r'(-g|-Wstrict-prototypes|-O\d|-fPIC)$', n))
 # Determine python-config script name.
 pyversion = pyoutput('import sys; print("%i.%i" % sys.version_info[:2])')
 pythonconfig = 'python%s-config' % (pyversion if pyversion[0] == '3' else '')
