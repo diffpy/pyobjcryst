@@ -26,14 +26,14 @@ before_install:
   - umask 022
   - git fetch origin --tags
   - MYPYTHON=python; MYPIP=pip
-  - NOAPT=true; NOBREW=true; NOMC=true
+  - NOSYS=true; NOAPT=true; NOBREW=true; NOMC=true
   - if ${MYUSEMC}; then
         NOMC=false;
     elif [[ ${TRAVIS_OS_NAME} == linux ]]; then
-        NOAPT=false;
+        NOAPT=false; NOSYS=false;
         MYPIPFLAGS="--user";
     elif [[ ${TRAVIS_OS_NAME} == osx ]]; then
-        NOBREW=false;
+        NOBREW=false; NOSYS=false;
         MYPYTHON=python3;
         MYPIP=pip3;
         MYPIPFLAGS="--user";
@@ -78,11 +78,6 @@ before_install:
                   python-setuptools python-numpy scons
                   build-essential python-dev libboost-all-dev
                   python-pip
-  - $NOAPT || devutils/makesdist
-  - $NOAPT || MYTARBUNDLE="$(ls -t "${PWD}"/dist/*.tar.gz | head -1)"
-  - $NOAPT || pushd ~/pkgs
-  - $NOAPT || git clone https://github.com/diffpy/libobjcryst.git
-  - $NOAPT || popd
 
   - $NOBREW || test "${TRAVIS_OS_NAME}" = "osx" || exit $?
   - $NOBREW || brew update
@@ -91,11 +86,12 @@ before_install:
   - $NOBREW || brew install boost-python --with-python3
   - $NOBREW || brew tap homebrew/python
   - $NOBREW || brew install numpy --without-python --with-python3
-  - $NOBREW || devutils/makesdist
-  - $NOBREW || MYTARBUNDLE="$(ls -t "${PWD}"/dist/*.tar.gz | head -1)"
-  - $NOBREW || pushd ~/pkgs
-  - $NOBREW || git clone https://github.com/diffpy/libobjcryst.git
-  - $NOBREW || popd
+
+  - $NOSYS || devutils/makesdist
+  - $NOSYS || MYTARBUNDLE="$(ls -t "${PWD}"/dist/*.tar.gz | head -1)"
+  - $NOSYS || pushd ~/pkgs
+  - $NOSYS || git clone https://github.com/diffpy/libobjcryst.git
+  - $NOSYS || popd
 
 install:
   - $NOMC || conda build --python=${MYPYTHON_VERSION} conda-recipe
@@ -104,13 +100,11 @@ install:
   - $NOMC || source activate testenv
   - $NOMC || conda install --yes --use-local --file=/tmp/mypackage.txt
 
-  - $NOAPT || $MYPIP install $MYPIPFLAGS coverage
-  - $NOAPT || sudo scons -C ~/pkgs/libobjcryst install
-  - $NOAPT || $MYPIP install $MYPIPFLAGS --user "${MYTARBUNDLE}"
-
-  - $NOBREW || $MYPIP install $MYPIPFLAGS coverage
-  - $NOBREW || scons -C ~/pkgs/libobjcryst install
-  - $NOBREW || $MYPIP install $MYPIPFLAGS "${MYTARBUNDLE}"
+  - MYSUDO=
+  - $NOAPT || MYSUDO=sudo
+  - $NOSYS || $MYPIP install $MYPIPFLAGS coverage
+  - $NOSYS || $MYSUDO scons -C ~/pkgs/libobjcryst install
+  - $NOSYS || $MYPIP install $MYPIPFLAGS "${MYTARBUNDLE}"
 
   - cd ${MYRUNDIR}
   - MYGIT_REV=$($MYPYTHON -c "import ${MYNAME}.version as v; print(v.__gitsha__)")
