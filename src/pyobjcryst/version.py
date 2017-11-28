@@ -13,9 +13,18 @@
 #
 ##############################################################################
 
-
-"""Definition of __version__, __date__, __gitsha__, libobjcryst_version_info.
 """
+Definition of __version__, __date__, __timestamp__, __git_commit__,
+libobjcryst_version_info.
+
+Notes
+-----
+Variable `__gitsha__` is deprecated as of version 2.1.
+Use `__git_commit__` instead.
+"""
+
+__all__ = ['__date__', '__git_commit__', '__timestamp__', '__version__',
+           'libobjcryst_version_info']
 
 from pkg_resources import resource_filename
 
@@ -26,6 +35,7 @@ else:
     from ConfigParser import RawConfigParser
 del sys
 
+
 # obtain version information from the version.cfg file
 cp = RawConfigParser(dict(version='', date='', commit='', timestamp=0))
 if not cp.read(resource_filename(__name__, 'version.cfg')):
@@ -34,8 +44,11 @@ if not cp.read(resource_filename(__name__, 'version.cfg')):
 
 __version__ = cp.get('DEFAULT', 'version')
 __date__ = cp.get('DEFAULT', 'date')
-__gitsha__ = cp.get('DEFAULT', 'commit')
+__git_commit__ = cp.get('DEFAULT', 'commit')
 __timestamp__ = cp.getint('DEFAULT', 'timestamp')
+
+# TODO remove deprecated __gitsha__ in version 2.2.
+__gitsha__ = __git_commit__
 
 del cp
 
