@@ -84,7 +84,7 @@ before_install:
   - $NOBREW || brew install scons
   - $NOBREW || brew install python3
   - $NOBREW || brew install boost-python --with-python3
-  - $NOBREW || brew tap homebrew/python
+  - $NOBREW || brew install gcc || brew link --overwrite gcc
   - $NOBREW || brew install numpy --without-python --with-python3
 
   - $NOSYS || devutils/makesdist
