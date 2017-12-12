@@ -84,7 +84,7 @@ before_install:
   - $NOBREW || brew install scons
   - $NOBREW || brew install python3
   - $NOBREW || brew install boost-python --with-python3
-  - $NOBREW || brew tap homebrew/python
+  - $NOBREW || brew install gcc || brew link --overwrite gcc
   - $NOBREW || brew install numpy --without-python --with-python3
 
   - $NOSYS || devutils/makesdist
@@ -107,7 +107,7 @@ install:
   - $NOSYS || $MYPIP install $MYPIPFLAGS "${MYTARBUNDLE}"
 
   - cd ${MYRUNDIR}
-  - MYGIT_REV=$($MYPYTHON -c "import ${MYNAME}.version as v; print(v.__gitsha__)")
+  - MYGIT_REV=$($MYPYTHON -c "import ${MYNAME}.version as v; print(v.__git_commit__)")
   - if [[ "${TRAVIS_COMMIT}" != "${MYGIT_REV}" ]]; then
         echo "Version mismatch ${TRAVIS_COMMIT} vs ${MYGIT_REV}.";
         exit 1;
