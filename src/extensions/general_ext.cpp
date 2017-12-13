@@ -49,7 +49,7 @@ dict get_libobjcryst_version_info_dict()
     rv["minor"] = libobjcryst_version_info::minor;
     rv["micro"] = libobjcryst_version_info::micro;
     rv["date"] = libobjcryst_version_info::date;
-    rv["git_sha"] = libobjcryst_version_info::git_sha;
+    rv["git_commit"] = libobjcryst_version_info::git_sha;
 #if LIBOBJCRYST_VERSION >= 2015001000003
     rv["patch"] = libobjcryst_version_info::patch;
 #else
