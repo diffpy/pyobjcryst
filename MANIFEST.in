@@ -2,7 +2,8 @@ recursive-include src *
 include SConstruct
 include AUTHORS.txt LICENSE*.txt README.rst
 recursive-exclude src *.pyc *.so
-global-exclude .gitattributes .gitignore .DS_Store
+global-exclude .gitattributes .gitignore .gitarchive.cfg
+global-exclude .DS_Store
 
 # Avoid user content in setup.cfg to make distribution reproducible.
 exclude setup.cfg

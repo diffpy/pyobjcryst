@@ -77,7 +77,7 @@ def create_extensions():
 # It must reside in the same directory as version.py.
 MYDIR = os.path.dirname(os.path.abspath(__file__))
 versioncfgfile = os.path.join(MYDIR, 'src/pyobjcryst/version.cfg')
-gitarchivecfgfile = versioncfgfile.replace('version.cfg', 'gitarchive.cfg')
+gitarchivecfgfile = os.path.join(MYDIR, '.gitarchive.cfg')
 
 
 def gitinfo():
@@ -103,7 +103,7 @@ def getversioncfg():
     g = vd0.copy()
     cp0 = RawConfigParser(vd0)
     cp0.read(gitarchivecfgfile)
-    if '$Format:' not in cp0.get('DEFAULT', 'commit'):
+    if len(cp0.get('DEFAULT', 'commit')) > 20:
         g = cp0.defaults()
         mx = re.search(r'\btag: v(\d[^,]*)', g.pop('refnames'))
         if mx:
