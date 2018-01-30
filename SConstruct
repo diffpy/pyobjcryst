@@ -34,7 +34,8 @@ def getsyspaths(*names):
 
 def pyoutput(cmd):
     proc = subprocess.Popen([env['python'], '-c', cmd],
-                            stdout=subprocess.PIPE)
+                            stdout=subprocess.PIPE,
+                            universal_newlines=True)
     out = proc.communicate()[0]
     return out.rstrip()
 
