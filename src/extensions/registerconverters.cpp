@@ -55,12 +55,13 @@ typedef std::vector<MolAtom*> MolAtomVec;
 
 
 // Make an array out of a data pointer and a dimension vector
-PyObject* makeNdArray(double * data, std::vector<npy_intp>& dims)
+PyObject* makeNdArray(const double* data, std::vector<npy_intp>& dims)
 {
-    PyObject* pyarray = PyArray_SimpleNewFromData
-                (dims.size(), &dims[0], NPY_DOUBLE, (void *) data);
-    PyObject* pyarraycopy = PyArray_Copy( (PyArrayObject*) pyarray );
-    return bp::incref(pyarraycopy);
+    PyObject* pyarray = PyArray_SimpleNew(dims.size(), &dims[0], NPY_DOUBLE);
+    PyArrayObject* a = reinterpret_cast<PyArrayObject*>(pyarray);
+    double* adata = static_cast<double*>(PyArray_DATA(a));
+    std::copy(data, data + PyArray_SIZE(a), adata);
+    return bp::incref(pyarray);
 }
 
 // CrystVector to ndarray
