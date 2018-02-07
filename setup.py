@@ -178,5 +178,3 @@ setup_args = dict(
 if __name__ == '__main__':
     setup_args['ext_modules'] = create_extensions()
     setup(**setup_args)
-
-# End of file

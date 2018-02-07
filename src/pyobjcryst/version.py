@@ -72,5 +72,3 @@ libobjcryst_version_info = libobjcryst_version_info(
         date = vd['date'],
         git_commit = vd['git_commit'])
 del vd
-
-# End of file

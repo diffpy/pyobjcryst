@@ -28,6 +28,3 @@ if __name__ == '__main__':
     pattern = sys.argv[1] if len(sys.argv) > 1 else ''
     suite = testsuite(pattern)
     suite.debug()
-
-
-# End of file
