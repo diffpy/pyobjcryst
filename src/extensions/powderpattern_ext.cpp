@@ -89,6 +89,22 @@ PowderPatternDiffraction& addppdiffraction(PowderPattern& pp, Crystal& crst)
 }
 
 
+void setpowderpatternx (PowderPattern& pp, bp::object x)
+{
+    CrystVector_REAL cvx;
+    assignCrystVector(cvx, x);
+    pp.SetPowderPatternX(cvx);
+}
+
+
+void setpowderpatternobs (PowderPattern& pp, bp::object x)
+{
+    CrystVector_REAL cvx;
+    assignCrystVector(cvx, x);
+    pp.SetPowderPatternObs(cvx);
+}
+
+
 }   // namespace
 
 void wrap_powderpattern()
@@ -116,7 +132,7 @@ void wrap_powderpattern()
                 &PowderPattern::SetPowderPatternPar,
                 (bp::arg("xmin"), bp::arg("xstep"), bp::arg("nbpoints")))
         .def("SetPowderPatternX",
-                &PowderPattern::SetPowderPatternX,
+                &setpowderpatternx,
                 bp::arg("x"))
         .def("GetPowderPatternCalc",
                 &PowderPattern::GetPowderPatternCalc,
@@ -171,7 +187,7 @@ void wrap_powderpattern()
                 &PowderPattern::ImportPowderPatternGSAS,
                 bp::arg("filename"))
         .def("SetPowderPatternObs",
-                &PowderPattern::SetPowderPatternObs,
+                &setpowderpatternobs,
                 bp::arg("obs"))
         .def("FitScaleFactorForR",
                 &PowderPattern::FitScaleFactorForR)
