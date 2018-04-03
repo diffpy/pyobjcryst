@@ -82,17 +82,18 @@ before_install:
 
   - $NOBREW || test "${TRAVIS_OS_NAME}" = "osx" || exit $?
   - $NOBREW || brew update
-  - $NOBREW || brew install scons
-  - $NOBREW || brew install python3
-  - $NOBREW || brew install boost-python --with-python3
+  - $NOBREW || brew upgrade python
   - $NOBREW || brew install gcc || brew link --overwrite gcc
-  - $NOBREW || brew install numpy --without-python --with-python3
+  - $NOBREW || brew install numpy --without-python@2
+  - $NOBREW || brew install boost-python3
+  - $NOBREW || brew install scons
 
   - $NOSYS || devutils/makesdist
   - $NOSYS || MYTARBUNDLE="$(ls -t "${PWD}"/dist/*.tar.gz | head -1)"
   - $NOSYS || pushd ~/pkgs
   - $NOSYS || git clone https://github.com/diffpy/libobjcryst.git
   - $NOSYS || popd
+
 
 install:
   - $NOMC || conda build --python=${MYPYTHON_VERSION} conda-recipe
