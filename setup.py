@@ -39,8 +39,11 @@ def get_boost_libraries():
     on the system. If required libraries are not found, an Exception will be
     thrown.
     """
-    baselib = "boost_python3" if PY3 else "boost_python"
-    boostlibtags = ['', '-mt'] + ['']
+    baselib = "boost_python"
+    major, minor = (str(x) for x in sys.version_info[:2])
+    pytags = [major + minor, major, '']
+    mttags = ['', '-mt']
+    boostlibtags = [(pt + mt) for mt in mttags for pt in pytags] + ['']
     from ctypes.util import find_library
     for tag in boostlibtags:
         lib = baselib + tag
