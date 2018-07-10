@@ -29,35 +29,36 @@
 
 using namespace boost::python;
 using namespace ObjCryst;
+namespace bp = boost::python;
 
 namespace {
 
-tuple FractionalToOrthonormalCoords(const UnitCell& uc,
+bp::tuple FractionalToOrthonormalCoords(const UnitCell& uc,
         double x, double y, double z)
 {
     uc.FractionalToOrthonormalCoords(x,y,z);
-    return make_tuple(x,y,z);
+    return bp::make_tuple(x,y,z);
 }
 
-tuple OrthonormalToFractionalCoords(const UnitCell& uc,
+bp::tuple OrthonormalToFractionalCoords(const UnitCell& uc,
         double x, double y, double z)
 {
     uc.OrthonormalToFractionalCoords(x,y,z);
-    return make_tuple(x,y,z);
+    return bp::make_tuple(x,y,z);
 }
 
-tuple MillerToOrthonormalCoords(const UnitCell& uc,
+bp::tuple MillerToOrthonormalCoords(const UnitCell& uc,
         double x, double y, double z)
 {
     uc.MillerToOrthonormalCoords(x,y,z);
-    return make_tuple(x,y,z);
+    return bp::make_tuple(x,y,z);
 }
 
-tuple OrthonormalToMillerCoords(const UnitCell& uc,
+bp::tuple OrthonormalToMillerCoords(const UnitCell& uc,
         double x, double y, double z)
 {
     uc.OrthonormalToMillerCoords(x,y,z);
-    return make_tuple(x,y,z);
+    return bp::make_tuple(x,y,z);
 }
 
 // Setter for the lattice parameters.
