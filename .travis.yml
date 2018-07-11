@@ -23,6 +23,7 @@ branches:
 
 before_install:
   - MYNAME=pyobjcryst
+  - MYCOMMIT="$(git rev-parse HEAD)"
   - umask 022
   - git fetch origin --tags
   - MYPYTHON=python; MYPIP=pip
@@ -58,7 +59,7 @@ before_install:
   - $NOMC || wget --timestamping ${MYMCREPO}/${MYMCBUNDLE}
   - $NOMC || test -x ~/mc/bin/conda || bash ${MYMCBUNDLE} -b -f -p ~/mc
   - $NOMC || popd
-  - $NOMC || source ~/mc/bin/activate root
+  - $NOMC || source ~/mc/bin/activate base
   - $NOMC || conda update --yes conda
   - $NOMC || conda install --yes conda-build jinja2 scons numpy
   # Make scons available globally.
@@ -81,17 +82,18 @@ before_install:
 
   - $NOBREW || test "${TRAVIS_OS_NAME}" = "osx" || exit $?
   - $NOBREW || brew update
-  - $NOBREW || brew install scons
-  - $NOBREW || brew install python3
-  - $NOBREW || brew install boost-python --with-python3
+  - $NOBREW || brew upgrade python
   - $NOBREW || brew install gcc || brew link --overwrite gcc
-  - $NOBREW || brew install numpy --without-python --with-python3
+  - $NOBREW || brew install numpy --without-python@2
+  - $NOBREW || brew install boost-python3
+  - $NOBREW || brew install scons
 
   - $NOSYS || devutils/makesdist
   - $NOSYS || MYTARBUNDLE="$(ls -t "${PWD}"/dist/*.tar.gz | head -1)"
   - $NOSYS || pushd ~/pkgs
   - $NOSYS || git clone https://github.com/diffpy/libobjcryst.git
   - $NOSYS || popd
+
 
 install:
   - $NOMC || conda build --python=${MYPYTHON_VERSION} conda-recipe
@@ -108,8 +110,8 @@ install:
 
   - cd ${MYRUNDIR}
   - MYGIT_REV=$($MYPYTHON -c "import ${MYNAME}.version as v; print(v.__git_commit__)")
-  - if [[ "${TRAVIS_COMMIT}" != "${MYGIT_REV}" ]]; then
-        echo "Version mismatch ${TRAVIS_COMMIT} vs ${MYGIT_REV}.";
+  - if [[ "${MYCOMMIT}" != "${MYGIT_REV}" ]]; then
+        echo "Version mismatch ${MYCOMMIT} vs ${MYGIT_REV}.";
         exit 1;
     fi
 
