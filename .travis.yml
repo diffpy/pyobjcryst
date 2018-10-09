@@ -84,7 +84,6 @@ before_install:
   - $NOBREW || brew update
   - $NOBREW || brew upgrade python
   - $NOBREW || brew install gcc || brew link --overwrite gcc
-  - $NOBREW || brew install numpy --without-python@2
   - $NOBREW || brew install boost-python3
   - $NOBREW || brew install scons
 
