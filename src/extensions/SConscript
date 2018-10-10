@@ -7,7 +7,7 @@ Import('env', 'pyoutput')
 npdirs = pyoutput(
     'from numpy.distutils.misc_util import get_numpy_include_dirs\n'
     'print("\\n".join(get_numpy_include_dirs()))')
-npdirs = map(str.strip, npdirs.split('\n'))
+npdirs = [d.strip() for d in npdirs.split('\n')]
 env.AppendUnique(CPPPATH=npdirs)
 
 # configure the boost_python library, which may have different extensions

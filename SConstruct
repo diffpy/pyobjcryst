@@ -28,8 +28,8 @@ def subdictionary(d, keyset):
     return dict(kv for kv in d.items() if kv[0] in keyset)
 
 def getsyspaths(*names):
-    s = os.pathsep.join(filter(None, map(os.environ.get, names)))
-    rv = [p for p in s.split(os.pathsep) if os.path.exists(p)]
+    pall = sum((os.environ.get(n, '').split(os.pathsep) for n in names), [])
+    rv = [p for p in pall if os.path.exists(p)]
     return rv
 
 def pyoutput(cmd):
@@ -91,8 +91,8 @@ flagnames = 'CFLAGS CXXFLAGS LDFLAGS'.split()
 env.MergeFlags([os.environ.get(n, '') for n in flagnames])
 
 # Figure out compilation switches, filter away C-related items.
-good_python_flags = lambda n : (
-    not isinstance(n, basestring) or
+good_python_flag = lambda n : (
+    not isinstance(n, str) or
     not re.match(r'(-g|-Wstrict-prototypes|-O\d|-fPIC)$', n))
 # Determine python-config script name.
 pyversion = pyoutput('import sys; print("%i.%i" % sys.version_info[:2])')
@@ -105,7 +105,7 @@ if os.path.dirname(xpython) != os.path.dirname(xpythonconfig):
     Exit(1)
 # Process the python-config flags here.
 env.ParseConfig(pythonconfig + " --cflags")
-env.Replace(CCFLAGS=filter(good_python_flags, env['CCFLAGS']))
+env.Replace(CCFLAGS=[f for f in env['CCFLAGS'] if good_python_flag(f)])
 env.Replace(CPPDEFINES='')
 # the CPPPATH directories are checked by scons dependency scanner
 cpppath = getsyspaths('CPLUS_INCLUDE_PATH', 'CPATH')
