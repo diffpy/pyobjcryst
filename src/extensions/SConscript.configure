@@ -14,23 +14,24 @@ def CheckOptimizerFlag(context, flag):
     return result
 
 
-boostlibtags = ['', '-mt']
 def configure_boost_library(libname):
-    '''Add a boost library to the configured environment allowing for any
-    of the boostlibtags name extensions.
+    '''Detect name extension of a boost library and add it to the environment.
 
     libname  -- boost library name without any extension
 
     Note: CheckLib function automatically adds library to the environment.
     '''
-    # adjust libname for boost_python
-    if libname == 'boost_python' and pyversion[0] == '3':
-        libname = 'boost_python3'
+    mttags = ['', '-mt']
+    boostlibtags = mttags
+    # check more tags for boost_python
+    if libname == 'boost_python':
+        major, minor = pyversion.split('.')
+        pytags = [major + minor, major, '']
+        boostlibtags = [(pt + mt) for mt in mttags for pt in pytags]
     # using global conf defined below
     for t in boostlibtags:
         libnamefull = libname + t
         if conf.CheckLib(libnamefull, language='C++'):
-            boostlibtags[:] = [t]
             return
     # library not found here
     print('This program requires %r library.' % libname)
