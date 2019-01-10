@@ -39,7 +39,7 @@ before_install:
         MYPIP=pip3;
         MYPIPFLAGS="--user";
     fi
-  - MYMCREPO=https://repo.continuum.io/miniconda
+  - MYMCREPO=https://repo.anaconda.com/miniconda
   - case ${TRAVIS_OS_NAME} in
     linux)
         MYMCBUNDLE=Miniconda3-latest-Linux-x86_64.sh ;;
