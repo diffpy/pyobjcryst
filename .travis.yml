@@ -62,9 +62,8 @@ before_install:
   - $NOMC || source ~/mc/bin/activate base
   - $NOMC || conda update --yes conda
   - $NOMC || conda install --yes conda-build jinja2 scons numpy
-  # Make scons available globally.
-  - $NOMC || mkdir -p ~/bin
-  - $NOMC || cp ~/mc/bin/scons ~/bin/
+  # Fix scons hashbang to use specific Python.
+  - $NOMC || sed -i "1s,.*,#!${HOME}/mc/bin/python," ~/mc/bin/scons
   - $NOMC || conda create --name=testenv --yes python=${MYPYTHON_VERSION} coverage
   - $NOMC || conda config --add channels diffpy
   # FIXME - keep just the "diffpy" channel for public release.
