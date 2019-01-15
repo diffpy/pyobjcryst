@@ -19,6 +19,7 @@ requirements:
     - setuptools
     - numpy 1.11.2
     - libobjcryst >=2017.1.1,2017.1.*
+    - scons
   host:
     - boost 1.67.0
 
