@@ -23,6 +23,7 @@
 
 #include <ObjCryst/ObjCryst/ScatteringPowerSphere.h>
 
+namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
@@ -36,7 +37,8 @@ void wrap_scatteringpowersphere()
 
     class_<ScatteringPowerSphere, bases<ScatteringPower> >
         ("ScatteringPowerSphere")
-        .def(init<const std::string&, const double, optional<const double> >())
+        .def(init<const std::string&, const double,
+                  bp::optional<const double> >())
         .def("Init", theinit,
                 (boost::python::arg("name"),
                 boost::python::arg("radius"),
