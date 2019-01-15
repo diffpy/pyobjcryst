@@ -96,7 +96,9 @@ good_python_flag = lambda n : (
     not re.match(r'(-g|-Wstrict-prototypes|-O\d|-fPIC)$', n))
 # Determine python-config script name.
 pyversion = pyoutput('import sys; print("%i.%i" % sys.version_info[:2])')
-pythonconfig = 'python%s-config' % (pyversion if pyversion[0] == '3' else '')
+pycfgname = 'python%s-config' % (pyversion if pyversion[0] == '3' else '')
+pybindir = os.path.dirname(env.WhereIs(env['python']))
+pythonconfig = os.path.join(pybindir, pycfgname)
 # Verify python-config comes from the same path as the target python.
 xpython = env.WhereIs(env['python'])
 xpythonconfig = env.WhereIs(pythonconfig)
