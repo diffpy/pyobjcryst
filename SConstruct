@@ -87,7 +87,7 @@ if env['tool'] == 'intelc':
     env.Tool('intelc', topdir=icpc[:icpc.rfind('/bin')])
 
 # Apply CFLAGS, CXXFLAGS, LDFLAGS from the system environment.
-flagnames = 'CFLAGS CXXFLAGS LDFLAGS'.split()
+flagnames = 'CFLAGS CXXFLAGS CPPFLAGS LDFLAGS'.split()
 env.MergeFlags([os.environ.get(n, '') for n in flagnames])
 
 # Figure out compilation switches, filter away C-related items.
