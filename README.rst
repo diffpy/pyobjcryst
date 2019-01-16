@@ -16,7 +16,7 @@ http://diffpy.github.io/pyobjcryst.
 REQUIREMENTS
 ------------
 
-pyobjcryst requires Python 3.6, 3.5 or 2.7, C++ compiler and
+pyobjcryst requires Python 3.7, 3.6, 3.5 or 2.7, C++ compiler and
 the following software:
 
 * ``libobjcryst`` - Object-Oriented Crystallographic Library for C++,
