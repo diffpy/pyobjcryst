@@ -22,13 +22,12 @@ requirements:
     - scons
     - numpy {{ numpy }}
     - boost 1.67.0
-    - libobjcryst >=2017.1.1,2017.1.*
+    - libobjcryst >=2017.1.1
 
   run:
     - python
     - setuptools
     - {{ pin_compatible('numpy', min_pin='x.x', max_pin='x') }}
-    - libobjcryst >=2017.1.1,2017.1.*
     - boost 1.67.0
 
 test:
