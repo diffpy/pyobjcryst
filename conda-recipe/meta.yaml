@@ -21,14 +21,14 @@ requirements:
     - setuptools
     - scons
     - numpy {{ numpy }}
-    - boost 1.67.0
+    - boost {{ boost }}
     - libobjcryst >=2017.1.1
 
   run:
     - python
     - setuptools
     - {{ pin_compatible('numpy', min_pin='x.x', max_pin='x') }}
-    - boost 1.67.0
+    - boost
 
 test:
   # Python imports
