@@ -55,6 +55,8 @@ conf.Finish()
 ecfg = env.Clone()
 ecfg.Append(LIBS=[])
 ecfg.MergeFlags(pyconfigvar('BLDLIBRARY'))
+# make sure there are no implicit dependency nodes in added LIBS
+ecfg.Replace(LIBS=[str(n) for n in ecfg['LIBS']])
 newlibsindex = len(ecfg['LIBS'])
 
 conf = Configure(ecfg)

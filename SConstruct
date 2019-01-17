@@ -50,6 +50,8 @@ DefaultEnvironment(ENV=subdictionary(os.environ, '''
     CPATH CPLUS_INCLUDE_PATH LIBRARY_PATH LD_RUN_PATH
     LD_LIBRARY_PATH DYLD_LIBRARY_PATH DYLD_FALLBACK_LIBRARY_PATH
     MACOSX_DEPLOYMENT_TARGET LANG
+    _PYTHON_SYSCONFIGDATA_NAME
+    _CONDA_PYTHON_SYSCONFIGDATA_NAME
     '''.split())
 )
 
@@ -87,7 +89,7 @@ if env['tool'] == 'intelc':
     env.Tool('intelc', topdir=icpc[:icpc.rfind('/bin')])
 
 # Apply CFLAGS, CXXFLAGS, LDFLAGS from the system environment.
-flagnames = 'CFLAGS CXXFLAGS LDFLAGS'.split()
+flagnames = 'CFLAGS CXXFLAGS CPPFLAGS LDFLAGS'.split()
 env.MergeFlags([os.environ.get(n, '') for n in flagnames])
 
 # Figure out compilation switches, filter away C-related items.
@@ -96,7 +98,9 @@ good_python_flag = lambda n : (
     not re.match(r'(-g|-Wstrict-prototypes|-O\d|-fPIC)$', n))
 # Determine python-config script name.
 pyversion = pyoutput('import sys; print("%i.%i" % sys.version_info[:2])')
-pythonconfig = 'python%s-config' % (pyversion if pyversion[0] == '3' else '')
+pycfgname = 'python%s-config' % (pyversion if pyversion[0] == '3' else '')
+pybindir = os.path.dirname(env.WhereIs(env['python']))
+pythonconfig = os.path.join(pybindir, pycfgname)
 # Verify python-config comes from the same path as the target python.
 xpython = env.WhereIs(env['python'])
 xpythonconfig = env.WhereIs(pythonconfig)

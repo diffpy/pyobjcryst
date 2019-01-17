@@ -38,7 +38,7 @@ void wrap_scatteringpoweratom()
     class_<ScatteringPowerAtom, bases<ScatteringPower> > ("ScatteringPowerAtom",
             init<const ScatteringPowerAtom&>())
         .def(
-            init<const std::string&, const std::string&, optional<const double> >
+            init<const std::string&, const std::string&, bp::optional<const double> >
             ((bp::arg("name"), bp::arg("symbol"), bp::arg("bIso")=1.0)))
         .def("Init", theinit,
                 (bp::arg("name"),

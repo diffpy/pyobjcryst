@@ -7,5 +7,6 @@ import os
 # Silence copious warnings from the boost headers.
 P = os.environ['PREFIX']
 env.Prepend(CCFLAGS=['-isystem{}/include'.format(P)])
+env.Replace(CXX=os.environ['CXX'])
 
 # vim: ft=python
