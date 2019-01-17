@@ -102,8 +102,6 @@ class TestPowderPattern(unittest.TestCase):
         self.assertTrue(np.array_equal(2 * tth0, pp.GetPowderPatternX()))
         return
 
-    # TODO enable for libobjcryst 2017.2
-    @unittest.skip("pending bugfix in libobjcryst")
     def test_SetPowderPatternXempty(self):
         pp = self.pp
         pp.SetPowderPatternX([0, 0.1, 0.2, 0.3])
