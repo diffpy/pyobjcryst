@@ -24,9 +24,9 @@
 #include <ObjCryst/version.h>
 #include <ObjCryst/ObjCryst/General.h>
 
-// Explain compilation failure when build with old libobjcryst.
-#ifndef LIBOBJCRYST_VERSION_MICRO
-#error "pyobjcryst requires libobjcryst 2015.1 or later."
+// TODO update RHS after libobjcryst release
+#if LIBOBJCRYST_VERSION < 2017001001088LL
+#error "pyobjcryst requires libobjcryst 2017.2.1 or later."
 #endif
 
 using namespace boost::python;
@@ -49,12 +49,8 @@ dict get_libobjcryst_version_info_dict()
     rv["minor"] = libobjcryst_version_info::minor;
     rv["micro"] = libobjcryst_version_info::micro;
     rv["date"] = libobjcryst_version_info::date;
-    rv["git_commit"] = libobjcryst_version_info::git_sha;
-#if LIBOBJCRYST_VERSION >= 2015001000003
+    rv["git_commit"] = libobjcryst_version_info::git_commit;
     rv["patch"] = libobjcryst_version_info::patch;
-#else
-    rv["patch"] = 0;
-#endif
     return rv;
 }
 
