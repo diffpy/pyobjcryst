@@ -25,6 +25,7 @@ requirements:
     - libobjcryst >=2017.1.1
 
   run:
+    # NOTE libobjcryst is implicitly added by libobjcryst run_exports
     - python
     - setuptools
     - {{ pin_compatible('numpy', min_pin='x.x', max_pin='x') }}
