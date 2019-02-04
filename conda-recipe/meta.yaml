@@ -22,7 +22,7 @@ requirements:
     - scons
     - numpy {{ numpy }}
     - boost {{ boost }}
-    - libobjcryst >=2017.1.1
+    - libobjcryst {{ libobjcryst }}
 
   run:
     # NOTE libobjcryst is implicitly added by libobjcryst run_exports
