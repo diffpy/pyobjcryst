@@ -24,8 +24,7 @@
 #include <ObjCryst/version.h>
 #include <ObjCryst/ObjCryst/General.h>
 
-// TODO update RHS after libobjcryst release
-#if LIBOBJCRYST_VERSION < 2017001001088LL
+#if LIBOBJCRYST_VERSION < 2017002001000LL
 #error "pyobjcryst requires libobjcryst 2017.2.1 or later."
 #endif
 
