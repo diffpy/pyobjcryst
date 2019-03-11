@@ -1,6 +1,6 @@
 # Release notes
 
-## Unreleased - Version 2.1.0
+## Version 2.1.0 -- 2019-03-11
 
 Notable differences from version 2.0.1.
 
