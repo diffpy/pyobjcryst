@@ -135,6 +135,9 @@ def getversioncfg():
 
 versiondata = getversioncfg()
 
+with open(os.path.join(MYDIR, 'README.rst')) as fp:
+    long_description = fp.read()
+
 # define distribution
 setup_args = dict(
     name = "pyobjcryst",
@@ -144,6 +147,8 @@ setup_args = dict(
     maintainer = 'Pavol Juhas',
     maintainer_email = 'pavol.juhas@gmail.com',
     description = "Python bindings to the ObjCryst++ library.",
+    long_description = long_description,
+    long_description_content_type = 'text/x-rst',
     license = "BSD-style license",
     url = "https://github.com/diffpy/pyobjcryst",
 
