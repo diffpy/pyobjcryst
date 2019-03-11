@@ -1,50 +1,40 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>pyobjcryst documentation &#8212; pyobjcryst 2.0.2 documentation</title>
-    
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <title>pyobjcryst documentation &#8212; pyobjcryst 2.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '2.0.2',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
     <script type="text/javascript" src="_static/sidebar.js"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="pyobjcryst" href="api/modules.html" /> 
-  </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
+    <link rel="next" title="License" href="license.html" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <link rel="shortcut icon" type="image/png" href="_static/favicon.png" />
+    <meta name="viewport" content="width=device-width,initial-scale=0.8">
+    
+    
+
+  </head><body>
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="api/modules.html" title="pyobjcryst"
-             accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">pyobjcryst 2.0.2 documentation</a> &#187;</li> 
+        <li class="responsive-menu"><a href="#sidebar-anchor" title="Navigation">&#9776;</a></li>
+        <li><a href="#">pyobjcryst 2.1.0 documentation</a> &#187;</li> 
       </ul>
-    </div>  
+    </div>
+    
+  
 
     <div class="document">
       <div class="documentwrapper">
@@ -52,150 +42,12 @@
           <div class="body" role="main">
             
   <div class="section" id="pyobjcryst-documentation">
-<span id="manual-index"></span><h1>pyobjcryst documentation<a class="headerlink" href="#pyobjcryst-documentation" title="Permalink to this headline">¶</a></h1>
+<h1>pyobjcryst documentation<a class="headerlink" href="#pyobjcryst-documentation" title="Permalink to this headline">¶</a></h1>
 <p>pyobjcryst - Python bindings to the ObjCryst++ Object-Oriented
 Crystallographic Library</p>
-<div class="section" id="disclaimer">
-<h2>Disclaimer<a class="headerlink" href="#disclaimer" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">OPEN</span> <span class="n">SOURCE</span> <span class="n">LICENSE</span> <span class="n">AGREEMENT</span>
-<span class="o">=============================</span>
-
-<span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2009</span><span class="o">-</span><span class="mi">2011</span><span class="p">,</span> <span class="n">University</span> <span class="n">of</span> <span class="n">Tennessee</span>
-<span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">1989</span><span class="p">,</span> <span class="mi">1991</span> <span class="n">Free</span> <span class="n">Software</span> <span class="n">Foundation</span><span class="p">,</span> <span class="n">Inc</span><span class="o">.</span>
-<span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2006</span><span class="p">,</span> <span class="n">The</span> <span class="n">Regents</span> <span class="n">of</span> <span class="n">the</span> <span class="n">University</span> <span class="n">of</span> <span class="n">California</span> <span class="n">through</span>
-    <span class="n">Lawrence</span> <span class="n">Berkeley</span> <span class="n">National</span> <span class="n">Laboratory</span>
-<span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2014</span><span class="p">,</span> <span class="n">Australian</span> <span class="n">Synchrotron</span> <span class="n">Research</span> <span class="n">Program</span> <span class="n">Inc</span><span class="o">.</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;ASRP&quot;</span><span class="p">)</span>
-<span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2006</span><span class="o">-</span><span class="mi">2007</span><span class="p">,</span> <span class="n">Board</span> <span class="n">of</span> <span class="n">Trustees</span> <span class="n">of</span> <span class="n">Michigan</span> <span class="n">State</span> <span class="n">University</span>
-<span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2008</span><span class="o">-</span><span class="mi">2012</span><span class="p">,</span> <span class="n">The</span> <span class="n">Trustees</span> <span class="n">of</span> <span class="n">Columbia</span> <span class="n">University</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">City</span>
-    <span class="n">of</span> <span class="n">New</span> <span class="n">York</span>
-
-<span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2014</span><span class="o">-</span><span class="mi">2017</span><span class="p">,</span> <span class="n">Brookhaven</span> <span class="n">Science</span> <span class="n">Associates</span><span class="p">,</span> <span class="n">Brookhaven</span> <span class="n">National</span>
-    <span class="n">Laboratory</span>
-
-
-<span class="n">The</span> <span class="s2">&quot;DiffPy-CMI&quot;</span> <span class="ow">is</span> <span class="n">distributed</span> <span class="n">subject</span> <span class="n">to</span> <span class="n">the</span> <span class="n">following</span> <span class="n">license</span> <span class="n">conditions</span><span class="p">:</span>
-
-
-<span class="n">SOFTWARE</span> <span class="n">LICENSE</span> <span class="n">AGREEMENT</span>
-
-    <span class="n">Software</span><span class="p">:</span> <span class="n">DiffPy</span><span class="o">-</span><span class="n">CMI</span>
-
-
-<span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">The</span> <span class="s2">&quot;Software&quot;</span><span class="p">,</span> <span class="n">below</span><span class="p">,</span> <span class="n">refers</span> <span class="n">to</span> <span class="n">the</span> <span class="n">aforementioned</span> <span class="n">DiffPy</span><span class="o">-</span><span class="n">CMI</span> <span class="p">(</span><span class="ow">in</span> <span class="n">either</span>
-<span class="n">source</span> <span class="n">code</span><span class="p">,</span> <span class="ow">or</span> <span class="n">binary</span> <span class="n">form</span> <span class="ow">and</span> <span class="n">accompanying</span> <span class="n">documentation</span><span class="p">)</span><span class="o">.</span>
-
-<span class="n">Part</span> <span class="n">of</span> <span class="n">the</span> <span class="n">software</span> <span class="n">was</span> <span class="n">derived</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">DANSE</span><span class="p">,</span> <span class="n">ObjCryst</span><span class="o">++</span> <span class="p">(</span><span class="k">with</span> <span class="n">permission</span><span class="p">),</span>
-<span class="n">PyCifRW</span><span class="p">,</span> <span class="n">Python</span> <span class="n">periodictable</span><span class="p">,</span> <span class="n">CCTBX</span><span class="p">,</span> <span class="ow">and</span> <span class="n">SasView</span> <span class="nb">open</span> <span class="n">source</span> <span class="n">projects</span><span class="p">,</span> <span class="n">of</span>
-<span class="n">which</span> <span class="n">the</span> <span class="n">original</span> <span class="n">Copyrights</span> <span class="n">are</span> <span class="n">contained</span> <span class="ow">in</span> <span class="n">each</span> <span class="n">individual</span> <span class="n">file</span><span class="o">.</span>
-
-<span class="n">Each</span> <span class="n">licensee</span> <span class="ow">is</span> <span class="n">addressed</span> <span class="k">as</span> <span class="s2">&quot;you&quot;</span> <span class="ow">or</span> <span class="s2">&quot;Licensee.&quot;</span>
-
-
-<span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">The</span> <span class="n">copyright</span> <span class="n">holders</span> <span class="n">shown</span> <span class="n">above</span> <span class="ow">and</span> <span class="n">their</span> <span class="n">third</span><span class="o">-</span><span class="n">party</span> <span class="n">Licensors</span> <span class="n">hereby</span>
-<span class="n">grant</span> <span class="n">licensee</span> <span class="n">a</span> <span class="n">royalty</span><span class="o">-</span><span class="n">free</span> <span class="n">nonexclusive</span> <span class="n">license</span><span class="p">,</span> <span class="n">subject</span> <span class="n">to</span> <span class="n">the</span> <span class="n">limitations</span>
-<span class="n">stated</span> <span class="n">herein</span> <span class="ow">and</span> <span class="n">U</span><span class="o">.</span><span class="n">S</span><span class="o">.</span> <span class="n">Government</span> <span class="n">license</span> <span class="n">rights</span><span class="o">.</span>
-
-
-<span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="n">You</span> <span class="n">may</span> <span class="n">modify</span> <span class="ow">and</span> <span class="n">make</span> <span class="n">a</span> <span class="n">copy</span> <span class="ow">or</span> <span class="n">copies</span> <span class="n">of</span> <span class="n">the</span> <span class="n">software</span> <span class="k">for</span> <span class="n">use</span> <span class="n">within</span>
-<span class="n">your</span> <span class="n">organization</span><span class="p">,</span> <span class="k">if</span> <span class="n">you</span> <span class="n">meet</span> <span class="n">the</span> <span class="n">following</span> <span class="n">conditions</span><span class="p">:</span>
-
-    <span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="n">Copies</span> <span class="ow">in</span> <span class="n">source</span> <span class="n">code</span> <span class="n">must</span> <span class="n">include</span> <span class="n">the</span> <span class="n">copyright</span> <span class="n">notice</span> <span class="ow">and</span> <span class="n">this</span>
-        <span class="n">software</span> <span class="n">license</span> <span class="n">agreement</span><span class="o">.</span>
-
-    <span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="n">Copies</span> <span class="ow">in</span> <span class="n">binary</span> <span class="n">form</span> <span class="n">must</span> <span class="n">include</span> <span class="n">the</span> <span class="n">copyright</span> <span class="n">notice</span> <span class="ow">and</span> <span class="n">this</span>
-        <span class="n">Software</span> <span class="n">License</span> <span class="n">Agreement</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">documentation</span> <span class="ow">and</span><span class="o">/</span><span class="ow">or</span> <span class="n">other</span> <span class="n">materials</span>
-        <span class="n">provided</span> <span class="k">with</span> <span class="n">the</span> <span class="n">copy</span><span class="o">.</span>
-
-
-<span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">You</span> <span class="n">may</span> <span class="n">modify</span> <span class="n">a</span> <span class="n">copy</span> <span class="ow">or</span> <span class="n">copies</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Software</span> <span class="ow">or</span> <span class="nb">any</span> <span class="n">portion</span> <span class="n">of</span> <span class="n">it</span><span class="p">,</span> <span class="n">thus</span>
-<span class="n">forming</span> <span class="n">a</span> <span class="n">work</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span> <span class="n">Software</span><span class="p">,</span> <span class="ow">and</span> <span class="n">distribute</span> <span class="n">copies</span> <span class="n">of</span> <span class="n">such</span> <span class="n">work</span>
-<span class="n">outside</span> <span class="n">your</span> <span class="n">organization</span><span class="p">,</span> <span class="k">if</span> <span class="n">you</span> <span class="n">meet</span> <span class="nb">all</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">conditions</span><span class="p">:</span>
-
-    <span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="n">Copies</span> <span class="ow">in</span> <span class="n">source</span> <span class="n">code</span> <span class="n">must</span> <span class="n">include</span> <span class="n">the</span> <span class="n">copyright</span> <span class="n">notice</span> <span class="ow">and</span> <span class="n">this</span>
-        <span class="n">Software</span> <span class="n">License</span> <span class="n">Agreement</span><span class="p">;</span>
-
-    <span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="n">Copies</span> <span class="ow">in</span> <span class="n">binary</span> <span class="n">form</span> <span class="n">must</span> <span class="n">include</span> <span class="n">the</span> <span class="n">copyright</span> <span class="n">notice</span> <span class="ow">and</span> <span class="n">this</span>
-        <span class="n">Software</span> <span class="n">License</span> <span class="n">Agreement</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">documentation</span> <span class="ow">and</span><span class="o">/</span><span class="ow">or</span> <span class="n">other</span> <span class="n">materials</span>
-        <span class="n">provided</span> <span class="k">with</span> <span class="n">the</span> <span class="n">copy</span><span class="p">;</span>
-
-    <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="n">Modified</span> <span class="n">copies</span> <span class="ow">and</span> <span class="n">works</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span> <span class="n">Software</span> <span class="n">must</span> <span class="n">carry</span> <span class="n">prominent</span>
-        <span class="n">notices</span> <span class="n">stating</span> <span class="n">that</span> <span class="n">you</span> <span class="n">changed</span> <span class="n">specified</span> <span class="n">portions</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Software</span><span class="o">.</span>
-
-    <span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="n">Neither</span> <span class="n">the</span> <span class="n">name</span> <span class="n">of</span> <span class="n">Brookhaven</span> <span class="n">Science</span> <span class="n">Associates</span> <span class="ow">or</span> <span class="n">Brookhaven</span>
-        <span class="n">National</span> <span class="n">Laboratory</span> <span class="n">nor</span> <span class="n">the</span> <span class="n">names</span> <span class="n">of</span> <span class="n">its</span> <span class="n">contributors</span> <span class="n">may</span> <span class="n">be</span> <span class="n">used</span> <span class="n">to</span>
-        <span class="n">endorse</span> <span class="ow">or</span> <span class="n">promote</span> <span class="n">products</span> <span class="n">derived</span> <span class="kn">from</span> <span class="nn">this</span> <span class="n">software</span> <span class="n">without</span> <span class="n">specific</span>
-        <span class="n">written</span> <span class="n">permission</span><span class="o">.</span>
-
-
-<span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="n">Portions</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Software</span> <span class="n">resulted</span> <span class="kn">from</span> <span class="nn">work</span> <span class="n">developed</span> <span class="n">under</span> <span class="n">a</span> <span class="n">U</span><span class="o">.</span><span class="n">S</span><span class="o">.</span>
-<span class="n">Government</span> <span class="n">contract</span> <span class="ow">and</span> <span class="n">are</span> <span class="n">subject</span> <span class="n">to</span> <span class="n">the</span> <span class="n">following</span> <span class="n">license</span><span class="p">:</span>
-<span class="n">The</span> <span class="n">Government</span> <span class="ow">is</span> <span class="n">granted</span> <span class="k">for</span> <span class="n">itself</span> <span class="ow">and</span> <span class="n">others</span> <span class="n">acting</span> <span class="n">on</span> <span class="n">its</span> <span class="n">behalf</span> <span class="n">a</span>
-<span class="n">paid</span><span class="o">-</span><span class="n">up</span><span class="p">,</span> <span class="n">nonexclusive</span><span class="p">,</span> <span class="n">irrevocable</span> <span class="n">worldwide</span> <span class="n">license</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">computer</span> <span class="n">software</span>
-<span class="n">to</span> <span class="n">reproduce</span><span class="p">,</span> <span class="n">prepare</span> <span class="n">derivative</span> <span class="n">works</span><span class="p">,</span> <span class="ow">and</span> <span class="n">perform</span> <span class="n">publicly</span> <span class="ow">and</span> <span class="n">display</span>
-<span class="n">publicly</span><span class="o">.</span>
-
-
-<span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="n">WARRANTY</span> <span class="n">DISCLAIMER</span><span class="o">.</span> <span class="n">THE</span> <span class="n">SOFTWARE</span> <span class="n">IS</span> <span class="n">SUPPLIED</span> <span class="s2">&quot;AS IS&quot;</span> <span class="n">WITHOUT</span>
-<span class="n">WARRANTY</span> <span class="n">OF</span> <span class="n">ANY</span> <span class="n">KIND</span><span class="o">.</span> <span class="n">THE</span> <span class="n">COPYRIGHT</span> <span class="n">HOLDERS</span><span class="p">,</span> <span class="n">THEIR</span> <span class="n">THIRD</span> <span class="n">PARTY</span>
-<span class="n">LICENSORS</span><span class="p">,</span> <span class="n">THE</span> <span class="n">UNITED</span> <span class="n">STATES</span><span class="p">,</span> <span class="n">THE</span> <span class="n">UNITED</span> <span class="n">STATES</span> <span class="n">DEPARTMENT</span> <span class="n">OF</span> <span class="n">ENERGY</span><span class="p">,</span> <span class="n">AND</span>
-<span class="n">THEIR</span> <span class="n">EMPLOYEES</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">DISCLAIM</span> <span class="n">ANY</span> <span class="n">WARRANTIES</span><span class="p">,</span> <span class="n">EXPRESS</span> <span class="n">OR</span> <span class="n">IMPLIED</span><span class="p">,</span> <span class="n">INCLUDING</span>
-<span class="n">BUT</span> <span class="n">NOT</span> <span class="n">LIMITED</span> <span class="n">TO</span> <span class="n">ANY</span> <span class="n">IMPLIED</span> <span class="n">WARRANTIES</span> <span class="n">OF</span> <span class="n">MERCHANTABILITY</span><span class="p">,</span> <span class="n">FITNESS</span> <span class="n">FOR</span> <span class="n">A</span>
-<span class="n">PARTICULAR</span> <span class="n">PURPOSE</span><span class="p">,</span> <span class="n">TITLE</span> <span class="n">OR</span> <span class="n">NON</span><span class="o">-</span><span class="n">INFRINGEMENT</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">DO</span> <span class="n">NOT</span> <span class="n">ASSUME</span> <span class="n">ANY</span> <span class="n">LEGAL</span>
-<span class="n">LIABILITY</span> <span class="n">OR</span> <span class="n">RESPONSIBILITY</span> <span class="n">FOR</span> <span class="n">THE</span> <span class="n">ACCURACY</span><span class="p">,</span> <span class="n">COMPLETENESS</span><span class="p">,</span> <span class="n">OR</span> <span class="n">USEFULNESS</span> <span class="n">OF</span>
-<span class="n">THE</span> <span class="n">SOFTWARE</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="n">DO</span> <span class="n">NOT</span> <span class="n">REPRESENT</span> <span class="n">THAT</span> <span class="n">USE</span> <span class="n">OF</span> <span class="n">THE</span> <span class="n">SOFTWARE</span> <span class="n">WOULD</span> <span class="n">NOT</span> <span class="n">INFRINGE</span>
-<span class="n">PRIVATELY</span> <span class="n">OWNED</span> <span class="n">RIGHTS</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">DO</span> <span class="n">NOT</span> <span class="n">WARRANT</span> <span class="n">THAT</span> <span class="n">THE</span> <span class="n">SOFTWARE</span> <span class="n">WILL</span> <span class="n">FUNCTION</span>
-<span class="n">UNINTERRUPTED</span><span class="p">,</span> <span class="n">THAT</span> <span class="n">IT</span> <span class="n">IS</span> <span class="n">ERROR</span><span class="o">-</span><span class="n">FREE</span> <span class="n">OR</span> <span class="n">THAT</span> <span class="n">ANY</span> <span class="n">ERRORS</span> <span class="n">WILL</span> <span class="n">BE</span> <span class="n">CORRECTED</span><span class="o">.</span>
-
-
-<span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="n">LIMITATION</span> <span class="n">OF</span> <span class="n">LIABILITY</span><span class="o">.</span> <span class="n">IN</span> <span class="n">NO</span> <span class="n">EVENT</span> <span class="n">WILL</span> <span class="n">THE</span> <span class="n">COPYRIGHT</span> <span class="n">HOLDERS</span><span class="p">,</span> <span class="n">THEIR</span>
-<span class="n">THIRD</span> <span class="n">PARTY</span> <span class="n">LICENSORS</span><span class="p">,</span> <span class="n">THE</span> <span class="n">UNITED</span> <span class="n">STATES</span><span class="p">,</span> <span class="n">THE</span> <span class="n">UNITED</span> <span class="n">STATES</span> <span class="n">DEPARTMENT</span> <span class="n">OF</span>
-<span class="n">ENERGY</span><span class="p">,</span> <span class="n">OR</span> <span class="n">THEIR</span> <span class="n">EMPLOYEES</span><span class="p">:</span> <span class="n">BE</span> <span class="n">LIABLE</span> <span class="n">FOR</span>  <span class="n">ANY</span> <span class="n">INDIRECT</span><span class="p">,</span> <span class="n">INCIDENTAL</span><span class="p">,</span>
-<span class="n">CONSEQUENTIAL</span><span class="p">,</span> <span class="n">SPECIAL</span> <span class="n">OR</span> <span class="n">PUNITIVE</span>  <span class="n">DAMAGES</span> <span class="n">OF</span> <span class="n">ANY</span> <span class="n">KIND</span> <span class="n">OR</span> <span class="n">NATURE</span><span class="p">,</span> <span class="n">INCLUDING</span>
-<span class="n">BUT</span> <span class="n">NOT</span> <span class="n">LIMITED</span> <span class="n">TO</span> <span class="n">LOSS</span> <span class="n">OF</span> <span class="n">PROFITS</span> <span class="n">OR</span> <span class="n">LOSS</span> <span class="n">OF</span> <span class="n">DATA</span><span class="p">,</span> <span class="n">FOR</span> <span class="n">ANY</span> <span class="n">REASON</span> <span class="n">WHATSOEVER</span><span class="p">,</span>
-<span class="n">WHETHER</span> <span class="n">SUCH</span> <span class="n">LIABILITY</span> <span class="n">IS</span> <span class="n">ASSERTED</span> <span class="n">ON</span> <span class="n">THE</span> <span class="n">BASIS</span> <span class="n">OF</span> <span class="n">CONTRACT</span><span class="p">,</span> <span class="n">TORT</span> <span class="p">(</span><span class="n">INCLUDING</span>
-<span class="n">NEGLIGENCE</span> <span class="n">OR</span> <span class="n">STRICT</span> <span class="n">LIABILITY</span><span class="p">),</span> <span class="n">OR</span> <span class="n">OTHERWISE</span><span class="p">,</span> <span class="n">EVEN</span> <span class="n">IF</span> <span class="n">ANY</span> <span class="n">OF</span> <span class="n">SAID</span> <span class="n">PARTIES</span> <span class="n">HAS</span>
-<span class="n">BEEN</span> <span class="n">WARNED</span> <span class="n">OF</span> <span class="n">THE</span> <span class="n">POSSIBILITY</span> <span class="n">OF</span> <span class="n">SUCH</span> <span class="n">LOSS</span> <span class="n">OR</span> <span class="n">DAMAGES</span><span class="o">.</span>
-
-
-<span class="n">Brookhaven</span> <span class="n">National</span> <span class="n">Laboratory</span> <span class="n">Notice</span>
-<span class="o">=====================================</span>
-
-<span class="n">Acknowledgment</span> <span class="n">of</span> <span class="n">sponsorship</span>
-<span class="o">-----------------------------</span>
-
-<span class="n">This</span> <span class="n">software</span> <span class="n">was</span> <span class="n">produced</span> <span class="n">by</span> <span class="n">the</span> <span class="n">Brookhaven</span> <span class="n">National</span> <span class="n">Laboratory</span><span class="p">,</span> <span class="n">under</span>
-<span class="n">Contract</span> <span class="n">DE</span><span class="o">-</span><span class="n">AC02</span><span class="o">-</span><span class="mi">98</span><span class="n">CH10886</span> <span class="k">with</span> <span class="n">the</span> <span class="n">Department</span> <span class="n">of</span> <span class="n">Energy</span><span class="o">.</span>
-
-
-<span class="n">Government</span> <span class="n">disclaimer</span> <span class="n">of</span> <span class="n">liability</span>
-<span class="o">----------------------------------</span>
-
-<span class="n">Neither</span> <span class="n">the</span> <span class="n">United</span> <span class="n">States</span> <span class="n">nor</span> <span class="n">the</span> <span class="n">United</span> <span class="n">States</span> <span class="n">Department</span> <span class="n">of</span> <span class="n">Energy</span><span class="p">,</span> <span class="n">nor</span>
-<span class="nb">any</span> <span class="n">of</span> <span class="n">their</span> <span class="n">employees</span><span class="p">,</span> <span class="n">makes</span> <span class="nb">any</span> <span class="n">warranty</span><span class="p">,</span> <span class="n">express</span> <span class="ow">or</span> <span class="n">implied</span><span class="p">,</span> <span class="ow">or</span> <span class="n">assumes</span>
-<span class="nb">any</span> <span class="n">legal</span> <span class="n">liability</span> <span class="ow">or</span> <span class="n">responsibility</span> <span class="k">for</span> <span class="n">the</span> <span class="n">accuracy</span><span class="p">,</span> <span class="n">completeness</span><span class="p">,</span> <span class="ow">or</span>
-<span class="n">usefulness</span> <span class="n">of</span> <span class="nb">any</span> <span class="n">data</span><span class="p">,</span> <span class="n">apparatus</span><span class="p">,</span> <span class="n">product</span><span class="p">,</span> <span class="ow">or</span> <span class="n">process</span> <span class="n">disclosed</span><span class="p">,</span> <span class="ow">or</span>
-<span class="n">represents</span> <span class="n">that</span> <span class="n">its</span> <span class="n">use</span> <span class="n">would</span> <span class="ow">not</span> <span class="n">infringe</span> <span class="n">privately</span> <span class="n">owned</span> <span class="n">rights</span><span class="o">.</span>
-
-
-<span class="n">Brookhaven</span> <span class="n">disclaimer</span> <span class="n">of</span> <span class="n">liability</span>
-<span class="o">----------------------------------</span>
-
-<span class="n">Brookhaven</span> <span class="n">National</span> <span class="n">Laboratory</span> <span class="n">makes</span> <span class="n">no</span> <span class="n">representations</span> <span class="ow">or</span> <span class="n">warranties</span><span class="p">,</span>
-<span class="n">express</span> <span class="ow">or</span> <span class="n">implied</span><span class="p">,</span> <span class="n">nor</span> <span class="n">assumes</span> <span class="nb">any</span> <span class="n">liability</span> <span class="k">for</span> <span class="n">the</span> <span class="n">use</span> <span class="n">of</span> <span class="n">this</span> <span class="n">software</span><span class="o">.</span>
-
-
-<span class="n">Maintenance</span> <span class="n">of</span> <span class="n">notice</span>
-<span class="o">---------------------</span>
-
-<span class="n">In</span> <span class="n">the</span> <span class="n">interest</span> <span class="n">of</span> <span class="n">clarity</span> <span class="n">regarding</span> <span class="n">the</span> <span class="n">origin</span> <span class="ow">and</span> <span class="n">status</span> <span class="n">of</span> <span class="n">this</span>
-<span class="n">software</span><span class="p">,</span> <span class="n">Brookhaven</span> <span class="n">National</span> <span class="n">Laboratory</span> <span class="n">requests</span> <span class="n">that</span> <span class="nb">any</span> <span class="n">recipient</span> <span class="n">of</span> <span class="n">it</span>
-<span class="n">maintain</span> <span class="n">this</span> <span class="n">notice</span> <span class="n">affixed</span> <span class="n">to</span> <span class="nb">any</span> <span class="n">distribution</span> <span class="n">by</span> <span class="n">the</span> <span class="n">recipient</span> <span class="n">that</span>
-<span class="n">contains</span> <span class="n">a</span> <span class="n">copy</span> <span class="ow">or</span> <span class="n">derivative</span> <span class="n">of</span> <span class="n">this</span> <span class="n">software</span><span class="o">.</span>
-
-
-<span class="n">END</span> <span class="n">OF</span> <span class="n">LICENSE</span>
-</pre></div>
-</div>
+<div class="line-block">
+<div class="line">Software version 2.1.0.</div>
+<div class="line">Last updated March 11, 2019.</div>
 </div>
 <div class="section" id="authors">
 <h2>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h2>
@@ -208,42 +60,25 @@ modeling initiative at the Brookhaven National Laboratory.</p>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>See the <a class="reference external" href="https://github.com/diffpy/pyobjcryst#requirements">README.rst</a>
+<p>See the <a class="reference external" href="https://github.com/diffpy/pyobjcryst#requirements">README</a>
 file included with the distribution.</p>
 </div>
-<div class="section" id="api">
-<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="table-of-contents">
+<h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api/modules.html">pyobjcryst</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/pyobjcryst.html">pyobjcryst package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.atom">pyobjcryst.atom module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.crystal">pyobjcryst.crystal module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.general">pyobjcryst.general module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.io">pyobjcryst.io module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.molecule">pyobjcryst.molecule module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.polyhedron">pyobjcryst.polyhedron module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.refinableobj">pyobjcryst.refinableobj module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.scatterer">pyobjcryst.scatterer module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.scatteringpower">pyobjcryst.scatteringpower module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.scatteringpowersphere">pyobjcryst.scatteringpowersphere module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.spacegroup">pyobjcryst.spacegroup module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.unitcell">pyobjcryst.unitcell module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.utils">pyobjcryst.utils module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst.version">pyobjcryst.version module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#pyobjcryst-zscatterer-module">pyobjcryst.zscatterer module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/pyobjcryst.html#module-pyobjcryst">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">pyobjcryst API</a></li>
 </ul>
 </div>
+</div>
+<div class="section" id="indices">
+<h2>Indices<a class="headerlink" href="#indices" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
-<p>Last updated May 08, 2017.</p>
 </div>
 </div>
 
@@ -253,20 +88,23 @@ file included with the distribution.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table Of Contents</a></h3>
+    <a id="sidebar-anchor"></a>
+    
+
+  <h3><a href="#">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">pyobjcryst documentation</a><ul>
-<li><a class="reference internal" href="#disclaimer">Disclaimer</a></li>
 <li><a class="reference internal" href="#authors">Authors</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#api">API</a></li>
+<li><a class="reference internal" href="#table-of-contents">Table of contents</a></li>
+<li><a class="reference internal" href="#indices">Indices</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Next topic</h4>
-  <p class="topless"><a href="api/modules.html"
-                        title="next chapter">pyobjcryst</a></p>
+  <p class="topless"><a href="license.html"
+                        title="next chapter">License</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -276,36 +114,38 @@ file included with the distribution.</p>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
-             >index</a></li>
+             accesskey="I">index</a></li>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="api/modules.html" title="pyobjcryst"
-             >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">pyobjcryst 2.0.2 documentation</a> &#187;</li> 
+          <a href="license.html" title="License"
+             accesskey="N">next</a> |</li>
       </ul>
     </div>
+
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, Brookhaven National Laboratory.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+        &#169; Copyright 2019, Brookhaven National Laboratory.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
     </div>
   </body>
 </html>
