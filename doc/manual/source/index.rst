@@ -1,5 +1,3 @@
-.. _manual-index:
-
 ####################################################
 pyobjcryst documentation
 ####################################################
@@ -7,12 +5,8 @@ pyobjcryst documentation
 pyobjcryst - Python bindings to the ObjCryst++ Object-Oriented
 Crystallographic Library
 
-===================
-Disclaimer
-===================
-
-.. literalinclude:: ../../../LICENSE.txt
-
+| Software version |release|.
+| Last updated |today|.
 
 ================
 Authors
@@ -32,18 +26,22 @@ https://github.com/diffpy/pyobjcryst/graphs/contributors.
 Installation
 ======================================
 
-See the `README.rst <https://github.com/diffpy/pyobjcryst#requirements>`_
+See the `README <https://github.com/diffpy/pyobjcryst#requirements>`_
 file included with the distribution.
 
 ======================================
-API
+Table of contents
 ======================================
 
 .. toctree::
-   :maxdepth: 3
+   :titlesonly:
 
+   license
    api/modules.rst
 
-* :ref:`genindex`
+========================================================================
+Indices
+========================================================================
 
-Last updated |today|.
+* :ref:`genindex`
+* :ref:`search`
