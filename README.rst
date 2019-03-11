@@ -116,11 +116,9 @@ Anaconda environment.  This can be achieved by setting the ``CPATH``,
    # compile and re-install pyobjcryst
    scons -j4 build=debug develop
 
-On Mac OS X the distributed Anaconda packages are built for operating
-system version 10.7, which may be incompatible with codes compiled on a
-newer OS.  To avoid this problem set the environment variable
-``MACOSX_DEPLOYMENT_TARGET=10.7``.  This allows to build pyobjcryst
-against the Anaconda package for the libobjcryst library.
+Note the Anaconda package for the required libobjcryst library is built
+with a C++ compiler provided by Anaconda.  This may cause incompatibility
+with system C++.  In such case please use Anaconda C++ to build pyobjcryst.
 
 
 CONTACTS
