@@ -37,6 +37,7 @@ Table of contents
    :titlesonly:
 
    license
+   release
    api/modules
 
 ========================================================================
