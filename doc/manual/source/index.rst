@@ -37,7 +37,7 @@ Table of contents
    :titlesonly:
 
    license
-   api/modules.rst
+   api/modules
 
 ========================================================================
 Indices
