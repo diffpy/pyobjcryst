@@ -101,6 +101,7 @@ void setpowderpatternobs (PowderPattern& pp, bp::object x)
 {
     CrystVector_REAL cvx;
     assignCrystVector(cvx, x);
+    MuteObjCrystUserInfo muzzle;
     pp.SetPowderPatternObs(cvx);
 }
 
