@@ -34,6 +34,21 @@ namespace bp = boost::python;
 
 typedef std::numeric_limits<double> doublelim;
 
+class MuteObjCrystUserInfo
+{
+    public:
+
+        MuteObjCrystUserInfo();
+        ~MuteObjCrystUserInfo();
+        void release();
+
+    private:
+
+        // pointer to the previous info function
+        void (*msave_info_func)(const std::string &);
+};
+
+
 // Switch stdout with another stream. To get things back the right way, just
 // switch again with the same stream.
 void swapstdout(std::ostream& buf);

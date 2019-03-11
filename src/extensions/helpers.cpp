@@ -32,6 +32,36 @@
 
 namespace bp = boost::python;
 
+namespace {
+
+void black_hole_info(const std::string& s)  { }
+
+}   // namespace
+
+// class MuteObjCrystUserInfo ------------------------------------------------
+
+MuteObjCrystUserInfo::MuteObjCrystUserInfo() :
+    msave_info_func(ObjCryst::fpObjCrystInformUser)
+{
+    ObjCryst::fpObjCrystInformUser = black_hole_info;
+}
+
+
+MuteObjCrystUserInfo::~MuteObjCrystUserInfo()
+{
+    this->release();
+}
+
+
+void MuteObjCrystUserInfo::release()
+{
+    using ObjCryst::fpObjCrystInformUser;
+    if (msave_info_func)  fpObjCrystInformUser = msave_info_func;
+    msave_info_func = NULL;
+}
+
+// free functions ------------------------------------------------------------
+
 void swapstdout(std::ostream& buf)
 {
     // Switch the stream buffer with std::cout, which is used by Print.
