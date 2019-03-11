@@ -1,8 +1,17 @@
-pyobjcryst package
-==================
+:tocdepth: 2
 
-Submodules
-----------
+##############
+pyobjcryst API
+##############
+
+
+pyobjcryst module
+-----------------
+
+.. automodule:: pyobjcryst
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 pyobjcryst.atom module
 ----------------------
@@ -120,15 +129,6 @@ pyobjcryst.zscatterer module
 ----------------------------
 
 .. automodule:: pyobjcryst.zscatterer
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: pyobjcryst
     :members:
     :undoc-members:
     :show-inheritance:
