@@ -184,7 +184,9 @@ _CreateCrystalFromCIF(bp::object input,
 {
     // Reading a cif file creates some output via fpObjCrystInformUser.
     // Mute the output and restore it on return or exception.
+    // Also mute any hardcoded output to cout.
     MuteObjCrystUserInfo muzzle;
+    CaptureStdOut gag;
 
     boost_adaptbx::python::streambuf sbuf(input);
     boost_adaptbx::python::streambuf::istream in(sbuf);
@@ -196,6 +198,9 @@ _CreateCrystalFromCIF(bp::object input,
     const bool checkSymAsXYZ = true;
     ObjCryst::CreateCrystalFromCIF(cif, verbose, checkSymAsXYZ,
             oneScatteringPowerPerElement, connectAtoms);
+
+    gag.release();
+    muzzle.release();
 
     int idx = gCrystalRegistry.GetNb();
     if(idx == idx0)

@@ -43,7 +43,9 @@ PowderPattern* _CreatePowderPatternFromCIF(bp::object input)
 {
     // Reading a cif file creates some output via fpObjCrystInformUser.
     // Mute the output and restore it on return or exception.
+    // Also mute any hardcoded output to cout.
     MuteObjCrystUserInfo muzzle;
+    CaptureStdOut gag;
 
     boost_adaptbx::python::streambuf sbuf(input);
     boost_adaptbx::python::streambuf::istream in(sbuf);
@@ -52,6 +54,9 @@ PowderPattern* _CreatePowderPatternFromCIF(bp::object input)
     int idx0 = gPowderPatternRegistry.GetNb();
 
     ObjCryst::CreatePowderPatternFromCIF(cif);
+
+    gag.release();
+    muzzle.release();
 
     int idx = gPowderPatternRegistry.GetNb();
     if(idx == idx0)
