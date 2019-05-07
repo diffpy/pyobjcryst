@@ -64,20 +64,12 @@ class CaptureStdOut
 
 };
 
-// Switch stdout with another stream. To get things back the right way, just
-// switch again with the same stream.
-void swapstdout(std::ostream& buf);
-
 template <class T>
 std::string __str__(const T& obj)
 {
-    // Switch the stream buffer with std::cout, which is used by Print.
-    std::ostringstream outbuf;
-    swapstdout(outbuf);
-    // Call Print()
+    CaptureStdOut outbuf;
     obj.Print();
-    // Switch the stream buffer back
-    swapstdout(outbuf);
+    outbuf.release();
 
     std::string outstr = outbuf.str();
     // Remove the trailing newline

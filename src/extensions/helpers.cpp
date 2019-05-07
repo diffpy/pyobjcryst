@@ -89,15 +89,6 @@ void CaptureStdOut::release()
 
 // free functions ------------------------------------------------------------
 
-void swapstdout(std::ostream& buf)
-{
-    // Switch the stream buffer with std::cout, which is used by Print.
-    std::streambuf* cout_strbuf(std::cout.rdbuf());
-    std::cout.rdbuf(buf.rdbuf());
-    buf.rdbuf(cout_strbuf);
-}
-
-
 void assignCrystVector(CrystVector<double>& cv, bp::object obj)
 {
     // copy data directly if it is a numpy array of doubles
