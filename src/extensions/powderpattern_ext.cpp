@@ -41,11 +41,11 @@ namespace {
 
 PowderPattern* _CreatePowderPatternFromCIF(bp::object input)
 {
-    // Reading a cif file creates some output. Let's redirect stdout to a junk
-    // stream and then throw it away.
-    // FIXME ... try to remove this kludge with junk buffer
-    ostringstream junk;
-    swapstdout(junk);
+    // Reading a cif file creates some output via fpObjCrystInformUser.
+    // Mute the output and restore it on return or exception.
+    // Also mute any hardcoded output to cout.
+    MuteObjCrystUserInfo muzzle;
+    CaptureStdOut gag;
 
     boost_adaptbx::python::streambuf sbuf(input);
     boost_adaptbx::python::streambuf::istream in(sbuf);
@@ -55,11 +55,10 @@ PowderPattern* _CreatePowderPatternFromCIF(bp::object input)
 
     ObjCryst::CreatePowderPatternFromCIF(cif);
 
+    gag.release();
+    muzzle.release();
+
     int idx = gPowderPatternRegistry.GetNb();
-
-    // Switch the stream buffer back
-    swapstdout(junk);
-
     if(idx == idx0)
     {
         throw ObjCryst::ObjCrystException("Cannot create powder pattern from CIF");

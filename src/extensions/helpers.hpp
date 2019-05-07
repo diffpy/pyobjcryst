@@ -48,21 +48,28 @@ class MuteObjCrystUserInfo
         void (*msave_info_func)(const std::string &);
 };
 
+class CaptureStdOut
+{
+    public:
 
-// Switch stdout with another stream. To get things back the right way, just
-// switch again with the same stream.
-void swapstdout(std::ostream& buf);
+        CaptureStdOut();
+        ~CaptureStdOut();
+        std::string str() const;
+        void release();
+
+    private:
+
+        std::ostringstream moutput;
+        std::streambuf* msave_cout_buffer;
+
+};
 
 template <class T>
 std::string __str__(const T& obj)
 {
-    // Switch the stream buffer with std::cout, which is used by Print.
-    std::ostringstream outbuf;
-    swapstdout(outbuf);
-    // Call Print()
+    CaptureStdOut outbuf;
     obj.Print();
-    // Switch the stream buffer back
-    swapstdout(outbuf);
+    outbuf.release();
 
     std::string outstr = outbuf.str();
     // Remove the trailing newline

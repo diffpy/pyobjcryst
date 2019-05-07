@@ -182,10 +182,11 @@ _CreateCrystalFromCIF(bp::object input,
         const bool oneScatteringPowerPerElement=false,
         const bool connectAtoms=false)
 {
-    // Reading a cif file creates some output. Let's redirect stdout to a junk
-    // stream and then throw it away.
-    ostringstream junk;
-    swapstdout(junk);
+    // Reading a cif file creates some output via fpObjCrystInformUser.
+    // Mute the output and restore it on return or exception.
+    // Also mute any hardcoded output to cout.
+    MuteObjCrystUserInfo muzzle;
+    CaptureStdOut gag;
 
     boost_adaptbx::python::streambuf sbuf(input);
     boost_adaptbx::python::streambuf::istream in(sbuf);
@@ -198,11 +199,10 @@ _CreateCrystalFromCIF(bp::object input,
     ObjCryst::CreateCrystalFromCIF(cif, verbose, checkSymAsXYZ,
             oneScatteringPowerPerElement, connectAtoms);
 
+    gag.release();
+    muzzle.release();
+
     int idx = gCrystalRegistry.GetNb();
-
-    // Switch the stream buffer back
-    swapstdout(junk);
-
     if(idx == idx0)
     {
         throw ObjCryst::ObjCrystException("Cannot create crystal from CIF");

@@ -60,16 +60,34 @@ void MuteObjCrystUserInfo::release()
     msave_info_func = NULL;
 }
 
-// free functions ------------------------------------------------------------
+// class CaptureStdOut -------------------------------------------------------
 
-void swapstdout(std::ostream& buf)
+CaptureStdOut::CaptureStdOut() :
+    msave_cout_buffer(std::cout.rdbuf())
 {
-    // Switch the stream buffer with std::cout, which is used by Print.
-    std::streambuf* cout_strbuf(std::cout.rdbuf());
-    std::cout.rdbuf(buf.rdbuf());
-    buf.rdbuf(cout_strbuf);
+    std::cout.rdbuf(moutput.rdbuf());
 }
 
+
+CaptureStdOut::~CaptureStdOut()
+{
+    this->release();
+}
+
+
+std::string CaptureStdOut::str() const
+{
+    return moutput.str();
+}
+
+
+void CaptureStdOut::release()
+{
+    if (msave_cout_buffer)  std::cout.rdbuf(msave_cout_buffer);
+    msave_cout_buffer = NULL;
+}
+
+// free functions ------------------------------------------------------------
 
 void assignCrystVector(CrystVector<double>& cv, bp::object obj)
 {
