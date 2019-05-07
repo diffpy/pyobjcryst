@@ -48,6 +48,21 @@ class MuteObjCrystUserInfo
         void (*msave_info_func)(const std::string &);
 };
 
+class CaptureStdOut
+{
+    public:
+
+        CaptureStdOut();
+        ~CaptureStdOut();
+        std::string str() const;
+        void release();
+
+    private:
+
+        std::ostringstream moutput;
+        std::streambuf* msave_cout_buffer;
+
+};
 
 // Switch stdout with another stream. To get things back the right way, just
 // switch again with the same stream.

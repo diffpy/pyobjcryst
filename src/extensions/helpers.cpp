@@ -60,6 +60,33 @@ void MuteObjCrystUserInfo::release()
     msave_info_func = NULL;
 }
 
+// class CaptureStdOut -------------------------------------------------------
+
+CaptureStdOut::CaptureStdOut() :
+    msave_cout_buffer(std::cout.rdbuf())
+{
+    std::cout.rdbuf(moutput.rdbuf());
+}
+
+
+CaptureStdOut::~CaptureStdOut()
+{
+    this->release();
+}
+
+
+std::string CaptureStdOut::str() const
+{
+    return moutput.str();
+}
+
+
+void CaptureStdOut::release()
+{
+    if (msave_cout_buffer)  std::cout.rdbuf(msave_cout_buffer);
+    msave_cout_buffer = NULL;
+}
+
 // free functions ------------------------------------------------------------
 
 void swapstdout(std::ostream& buf)
