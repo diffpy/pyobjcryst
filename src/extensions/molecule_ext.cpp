@@ -152,14 +152,8 @@ size_t _GetNbRigidGroups(Molecule& m)
 // Overloaded for safety
 MolAtom& _GetAtomIdx(Molecule& m, int idx)
 {
-    std::vector<MolAtom*>& v = m.GetAtomList();
-    if(idx < 0) idx += v.size();
-    if(0 == v.size() || idx < 0 || idx >= (int) v.size())
-    {
-        PyErr_SetString(PyExc_IndexError, "Index out of range");
-        throw_error_already_set();
-    }
-    return *v[idx];
+    int i = check_index(idx, m.GetNbComponent(), ALLOW_NEGATIVE);
+    return m.GetAtom(i);
 }
 
 // Overloaded for safety

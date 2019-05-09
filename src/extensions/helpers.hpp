@@ -136,4 +136,8 @@ template <class T> class CrystVector;
 
 void assignCrystVector(CrystVector<double>& cv, bp::object obj);
 
+// check index bounds and convert negative index to equivalent value
+enum NegativeIndexFlag {POSITIVE, ALLOW_NEGATIVE};
+int check_index(int idx, int size, NegativeIndexFlag nflag);
+
 #endif
