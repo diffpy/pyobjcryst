@@ -118,3 +118,16 @@ void assignCrystVector(CrystVector<double>& cv, bp::object obj)
         for (; vv != values.end(); ++vv, ++dst)  *dst = *vv;
     }
 }
+
+
+int check_index(int idx, int size, NegativeIndexFlag nflag)
+{
+    const int lo = (nflag == ALLOW_NEGATIVE) ? -size : 0;
+    if (idx < lo || idx >= size)
+    {
+        PyErr_SetString(PyExc_IndexError, "Index out of range.");
+        bp::throw_error_already_set();
+    }
+    int rv = (idx < 0) ? size + idx : idx;
+    return rv;
+}

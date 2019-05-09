@@ -31,6 +31,7 @@
 #include <boost/python/def.hpp>
 #include <boost/python/copy_const_reference.hpp>
 #include <boost/python/manage_new_object.hpp>
+#include <boost/python/tuple.hpp>
 
 #include <string>
 #include <map>
@@ -72,6 +73,37 @@ void _RemoveScatterer(Crystal& crystal, Scatterer* scatt)
     }
     crystal.RemoveScatterer(scatt, false);
 }
+
+// Overload to handle invalid index values
+Scatterer& _GetScattByIndex(Crystal& crystal, int idx)
+{
+    int i = check_index(idx, crystal.GetNbScatterer(), ALLOW_NEGATIVE);
+    return crystal.GetScatt(i);
+}
+
+
+// Overload to handle invalid names
+Scatterer* _GetScattByName(Crystal& crystal, const std::string& name)
+{
+    Scatterer* rv = NULL;
+    try
+    {
+        CaptureStdOut gag;
+        rv = &(crystal.GetScatt(name));
+    }
+    catch (ObjCrystException e)
+    {
+        rv = NULL;
+    }
+    if (!rv)
+    {
+        bp::object emsg = ("Invalid atom name %r" % bp::make_tuple(name));
+        PyErr_SetObject(PyExc_ValueError, emsg.ptr());
+        throw_error_already_set();
+    }
+    return rv;
+}
+
 
 // Overloaded so that AddScatteringPower does not add NULL
 void _AddScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
@@ -240,18 +272,10 @@ void wrap_crystal()
             with_custodian_and_ward<1,2,with_custodian_and_ward<2,1> >())
         .def("RemoveScatterer", &_RemoveScatterer)
         .def("GetNbScatterer", &Crystal::GetNbScatterer)
-        .def("GetScatt",
-            (Scatterer& (Crystal::*)(const std::string&)) &Crystal::GetScatt,
-            return_internal_reference<>())
-        .def("GetScatt",
-            (Scatterer& (Crystal::*)(const long)) &Crystal::GetScatt,
-            return_internal_reference<>())
-        .def("GetScatterer",
-            (Scatterer& (Crystal::*)(const std::string&)) &Crystal::GetScatt,
-            return_internal_reference<>())
-        .def("GetScatterer",
-            (Scatterer& (Crystal::*)(const long)) &Crystal::GetScatt,
-            return_internal_reference<>())
+        .def("GetScatt", _GetScattByName, return_internal_reference<>())
+        .def("GetScatt", _GetScattByIndex, return_internal_reference<>())
+        .def("GetScatterer", _GetScattByName, return_internal_reference<>())
+        .def("GetScatterer", _GetScattByIndex, return_internal_reference<>())
         .def("GetScattererRegistry", ( ObjRegistry<Scatterer>&
             (Crystal::*) ()) &Crystal::GetScattererRegistry,
             return_internal_reference<>())

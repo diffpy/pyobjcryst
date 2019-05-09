@@ -40,7 +40,7 @@
 * - FindBond returns the bond if found, None otherwise
 * - FindBondAngle returns the bond angle if found, None otherwise
 * - FindDihedralAngle returns the dihedral angle if found, None otherwise
-* - FindAtom is identical to GetAtom.
+* - FindAtom returns the Atom if found or None otherwise
 * - FlipAtomGroup is not wrapped.
 * - FlipGroup, RotorGroup and StretchModeGroup are not wrapped.
 * - StretchMode getters are not wrapped.
@@ -152,14 +152,30 @@ size_t _GetNbRigidGroups(Molecule& m)
 // Overloaded for safety
 MolAtom& _GetAtomIdx(Molecule& m, int idx)
 {
-    std::vector<MolAtom*>& v = m.GetAtomList();
-    if(idx < 0) idx += v.size();
-    if(0 == v.size() || idx < 0 || idx >= (int) v.size())
+    int i = check_index(idx, m.GetNbComponent(), ALLOW_NEGATIVE);
+    return m.GetAtom(i);
+}
+
+// Overloaded for safety
+MolAtom* _FindAtom(Molecule& m, const std::string& name)
+{
+    MolAtom* rv = NULL;
+    auto ii = m.FindAtom(name);
+    if (ii != m.mvpAtom.rend())  rv = *ii;
+    return rv;
+}
+
+// Overloaded for safety
+MolAtom* _GetAtomByName(Molecule& m, const std::string& name)
+{
+    MolAtom* rv = _FindAtom(m, name);
+    if (!rv)
     {
-        PyErr_SetString(PyExc_IndexError, "Index out of range");
+        bp::object emsg = ("Invalid atom name %r" % bp::make_tuple(name));
+        PyErr_SetObject(PyExc_ValueError, emsg.ptr());
         throw_error_already_set();
     }
-    return *v[idx];
+    return rv;
 }
 
 MolBond& _GetBondIdx(Molecule& m, int idx)
@@ -665,12 +681,8 @@ void wrap_molecule()
         .def("RemoveRigidGroup", &_RemoveRigidGroup,
                 (bp::arg("group"), bp::arg("updateDisplay") = true))
         .def("GetAtom", &_GetAtomIdx, return_internal_reference<>())
-        .def("GetAtom",
-            (MolAtom& (Molecule::*)(const string&)) &Molecule::GetAtom,
-            return_internal_reference<>())
-        .def("FindAtom",
-            (MolAtom& (Molecule::*)(const string&)) &Molecule::GetAtom,
-            return_internal_reference<>())
+        .def("GetAtom", &_GetAtomByName, return_internal_reference<>())
+        .def("FindAtom", &_FindAtom, return_internal_reference<>())
         .def("OptimizeConformation", &Molecule::OptimizeConformation,
             (bp::arg("nbTrial")=10000, bp::arg("stopCost")=0))
         .def("OptimizeConformationSteepestDescent",
