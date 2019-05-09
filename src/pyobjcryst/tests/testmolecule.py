@@ -127,6 +127,36 @@ class TestMolecule(unittest.TestCase):
 
         return
 
+
+    def testGetAtom(self):
+        "check Molecule.GetAtom."
+        m = self.m
+        a0 = m.GetAtom(0)
+        b0 = m.GetAtom("C0")
+        c0 = m.GetAtom(-60)
+        self.assertEqual([a0.X, a0.Y, a0.Z], [b0.X, b0.Y, b0.Z])
+        self.assertEqual([a0.X, a0.Y, a0.Z], [c0.X, c0.Y, c0.Z])
+        a0.X = 0.123
+        self.assertEqual(a0.X, b0.X)
+        self.assertEqual(a0.X, c0.X)
+        self.assertRaises(IndexError, m.GetAtom, 60)
+        self.assertRaises(IndexError, m.GetAtom, -61)
+        self.assertRaises(ValueError, m.GetAtom, "invalid")
+        return
+
+
+    def testFindAtom(self):
+        "check Molecule.FindAtom."
+        m = self.m
+        a0 = m.GetAtom(0)
+        b0 = m.FindAtom("C0")
+        self.assertEqual([a0.X, a0.Y, a0.Z], [b0.X, b0.Y, b0.Z])
+        a0.X = 0.123
+        self.assertEqual(a0.X, b0.X)
+        self.assertIs(None, m.FindAtom("invalid"))
+        return
+
+
     def testBonds(self):
         """Test the Bond methods."""
 
