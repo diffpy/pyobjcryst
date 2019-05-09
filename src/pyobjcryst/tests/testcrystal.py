@@ -104,11 +104,22 @@ class TestCrystal(unittest.TestCase):
         return
 
     def testGetScatterer(self):
-        """Test GetScatterer."""
+        """Test GetScatterer and GetScatt."""
         sp, atom = makeScatterer()
         c = makeCrystal(sp, atom)
-        for i in range(c.GetNbScatterer()):
-            c.GetScatterer(i)
+        for fget in (c.GetScatterer, c.GetScatt):
+            for i in range(c.GetNbScatterer()):
+                fget(i)
+            a = fget(0)
+            ani = fget("Ni")
+            self.assertEqual([a.X, a.Y, a.Z], [ani.X, ani.Y, ani.Z])
+            a.X = 0.112
+            self.assertEqual(a.X, ani.X)
+            aneg = fget(-1)
+            self.assertEqual(a.X, aneg.X)
+            self.assertRaises(ValueError, fget, 'invalid')
+            self.assertRaises(IndexError, fget, 10)
+            self.assertRaises(IndexError, fget, -2)
         return
 
     def testDummyAtom(self):
