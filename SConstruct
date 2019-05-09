@@ -119,6 +119,10 @@ env.PrependUnique(LIBPATH=getsyspaths('LIBRARY_PATH'))
 fast_linkflags = ['-s']
 fast_shlinkflags = pyconfigvar('LDSHARED').split()[1:]
 
+# Specify minimum C++ standard.  Allow later standard from sconscript.local.
+# In case of multiple `-std` options the last option holds.
+env.PrependUnique(CXXFLAGS='-std=c++11', delete_existing=1)
+
 # Platform specific intricacies.
 if env['PLATFORM'] == 'darwin':
     darwin_shlinkflags = [n for n in env['SHLINKFLAGS']
