@@ -84,33 +84,18 @@ bp::list GetSymmetryOperations(const SpaceGroup& sg)
 
 SpaceGroup* CreateSpaceGroup(const std::string& sgid)
 {
-    SpaceGroup* rv = NULL;
-    try
-    {
-        MuteObjCrystUserInfo muzzle;
-        rv = new SpaceGroup(sgid);
-    }
-    catch (ObjCrystException e)
-    {
-        PyErr_SetString(PyExc_ValueError, e.message.c_str());
-        throw_error_already_set();
-    }
+    MuteObjCrystUserInfo muzzle;
+    // this may throw invalid_argument which is translated to ValueError
+    SpaceGroup* rv = new SpaceGroup(sgid);
     return rv;
 }
 
 
 void SafeChangeSpaceGroup(SpaceGroup& sg, const std::string& sgid)
 {
-    try
-    {
-        MuteObjCrystUserInfo muzzle;
-        sg.ChangeSpaceGroup(sgid);
-    }
-    catch (ObjCrystException e)
-    {
-        PyErr_SetString(PyExc_ValueError, e.message.c_str());
-        throw_error_already_set();
-    }
+    MuteObjCrystUserInfo muzzle;
+    // this may throw invalid_argument which is translated to ValueError
+    sg.ChangeSpaceGroup(sgid);
 }
 
 }   // namespace
