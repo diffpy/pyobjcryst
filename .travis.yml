@@ -2,13 +2,13 @@ language: generic
 
 os:
   - linux
-  - osx
+# - osx
 
 env:
-  - MYUSEMC=true MYPYTHON_VERSION=2.7
-  - MYUSEMC=true MYPYTHON_VERSION=3.5
-  - MYUSEMC=true MYPYTHON_VERSION=3.6
-  - MYUSEMC=true MYPYTHON_VERSION=3.7
+# - MYUSEMC=true MYPYTHON_VERSION=2.7
+# - MYUSEMC=true MYPYTHON_VERSION=3.5
+# - MYUSEMC=true MYPYTHON_VERSION=3.6
+# - MYUSEMC=true MYPYTHON_VERSION=3.7
   - MYUSEMC=false
 
 git:
@@ -83,7 +83,9 @@ before_install:
   - $NOSYS || devutils/makesdist
   - $NOSYS || MYTARBUNDLE="$(ls -t "${PWD}"/dist/*.tar.gz | head -1)"
   - $NOSYS || pushd ~/pkgs
-  - $NOSYS || git clone https://github.com/diffpy/libobjcryst.git
+  # FIXME - restore default clone after libobjcryst fix up
+  - $NOSYS || git clone -b pu-fix-spacegroup-recursion https://github.com/pavoljuhas/libobjcryst.git
+  # - $NOSYS || git clone https://github.com/diffpy/libobjcryst.git
   - $NOSYS || popd
 
 
