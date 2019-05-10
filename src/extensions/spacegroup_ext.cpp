@@ -20,6 +20,7 @@
 #include <boost/python/args.hpp>
 #include <boost/python/copy_const_reference.hpp>
 #include <boost/python/tuple.hpp>
+#include <boost/python/make_constructor.hpp>
 
 #include <ObjCryst/ObjCryst/SpaceGroup.h>
 
@@ -80,7 +81,39 @@ bp::list GetSymmetryOperations(const SpaceGroup& sg)
     return outlist;
 }
 
+
+SpaceGroup* CreateSpaceGroup(const std::string& sgid)
+{
+    SpaceGroup* rv = NULL;
+    try
+    {
+        MuteObjCrystUserInfo muzzle;
+        rv = new SpaceGroup(sgid);
+    }
+    catch (ObjCrystException e)
+    {
+        PyErr_SetString(PyExc_ValueError, e.message.c_str());
+        throw_error_already_set();
+    }
+    return rv;
 }
+
+
+void SafeChangeSpaceGroup(SpaceGroup& sg, const std::string& sgid)
+{
+    try
+    {
+        MuteObjCrystUserInfo muzzle;
+        sg.ChangeSpaceGroup(sgid);
+    }
+    catch (ObjCrystException e)
+    {
+        PyErr_SetString(PyExc_ValueError, e.message.c_str());
+        throw_error_already_set();
+    }
+}
+
+}   // namespace
 
 
 void wrap_spacegroup()
@@ -88,9 +121,9 @@ void wrap_spacegroup()
 
     class_<SpaceGroup>("SpaceGroup")
         // Constructors
-        .def(init<const std::string&>((bp::arg("spgId"))))
+        .def("__init__", make_constructor(CreateSpaceGroup))
         // Methods
-        .def("ChangeSpaceGroup", &SpaceGroup::ChangeSpaceGroup)
+        .def("ChangeSpaceGroup", &SafeChangeSpaceGroup)
         .def("GetName", &SpaceGroup::GetName,
                 return_value_policy<copy_const_reference>())
         .def("IsInAsymmetricUnit", &SpaceGroup::IsInAsymmetricUnit)
