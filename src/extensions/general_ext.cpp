@@ -24,8 +24,8 @@
 #include <ObjCryst/version.h>
 #include <ObjCryst/ObjCryst/General.h>
 
-#if LIBOBJCRYST_VERSION < 2017002001000LL
-#error "pyobjcryst requires libobjcryst 2017.2.1 or later."
+#if LIBOBJCRYST_VERSION < 2017002002000LL
+#error "pyobjcryst requires libobjcryst 2017.2.2 or later."
 #endif
 
 using namespace boost::python;
