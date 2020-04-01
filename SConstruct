@@ -92,13 +92,16 @@ if env['tool'] == 'intelc':
 good_python_flag = lambda n : (
     not isinstance(n, str) or
     not re.match(r'(-g|-Wstrict-prototypes|-O\d|-fPIC)$', n))
+
 # Determine python-config script name.
 pyversion = pyoutput('import sys; print("%i.%i" % sys.version_info[:2])')
 pycfgname = 'python%s-config' % (pyversion if pyversion[0] == '3' else '')
-pybindir = os.path.dirname(env.WhereIs(env['python']))
+# realpath gets the real path if exec is a link (e.g. in a python environment)
+xpython = os.path.realpath(env.WhereIs(env['python']))
+pybindir = os.path.dirname(xpython)
 pythonconfig = os.path.join(pybindir, pycfgname)
+
 # Verify python-config comes from the same path as the target python.
-xpython = env.WhereIs(env['python'])
 xpythonconfig = env.WhereIs(pythonconfig)
 if os.path.dirname(xpython) != os.path.dirname(xpythonconfig):
     print("Inconsistent paths of %r and %r" % (xpython, xpythonconfig))
