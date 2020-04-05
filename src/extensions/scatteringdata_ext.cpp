@@ -16,6 +16,9 @@
 * used by ObjCryst objects that inherit from ScatteringData (see, for example,
 * diffractiondatasinglecrystal_ext.cpp).
 *
+* Changes from ObjCryst::ScatteringData
+* - GetWavelength returns a scalar instead of a vector
+*
 *****************************************************************************/
 
 #include <boost/python/class.hpp>
@@ -39,6 +42,12 @@ void _PrintFhklCalc(const ScatteringData& sd)
 void _PrintFhklCalcDetail(const ScatteringData& sd)
 {
     sd.PrintFhklCalcDetail();
+}
+
+
+double _GetWavelength(ScatteringData& s)
+{
+    return s.GetWavelength()(0);
 }
 
 }   // anonymous namespace
@@ -104,7 +113,12 @@ void wrap_scatteringdata()
         //     (const std::map< const ScatteringPower *, CrystVector_REAL > &
         //     (ScatteringData::*)()) &ScatteringData::GetScatteringFactor,
         //     return_internal_reference<>())
-        .def("GetWavelength", &ScatteringData::GetWavelength)
+        .def("GetRadiation",
+                (Radiation& (ScatteringData::*)()) &ScatteringData::GetRadiation,
+                return_internal_reference<>())
+        .def("GetRadiationType", &ScatteringData::GetRadiationType)
+        // Overloaded to return a single wavelength instead of a vector
+        .def("GetWavelength", &_GetWavelength)
         .def("SetIsIgnoringImagScattFact",
                 &ScatteringData::SetIsIgnoringImagScattFact)
         .def("IsIgnoringImagScattFact",

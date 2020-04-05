@@ -62,6 +62,7 @@ import pyobjcryst.io
 import pyobjcryst.molecule
 import pyobjcryst.polyhedron
 import pyobjcryst.powderpattern
+import pyobjcryst.radiation
 import pyobjcryst.refinableobj
 import pyobjcryst.reflectionprofile
 import pyobjcryst.scatterer

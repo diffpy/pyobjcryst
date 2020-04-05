@@ -22,6 +22,7 @@ import numpy as np
 
 from pyobjcryst import ObjCrystException
 from pyobjcryst.powderpattern import PowderPattern
+from pyobjcryst.radiation import RadiationType, WavelengthType
 
 # ----------------------------------------------------------------------------
 
@@ -122,8 +123,30 @@ class TestPowderPattern(unittest.TestCase):
         self.assertEqual(0, len(pp.GetPowderPatternX()))
         return
 
+    def test_SetWavelength(self):
+        pp = self.pp
+        pp.SetWavelength(1.2345)
+        self.assertAlmostEqual(pp.GetWavelength(), 1.2345, places=4)
+
+    def test_SetWavelengthXrayTube(self):
+        pp = self.pp
+        t = pp.GetRadiation().GetWavelengthType()
+        w = pp.GetWavelength()
+        pp.SetWavelength("Cu")
+        self.assertAlmostEqual(pp.GetWavelength(), 1.5418, places=4)
+        self.assertEqual(pp.GetRadiation().GetWavelengthType(), WavelengthType.WAVELENGTH_ALPHA12)
+        pp.GetRadiation().SetWavelengthType(t)
+        pp.SetWavelength(w)
+
+    def test_SetRadiationType(self):
+        pp = self.pp
+        t = pp.GetRadiationType()
+        pp.SetRadiationType(RadiationType.RAD_NEUTRON)
+        self.assertEqual(pp.GetRadiationType(), RadiationType.RAD_NEUTRON)
+        pp.SetRadiationType(t)
+
+
     #def test_SetScaleFactor(self):  assert False
-    #def test_SetWavelength(self):  assert False
 
 # End of class TestPowderPattern
 

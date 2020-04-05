@@ -65,6 +65,13 @@ void wrap_general()
         .value("RAD_ELECTRON", RAD_ELECTRON)
         ;
 
+    // Only import wavelength types actually used
+    enum_<WavelengthType>("WavelengthType")
+        .value("WAVELENGTH_MONOCHROMATIC", WAVELENGTH_MONOCHROMATIC)
+        .value("WAVELENGTH_ALPHA12", WAVELENGTH_ALPHA12)
+        .value("WAVELENGTH_TOF", WAVELENGTH_TOF)
+        ;
+
     def("_get_libobjcryst_version_info_dict",
             get_libobjcryst_version_info_dict,
             doc__get_libobjcryst_version_info_dict);

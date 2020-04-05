@@ -42,6 +42,7 @@ void wrap_powderpatternbackground();
 void wrap_powderpatterncomponent();
 void wrap_powderpatterndiffraction();
 void wrap_quaternion();
+void wrap_radiation();
 void wrap_refinableobj();
 void wrap_refinableobjclock();
 void wrap_refinablepar();
@@ -120,6 +121,7 @@ BOOST_PYTHON_MODULE(_pyobjcryst)
     wrap_powderpattern();
     wrap_powderpatternbackground();
     wrap_powderpatterndiffraction();
+    wrap_radiation();
     wrap_rigidgroup();
     wrap_scatteringcomponent();
     wrap_scatteringcomponentlist();

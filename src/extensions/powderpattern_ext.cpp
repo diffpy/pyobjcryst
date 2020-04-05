@@ -143,6 +143,12 @@ void wrap_powderpattern()
         .def("GetPowderPatternX",
                 &PowderPattern::GetPowderPatternX,
                 return_value_policy<copy_const_reference>())
+        .def("GetRadiation",
+                (Radiation& (PowderPattern::*)()) &PowderPattern::GetRadiation,
+                return_internal_reference<>())
+        .def("GetRadiationType", &PowderPattern::GetRadiationType)
+        .def("SetRadiationType", &PowderPattern::SetRadiationType)
+        .def("GetWavelength", &PowderPattern::GetWavelength)
         .def("SetWavelength",
                 (void (PowderPattern::*) (const REAL))
                 &PowderPattern::SetWavelength, bp::arg("wavelength"))
