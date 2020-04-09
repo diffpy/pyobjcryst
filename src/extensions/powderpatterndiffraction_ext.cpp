@@ -69,7 +69,8 @@ void wrap_powderpatterndiffraction()
                 (bp::arg("nbcycle")=1))
         .def("SetCrystal",
                 &PowderPatternDiffraction::SetCrystal,
-                bp::arg("crystal"))
+                bp::arg("crystal"),
+                with_custodian_and_ward<1, 2>())
         .def("GetNbReflBelowMaxSinThetaOvLambda",
                 &PowderPatternDiffraction::GetNbReflBelowMaxSinThetaOvLambda)
         ;

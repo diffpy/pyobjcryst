@@ -84,6 +84,7 @@ PowderPatternDiffraction& addppdiffraction(PowderPattern& pp, Crystal& crst)
     PowderPatternDiffraction* ppc = new PowderPatternDiffraction();
     ppc->SetCrystal(crst);
     pp.AddPowderPatternComponent(*ppc);
+    pp.Prepare();
     return *ppc;
 }
 
@@ -115,7 +116,8 @@ void wrap_powderpattern()
                 return_internal_reference<>())
         .def("AddPowderPatternDiffraction",
                 &addppdiffraction,
-                with_custodian_and_ward<2,1,return_internal_reference<> >())
+                with_custodian_and_ward_postcall<1,0,
+                  with_custodian_and_ward_postcall<0,2,return_internal_reference<> > > ())
         .def("GetNbPowderPatternComponent",
                 &PowderPattern::GetNbPowderPatternComponent)
         .def("GetPowderPatternComponent",
