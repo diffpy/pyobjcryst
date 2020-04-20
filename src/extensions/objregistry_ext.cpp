@@ -23,10 +23,17 @@
 
 #include <boost/python/class.hpp>
 #include <boost/python/copy_const_reference.hpp>
+#include <boost/python/iterator.hpp>
+#include <boost/python/slice.hpp>
+#undef B0
 
 #include <string>
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>
+#include <ObjCryst/ObjCryst/Atom.h>
+#include <ObjCryst/ObjCryst/Crystal.h>
+#include <ObjCryst/ObjCryst/DiffractionDataSingleCrystal.h>
+#include <ObjCryst/ObjCryst/PowderPattern.h>
 #include <ObjCryst/ObjCryst/Scatterer.h>
 #include <ObjCryst/ObjCryst/ZScatterer.h>
 
@@ -36,6 +43,20 @@ using namespace ObjCryst;
 using namespace boost::python;
 
 namespace {
+
+// Get objects by slice
+template <class T> bp::object getObjSlice(ObjRegistry<T>& o, bp::slice& s)
+{
+    bp::list l;
+
+    for(typename std::vector<T*>::const_iterator it = o.begin(); it != o.end(); ++it)
+    {
+        l.append(bp::ptr(*it));
+    }
+    return l[s];
+}
+
+
 
 /* Wrap all the class methods for the template class */
 template <class T>
@@ -79,6 +100,24 @@ wrapClass(class_<ObjRegistry<T> > & c)
         return_value_policy<copy_const_reference>())
     // Python-only methods
     .def("__str__", &__str__< ObjRegistry<T> >)
+    .def("__len__", &ObjRegistry<T>::GetNb)
+    .def("__getitem__", &getObjSlice<T>,
+            with_custodian_and_ward_postcall<1,0>())
+    .def("__getitem__", (T& (ObjRegistry<T>::*)(const unsigned int))
+        &ObjRegistry<T>::GetObj,
+        return_internal_reference<>())
+    // Note to indexing robots: It took me a while to understand how this worked,
+    // so that the object would be returned instead of the pointer !
+    // The definition of NextPolicies use in boost.python range is quite obscure
+    //
+    // Unrelated note: this can be dangerous, as the registry is susceptible to
+    // change while being iterated. Example
+    //    c = pyobjcryst.crystal.Crystal(...)
+    //    for c in pyobjcryst.crystal.gCrystalRegistry: print(c.GetName())
+    // => this will erase the first crystal 'c' when looping other the registry,
+    // which will effectively invalidate the iterator...
+    .def("__iter__", range<return_value_policy<reference_existing_object> >
+                       (&ObjRegistry<T>::list_begin, &ObjRegistry<T>::list_end))
     ;
 }
 
@@ -87,12 +126,43 @@ wrapClass(class_<ObjRegistry<T> > & c)
 
 void wrap_objregistry()
 {
+    // Template instantiation
+
+    // ObjRegistry<Crystal>
+    class_< ObjRegistry<Crystal> >
+        CrystalRegistry("CrystalRegistry",
+        init<const string&>());
+    wrapClass<Crystal>(CrystalRegistry);
+
+    // ObjRegistry<PowderPattern>
+    class_< ObjRegistry<PowderPattern> >
+        PowderPatternRegistry("PowderPatternRegistry",
+        init<const string&>());
+    wrapClass<PowderPattern>(PowderPatternRegistry);
+
+    // ObjRegistry<DiffractionDataSingleCrystal>
+    class_< ObjRegistry<DiffractionDataSingleCrystal> >
+        DiffractionDataSingleCrystalRegistry("DiffractionDataSingleCrystalRegistry",
+        init<const string&>());
+    wrapClass<DiffractionDataSingleCrystal>(DiffractionDataSingleCrystalRegistry);
+
+    // ObjRegistry<OptimizationObj>
+    class_< ObjRegistry<OptimizationObj> >
+        OptimizationObjRegistry("OptimizationObjRegistry",
+        init<const string&>());
+    wrapClass<OptimizationObj>(OptimizationObjRegistry);
 
     // ObjRegistry<RefinableObj>
     class_< ObjRegistry<RefinableObj> >
         RefinableObjRegistry("RefinableObjRegistry",
         init<const string&>());
     wrapClass<RefinableObj>(RefinableObjRegistry);
+
+    // ObjRegistry<RefObjOpt>
+    class_< ObjRegistry<RefObjOpt> >
+        RefObjOptRegistry("RefObjOpt",
+        init<const string&>());
+    wrapClass<RefObjOpt>(RefObjOptRegistry);
 
     // ObjRegistry<Scatterer>
     class_< ObjRegistry<Scatterer> >
@@ -106,9 +176,16 @@ void wrap_objregistry()
         init<const string&>());
     wrapClass<ScatteringPower>(ScatteringPowerRegistry);
 
+    // ObjRegistry<ScatteringPowerAtom>
+    class_< ObjRegistry<ScatteringPowerAtom> >
+        ScatteringPowerAtomRegistry("ScatteringPowerAtomRegistry",
+        init<const string&>());
+    wrapClass<ScatteringPowerAtom>(ScatteringPowerAtomRegistry);
+
     // ObjRegistry<ZAtom>
     class_< ObjRegistry<ZAtom> >
         ZAtomRegistry("ZAtomRegistry",
         init<const string&>());
     wrapClass<ZAtom>(ZAtomRegistry);
+
 }

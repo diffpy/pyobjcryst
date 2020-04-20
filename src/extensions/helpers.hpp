@@ -131,6 +131,19 @@ bp::list setToPyList(std::set<T>& v)
 }
 
 
+template <class T>
+bp::list vectorToPyList(std::vector<T>& v)
+{
+    return containerToPyList< typename std::vector<T> >(v);
+}
+
+template <class T>
+bp::list listToPyList(std::list<T>& v)
+{
+    return containerToPyList< typename std::list<T> >(v);
+}
+
+
 // Extract CrystVector from a Python object
 template <class T> class CrystVector;
 

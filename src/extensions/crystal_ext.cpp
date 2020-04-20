@@ -254,6 +254,9 @@ _CreateCrystalFromCIF(bp::object input,
 
 void wrap_crystal()
 {
+    scope().attr("refpartype_crystal") = object(ptr(gpRefParTypeCrystal));
+    // Global object registry
+    scope().attr("gCrystalRegistry") = boost::cref(gCrystalRegistry);
 
     class_<CrystalWrap, bases<UnitCell>, boost::noncopyable>("Crystal")
         /* Constructors */
@@ -337,6 +340,7 @@ void wrap_crystal()
         .def("ConnectAtoms", &Crystal::ConnectAtoms,
              (bp::arg("min_relat_dist")=0.4, bp::arg("max_relat_dist")=1.3,
               bp::arg("warnuser_fail")=false))
+        .def("GetFormula", &Crystal::GetFormula)
         ;
 
 

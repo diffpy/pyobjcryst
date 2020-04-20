@@ -21,13 +21,14 @@
 #include <boost/python/def.hpp>
 #include <boost/python/copy_const_reference.hpp>
 #include <boost/python/manage_new_object.hpp>
-
+#include <boost/format.hpp>
 #undef B0
 
 #include <string>
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 #include <ObjCryst/ObjCryst/PowderPattern.h>
+#include <ObjCryst/ObjCryst/CIF.h>
 
 #include "python_streambuf.hpp"
 #include "helpers.hpp"
@@ -53,7 +54,7 @@ PowderPattern* _CreatePowderPatternFromCIF(bp::object input)
 
     int idx0 = gPowderPatternRegistry.GetNb();
 
-    ObjCryst::CreatePowderPatternFromCIF(cif);
+    ObjCryst::PowderPattern* p = ObjCryst::CreatePowderPatternFromCIF(cif);
 
     gag.release();
     muzzle.release();
@@ -63,9 +64,6 @@ PowderPattern* _CreatePowderPatternFromCIF(bp::object input)
     {
         throw ObjCryst::ObjCrystException("Cannot create powder pattern from CIF");
     }
-    idx--;
-
-    ObjCryst::PowderPattern* p = &gPowderPatternRegistry.GetObj(idx);
 
     return p;
 }
@@ -106,11 +104,57 @@ void setpowderpatternobs (PowderPattern& pp, bp::object x)
 }
 
 
+// Allow override (since we can't benefit from override in RefinableObjWrap)
+class PowderPatternWrap : public PowderPattern, public wrapper<PowderPattern>
+{
+  public:
+    PowderPatternWrap() : PowderPattern() {}
+
+    PowderPatternWrap(const PowderPattern& p) : PowderPattern(p){}
+
+    PeakList _FindPeaks(const float dmin=2.0,const float maxratio=0.01,
+                       const unsigned int maxpeak=100, const bool verbose=true)
+    {
+      CaptureStdOut gag;
+      if(verbose) gag.release();
+      return this->FindPeaks(dmin, maxratio, maxpeak);
+    }
+
+    void default_UpdateDisplay() const
+    { this->PowderPattern::UpdateDisplay();}
+
+    virtual void UpdateDisplay() const
+    {
+        override f = this->get_override("UpdateDisplay");
+        if (f)  f();
+        else  default_UpdateDisplay();
+    }
+
+};
+
+std::string __str__SPGScore(SPGScore& s)
+{
+    if(s.ngof>0.01)
+      return (boost::format("%10s nGoF=%7.2f Gof=%7.2f Rw=%5.2f [extinct=%3d]")
+                           % s.hm % s.ngof % s.gof % s.rw %s.nbextinct446).str();
+
+    return (boost::format("%10s Gof=%8.2f Rw=%4.2f [extinct=%3d]")
+                          % s.hm % s.gof % s.rw %s.nbextinct446).str();
+}
+
+bp::list _GetScores(const SpaceGroupExplorer &spgex)
+{
+    return containerToPyList(spgex.GetScores());
+}
+
 }   // namespace
 
 void wrap_powderpattern()
 {
-    class_<PowderPattern, bases<RefinableObj> >("PowderPattern")
+    // Global object registry
+    scope().attr("gPowderPatternRegistry") = boost::cref(gPowderPatternRegistry);
+
+    class_<PowderPatternWrap, bases<RefinableObj> >("PowderPattern")
         .def("AddPowderPatternBackground",
                 &addppbackground,
                 return_internal_reference<>())
@@ -124,6 +168,9 @@ void wrap_powderpattern()
                 (PowderPatternComponent& (PowderPattern::*) (const int))
                 &PowderPattern::GetPowderPatternComponent,
                 return_internal_reference<>())
+        .def("FindPeaks", &PowderPatternWrap::_FindPeaks,
+                (bp::arg("dmin")=2.0, bp::arg("maxratio")=0.01,
+                 bp::arg("maxpeak")=100, bp::arg("verbose")=false))
         .def("GetScaleFactor",
                 (REAL (PowderPattern::*) (const int) const)
                 &PowderPattern::GetScaleFactor)
@@ -210,7 +257,39 @@ void wrap_powderpattern()
                 bp::arg("max"))
         .def("GetMaxSinThetaOvLambda",
                 &PowderPattern::GetMaxSinThetaOvLambda)
-        .def("Prepare", &PowderPattern::Prepare)
+        .def("X2XCorr", &PowderPattern::X2XCorr)
+        .def("X2PixelCorr", &PowderPattern::X2PixelCorr)
+        .def("X2Pixel", &PowderPattern::X2Pixel)
+        .def("STOL2X", &PowderPattern::STOL2X)
+        .def("X2STOL", &PowderPattern::X2STOL)
+        .def("X2XCorr", &PowderPattern::X2XCorr)
+        .def("STOL2Pixel", &PowderPattern::STOL2Pixel)
+        .def("UpdateDisplay", &PowderPattern::UpdateDisplay,
+            &PowderPatternWrap::default_UpdateDisplay)
+        ;
+
+    class_<SPGScore>("SPGScore", init<const string &, const REAL, const REAL,
+            const unsigned int, bp::optional<const REAL> >
+            ((bp::arg("hermann_mauguin"), bp::arg("rw"), bp::arg("gof"),
+              bp::arg("nbextinct"), bp::arg("ngof")=0)))
+        .def_readonly("hermann_mauguin", &SPGScore::hm)
+        .def_readonly("Rw", &SPGScore::rw)
+        .def_readonly("GoF", &SPGScore::gof)
+        .def_readonly("nGoF", &SPGScore::ngof)
+        .def("__str__", &__str__SPGScore)
+        .def("__repr__", &__str__SPGScore)
+        ;
+    //,init<PowderPatternDiffraction *>(bp::arg("powdiff")),with_custodian_and_ward_postcall<1,2>()
+    class_<SpaceGroupExplorer>("SpaceGroupExplorer", init<PowderPatternDiffraction * >
+            ((bp::arg("powdiff"))) [with_custodian_and_ward<1,2>()])
+        .def("Run", (SPGScore (SpaceGroupExplorer::*)(const string&, const bool, const bool, const bool))
+             &SpaceGroupExplorer::Run,
+             (bp::arg("spg"), bp::arg("fitprofile")=false, bp::arg("verbose")=false,
+             bp::arg("restore_orig")=false))
+        .def("RunAll", &SpaceGroupExplorer::RunAll,
+             (bp::arg("fitprofile")=false, bp::arg("verbose")=true,
+             bp::arg("keep_best")=true))
+        .def("GetScores", &_GetScores)
         ;
 
     def("CreatePowderPatternFromCIF",

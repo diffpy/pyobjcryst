@@ -67,7 +67,22 @@ Changes from ObjCryst::Restraint
 __all__ = ["RefinableObjClock", "RefinableObj", "RefObjOpt",
            "RefinableObjRegistry", "RefParType", "RefParDerivStepModel",
            "RefinablePar", "Restraint", "ScattererRegistry",
-           "ScatteringPowerRegistry", "ZAtomRegistry"]
+           "ScatteringPowerRegistry", "ZAtomRegistry",
+           "refpartype_crystal", "refpartype_objcryst", "refpartype_scatt",
+           "refpartype_scatt_transl", "refpartype_scatt_transl_x",
+           "refpartype_scatt_transl_y", "refpartype_scatt_transl_z",
+           "refpartype_scatt_orient", "refpartype_scatt_conform",
+           "refpartype_scatt_conform_bondlength", "refpartype_scatt_conform_bondangle",
+           "refpartype_scatt_conform_dihedangle", "refpartype_scatt_conform_x",
+           "refpartype_scatt_conform_y", "refpartype_scatt_conform_z",
+           "refpartype_scatt_occup", "refpartype_scattdata", "refpartype_scattdata_background",
+           "refpartype_scattdata_scale", "refpartype_scattdata_profile",
+           "refpartype_scattdata_profile_type", "refpartype_scattdata_profile_width",
+           "refpartype_scattdata_profile_asym", "refpartype_scattdata_corr",
+           "refpartype_scattdata_corr_pos", "refpartype_scattdata_radiation",
+           "refpartype_scattdata_radiation_wavelength", "refpartype_scattpow",
+           "refpartype_scattpow_temperature", "refpartype_unitcell",
+           "refpartype_unitcell_length", "refpartype_unitcell_angle", "gRefinableObjRegistry"]
 
 from pyobjcryst._pyobjcryst import RefinableObjClock
 from pyobjcryst._pyobjcryst import RefinableObj
@@ -80,3 +95,36 @@ from pyobjcryst._pyobjcryst import Restraint
 from pyobjcryst._pyobjcryst import ScattererRegistry
 from pyobjcryst._pyobjcryst import ScatteringPowerRegistry
 from pyobjcryst._pyobjcryst import ZAtomRegistry
+from pyobjcryst._pyobjcryst import refpartype_crystal
+from pyobjcryst._pyobjcryst import refpartype_objcryst
+from pyobjcryst._pyobjcryst import refpartype_scatt
+from pyobjcryst._pyobjcryst import refpartype_scatt_transl
+from pyobjcryst._pyobjcryst import refpartype_scatt_transl_x
+from pyobjcryst._pyobjcryst import refpartype_scatt_transl_y
+from pyobjcryst._pyobjcryst import refpartype_scatt_transl_z
+from pyobjcryst._pyobjcryst import refpartype_scatt_orient
+from pyobjcryst._pyobjcryst import refpartype_scatt_conform
+from pyobjcryst._pyobjcryst import refpartype_scatt_conform_bondlength
+from pyobjcryst._pyobjcryst import refpartype_scatt_conform_bondangle
+from pyobjcryst._pyobjcryst import refpartype_scatt_conform_dihedangle
+from pyobjcryst._pyobjcryst import refpartype_scatt_conform_x
+from pyobjcryst._pyobjcryst import refpartype_scatt_conform_y
+from pyobjcryst._pyobjcryst import refpartype_scatt_conform_z
+from pyobjcryst._pyobjcryst import refpartype_scatt_occup
+from pyobjcryst._pyobjcryst import refpartype_scattdata
+from pyobjcryst._pyobjcryst import refpartype_scattdata_scale
+from pyobjcryst._pyobjcryst import refpartype_scattdata_profile
+from pyobjcryst._pyobjcryst import refpartype_scattdata_profile_type
+from pyobjcryst._pyobjcryst import refpartype_scattdata_profile_width
+from pyobjcryst._pyobjcryst import refpartype_scattdata_profile_asym
+from pyobjcryst._pyobjcryst import refpartype_scattdata_corr
+from pyobjcryst._pyobjcryst import refpartype_scattdata_corr_pos
+from pyobjcryst._pyobjcryst import refpartype_scattdata_radiation
+from pyobjcryst._pyobjcryst import refpartype_scattdata_radiation_wavelength
+from pyobjcryst._pyobjcryst import refpartype_scattdata_background
+from pyobjcryst._pyobjcryst import refpartype_scattpow
+from pyobjcryst._pyobjcryst import refpartype_scattpow_temperature
+from pyobjcryst._pyobjcryst import refpartype_unitcell
+from pyobjcryst._pyobjcryst import refpartype_unitcell_length
+from pyobjcryst._pyobjcryst import refpartype_unitcell_angle
+from pyobjcryst._pyobjcryst import gRefinableObjRegistry

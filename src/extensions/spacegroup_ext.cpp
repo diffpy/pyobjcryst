@@ -152,6 +152,9 @@ void wrap_spacegroup()
         .def("IsReflSystematicAbsent", &SpaceGroup::IsReflSystematicAbsent)
         .def("IsReflCentric", &SpaceGroup::IsReflCentric)
         .def("GetExpectedIntensityFactor", &SpaceGroup::GetExpectedIntensityFactor)
-        .def("__str__", &__str__<SpaceGroup>)
+        .def("__str__", &SpaceGroup::GetName,
+                return_value_policy<copy_const_reference>())
+        .def("__repr__", &SpaceGroup::GetName,
+                return_value_policy<copy_const_reference>())
         ;
 }

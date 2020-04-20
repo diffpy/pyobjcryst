@@ -25,9 +25,11 @@ Changes from ObjCryst::ScatteringComponentList
 """
 
 __all__ = ["ScatteringPower", "ScatteringComponent",
-           "ScatteringPowerAtom", "ScatteringComponentList"]
+           "ScatteringPowerAtom", "ScatteringComponentList",
+           "gScatteringPowerRegistry"]
 
 from pyobjcryst._pyobjcryst import ScatteringPower
 from pyobjcryst._pyobjcryst import ScatteringComponent
 from pyobjcryst._pyobjcryst import ScatteringPowerAtom
 from pyobjcryst._pyobjcryst import ScatteringComponentList
+from pyobjcryst._pyobjcryst import gScatteringPowerRegistry

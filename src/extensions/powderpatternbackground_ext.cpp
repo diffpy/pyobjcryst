@@ -20,6 +20,7 @@
 #include <boost/python/class.hpp>
 #include <boost/python/args.hpp>
 #include <boost/python/copy_const_reference.hpp>
+#include <boost/python/scope.hpp>
 
 #undef B0
 
@@ -29,6 +30,7 @@
 
 namespace bp = boost::python;
 using namespace ObjCryst;
+using namespace boost::python;
 
 namespace {
 
@@ -41,12 +43,20 @@ void _SetInterpPoints(PowderPatternBackground& b,
     b.SetInterpPoints(cvtth, cvbackg);
 }
 
+void _OptimizeBayesianBackground(PowderPatternBackground *pbackgd, const bool verbose=false)
+{
+      CaptureStdOut gag;
+      if(verbose) gag.release();
+      pbackgd->OptimizeBayesianBackground();
+}
+
 }   // namespace
 
 
 void wrap_powderpatternbackground()
 {
-    using namespace boost::python;
+    scope().attr("refpartype_scattdata_background") = object(ptr(gpRefParTypeScattDataBackground));
+
     class_<PowderPatternBackground, bases<PowderPatternComponent>, boost::noncopyable>(
             "PowderPatternBackground", no_init)
         //.def("SetParentPowderPattern", &PowderPatternBackground::SetParentPowderPattern)
@@ -60,7 +70,7 @@ void wrap_powderpatternbackground()
                 _SetInterpPoints,
                 (bp::arg("tth"), bp::arg("backgd")))
         .def("OptimizeBayesianBackground",
-                &PowderPatternBackground::OptimizeBayesianBackground)
+                &_OptimizeBayesianBackground, (bp::arg("verbose")=false))
         .def("FixParametersBeyondMaxresolution",
                 &PowderPatternBackground::FixParametersBeyondMaxresolution,
                 bp::arg("obj"))

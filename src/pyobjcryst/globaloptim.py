@@ -10,15 +10,13 @@
 #
 ##############################################################################
 
-"""Python wrapping of PowderPattern.h
+"""Python wrapping of GlobalOptimObj.h
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-Changes from ObjCryst::ReflectionProfile::
+Changes from ObjCryst::MonteCarloObj::
         In development !
+
 """
 
-__all__ = ["ReflectionProfile", "ReflectionProfileType"]
-
-from pyobjcryst._pyobjcryst import ReflectionProfile
-from pyobjcryst._pyobjcryst import ReflectionProfileType
+from pyobjcryst._pyobjcryst import MonteCarlo, AnnealingSchedule, GlobalOptimType

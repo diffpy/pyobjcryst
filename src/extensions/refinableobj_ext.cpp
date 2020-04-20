@@ -32,6 +32,7 @@
 *****************************************************************************/
 
 #include <boost/python/class.hpp>
+#include <boost/python/def.hpp>
 #include <boost/python/args.hpp>
 #include <boost/python/copy_const_reference.hpp>
 
@@ -408,6 +409,11 @@ void _XMLInput(
 
 void wrap_refinableobj()
 {
+    scope().attr("refpartype_objcryst") = object(ptr(gpRefParTypeObjCryst));
+    // Global object registry
+    scope().attr("gRefinableObjRegistry") = boost::cref(gRefinableObjRegistry);
+    // Global top object registry, exposed at the pyobjcryst module level
+    scope().attr("gTopRefinableObjRegistry") = boost::cref(gTopRefinableObjRegistry);
 
     class_<RefinableObjWrap, boost::noncopyable>("RefinableObj")
         .def(init<bool>())
@@ -481,6 +487,7 @@ void wrap_refinableobj()
         .def("BeginGlobalOptRandomMove",
             &RefinableObj::BeginGlobalOptRandomMove)
         .def("ResetParList", &RefinableObj::ResetParList)
+        .def("GetOptionList", &RefinableObj::GetOptionList, return_value_policy<reference_existing_object>())
         .def("GetNbOption", &RefinableObj::GetNbOption)
         .def("GetOption", (RefObjOpt& (RefinableObj::*)(const unsigned int))
             &RefinableObj::GetOption,
@@ -550,6 +557,8 @@ void wrap_refinableobj()
             &RefinableObjWrap::default_XMLInput)
         .def("GetGeneGroup", &RefinableObj::GetGeneGroup,
             &RefinableObjWrap::default_GetGeneGroup)
+        .def("UpdateDisplay", &RefinableObj::UpdateDisplay,
+            &RefinableObjWrap::default_UpdateDisplay)
         .def("GetRestraintCost", &RefinableObj::GetRestraintCost,
             &RefinableObjWrap::default_GetRestraintCost)
         .def("TagNewBestConfig", &RefinableObj::TagNewBestConfig,

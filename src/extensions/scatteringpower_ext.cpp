@@ -17,6 +17,7 @@
 *****************************************************************************/
 
 #include <boost/python/class.hpp>
+#include <boost/python/def.hpp>
 #include <boost/python/copy_const_reference.hpp>
 #include <boost/python/pure_virtual.hpp>
 
@@ -191,6 +192,13 @@ void _SetBij(ScatteringPower& sp, const double newB)
 
 void wrap_scatteringpower()
 {
+    scope().attr("refpartype_scattpow") = object(ptr(gpRefParTypeScattPow));
+    // scope().attr("refpartype_scattpow_resonant") = object(ptr(gpRefParTypeScattPowResonant));
+    scope().attr("refpartype_scattpow_temperature") = object(ptr(gpRefParTypeScattPowTemperature));
+    // scope().attr("refpartype_scattpow_temperature_iso") = object(ptr(gpRefParTypeScattPowTemperatureIso));
+    // scope().attr("refpartype_scattpow_temperature_aniso") = object(ptr(gpRefParTypeScattPowTemperatureAniso));
+    // Global object registry
+    scope().attr("gScatteringPowerRegistry") = boost::cref(gScatteringPowerRegistry);
 
     // By making this non-copyable ScatteringPower can be passed from c++ when
     // copy_const_reference is uses, but they are turned into RefinableObj

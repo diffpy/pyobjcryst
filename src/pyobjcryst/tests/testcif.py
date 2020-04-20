@@ -16,11 +16,12 @@
 """Tests for crystal module."""
 
 import unittest
+import gc
 
-from pyobjcryst.crystal import CreateCrystalFromCIF
+from pyobjcryst.crystal import CreateCrystalFromCIF, gCrystalRegistry
+from pyobjcryst.diffractiondatasinglecrystal import create_singlecrystaldata_from_cif
 from numpy import pi
 from pyobjcryst.tests.pyobjcrysttestutils import loadcifdata, datafile
-
 
 class TestCif(unittest.TestCase):
 
@@ -274,6 +275,28 @@ class TestCif(unittest.TestCase):
         self.assertRaises(ObjCrystException, CreateCrystalFromCIF, infile)
         infile.close()
         return
+
+
+    def test_paracetamol_monomethanolate(self):
+        """ Test loading crystal and diffraction data
+        """
+        c = CreateCrystalFromCIF("testdata/paracetamol_monomethanolate.cif")
+        d = create_singlecrystaldata_from_cif(
+            "testdata/paracetamol_monomethanolate_data_single_crystal.cif", c)
+        self.assertTrue(d is not None)
+
+    def test_paracetamol_monomethanolate_ward(self):
+        """ Test loading crystal and diffraction data,
+        make sure custodian & ward works
+        """
+        c = CreateCrystalFromCIF("testdata/paracetamol_monomethanolate.cif")
+        d = create_singlecrystaldata_from_cif(
+            "testdata/paracetamol_monomethanolate_data_single_crystal.cif", c)
+        n = d.GetCrystal().GetName()
+        # Replace c by another Crystal object
+        c = loadcifdata('ZnS_sphalerite.cif')
+        gc.collect()
+        self.assertTrue(gCrystalRegistry.GetObj(n) is not None)
 
 # End of class TestCif
 

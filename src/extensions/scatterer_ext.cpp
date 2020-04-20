@@ -29,6 +29,7 @@
 *****************************************************************************/
 
 #include <boost/python/class.hpp>
+#include <boost/python/def.hpp>
 #include <boost/python/pure_virtual.hpp>
 #include <boost/python/copy_const_reference.hpp>
 
@@ -182,6 +183,22 @@ bp::list _GetScatteringComponentList(Scatterer& s)
 
 void wrap_scatterer()
 {
+    scope().attr("refpartype_scatt") = object(gpRefParTypeScatt);
+    scope().attr("refpartype_scatt_transl") = object(ptr(gpRefParTypeScattTransl));
+    scope().attr("refpartype_scatt_transl_x") = object(ptr(gpRefParTypeScattTranslX));
+    scope().attr("refpartype_scatt_transl_y") = object(ptr(gpRefParTypeScattTranslY));
+    scope().attr("refpartype_scatt_transl_z") = object(ptr(gpRefParTypeScattTranslZ));
+    scope().attr("refpartype_scatt_orient") = object(ptr(gpRefParTypeScattOrient));
+    scope().attr("refpartype_scatt_conform") = object(ptr(gpRefParTypeScattConform));
+    scope().attr("refpartype_scatt_conform_bondlength") = object(ptr(gpRefParTypeScattConformBondLength));
+    scope().attr("refpartype_scatt_conform_bondangle") = object(ptr(gpRefParTypeScattConformBondAngle));
+    scope().attr("refpartype_scatt_conform_dihedangle") = object(ptr(gpRefParTypeScattConformDihedAngle));
+    scope().attr("refpartype_scatt_conform_x") = object(ptr(gpRefParTypeScattConformX));
+    scope().attr("refpartype_scatt_conform_y") = object(ptr(gpRefParTypeScattConformY));
+    scope().attr("refpartype_scatt_conform_z") = object(ptr(gpRefParTypeScattConformZ));
+    scope().attr("refpartype_scatt_occup") = object(ptr(gpRefParTypeScattOccup));
+    // Global object registry
+    scope().attr("gScattererRegistry") = boost::cref(gScattererRegistry);
 
     class_<ScattererWrap, boost::noncopyable, bases<RefinableObj> >
         ("Scatterer")
