@@ -26,6 +26,8 @@
 
 #include <string>
 #include <set>
+#include <list>
+#include <vector>
 #include <sstream>
 #include <iostream>
 #include <limits>
