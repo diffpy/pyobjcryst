@@ -52,18 +52,34 @@ class PowderPattern(PowderPattern_objcryst):
 
     def UpdateDisplay(self):
         import matplotlib.pyplot as plt
-        if self._plot_fig is not None:
+        if self._plot_fig is not None and 'inline' not in plt.get_backend():
             if plt.fignum_exists(self._plot_fig.number):
                 self.plot()
 
-    def plot(self, diff=None, hkl=None):
+    def plot(self, diff=None, hkl=None, figsize=(9, 4), fontsize_hkl=6, reset=False, **kwargs):
         """
         Show the powder pattern in a plot using matplotlib
         :param diff: if True, also show the difference plot
+        :param hkl: if True, print the hkl values
+        :param figsize: the figure size passed to matplotlib
+        :param fontsize_hkl: fontsize for hkl coordinates
+        :param reset: if True, will reset the x and y limits, and remove the flags to plot
+                      the difference and hkl unless the options are set at the same time.
+        :param kwargs: additional keyword arguments:
+                       fig=None will force creating a new figure
+                       fig=fig1 will plot in the given matplotlib figure
         """
         import matplotlib.pyplot as plt
         obs = self.GetPowderPatternObs()
         calc = self.GetPowderPatternCalc()
+
+        if reset:
+            self._plot_ylim = None
+            self._plot_xlim = None
+            self._plot_hkl = False
+            self._plot_diff = False
+        if 'fig' in kwargs:
+            self._plot_fig = kwargs['fig']
 
         if diff is not None:
             self._plot_diff = diff
@@ -75,12 +91,15 @@ class PowderPattern(PowderPattern_objcryst):
         # TODO: handle other coordinates than angles (TOF)
         x = np.rad2deg(self.GetPowderPatternX())
         first_plot = False
-        if self._plot_fig is None:
-            self._plot_fig = plt.figure(figsize=(16, 5))
-        elif plt.fignum_exists(self._plot_fig.number) is False:
-            self._plot_fig = plt.figure(figsize=(16, 5))
-        plt.figure(self._plot_fig.number)
-        plt.clf()
+        if 'inline' not in plt.get_backend():
+            if self._plot_fig is None:
+                self._plot_fig = plt.figure(figsize=figsize)
+            elif plt.fignum_exists(self._plot_fig.number) is False:
+                self._plot_fig = plt.figure(figsize=figsize)
+            plt.figure(self._plot_fig.number)
+            plt.clf()
+        else:
+            plt.figure(figsize=figsize)
         plt.plot(x, obs, 'k', label='obs', linewidth=1)
         plt.plot(x, calc, 'r', label='calc', linewidth=1)
         if plot_diff:
@@ -110,17 +129,22 @@ class PowderPattern(PowderPattern_objcryst):
                 vk = np.round(c.GetK()).astype(np.int16)
                 vl = np.round(c.GetL()).astype(np.int16)
                 stol = c.GetSinThetaOverLambda()
-                try:
-                    # need the renderer to avoid text overlap
-                    renderer = plt.gcf().canvas.renderer
-                except:
-                    # Force immediate display. Not supported on all backends (e.g. nbagg)
-                    plt.draw()
-                    plt.pause(.001)
+
+                if 'inline' not in plt.get_backend():
+                    # 'inline' backend triggers a delayed exception (?)
                     try:
+                        # need the renderer to avoid text overlap
                         renderer = plt.gcf().canvas.renderer
                     except:
-                        renderer = None
+                        # Force immediate display. Not supported on all backends (e.g. nbagg)
+                        plt.draw()
+                        plt.pause(.001)
+                        try:
+                            renderer = plt.gcf().canvas.renderer
+                        except:
+                            renderer = None
+                else:
+                    renderer = None
 
                 props = {'ha': 'center', 'va': 'bottom'}
                 ct = 0
@@ -141,7 +165,8 @@ class PowderPattern(PowderPattern_objcryst):
 
                     ihkl = max(calc[idxhkl], obs[idxhkl])
                     s = " %d %d %d" % (vh[i], vk[i], vl[i])
-                    t = plt.text(xhkl, ihkl, s, props, rotation=90, fontsize=6, fontweight='light')
+                    t = plt.text(xhkl, ihkl, s, props, rotation=90,
+                                 fontsize=fontsize_hkl, fontweight='light')
                     if renderer is not None:
                         # Check for overlap with previous
                         bbox = t.get_window_extent(renderer)
@@ -151,16 +176,17 @@ class PowderPattern(PowderPattern_objcryst):
                                 b = bbox.transformed(tdi)
                                 t.set_y(ihkl + b.height * 1.2)
                         last_bbox = t.get_window_extent(renderer)
-        try:
-            # Force immediate display. Not supported on all backends (e.g. nbagg)
-            plt.draw()
-            plt.pause(.001)
-        except:
-            pass
-        self._plot_xlim_plot = plt.xlim()
-        plt.gca().callbacks.connect('xlim_changed', self._on_xlims_change)
-        plt.gca().callbacks.connect('ylim_changed', self._on_ylims_change)
-        self._plot_fig.canvas.mpl_connect('button_press_event', self._on_mouse_event)
+        if 'inline' not in plt.get_backend():
+            try:
+                # Force immediate display. Not supported on all backends (e.g. nbagg)
+                plt.draw()
+                plt.pause(.001)
+            except:
+                pass
+            self._plot_xlim_plot = plt.xlim()
+            plt.gca().callbacks.connect('xlim_changed', self._on_xlims_change)
+            plt.gca().callbacks.connect('ylim_changed', self._on_ylims_change)
+            self._plot_fig.canvas.mpl_connect('button_press_event', self._on_mouse_event)
 
     def quick_fit_profile(self, pdiff=None, auto_background=True, init_profile=True, plot=True,
                           zero=True, constant_width=True, width=True, eta=True, backgd=True, cell=True,
@@ -286,7 +312,6 @@ class PowderPattern(PowderPattern_objcryst):
                     lsq.SafeRefine(nbCycle=10, useLevenbergMarquardt=True, silent=True)
                     break
 
-
     def _on_xlims_change(self, event_ax):
         self._plot_xlim = event_ax.get_xlim()
         if self._plot_hkl and self._plot_xlim_plot is not None:
@@ -321,15 +346,14 @@ def create_powderpattern_from_cif(file):
     :return: the imported PowderPattern
     :raises: ObjCrystException - if no PowderPattern object can be imported
     """
+    p = PowderPattern()
     if isinstance(file, str):
         if len(file) > 4:
             if file[:4].lower() == 'http':
-                return CreatePowderPatternFromCIF_orig(urllib.request.urlopen(file))
+                return CreatePowderPatternFromCIF_orig(urllib.request.urlopen(file), p)
         with open(file, 'rb') as cif:  # Make sure file object is closed
-            c = CreatePowderPatternFromCIF_orig(cif)
-    else:
-        c = CreatePowderPatternFromCIF_orig(file)
-    return c
+            return CreatePowderPatternFromCIF_orig(cif, p)
+    return CreatePowderPatternFromCIF_orig(file, p)
 
 
 # PEP8

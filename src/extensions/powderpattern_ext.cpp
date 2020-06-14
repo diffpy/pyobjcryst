@@ -40,6 +40,7 @@ using namespace ObjCryst;
 namespace {
 
 
+// This creates a C++ PowderPattern object
 PowderPattern* _CreatePowderPatternFromCIF(bp::object input)
 {
     // Reading a cif file creates some output via fpObjCrystInformUser.
@@ -66,6 +67,43 @@ PowderPattern* _CreatePowderPatternFromCIF(bp::object input)
     }
 
     return p;
+}
+
+// This reads the CIF into an existing PowderPattern object
+PowderPattern* _CreatePowderPatternFromCIF(bp::object input, PowderPattern &p)
+{
+    // Reading a cif file creates some output via fpObjCrystInformUser.
+    // Mute the output and restore it on return or exception.
+    // Also mute any hardcoded output to cout.
+    MuteObjCrystUserInfo muzzle;
+    CaptureStdOut gag;
+
+    boost_adaptbx::python::streambuf sbuf(input);
+    boost_adaptbx::python::streambuf::istream in(sbuf);
+    ObjCryst::CIF cif(in);
+
+    bool import_ok = false;
+
+    for(map<string,CIFData>::iterator pos=cif.mvData.begin();pos!=cif.mvData.end();++pos)
+    {
+       if(pos->second.mPowderPatternObs.size()>10)
+       {
+          p.ImportPowderPatternCIF(cif);
+          (*fpObjCrystInformUser)((boost::format("CIF: Imported POWDER PATTERN, with %d points") % p.GetNbPoint()).str());
+          import_ok = true;
+          break; // only import one powder pattern
+       }
+    }
+
+    gag.release();
+    muzzle.release();
+
+    if(!import_ok)
+    {
+        throw ObjCryst::ObjCrystException("Cannot create powder pattern from CIF");
+    }
+
+    return &p;
 }
 
 
@@ -292,7 +330,13 @@ void wrap_powderpattern()
         .def("GetScores", &_GetScores)
         ;
 
+    // This will only return a C++ PowderPattern object
     def("CreatePowderPatternFromCIF",
-            &_CreatePowderPatternFromCIF, bp::arg("file"),
+            (PowderPattern* (*)(bp::object input)) &_CreatePowderPatternFromCIF, bp::arg("file"),
+            return_value_policy<manage_new_object>());
+
+    // This can update a PowderPattern object with python methods
+    def("CreatePowderPatternFromCIF",
+            (PowderPattern* (*)(bp::object input, PowderPattern &)) &_CreatePowderPatternFromCIF, (bp::arg("file"), bp::arg("powpat")),
             return_value_policy<manage_new_object>());
 }
