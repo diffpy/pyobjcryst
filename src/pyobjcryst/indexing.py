@@ -29,7 +29,7 @@ from pyobjcryst._pyobjcryst import CrystalSystem, CrystalCentering, \
     CellExplorer
 
 
-def quick_index(pl: PeakList, min_obs_ratio=0.3, max_obs_ratio=1.5, nb_refl=20, try_centered_lattice=True,
+def quick_index(pl, min_obs_ratio=0.3, max_obs_ratio=1.5, nb_refl=20, try_centered_lattice=True,
                 continue_on_sol=False, max_nb_spurious=0, verbose=True):
     if len(pl) > nb_refl:
         pl.resize(nb_refl)
