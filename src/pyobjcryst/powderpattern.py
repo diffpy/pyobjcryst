@@ -51,10 +51,11 @@ class PowderPattern(PowderPattern_objcryst):
         self._plot_xlim_plot = None
 
     def UpdateDisplay(self):
-        import matplotlib.pyplot as plt
-        if self._plot_fig is not None and 'inline' not in plt.get_backend():
-            if plt.fignum_exists(self._plot_fig.number):
-                self.plot()
+        if self._plot_fig is not None:
+            import matplotlib.pyplot as plt
+            if 'inline' not in plt.get_backend():
+                if plt.fignum_exists(self._plot_fig.number):
+                    self.plot()
 
     def plot(self, diff=None, hkl=None, figsize=(9, 4), fontsize_hkl=6, reset=False, **kwargs):
         """

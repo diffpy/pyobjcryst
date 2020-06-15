@@ -80,6 +80,7 @@ before_install:
   - $NOBREW || brew install gcc || brew link --overwrite gcc
   - $NOBREW || brew install boost-python3
   - $NOBREW || brew install scons
+  - $NOBREW || $MYPIP install numpy
 
   - $NOSYS || devutils/makesdist
   - $NOSYS || MYTARBUNDLE="$(ls -t "${PWD}"/dist/*.tar.gz | head -1)"
