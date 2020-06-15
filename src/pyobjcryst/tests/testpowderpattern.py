@@ -25,6 +25,7 @@ from pyobjcryst.radiation import RadiationType, WavelengthType
 from pyobjcryst.crystal import *
 from pyobjcryst.reflectionprofile import ReflectionProfileType
 from pyobjcryst.indexing import *
+from pyobjcryst.tests.pyobjcrysttestutils import loadcifdata, datafile
 
 
 # ----------------------------------------------------------------------------
@@ -148,7 +149,7 @@ class TestPowderPattern(unittest.TestCase):
         pp.SetRadiationType(t)
 
     def test_quick_fit(self):
-        c = CreateCrystalFromCIF("testdata/paracetamol.cif")
+        c = loadcifdata("paracetamol.cif")
         p = PowderPattern()
         p.SetWavelength(0.7)
         x = np.linspace(0, 40, 8001)
@@ -163,7 +164,7 @@ class TestPowderPattern(unittest.TestCase):
         p.quick_fit_profile(auto_background=True, verbose=False, plot=False)
 
     def test_peaklist_index(self):
-        c = CreateCrystalFromCIF("testdata/paracetamol.cif")
+        c = loadcifdata("paracetamol.cif")
         p = PowderPattern()
         p.SetWavelength(0.7)
         x = np.linspace(0, 40, 8001)
@@ -188,7 +189,7 @@ class TestPowderPattern(unittest.TestCase):
         self.assertAlmostEqual(ruc.DirectUnitCell()[-1], c.GetVolume(), delta=5)
 
     def test_spacegroup_explorer(self):
-        c = CreateCrystalFromCIF("testdata/paracetamol.cif")
+        c = loadcifdata("paracetamol.cif")
         p = PowderPattern()
         p.SetWavelength(0.7)
         x = np.linspace(0, 40, 8001)

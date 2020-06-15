@@ -280,18 +280,18 @@ class TestCif(unittest.TestCase):
     def test_paracetamol_monomethanolate(self):
         """ Test loading crystal and diffraction data
         """
-        c = CreateCrystalFromCIF("testdata/paracetamol_monomethanolate.cif")
+        c = loadcifdata("paracetamol_monomethanolate.cif")
         d = create_singlecrystaldata_from_cif(
-            "testdata/paracetamol_monomethanolate_data_single_crystal.cif", c)
+            datafile("paracetamol_monomethanolate_data_single_crystal.cif"), c)
         self.assertTrue(d is not None)
 
     def test_paracetamol_monomethanolate_ward(self):
         """ Test loading crystal and diffraction data,
         make sure custodian & ward works
         """
-        c = CreateCrystalFromCIF("testdata/paracetamol_monomethanolate.cif")
+        c = loadcifdata("paracetamol_monomethanolate.cif")
         d = create_singlecrystaldata_from_cif(
-            "testdata/paracetamol_monomethanolate_data_single_crystal.cif", c)
+            datafile("paracetamol_monomethanolate_data_single_crystal.cif"), c)
         n = d.GetCrystal().GetName()
         # Replace c by another Crystal object
         c = loadcifdata('ZnS_sphalerite.cif')
