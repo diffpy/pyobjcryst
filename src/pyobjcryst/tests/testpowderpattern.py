@@ -183,8 +183,8 @@ class TestPowderPattern(unittest.TestCase):
         self.assertGreater(len(sols), 0)
         ruc = sols[0][0]
         # Check lattice type
-        self.assertEqual(ruc.mCentering, CrystalCentering.LATTICE_P)
-        self.assertEqual(ruc.mlattice, CrystalSystem.MONOCLINIC)
+        self.assertEqual(ruc.centering, CrystalCentering.LATTICE_P)
+        self.assertEqual(ruc.lattice, CrystalSystem.MONOCLINIC)
         # Cell volume
         self.assertAlmostEqual(ruc.DirectUnitCell()[-1], c.GetVolume(), delta=5)
 

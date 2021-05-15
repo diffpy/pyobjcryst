@@ -107,7 +107,16 @@ class PowderPattern(PowderPattern_objcryst):
             plt.plot(x, calc - obs - obs.max() / 20, 'g', label='calc-obs',
                      linewidth=0.5)
         plt.legend(loc='upper right')
-        plt.title("PowderPattern: %s" % self.GetName())
+        if self.GetName() == "":
+            # try to find a crystal phase
+            s = "PowderPattern: "
+            for i in range(self.GetNbPowderPatternComponent()):
+                if self.GetPowderPatternComponent(i).GetClassName() == "PowderPatternDiffraction":
+                    c = self.GetPowderPatternComponent(i).GetCrystal()
+                    s += "Phase: %s (%s)" % (c.GetName(), c.GetSpaceGroup().GetName())
+            plt.title(s)
+        else:
+            plt.title("PowderPattern: %s" % self.GetName())
 
         m = self.GetMaxSinThetaOvLambda() * self.GetWavelength()
         if self._plot_ylim is not None:
@@ -139,6 +148,7 @@ class PowderPattern(PowderPattern_objcryst):
                     except:
                         # Force immediate display. Not supported on all backends (e.g. nbagg)
                         plt.draw()
+                        plt.gcf().canvas.draw()
                         plt.pause(.001)
                         try:
                             renderer = plt.gcf().canvas.renderer
@@ -181,6 +191,7 @@ class PowderPattern(PowderPattern_objcryst):
             try:
                 # Force immediate display. Not supported on all backends (e.g. nbagg)
                 plt.draw()
+                plt.gcf().canvas.draw()
                 plt.pause(.001)
             except:
                 pass
@@ -312,6 +323,27 @@ class PowderPattern(PowderPattern_objcryst):
                     # lsqr.Print()
                     lsq.SafeRefine(nbCycle=10, useLevenbergMarquardt=True, silent=True)
                     break
+
+    def get_background(self):
+        """
+        Access the background component.
+
+        :return: the PowderPatternBackground for this powder pattern, or None
+        """
+        for i in range(self.GetNbPowderPatternComponent()):
+            if self.GetPowderPatternComponent(i).GetClassName() == "PowderPatternBackground":
+                return self.GetPowderPatternComponent(i)
+
+    def get_crystalline_components(self):
+        """
+        Get the crystalline phase for this powder pattern
+        :return: a list of the PowderPatternDiffraction components
+        """
+        vc = []
+        for i in range(self.GetNbPowderPatternComponent()):
+            if self.GetPowderPatternComponent(i).GetClassName() == "PowderPatternDiffraction":
+                vc.append(self.GetPowderPatternComponent(i))
+        return vc
 
     def _on_xlims_change(self, event_ax):
         self._plot_xlim = event_ax.get_xlim()

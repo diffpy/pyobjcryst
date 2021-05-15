@@ -304,6 +304,11 @@ void wrap_powderpattern()
         .def("STOL2Pixel", &PowderPattern::STOL2Pixel)
         .def("UpdateDisplay", &PowderPattern::UpdateDisplay,
             &PowderPatternWrap::default_UpdateDisplay)
+        .add_property("mur", &PowderPattern::GetMuR, &PowderPattern::SetMuR)
+        .add_property("rw", &PowderPattern::GetRw)
+        .add_property("chi2", &PowderPattern::GetChi2)
+        .add_property("wavelength", &PowderPattern::GetWavelength,
+                      (void (PowderPattern::*)(double)) &PowderPattern::SetWavelength)
         ;
 
     class_<SPGScore>("SPGScore", init<const string &, const REAL, const REAL,
@@ -320,13 +325,14 @@ void wrap_powderpattern()
     //,init<PowderPatternDiffraction *>(bp::arg("powdiff")),with_custodian_and_ward_postcall<1,2>()
     class_<SpaceGroupExplorer>("SpaceGroupExplorer", init<PowderPatternDiffraction * >
             ((bp::arg("powdiff"))) [with_custodian_and_ward<1,2>()])
-        .def("Run", (SPGScore (SpaceGroupExplorer::*)(const string&, const bool, const bool, const bool))
+        .def("Run", (SPGScore (SpaceGroupExplorer::*)(const string&, const bool, const bool, const bool, const bool))
              &SpaceGroupExplorer::Run,
              (bp::arg("spg"), bp::arg("fitprofile")=false, bp::arg("verbose")=false,
-             bp::arg("restore_orig")=false))
+             bp::arg("restore_orig")=false, bp::arg("update_display")=false))
         .def("RunAll", &SpaceGroupExplorer::RunAll,
              (bp::arg("fitprofile")=false, bp::arg("verbose")=true,
-             bp::arg("keep_best")=true))
+             bp::arg("keep_best")=true, bp::arg("update_display")=true,
+             bp::arg("fitprofile_p1")=true))
         .def("GetScores", &_GetScores)
         ;
 

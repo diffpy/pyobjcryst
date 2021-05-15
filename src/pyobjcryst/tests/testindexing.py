@@ -68,8 +68,8 @@ class TestIndexing(unittest.TestCase):
         self.assertGreater(sols[0][1], 120)
         ruc = sols[0][0]
         # Check lattice type
-        self.assertEqual(ruc.mCentering, CrystalCentering.LATTICE_P)
-        self.assertEqual(ruc.mlattice, CrystalSystem.MONOCLINIC)
+        self.assertEqual(ruc.centering, CrystalCentering.LATTICE_P)
+        self.assertEqual(ruc.lattice, CrystalSystem.MONOCLINIC)
         # Cell volume
         self.assertAlmostEqual(ruc.DirectUnitCell()[-1], 1280, delta=2)
 
