@@ -50,6 +50,17 @@ void _OptimizeBayesianBackground(PowderPatternBackground *pbackgd, const bool ve
       pbackgd->OptimizeBayesianBackground();
 }
 
+const CrystVector_REAL& _GetInterpPointsX(PowderPatternBackground *pbackgd)
+{
+  return *(pbackgd->GetInterpPoints().first);
+}
+
+const CrystVector_REAL& _GetInterpPointsY(PowderPatternBackground *pbackgd)
+{
+  return *(pbackgd->GetInterpPoints().second);
+}
+
+
 }   // namespace
 
 
@@ -69,6 +80,12 @@ void wrap_powderpatternbackground()
         .def("SetInterpPoints",
                 _SetInterpPoints,
                 (bp::arg("tth"), bp::arg("backgd")))
+        .def("GetInterpPointsX",
+                &_GetInterpPointsX,
+                return_value_policy<copy_const_reference>())
+        .def("GetInterpPointsY",
+                &_GetInterpPointsY,
+                return_value_policy<copy_const_reference>())
         .def("OptimizeBayesianBackground",
                 &_OptimizeBayesianBackground, (bp::arg("verbose")=false))
         .def("FixParametersBeyondMaxresolution",
