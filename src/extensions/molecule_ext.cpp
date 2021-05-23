@@ -54,6 +54,7 @@
 #include <boost/python/dict.hpp>
 #include <boost/python/slice.hpp>
 #include <boost/python/iterator.hpp>
+#include <boost/python/manage_new_object.hpp>
 
 #include <iostream>
 #include <vector>
@@ -64,6 +65,7 @@
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 #include <ObjCryst/ObjCryst/Molecule.h>
+#include <ObjCryst/ObjCryst/ZScatterer.h>
 #include <ObjCryst/ObjCryst/Crystal.h>
 #include <ObjCryst/ObjCryst/ScatteringPower.h>
 
@@ -834,5 +836,9 @@ void wrap_molecule()
     def("GetBondLength", &GetBondLength);
     def("GetBondAngle", &GetBondAngle);
     def("GetDihedralAngle", &GetDihedralAngle);
+
+    def("ZScatterer2Molecule",
+        (Molecule* (*)(ZScatterer*)) &ZScatterer2Molecule, bp::arg("zscatt"),
+        return_value_policy<manage_new_object>());
 
 }
