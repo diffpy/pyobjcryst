@@ -47,8 +47,10 @@ class PowderPattern(PowderPattern_objcryst):
         self._plot_ylim = None
         self._plot_diff = False
         self._plot_hkl = False
-        # xlim last time we called
-        self._plot_xlim_plot = None
+        self._plot_hkl_fontsize = 6
+        # xlim last time hkl were plotted
+        self._last_hkl_plot_xlim = None
+        self.evts = []
 
     def UpdateDisplay(self):
         if self._plot_fig is not None:
@@ -91,7 +93,6 @@ class PowderPattern(PowderPattern_objcryst):
 
         # TODO: handle other coordinates than angles (TOF)
         x = np.rad2deg(self.GetPowderPatternX())
-        first_plot = False
         if 'inline' not in plt.get_backend():
             if self._plot_fig is None:
                 self._plot_fig = plt.figure(figsize=figsize)
@@ -127,66 +128,8 @@ class PowderPattern(PowderPattern_objcryst):
             plt.xlim(x.min(), np.rad2deg(np.arcsin(m)) * 2)
 
         if plot_hkl:
-            # Plot a maximum number of hkl reflections
-            nb_max = 100
-            for ic in range(self.GetNbPowderPatternComponent()):
-                c = self.GetPowderPatternComponent(ic)
-                if isinstance(c, PowderPatternDiffraction) is False:
-                    continue
-                # print("HKL for:", c.GetName())
-                xmin, xmax = plt.xlim()
-                vh = np.round(c.GetH()).astype(np.int16)
-                vk = np.round(c.GetK()).astype(np.int16)
-                vl = np.round(c.GetL()).astype(np.int16)
-                stol = c.GetSinThetaOverLambda()
+            self._do_plot_hkl(nb_max=100, fontsize_hkl=fontsize_hkl)
 
-                if 'inline' not in plt.get_backend():
-                    # 'inline' backend triggers a delayed exception (?)
-                    try:
-                        # need the renderer to avoid text overlap
-                        renderer = plt.gcf().canvas.renderer
-                    except:
-                        # Force immediate display. Not supported on all backends (e.g. nbagg)
-                        plt.draw()
-                        plt.gcf().canvas.draw()
-                        plt.pause(.001)
-                        try:
-                            renderer = plt.gcf().canvas.renderer
-                        except:
-                            renderer = None
-                else:
-                    renderer = None
-
-                props = {'ha': 'center', 'va': 'bottom'}
-                ct = 0
-                last_bbox = None
-                ax = plt.gca()
-                tdi = ax.transData.inverted()
-                for i in range(len(vh)):
-                    xhkl = np.rad2deg(self.X2XCorr(self.STOL2X(stol[i])))
-                    idxhkl = int(round(self.X2PixelCorr(self.STOL2X(stol[i]))))
-                    # print(vh[i], vk[i], vl[i], xhkl, idxhkl)
-                    if xhkl < xmin or idxhkl < 0:
-                        continue
-                    if xhkl > xmax or idxhkl >= len(x):
-                        break
-                    ct += 1
-                    if ct >= nb_max:
-                        break
-
-                    ihkl = max(calc[idxhkl], obs[idxhkl])
-                    s = " %d %d %d" % (vh[i], vk[i], vl[i])
-                    t = plt.text(xhkl, ihkl, s, props, rotation=90,
-                                 fontsize=fontsize_hkl, fontweight='light')
-                    if renderer is not None:
-                        # Check for overlap with previous
-                        bbox = t.get_window_extent(renderer)
-                        # print(s, bbox)
-                        if last_bbox is not None:
-                            if bbox.overlaps(last_bbox):
-                                b = bbox.transformed(tdi)
-                                t.set_y(ihkl + b.height * 1.2)
-                        last_bbox = t.get_window_extent(renderer)
         if 'inline' not in plt.get_backend():
             try:
                 # Force immediate display. Not supported on all backends (e.g. nbagg)
@@ -195,10 +138,82 @@ class PowderPattern(PowderPattern_objcryst):
                 plt.pause(.001)
             except:
                 pass
-            self._plot_xlim_plot = plt.xlim()
-            plt.gca().callbacks.connect('xlim_changed', self._on_xlims_change)
-            plt.gca().callbacks.connect('ylim_changed', self._on_ylims_change)
+            # plt.gca().callbacks.connect('xlim_changed', self._on_xlims_change)
+            # plt.gca().callbacks.connect('ylim_changed', self._on_ylims_change)
             self._plot_fig.canvas.mpl_connect('button_press_event', self._on_mouse_event)
+            self._plot_fig.canvas.mpl_connect('draw_event', self._on_draw_event)
+
+    def _do_plot_hkl(self, nb_max=100, fontsize_hkl=None):
+        import matplotlib.pyplot as plt
+        if fontsize_hkl is None:
+            fontsize_hkl = self._plot_hkl_fontsize
+        else:
+            self._plot_hkl_fontsize = fontsize_hkl
+        # Plot up to nb_max hkl reflections
+        obs = self.GetPowderPatternObs()
+        calc = self.GetPowderPatternCalc()
+        x = np.rad2deg(self.GetPowderPatternX())
+        # Clear previous text (assumes only hkl were printed)
+        plt.gca().texts = []
+        for ic in range(self.GetNbPowderPatternComponent()):
+            c = self.GetPowderPatternComponent(ic)
+            if isinstance(c, PowderPatternDiffraction) is False:
+                continue
+            # print("HKL for:", c.GetName())
+            xmin, xmax = plt.xlim()
+            vh = np.round(c.GetH()).astype(np.int16)
+            vk = np.round(c.GetK()).astype(np.int16)
+            vl = np.round(c.GetL()).astype(np.int16)
+            stol = c.GetSinThetaOverLambda()
+
+            if 'inline' not in plt.get_backend():
+                # 'inline' backend triggers a delayed exception (?)
+                try:
+                    # need the renderer to avoid text overlap
+                    renderer = plt.gcf().canvas.renderer
+                except:
+                    # Force immediate display. Not supported on all backends (e.g. nbagg)
+                    plt.draw()
+                    plt.gcf().canvas.draw()
+                    plt.pause(.001)
+                    try:
+                        renderer = plt.gcf().canvas.renderer
+                    except:
+                        renderer = None
+            else:
+                renderer = None
+
+            props = {'ha': 'center', 'va': 'bottom'}
+            ct = 0
+            last_bbox = None
+            ax = plt.gca()
+            tdi = ax.transData.inverted()
+            for i in range(len(vh)):
+                xhkl = np.rad2deg(self.X2XCorr(self.STOL2X(stol[i])))
+                idxhkl = int(round(self.X2PixelCorr(self.STOL2X(stol[i]))))
+                # print(vh[i], vk[i], vl[i], xhkl, idxhkl)
+                if xhkl < xmin or idxhkl < 0:
+                    continue
+                if xhkl > xmax or idxhkl >= len(x):
+                    break
+                ct += 1
+                if ct >= nb_max:
+                    break
+
+                ihkl = max(calc[idxhkl], obs[idxhkl])
+                s = " %d %d %d" % (vh[i], vk[i], vl[i])
+                t = plt.text(xhkl, ihkl, s, props, rotation=90,
+                             fontsize=fontsize_hkl, fontweight='light')
+                if renderer is not None:
+                    # Check for overlap with previous
+                    bbox = t.get_window_extent(renderer)
+                    # print(s, bbox)
+                    if last_bbox is not None:
+                        if bbox.overlaps(last_bbox):
+                            b = bbox.transformed(tdi)
+                            t.set_y(ihkl + b.height * 1.2)
+                    last_bbox = t.get_window_extent(renderer)
+        self._last_hkl_plot_xlim = plt.xlim()
 
     def quick_fit_profile(self, pdiff=None, auto_background=True, init_profile=True, plot=True,
                           zero=True, constant_width=True, width=True, eta=True, backgd=True, cell=True,
@@ -345,24 +360,23 @@ class PowderPattern(PowderPattern_objcryst):
                 vc.append(self.GetPowderPatternComponent(i))
         return vc
 
-    def _on_xlims_change(self, event_ax):
-        self._plot_xlim = event_ax.get_xlim()
-        if self._plot_hkl and self._plot_xlim_plot is not None:
-            import matplotlib.pyplot as plt
-            # Redraw to update the displayed hkl ?
-            dx1 = abs(self._plot_xlim_plot[0] - plt.xlim()[0])
-            dx2 = abs(self._plot_xlim_plot[1] - plt.xlim()[1])
-            if max(dx1, dx2) > 0.1 * (self._plot_xlim_plot[1] - self._plot_xlim_plot[0]):
-                self.plot()
-
-    def _on_ylims_change(self, event_ax):
-        self._plot_ylim = event_ax.get_ylim()
-
     def _on_mouse_event(self, event):
         if event.dblclick:
+            # This does not work in a notebook
             self._plot_xlim = None
             self._plot_ylim = None
             self.plot()
+
+    def _on_draw_event(self, event):
+        if self._plot_hkl and self._last_hkl_plot_xlim is not None:
+            import matplotlib.pyplot as plt
+            self._plot_xlim = plt.gca().get_xlim()
+            dx1 = abs(self._last_hkl_plot_xlim[0] - plt.xlim()[0])
+            dx2 = abs(self._last_hkl_plot_xlim[1] - plt.xlim()[1])
+            plt.title("%f %f %f" % (dx1, dx2, self._last_hkl_plot_xlim[1] - self._last_hkl_plot_xlim[0]))
+            if max(dx1, dx2) > 0.1 * (self._last_hkl_plot_xlim[1] - self._last_hkl_plot_xlim[0]):
+                # Need to update the hkl list
+                self._do_plot_hkl()
 
 
 def create_powderpattern_from_cif(file):

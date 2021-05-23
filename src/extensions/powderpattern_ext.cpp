@@ -172,12 +172,12 @@ class PowderPatternWrap : public PowderPattern, public wrapper<PowderPattern>
 
 std::string __str__SPGScore(SPGScore& s)
 {
-    if(s.ngof>0.01)
-      return (boost::format("%10s nGoF=%7.2f Gof=%7.2f Rw=%5.2f [extinct=%3d]")
-                           % s.hm % s.ngof % s.gof % s.rw %s.nbextinct446).str();
+    if(s.ngof>0.0001)
+      return (boost::format("%-13s nGoF=%9.4f GoF=%8.3f Rw=%5.2f [%3d reflections, extinct446=%3d]")
+                           % s.hm % s.ngof % s.gof % s.rw %s.nbreflused %s.nbextinct446).str();
 
-    return (boost::format("%10s Gof=%8.2f Rw=%4.2f [extinct=%3d]")
-                          % s.hm % s.gof % s.rw %s.nbextinct446).str();
+    return (boost::format("%-13s GoF=%8.3f Rw=%4.2f [extinct446=%3d]")
+                          % s.hm % s.gof % s.rw %s.nbreflused %s.nbextinct446).str();
 }
 
 bp::list _GetScores(const SpaceGroupExplorer &spgex)
@@ -330,7 +330,7 @@ void wrap_powderpattern()
              (bp::arg("spg"), bp::arg("fitprofile")=false, bp::arg("verbose")=false,
              bp::arg("restore_orig")=false, bp::arg("update_display")=false))
         .def("RunAll", &SpaceGroupExplorer::RunAll,
-             (bp::arg("fitprofile")=false, bp::arg("verbose")=true,
+             (bp::arg("fitprofile_all")=false, bp::arg("verbose")=true,
              bp::arg("keep_best")=true, bp::arg("update_display")=true,
              bp::arg("fitprofile_p1")=true))
         .def("GetScores", &_GetScores)
