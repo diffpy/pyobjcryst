@@ -20,6 +20,7 @@
 #include <boost/python/def.hpp>
 #include <boost/python/copy_const_reference.hpp>
 #include <boost/python/pure_virtual.hpp>
+#include <boost/python/tuple.hpp>
 
 #include <ObjCryst/ObjCryst/ScatteringPower.h>
 #include <ObjCryst/RefinableObj/RefinableObj.h>
@@ -186,6 +187,11 @@ void _SetBij(ScatteringPower& sp, const double newB)
     return sp.SetBij(i, j, newB);
 }
 
+boost::python::tuple _GetColourRGB(ScatteringPower& sp)
+{
+  return make_tuple(sp.GetColourRGB()[0], sp.GetColourRGB()[1], sp.GetColourRGB()[2]);
+}
+
 
 } // anonymous namespace
 
@@ -272,6 +278,11 @@ void wrap_scatteringpower()
         .def("SetFormalCharge",
             &ScatteringPower::SetFormalCharge,
             &ScatteringPowerWrap::default_SetFormalCharge)
+        .def("GetColourRGB", &_GetColourRGB)
+        .def("GetColour", &_GetColourRGB)
+        .def("SetColour",
+            (void (ScatteringPower::*)(const float,const float,const float)) &ScatteringPower::SetColour,
+            (boost::python::arg("r"), boost::python::arg("g"), boost::python::arg("b")))
         .add_property("Biso", (double (ScatteringPower::*)()const)
                 &ScatteringPower::GetBiso, &ScatteringPower::SetBiso)
         .add_property("B11", &_GetBij<1,1>, &_SetBij<1,1>)

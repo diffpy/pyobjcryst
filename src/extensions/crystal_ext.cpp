@@ -159,6 +159,14 @@ void _CIFOutput(Crystal& c, bp::object output, double mindist)
     os.flush();
 }
 
+std::string _CIF(const Crystal &c, double mindist)
+{
+    std::stringstream s;
+    c.CIFOutput(s, mindist);
+    return s.str();
+}
+
+
 // wrap the virtual functions that need it
 class CrystalWrap : public Crystal, public wrapper<Crystal>
 {
@@ -330,6 +338,7 @@ void wrap_crystal()
         .def("GetClockScattererList", &Crystal::GetClockScattererList,
                 return_value_policy<copy_const_reference>())
         .def("CIFOutput", &_CIFOutput, (bp::arg("file"), bp::arg("mindist")=0))
+        .def("CIF", &_CIF, (bp::arg("mindist")=0))
         .def("AddBondValenceRo", &Crystal::AddBondValenceRo)
         .def("RemoveBondValenceRo", &Crystal::AddBondValenceRo)
         .def("GetBondValenceCost", &Crystal::GetBondValenceCost)
