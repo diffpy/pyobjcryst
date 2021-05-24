@@ -33,10 +33,24 @@ __all__ = ["Crystal", "BumpMergePar", "CreateCrystalFromCIF",
            "create_crystal_from_cif", "gCrystalRegistry"]
 
 import urllib
-from pyobjcryst._pyobjcryst import Crystal
+from pyobjcryst._pyobjcryst import Crystal as Crystal_orig
 from pyobjcryst._pyobjcryst import BumpMergePar
 from pyobjcryst._pyobjcryst import CreateCrystalFromCIF as CreateCrystalFromCIF_orig
 from pyobjcryst._pyobjcryst import gCrystalRegistry
+
+
+class Crystal(Crystal_orig):
+
+    def CIFOutput(self,file, mindist=0):
+        """
+        Save the crystal structure to a CIF file.
+
+        :param file: either a filename, or a python file object opened in write mode
+        """
+        if isinstance(file, str):
+            super().CIFOutput(open(file,"w"), mindist)
+        else:
+            super().CIFOutput(file, mindist)
 
 
 def create_crystal_from_cif(file, oneScatteringPowerPerElement=False,

@@ -110,21 +110,21 @@ from pyobjcryst._pyobjcryst import ZScatterer2Molecule
 from .zscatterer import ZScatterer
 
 
-def ImportFenskeHallZMatrix(cryst, input, named=False):
+def ImportFenskeHallZMatrix(cryst, src, named=False):
     """
     Create a Molecule from a Fenske-Hall z-matrix. This is cleaner than importing
     the Z-matrix into a ZScatterer object and then using ZScatterer2Molecule,
     as it takes care of keeping only the created Molecule inside the Crystal.
 
     :param cryst: a Crystal object to which will belong the created Molecule
-    :param input: either a python filed (opened in 'rb' mode), or
+    :param src: either a python filed (opened in 'rb' mode), or
         a filename, or an url ("http://...") to a text file with the z-matrix
     :param named: if True, allows to read a named Z-matrix - the formatting
         is similar to a Fenske-Hall z-matrix but only relies on spaces between the
         different fields instead of a strict number of characters.
     """
     z = ZScatterer("", cryst)
-    z.ImportFenskeHallZMatrix(input,named)
+    z.ImportFenskeHallZMatrix(src,named)
     m = ZScatterer2Molecule(z)
     cryst.RemoveScatterer(z)
     cryst.AddScatterer(m)

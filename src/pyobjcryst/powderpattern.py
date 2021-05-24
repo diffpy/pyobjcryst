@@ -48,6 +48,7 @@ class PowderPattern(PowderPattern_objcryst):
         self._plot_diff = False
         self._plot_hkl = False
         self._plot_hkl_fontsize = 6
+        self._plot_phase_labels = None
         # xlim last time hkl were plotted
         self._last_hkl_plot_xlim = None
         self.evts = []
@@ -107,16 +108,9 @@ class PowderPattern(PowderPattern_objcryst):
         if plot_diff:
             plt.plot(x, calc - obs - obs.max() / 20, 'g', label='calc-obs',
                      linewidth=0.5)
+
         plt.legend(loc='upper right')
-        if self.GetName() == "":
-            # try to find a crystal phase
-            s = "PowderPattern: "
-            for i in range(self.GetNbPowderPatternComponent()):
-                if self.GetPowderPatternComponent(i).GetClassName() == "PowderPatternDiffraction":
-                    c = self.GetPowderPatternComponent(i).GetCrystal()
-                    s += "Phase: %s (%s)" % (c.GetName(), c.GetSpaceGroup().GetName())
-            plt.title(s)
-        else:
+        if self.GetName() != "":
             plt.title("PowderPattern: %s" % self.GetName())
 
         m = self.GetMaxSinThetaOvLambda() * self.GetWavelength()
@@ -129,6 +123,29 @@ class PowderPattern(PowderPattern_objcryst):
 
         if plot_hkl:
             self._do_plot_hkl(nb_max=100, fontsize_hkl=fontsize_hkl)
+
+        # print PowderPatternDiffraction names
+        s = ""
+        for i in range(self.GetNbPowderPatternComponent()):
+            comp = self.GetPowderPatternComponent(i)
+            if comp.GetClassName() == "PowderPatternDiffraction":
+                if comp.GetName() != "":
+                    s += "%s\n" % comp.GetName()
+                else:
+                    c = comp.GetCrystal()
+                    if c.GetName() != "":
+                        s += c.GetName()
+                    else:
+                        s += c.GetFormula()
+                    s += "[%s]" % str(c.GetSpaceGroup())
+                if comp.GetExtractionMode():
+                    s += "[Le Bail mode]"
+                else:
+                    s += "\n"
+
+        self._plot_phase_labels = s
+        plt.text(0.005, 0.995, s, horizontalalignment="left", verticalalignment="top",
+                 transform=plt.gca().transAxes, fontsize=6)
 
         if 'inline' not in plt.get_backend():
             try:
@@ -214,6 +231,9 @@ class PowderPattern(PowderPattern_objcryst):
                             t.set_y(ihkl + b.height * 1.2)
                     last_bbox = t.get_window_extent(renderer)
         self._last_hkl_plot_xlim = plt.xlim()
+        if self._plot_phase_labels is not None:
+            plt.text(0.005, 0.995, self._plot_phase_labels, horizontalalignment="left", verticalalignment="top",
+                     transform=plt.gca().transAxes, fontsize=6)
 
     def quick_fit_profile(self, pdiff=None, auto_background=True, init_profile=True, plot=True,
                           zero=True, constant_width=True, width=True, eta=True, backgd=True, cell=True,
@@ -338,6 +358,10 @@ class PowderPattern(PowderPattern_objcryst):
                     # lsqr.Print()
                     lsq.SafeRefine(nbCycle=10, useLevenbergMarquardt=True, silent=True)
                     break
+        if verbose:
+            print("Profile fitting finished.\n"
+                  "Remember to use SetExtractionMode(False) on the PowderPatternDiffraction object\n"
+                  "to disable profile fitting and optimise the structure.")
 
     def get_background(self):
         """
@@ -373,7 +397,6 @@ class PowderPattern(PowderPattern_objcryst):
             self._plot_xlim = plt.gca().get_xlim()
             dx1 = abs(self._last_hkl_plot_xlim[0] - plt.xlim()[0])
             dx2 = abs(self._last_hkl_plot_xlim[1] - plt.xlim()[1])
-            plt.title("%f %f %f" % (dx1, dx2, self._last_hkl_plot_xlim[1] - self._last_hkl_plot_xlim[0]))
             if max(dx1, dx2) > 0.1 * (self._last_hkl_plot_xlim[1] - self._last_hkl_plot_xlim[0]):
                 # Need to update the hkl list
                 self._do_plot_hkl()

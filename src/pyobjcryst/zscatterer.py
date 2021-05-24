@@ -38,20 +38,20 @@ from pyobjcryst._pyobjcryst import GlobalScatteringPower
 
 class ZScatterer(ZScatterer_orig):
 
-    def ImportFenskeHallZMatrix(self, input, named=False):
+    def ImportFenskeHallZMatrix(self, src, named=False):
         """
         Import atoms from a Fenske-Hall z-matrix
-        :param input: either a python filed (opened in 'rb' mode), or
+        :param src: either a python filed (opened in 'rb' mode), or
             a filename, or an url ("http://...") to a text file with the z-matrix
         :param named: if True, allows to read a named Z-matrix - the formatting
             is similar to a Fenske-Hall z-matrix but only relies on spaces between the
             different fields instead of a strict number of characters.
         """
-        if isinstance(input, str):
-            if len(input) > 4:
-                if input[:4].lower() == 'http':
-                    return super().ImportFenskeHallZMatrix(urllib.request.urlopen(input), named)
-            with open(input, 'rb') as fhz:  # Make sure file object is closed
+        if isinstance(src, str):
+            if len(src) > 4:
+                if src[:4].lower() == 'http':
+                    return super().ImportFenskeHallZMatrix(urllib.request.urlopen(src), named)
+            with open(src, 'rb') as fhz:  # Make sure file object is closed
                 super().ImportFenskeHallZMatrix(fhz, named)
         else:
-            super().ImportFenskeHallZMatrix(input, named)
+            super().ImportFenskeHallZMatrix(src, named)

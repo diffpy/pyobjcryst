@@ -32,14 +32,37 @@ using namespace ObjCryst;
 namespace {
 
 // Overload MonteCarlo class so that it does not auto-save to XML
-class MonteCarloObjWrap: public MonteCarloObj
+class MonteCarloObjWrap: public MonteCarloObj, public wrapper<MonteCarloObj>
 {
   public:
-    MonteCarloObjWrap(const string name=""):
+    MonteCarloObjWrap():
+    MonteCarloObj()
+    {
+      this->GetOption("Save Best Config Regularly").SetChoice(0);
+    }
+
+    MonteCarloObjWrap(const string name):
     MonteCarloObj(name)
     {
       this->GetOption("Save Best Config Regularly").SetChoice(0);
     }
+
+    MonteCarloObjWrap(const MonteCarloObj &old):
+    MonteCarloObj(old)
+    {}
+
+    void default_UpdateDisplay() const
+    { this->MonteCarloObj::UpdateDisplay();}
+
+    virtual void UpdateDisplay() const
+    {
+        override f = this->get_override("UpdateDisplay");
+        if (f)  f();
+        // Always call the default UpdateDisplay, which updates all
+        // other objects display
+        default_UpdateDisplay();
+    }
+
 };
 
 void run_optimize(MonteCarloObjWrap& obj, long nbSteps, const bool silent,
@@ -143,6 +166,10 @@ void wrap_globaloptim()
         .def("SetName", &MonteCarloObj::SetName)
         .def("Print", &MonteCarloObj::Print, &MonteCarloObj::Print)
         .def("RestoreBestConfiguration", &MonteCarloObj::RestoreBestConfiguration)
+        .def("GetNbParamSet", &MonteCarloObj::GetNbParamSet)
+        .def("GetParamSetIndex", &MonteCarloObj::GetParamSetIndex)
+        .def("GetParamSetCost", &MonteCarloObj::GetParamSetCost)
+        .def("RestoreParamSet", &MonteCarloObj::RestoreParamSet, (bp::arg("idx"), bp::arg("update_display")=true))
         .def("IsOptimizing", &MonteCarloObj::IsOptimizing)
         .def("GetLastOptimElapsedTime", &MonteCarloObj::GetLastOptimElapsedTime)
         //.def("GetMainTracker", &MonteCarloObj::GetMainTracker)
@@ -154,6 +181,9 @@ void wrap_globaloptim()
         .def("GetOption", (RefObjOpt& (MonteCarloObj::*)(const string&))
             &MonteCarloObj::GetOption,
             with_custodian_and_ward_postcall<1,0,return_internal_reference<> >())
+        .add_property("trial", &MonteCarloObj::GetTrial)
+        .add_property("run", &MonteCarloObj::GetRun)
+        .add_property("llk", &MonteCarloObj::GetLogLikelihood)
 
         //////////////// MonteCarlo methods
         .def("SetAlgorithmParallTempering", &MonteCarloObj::SetAlgorithmParallTempering,

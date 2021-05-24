@@ -230,6 +230,8 @@ void wrap_powderpattern()
         .def("GetPowderPatternX",
                 &PowderPattern::GetPowderPatternX,
                 return_value_policy<copy_const_reference>())
+        .def("GetNbPoint", &PowderPattern::GetNbPoint)
+        .def("GetNbPointUsed", &PowderPattern::GetNbPoint)
         .def("GetRadiation",
                 (Radiation& (PowderPattern::*)()) &PowderPattern::GetRadiation,
                 return_internal_reference<>())
@@ -304,9 +306,21 @@ void wrap_powderpattern()
         .def("STOL2Pixel", &PowderPattern::STOL2Pixel)
         .def("UpdateDisplay", &PowderPattern::UpdateDisplay,
             &PowderPatternWrap::default_UpdateDisplay)
+        .def("GetR", &PowderPattern::GetR)
+        .def("GetIntegratedR", &PowderPattern::GetIntegratedR)
+        .def("GetRw", &PowderPattern::GetRw)
+        .def("GetIntegratedRw", &PowderPattern::GetIntegratedRw)
+        .def("GetChi2", &PowderPattern::GetChi2)
+        .def("GetIntegratedChi2", &PowderPattern::GetIntegratedChi2)
+        .def("GetLogLikelihood", &PowderPattern::GetLogLikelihood)
         .add_property("mur", &PowderPattern::GetMuR, &PowderPattern::SetMuR)
+        .add_property("r", &PowderPattern::GetR)
+        .add_property("r_integrated", &PowderPattern::GetIntegratedR)
         .add_property("rw", &PowderPattern::GetRw)
+        .add_property("rw_integrated", &PowderPattern::GetIntegratedRw)
         .add_property("chi2", &PowderPattern::GetChi2)
+        .add_property("chi2_integrated", &PowderPattern::GetIntegratedChi2)
+        .add_property("llk", &PowderPattern::GetLogLikelihood)
         .add_property("wavelength", &PowderPattern::GetWavelength,
                       (void (PowderPattern::*)(double)) &PowderPattern::SetWavelength)
         ;
