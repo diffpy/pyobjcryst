@@ -122,9 +122,9 @@ void wrap_spacegroup()
         .def("GetTranslationVectors", &GetTranslationVectors)
         .def("GetSymmetryOperations", &GetSymmetryOperations)
         .def("GetAllSymmetrics", &SpaceGroup::GetAllSymmetrics,
-                (bp::arg("h"),
-                 bp::arg("k"),
-                 bp::arg("l"),
+                (bp::arg("x"),
+                 bp::arg("y"),
+                 bp::arg("z"),
                  bp::arg("noCenter")=false,
                  bp::arg("noTransl")=false,
                  bp::arg("noIdentical")=false))

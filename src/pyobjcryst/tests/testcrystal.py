@@ -154,6 +154,15 @@ class TestCrystal(unittest.TestCase):
 
         return
 
+    def test_cif_display(self):
+        """Test the creation of a CIF just for display"""
+        c = makeCrystal(*makeScatterer())
+        s = c._display_cif()
+        s = c._display_cif(full_molecule=True)
+        s = c._display_cif(enantiomer=True)
+        s = c._display_cif(only_independent_atoms=True)
+
+
 
 if __name__ == "__main__":
     unittest.main()

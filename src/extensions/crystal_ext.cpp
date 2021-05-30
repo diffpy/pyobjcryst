@@ -166,6 +166,29 @@ std::string _CIF(const Crystal &c, double mindist)
     return s.str();
 }
 
+void _ImportCrystalFromCIF(Crystal &cryst, bp::object input,
+                           const bool oneScatteringPowerPerElement=false,
+                           const bool connectAtoms=false)
+{
+    // Reading a cif file creates some output via fpObjCrystInformUser.
+    // Mute the output and restore it on return or exception.
+    // Also mute any hardcoded output to cout.
+    MuteObjCrystUserInfo muzzle;
+    CaptureStdOut gag;
+
+    boost_adaptbx::python::streambuf sbuf(input);
+    boost_adaptbx::python::streambuf::istream in(sbuf);
+    ObjCryst::CIF cif(in);
+
+    const bool verbose = false;
+    const bool checkSymAsXYZ = true;
+    ObjCryst::CreateCrystalFromCIF(cif, verbose, checkSymAsXYZ, oneScatteringPowerPerElement,
+                                   connectAtoms, &cryst);
+
+    gag.release();
+    muzzle.release();
+}
+
 
 // wrap the virtual functions that need it
 class CrystalWrap : public Crystal, public wrapper<Crystal>
@@ -210,6 +233,16 @@ class CrystalWrap : public Crystal, public wrapper<Crystal>
         override f = this->get_override("GetScatteringComponentList");
         if (f)  return f();
         return default_GetScatteringComponentList();
+    }
+
+    void default_UpdateDisplay() const
+    { this->Crystal::UpdateDisplay();}
+
+    virtual void UpdateDisplay() const
+    {
+        override f = this->get_override("UpdateDisplay");
+        if (f)  f();
+        else  default_UpdateDisplay();
     }
 
 };
@@ -350,6 +383,11 @@ void wrap_crystal()
              (bp::arg("min_relat_dist")=0.4, bp::arg("max_relat_dist")=1.3,
               bp::arg("warnuser_fail")=false))
         .def("GetFormula", &Crystal::GetFormula)
+        .def("ImportCrystalFromCIF", &_ImportCrystalFromCIF, (bp::arg("input"),
+            bp::arg("oneScatteringPowerPerElement")=false,
+            bp::arg("connectAtoms")=false))
+        .def("UpdateDisplay", &Crystal::UpdateDisplay,
+            &CrystalWrap::default_UpdateDisplay)
         ;
 
 
