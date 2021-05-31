@@ -122,9 +122,9 @@ void wrap_spacegroup()
         .def("GetTranslationVectors", &GetTranslationVectors)
         .def("GetSymmetryOperations", &GetSymmetryOperations)
         .def("GetAllSymmetrics", &SpaceGroup::GetAllSymmetrics,
-                (bp::arg("h"),
-                 bp::arg("k"),
-                 bp::arg("l"),
+                (bp::arg("x"),
+                 bp::arg("y"),
+                 bp::arg("z"),
                  bp::arg("noCenter")=false,
                  bp::arg("noTransl")=false,
                  bp::arg("noIdentical")=false))
@@ -152,6 +152,9 @@ void wrap_spacegroup()
         .def("IsReflSystematicAbsent", &SpaceGroup::IsReflSystematicAbsent)
         .def("IsReflCentric", &SpaceGroup::IsReflCentric)
         .def("GetExpectedIntensityFactor", &SpaceGroup::GetExpectedIntensityFactor)
-        .def("__str__", &__str__<SpaceGroup>)
+        .def("__str__", &SpaceGroup::GetName,
+                return_value_policy<copy_const_reference>())
+        .def("__repr__", &SpaceGroup::GetName,
+                return_value_policy<copy_const_reference>())
         ;
 }

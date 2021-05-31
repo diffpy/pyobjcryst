@@ -109,7 +109,7 @@ if os.path.dirname(xpython) != os.path.dirname(xpythonconfig):
 # Process the python-config flags here.
 env.ParseConfig(pythonconfig + " --cflags")
 env.Replace(CCFLAGS=[f for f in env['CCFLAGS'] if good_python_flag(f)])
-env.Replace(CPPDEFINES='')
+env.Replace(CPPDEFINES='BOOST_ERROR_CODE_HEADER_ONLY')
 # the CPPPATH directories are checked by scons dependency scanner
 cpppath = getsyspaths('CPLUS_INCLUDE_PATH', 'CPATH')
 env.AppendUnique(CPPPATH=cpppath)
@@ -125,6 +125,9 @@ fast_shlinkflags = pyconfigvar('LDSHARED').split()[1:]
 # Specify minimum C++ standard.  Allow later standard from sconscript.local.
 # In case of multiple `-std` options the last option holds.
 env.PrependUnique(CXXFLAGS='-std=c++11', delete_existing=1)
+
+# Need this to avoid missing symbol with boost<1.66
+env.PrependUnique(CXXFLAGS=['-DBOOST_ERROR_CODE_HEADER_ONLY'])
 
 # Platform specific intricacies.
 if env['PLATFORM'] == 'darwin':

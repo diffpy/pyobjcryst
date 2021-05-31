@@ -26,6 +26,8 @@
 
 #include <string>
 #include <set>
+#include <list>
+#include <vector>
 #include <sstream>
 #include <iostream>
 #include <limits>
@@ -128,6 +130,19 @@ template <class T>
 bp::list setToPyList(std::set<T>& v)
 {
     return containerToPyList< typename std::set<T> >(v);
+}
+
+
+template <class T>
+bp::list vectorToPyList(std::vector<T>& v)
+{
+    return containerToPyList< typename std::vector<T> >(v);
+}
+
+template <class T>
+bp::list listToPyList(std::list<T>& v)
+{
+    return containerToPyList< typename std::list<T> >(v);
 }
 
 

@@ -20,17 +20,43 @@
 *****************************************************************************/
 
 #include <boost/python/class.hpp>
+#include <boost/python/def.hpp>
 #include <boost/python/copy_const_reference.hpp>
 
 #include <string>
 
 #include <ObjCryst/RefinableObj/IO.h>
+#include <ObjCryst/ObjCryst/IO.h>
 
 #include "helpers.hpp"
+#include "python_streambuf.hpp"
 
 namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
+
+void _XMLCrystFileLoadAllObject(bp::object input, const bool verbose=false)
+{
+    // Mute all output
+    MuteObjCrystUserInfo muzzle;
+    CaptureStdOut gag;
+    if(verbose)
+    {
+      gag.release();
+      muzzle.release();
+    }
+
+    boost_adaptbx::python::streambuf sbuf(input);
+    boost_adaptbx::python::streambuf::istream in(sbuf);
+    XMLCrystFileLoadAllObject(in);
+}
+
+void _XMLCrystFileSaveGlobal(bp::object output)
+{
+    boost_adaptbx::python::streambuf sbuf(output);
+    boost_adaptbx::python::streambuf::ostream out(sbuf);
+    XMLCrystFileSaveGlobal(out);
+}
 
 void wrap_io()
 {
@@ -61,4 +87,10 @@ void wrap_io()
         .def("__str__", &__str__<XMLCrystTag>)
         // python-only
         ;
+
+    def("XMLCrystFileLoadAllObject", &_XMLCrystFileLoadAllObject,
+        (bp::arg("file"), bp::arg("verbose")=false));
+    def("XMLCrystFileSaveGlobal", &_XMLCrystFileSaveGlobal,
+        bp::arg("file"));
+
 }

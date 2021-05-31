@@ -17,6 +17,7 @@
 *****************************************************************************/
 
 #include <boost/python/class.hpp>
+#include <boost/python/def.hpp>
 #include <boost/python/tuple.hpp>
 #include <boost/python/copy_const_reference.hpp>
 
@@ -128,6 +129,9 @@ double _getgamma(UnitCell& u)
 
 void wrap_unitcell()
 {
+    scope().attr("refpartype_unitcell") = object(ptr(gpRefParTypeUnitCell));
+    scope().attr("refpartype_unitcell_length") = object(ptr(gpRefParTypeUnitCellLength));
+    scope().attr("refpartype_unitcell_angle") = object(ptr(gpRefParTypeUnitCellAngle));
 
     class_<UnitCell, bases<RefinableObj> >
         ("UnitCell")

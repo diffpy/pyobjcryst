@@ -29,11 +29,23 @@
 
 #include <ObjCryst/ObjCryst/ZScatterer.h>
 
+#include "python_streambuf.hpp"
 #include "helpers.hpp"
 
 namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
+
+void _ImportFenskeHallZMatrix(ZScatterer &scatt, bp::object input , bool named)
+{
+    // Mute output
+    MuteObjCrystUserInfo muzzle;
+    CaptureStdOut gag;
+
+    boost_adaptbx::python::streambuf sbuf(input);
+    boost_adaptbx::python::streambuf::istream in(sbuf);
+    scatt.ImportFenskeHallZMatrix(in, named);
+}
 
 void wrap_zscatterer()
 {
@@ -48,7 +60,7 @@ void wrap_zscatterer()
               bp::arg("psi")=0)
             ) [with_custodian_and_ward<1,6>()])
         /* Methods */
-        .def("GetClassName", &ZAtom::GetClassName,
+        .def("GetClassName", &ZScatterer::GetClassName,
             return_value_policy<copy_const_reference>())
         .def("AddAtom", &ZScatterer::AddAtom,
             (bp::arg("name"), bp::arg("pow"),
@@ -86,6 +98,7 @@ void wrap_zscatterer()
             return_value_policy<copy_const_reference>())
         .def("SetCenterAtomIndex", &ZScatterer::SetCenterAtomIndex)
         .def("GetCenterAtomIndex", &ZScatterer::GetCenterAtomIndex)
+        .def("ImportFenskeHallZMatrix", &_ImportFenskeHallZMatrix)
         // Python-only methods
         .def("__str__", &__str__<ZScatterer>)
         ;

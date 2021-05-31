@@ -24,7 +24,9 @@ Modules
 atom                    --  Wrapping of Atom.h
 crystal                 --  Wrapping of Crystal.h
 general                 --  Wrapping of General.h
+globaloptim             --  Wrapping of GlobalOptimObj.h
 io                      --  Wrapping of IO.h
+lsq                     --  Wrapping of LSQNumObj.h
 molecule                --  Wrapping of Molecule.h
 polyhedron              --  Wrapping of Polyhedron.h
 refinableobj            --  Wrapping of RefinableObj.h
@@ -58,10 +60,14 @@ import pyobjcryst.atom
 import pyobjcryst.crystal
 import pyobjcryst.diffractiondatasinglecrystal
 import pyobjcryst.general
+import pyobjcryst.globaloptim
+import pyobjcryst.indexing
 import pyobjcryst.io
+import pyobjcryst.lsq
 import pyobjcryst.molecule
 import pyobjcryst.polyhedron
 import pyobjcryst.powderpattern
+import pyobjcryst.radiation
 import pyobjcryst.refinableobj
 import pyobjcryst.reflectionprofile
 import pyobjcryst.scatterer
@@ -71,6 +77,8 @@ import pyobjcryst.scatteringpowersphere
 import pyobjcryst.spacegroup
 import pyobjcryst.unitcell
 import pyobjcryst.zscatterer
+
+from pyobjcryst._pyobjcryst import gTopRefinableObjRegistry
 
 
 def loadCrystal(filename):

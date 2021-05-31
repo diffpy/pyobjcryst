@@ -53,6 +53,8 @@
 #include <boost/python/args.hpp>
 #include <boost/python/dict.hpp>
 #include <boost/python/slice.hpp>
+#include <boost/python/iterator.hpp>
+#include <boost/python/manage_new_object.hpp>
 
 #include <iostream>
 #include <vector>
@@ -63,6 +65,7 @@
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 #include <ObjCryst/ObjCryst/Molecule.h>
+#include <ObjCryst/ObjCryst/ZScatterer.h>
 #include <ObjCryst/ObjCryst/Crystal.h>
 #include <ObjCryst/ObjCryst/ScatteringPower.h>
 
@@ -446,6 +449,28 @@ bp::list _GetRigidGroupList(const Molecule& m)
     return l;
 }
 
+// Access using standard iterators
+std::vector<MolAtom*>::const_iterator _GetAtomIterBegin(const Molecule& m)
+{return m.GetAtomList().begin();}
+std::vector<MolAtom*>::const_iterator _GetAtomIterEnd(const Molecule& m)
+{return m.GetAtomList().end();}
+
+std::vector<MolBond*>::const_iterator _GetBondIterBegin(const Molecule& m)
+{return m.GetBondList().begin();}
+std::vector<MolBond*>::const_iterator _GetBondIterEnd(const Molecule& m)
+{return m.GetBondList().end();}
+
+std::vector<MolBondAngle*>::const_iterator _GetBondAngleIterBegin(const Molecule& m)
+{return m.GetBondAngleList().begin();}
+std::vector<MolBondAngle*>::const_iterator _GetBondAngleIterEnd(const Molecule& m)
+{return m.GetBondAngleList().end();}
+
+std::vector<MolDihedralAngle*>::const_iterator _GetDihedralAngleIterBegin(const Molecule& m)
+{return m.GetDihedralAngleList().begin();}
+std::vector<MolDihedralAngle*>::const_iterator _GetDihedralAngleIterEnd(const Molecule& m)
+{return m.GetDihedralAngleList().end();}
+
+
 // Get atoms by slice
 bp::object getAtomSlice(Molecule& m, bp::slice& s)
 {
@@ -783,11 +808,23 @@ void wrap_molecule()
             &Molecule::BuildStretchModeGroups)
         .def("UpdateScattCompList", &Molecule::UpdateScattCompList)
         .def("InitOptions", &Molecule::InitOptions)
+        // Python only functions
         .def("__getitem__", &getAtomSlice,
                 with_custodian_and_ward_postcall<1,0>())
         .def("__getitem__", &_GetAtomIdx,
                 return_internal_reference<>())
         .def("__len__", &_GetNbAtoms)
+        .def("__iter__", range<return_value_policy<reference_existing_object> >
+                   (&_GetAtomIterBegin, &_GetAtomIterEnd))
+        .def("IterAtom", range<return_value_policy<reference_existing_object> >
+                   (&_GetAtomIterBegin, &_GetAtomIterEnd))
+        .def("IterBond", range<return_value_policy<reference_existing_object> >
+                   (&_GetBondIterBegin, &_GetBondIterEnd))
+        .def("IterBondAngle", range<return_value_policy<reference_existing_object> >
+                   (&_GetBondAngleIterBegin, &_GetBondAngleIterEnd))
+        .def("IterDihedralAngle", range<return_value_policy<reference_existing_object> >
+                   (&_GetDihedralAngleIterBegin, &_GetDihedralAngleIterEnd))
+
         // Properties for molecule position
         .add_property("Q0", &_getQ0, &_setQ0)
         .add_property("Q1", &_getQ1, &_setQ1)
@@ -799,5 +836,9 @@ void wrap_molecule()
     def("GetBondLength", &GetBondLength);
     def("GetBondAngle", &GetBondAngle);
     def("GetDihedralAngle", &GetDihedralAngle);
+
+    def("ZScatterer2Molecule",
+        (Molecule* (*)(ZScatterer*)) &ZScatterer2Molecule, bp::arg("zscatt"),
+        return_value_policy<manage_new_object>());
 
 }

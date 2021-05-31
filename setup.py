@@ -23,7 +23,7 @@ FALLBACK_VERSION = '2.1.0.post0'
 # define extension arguments here
 ext_kws = {
         'libraries' : ['ObjCryst'],
-        'extra_compile_args' : ['-std=c++11'],
+        'extra_compile_args' : ['-std=c++11', '-DBOOST_ERROR_CODE_HEADER_ONLY'],
         'extra_link_args' : [],
         'include_dirs' : get_numpy_include_dirs(),
 }

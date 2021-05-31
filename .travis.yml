@@ -75,10 +75,12 @@ before_install:
 
   - $NOBREW || test "${TRAVIS_OS_NAME}" = "osx" || exit $?
   - $NOBREW || brew update
+  - $NOBREW || brew unlink python@2
   - $NOBREW || brew upgrade python
   - $NOBREW || brew install gcc || brew link --overwrite gcc
   - $NOBREW || brew install boost-python3
   - $NOBREW || brew install scons
+  - $NOBREW || $MYPIP install numpy
 
   - $NOSYS || devutils/makesdist
   - $NOSYS || MYTARBUNDLE="$(ls -t "${PWD}"/dist/*.tar.gz | head -1)"

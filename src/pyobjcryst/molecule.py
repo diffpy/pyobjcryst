@@ -86,7 +86,8 @@ __all__ = ["Molecule", "GetBondLength", "GetBondAngle",
            "GetDihedralAngle", "MolAtom", "MolBond",
            "MolBondAngle", "MolDihedralAngle", "Quaternion",
            "RigidGroup", "StretchMode", "StretchModeBondLength",
-           "StretchModeBondAngle", "StretchModeTorsion", "StretchModeTwist"]
+           "StretchModeBondAngle", "StretchModeTorsion", "StretchModeTwist",
+           "ZScatterer2Molecule", "ImportFenskeHallZMatrix"]
 
 # TODO - MolRing
 
@@ -105,3 +106,31 @@ from pyobjcryst._pyobjcryst import StretchModeBondLength
 from pyobjcryst._pyobjcryst import StretchModeBondAngle
 from pyobjcryst._pyobjcryst import StretchModeTorsion
 from pyobjcryst._pyobjcryst import StretchModeTwist
+from pyobjcryst._pyobjcryst import ZScatterer2Molecule
+from .zscatterer import ZScatterer
+
+
+def ImportFenskeHallZMatrix(cryst, src, named=False):
+    """
+    Create a Molecule from a Fenske-Hall z-matrix. This is cleaner than importing
+    the Z-matrix into a ZScatterer object and then using ZScatterer2Molecule,
+    as it takes care of keeping only the created Molecule inside the Crystal.
+
+    :param cryst: a Crystal object to which will belong the created Molecule
+    :param src: either a python filed (opened in 'rb' mode), or
+        a filename, or an url ("http://...") to a text file with the z-matrix
+    :param named: if True, allows to read a named Z-matrix - the formatting
+        is similar to a Fenske-Hall z-matrix but only relies on spaces between the
+        different fields instead of a strict number of characters.
+    """
+    z = ZScatterer("", cryst)
+    z.ImportFenskeHallZMatrix(src,named)
+    m = ZScatterer2Molecule(z)
+    cryst.RemoveScatterer(z)
+    cryst.AddScatterer(m)
+    # TODO: this is a hack to keep a reference to the Crystal used for creation,
+    #  since with this function we can't use a custodian_and_ward.
+    #  It will just help avoiding deletion of the Crystal before the Molecule object.
+    m._crystal = cryst
+
+    return m

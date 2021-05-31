@@ -16,9 +16,13 @@
 * used by ObjCryst objects that inherit from ScatteringData (see, for example,
 * diffractiondatasinglecrystal_ext.cpp).
 *
+* Changes from ObjCryst::ScatteringData
+* - GetWavelength returns a scalar instead of a vector
+*
 *****************************************************************************/
 
 #include <boost/python/class.hpp>
+#include <boost/python/def.hpp>
 #include <boost/python/copy_const_reference.hpp>
 
 #include <ObjCryst/ObjCryst/ScatteringData.h>
@@ -41,11 +45,27 @@ void _PrintFhklCalcDetail(const ScatteringData& sd)
     sd.PrintFhklCalcDetail();
 }
 
+
+double _GetWavelength(ScatteringData& s)
+{
+    return s.GetWavelength()(0);
+}
+
 }   // anonymous namespace
 
 
 void wrap_scatteringdata()
 {
+    scope().attr("refpartype_scattdata") = object(ptr(gpRefParTypeScattData));
+    scope().attr("refpartype_scattdata_scale") = object(ptr(gpRefParTypeScattDataScale));
+    scope().attr("refpartype_scattdata_profile") = object(ptr(gpRefParTypeScattDataProfile));
+    scope().attr("refpartype_scattdata_profile_type") = object(ptr(gpRefParTypeScattDataProfileType));
+    scope().attr("refpartype_scattdata_profile_width") = object(ptr(gpRefParTypeScattDataProfileWidth));
+    scope().attr("refpartype_scattdata_profile_asym") = object(ptr(gpRefParTypeScattDataProfileAsym));
+    scope().attr("refpartype_scattdata_corr") = object(ptr(gpRefParTypeScattDataCorr));
+    scope().attr("refpartype_scattdata_corr_pos") = object(ptr(gpRefParTypeScattDataCorrPos));
+    scope().attr("refpartype_scattdata_radiation") = object(ptr(gpRefParTypeRadiation));
+    scope().attr("refpartype_scattdata_radiation_wavelength") = object(ptr(gpRefParTypeRadiationWavelength));
 
     class_<ScatteringData, bases<RefinableObj>, boost::noncopyable>(
             "ScatteringData", no_init)
@@ -104,7 +124,12 @@ void wrap_scatteringdata()
         //     (const std::map< const ScatteringPower *, CrystVector_REAL > &
         //     (ScatteringData::*)()) &ScatteringData::GetScatteringFactor,
         //     return_internal_reference<>())
-        .def("GetWavelength", &ScatteringData::GetWavelength)
+        .def("GetRadiation",
+                (Radiation& (ScatteringData::*)()) &ScatteringData::GetRadiation,
+                return_internal_reference<>())
+        .def("GetRadiationType", &ScatteringData::GetRadiationType)
+        // Overloaded to return a single wavelength instead of a vector
+        .def("GetWavelength", &_GetWavelength)
         .def("SetIsIgnoringImagScattFact",
                 &ScatteringData::SetIsIgnoringImagScattFact)
         .def("IsIgnoringImagScattFact",

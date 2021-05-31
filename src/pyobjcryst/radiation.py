@@ -10,15 +10,15 @@
 #
 ##############################################################################
 
-"""Python wrapping of PowderPattern.h
+"""Python wrapping of Radiation from ScatteringData.h
 
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
-Changes from ObjCryst::ReflectionProfile::
+Changes from ObjCryst::Radiation::
         In development !
 """
 
-__all__ = ["ReflectionProfile", "ReflectionProfileType"]
+__all__ = ["Radiation", "RadiationType", "WavelengthType"]
 
-from pyobjcryst._pyobjcryst import ReflectionProfile
-from pyobjcryst._pyobjcryst import ReflectionProfileType
+from pyobjcryst._pyobjcryst import Radiation, RadiationType, WavelengthType
+

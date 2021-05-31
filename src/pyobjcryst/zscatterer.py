@@ -27,8 +27,31 @@ Changes from ObjCryst++
 __all__ = ["ZScatterer", "ZAtom", "ZPolyhedron",
            "RegularPolyhedraType", "GlobalScatteringPower"]
 
-from pyobjcryst._pyobjcryst import ZScatterer
+import urllib
+
+from pyobjcryst._pyobjcryst import ZScatterer as ZScatterer_orig
 from pyobjcryst._pyobjcryst import ZAtom
 from pyobjcryst._pyobjcryst import ZPolyhedron
 from pyobjcryst._pyobjcryst import RegularPolyhedraType
 from pyobjcryst._pyobjcryst import GlobalScatteringPower
+
+
+class ZScatterer(ZScatterer_orig):
+
+    def ImportFenskeHallZMatrix(self, src, named=False):
+        """
+        Import atoms from a Fenske-Hall z-matrix
+        :param src: either a python filed (opened in 'rb' mode), or
+            a filename, or an url ("http://...") to a text file with the z-matrix
+        :param named: if True, allows to read a named Z-matrix - the formatting
+            is similar to a Fenske-Hall z-matrix but only relies on spaces between the
+            different fields instead of a strict number of characters.
+        """
+        if isinstance(src, str):
+            if len(src) > 4:
+                if src[:4].lower() == 'http':
+                    return super().ImportFenskeHallZMatrix(urllib.request.urlopen(src), named)
+            with open(src, 'rb') as fhz:  # Make sure file object is closed
+                super().ImportFenskeHallZMatrix(fhz, named)
+        else:
+            super().ImportFenskeHallZMatrix(src, named)

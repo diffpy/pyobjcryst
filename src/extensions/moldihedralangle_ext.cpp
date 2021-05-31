@@ -21,6 +21,7 @@
 *****************************************************************************/
 
 #include <boost/python/class.hpp>
+#include <boost/python/iterator.hpp>
 
 #include <ObjCryst/ObjCryst/Molecule.h>
 
@@ -109,5 +110,8 @@ void wrap_moldihedralangle()
             &MolDihedralAngle::SetAngleSigma)
         .def("__getitem__", &_GetAtom,
             return_internal_reference<>())
+        // Iterate other the atoms involved
+        .def("__iter__", range<return_value_policy<reference_existing_object> >
+                           (&MolDihedralAngle::begin, &MolDihedralAngle::end))
         ;
 }

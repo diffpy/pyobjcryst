@@ -16,12 +16,13 @@
 """Tests for molecule module."""
 
 import unittest
-
+from pkg_resources import resource_filename
 from pyobjcryst import ObjCrystException
+from pyobjcryst.crystal import Crystal
 from pyobjcryst.molecule import (
     GetBondLength, StretchModeBondLength,
     GetBondAngle, StretchModeBondAngle,
-    GetDihedralAngle, StretchModeTorsion)
+    GetDihedralAngle, StretchModeTorsion, ImportFenskeHallZMatrix)
 from pyobjcryst.refinableobj import RefParType, RefinablePar
 from pyobjcryst.tests.pyobjcrysttestutils import makeC60, makeMnO6
 
@@ -441,6 +442,13 @@ class TestMolecule(unittest.TestCase):
             self.assertAlmostEqual(newxyz[2], self.m[i].Z, 6)
 
         return
+
+    def testZMatrix(self):
+        """Test creating a Molecule from a z-matrix"""
+        fname = resource_filename(__name__, "testdata/cime.fhz")
+        c= Crystal()
+        m = ImportFenskeHallZMatrix(c, fname)
+        assert m.GetNbAtoms() == 17
 
 # Test how changing a name to one that is already taken messes things up.
 
