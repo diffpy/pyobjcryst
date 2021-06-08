@@ -18,7 +18,7 @@ from numpy.distutils.misc_util import get_numpy_include_dirs
 
 # Use this version when git data are not available as in a git zip archive.
 # Update when tagging a new release.
-FALLBACK_VERSION = '2.1.0.post0'
+FALLBACK_VERSION = '2021.1.1.post0'
 
 # define extension arguments here
 ext_kws = {
