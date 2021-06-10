@@ -68,9 +68,12 @@ class Crystal(Crystal_orig):
         # test for _3d_widget is a bit ugly, but to correctly implement this we'd need an
         # __init__ function which overrides the 3 different Crystal constructors which
         # could be messy as well.
-        if self.__getattribute__("_3d_widget") is not None:
+        try:
             if self._3d_widget is not None:
                 self._widget_update()
+        except AttributeError:
+            # self._3d_widget does not exist
+            pass
 
     def _display_cif(self, xmin=0, xmax=1, ymin=0, ymax=1, zmin=0, zmax=1, enantiomer=False,
                      full_molecule=True, only_independent_atoms=False):

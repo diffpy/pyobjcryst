@@ -74,28 +74,28 @@ class TestGlobalOptim(unittest.TestCase):
         mc.AddRefinableObj(self.c)
         mc.AddRefinableObj(self.d)
         mc.RandomizeStartingConfig()
-        mc.Optimize(nbSteps=1000, silent=True)
+        mc.Optimize(nb_step=1000)
 
     def test_mc_optim_multi(self):
         mc = MonteCarlo()
         mc.AddRefinableObj(self.c)
         mc.AddRefinableObj(self.d)
         mc.RandomizeStartingConfig()
-        mc.MultiRunOptimize(nbCycle=2, nbSteps=1000, silent=True)
+        mc.MultiRunOptimize(nb_run=2, nb_step=1000)
 
     def test_mc_sa(self):
         mc = MonteCarlo()
         mc.AddRefinableObj(self.c)
         mc.AddRefinableObj(self.d)
         mc.RandomizeStartingConfig()
-        mc.RunSimulatedAnnealing(nbSteps=1000, silent=True)
+        mc.RunSimulatedAnnealing(nb_step=1000)
 
     def test_mc_pt(self):
         mc = MonteCarlo()
         mc.AddRefinableObj(self.c)
         mc.AddRefinableObj(self.d)
         mc.RandomizeStartingConfig()
-        mc.RunParallelTempering(nbSteps=1000, silent=True)
+        mc.RunParallelTempering(nb_step=1000)
 
     # TODO: this is experimental and leads to segfault if testcrystal:testDummyAtom() has been run before (?!)
     # def test_mc_lsq(self):
@@ -113,9 +113,9 @@ class TestGlobalOptim(unittest.TestCase):
         mc.AddRefinableObj(self.d)
         mc.RandomizeStartingConfig()
         mc.SetAlgorithmSimulAnnealing(AnnealingSchedule.SMART, 1000.0, 1.0)
-        mc.Optimize(nbSteps=1000, silent=True)
+        mc.Optimize(nb_step=1000)
         mc.SetAlgorithmParallTempering(AnnealingSchedule.SMART, 1000.0, 1.0)
-        mc.Optimize(nbSteps=1000, silent=True)
+        mc.Optimize(nb_step=1000)
 
 
 if __name__ == "__main__":

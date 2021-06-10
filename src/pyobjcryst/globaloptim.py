@@ -26,29 +26,23 @@ from .refinableobj import *
 
 class MonteCarlo(MonteCarlo_orig):
 
-    def MultiRunOptimize(self, nb_run: int, nb_step: int, final_cost=0, max_time=-1):
-        # Fix parameters that should not be optimised in a MonterCarlo run
-        self.SetParIsFixed(refpartype_unitcell, True);
-        self.SetParIsFixed(refpartype_scattdata_scale, True);
-        self.SetParIsFixed(refpartype_scattdata_profile, True);
-        self.SetParIsFixed(refpartype_scattdata_corr, True);
-        self.SetParIsFixed(refpartype_scattdata_background, True);
-        self.SetParIsFixed(refpartype_scattdata_radiation, True);
+    def Optimize(self, nb_step: int, final_cost=0, max_time=-1):
+        self._fix_parameters_for_global_optim()
+        super().Optimize(int(nb_step), True, final_cost, max_time)
 
+    def MultiRunOptimize(self, nb_run: int, nb_step: int, final_cost=0, max_time=-1):
+        self._fix_parameters_for_global_optim()
         super().MultiRunOptimize(int(nb_run), int(nb_step), True, final_cost, max_time)
 
     def RunSimulatedAnnealing(self, nb_step: int, final_cost=0, max_time=-1):
-        # Fix parameters that should not be optimised in a MonterCarlo run
-        self.SetParIsFixed(refpartype_unitcell, True);
-        self.SetParIsFixed(refpartype_scattdata_scale, True);
-        self.SetParIsFixed(refpartype_scattdata_profile, True);
-        self.SetParIsFixed(refpartype_scattdata_corr, True);
-        self.SetParIsFixed(refpartype_scattdata_background, True);
-        self.SetParIsFixed(refpartype_scattdata_radiation, True);
-
+        self._fix_parameters_for_global_optim()
         super().RunSimulatedAnnealing(int(nb_step), True, final_cost, max_time)
 
     def RunParallelTempering(self, nb_step: int, final_cost=0, max_time=-1):
+        self._fix_parameters_for_global_optim()
+        super().RunParallelTempering(int(nb_step), True, final_cost, max_time)
+
+    def _fix_parameters_for_global_optim(self):
         # Fix parameters that should not be optimised in a MonterCarlo run
         self.SetParIsFixed(refpartype_unitcell, True);
         self.SetParIsFixed(refpartype_scattdata_scale, True);
@@ -57,7 +51,6 @@ class MonteCarlo(MonteCarlo_orig):
         self.SetParIsFixed(refpartype_scattdata_background, True);
         self.SetParIsFixed(refpartype_scattdata_radiation, True);
 
-        super().RunParallelTempering(int(nb_step), True, final_cost, max_time)
 
     def UpdateDisplay(self):
         if self.IsOptimizing():
