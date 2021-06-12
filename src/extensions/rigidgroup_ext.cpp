@@ -44,5 +44,6 @@ void wrap_rigidgroup()
     class_<RigidGroup, bases<MolAtomSet> >("RigidGroup")
         .def(init<const RigidGroup&>())
         .def("GetName", &RigidGroup::GetName)
+        .def("int_ptr", &RigidGroup::int_ptr)
         ;
 }

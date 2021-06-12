@@ -19,6 +19,7 @@ Changes from ObjCryst::PowderPattern::
 """
 
 import urllib
+from multiprocessing import current_process
 import numpy as np
 
 __all__ = ["PowderPattern", "CreatePowderPatternFromCIF",
@@ -54,11 +55,24 @@ class PowderPattern(PowderPattern_objcryst):
         self.evts = []
 
     def UpdateDisplay(self):
+        try:
+            if self._display_update_disabled:
+                return
+        except:
+            pass
         if self._plot_fig is not None:
             import matplotlib.pyplot as plt
             if 'inline' not in plt.get_backend():
                 if plt.fignum_exists(self._plot_fig.number):
                     self.plot()
+
+    def disable_display_update(self):
+        """ Disable display (useful for multiprocessing)"""
+        self._display_update_disabled = True
+
+    def enable_display_update(self):
+        """ Enable display"""
+        self._display_update_disabled = False
 
     def plot(self, diff=None, hkl=None, figsize=(9, 4), fontsize_hkl=6, reset=False, **kwargs):
         """

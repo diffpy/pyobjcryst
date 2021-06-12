@@ -103,5 +103,6 @@ void wrap_molbond()
             &MolBond::SetBondOrder)
         .def("__getitem__", &_GetAtom,
             return_internal_reference<>())
+        .def("int_ptr", &MolBond::int_ptr)
         ;
 }

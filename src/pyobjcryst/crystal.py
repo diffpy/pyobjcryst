@@ -34,6 +34,7 @@ __all__ = ["Crystal", "BumpMergePar", "CreateCrystalFromCIF",
 
 import warnings
 import urllib
+from multiprocessing import current_process
 import numpy as np
 from pyobjcryst._pyobjcryst import Crystal as Crystal_orig
 from pyobjcryst._pyobjcryst import BumpMergePar
@@ -65,6 +66,11 @@ class Crystal(Crystal_orig):
             super().CIFOutput(file, mindist)
 
     def UpdateDisplay(self):
+        try:
+            if self._display_update_disabled:
+                return
+        except:
+            pass
         # test for _3d_widget is a bit ugly, but to correctly implement this we'd need an
         # __init__ function which overrides the 3 different Crystal constructors which
         # could be messy as well.
@@ -74,6 +80,14 @@ class Crystal(Crystal_orig):
         except AttributeError:
             # self._3d_widget does not exist
             pass
+
+    def disable_display_update(self):
+        """ Disable display (useful for multiprocessing)"""
+        self._display_update_disabled = True
+
+    def enable_display_update(self):
+        """ Enable display"""
+        self._display_update_disabled = False
 
     def _display_cif(self, xmin=0, xmax=1, ymin=0, ymax=1, zmin=0, zmax=1, enantiomer=False,
                      full_molecule=True, only_independent_atoms=False):
@@ -178,6 +192,191 @@ class Crystal(Crystal_orig):
                                                    (name, symbol, x, y, z, occ)
         return cif
 
+    def _display_list(self, xmin=0, xmax=1, ymin=0, ymax=1, zmin=0, zmax=1, enantiomer=False,
+                      full_molecule=True, only_independent_atoms=False):
+        """
+        Create a list of atoms to be displayed, so it can be supplied to py3Dmol
+
+        :param xmin, xmax, ymin, ymax, zmin, zmax: the view limits in fractional coordinates.
+        :param enantiomer: if True, will mirror the structure along the x axis
+        :param full_molecule: if True, a Molecule (or Scatterer) which has at least
+            one atom inside the view limits is entirely shown.
+        :param only_independent_atoms: if True, only show the independent atoms, no symmetry
+            or translation is applied
+        :return : the list of atoms and bonds to be displayed for 3dmol
+        """
+
+        spg = self.GetSpaceGroup()
+        vv = []
+        idx = 0
+        for i in range(self.GetNbScatterer()):
+            scatt = self.GetScatterer(i)
+            v = scatt.GetScatteringComponentList()
+            nat = len(v)
+            if scatt.GetClassName() == "Molecule":
+                # We need to generate all atomic positions and the associated bonds
+                atoms = {}
+                for j in range(nat):
+                    s = v[j]
+                    a = scatt.GetAtom(j)
+                    if a.IsDummy():
+                        continue
+                    name = scatt.GetComponentName(j)
+                    name = name.replace("'", "_")
+                    symbol = s.mpScattPow.GetSymbol()
+                    occ = s.Occupancy
+                    x, y, z = s.X, s.Y, s.Z
+                    if enantiomer:
+                        x = -x
+                    atoms[a.int_ptr()] = {'x': x, 'y': y, 'z': z, 'name': name, 'j': j,
+                                          'symbol': symbol, 'bonds': [], 'bondOrder': []}
+                for bond in scatt.IterBond():
+                    o = bond.BondOrder
+                    if o == 0:
+                        o = 1
+                    i1 = bond.GetAtom1().int_ptr()
+                    i2 = bond.GetAtom2().int_ptr()
+                    atoms[i1]['bonds'].append(i2)
+                    atoms[i2]['bonds'].append(i1)
+                    atoms[i1]['bondOrder'].append(o)
+                    atoms[i2]['bondOrder'].append(o)
+                if only_independent_atoms:
+                    # Generate the index for the atoms
+                    for a in atoms.values():
+                        a['idx'] = idx
+                        idx += 1
+                    for a in atoms.values():
+                        vb = [atoms[int_ptr]['idx'] for int_ptr in a['bonds']]
+                        x, y, z = self.FractionalToOrthonormalCoords(a['x'], a['y'], a['z'])
+                        vv.append({'elem': a['symbol'], 'x': x, 'y': y, 'z': z,
+                                   'bonds': vb, 'bondOrder': a['bondOrder']})
+                else:
+                    # Generate all symmetrics to enable full molecule display
+                    nsym = spg.GetNbSymmetrics()
+                    # print(nsym)
+                    vxyz = np.empty((nsym, nat, 3), dtype=np.float32)
+                    for j in range(nat):
+                        s = v[j]
+                        x, y, z = s.X, s.Y, s.Z
+                        if enantiomer:
+                            x = -x
+                        xyzsym = spg.GetAllSymmetrics(x, y, z)
+                        vxyz[:, j, :] = xyzsym
+
+                    for k in range(nsym):
+                        xc, yc, zc = vxyz[k].mean(axis=0)
+                        vxyz[k, :, 0] -= (xc - xc % 1)
+                        vxyz[k, :, 1] -= (yc - yc % 1)
+                        vxyz[k, :, 2] -= (zc - zc % 1)
+
+                    if full_molecule:
+                        for k in range(nsym):
+                            for dx in (-1, 0, 1):
+                                for dy in (-1, 0, 1):
+                                    for dz in (-1, 0, 1):
+                                        vx, vy, vz = vxyz[k, :, 0] + dx, vxyz[k, :, 1] + dy, vxyz[k, :, 2] + dz
+                                        # Is at least one atom inside the limits ?
+                                        tmp = (vx >= xmin) * (vx <= xmax) * (vy >= ymin) * (vy <= ymax) * (
+                                                vz >= zmin) * (vz <= zmax)
+                                        if tmp.sum():
+                                            for a in atoms.values():
+                                                a['idx'] = idx
+                                                idx += 1
+                                            for a in atoms.values():
+                                                j = a['j']
+                                                vb = [atoms[int_ptr]['idx'] for int_ptr in a['bonds']]
+                                                x, y, z = vxyz[k, j] + np.array((dx, dy, dz))
+                                                x, y, z = self.FractionalToOrthonormalCoords(x, y, z)
+                                                vv.append({'elem': a['symbol'], 'x': x, 'y': y, 'z': z,
+                                                           'bonds': vb, 'bondOrder': a['bondOrder']})
+                    else:
+                        # TODO add 'visible' value in dictionnary to determine which atoms are shown,
+                        # then update the bond and bondOrder lists
+                        for k in range(nsym):
+                            for dx in (-1, 0, 1):
+                                for dy in (-1, 0, 1):
+                                    for dz in (-1, 0, 1):
+                                        vx, vy, vz = vxyz[k, :, 0] + dx, vxyz[k, :, 1] + dy, vxyz[k, :, 2] + dz
+                                        for a in atoms.values():
+                                            j = a['j']
+                                            x, y, z = vx[j], vy[j], vz[j]
+                                            if xmin <= x <= xmax and ymin <= y <= ymax and zmin <= z <= zmax:
+                                                a['idx'] = idx
+                                                a['visible'] = True
+                                                idx += 1
+                                            else:
+                                                a['visible'] = False
+                                        for a in atoms.values():
+                                            if not a['visible']:
+                                                continue
+                                            j = a['j']
+                                            vb = []
+                                            vo = []
+                                            for l in range(len(a['bonds'])):
+                                                int_ptr = a['bonds'][l]
+                                                if atoms[int_ptr]['visible']:
+                                                    vb.append(atoms[int_ptr]['idx'])
+                                                    vo.append(a['bondOrder'][l])
+                                            x, y, z = vxyz[k, j] + np.array((dx, dy, dz))
+                                            x, y, z = self.FractionalToOrthonormalCoords(x, y, z)
+                                            vv.append({'elem': a['symbol'], 'x': x, 'y': y, 'z': z,
+                                                       'bonds': vb, 'bondOrder': vo})
+            else:
+                if only_independent_atoms:
+                    for j in range(len(v)):
+                        s = v[j]
+                        symbol = s.mpScattPow.GetSymbol()
+                        name = scatt.GetComponentName(j)
+                        # 3dmol.js does not like ' in names,
+                        # despite https://www.iucr.org/resources/cif/spec/version1.1/cifsyntax#bnf
+                        name = name.replace("'", "_")
+                        occ = s.Occupancy
+                        x, y, z = s.X, s.Y, s.Z
+                        if enantiomer:
+                            x = -x
+                        x, y, z = self.FractionalToOrthonormalCoords(x, y, z)
+                        vv.append({'elem': symbol, 'x': x, 'y': y, 'z': z})
+                else:
+                    # Generate all symmetrics to enable full molecule display
+                    nsym = spg.GetNbSymmetrics()
+                    # print(nsym)
+                    vxyz = np.empty((nsym, nat, 3), dtype=np.float32)
+                    for j in range(nat):
+                        s = v[j]
+                        x, y, z = s.X, s.Y, s.Z
+                        if enantiomer:
+                            x = -x
+                        xyzsym = spg.GetAllSymmetrics(x, y, z)
+                        for k in range(nsym):
+                            vxyz[k, j, :] = xyzsym[k]
+
+                    for k in range(nsym):
+                        xc, yc, zc = vxyz[k].mean(axis=0)
+                        vxyz[k, :, 0] -= (xc - xc % 1)
+                        vxyz[k, :, 1] -= (yc - yc % 1)
+                        vxyz[k, :, 2] -= (zc - zc % 1)
+
+                    # print(vxyz, vxyz.shape)
+
+                    for j in range(nat):
+                        s = v[j]
+                        symbol = s.mpScattPow.GetSymbol()
+                        name = scatt.GetComponentName(j)
+                        # 3dmol.js does not like ' in names,
+                        # despite https://www.iucr.org/resources/cif/spec/version1.1/cifsyntax#bnf
+                        name = name.replace("'", "_")
+                        occ = s.Occupancy
+
+                        for k in range(nsym):
+                            for dx in (-1, 0, 1):
+                                for dy in (-1, 0, 1):
+                                    for dz in (-1, 0, 1):
+                                        x, y, z = vxyz[k, j] + np.array((dx, dy, dz))
+                                        if xmin <= x <= xmax and ymin <= y <= ymax and zmin <= z <= zmax:
+                                            x, y, z = self.FractionalToOrthonormalCoords(x, y, z)
+                                            vv.append({'elem': symbol, 'x': x, 'y': y, 'z': z})
+        return vv
+
     def display_3d(self, xmin=0, xmax=1, ymin=0, ymax=1, zmin=0, zmax=1, enantiomer=False,
                    full_molecule_opacity=0.5, extra_dist=2, extra_opacity=0.5):
         """
@@ -197,23 +396,41 @@ class Crystal(Crystal_orig):
             warnings.warn("Yout need to install py3Dmol>=0.9 to use Crystal.display_3d()")
             return
         v = py3Dmol.view()
+
         if full_molecule_opacity > 0:
-            v.addModel(self._display_cif(xmin, xmax, ymin, ymax, zmin, zmax, full_molecule=True,
-                                         only_independent_atoms=False, enantiomer=enantiomer), 'cif')
-            v.getModel().setStyle({'stick': {'radius': 0.2, 'opacity': full_molecule_opacity},
-                                   'sphere': {'scale': 0.3, 'colorscheme': 'jmol', 'opacity': full_molecule_opacity}})
+            v.addModel()
+            m = v.getModel()
+            atoms = self._display_list(xmin, xmax, ymin, ymax, zmin, zmax, full_molecule=True,
+                                       only_independent_atoms=False, enantiomer=enantiomer)
+            m.addAtoms(atoms)
+            m.setStyle({'stick': {'radius': 0.2, 'opacity': full_molecule_opacity},
+                        'sphere': {'scale': 0.3, 'colorscheme': 'jmol', 'opacity': full_molecule_opacity}})
+
         if extra_opacity > 0 and extra_dist > 0:
             dx, dy, dz = extra_dist / self.a, extra_dist / self.b, extra_dist / self.c
-            v.addModel(self._display_cif(xmin - dx, xmax + dx, ymin - dy, ymax + dy, zmin - dz, zmax + dz,
-                                         full_molecule=False, only_independent_atoms=False, enantiomer=enantiomer),
-                       'cif')
-            v.getModel().setStyle({'stick': {'radius': 0.2, 'opacity': extra_opacity},
-                                   'sphere': {'scale': 0.3, 'colorscheme': 'jmol', 'opacity': extra_opacity}})
-        v.addModel(self._display_cif(xmin, xmax, ymin, ymax, zmin, zmax, full_molecule=False,
-                                     only_independent_atoms=False, enantiomer=enantiomer), 'cif')
-        v.getModel().setStyle({'stick': {'radius': 0.2, 'opacity': 1},
-                               'sphere': {'scale': 0.3, 'colorscheme': 'jmol', 'opacity': 1}})
-        v.addUnitCell()
+            v.addModel()
+            m = v.getModel()
+            atoms = self._display_list(xmin - dx, xmax + dx, ymin - dy, ymax + dy, zmin - dz, zmax + dz,
+                                       full_molecule=False,
+                                       only_independent_atoms=False, enantiomer=enantiomer)
+            m.addAtoms(atoms)
+            m.setStyle({'stick': {'radius': 0.2, 'opacity': extra_opacity},
+                        'sphere': {'scale': 0.3, 'colorscheme': 'jmol', 'opacity': extra_opacity}})
+
+        v.addModel()
+        m = v.getModel()
+        m.setCrystData(self.a, self.b, self.c, np.rad2deg(self.alpha), np.rad2deg(self.beta), np.rad2deg(self.gamma))
+        v.addUnitCell({'box': {'color': 'purple'}, 'alabel': 'X', 'blabel': 'Y', 'clabel': 'Z',
+                       'alabelstyle': {'fontColor': 'black', 'backgroundColor': 'white', 'inFront': True,
+                                       'fontSize': 40},
+                       'astyle': {'color': 'darkred', 'radius': 5, 'midpos': -10}})
+
+        atoms = self._display_list(xmin, xmax, ymin, ymax, zmin, zmax, full_molecule=False,
+                                   only_independent_atoms=False, enantiomer=enantiomer)
+        m.addAtoms(atoms)
+        m.setStyle({'stick': {'radius': 0.2, 'opacity': 1},
+                    'sphere': {'scale': 0.3, 'colorscheme': 'jmol', 'opacity': 1}})
+
         v.zoomTo()
         return v
 
@@ -316,24 +533,38 @@ class Crystal(Crystal_orig):
         v = self.py3dmol_view
         v.removeAllModels()
         if full_molecule_opacity > 0:
-            v.addModel(self._display_cif(xmin, xmax, ymin, ymax, zmin, zmax,
-                                         full_molecule=True, only_independent_atoms=False), 'cif')
-            v.getModel().setStyle({'stick': {'radius': 0.2, 'opacity': full_molecule_opacity},
-                                   'sphere': {'scale': 0.3, 'colorscheme': 'jmol',
-                                              'opacity': full_molecule_opacity}})
+            v.addModel()
+            m = v.getModel()
+            atoms = self._display_list(xmin, xmax, ymin, ymax, zmin, zmax, full_molecule=True,
+                                       only_independent_atoms=False)
+            m.addAtoms(atoms)
+            m.setStyle({'stick': {'radius': 0.2, 'opacity': full_molecule_opacity},
+                        'sphere': {'scale': 0.3, 'colorscheme': 'jmol', 'opacity': full_molecule_opacity}})
+
         if extra_opacity > 0 and extra_dist > 0:
             dx, dy, dz = extra_dist / self.a, extra_dist / self.b, extra_dist / self.c
-            v.addModel(self._display_cif(xmin - dx, xmax + dx, ymin - dy,
-                                         ymax + dy, zmin - dz, zmax + dz, full_molecule=False,
-                                         only_independent_atoms=False), 'cif')
-            v.getModel().setStyle({'stick': {'radius': 0.2, 'opacity': extra_opacity},
-                                   'sphere': {'scale': 0.3, 'colorscheme': 'jmol', 'opacity': extra_opacity}})
-        v.addModel(self._display_cif(xmin, xmax, ymin, ymax, zmin, zmax,
-                                     full_molecule=False, only_independent_atoms=False), 'cif')
-        v.getModel().setStyle({'stick': {'radius': 0.2, 'opacity': 1},
-                               'sphere': {'scale': 0.3, 'colorscheme': 'jmol',
-                                          'opacity': 1}})  # Use 'sphere' for atoms
-        v.addUnitCell()
+            v.addModel()
+            m = v.getModel()
+            atoms = self._display_list(xmin - dx, xmax + dx, ymin - dy, ymax + dy, zmin - dz, zmax + dz,
+                                       full_molecule=False, only_independent_atoms=False)
+            m.addAtoms(atoms)
+            m.setStyle({'stick': {'radius': 0.2, 'opacity': extra_opacity},
+                        'sphere': {'scale': 0.3, 'colorscheme': 'jmol', 'opacity': extra_opacity}})
+
+        v.addModel()
+        m = v.getModel()
+        m.setCrystData(self.a, self.b, self.c, np.rad2deg(self.alpha), np.rad2deg(self.beta), np.rad2deg(self.gamma))
+        v.addUnitCell({'box': {'color': 'purple'}, 'alabel': 'X', 'blabel': 'Y', 'clabel': 'Z',
+                       'alabelstyle': {'fontColor': 'black', 'backgroundColor': 'white', 'inFront': True,
+                                       'fontSize': 40},
+                       'astyle': {'color': 'darkred', 'radius': 5, 'midpos': -10}})
+
+        atoms = self._display_list(xmin, xmax, ymin, ymax, zmin, zmax, full_molecule=False,
+                                   only_independent_atoms=False)
+        m.addAtoms(atoms)
+        m.setStyle({'stick': {'radius': 0.2, 'opacity': 1},
+                    'sphere': {'scale': 0.3, 'colorscheme': 'jmol', 'opacity': 1}})
+
         if zoom:
             v.zoomTo()
         if show:
@@ -375,7 +606,7 @@ def create_crystal_from_cif(file, oneScatteringPowerPerElement=False,
             if len(file) > 4:
                 if file[:4].lower() == 'http':
                     return CreateCrystalFromCIF_orig(urllib.request.urlopen(file),
-                                           oneScatteringPowerPerElement, connectAtoms)
+                                                     oneScatteringPowerPerElement, connectAtoms)
             with open(file, 'rb') as cif:  # Make sure file object is closed afterwards
                 c = CreateCrystalFromCIF_orig(cif, oneScatteringPowerPerElement, connectAtoms)
         else:

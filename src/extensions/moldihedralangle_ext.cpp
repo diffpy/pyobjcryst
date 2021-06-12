@@ -113,5 +113,6 @@ void wrap_moldihedralangle()
         // Iterate other the atoms involved
         .def("__iter__", range<return_value_policy<reference_existing_object> >
                            (&MolDihedralAngle::begin, &MolDihedralAngle::end))
+        .def("int_ptr", &MolDihedralAngle::int_ptr)
         ;
 }

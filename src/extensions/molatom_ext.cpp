@@ -90,5 +90,6 @@ void wrap_molatom()
         .add_property("Occupancy", &MolAtom::GetOccupancy,
                 &MolAtom::SetOccupancy)
         .def("__str__", &__str__)
+        .def("int_ptr", &MolAtom::int_ptr)
         ;
 }
