@@ -110,5 +110,6 @@ void wrap_molbondangle()
         // Iterate other the atoms involved
         .def("__iter__", range<return_value_policy<reference_existing_object> >
                            (&MolBondAngle::begin, &MolBondAngle::end))
+        .def("int_ptr", &MolBondAngle::int_ptr)
         ;
 }

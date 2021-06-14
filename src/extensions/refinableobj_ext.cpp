@@ -37,6 +37,7 @@
 #include <boost/python/copy_const_reference.hpp>
 
 #include <string>
+#include <sstream>
 #include <map>
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>
@@ -404,6 +405,15 @@ void _XMLInput(
     in.sync();
 }
 
+void _XMLInputString(RefinableObj& r, const string& s)
+{
+  stringstream ss(s);
+  ss.imbue(std::locale::classic());
+  XMLCrystTag tag;
+  ss>>tag;
+  r.XMLInput(ss, tag);
+}
+
 } // anonymous namespace
 
 
@@ -555,6 +565,7 @@ void wrap_refinableobj()
         .def("XMLInput", &_XMLInput, (bp::arg("file"), bp::arg("tag")))
         .def("XMLInput", &RefinableObj::XMLInput,
             &RefinableObjWrap::default_XMLInput)
+        .def("XMLInput", &_XMLInputString, (bp::arg("xml")))
         .def("GetGeneGroup", &RefinableObj::GetGeneGroup,
             &RefinableObjWrap::default_GetGeneGroup)
         .def("UpdateDisplay", &RefinableObj::UpdateDisplay,
@@ -563,6 +574,7 @@ void wrap_refinableobj()
             &RefinableObjWrap::default_GetRestraintCost)
         .def("TagNewBestConfig", &RefinableObj::TagNewBestConfig,
             &RefinableObjWrap::default_TagNewBestConfig)
+        .def("int_ptr", &RefinableObj::int_ptr)
         // Additional methods for python only
         .def("__str__", &__str__<RefinableObj>)
         ;
