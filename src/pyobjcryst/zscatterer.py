@@ -27,7 +27,7 @@ Changes from ObjCryst++
 __all__ = ["ZScatterer", "ZAtom", "ZPolyhedron",
            "RegularPolyhedraType", "GlobalScatteringPower"]
 
-import urllib
+from urllib.request import urlopen
 
 from pyobjcryst._pyobjcryst import ZScatterer as ZScatterer_orig
 from pyobjcryst._pyobjcryst import ZAtom
@@ -50,7 +50,7 @@ class ZScatterer(ZScatterer_orig):
         if isinstance(src, str):
             if len(src) > 4:
                 if src[:4].lower() == 'http':
-                    return super().ImportFenskeHallZMatrix(urllib.request.urlopen(src), named)
+                    return super().ImportFenskeHallZMatrix(urlopen(src), named)
             with open(src, 'rb') as fhz:  # Make sure file object is closed
                 super().ImportFenskeHallZMatrix(fhz, named)
         else:

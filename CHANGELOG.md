@@ -1,5 +1,12 @@
 # Release notes
 
+## Version 2.X --
+
+### Fixed
+
+- Correct import of urllib.request.urllopen() when loading CIF or z-matrix 
+  files from http urls.
+
 ## Version 2.2.0 -- 2021-06-08
 
 Notable differences from version 2.1.0.

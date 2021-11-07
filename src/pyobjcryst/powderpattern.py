@@ -18,7 +18,7 @@ Changes from ObjCryst::PowderPattern::
         In development !
 """
 
-import urllib
+from urllib.request import urlopen
 from multiprocessing import current_process
 import numpy as np
 
@@ -53,6 +53,8 @@ class PowderPattern(PowderPattern_objcryst):
         # xlim last time hkl were plotted
         self._last_hkl_plot_xlim = None
         self.evts = []
+        self._colour_phases = ["black", "blue", "green", "red", "brown", "olive",
+                               "cyan", "purple", "magenta", "salmon"]
 
     def UpdateDisplay(self):
         try:
@@ -139,8 +141,10 @@ class PowderPattern(PowderPattern_objcryst):
             self._do_plot_hkl(nb_max=100, fontsize_hkl=fontsize_hkl)
 
         # print PowderPatternDiffraction names
-        s = ""
+        self._plot_phase_labels = []
+        iphase = 0
         for i in range(self.GetNbPowderPatternComponent()):
+            s = ""
             comp = self.GetPowderPatternComponent(i)
             if comp.GetClassName() == "PowderPatternDiffraction":
                 if comp.GetName() != "":
@@ -154,12 +158,10 @@ class PowderPattern(PowderPattern_objcryst):
                     s += "[%s]" % str(c.GetSpaceGroup())
                 if comp.GetExtractionMode():
                     s += "[Le Bail mode]"
-                else:
-                    s += "\n"
-
-        self._plot_phase_labels = s
-        plt.text(0.005, 0.995, s, horizontalalignment="left", verticalalignment="top",
-                 transform=plt.gca().transAxes, fontsize=6)
+                self._plot_phase_labels.append(s)
+                plt.text(0.005, 0.995, "\n" * iphase + s, horizontalalignment="left", verticalalignment="top",
+                         transform=plt.gca().transAxes, fontsize=6, color=self._colour_phases[iphase])
+                iphase += 1
 
         if 'inline' not in plt.get_backend():
             try:
@@ -186,6 +188,7 @@ class PowderPattern(PowderPattern_objcryst):
         x = np.rad2deg(self.GetPowderPatternX())
         # Clear previous text (assumes only hkl were printed)
         plt.gca().texts = []
+        iphase = 0
         for ic in range(self.GetNbPowderPatternComponent()):
             c = self.GetPowderPatternComponent(ic)
             if isinstance(c, PowderPatternDiffraction) is False:
@@ -233,8 +236,8 @@ class PowderPattern(PowderPattern_objcryst):
 
                 ihkl = max(calc[idxhkl], obs[idxhkl])
                 s = " %d %d %d" % (vh[i], vk[i], vl[i])
-                t = plt.text(xhkl, ihkl, s, props, rotation=90,
-                             fontsize=fontsize_hkl, fontweight='light')
+                t = plt.text(xhkl, ihkl, s, props, rotation=90, fontsize=fontsize_hkl,
+                             fontweight='light', color=self._colour_phases[iphase])
                 if renderer is not None:
                     # Check for overlap with previous
                     bbox = t.get_window_extent(renderer)
@@ -244,10 +247,13 @@ class PowderPattern(PowderPattern_objcryst):
                             b = bbox.transformed(tdi)
                             t.set_y(ihkl + b.height * 1.2)
                     last_bbox = t.get_window_extent(renderer)
+            iphase += 1
         self._last_hkl_plot_xlim = plt.xlim()
         if self._plot_phase_labels is not None:
-            plt.text(0.005, 0.995, self._plot_phase_labels, horizontalalignment="left", verticalalignment="top",
-                     transform=plt.gca().transAxes, fontsize=6)
+            for iphase in range(len(self._plot_phase_labels)):
+                s = self._plot_phase_labels[iphase]
+                plt.text(0.005, 0.995, "\n" * iphase + s, horizontalalignment="left", verticalalignment="top",
+                         transform=plt.gca().transAxes, fontsize=6, color=self._colour_phases[iphase])
 
     def quick_fit_profile(self, pdiff=None, auto_background=True, init_profile=True, plot=True,
                           zero=True, constant_width=True, width=True, eta=True, backgd=True, cell=True,
@@ -434,7 +440,7 @@ def create_powderpattern_from_cif(file):
     if isinstance(file, str):
         if len(file) > 4:
             if file[:4].lower() == 'http':
-                return CreatePowderPatternFromCIF_orig(urllib.request.urlopen(file), p)
+                return CreatePowderPatternFromCIF_orig(urlopen(file), p)
         with open(file, 'rb') as cif:  # Make sure file object is closed
             return CreatePowderPatternFromCIF_orig(cif, p)
     return CreatePowderPatternFromCIF_orig(file, p)

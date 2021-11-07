@@ -212,6 +212,9 @@ void wrap_powderpattern()
         .def("GetScaleFactor",
                 (REAL (PowderPattern::*) (const int) const)
                 &PowderPattern::GetScaleFactor)
+        .def("GetScaleFactor",
+                (REAL (PowderPattern::*) (const PowderPatternComponent&) const)
+                &PowderPattern::GetScaleFactor)
         .def("SetScaleFactor",
                 (void (PowderPattern::*) (const int, REAL))
                 &PowderPattern::SetScaleFactor)

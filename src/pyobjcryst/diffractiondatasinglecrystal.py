@@ -24,7 +24,7 @@ Changes from ObjCryst::DiffractionDataSingleCrystal::
 __all__ = ["DiffractionDataSingleCrystal", "gDiffractionDataSingleCrystalRegistry",
            "create_singlecrystaldata_from_cif"]
 
-import urllib
+from urllib.request import urlopen
 from pyobjcryst._pyobjcryst import DiffractionDataSingleCrystal
 from pyobjcryst._pyobjcryst import gDiffractionDataSingleCrystalRegistry
 from pyobjcryst._pyobjcryst import CreateSingleCrystalDataFromCIF as crcif
@@ -47,7 +47,7 @@ def create_singlecrystaldata_from_cif(file, crystal):
     if isinstance(file, str):
         if len(file) > 4:
             if file[:4].lower() == 'http':
-                return crcif(urllib.request.urlopen(file), crystal)
+                return crcif(urlopen(file), crystal)
         with open(file, 'rb') as cif:  # Make sure file object is closed
             c = crcif(cif, crystal)
     else:

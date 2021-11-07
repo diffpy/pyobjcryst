@@ -383,6 +383,7 @@ void wrap_crystal()
              (bp::arg("min_relat_dist")=0.4, bp::arg("max_relat_dist")=1.3,
               bp::arg("warnuser_fail")=false))
         .def("GetFormula", &Crystal::GetFormula)
+        .def("GetWeight", &Crystal::GetWeight)
         .def("ImportCrystalFromCIF", &_ImportCrystalFromCIF, (bp::arg("input"),
             bp::arg("oneScatteringPowerPerElement")=false,
             bp::arg("connectAtoms")=false))
