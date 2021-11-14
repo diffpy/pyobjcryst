@@ -570,7 +570,11 @@ class Crystal(Crystal_orig):
         if show:
             v.show()
         else:
-            v.update()
+            # This avoids adding extra lines in the javascript output everytime
+            # the model is update. Only a flicker (line removed/added) remains.
+            self.output_view.clear_output()
+            with self.output_view:
+                v.update()
 
     def _widget_on_change_parameter(self, v):
         if v is not None:
