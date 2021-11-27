@@ -858,9 +858,8 @@ class TestStretchModeTorsion(unittest.TestCase):
         sp = self.m[-1].GetScatteringPower()
         self.assertTrue(sp is None)
 
-        sm = io.StringIO()
-        self.m.XMLOutput(sm)
-        self.assertEqual(8, sm.getvalue().count('Atom Name'))
+        sm = self.m.xml()
+        self.assertEqual(8, sm.count('Atom Name'))
 
         sc = str(self.c)
         sclines = sc.splitlines()
