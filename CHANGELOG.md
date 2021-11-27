@@ -1,19 +1,25 @@
 # Release notes
 
-## Version 2.X --
+## Version 2.2.1 -- 2021-11-28
 
-### Fixed
-
+- Add quantitative phase analysis with PowderPattern.qpa(), including
+  an example notebook using the QPA Round-Robin data.
 - Correct import of urllib.request.urllopen() when loading CIF or z-matrix 
   files from http urls.
+- Fix blank line javascript output when updating the Crystal 3D view
+- Add REfinableObj.xml() to directly get the XMLOutput() as a string
 
 ## Version 2.2.0 -- 2021-06-08
 
 Notable differences from version 2.1.0.
 
-- Add access to Radiation class & functions to change RadiationType, wavelength in PowderPattern and ScatteringData (and hence DiffractionDataSingleCrystal) classes.
+- Add access to Radiation class & functions to change RadiationType,
+  wavelength in PowderPattern and ScatteringData (and hence
+  DiffractionDataSingleCrystal) classes.
 
-- Fix the custodian_ward when creating a PowderPatternDiffraction: PowderPatternDiffraction must persist while PowderPattern exists, and Crystal must persist while PowderPatternDiffraction exists.
+- Fix the custodian_ward when creating a PowderPatternDiffraction:
+  PowderPatternDiffraction must persist while PowderPattern exists, and
+  Crystal must persist while PowderPatternDiffraction exists.
 
 - Add 3D Crystal viewer `pyobjcryst.crystal.Crystal.widget_3d`.
 

@@ -421,6 +421,37 @@ class PowderPattern(PowderPattern_objcryst):
                 # Need to update the hkl list
                 self._do_plot_hkl()
 
+    def qpa(self, verbose=False):
+        """
+        Get the quantitative phase analysis for the current powder pattern,
+        when multiple crystalline phases are present.
+
+        :param verbose: if True, print the Crystal names and their weight percentage.
+        :return: a dictionary with the PowderPatternDiffraction object as key, and
+            the weight percentages as value.
+        """
+        res = {}
+        szmv_sum = 0
+        for pdiff in self.get_crystalline_components():
+            if not isinstance(pdiff, PowderPatternDiffraction):
+                continue
+            c = pdiff.GetCrystal()
+            s = self.GetScaleFactor(pdiff)
+            m = c.GetWeight()
+            z = c.GetSpaceGroup().GetNbSymmetrics()
+            v = c.GetVolume()
+            # print("%25s: %12f, %10f, %3d, %10.2f" % (c.GetName(), s, m, z, v))
+            res[pdiff] = s * z * m * v
+            szmv_sum += s * z * m * v
+
+        if verbose:
+            print("Weight percentages:")
+        for k, v in res.items():
+            res[k] = v / szmv_sum
+            if verbose:
+                print("%25s: %6.2f%%" % (k.GetCrystal().GetName(), res[k] * 100))
+        return res
+
 
 def create_powderpattern_from_cif(file):
     """

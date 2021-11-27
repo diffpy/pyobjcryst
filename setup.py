@@ -18,7 +18,7 @@ from numpy.distutils.misc_util import get_numpy_include_dirs
 
 # Use this version when git data are not available as in a git zip archive.
 # Update when tagging a new release.
-FALLBACK_VERSION = '2.2.0.post0'
+FALLBACK_VERSION = '2.2.1.post0'
 
 # define extension arguments here
 ext_kws = {
@@ -177,6 +177,7 @@ setup_args = dict(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Topic :: Scientific/Engineering :: Chemistry',
         'Topic :: Scientific/Engineering :: Physics',
         'Topic :: Software Development :: Libraries',
