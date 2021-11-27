@@ -17,6 +17,11 @@ Christopher Farrow, Pavol Juhás, and Simon J.L. Billinge.
 The sources are now maintained as a part of the DiffPy-CMI complex
 modeling initiative at the Brookhaven National Laboratory.
 
+Further developments including the ability to index and refine
+powder patterns, solve and display crystal structures, using the
+global optimisation and least squares algorithms (see the notebooks
+in the examples) are provided by Vincent Favre-Nicolin (ESRF).
+
 For a complete list of contributors, see
 https://github.com/diffpy/pyobjcryst/graphs/contributors.
 

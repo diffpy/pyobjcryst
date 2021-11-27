@@ -23,7 +23,7 @@ import time
 extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.autodoc',
-    'm2r',
+    'm2r2',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
