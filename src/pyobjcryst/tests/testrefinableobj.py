@@ -24,6 +24,7 @@ import numpy
 
 from pyobjcryst.tests.pyobjcrysttestutils import makeScatterer, makeCrystal
 
+
 class TestRefinableObjClock(unittest.TestCase):
 
     def testRelations(self):
@@ -52,50 +53,50 @@ class TestRefinableObjClock(unittest.TestCase):
         ref2.Reset()
 
         # See if these things are at the same spot
-        self.assertTrue( not ( c1 < c2 or c2 < c1 ) )
+        self.assertTrue(not (c1 < c2 or c2 < c1))
 
         # Click one to make greater than other
         c1.Click()
-        self.assertTrue( c1 > c2 )
-        self.assertFalse( c2 > c1)
+        self.assertTrue(c1 > c2)
+        self.assertFalse(c2 > c1)
 
         # Adding children advances the parent beyond all children
         parent.AddChild(c1)
         parent.AddChild(c2)
-        self.assertTrue( parent > c1 )
-        self.assertTrue( parent > c2 )
-        self.assertTrue( c1 > c2 )
+        self.assertTrue(parent > c1)
+        self.assertTrue(parent > c2)
+        self.assertTrue(c1 > c2)
 
         # Clicking parent leaves the children
         ref.SetEqual(c1)
         parent.Click()
-        self.assertTrue( parent > ref )
-        self.assertTrue( parent > c1 )
-        self.assertTrue( parent > c2 )
-        self.assertTrue( c1 > c2 )
-        self.assertTrue( not (c1 < ref or ref < c1 ) )
+        self.assertTrue(parent > ref)
+        self.assertTrue(parent > c1)
+        self.assertTrue(parent > c2)
+        self.assertTrue(c1 > c2)
+        self.assertTrue(not (c1 < ref or ref < c1))
 
         # Resetting parent does not reset children
         parent.Reset()
-        self.assertTrue( parent < c1 )
+        self.assertTrue(parent < c1)
 
         # Resetting child does not affect parent
         ref.SetEqual(parent)
         c1.Reset()
-        self.assertTrue( not (parent < ref or ref < parent) )
+        self.assertTrue(not (parent < ref or ref < parent))
 
         # Clicking children advances parent
         ref.SetEqual(parent)
         c1.Click()
-        self.assertTrue( parent > c1 )
-        self.assertTrue( parent > c2 )
+        self.assertTrue(parent > c1)
+        self.assertTrue(parent > c2)
 
         # Reset child does not affect parent or other children
         ref.SetEqual(parent)
         ref2.SetEqual(c1)
         c2.Reset()
-        self.assertTrue( not (parent < ref or ref < parent) )
-        self.assertTrue( not (c1 < ref2 or ref2 < c1 ) )
+        self.assertTrue(not (parent < ref or ref < parent))
+        self.assertTrue(not (c1 < ref2 or ref2 < c1))
 
         # Increasing child above parent with SetEqual will increase parent to
         # child's value
@@ -106,9 +107,9 @@ class TestRefinableObjClock(unittest.TestCase):
         self.assertTrue(ref > parent)
         c1.SetEqual(ref)
         self.assertTrue(c1 > ref2)
-        self.assertTrue(not ( parent < c1 or c1 < parent ) )
+        self.assertTrue(not (parent < c1 or c1 < parent))
         ref.Reset()
-        self.assertTrue( parent > ref )
+        self.assertTrue(parent > ref)
 
         # Decreasing child with SetEqual will not affect parent.
         c1.Click()
@@ -118,7 +119,7 @@ class TestRefinableObjClock(unittest.TestCase):
         self.assertTrue(ref2 < parent)
         ref.SetEqual(parent)
         c1.SetEqual(ref2)
-        self.assertTrue(not (ref < parent or parent < ref) )
+        self.assertTrue(not (ref < parent or parent < ref))
 
         # Increasing child with SetEqual, so that it is still smaller than
         # parent, will increment parent
@@ -129,7 +130,7 @@ class TestRefinableObjClock(unittest.TestCase):
         ref.SetEqual(parent)
         c1.SetEqual(ref2)
         self.assertTrue(c1 < parent)
-        self.assertTrue(not (ref < parent or parent < ref) )
+        self.assertTrue(not (ref < parent or parent < ref))
 
         # Reducing parent with SetEqual will not affect children.
         ref.Reset()
@@ -196,7 +197,7 @@ class TestRefinablePar(unittest.TestCase):
         self.assertAlmostEqual(self.testpar.GetValue(), testpar2.GetValue())
 
         testpar2.SetValue(2.17)
-        self.assertAlmostEqual(2.17, testpar2.GetValue(), places = 6)
+        self.assertAlmostEqual(2.17, testpar2.GetValue(), places=6)
         self.assertAlmostEqual(self.testpar.GetValue(), testpar2.GetValue())
         return
 
@@ -205,6 +206,7 @@ class TestRefinablePar(unittest.TestCase):
         rpt2 = self.testpar.GetType()
         self.assertEqual(rpt2, self.rpt)
         return
+
 
 class TestRefinableObj(unittest.TestCase):
 
@@ -326,13 +328,13 @@ class TestRefinableObj(unittest.TestCase):
         # Test saving and retrieval of parameters
         save1 = r.CreateParamSet("save1")
         savevals1 = r.GetParamSet(save1)
-        self.assertTrue( numpy.array_equal([3,-3], savevals1) )
+        self.assertTrue(numpy.array_equal([3, -3], savevals1))
 
         # Change a parameter test new value
         p1.SetValue(8.0)
         save2 = r.CreateParamSet("save2")
         savevals2 = r.GetParamSet(save2)
-        self.assertTrue( numpy.array_equal([8,-3], savevals2) )
+        self.assertTrue(numpy.array_equal([8, -3], savevals2))
 
         # Restore the old set
         r.RestoreParamSet(save1)
@@ -409,6 +411,10 @@ class TestRefinableObj(unittest.TestCase):
         self.assertAlmostEqual(0.1, p1.GetGlobalOptimStep())
         self.assertAlmostEqual(0.1, p2.GetGlobalOptimStep())
         return
+
+    def test_xml(self):
+        """Test xml() function"""
+        x = self.r.xml()
 
 
 if __name__ == "__main__":
