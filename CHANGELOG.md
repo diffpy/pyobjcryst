@@ -7,7 +7,8 @@
 - Correct import of urllib.request.urllopen() when loading CIF or z-matrix 
   files from http urls.
 - Fix blank line javascript output when updating the Crystal 3D view
-- Add REfinableObj.xml() to directly get the XMLOutput() as a string
+- Add RefinableObj.xml() to directly get the XMLOutput() as a string
+- Add example notebooks to the sphinx-generated html documentation
 
 ## Version 2.2.0 -- 2021-06-08
 
