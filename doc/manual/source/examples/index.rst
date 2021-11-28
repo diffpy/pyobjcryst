@@ -13,14 +13,23 @@ Example of importing a CIF file from a file or the
 and displaying it in a widget using
 `3dmol.js <https://3dmol.csb.pitt.edu/>`_.
 
-:doc:`Solving a crystal structure from its powder pattern <cimetidine-structure-solution-powder>`
-=================================================================================================
+:doc:`Solving the cimetidine structure from its powder pattern <structure-solution-powder-cimetidine>`
+======================================================================================================
 
 In this example, a powder pattern is used to solve the crystal
 structure of Cimetidine. This covers all the steps: loading the
 data, indexing the pattern (determining the unit cell), finding
 the spacegroup, profile fitting, and solving the structure
 using a global optimisation algorithm.
+
+:doc:`Solving the PbSO4 structure from its X and N powder patterns <structure-solution-powder-pbso4>`
+=====================================================================================================
+
+In this example, two powder patterns (X-ray and neutron) are used to solve
+the crystal structure of PbSO4. This covers all the steps: loading the
+data, indexing the pattern (determining the unit cell), finding
+the spacegroup, profile fitting for the two patterns, and solving the
+structure using a global optimisation algorithm.
 
 :doc:`Meta-structure solution using multi-processing <structure-solution-multiprocessing>`
 ==========================================================================================

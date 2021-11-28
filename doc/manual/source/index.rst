@@ -49,7 +49,8 @@ pyobjcryst can be used in different ways:
   See the :doc:`examples/index`:
 
   * :doc:`3D Crystal structure display <examples/crystal_3d_widget>`
-  * :doc:`Solving a crystal structure from its powder pattern <examples/cimetidine-structure-solution-powder>`
+  * :doc:`Solving the cimetidine structure from its powder pattern <examples/structure-solution-powder-cimetidine>`
+  * :doc:`Solving the PbSO4 structure from its X and N powder patterns <examples/structure-solution-powder-pbso4>`
   * :doc:`Meta-structure solution using multi-processing <examples/structure-solution-multiprocessing>`
   * :doc:`Quantitative phase analysis (QPA) <examples/Quantitative-phase-analysis>`
 
