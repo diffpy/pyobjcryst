@@ -19,8 +19,8 @@ modeling initiative at the Brookhaven National Laboratory.
 
 Further developments including the ability to index and refine
 powder patterns, solve and display crystal structures, using the
-global optimisation and least squares algorithms (see the notebooks
-in the examples) are provided by Vincent Favre-Nicolin (ESRF).
+global optimisation and least squares algorithms (see the
+:doc:`examples/index`) are provided by Vincent Favre-Nicolin (ESRF).
 
 For a complete list of contributors, see
 https://github.com/diffpy/pyobjcryst/graphs/contributors.
