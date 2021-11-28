@@ -121,21 +121,25 @@ class PowderPattern(PowderPattern_objcryst):
             plt.figure(figsize=figsize)
         plt.plot(x, obs, 'k', label='obs', linewidth=1)
         plt.plot(x, calc, 'r', label='calc', linewidth=1)
+        m = self.GetMaxSinThetaOvLambda() * self.GetWavelength()
+        mtth = np.rad2deg(np.arcsin(m)) * 2
         if plot_diff:
-            plt.plot(x, calc - obs - obs.max() / 20, 'g', label='calc-obs',
+            diff = calc - obs - obs.max() / 20
+            # Mask difference above max sin(theta)/lambda
+            diff = np.ma.masked_array(diff, x > mtth)
+            plt.plot(x, diff, 'g', label='calc-obs',
                      linewidth=0.5)
 
         plt.legend(loc='upper right')
         if self.GetName() != "":
             plt.title("PowderPattern: %s" % self.GetName())
 
-        m = self.GetMaxSinThetaOvLambda() * self.GetWavelength()
         if self._plot_ylim is not None:
             plt.ylim(self._plot_ylim)
         if self._plot_xlim is not None:
             plt.xlim(self._plot_xlim)
         elif m < 1:
-            plt.xlim(x.min(), np.rad2deg(np.arcsin(m)) * 2)
+            plt.xlim(x.min(), mtth)
 
         if plot_hkl:
             self._do_plot_hkl(nb_max=100, fontsize_hkl=fontsize_hkl)
