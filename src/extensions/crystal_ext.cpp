@@ -38,6 +38,8 @@
 
 #undef B0
 #include <ObjCryst/ObjCryst/Crystal.h>
+#include <ObjCryst/ObjCryst/Atom.h>
+#include <ObjCryst/ObjCryst/Molecule.h>
 #include <ObjCryst/ObjCryst/CIF.h>
 #include <ObjCryst/ObjCryst/UnitCell.h>
 
@@ -59,6 +61,30 @@ void _AddScatterer(Crystal& crystal, Scatterer* scatt)
                 "Cannot add nonexistant Scatterer");
         throw_error_already_set();
     }
+    // Make sure the associated ScatteringPower exists in the Crystal
+    if(scatt->GetClassName()=="Atom")
+    {
+      Atom *pat=dynamic_cast<Atom*>(scatt);
+      if(!(pat->IsDummy()))
+      {
+        const ScatteringPower *psp = &pat->GetScatteringPower();
+        if(crystal.GetScatteringPowerRegistry().Find(psp)<0)
+          throw ObjCryst::ObjCrystException("The Atom's scattering power must be added to the Crystal first.");
+      }
+    }
+    else if(scatt->GetClassName()=="Molecule")
+    {
+      Molecule *pm=dynamic_cast<Molecule*>(scatt);
+      for(int i=0; i<pm->GetNbComponent(); i++)
+      {
+        if(!(pm->GetAtom(i).IsDummy()))
+        {
+          if(crystal.GetScatteringPowerRegistry().Find(&(pm->GetAtom(i).GetScatteringPower()))<0)
+          throw ObjCryst::ObjCrystException("The Molecule or Polyhedra scattering powers must be added to the Crystal first.");
+        }
+      }
+    }
+
     crystal.AddScatterer(scatt);
 }
 
@@ -71,6 +97,7 @@ void _RemoveScatterer(Crystal& crystal, Scatterer* scatt)
                 "Cannot remove nonexistant Scatterer");
         throw_error_already_set();
     }
+
     crystal.RemoveScatterer(scatt, false);
 }
 
