@@ -9,6 +9,9 @@
 - Fix blank line javascript output when updating the Crystal 3D view
 - Add RefinableObj.xml() to directly get the XMLOutput() as a string
 - Add example notebooks to the sphinx-generated html documentation
+- Fix issue when using Crystal.XMLInput() for a non-empty structure.
+  Existing scattering power will be re-used when possible, and otherwise
+  not deleted anymore (which could lead to crashes).
 
 ## Version 2.2.0 -- 2021-06-08
 
