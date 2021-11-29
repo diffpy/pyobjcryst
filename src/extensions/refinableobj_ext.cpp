@@ -394,6 +394,15 @@ void _XMLOutput(
     os.flush();
 }
 
+std::string _xml(const RefinableObj &r)
+{
+    std::stringstream s;
+    int indent=0;
+    r.XMLOutput(s, indent);
+    return s.str();
+}
+
+
 void _XMLInput(
         RefinableObj& r,
         bp::object input,
@@ -562,6 +571,7 @@ void wrap_refinableobj()
         .def("XMLOutput", &_XMLOutput, (bp::arg("file"), bp::arg("indent")=0))
         .def("XMLOutput", &RefinableObj::XMLOutput,
             &RefinableObjWrap::default_XMLOutput)
+        .def("xml", &_xml)
         .def("XMLInput", &_XMLInput, (bp::arg("file"), bp::arg("tag")))
         .def("XMLInput", &RefinableObj::XMLInput,
             &RefinableObjWrap::default_XMLInput)

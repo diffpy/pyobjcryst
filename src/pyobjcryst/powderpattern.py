@@ -18,7 +18,7 @@ Changes from ObjCryst::PowderPattern::
         In development !
 """
 
-import urllib
+from urllib.request import urlopen
 from multiprocessing import current_process
 import numpy as np
 
@@ -53,6 +53,8 @@ class PowderPattern(PowderPattern_objcryst):
         # xlim last time hkl were plotted
         self._last_hkl_plot_xlim = None
         self.evts = []
+        self._colour_phases = ["black", "blue", "green", "red", "brown", "olive",
+                               "cyan", "purple", "magenta", "salmon"]
 
     def UpdateDisplay(self):
         try:
@@ -119,28 +121,34 @@ class PowderPattern(PowderPattern_objcryst):
             plt.figure(figsize=figsize)
         plt.plot(x, obs, 'k', label='obs', linewidth=1)
         plt.plot(x, calc, 'r', label='calc', linewidth=1)
+        m = self.GetMaxSinThetaOvLambda() * self.GetWavelength()
+        mtth = np.rad2deg(np.arcsin(m)) * 2
         if plot_diff:
-            plt.plot(x, calc - obs - obs.max() / 20, 'g', label='calc-obs',
+            diff = calc - obs - obs.max() / 20
+            # Mask difference above max sin(theta)/lambda
+            diff = np.ma.masked_array(diff, x > mtth)
+            plt.plot(x, diff, 'g', label='calc-obs',
                      linewidth=0.5)
 
         plt.legend(loc='upper right')
         if self.GetName() != "":
             plt.title("PowderPattern: %s" % self.GetName())
 
-        m = self.GetMaxSinThetaOvLambda() * self.GetWavelength()
         if self._plot_ylim is not None:
             plt.ylim(self._plot_ylim)
         if self._plot_xlim is not None:
             plt.xlim(self._plot_xlim)
         elif m < 1:
-            plt.xlim(x.min(), np.rad2deg(np.arcsin(m)) * 2)
+            plt.xlim(x.min(), mtth)
 
         if plot_hkl:
             self._do_plot_hkl(nb_max=100, fontsize_hkl=fontsize_hkl)
 
         # print PowderPatternDiffraction names
-        s = ""
+        self._plot_phase_labels = []
+        iphase = 0
         for i in range(self.GetNbPowderPatternComponent()):
+            s = ""
             comp = self.GetPowderPatternComponent(i)
             if comp.GetClassName() == "PowderPatternDiffraction":
                 if comp.GetName() != "":
@@ -154,12 +162,10 @@ class PowderPattern(PowderPattern_objcryst):
                     s += "[%s]" % str(c.GetSpaceGroup())
                 if comp.GetExtractionMode():
                     s += "[Le Bail mode]"
-                else:
-                    s += "\n"
-
-        self._plot_phase_labels = s
-        plt.text(0.005, 0.995, s, horizontalalignment="left", verticalalignment="top",
-                 transform=plt.gca().transAxes, fontsize=6)
+                self._plot_phase_labels.append(s)
+                plt.text(0.005, 0.995, "\n" * iphase + s, horizontalalignment="left", verticalalignment="top",
+                         transform=plt.gca().transAxes, fontsize=6, color=self._colour_phases[iphase])
+                iphase += 1
 
         if 'inline' not in plt.get_backend():
             try:
@@ -186,6 +192,7 @@ class PowderPattern(PowderPattern_objcryst):
         x = np.rad2deg(self.GetPowderPatternX())
         # Clear previous text (assumes only hkl were printed)
         plt.gca().texts = []
+        iphase = 0
         for ic in range(self.GetNbPowderPatternComponent()):
             c = self.GetPowderPatternComponent(ic)
             if isinstance(c, PowderPatternDiffraction) is False:
@@ -233,8 +240,8 @@ class PowderPattern(PowderPattern_objcryst):
 
                 ihkl = max(calc[idxhkl], obs[idxhkl])
                 s = " %d %d %d" % (vh[i], vk[i], vl[i])
-                t = plt.text(xhkl, ihkl, s, props, rotation=90,
-                             fontsize=fontsize_hkl, fontweight='light')
+                t = plt.text(xhkl, ihkl, s, props, rotation=90, fontsize=fontsize_hkl,
+                             fontweight='light', color=self._colour_phases[iphase])
                 if renderer is not None:
                     # Check for overlap with previous
                     bbox = t.get_window_extent(renderer)
@@ -244,10 +251,13 @@ class PowderPattern(PowderPattern_objcryst):
                             b = bbox.transformed(tdi)
                             t.set_y(ihkl + b.height * 1.2)
                     last_bbox = t.get_window_extent(renderer)
+            iphase += 1
         self._last_hkl_plot_xlim = plt.xlim()
         if self._plot_phase_labels is not None:
-            plt.text(0.005, 0.995, self._plot_phase_labels, horizontalalignment="left", verticalalignment="top",
-                     transform=plt.gca().transAxes, fontsize=6)
+            for iphase in range(len(self._plot_phase_labels)):
+                s = self._plot_phase_labels[iphase]
+                plt.text(0.005, 0.995, "\n" * iphase + s, horizontalalignment="left", verticalalignment="top",
+                         transform=plt.gca().transAxes, fontsize=6, color=self._colour_phases[iphase])
 
     def quick_fit_profile(self, pdiff=None, auto_background=True, init_profile=True, plot=True,
                           zero=True, constant_width=True, width=True, eta=True, backgd=True, cell=True,
@@ -415,6 +425,37 @@ class PowderPattern(PowderPattern_objcryst):
                 # Need to update the hkl list
                 self._do_plot_hkl()
 
+    def qpa(self, verbose=False):
+        """
+        Get the quantitative phase analysis for the current powder pattern,
+        when multiple crystalline phases are present.
+
+        :param verbose: if True, print the Crystal names and their weight percentage.
+        :return: a dictionary with the PowderPatternDiffraction object as key, and
+            the weight percentages as value.
+        """
+        res = {}
+        szmv_sum = 0
+        for pdiff in self.get_crystalline_components():
+            if not isinstance(pdiff, PowderPatternDiffraction):
+                continue
+            c = pdiff.GetCrystal()
+            s = self.GetScaleFactor(pdiff)
+            m = c.GetWeight()
+            z = c.GetSpaceGroup().GetNbSymmetrics()
+            v = c.GetVolume()
+            # print("%25s: %12f, %10f, %3d, %10.2f" % (c.GetName(), s, m, z, v))
+            res[pdiff] = s * z * m * v
+            szmv_sum += s * z * m * v
+
+        if verbose:
+            print("Weight percentages:")
+        for k, v in res.items():
+            res[k] = v / szmv_sum
+            if verbose:
+                print("%25s: %6.2f%%" % (k.GetCrystal().GetName(), res[k] * 100))
+        return res
+
 
 def create_powderpattern_from_cif(file):
     """
@@ -434,7 +475,7 @@ def create_powderpattern_from_cif(file):
     if isinstance(file, str):
         if len(file) > 4:
             if file[:4].lower() == 'http':
-                return CreatePowderPatternFromCIF_orig(urllib.request.urlopen(file), p)
+                return CreatePowderPatternFromCIF_orig(urlopen(file), p)
         with open(file, 'rb') as cif:  # Make sure file object is closed
             return CreatePowderPatternFromCIF_orig(cif, p)
     return CreatePowderPatternFromCIF_orig(file, p)

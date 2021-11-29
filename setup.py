@@ -18,18 +18,19 @@ from numpy.distutils.misc_util import get_numpy_include_dirs
 
 # Use this version when git data are not available as in a git zip archive.
 # Update when tagging a new release.
-FALLBACK_VERSION = '2.2.0.post0'
+FALLBACK_VERSION = '2.2.1.post0'
 
 # define extension arguments here
 ext_kws = {
-        'libraries' : ['ObjCryst'],
-        'extra_compile_args' : ['-std=c++11', '-DBOOST_ERROR_CODE_HEADER_ONLY'],
-        'extra_link_args' : [],
-        'include_dirs' : get_numpy_include_dirs(),
+    'libraries': ['ObjCryst'],
+    'extra_compile_args': ['-std=c++11', '-DBOOST_ERROR_CODE_HEADER_ONLY'],
+    'extra_link_args': [],
+    'include_dirs': get_numpy_include_dirs(),
 }
 
 # determine if we run with Python 3.
 PY3 = (sys.version_info[0] == 3)
+
 
 # Figure out the tagged name of boost_python library.
 def get_boost_libraries():
@@ -68,7 +69,7 @@ def get_boost_libraries():
 def create_extensions():
     "Initialize Extension objects for the setup function."
     blibs = [n for n in get_boost_libraries()
-            if not n in ext_kws['libraries']]
+             if not n in ext_kws['libraries']]
     ext_kws['libraries'] += blibs
     ext = Extension('pyobjcryst._pyobjcryst',
                     glob.glob("src/extensions/*.cpp"),
@@ -123,7 +124,7 @@ def getversioncfg():
     cp.read(versioncfgfile)
     d = cp.defaults()
     rewrite = not d or (g['commit'] and (
-        g['version'] != d.get('version') or g['commit'] != d.get('commit')))
+            g['version'] != d.get('version') or g['commit'] != d.get('commit')))
     if rewrite:
         cp.set('DEFAULT', 'version', g['version'])
         cp.set('DEFAULT', 'commit', g['commit'])
@@ -133,6 +134,7 @@ def getversioncfg():
             cp.write(fp)
     return cp
 
+
 versiondata = getversioncfg()
 
 with open(os.path.join(MYDIR, 'README.rst')) as fp:
@@ -140,27 +142,33 @@ with open(os.path.join(MYDIR, 'README.rst')) as fp:
 
 # define distribution
 setup_args = dict(
-    name = "pyobjcryst",
-    version = versiondata.get('DEFAULT', 'version'),
-    author = "Simon J.L. Billinge",
-    author_email = "sb2896@columbia.edu",
-    maintainer = 'Pavol Juhas',
-    maintainer_email = 'pavol.juhas@gmail.com',
-    description = "Python bindings to the ObjCryst++ library.",
-    long_description = long_description,
-    long_description_content_type = 'text/x-rst',
-    license = "BSD-style license",
-    url = "https://github.com/diffpy/pyobjcryst",
+    name="pyobjcryst",
+    version=versiondata.get('DEFAULT', 'version'),
+    author="Simon J.L. Billinge",
+    author_email="sb2896@columbia.edu",
+    maintainer='Pavol Juhas',
+    maintainer_email='pavol.juhas@gmail.com',
+    description="Python bindings to the ObjCryst++ library.",
+    long_description=long_description,
+    long_description_content_type='text/x-rst',
+    license="BSD-style license",
+    url="https://github.com/diffpy/pyobjcryst",
+
+    # Required python packages
+    install_requires=['numpy'],
+    extras_require={'gui': ['ipywidgets', 'jupyter', 'matplotlib', 'ipympl', 'py3dmol'],
+                    'doc': ['sphinx', 'm2r2', 'sphinx_py3doc_enhanced_theme',
+                            'nbsphinx', 'nbsphinx-link']},
 
     # What we're installing
-    packages = ['pyobjcryst', 'pyobjcryst.tests'],
-    package_dir = {'' : 'src'},
-    test_suite = 'pyobjcryst.tests',
-    include_package_data = True,
-    zip_safe = False,
+    packages=['pyobjcryst', 'pyobjcryst.tests'],
+    package_dir={'': 'src'},
+    test_suite='pyobjcryst.tests',
+    include_package_data=True,
+    zip_safe=False,
 
-    keywords = "objcryst atom structure crystallography",
-    classifiers = [
+    keywords="objcryst atom structure crystallography powder diffraction",
+    classifiers=[
         # List of possible values at
         # http://pypi.python.org/pypi?:action=list_classifiers
         'Development Status :: 5 - Production/Stable',
@@ -177,6 +185,7 @@ setup_args = dict(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Topic :: Scientific/Engineering :: Chemistry',
         'Topic :: Scientific/Engineering :: Physics',
         'Topic :: Software Development :: Libraries',

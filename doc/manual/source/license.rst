@@ -14,7 +14,7 @@ OPEN SOURCE LICENSE AGREEMENT
   the City of New York
 | Copyright (c) 2014-2019, Brookhaven Science Associates,
   Brookhaven National Laboratory
-
+| Copyright (c) 2015-, ESRF-European Synchrotron Radiation Facility
 
 The "DiffPy-CMI" is distributed subject to the following license conditions:
 

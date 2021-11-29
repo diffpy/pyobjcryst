@@ -33,7 +33,7 @@ __all__ = ["Crystal", "BumpMergePar", "CreateCrystalFromCIF",
            "create_crystal_from_cif", "gCrystalRegistry"]
 
 import warnings
-import urllib
+from urllib.request import urlopen
 from multiprocessing import current_process
 import numpy as np
 from pyobjcryst._pyobjcryst import Crystal as Crystal_orig
@@ -570,7 +570,11 @@ class Crystal(Crystal_orig):
         if show:
             v.show()
         else:
-            v.update()
+            # This avoids adding extra lines in the javascript output everytime
+            # the model is update. Only a flicker (line removed/added) remains.
+            self.output_view.clear_output()
+            with self.output_view:
+                v.update()
 
     def _widget_on_change_parameter(self, v):
         if v is not None:
@@ -605,7 +609,7 @@ def create_crystal_from_cif(file, oneScatteringPowerPerElement=False,
         if isinstance(file, str):
             if len(file) > 4:
                 if file[:4].lower() == 'http':
-                    return CreateCrystalFromCIF_orig(urllib.request.urlopen(file),
+                    return CreateCrystalFromCIF_orig(urlopen(file),
                                                      oneScatteringPowerPerElement, connectAtoms)
             with open(file, 'rb') as cif:  # Make sure file object is closed afterwards
                 c = CreateCrystalFromCIF_orig(cif, oneScatteringPowerPerElement, connectAtoms)
@@ -616,7 +620,7 @@ def create_crystal_from_cif(file, oneScatteringPowerPerElement=False,
         if isinstance(file, str):
             if len(file) > 4:
                 if file[:4].lower() == 'http':
-                    c.ImportCrystalFromCIF(urllib.request.urlopen(file),
+                    c.ImportCrystalFromCIF(urlopen(file),
                                            oneScatteringPowerPerElement, connectAtoms)
                     return c
             with open(file, 'rb') as cif:  # Make sure file object is closed afterwards

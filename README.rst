@@ -76,6 +76,26 @@ parallel jobs (-j4)::
 
 See ``scons -h`` for description of build targets and options.
 
+Optional graphical dependencies for jupyter notebooks
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Some of the classes can produce graphical outputs, which can be
+displayed in a jupyter notebook:
+
+* a Crystal structure can be displayed in 3D: this requires the
+  ``py3dmol`` and ``ipywidgets`` modules. See the notebook
+  ``examples/cystal_3d_widget.ipynb``
+* a PowderPattern can be displayed (and live-updated) if
+  ``matplotlib`` (and optionnally ``ipympl``) are installed. See the
+  notebook ``examples/cimetidine-structure-solution-powder.ipynb``
+
+In short, ``pip install jupyter matplotlib ipywidgets py3dmol``
+will give you all the required dependencies. Note that you can also
+use this in jupyterlab.
+
+Note that ``jupyter``, ``ipywidgets``, ``matplotlib`` and ``ipympl`` can
+be installed using conda(-forge), but ``py3dmol`` should be installed using
+``pip``, as the conda version is obsolete.
+
 
 DEVELOPMENT
 -----------
@@ -109,7 +129,7 @@ Anaconda environment.  This can be achieved by setting the ``CPATH``,
 ``LIBRARY_PATH`` and ``LDFLAGS`` environment variables as follows::
 
    # resolve the prefix directory P of the active Anaconda environment
-   P="$(conda info --json | grep default_prefix | cut -d\" -f4)"
+   P=$CONDA_PREFIX
    export CPATH=$P/include
    export LIBRARY_PATH=$P/lib
    export LDFLAGS=-Wl,-rpath,$P/lib
@@ -120,6 +140,25 @@ Note the Anaconda package for the required libobjcryst library is built
 with a C++ compiler provided by Anaconda.  This may cause incompatibility
 with system C++.  In such case please use Anaconda C++ to build pyobjcryst.
 
+Quick conda environment from libobjcryst and pyobjcryst sources
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If ``conda`` is available, you can create a pyobjcryst environment
+from the git repositories (downloaded in the current directory) using::
+  conda create --yes --name pyobjcryst numpy matplotlib ipywidgets jupyter
+  conda install --yes  -n pyobjcryst -c conda-forge boost scons py3dmol
+  conda activate pyobjcryst
+  git clone https://github.com/diffpy/libobjcryst.git
+  cd libobjcryst
+  scons -j4 install prefix=$CONDA_PREFIX
+  cd ..
+  git clone https://github.com/diffpy/pyobjcryst.git
+  cd pyobjcryst
+  export CPATH=$CONDA_PREFIX/include
+  export LIBRARY_PATH=$CONDA_PREFIX/lib
+  export LDFLAGS=-Wl,-rpath,$CONDA_PREFIX/lib
+  scons -j4 install prefix=$CONDA_PREFIX
+
 
 CONTACTS
 --------
@@ -129,3 +168,8 @@ For more information on pyobjcryst please visit the project web-page
 http://www.diffpy.org
 
 or email Prof. Simon Billinge at sb2896@columbia.edu.
+
+You can also contact Vincent Favre-Nicolin (favre@esrf.fr) if you
+are using pyobjcryst outside diffpy, e.g. to display structures
+in a notebook, refine powder patterns or solve structures using the
+global optimisation algorithms, etc..

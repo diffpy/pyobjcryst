@@ -48,5 +48,6 @@ void wrap_scatteringpoweratom()
         .def("SetSymbol", &ScatteringPowerAtom::SetSymbol)
         .def("GetElementName", &ScatteringPowerAtom::GetElementName)
         .def("GetAtomicNumber", &ScatteringPowerAtom::GetAtomicNumber)
+        .def("GetAtomicWeight", &ScatteringPowerAtom::GetAtomicWeight)
         ;
 }

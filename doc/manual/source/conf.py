@@ -4,6 +4,7 @@
 
 import sys, os
 import time
+import sphinx_py3doc_enhanced_theme
 # Requires sphinx >= 0.6
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -23,7 +24,9 @@ import time
 extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.autodoc',
-    'm2r',
+    'm2r2',
+    'nbsphinx',
+    'nbsphinx_link'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -101,6 +104,7 @@ pygments_style = 'sphinx'
 # a list of builtin themes.
 #
 html_theme = 'sphinx_py3doc_enhanced_theme'
+html_theme_path = [sphinx_py3doc_enhanced_theme.get_html_theme_path()]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the

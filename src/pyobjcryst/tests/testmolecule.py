@@ -15,6 +15,7 @@
 
 """Tests for molecule module."""
 
+import io
 import unittest
 from pkg_resources import resource_filename
 from pyobjcryst import ObjCrystException
@@ -857,7 +858,7 @@ class TestStretchModeTorsion(unittest.TestCase):
         sp = self.m[-1].GetScatteringPower()
         self.assertTrue(sp is None)
 
-        sm = str(self.m)
+        sm = self.m.xml()
         self.assertEqual(8, sm.count('Atom Name'))
 
         sc = str(self.c)
