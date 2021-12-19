@@ -38,8 +38,8 @@ def makeScattererAnisotropic():
 
 def makeCrystal(sp, atom):
     c = Crystal(3.52, 3.52, 3.52, "225")
-    c.AddScatterer(atom)
     c.AddScatteringPower(sp)
+    c.AddScatterer(atom)
     return c
 
 def getScatterer():
@@ -138,6 +138,8 @@ def makeMnO6():
     sp1.SetBiso(8*pi*pi*0.003)
     sp2 = ScatteringPowerAtom("O", "O")
     sp2.SetBiso(8*pi*pi*0.003)
+    crystal.AddScatteringPower(sp1)
+    crystal.AddScatteringPower(sp2)
 
     m = MakeOctahedron(crystal, "MnO6", sp1, sp2, 0.5*a)
 
