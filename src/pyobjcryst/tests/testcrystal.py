@@ -66,8 +66,8 @@ class TestCrystal(unittest.TestCase):
 
         # You can add scatterers with the same name. That should be a no-no.
         sp2, atom2 = makeScatterer()
-        c.AddScatterer(atom2)
         c.AddScatteringPower(sp2)
+        c.AddScatterer(atom2)
 
         # These act according to the library. You can try to remove an object
         # that is not in the crystal, and it will gladly do nothing for you.
