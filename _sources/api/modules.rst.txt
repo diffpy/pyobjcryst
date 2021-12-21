@@ -29,6 +29,14 @@ pyobjcryst.crystal module
     :undoc-members:
     :show-inheritance:
 
+pyobjcryst.diffractiondatasinglecrystal module
+----------------------------------------------
+
+.. automodule:: pyobjcryst.diffractiondatasinglecrystal
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pyobjcryst.general module
 -------------------------
 
@@ -37,10 +45,34 @@ pyobjcryst.general module
     :undoc-members:
     :show-inheritance:
 
+pyobjcryst.globaloptim module
+-----------------------------
+
+.. automodule:: pyobjcryst.globaloptim
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyobjcryst.indexing module
+--------------------------
+
+.. automodule:: pyobjcryst.indexing
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pyobjcryst.io module
 --------------------
 
 .. automodule:: pyobjcryst.io
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyobjcryst.lsq module
+---------------------
+
+.. automodule:: pyobjcryst.lsq
     :members:
     :undoc-members:
     :show-inheritance:
@@ -61,6 +93,22 @@ pyobjcryst.polyhedron module
     :undoc-members:
     :show-inheritance:
 
+pyobjcryst.powderpattern module
+-------------------------------
+
+.. automodule:: pyobjcryst.powderpattern
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyobjcryst.radiation module
+---------------------------
+
+.. automodule:: pyobjcryst.radiation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pyobjcryst.refinableobj module
 ------------------------------
 
@@ -69,10 +117,26 @@ pyobjcryst.refinableobj module
     :undoc-members:
     :show-inheritance:
 
+pyobjcryst.reflectionprofile module
+-----------------------------------
+
+.. automodule:: pyobjcryst.reflectionprofile
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pyobjcryst.scatterer module
 ---------------------------
 
 .. automodule:: pyobjcryst.scatterer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyobjcryst.scatteringdata module
+--------------------------------
+
+.. automodule:: pyobjcryst.scatteringdata
     :members:
     :undoc-members:
     :show-inheritance:

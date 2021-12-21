@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Example notebooks &#8212; pyobjcryst 2.2.1.post4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="pyobjcryst API" href="../api/modules.html" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <link rel="shortcut icon" type="image/png" href="../_static/favicon.png" />
+    <meta name="viewport" content="width=device-width,initial-scale=0.8">
+    
+    
+
+  </head><body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="responsive-menu"><a href="#sidebar-anchor" title="Navigation">&#9776;</a></li>
+        <li><a href="../index.html">pyobjcryst 2.2.1.post4 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="example-notebooks">
+<h1>Example notebooks<a class="headerlink" href="#example-notebooks" title="Permalink to this headline">¶</a></h1>
+<p>Several examples available in the pyobjcryst repository:</p>
+<section id="d-crystal-structure-display">
+<h2><a class="reference internal" href="crystal_3d_widget.html"><span class="doc">3D Crystal structure display</span></a><a class="headerlink" href="#d-crystal-structure-display" title="Permalink to this headline">¶</a></h2>
+<p>Example of importing a CIF file from a file or the
+<a class="reference external" href="http://crystallography.net/cod/">Crystallography Open Database</a>
+and displaying it in a widget using
+<a class="reference external" href="https://3dmol.csb.pitt.edu/">3dmol.js</a>.</p>
+</section>
+<section id="solving-the-cimetidine-structure-from-its-powder-pattern">
+<h2><a class="reference internal" href="structure-solution-powder-cimetidine.html"><span class="doc">Solving the cimetidine structure from its powder pattern</span></a><a class="headerlink" href="#solving-the-cimetidine-structure-from-its-powder-pattern" title="Permalink to this headline">¶</a></h2>
+<p>In this example, a powder pattern is used to solve the crystal
+structure of Cimetidine. This covers all the steps: loading the
+data, indexing the pattern (determining the unit cell), finding
+the spacegroup, profile fitting, and solving the structure
+using a global optimisation algorithm.</p>
+</section>
+<section id="solving-the-pbso4-structure-from-its-x-and-n-powder-patterns">
+<h2><a class="reference internal" href="structure-solution-powder-pbso4.html"><span class="doc">Solving the PbSO4 structure from its X and N powder patterns</span></a><a class="headerlink" href="#solving-the-pbso4-structure-from-its-x-and-n-powder-patterns" title="Permalink to this headline">¶</a></h2>
+<p>In this example, two powder patterns (X-ray and neutron) are used to solve
+the crystal structure of PbSO4. This covers all the steps: loading the
+data, indexing the pattern (determining the unit cell), finding
+the spacegroup, profile fitting for the two patterns, and solving the
+structure using a global optimisation algorithm.</p>
+</section>
+<section id="meta-structure-solution-using-multi-processing">
+<h2><a class="reference internal" href="structure-solution-multiprocessing.html"><span class="doc">Meta-structure solution using multi-processing</span></a><a class="headerlink" href="#meta-structure-solution-using-multi-processing" title="Permalink to this headline">¶</a></h2>
+<p>This is a more advanced example where 8 different spacegroups are
+tested in parallel to determine which one is correct. The solutions
+can then be compared and displayed individually.</p>
+</section>
+<section id="quantitative-phase-analysis-qpa">
+<h2><a class="reference internal" href="Quantitative-phase-analysis.html"><span class="doc">Quantitative phase analysis (QPA)</span></a><a class="headerlink" href="#quantitative-phase-analysis-qpa" title="Permalink to this headline">¶</a></h2>
+<p>Example of QPA based on the data available from the <a class="reference external" href="https://www.iucr.org/__data/iucr/powder/QARR/samples.htm">1999 Round Robin</a>,
+in the case where all present crystalline structures are known
+and there is no preferred orientation.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+    <a id="sidebar-anchor"></a>
+    
+
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Example notebooks</a><ul>
+<li><a class="reference internal" href="#d-crystal-structure-display"><span class="xref std std-doc">3D Crystal structure display</span></a></li>
+<li><a class="reference internal" href="#solving-the-cimetidine-structure-from-its-powder-pattern"><span class="xref std std-doc">Solving the cimetidine structure from its powder pattern</span></a></li>
+<li><a class="reference internal" href="#solving-the-pbso4-structure-from-its-x-and-n-powder-patterns"><span class="xref std std-doc">Solving the PbSO4 structure from its X and N powder patterns</span></a></li>
+<li><a class="reference internal" href="#meta-structure-solution-using-multi-processing"><span class="xref std std-doc">Meta-structure solution using multi-processing</span></a></li>
+<li><a class="reference internal" href="#quantitative-phase-analysis-qpa"><span class="xref std std-doc">Quantitative phase analysis (QPA)</span></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../api/modules.html"
+                        title="previous chapter">pyobjcryst API</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/examples/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../api/modules.html" title="pyobjcryst API"
+             accesskey="P">previous</a> |</li>
+      </ul>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Brookhaven National Laboratory.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+  </body>
+</html>

@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pyobjcryst documentation &#8212; pyobjcryst 2.1.0 documentation</title>
-    <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>pyobjcryst documentation &#8212; pyobjcryst 2.2.1.post4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
-    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <script src="_static/sidebar.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -30,7 +31,7 @@
       <h3>Navigation</h3>
       <ul>
         <li class="responsive-menu"><a href="#sidebar-anchor" title="Navigation">&#9776;</a></li>
-        <li><a href="#">pyobjcryst 2.1.0 documentation</a> &#187;</li> 
+        <li><a href="#">pyobjcryst 2.2.1.post4 documentation</a> &#187;</li> 
       </ul>
     </div>
     
@@ -41,48 +42,89 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="pyobjcryst-documentation">
+  <section id="pyobjcryst-documentation">
 <h1>pyobjcryst documentation<a class="headerlink" href="#pyobjcryst-documentation" title="Permalink to this headline">¶</a></h1>
 <p>pyobjcryst - Python bindings to the ObjCryst++ Object-Oriented
 Crystallographic Library</p>
 <div class="line-block">
-<div class="line">Software version 2.1.0.</div>
-<div class="line">Last updated March 11, 2019.</div>
+<div class="line">Software version 2.2.1.post4.</div>
+<div class="line">Last updated décembre 21, 2021.</div>
 </div>
-<div class="section" id="authors">
+<section id="authors">
 <h2>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h2>
-<p>pyobjcryst was written as part of the <a class="reference external" href="http://danse.us/">DANSE</a> open-source project by
+<p><cite>pyobjcryst</cite> was written as part of the <a class="reference external" href="http://danse.us/">DANSE</a> open-source project by
 Christopher Farrow, Pavol Juhás, and Simon J.L. Billinge.
 The sources are now maintained as a part of the DiffPy-CMI complex
 modeling initiative at the Brookhaven National Laboratory.</p>
+<p>Further developments including the ability to index and refine
+powder patterns, solve and display crystal structures, using the
+global optimisation and least squares algorithms (see the
+<a class="reference internal" href="examples/index.html"><span class="doc">Example notebooks</span></a>) are provided by Vincent Favre-Nicolin (ESRF).</p>
 <p>For a complete list of contributors, see
-<a class="reference external" href="https://github.com/diffpy/pyobjcryst/graphs/contributors">https://github.com/diffpy/pyobjcryst/graphs/contributors</a>.</p>
-</div>
-<div class="section" id="installation">
+<a class="reference external" href="https://github.com/diffpy/pyobjcryst/graphs/contributors">https://github.com/diffpy/pyobjcryst/graphs/contributors</a> and
+<a class="reference external" href="https://github.com/diffpy/libobjcryst/graphs/contributors">https://github.com/diffpy/libobjcryst/graphs/contributors</a>.</p>
+</section>
+<section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p><cite>pyobjcryst</cite> and <cite>libobjcryst</cite> conda packages can be easily installed under
+Linux and macOS using channel <cite>conda-forge</cite> or <cite>diffpy</cite> channels,
+e.g.:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>conda install -c diffpy libobjcryst pyobjcryst</cite></p></li>
+<li><p><cite>conda install -c conda-forge libobjcryst pyobjcryst</cite></p></li>
+</ul>
+</div></blockquote>
 <p>See the <a class="reference external" href="https://github.com/diffpy/pyobjcryst#requirements">README</a>
-file included with the distribution.</p>
-</div>
-<div class="section" id="table-of-contents">
+file included with the distribution for more details.</p>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p><cite>pyobjcryst</cite> can be used in different ways:</p>
+<ul>
+<li><p><strong>as a backend library</strong> to manage crystal structures description in an application
+like <a class="reference external" href="https://www.diffpy.org/products/diffpycmi/index.html">DiffPy-CMI</a></p></li>
+<li><p><strong>in python scripts or notebooks</strong>, allowing to:</p>
+<ul class="simple">
+<li><p>display crystal structures,</p></li>
+<li><p>index and refine powder diffraction patterns</p></li>
+<li><p>solve crystal structures from diffraction data using global optimisation algorithms</p></li>
+<li><p>etc..</p></li>
+</ul>
+<p>The functionality is similar to what is available in <a class="reference external" href="http://fox.vincefn.net">Fox</a>.
+See the <a class="reference internal" href="examples/index.html"><span class="doc">Example notebooks</span></a>:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="examples/crystal_3d_widget.html"><span class="doc">3D Crystal structure display</span></a></p></li>
+<li><p><a class="reference internal" href="examples/structure-solution-powder-cimetidine.html"><span class="doc">Solving the cimetidine structure from its powder pattern</span></a></p></li>
+<li><p><a class="reference internal" href="examples/structure-solution-powder-pbso4.html"><span class="doc">Solving the PbSO4 structure from its X and N powder patterns</span></a></p></li>
+<li><p><a class="reference internal" href="examples/structure-solution-multiprocessing.html"><span class="doc">Meta-structure solution using multi-processing</span></a></p></li>
+<li><p><a class="reference internal" href="examples/Quantitative-phase-analysis.html"><span class="doc">Quantitative phase analysis (QPA)</span></a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="table-of-contents">
 <h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/modules.html">pyobjcryst API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Example notebooks</a></li>
 </ul>
 </div>
-</div>
-<div class="section" id="indices">
+</section>
+<section id="indices">
 <h2>Indices<a class="headerlink" href="#indices" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -96,6 +138,7 @@ file included with the distribution.</p>
 <li><a class="reference internal" href="#">pyobjcryst documentation</a><ul>
 <li><a class="reference internal" href="#authors">Authors</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#table-of-contents">Table of contents</a></li>
 <li><a class="reference internal" href="#indices">Indices</a></li>
 </ul>
@@ -113,17 +156,15 @@ file included with the distribution.</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -144,8 +185,8 @@ file included with the distribution.</p>
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2019, Brookhaven National Laboratory.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+        &#169; Copyright 2021, Brookhaven National Laboratory.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
     </div>
   </body>
 </html>

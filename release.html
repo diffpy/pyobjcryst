@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Release notes &#8212; pyobjcryst 2.1.0 documentation</title>
-    <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Release notes &#8212; pyobjcryst 2.2.1.post4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
-    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <script src="_static/sidebar.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -31,7 +32,7 @@
       <h3>Navigation</h3>
       <ul>
         <li class="responsive-menu"><a href="#sidebar-anchor" title="Navigation">&#9776;</a></li>
-        <li><a href="index.html">pyobjcryst 2.1.0 documentation</a> &#187;</li> 
+        <li><a href="index.html">pyobjcryst 2.2.1.post4 documentation</a> &#187;</li> 
       </ul>
     </div>
     
@@ -42,55 +43,84 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="release-notes">
+  <section id="release-notes">
 <span id="index-0"></span><h1>Release notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="version-2-1-0-2019-03-11">
+<section id="version-2-2-1-2021-11-28">
+<h2>Version 2.2.1 – 2021-11-28<a class="headerlink" href="#version-2-2-1-2021-11-28" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add quantitative phase analysis with PowderPattern.qpa(), including
+an example notebook using the QPA Round-Robin data.</p></li>
+<li><p>Correct import of urllib.request.urllopen() when loading CIF or z-matrix
+files from http urls.</p></li>
+<li><p>Fix blank line javascript output when updating the Crystal 3D view</p></li>
+<li><p>Add RefinableObj.xml() to directly get the XMLOutput() as a string</p></li>
+<li><p>Add example notebooks to the sphinx-generated html documentation</p></li>
+<li><p>Fix issue when using Crystal.XMLInput() for a non-empty structure.
+Existing scattering power will be re-used when possible, and otherwise
+not deleted anymore (which could lead to crashes).</p></li>
+</ul>
+</section>
+<section id="version-2-2-0-2021-06-08">
+<h2>Version 2.2.0 – 2021-06-08<a class="headerlink" href="#version-2-2-0-2021-06-08" title="Permalink to this headline">¶</a></h2>
+<p>Notable differences from version 2.1.0.</p>
+<ul class="simple">
+<li><p>Add access to Radiation class &amp; functions to change RadiationType,
+wavelength in PowderPattern and ScatteringData (and hence
+DiffractionDataSingleCrystal) classes.</p></li>
+<li><p>Fix the custodian_ward when creating a PowderPatternDiffraction:
+PowderPatternDiffraction must persist while PowderPattern exists, and
+Crystal must persist while PowderPatternDiffraction exists.</p></li>
+<li><p>Add 3D Crystal viewer <code class="docutils literal notranslate"><span class="pre">pyobjcryst.crystal.Crystal.widget_3d</span></code>.</p></li>
+</ul>
+</section>
+<section id="version-2-1-0-2019-03-11">
 <h2>Version 2.1.0 – 2019-03-11<a class="headerlink" href="#version-2-1-0-2019-03-11" title="Permalink to this headline">¶</a></h2>
 <p>Notable differences from version 2.0.1.</p>
-<div class="section" id="added">
+<section id="added">
 <h3>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Support for Python 3.7.</li>
-<li>Validation of compiler options from <code class="docutils literal notranslate"><span class="pre">python-config</span></code>.</li>
-<li>Make scons scripts compatible with Python 3 and Python 2.</li>
-<li>Support np.array arguments for <code class="docutils literal notranslate"><span class="pre">SetPowderPatternX</span></code>, <code class="docutils literal notranslate"><span class="pre">SetPowderPatternObs</span></code>.</li>
-<li>Declare compatible version requirements for client Anaconda packages.</li>
-<li>Facility for silencing spurious console output from libobjcryst.</li>
+<li><p>Support for Python 3.7.</p></li>
+<li><p>Validation of compiler options from <code class="docutils literal notranslate"><span class="pre">python-config</span></code>.</p></li>
+<li><p>Make scons scripts compatible with Python 3 and Python 2.</p></li>
+<li><p>Support np.array arguments for <code class="docutils literal notranslate"><span class="pre">SetPowderPatternX</span></code>, <code class="docutils literal notranslate"><span class="pre">SetPowderPatternObs</span></code>.</p></li>
+<li><p>Declare compatible version requirements for client Anaconda packages.</p></li>
+<li><p>Facility for silencing spurious console output from libobjcryst.</p></li>
 </ul>
-</div>
-<div class="section" id="changed">
+</section>
+<section id="changed">
 <h3>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Build Anaconda package with Anaconda C++ compiler.</li>
-<li>Update to libobjcryst 2017.2.x.</li>
+<li><p>Build Anaconda package with Anaconda C++ compiler.</p></li>
+<li><p>Update to libobjcryst 2017.2.x.</p></li>
 </ul>
-</div>
-<div class="section" id="deprecated">
+</section>
+<section id="deprecated">
 <h3>Deprecated<a class="headerlink" href="#deprecated" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Variable <code class="docutils literal notranslate"><span class="pre">__gitsha__</span></code> in the <code class="docutils literal notranslate"><span class="pre">version</span></code> module which was renamed
-to <code class="docutils literal notranslate"><span class="pre">__git_commit__</span></code>.</li>
+<li><p>Variable <code class="docutils literal notranslate"><span class="pre">__gitsha__</span></code> in the <code class="docutils literal notranslate"><span class="pre">version</span></code> module which was renamed
+to <code class="docutils literal notranslate"><span class="pre">__git_commit__</span></code>.</p></li>
 </ul>
-</div>
-<div class="section" id="removed">
+</section>
+<section id="removed">
 <h3>Removed<a class="headerlink" href="#removed" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Support for Python 3.4.</li>
+<li><p>Support for Python 3.4.</p></li>
 </ul>
-</div>
-<div class="section" id="fixed">
+</section>
+<section id="fixed">
 <h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Ambiguous use of boost::python classes and functions.</li>
-<li>Name suffix resolution of <code class="docutils literal notranslate"><span class="pre">boost_python</span></code> shared library.</li>
-<li><code class="docutils literal notranslate"><span class="pre">SetPowderPatternX</span></code> crash for zero-length argument.</li>
-<li>Incorrectly doubled return value from <code class="docutils literal notranslate"><span class="pre">GetInversionCenter</span></code>.</li>
+<li><p>Ambiguous use of boost::python classes and functions.</p></li>
+<li><p>Name suffix resolution of <code class="docutils literal notranslate"><span class="pre">boost_python</span></code> shared library.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetPowderPatternX</span></code> crash for zero-length argument.</p></li>
+<li><p>Incorrectly doubled return value from <code class="docutils literal notranslate"><span class="pre">GetInversionCenter</span></code>.</p></li>
 </ul>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -102,6 +132,8 @@ to <code class="docutils literal notranslate"><span class="pre">__git_commit__</
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Release notes</a><ul>
+<li><a class="reference internal" href="#version-2-2-1-2021-11-28">Version 2.2.1 – 2021-11-28</a></li>
+<li><a class="reference internal" href="#version-2-2-0-2021-06-08">Version 2.2.0 – 2021-06-08</a></li>
 <li><a class="reference internal" href="#version-2-1-0-2019-03-11">Version 2.1.0 – 2019-03-11</a><ul>
 <li><a class="reference internal" href="#added">Added</a></li>
 <li><a class="reference internal" href="#changed">Changed</a></li>
@@ -128,17 +160,15 @@ to <code class="docutils literal notranslate"><span class="pre">__git_commit__</
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -162,8 +192,8 @@ to <code class="docutils literal notranslate"><span class="pre">__git_commit__</
     </div>
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2019, Brookhaven National Laboratory.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+        &#169; Copyright 2021, Brookhaven National Laboratory.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
     </div>
   </body>
 </html>
