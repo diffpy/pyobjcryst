@@ -39,7 +39,7 @@ tested in parallel to determine which one is correct. The solutions
 can then be compared and displayed individually.
 
 :doc:`Quantitative phase analysis (QPA) <Quantitative-phase-analysis>`
-______________________________________________________________________
+======================================================================
 
 Example of QPA based on the data available from the `1999 Round Robin
 <https://www.iucr.org/__data/iucr/powder/QARR/samples.htm>`_,

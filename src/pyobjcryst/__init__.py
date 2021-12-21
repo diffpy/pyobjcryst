@@ -17,7 +17,7 @@
 
 Objects are wrapped according to their header file in the ObjCryst source.
 
-See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
+See the online ObjCryst++ documentation (https://vincefn.net/ObjCryst/).
 
 Modules
 
