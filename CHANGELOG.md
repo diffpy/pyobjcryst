@@ -1,5 +1,13 @@
 # Release notes
 
+## Version X.Y.Z
+
+### Fixed
+
+- Fix access to PRISM_TETRAGONAL_DICAP, PRISM_TRIGONAL, 
+  ICOSAHEDRON and TRIANGLE_PLANE.
+
+
 ## Version 2.2.1 -- 2021-11-28
 
 - Add quantitative phase analysis with PowderPattern.qpa(), including
