@@ -115,7 +115,7 @@ html_theme_path = [sphinx_py3doc_enhanced_theme.get_html_theme_path()]
 html_theme_options = {
     'collapsiblesidebar': 'true',
     'navigation_with_keys': 'true',
-    'body_min_width': '400px',
+    'body_min_width': '40%',
     'body_max_width': '800px',
 }
 

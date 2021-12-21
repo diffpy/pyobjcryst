@@ -58,7 +58,7 @@ Usage
   * etc..
 
   The functionality is similar to what is available in `Fox <http://fox.vincefn.net>`_.
-  See the ** :doc:`examples/index` **:
+  See the :doc:`examples/index`:
 
   * :doc:`3D Crystal structure display <examples/crystal_3d_widget>`
   * :doc:`Solving the cimetidine structure from its powder pattern <examples/structure-solution-powder-cimetidine>`
