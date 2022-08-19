@@ -5,6 +5,7 @@
 import sys, os
 import time
 import sphinx_py3doc_enhanced_theme
+
 # Requires sphinx >= 0.6
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -50,6 +51,7 @@ copyright = '%Y, Brookhaven National Laboratory'
 # built documents.
 sys.path.insert(0, os.path.abspath('../../..'))
 from setup import versiondata
+
 fullversion = versiondata.get('DEFAULT', 'version')
 # The short X.Y version.
 version = ''.join(fullversion.split('.post')[:1])
@@ -111,8 +113,10 @@ html_theme_path = [sphinx_py3doc_enhanced_theme.get_html_theme_path()]
 # documentation.
 #
 html_theme_options = {
-    'collapsiblesidebar' : 'true',
-    'navigation_with_keys' : 'true',
+    'collapsiblesidebar': 'true',
+    'navigation_with_keys': 'true',
+    'body_min_width': '40%',
+    'body_max_width': '800px',
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -183,18 +187,17 @@ html_split_index = True
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'pyobjcrystdoc'
 
-
 # -- Options for LaTeX output --------------------------------------------------
 
 latex_elements = {
-# The paper size ('letterpaper' or 'a4paper').
-# 'papersize': 'letterpaper',
+    # The paper size ('letterpaper' or 'a4paper').
+    # 'papersize': 'letterpaper',
 
-# The font size ('10pt', '11pt' or '12pt').
-# 'pointsize': '10pt',
+    # The font size ('10pt', '11pt' or '12pt').
+    # 'pointsize': '10pt',
 
-# Additional stuff for the LaTeX preamble.
-# 'preamble': '',
+    # Additional stuff for the LaTeX preamble.
+    # 'preamble': '',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples

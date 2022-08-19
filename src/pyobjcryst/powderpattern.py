@@ -121,7 +121,7 @@ class PowderPattern(PowderPattern_objcryst):
             plt.figure(figsize=figsize)
         plt.plot(x, obs, 'k', label='obs', linewidth=1)
         plt.plot(x, calc, 'r', label='calc', linewidth=1)
-        m = self.GetMaxSinThetaOvLambda() * self.GetWavelength()
+        m = min(1, self.GetMaxSinThetaOvLambda() * self.GetWavelength())
         mtth = np.rad2deg(np.arcsin(m)) * 2
         if plot_diff:
             diff = calc - obs - obs.max() / 20
@@ -191,8 +191,7 @@ class PowderPattern(PowderPattern_objcryst):
         calc = self.GetPowderPatternCalc()
         x = np.rad2deg(self.GetPowderPatternX())
         # Clear previous text (assumes only hkl were printed)
-        plt.gca().texts = []
-        iphase = 0
+        plt.gca().texts.clear()
         for ic in range(self.GetNbPowderPatternComponent()):
             c = self.GetPowderPatternComponent(ic)
             if isinstance(c, PowderPatternDiffraction) is False:
