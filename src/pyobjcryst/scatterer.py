@@ -29,7 +29,6 @@ Changes from ObjCryst::Scatterer
 - Methods related to visualization are not exposed.
 """
 
-__all__ = ["Scatterer", "gScattererRegistry"]
+__all__ = ["Scatterer"]
 
 from pyobjcryst._pyobjcryst import Scatterer
-from pyobjcryst._pyobjcryst import gScattererRegistry

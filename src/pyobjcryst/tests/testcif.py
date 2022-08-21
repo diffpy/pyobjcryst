@@ -18,7 +18,8 @@
 import unittest
 import gc
 
-from pyobjcryst.crystal import CreateCrystalFromCIF, gCrystalRegistry
+from pyobjcryst.crystal import CreateCrystalFromCIF
+from pyobjcryst.globals import gCrystalRegistry
 from pyobjcryst.diffractiondatasinglecrystal import create_singlecrystaldata_from_cif
 from numpy import pi
 from pyobjcryst.tests.pyobjcrysttestutils import loadcifdata, datafile

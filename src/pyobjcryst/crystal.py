@@ -30,16 +30,17 @@ Other Changes
 """
 
 __all__ = ["Crystal", "BumpMergePar", "CreateCrystalFromCIF",
-           "create_crystal_from_cif", "gCrystalRegistry"]
+           "create_crystal_from_cif"]
 
 import warnings
+from types import MethodType
 from urllib.request import urlopen
 from multiprocessing import current_process
 import numpy as np
 from pyobjcryst._pyobjcryst import Crystal as Crystal_orig
 from pyobjcryst._pyobjcryst import BumpMergePar
 from pyobjcryst._pyobjcryst import CreateCrystalFromCIF as CreateCrystalFromCIF_orig
-from pyobjcryst._pyobjcryst import gCrystalRegistry
+from .refinableobj import wrap_boost_refinableobjregistry
 
 try:
     import py3Dmol
@@ -232,7 +233,7 @@ class Crystal(Crystal_orig):
                                           'symbol': symbol, 'bonds': [], 'bondOrder': []}
                 for bond in scatt.IterBond():
                     o = bond.BondOrder
-                    if o == 0:
+                    if o < 1:
                         o = 1
                     i1 = bond.GetAtom1().int_ptr()
                     i2 = bond.GetAtom2().int_ptr()
@@ -629,6 +630,18 @@ def create_crystal_from_cif(file, oneScatteringPowerPerElement=False,
             c.ImportCrystalFromCIF(file, oneScatteringPowerPerElement, connectAtoms)
     return c
 
+
+def wrap_boost_crystal(c: Crystal):
+    """
+    This function is used to wrap a C++ Object by adding the python methods to it.
+
+    :param c: the C++ created object to which the python function must be added.
+    """
+    if '_display_cif' not in dir(c):
+        for func in ['CIFOutput', 'UpdateDisplay', 'disable_display_update', 'enable_display_update',
+                     '_display_cif', '_display_list', 'display_3d', 'widget_3d', '_widget_update',
+                     '_widget_on_change_parameter']:
+            exec("c.%s = MethodType(Crystal.%s, c)" % (func, func))
 
 # PEP8, functions should be lowercase
 CreateCrystalFromCIF = create_crystal_from_cif

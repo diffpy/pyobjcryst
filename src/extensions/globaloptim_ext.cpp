@@ -19,6 +19,7 @@
 *****************************************************************************/
 
 #include <boost/python/class.hpp>
+#include <boost/python/def.hpp>
 #include <boost/python/copy_const_reference.hpp>
 #include <boost/python/enum.hpp>
 
@@ -65,28 +66,28 @@ class MonteCarloObjWrap: public MonteCarloObj, public wrapper<MonteCarloObj>
 
 };
 
-void run_optimize(MonteCarloObjWrap& obj, long nbSteps, const bool silent,
+void run_optimize(MonteCarloObj& obj, long nbSteps, const bool silent,
         const double finalcost, const double maxTime)
 {
     CaptureStdOut gag;
     obj.Optimize(nbSteps, silent, finalcost, maxTime);
 }
 
-void multirun_optimize(MonteCarloObjWrap& obj, long nbCycle, long nbSteps,
+void multirun_optimize(MonteCarloObj& obj, long nbCycle, long nbSteps,
         const bool silent, const double finalcost, const double maxTime)
 {
     CaptureStdOut gag;
     obj.MultiRunOptimize(nbCycle, nbSteps, silent, finalcost, maxTime);
 }
 
-void mc_sa(MonteCarloObjWrap& obj, long nbSteps, const bool silent,
+void mc_sa(MonteCarloObj& obj, long nbSteps, const bool silent,
         const double finalcost, const double maxTime)
 {
     CaptureStdOut gag;
     obj.RunSimulatedAnnealing(nbSteps, silent, finalcost, maxTime);
 }
 
-void mc_pt(MonteCarloObjWrap& obj, long nbSteps, const bool silent,
+void mc_pt(MonteCarloObj& obj, long nbSteps, const bool silent,
         const double finalcost, const double maxTime)
 {
     CaptureStdOut gag;
@@ -105,6 +106,9 @@ void mc_random_lsq(MonteCarloObjWrap& obj, long nbCycle)
 
 void wrap_globaloptim()
 {
+    // Global object registry
+    scope().attr("gOptimizationObjRegistry") = boost::cref(gOptimizationObjRegistry);
+
     enum_<AnnealingSchedule>("AnnealingSchedule")
         .value("CONSTANT", ANNEALING_CONSTANT)
         .value("BOLTZMANN", ANNEALING_BOLTZMANN)
@@ -122,7 +126,10 @@ void wrap_globaloptim()
         .value("PARALLEL_TEMPERING_MULTI", GLOBAL_OPTIM_PARALLEL_TEMPERING_MULTI)
         ;
 
-    class_<MonteCarloObjWrap>("MonteCarlo")
+    class_<MonteCarloObjWrap, boost::noncopyable>("MonteCarlo")
+        .def(init<>())
+        .def(init<const MonteCarloObj&>(bp::arg("old")))
+        .def(init<const std::string&>(bp::arg("name")))
         //////////////// OptimizationObj methods
         .def("RandomizeStartingConfig", &MonteCarloObj::RandomizeStartingConfig)
         .def("Optimize", &run_optimize,
@@ -161,9 +168,9 @@ void wrap_globaloptim()
         .def("GetFullRefinableObj", &MonteCarloObj::GetFullRefinableObj,
             bp::arg("rebuild")=true,
             with_custodian_and_ward_postcall<1,0, return_internal_reference<> >())
-        .def("GetName", &MonteCarloObj::GetName,
-            return_value_policy<copy_const_reference>())
+        .def("GetName", &MonteCarloObj::GetName, return_value_policy<copy_const_reference>())
         .def("SetName", &MonteCarloObj::SetName)
+        .def("GetClassName", &MonteCarloObj::GetClassName)
         .def("Print", &MonteCarloObj::Print, &MonteCarloObj::Print)
         .def("RestoreBestConfiguration", &MonteCarloObj::RestoreBestConfiguration)
         .def("GetNbParamSet", &MonteCarloObj::GetNbParamSet)

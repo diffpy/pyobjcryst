@@ -82,8 +82,9 @@ __all__ = ["RefinableObjClock", "RefinableObj", "RefObjOpt",
            "refpartype_scattdata_corr_pos", "refpartype_scattdata_radiation",
            "refpartype_scattdata_radiation_wavelength", "refpartype_scattpow",
            "refpartype_scattpow_temperature", "refpartype_unitcell",
-           "refpartype_unitcell_length", "refpartype_unitcell_angle", "gRefinableObjRegistry"]
+           "refpartype_unitcell_length", "refpartype_unitcell_angle"]
 
+from types import MethodType
 from pyobjcryst._pyobjcryst import RefinableObjClock
 from pyobjcryst._pyobjcryst import RefinableObj
 from pyobjcryst._pyobjcryst import RefObjOpt
@@ -127,4 +128,36 @@ from pyobjcryst._pyobjcryst import refpartype_scattpow_temperature
 from pyobjcryst._pyobjcryst import refpartype_unitcell
 from pyobjcryst._pyobjcryst import refpartype_unitcell_length
 from pyobjcryst._pyobjcryst import refpartype_unitcell_angle
-from pyobjcryst._pyobjcryst import gRefinableObjRegistry
+
+
+class ObjRegistryWrapper(RefinableObjRegistry):
+    """
+    Wrapper class with a GetObj() method which can correctly wrap C++ objects with
+    the python methods. This is only needed when the objects have been created
+    from C++, e.g. when loading an XML file.
+    """
+
+    def GetObj(self, i):
+        o = self._GetObj(i)
+        if o.GetClassName() == 'Crystal':
+            from .crystal import wrap_boost_crystal
+            wrap_boost_crystal(o)
+        elif o.GetClassName() == 'PowderPattern':
+            from .powderpattern import wrap_boost_powderpattern
+            wrap_boost_powderpattern(o)
+        elif o.GetClassName() == 'MonteCarloObj':
+            from .globaloptim import wrap_boost_montecarlo
+            wrap_boost_montecarlo(o)
+        return o
+
+
+def wrap_boost_refinableobjregistry(o):
+    """
+    This function is used to wrap a C++ Object by adding the python methods to it.
+
+    :param c: the C++ created object to which the python function must be added.
+    """
+    # TODO: moving the original function is not very pretty. Is there a better way ?
+    if '_GetObj' not in dir(o):
+        o._GetObj = o.GetObj
+        o.GetObj = MethodType(ObjRegistryWrapper.GetObj, o)

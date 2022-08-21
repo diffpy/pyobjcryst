@@ -25,18 +25,19 @@ import numpy as np
 __all__ = ["PowderPattern", "CreatePowderPatternFromCIF",
            "PowderPatternBackground", "PowderPatternComponent",
            "PowderPatternDiffraction", "ReflectionProfileType",
-           "gPowderPatternRegistry", "SpaceGroupExplorer"]
+           "SpaceGroupExplorer"]
 
+from types import MethodType
 from pyobjcryst._pyobjcryst import PowderPattern as PowderPattern_objcryst
 from pyobjcryst._pyobjcryst import CreatePowderPatternFromCIF as CreatePowderPatternFromCIF_orig
 from pyobjcryst._pyobjcryst import PowderPatternBackground
 from pyobjcryst._pyobjcryst import PowderPatternComponent
 from pyobjcryst._pyobjcryst import PowderPatternDiffraction
 from pyobjcryst._pyobjcryst import ReflectionProfileType
-from pyobjcryst._pyobjcryst import gPowderPatternRegistry
 from pyobjcryst._pyobjcryst import LSQ
 from pyobjcryst.refinableobj import refpartype_scattdata_background
 from pyobjcryst._pyobjcryst import SpaceGroupExplorer
+from pyobjcryst import ObjCrystException
 
 
 class PowderPattern(PowderPattern_objcryst):
@@ -91,7 +92,13 @@ class PowderPattern(PowderPattern_objcryst):
         """
         import matplotlib.pyplot as plt
         obs = self.GetPowderPatternObs()
-        calc = self.GetPowderPatternCalc()
+        try:
+            calc = self.GetPowderPatternCalc()
+        except ObjCrystException:
+            # TODO: when importing  objects from an XML file, the powder pattern does not compute
+            #  correctly, Prepare() needs to be called manually. Why ?
+            self.Prepare()
+            calc = self.GetPowderPatternCalc()
 
         if reset:
             self._plot_ylim = None
@@ -192,6 +199,7 @@ class PowderPattern(PowderPattern_objcryst):
         x = np.rad2deg(self.GetPowderPatternX())
         # Clear previous text (assumes only hkl were printed)
         plt.gca().texts.clear()
+        iphase = 0
         for ic in range(self.GetNbPowderPatternComponent()):
             c = self.GetPowderPatternComponent(ic)
             if isinstance(c, PowderPatternDiffraction) is False:
@@ -478,6 +486,31 @@ def create_powderpattern_from_cif(file):
         with open(file, 'rb') as cif:  # Make sure file object is closed
             return CreatePowderPatternFromCIF_orig(cif, p)
     return CreatePowderPatternFromCIF_orig(file, p)
+
+
+def wrap_boost_powderpattern(c: PowderPattern):
+    """
+    This function is used to wrap a C++ Object by adding the python methods to it.
+
+    :param c: the C++ created object to which the python function must be added.
+    """
+    if '_plot_fig' not in dir(c):
+        # Add attributes
+        c._plot_fig = None
+        c._plot_xlim = None
+        c._plot_ylim = None
+        c._plot_diff = False
+        c._plot_hkl = False
+        c._plot_hkl_fontsize = 6
+        c._plot_phase_labels = None
+        c._last_hkl_plot_xlim = None
+        c.evts = []
+        c._colour_phases = ["black", "blue", "green", "red", "brown", "olive",
+                            "cyan", "purple", "magenta", "salmon"]
+        for func in ['UpdateDisplay', 'disable_display_update', 'enable_display_update', 'plot',
+                     '_do_plot_hkl', 'quick_fit_profile', 'get_background', 'get_crystalline_components',
+                     '_on_mouse_event', '_on_draw_event', 'qpa']:
+            exec("c.%s = MethodType(PowderPattern.%s, c)" % (func, func))
 
 
 # PEP8

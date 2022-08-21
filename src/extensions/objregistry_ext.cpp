@@ -56,6 +56,20 @@ template <class T> bp::object getObjSlice(ObjRegistry<T>& o, bp::slice& s)
     return l[s];
 }
 
+// Get a MonteCarloObj by dynamic casting. This assumes that the caller (from python)
+// first checked the correct type e.g. using GetClassName()
+template <class T> MonteCarloObj& getObjCastMonteCarlo(ObjRegistry<T>& reg, const unsigned int i)
+{
+    T* obj = &reg.GetObj(i);
+    MonteCarloObj *p = dynamic_cast<MonteCarloObj*>(obj);
+    return *p;
+}
+
+// Explicit specialization for ZAtom which is not polymorphic
+template <> MonteCarloObj& getObjCastMonteCarlo(ObjRegistry<ZAtom>& reg, const unsigned int i)
+{
+    throw ObjCryst::ObjCrystException("Cannot cast a ZAtom to a MonteCarloObj");
+}
 
 
 /* Wrap all the class methods for the template class */
@@ -118,6 +132,9 @@ wrapClass(class_<ObjRegistry<T> > & c)
     // which will effectively invalidate the iterator...
     .def("__iter__", range<return_value_policy<reference_existing_object> >
                        (&ObjRegistry<T>::list_begin, &ObjRegistry<T>::list_end))
+    // Special casting functions so base class object registries can still
+    // provide access to the correct python object
+    .def("_getObjCastMonteCarlo", &getObjCastMonteCarlo<T>, return_internal_reference<>())
     ;
 }
 

@@ -31,10 +31,9 @@ __all__ = ["XMLCrystTag", "xml_cryst_file_load_all_object", "xml_cryst_file_save
 import gzip
 import os
 from pyobjcryst._pyobjcryst import XMLCrystTag, \
-    XMLCrystFileLoadAllObject as XMLCrystFileLoadAllObject_orig,\
+    XMLCrystFileLoadAllObject as XMLCrystFileLoadAllObject_orig, \
     XMLCrystFileSaveGlobal as XMLCrystFileSaveGlobal_orig
-
-from pyobjcryst._pyobjcryst import gTopRefinableObjRegistry
+from .globals import gTopRefinableObjRegistry
 
 
 def xml_cryst_file_load_all_object(file, verbose=False):
