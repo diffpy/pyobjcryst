@@ -15,7 +15,7 @@ which are tweaked to wrap pure C++ objects with the python methods.
 """
 
 __all__ = ["gCrystalRegistry","gPowderPatternRegistry", "gRefinableObjRegistry", "gScattererRegistry",
-           "gOptimizationObjRegistry", "gTopRefinableObjRegistry"]
+           "gOptimizationObjRegistry", "gTopRefinableObjRegistry", "gDiffractionDataSingleCrystalRegistry"]
 
 from .refinableobj import wrap_boost_refinableobjregistry
 from .globaloptim import wrap_boost_optimizationobjregistry
@@ -25,6 +25,7 @@ from pyobjcryst._pyobjcryst import gPowderPatternRegistry
 from pyobjcryst._pyobjcryst import gRefinableObjRegistry
 from pyobjcryst._pyobjcryst import gScattererRegistry
 from pyobjcryst._pyobjcryst import gTopRefinableObjRegistry
+from pyobjcryst._pyobjcryst import gDiffractionDataSingleCrystalRegistry
 
 # Wrap registries with python methods
 wrap_boost_refinableobjregistry(gCrystalRegistry)

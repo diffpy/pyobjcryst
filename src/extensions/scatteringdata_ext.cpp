@@ -23,6 +23,7 @@
 
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
+#include <boost/python/dict.hpp>
 #include <boost/python/copy_const_reference.hpp>
 
 #include <ObjCryst/ObjCryst/ScatteringData.h>
@@ -50,6 +51,24 @@ double _GetWavelength(ScatteringData& s)
 {
     return s.GetWavelength()(0);
 }
+
+bp::dict _GetScatteringFactor(ScatteringData& data)
+{
+
+    const std::map<const ScatteringPower*, CrystVector_REAL>& vsf
+        = data.GetScatteringFactor();
+
+    std::map<const ScatteringPower*, CrystVector_REAL>::const_iterator pos;
+    bp::dict d;
+
+    for(pos = vsf.begin(); pos != vsf.end(); ++pos)
+    {
+        bp::object key(bp::ptr(pos->first));
+        d[key] = pos->second;
+    }
+    return d;
+}
+
 
 }   // anonymous namespace
 
@@ -147,5 +166,7 @@ void wrap_scatteringdata()
         .def("GetClockNbReflBelowMaxSinThetaOvLambda",
                 &ScatteringData::GetClockNbReflBelowMaxSinThetaOvLambda,
                 return_value_policy<copy_const_reference>())
+        .def("GetScatteringFactor", &_GetScatteringFactor,
+            with_custodian_and_ward_postcall<1,0>())
         ;
 }
