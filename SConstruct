@@ -20,6 +20,7 @@ SCons construction environment can be customized in sconscript.local script.
 """
 
 import os
+from os.path import join as pjoin
 import re
 import subprocess
 import platform
@@ -101,66 +102,89 @@ xpython = os.path.realpath(env.WhereIs(env['python']))
 pybindir = os.path.dirname(xpython)
 pythonconfig = os.path.join(pybindir, pycfgname)
 
-# Verify python-config comes from the same path as the target python.
-xpythonconfig = env.WhereIs(pythonconfig)
-if os.path.dirname(xpython) != os.path.dirname(xpythonconfig):
-    print("Inconsistent paths of %r and %r" % (xpython, xpythonconfig))
-    Exit(1)
-# Process the python-config flags here.
-env.ParseConfig(pythonconfig + " --cflags")
-env.Replace(CCFLAGS=[f for f in env['CCFLAGS'] if good_python_flag(f)])
-env.Replace(CPPDEFINES='BOOST_ERROR_CODE_HEADER_ONLY')
-# the CPPPATH directories are checked by scons dependency scanner
-cpppath = getsyspaths('CPLUS_INCLUDE_PATH', 'CPATH')
-env.AppendUnique(CPPPATH=cpppath)
-# Insert LIBRARY_PATH explicitly because some compilers
-# ignore it in the system environment.
-env.PrependUnique(LIBPATH=getsyspaths('LIBRARY_PATH'))
-# Add shared libraries.
-# Note: ObjCryst and boost_python are added from SConscript.configure.
-
-fast_linkflags = ['-s']
-fast_shlinkflags = pyconfigvar('LDSHARED').split()[1:]
-
-# Specify minimum C++ standard.  Allow later standard from sconscript.local.
-# In case of multiple `-std` options the last option holds.
-env.PrependUnique(CXXFLAGS='-std=c++11', delete_existing=1)
-
-# Need this to avoid missing symbol with boost<1.66
-env.PrependUnique(CXXFLAGS=['-DBOOST_ERROR_CODE_HEADER_ONLY'])
-
-# Platform specific intricacies.
-if env['PLATFORM'] == 'darwin':
-    darwin_shlinkflags = [n for n in env['SHLINKFLAGS']
-            if n != '-dynamiclib']
-    env.Replace(SHLINKFLAGS=darwin_shlinkflags)
-    env.AppendUnique(SHLINKFLAGS=['-bundle'])
-    env.AppendUnique(SHLINKFLAGS=['-undefined', 'dynamic_lookup'])
-    fast_linkflags[:] = []
-
-# Compiler specific options
-if icpc:
-    # options for Intel C++ compiler on hpc dev-intel07
-    env.AppendUnique(CCFLAGS=['-w1', '-fp-model', 'precise'])
-    env.PrependUnique(LIBS=['imf'])
-    fast_optimflags = ['-fast', '-no-ipo']
+if platform.system().lower() == "windows":
+    # See https://scons.org/faq.html#Linking_on_Windows_gives_me_an_error
+    env['ENV']['TMP'] = os.environ['TMP']
+    # the CPPPATH directories are checked by scons dependency scanner
+    cpppath = getsyspaths('CPLUS_INCLUDE_PATH', 'CPATH')
+    env.AppendUnique(CPPPATH=cpppath)
+    # Insert LIBRARY_PATH explicitly because some compilers
+    # ignore it in the system environment.
+    env.PrependUnique(LIBPATH=getsyspaths('LIBRARY_PATH'))
+    if 'CONDA_PREFIX' in os.environ:
+        env.Append(CPPPATH=pjoin(os.environ['CONDA_PREFIX'],'include'))
+        env.Append(CPPPATH=pjoin(os.environ['CONDA_PREFIX'],'Library','include'))
+        # Windows conda library paths are a MESS ('lib', 'libs', 'Library\lib'...)
+        env.Append(LIBPATH=pjoin(os.environ['CONDA_PREFIX'],'Library','lib'))
+        env.Append(LIBPATH=pjoin(os.environ['CONDA_PREFIX'],'libs'))
+    # This disable automated versioned named e.g. libboost_date_time-vc142-mt-s-x64-1_73.lib
+    # so we can use conda-installed libraries
+    env.AppendUnique(CPPDEFINES='BOOST_ALL_NO_LIB')
+    # Prevent the generation of an import lib (.lib) in addition to the dll
+    # env.AppendUnique(no_import_lib=1)
+    env.PrependUnique(CCFLAGS=['/Ox', '/EHsc'])
+    env.AppendUnique(CPPDEFINES={'NDEBUG' : None})
 else:
-    # g++ options
-    env.AppendUnique(CCFLAGS=['-Wall'])
-    fast_optimflags = ['-ffast-math']
+    # Verify python-config comes from the same path as the target python.
+    xpythonconfig = env.WhereIs(pythonconfig)
+    if os.path.dirname(xpython) != os.path.dirname(xpythonconfig):
+        print("Inconsistent paths of %r and %r" % (xpython, xpythonconfig))
+        Exit(1)
+    # Process the python-config flags here.
+    env.ParseConfig(pythonconfig + " --cflags")
+    env.Replace(CCFLAGS=[f for f in env['CCFLAGS'] if good_python_flag(f)])
+    env.Replace(CPPDEFINES='BOOST_ERROR_CODE_HEADER_ONLY')
+    # the CPPPATH directories are checked by scons dependency scanner
+    cpppath = getsyspaths('CPLUS_INCLUDE_PATH', 'CPATH')
+    env.AppendUnique(CPPPATH=cpppath)
+    # Insert LIBRARY_PATH explicitly because some compilers
+    # ignore it in the system environment.
+    env.PrependUnique(LIBPATH=getsyspaths('LIBRARY_PATH'))
+    # Add shared libraries.
+    # Note: ObjCryst and boost_python are added from SConscript.configure.
 
-# Configure build variants
-if env['build'] == 'debug':
-    env.AppendUnique(CCFLAGS='-g')
-elif env['build'] == 'fast':
-    env.AppendUnique(CCFLAGS=['-O3'] + fast_optimflags)
-    env.AppendUnique(CPPDEFINES='NDEBUG')
-    env.AppendUnique(LINKFLAGS=fast_linkflags)
-    env.AppendUnique(SHLINKFLAGS=fast_shlinkflags)
+    fast_linkflags = ['-s']
+    fast_shlinkflags = pyconfigvar('LDSHARED').split()[1:]
 
-if env['profile']:
-    env.AppendUnique(CCFLAGS='-pg')
-    env.AppendUnique(LINKFLAGS='-pg')
+    # Specify minimum C++ standard.  Allow later standard from sconscript.local.
+    # In case of multiple `-std` options the last option holds.
+    env.PrependUnique(CXXFLAGS='-std=c++11', delete_existing=1)
+
+    # Need this to avoid missing symbol with boost<1.66
+    env.PrependUnique(CXXFLAGS=['-DBOOST_ERROR_CODE_HEADER_ONLY'])
+
+    # Platform specific intricacies.
+    if env['PLATFORM'] == 'darwin':
+        darwin_shlinkflags = [n for n in env['SHLINKFLAGS']
+                if n != '-dynamiclib']
+        env.Replace(SHLINKFLAGS=darwin_shlinkflags)
+        env.AppendUnique(SHLINKFLAGS=['-bundle'])
+        env.AppendUnique(SHLINKFLAGS=['-undefined', 'dynamic_lookup'])
+        fast_linkflags[:] = []
+
+    # Compiler specific options
+    if icpc:
+        # options for Intel C++ compiler on hpc dev-intel07
+        env.AppendUnique(CCFLAGS=['-w1', '-fp-model', 'precise'])
+        env.PrependUnique(LIBS=['imf'])
+        fast_optimflags = ['-fast', '-no-ipo']
+    else:
+        # g++ options
+        env.AppendUnique(CCFLAGS=['-Wall'])
+        fast_optimflags = ['-ffast-math']
+
+    # Configure build variants
+    if env['build'] == 'debug':
+        env.AppendUnique(CCFLAGS='-g')
+    elif env['build'] == 'fast':
+        env.AppendUnique(CCFLAGS=['-O3'] + fast_optimflags)
+        env.AppendUnique(CPPDEFINES='NDEBUG')
+        env.AppendUnique(LINKFLAGS=fast_linkflags)
+        env.AppendUnique(SHLINKFLAGS=fast_shlinkflags)
+
+    if env['profile']:
+        env.AppendUnique(CCFLAGS='-pg')
+        env.AppendUnique(LINKFLAGS='-pg')
 
 builddir = env.Dir('build/%s-%s' % (env['build'], platform.machine()))
 

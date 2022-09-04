@@ -1,6 +1,8 @@
+import platform
 Import('env', 'pyconfigvar', 'pyversion')
 
 # Helper functions -----------------------------------------------------------
+
 
 def CheckOptimizerFlag(context, flag):
     ccflags_save = context.env['CCFLAGS']
@@ -34,7 +36,7 @@ def configure_boost_library(libname):
         if conf.CheckLib(libnamefull, language='C++'):
             return
     # library not found here
-    print('This program requires %r library.' % libname)
+    print('This program requires the %r library.' % libname)
     Exit(1)
 
 # Start configuration --------------------------------------------------------
@@ -50,23 +52,38 @@ for o in optflags:
     conf.CheckOptimizerFlag(o)
 conf.Finish()
 
-# Create configuration environment that links with Python shared_library, so
-# that the boost_python check does not fail due to unresolved Python symbols.
-ecfg = env.Clone()
-ecfg.Append(LIBS=[])
-ecfg.MergeFlags(pyconfigvar('BLDLIBRARY'))
-# make sure there are no implicit dependency nodes in added LIBS
-ecfg.Replace(LIBS=[str(n) for n in ecfg['LIBS']])
-newlibsindex = len(ecfg['LIBS'])
-
+if platform.system().lower() == "windows":
+    ecfg = env.Clone()
+    # ecfg.MergeFlags(pyconfigvar('BLDLIBRARY'))
+    ecfg.Append(LIBS=['libObjCryst'])
+else:
+    # Create configuration environment that links with Python shared_library, so
+    # that the boost_python check does not fail due to unresolved Python symbols.
+    ecfg = env.Clone()
+    ecfg.Append(LIBS=[])
+    ecfg.MergeFlags(pyconfigvar('BLDLIBRARY'))
+    # make sure there are no implicit dependency nodes in added LIBS
+    ecfg.Replace(LIBS=[str(n) for n in ecfg['LIBS']])
+    newlibsindex = len(ecfg['LIBS'])
 conf = Configure(ecfg)
-if not conf.CheckLib('ObjCryst', language='C++'):
-    print("This program requires 'libObjCryst' library.")
-    Exit(1)
+
+if platform.system().lower() == "windows":
+    # Why libObjCryst and not ObjCryst on windows ?
+    if not conf.CheckLib('libObjCryst', language='C++'):
+        print("This program requires the 'libObjCryst' library.")
+        Exit(1)
+else:
+    if not conf.CheckLib('ObjCryst', language='C++'):
+        print("This program requires the 'libObjCryst' library.")
+        Exit(1)
+
 configure_boost_library('boost_python')
 conf.Finish()
 
-# Use libraries that were found in the configuration.
-env.AppendUnique(LIBS=ecfg['LIBS'][newlibsindex:])
+if platform.system().lower() != "windows":
+    # Use libraries that were found in the configuration.
+    env.AppendUnique(LIBS=ecfg['LIBS'][newlibsindex:])
+else:
+    env.AppendUnique(LIBS=ecfg['LIBS'])
 
 # vim: ft=python

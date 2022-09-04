@@ -28,7 +28,7 @@
 *   python class and the parameter accessors.
 * - SetDeleteRefParInDestructor is not exposed.
 * - RemovePar is overloaded to return None.
-*
+* - GetClientRegistry() override is deactivated for windows
 *****************************************************************************/
 
 #include <boost/python/class.hpp>
@@ -174,7 +174,14 @@ class RefinableObjWrap : public RefinableObj,
     ObjRegistry< RefinableObj >& GetClientRegistry()
     {
         override f = this->get_override("GetClientRegistry");
-        if (f)  return f();
+        if (f)
+        {
+            #ifdef _MSC_VER
+            return call<ObjRegistry< RefinableObj >&>(f.ptr());
+            #else
+            return f();
+            #endif
+        }
         return default_GetClientRegistry();
     }
 
