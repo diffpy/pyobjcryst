@@ -16,13 +16,12 @@ build:
 requirements:
   build:
     - {{ compiler('cxx') }}
-  host:
+    - libobjcryst {{ libobjcryst }}
+    - scons
+    - boost {{ boost }}
+    - numpy {{ numpy }}
     - python {{ python }}
     - setuptools
-    - scons
-    - numpy {{ numpy }}
-    - boost {{ boost }}
-    - libobjcryst {{ libobjcryst }}
 
   run:
     # NOTE libobjcryst is implicitly added by libobjcryst run_exports

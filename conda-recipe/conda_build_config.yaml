@@ -8,7 +8,7 @@ numpy:
   - 1.11
 
 libobjcryst:
-  - 2021.1.2
+  - 2022.1
 
 boost:
   - 1.67
