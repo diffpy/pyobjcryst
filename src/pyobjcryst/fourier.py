@@ -51,7 +51,7 @@ def calc_fourier_map(data: ScatteringData, map_type="obs", sharpen=True, resolut
     # Scale obs and calc
     if "calc" not in map_type:
         scale_fobs = np.sqrt((abs(calc) ** 2).sum() / obs2.sum())
-        print(" Fourier map obs scale factor:", scale_fobs)
+        # print(" Fourier map obs scale factor:", scale_fobs)
     vol = c.GetVolume()
     spg = c.GetSpaceGroup()
     h, k, l = data.GetH()[:nb], data.GetK()[:nb], data.GetL()[:nb]
@@ -78,9 +78,9 @@ def calc_fourier_map(data: ScatteringData, map_type="obs", sharpen=True, resolut
                 if "calc" in map_type.lower():
                     rhof[il, ik, ih] = (fr + 1j * fi) * norm / vol
                 elif "obs" in map_type.lower():
-                    rhof[il, ik, ih] = (fr + 1j * fi) * obs / acalc * norm / vol
+                    rhof[il, ik, ih] = (fr + 1j * fi) * obs / max(acalc, 1e-6) * norm / vol
                 else:
-                    rhof[il, ik, ih] = (fr + 1j * fi) * (obs - acalc) / acalc * norm / vol
+                    rhof[il, ik, ih] = (fr + 1j * fi) * (obs - acalc) / max(acalc, 1e-6) * norm / vol
             # if (i<5):
             #     print(int(h0)," ",int(k0)," ",int(l0),"(",spg.IsReflCentric(h0,k0,l0),"):"
             #           ,fr+1j*fi," :",rhof[il, ik, ih])
