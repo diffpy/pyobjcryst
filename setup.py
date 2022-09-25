@@ -12,6 +12,7 @@ import os
 import re
 import sys
 import glob
+import platform
 from setuptools import setup
 from setuptools import Extension
 from numpy.distutils.misc_util import get_numpy_include_dirs
@@ -27,6 +28,8 @@ ext_kws = {
     'extra_link_args': [],
     'include_dirs': get_numpy_include_dirs(),
 }
+if platform.system() == 'Windows':
+    ext_kws['extra_compile_args'] = ['-DBOOST_ERROR_CODE_HEADER_ONLY']
 
 # determine if we run with Python 3.
 PY3 = (sys.version_info[0] == 3)
@@ -181,11 +184,10 @@ setup_args = dict(
         'Operating System :: POSIX',
         'Operating System :: Unix',
         'Programming Language :: C++',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Scientific/Engineering :: Chemistry',
         'Topic :: Scientific/Engineering :: Physics',
         'Topic :: Software Development :: Libraries',

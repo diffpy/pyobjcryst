@@ -1,17 +1,17 @@
 python:
+  - 3.10  # [not win]
+  - 3.9   # [not win]
+  - 3.8   # [not win]
   - 3.7
-  - 3.6
-  - 3.5
-  - 2.7
 
 numpy:
-  - 1.11
+  - 1.19
 
 libobjcryst:
   - 2022.1
 
 boost:
-  - 1.67
+  - 1.78
 
 pin_run_as_build:
   boost: x.x

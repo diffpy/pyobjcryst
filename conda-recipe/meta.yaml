@@ -25,7 +25,7 @@ requirements:
 
   run:
     # NOTE libobjcryst is implicitly added by libobjcryst run_exports
-    - python
+    - python {{ python }}
     - setuptools
     - {{ pin_compatible('numpy', min_pin='x.x', max_pin='x') }}
     - boost

@@ -112,11 +112,11 @@ if platform.system().lower() == "windows":
     # ignore it in the system environment.
     env.PrependUnique(LIBPATH=getsyspaths('LIBRARY_PATH'))
     if 'CONDA_PREFIX' in os.environ:
-        env.Append(CPPPATH=pjoin(os.environ['CONDA_PREFIX'],'include'))
-        env.Append(CPPPATH=pjoin(os.environ['CONDA_PREFIX'],'Library','include'))
+        env.Append(CPPPATH=[pjoin(os.environ['CONDA_PREFIX'],'include')])
+        env.Append(CPPPATH=[pjoin(os.environ['CONDA_PREFIX'],'Library','include')])
         # Windows conda library paths are a MESS ('lib', 'libs', 'Library\lib'...)
-        env.Append(LIBPATH=pjoin(os.environ['CONDA_PREFIX'],'Library','lib'))
-        env.Append(LIBPATH=pjoin(os.environ['CONDA_PREFIX'],'libs'))
+        env.Append(LIBPATH=[pjoin(os.environ['CONDA_PREFIX'],'Library','lib')])
+        env.Append(LIBPATH=[pjoin(os.environ['CONDA_PREFIX'],'libs')])
     # This disable automated versioned named e.g. libboost_date_time-vc142-mt-s-x64-1_73.lib
     # so we can use conda-installed libraries
     env.AppendUnique(CPPDEFINES='BOOST_ALL_NO_LIB')
@@ -185,6 +185,14 @@ else:
     if env['profile']:
         env.AppendUnique(CCFLAGS='-pg')
         env.AppendUnique(LINKFLAGS='-pg')
+
+if 'CONDA_PREFIX' in os.environ:
+    # building for a conda environment
+    vars.Add(PathVariable(
+        'prefix',
+        'installation prefix directory',
+        os.environ['CONDA_PREFIX']))
+    vars.Update(env)
 
 builddir = env.Dir('build/%s-%s' % (env['build'], platform.machine()))
 
