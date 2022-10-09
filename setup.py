@@ -30,6 +30,8 @@ ext_kws = {
 }
 if platform.system() == 'Windows':
     ext_kws['extra_compile_args'] = ['-DBOOST_ERROR_CODE_HEADER_ONLY']
+elif platform.system() == 'Darwin':
+    ext_kws['extra_compile_args'] += ['-fno-strict-aliasing']
 
 # determine if we run with Python 3.
 PY3 = (sys.version_info[0] == 3)
