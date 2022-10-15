@@ -1,17 +1,34 @@
 python:
-  - 3.10  # [not win]
-  - 3.9   # [not win]
-  - 3.8   # [not win]
+  - 3.10
+  - 3.9
+  - 3.8
   - 3.7
 
 numpy:
+  - 1.21
   - 1.19
+  - 1.19
+  - 1.16
+
+boost:
+  - 1.78
+  - 1.78
+  - 1.78
+  - 1.73
+
+zip_keys:
+  - python
+  - numpy
+  - boost
 
 libobjcryst:
   - 2022.1
 
-boost:
-  - 1.78
 
 pin_run_as_build:
   boost: x.x
+
+# For a local macOS build
+CONDA_BUILD_SYSROOT:
+  - $HOME/dev/SDKs/MacOSX10.9.sdk  [osx and not arm64]
+  - $HOME/dev/SDKs/MacOSX11.0.sdk  [arm64]
