@@ -20,11 +20,11 @@ requirements:
     - {{ compiler('cxx') }}
     - numpy {{ numpy }}
     - python {{ python }}
+    - setuptools
     - git
   host:
     - python
     - pip
-    - setuptools
     - numpy
     - libobjcryst 2022.1.1
     - boost {{ boost }}

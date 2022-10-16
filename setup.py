@@ -9,6 +9,7 @@ Packages:   pyobjcryst
 """
 
 import os
+from os.path import join as pjoin
 import re
 import sys
 import glob
@@ -27,9 +28,16 @@ ext_kws = {
     'extra_compile_args': ['-std=c++11', '-DBOOST_ERROR_CODE_HEADER_ONLY'],
     'extra_link_args': [],
     'include_dirs': get_numpy_include_dirs(),
+    'library_dirs': []
 }
 if platform.system() == 'Windows':
     ext_kws['extra_compile_args'] = ['-DBOOST_ERROR_CODE_HEADER_ONLY']
+    if 'CONDA_PREFIX' in os.environ:
+        ext_kws['include_dirs'] += [pjoin(os.environ['CONDA_PREFIX'], 'include'),
+                                    pjoin(os.environ['CONDA_PREFIX'], 'Library', 'include')]
+        ext_kws['library_dirs'] += [pjoin(os.environ['CONDA_PREFIX'], 'Library', 'lib'),
+                                    pjoin(os.environ['CONDA_PREFIX'], 'libs')]
+        ext_kws['libraries'] = ['libObjCryst']
 elif platform.system() == 'Darwin':
     ext_kws['extra_compile_args'] += ['-fno-strict-aliasing']
 

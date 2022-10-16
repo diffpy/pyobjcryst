@@ -149,7 +149,7 @@ if platform.system().lower() == "windows":
     # Insert LIBRARY_PATH explicitly because some compilers
     # ignore it in the system environment.
     env.PrependUnique(LIBPATH=getsyspaths('LIBRARY_PATH'))
-    if vars['prefix'] is not None:
+    if env['prefix'] is not None:
         env.Append(CPPPATH=[pjoin(env['prefix'], 'include')])
         env.Append(CPPPATH=[pjoin(env['prefix'], 'Library', 'include')])
         # Windows conda library paths are a MESS ('lib', 'libs', 'Library\lib'...)
@@ -160,7 +160,7 @@ if platform.system().lower() == "windows":
     env.AppendUnique(CPPDEFINES='BOOST_ALL_NO_LIB')
     # Prevent the generation of an import lib (.lib) in addition to the dll
     # env.AppendUnique(no_import_lib=1)
-    env.PrependUnique(CCFLAGS=['/Ox', '/EHsc'])
+    env.PrependUnique(CCFLAGS=['/Ox', '/EHsc', '/MD'])
     env.AppendUnique(CPPDEFINES={'NDEBUG': None})
 else:
     if 'CONDA_BUILD' not in os.environ:
