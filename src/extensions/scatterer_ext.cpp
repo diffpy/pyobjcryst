@@ -37,6 +37,9 @@
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 #include <ObjCryst/ObjCryst/Scatterer.h>
+#include <ObjCryst/ObjCryst/Molecule.h>
+#include <ObjCryst/ObjCryst/Atom.h>
+#include <ObjCryst/ObjCryst/ZScatterer.h>
 
 #include "helpers.hpp"
 
@@ -122,10 +125,34 @@ class ScattererWrap : public Scatterer,
         this->get_override("Print")();
     }
 
+    //Need to implement the pure virtual function POVRayDescription
+    std::ostream& default_POVRayDescription(std::ostream& os,
+            const CrystalPOVRayOptions& options) const
+    {
+        if(this->GetClassName()=="Molecule")
+        {
+            const Molecule *p = dynamic_cast<const Molecule*>(this);
+            return p->POVRayDescription(os, options);
+        }
+        if(this->GetClassName()=="ZScatterer")
+        {
+            const ZScatterer *p = dynamic_cast<const ZScatterer*>(this);
+            return p->POVRayDescription(os, options);
+        }
+        const Atom *p = dynamic_cast<const Atom*>(this);
+        return p->POVRayDescription(os, options);
+    }
+
     std::ostream& POVRayDescription(std::ostream& os,
             const CrystalPOVRayOptions& options) const
     {
+        #ifdef _MSC_VER
+        override f = this->get_override("POVRayDescription");
+        if(f) return call<std::ostream&>(f.ptr(), os, options);
+        else  return default_POVRayDescription(os, options);
+        #else
         return this->get_override("POVRayDescription")(os, options);
+        #endif
     }
 
     // interface prior to Fox version 2016.2

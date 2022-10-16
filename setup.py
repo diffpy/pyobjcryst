@@ -9,16 +9,18 @@ Packages:   pyobjcryst
 """
 
 import os
+from os.path import join as pjoin
 import re
 import sys
 import glob
+import platform
 from setuptools import setup
 from setuptools import Extension
 from numpy.distutils.misc_util import get_numpy_include_dirs
 
 # Use this version when git data are not available as in a git zip archive.
 # Update when tagging a new release.
-FALLBACK_VERSION = '2.2.2'
+FALLBACK_VERSION = '2.2.3'
 
 # define extension arguments here
 ext_kws = {
@@ -26,7 +28,18 @@ ext_kws = {
     'extra_compile_args': ['-std=c++11', '-DBOOST_ERROR_CODE_HEADER_ONLY'],
     'extra_link_args': [],
     'include_dirs': get_numpy_include_dirs(),
+    'library_dirs': []
 }
+if platform.system() == 'Windows':
+    ext_kws['extra_compile_args'] = ['-DBOOST_ERROR_CODE_HEADER_ONLY']
+    if 'CONDA_PREFIX' in os.environ:
+        ext_kws['include_dirs'] += [pjoin(os.environ['CONDA_PREFIX'], 'include'),
+                                    pjoin(os.environ['CONDA_PREFIX'], 'Library', 'include')]
+        ext_kws['library_dirs'] += [pjoin(os.environ['CONDA_PREFIX'], 'Library', 'lib'),
+                                    pjoin(os.environ['CONDA_PREFIX'], 'libs')]
+        ext_kws['libraries'] = ['libObjCryst']
+elif platform.system() == 'Darwin':
+    ext_kws['extra_compile_args'] += ['-fno-strict-aliasing']
 
 # determine if we run with Python 3.
 PY3 = (sys.version_info[0] == 3)
@@ -181,11 +194,10 @@ setup_args = dict(
         'Operating System :: POSIX',
         'Operating System :: Unix',
         'Programming Language :: C++',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Scientific/Engineering :: Chemistry',
         'Topic :: Scientific/Engineering :: Physics',
         'Topic :: Software Development :: Libraries',

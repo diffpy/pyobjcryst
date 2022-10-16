@@ -52,8 +52,6 @@ Changes from ObjCryst::RefinableObjClock
 Changes from ObjCryst::ObjRegistry
 
 - DeleteAll not wrapped
-- GetObj(const unsigned int i) not wrapped. Documentation says that this is
-  for internal use only.
 
 Changes from ObjCryst::Restraint
 

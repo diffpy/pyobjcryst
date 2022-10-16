@@ -126,12 +126,12 @@ class PeakListWrap : public PeakList, public wrapper<PeakList>
       void ImportDhklDSigmaIntensity(bp::object input, const float defaultsigma)
       {
           CaptureStdOut gag;
-          const std::string cname = boost::python::extract<std::string>
+          const std::string cname = bp::extract<std::string>
                                      (input.attr("__class__").attr("__name__"));
           if(cname.compare("str")==0)
           { // Filename
-            boost::filesystem::path p{extract<std::string>(input)};
-            boost::filesystem::ifstream is(p);
+            std::string p = bp::extract<std::string>(input);
+            std::ifstream is(p);
             this->PeakList::ImportDhklDSigmaIntensity(is, defaultsigma);
           }
           else
@@ -146,12 +146,12 @@ class PeakListWrap : public PeakList, public wrapper<PeakList>
       void ImportDhklIntensity(bp::object input)
       {
           CaptureStdOut gag;
-          const std::string cname = boost::python::extract<std::string>
+          const std::string cname = bp::extract<std::string>
                                      (input.attr("__class__").attr("__name__"));
           if(cname.compare("str")==0)
           { // Filename
-            boost::filesystem::path p{extract<std::string>(input)};
-            boost::filesystem::ifstream is(p);
+            std::string p = bp::extract<std::string>(input);
+            std::ifstream is(p);
             this->PeakList::ImportDhklIntensity(is);
           }
           else
@@ -165,12 +165,12 @@ class PeakListWrap : public PeakList, public wrapper<PeakList>
       void default_ImportDhkl(bp::object input)
       {
           CaptureStdOut gag;
-          const std::string cname = boost::python::extract<std::string>
+          const std::string cname = bp::extract<std::string>
                                      (input.attr("__class__").attr("__name__"));
           if(cname.compare("str")==0)
           { // Filename
-            boost::filesystem::path p{extract<std::string>(input)};
-            boost::filesystem::ifstream is(p);
+            std::string p = bp::extract<std::string>(input);
+            std::ifstream is(p);
             this->PeakList::ImportDhkl(is);
           }
           else
@@ -184,12 +184,12 @@ class PeakListWrap : public PeakList, public wrapper<PeakList>
       void Import2ThetaIntensity(bp::object input, const float wavelength)
       {
           CaptureStdOut gag;
-          const std::string cname = boost::python::extract<std::string>
+          const std::string cname = bp::extract<std::string>
                                      (input.attr("__class__").attr("__name__"));
           if(cname.compare("str")==0)
           { // Filename
-            boost::filesystem::path p{extract<std::string>(input)};
-            boost::filesystem::ifstream is(p);
+            std::string p = bp::extract<std::string>(input);
+            std::ifstream is(p);
             this->PeakList::Import2ThetaIntensity(is, wavelength);
           }
           else
@@ -207,8 +207,8 @@ class PeakListWrap : public PeakList, public wrapper<PeakList>
                                      (output.attr("__class__").attr("__name__"));
           if(cname.compare("str")==0)
           { // Filename
-            boost::filesystem::path p{extract<std::string>(output)};
-            boost::filesystem::ofstream out(p);
+            std::string sout =bp::extract<std::string>(output);
+            std::ofstream out(sout);
             this->PeakList::ExportDhklDSigmaIntensity(out);
           }
           else

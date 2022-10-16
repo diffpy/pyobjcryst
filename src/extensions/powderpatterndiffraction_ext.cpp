@@ -73,5 +73,7 @@ void wrap_powderpatterndiffraction()
                 with_custodian_and_ward<1, 2>())
         .def("GetNbReflBelowMaxSinThetaOvLambda",
                 &PowderPatternDiffraction::GetNbReflBelowMaxSinThetaOvLambda)
+        .def("GetFhklObsSq", &PowderPatternDiffraction::GetFhklObsSq,
+                return_value_policy<copy_const_reference>())
         ;
 }
