@@ -218,6 +218,26 @@ class TestPowderPattern(unittest.TestCase):
         #     for s in spgex.GetScores():
         #         print(s)
 
+    def test_update_nbrefl(self):
+        c = loadcifdata("paracetamol.cif")
+        p = PowderPattern()
+        p.SetWavelength(1.5)
+        x = np.linspace(0, 40, 4000)
+        p.SetPowderPatternX(np.deg2rad(x))
+        pd = p.AddPowderPatternDiffraction(c)
+        p.GetPowderPatternCalc()
+        self.assertEqual(pd.GetNbRefl(), 89)
+        # Change lattice parameter, the reflection list is updated
+        # during the next powder pattern calculation
+        c.a *= 1.1
+        p.GetPowderPatternCalc()
+        self.assertEqual(pd.GetNbRefl(), 92)
+        # Change the spacegroup, the reflection list is updated
+        # during the next powder pattern calculation
+        c.GetSpaceGroup().ChangeSpaceGroup("P1")
+        p.GetPowderPatternCalc()
+        self.assertEqual(pd.GetNbRefl(), 187)
+
     # def test_SetScaleFactor(self):  assert False
 
 

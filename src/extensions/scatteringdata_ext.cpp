@@ -92,10 +92,10 @@ void wrap_scatteringdata()
         // Have to convert from Python array to C++ array
         //.def("SetHKL", &ScatteringData::SetHKL)
         .def("GenHKLFullSpace2",
-                &ScatteringData::GenHKLFullSpace2,
+                (void (ScatteringData::*)(const REAL,const bool)) &ScatteringData::GenHKLFullSpace2,
                 (bp::arg("maxsithsl"), bp::arg("unique")=false))
         .def("GenHKLFullSpace",
-                &ScatteringData::GenHKLFullSpace,
+                (void (ScatteringData::*)(const REAL,const bool))  &ScatteringData::GenHKLFullSpace,
                 (bp::arg("maxtheta"), bp::arg("unique")=false))
         // have to figure this out
         //.def("GetRadiationType", &ScatteringData::GetRadiationType,

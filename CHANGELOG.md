@@ -1,12 +1,43 @@
 # Release notes
 
-## Version X.Y.Z
+## Version 2.2.4
+
+### Changes
+
+- the list of HKL reflections will now be automatically be re-generated 
+  for a PowderPatternDiffraction when the Crystal's spacegroup changes,  
+  or the lattice parameters are modified by more than 0.5%
+
+### Fixes
+
+- Fixed the powder pattern indexing test
+
+## Version 2.2.3
+
+### Added
+
+- Support for windows install (works with python 3.7, and
+  also -only with pypy- 3.8 and 3.9)
+- Native support for Apple arm64 (M1, M2) processors
+- Fourier maps calculation
+- Add gDiffractionDataSingleCrystalRegistry to globals
+
+## Version 2.2.2
+
+### Changes
+
+- Add correct wrapping for C++-instantiated objects available through global 
+  registries, e.g. when loading an XML file. The objects are decorated with 
+  the python functions when accessed through the global registries GetObj()
+- Moved global object registries to pyobjcryst.globals
+- Update documentation
 
 ### Fixed
 
 - Fix access to PRISM_TETRAGONAL_DICAP, PRISM_TRIGONAL, 
   ICOSAHEDRON and TRIANGLE_PLANE.
-
+- Fix powder pattern plot issues (NaN and update of hkl text with recent 
+  matplotlib versions)
 
 ## Version 2.2.1 -- 2021-11-28
 
