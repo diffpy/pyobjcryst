@@ -63,7 +63,7 @@ def testsuite(pattern=''):
     return suite
 
 
-def test():
+def test(verbosity=1):
     '''Execute all unit tests for the pyobjcryst package.
 
     Returns
@@ -71,6 +71,6 @@ def test():
     result : `unittest.TestResult`
     '''
     suite = testsuite()
-    runner = unittest.TextTestRunner()
+    runner = unittest.TextTestRunner(verbosity=verbosity)
     result = runner.run(suite)
     return result
