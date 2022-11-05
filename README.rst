@@ -13,11 +13,41 @@ The documentation for this release of pyobjcryst can be found on-line at
 http://diffpy.github.io/pyobjcryst.
 
 
-REQUIREMENTS
+INSTALLATION
 ------------
+pyobjcryst is available for Python 3.7 (deprecated), and 3.8 to 3.11.
 
-pyobjcryst requires Python 3.7, 3.6, 3.5 or 2.7, C++ compiler and
-the following software:
+Note regarding windows: on conda-forge, pyobjcryst 2.2.3 is available
+for python3.7 only, and version 2.2.4 is available for python 3.8 and
+3.9 using a `pypy` environment rather than the regular cpython interpreter.
+
+Using conda (recommended)
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+We recommend to use `Anaconda Python <https://www.anaconda.com/download>`_
+as it allows to install all software dependencies together with
+pyobjcryst. For other Python distributions it is necessary to
+install the required software separately. 
+
+Using conda, we recommend installing pyobjcryst using the "conda-forge" channel ::
+
+   conda install -c conda-forge pyobjcryst
+
+Note: when updating, please make sure you are upgrading both
+libobjcryst and pyobjcryst packages.
+
+You can also install from the "diffpy" channel - especially if you use
+pyobjcryst allong with the other diffpy tools for PDF calculations,
+but it is not updated as often as conda-forge.
+
+pyobjcryst is also included in the "diffpy-cmi" collection
+of packages for structure analysis ::
+
+   conda install -c diffpy diffpy-cmi
+
+From source
+^^^^^^^^^^^
+The requirements are:
 
 * ``libobjcryst`` - Object-Oriented Crystallographic Library for C++,
   https://github.com/diffpy/libobjcryst
@@ -27,40 +57,26 @@ the following software:
 * ``libboost-all-dev`` - Boost C++ libraries and development files
 * ``scons`` - software construction tool (optional)
 
-We recommend to use `Anaconda Python <https://www.anaconda.com/download>`_
-as it allows to install all software dependencies together with
-pyobjcryst.  For other Python distributions it is necessary to
-install the required software separately.  As an example, on Ubuntu
-Linux the required software can be installed using ::
+The above requirements are easily installed through conda using e.g.::
+
+  conda install numpy compilers boost scons libobjcryst
+
+Alternatively, on Ubuntu Linux the required software can be installed using::
 
    sudo apt-get install \
       python-setuptools python-numpy scons \
       build-essential python-dev libboost-all-dev
 
 
-INSTALLATION
-------------
+The libobjcryst library can also be installed as per the instructions at
+https://github.com/diffpy/libobjcryst. Make sure other required
+software are also in place and then run from the pyobjcryst directory::
 
-The preferred method is to use Anaconda Python and install from the
-"diffpy" channel of Anaconda packages ::
-
-   conda config --add channels diffpy
-   conda install pyobjcryst
-
-pyobjcryst is also included in the "diffpy-cmi" collection
-of packages for structure analysis ::
-
-   conda install diffpy-cmi
-
-If you prefer to use other Python distribution or install from sources,
-you must first install the libobjcryst library as per the instructions at
-https://github.com/diffpy/libobjcryst.  Make sure other required
-software is also in place and then run::
-
-   python setup.py install
+   pip install .
 
 You may need to use ``sudo`` with system Python so the process is
-allowed to copy files to system directories.  If administrator (root)
+allowed to copy files to system directories, unless you are installing
+into a conda environment.  If administrator (root)
 access is not available, see the usage information from
 ``python setup.py install --help`` for options to install to
 a user-writable location.  The installation integrity can be
@@ -100,9 +116,10 @@ be installed using conda(-forge), but ``py3dmol`` should be installed using
 DEVELOPMENT
 -----------
 
-pyobjcryst is an open-source software developed as a part of the
+pyobjcryst is an open-source software originally developed as a part of the
 DiffPy-CMI complex modeling initiative at the Brookhaven National
-Laboratory.  The pyobjcryst sources are hosted at
+Laboratory, and is also further developed at ESRF.
+The pyobjcryst sources are hosted at
 https://github.com/diffpy/pyobjcryst.
 
 Feel free to fork the project and contribute.  To install pyobjcryst
