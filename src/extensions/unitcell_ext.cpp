@@ -96,7 +96,11 @@ double _getc(UnitCell& u)
 
 void _setalpha(UnitCell& u, double val)
 {
-    u.GetPar("alpha").SetValue(val);
+    if((val<=0)||(val>=M_PI)) throw ObjCrystException("alpha must be within ]0;pi[");
+    RefinablePar &p = u.GetPar("alpha");
+    if(p.IsUsed()) p.SetValue(val);
+    // Throwing an exception here would be risky - a warning would be more adequate
+    // else throw ObjCrystException("alpha is fixed and cannot be changed");
 }
 
 double _getalpha(UnitCell& u)
@@ -106,7 +110,11 @@ double _getalpha(UnitCell& u)
 
 void _setbeta(UnitCell& u, double val)
 {
-    u.GetPar("beta").SetValue(val);
+    if((val<=0)||(val>=M_PI)) throw ObjCrystException("beta must be within ]0;pi[");
+    RefinablePar &p = u.GetPar("beta");
+    if(p.IsUsed()) p.SetValue(val);
+    // Throwing an exception here would be risky - a warning would be more adequate
+    // else throw ObjCrystException("beta is fixed and cannot be changed");
 }
 
 double _getbeta(UnitCell& u)
@@ -116,7 +124,11 @@ double _getbeta(UnitCell& u)
 
 void _setgamma(UnitCell& u, double val)
 {
-    u.GetPar("gamma").SetValue(val);
+    if((val<=0)||(val>=M_PI)) throw ObjCrystException("gamma must be within ]0;pi[");
+    RefinablePar &p = u.GetPar("gamma");
+    if(p.IsUsed()) p.SetValue(val);
+    // Throwing an exception here would be risky - a warning would be more adequate
+    // else throw ObjCrystException("gamma is fixed and cannot be changed");
 }
 
 double _getgamma(UnitCell& u)
