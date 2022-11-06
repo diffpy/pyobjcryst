@@ -49,6 +49,7 @@ General Changes
 See the modules' documentation for specific changes.
 """
 
+import warnings
 # Let's put this on the package level
 from pyobjcryst.general import ObjCrystException
 
@@ -84,13 +85,18 @@ from pyobjcryst._pyobjcryst import gTopRefinableObjRegistry
 def loadCrystal(filename):
     """Load pyobjcryst Crystal object from a CIF file.
 
-    filename -- CIF file to be loaded
+    :param filename: CIF file to be loaded.
 
-    Return a new Crystal object.
+    :return: a new Crystal object.
 
-    See pyobjcryst.crystal.CreateCrystalFromCIF for additional
-    options for constructing Crystal object from CIF data.
+    ..deprecated:: 2.2.4
+        Use pyobjcryst.crystal.create_crystal_from_cif() instead,
+        which has more options when importing a CIF, including
+        using an URL instead of a file.
     """
+    warnings.warn("loadCrystal is deprecated. Please use "
+                  "pyobjcryst.crystal.create_crystal_from_cif() instead",
+                  DeprecationWarning)
     from pyobjcryst.crystal import CreateCrystalFromCIF
     with open(filename, 'rb') as fp:
         rv = CreateCrystalFromCIF(fp)
