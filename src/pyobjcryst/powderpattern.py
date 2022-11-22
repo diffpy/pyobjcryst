@@ -121,8 +121,10 @@ class PowderPattern(PowderPattern_objcryst):
             if self._plot_fig is None:
                 self._plot_fig = plt.figure(figsize=figsize)
             elif plt.fignum_exists(self._plot_fig.number) is False:
+                # Somehow the figure disappeared, create a new one
                 self._plot_fig = plt.figure(figsize=figsize)
-            plt.figure(self._plot_fig.number)
+            else:
+                self._plot_fig = plt.figure(self._plot_fig.number)
             plt.clf()
         else:
             plt.figure(figsize=figsize)
@@ -179,7 +181,8 @@ class PowderPattern(PowderPattern_objcryst):
                 # Force immediate display. Not supported on all backends (e.g. nbagg)
                 plt.draw()
                 plt.gcf().canvas.draw()
-                plt.pause(.001)
+                if 'ipympl' not in plt.get_backend():
+                    plt.pause(.001)
             except:
                 pass
             # plt.gca().callbacks.connect('xlim_changed', self._on_xlims_change)
@@ -220,7 +223,8 @@ class PowderPattern(PowderPattern_objcryst):
                     # Force immediate display. Not supported on all backends (e.g. nbagg)
                     plt.draw()
                     plt.gcf().canvas.draw()
-                    plt.pause(.001)
+                    if 'ipympl' not in plt.get_backend():
+                        plt.pause(.001)
                     try:
                         renderer = plt.gcf().canvas.renderer
                     except:
