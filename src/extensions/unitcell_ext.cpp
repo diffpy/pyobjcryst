@@ -136,6 +136,13 @@ double _getgamma(UnitCell& u)
     return u.GetLatticePar(5);
 }
 
+void SafeChangeSpaceGroup(UnitCell& u, const std::string& sgid)
+{
+    MuteObjCrystUserInfo muzzle;
+    // this may throw invalid_argument which is translated to ValueError
+    u.ChangeSpaceGroup(sgid);
+}
+
 
 }
 
@@ -180,6 +187,7 @@ void wrap_unitcell()
                 &OrthonormalToMillerCoords)
         .def("GetSpaceGroup", (SpaceGroup& (UnitCell::*)()) &UnitCell::GetSpaceGroup,
                 return_internal_reference<>())
+        .def("ChangeSpaceGroup", &SafeChangeSpaceGroup)
         .def("GetVolume", &UnitCell::GetVolume)
         .def("__str__", &__str__<UnitCell>)
         // python-only
