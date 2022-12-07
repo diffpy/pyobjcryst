@@ -23,7 +23,7 @@ zip_keys:
   - boost
 
 libobjcryst:
-  - 2022.1
+  - 2022.1.4
 
 c_compiler:    # [win]
 - vs2019       # [win]

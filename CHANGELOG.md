@@ -1,5 +1,22 @@
 # Release notes
 
+## Version 2.2.5
+
+### Changes
+
+- Raise an exception if alpha, beta or gamma are not within ]0;pi[ when 
+  changing lattice angles
+- Add UnitCell.ChangeSpaceGroup()
+
+### Fixes
+
+- Avoid duplication of plots when using ipympl (aka %matplotlib widget)
+- Correct powder pattern tests to avoid warnings
+
+### Deprecated
+
+- loadCrystal - use create_crystal_from_cif() instead
+
 ## Version 2.2.4
 
 ### Changes
