@@ -18,7 +18,7 @@ INSTALLATION
 pyobjcryst is available for Python 3.7 (deprecated), and 3.8 to 3.11.
 
 Note regarding windows: on conda-forge, pyobjcryst 2.2.3 is available
-for python3.7 only, and version 2.2.4 is available for python 3.8 and
+for python3.7 only, and versions >=2.2.4 are available for python 3.8 and
 3.9 using a `pypy` environment rather than the regular cpython interpreter.
 
 Using conda (recommended)
@@ -101,7 +101,7 @@ displayed in a jupyter notebook:
   ``py3dmol`` and ``ipywidgets`` modules. See the notebook
   ``examples/cystal_3d_widget.ipynb``
 * a PowderPattern can be displayed (and live-updated) if
-  ``matplotlib`` (and optionnally ``ipympl``) are installed. See the
+  ``matplotlib`` (and optionally ``ipympl``) are installed. See the
   notebook ``examples/cimetidine-structure-solution-powder.ipynb``
 
 In short, ``pip install jupyter matplotlib ipywidgets py3dmol``
@@ -162,6 +162,7 @@ Quick conda environment from libobjcryst and pyobjcryst sources
 
 If ``conda`` is available, you can create a pyobjcryst environment
 from the git repositories (downloaded in the current directory) using::
+
   conda create --yes --name pyobjcryst numpy matplotlib ipywidgets jupyter
   conda install --yes  -n pyobjcryst -c conda-forge boost scons py3dmol
   conda activate pyobjcryst
