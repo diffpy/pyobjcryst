@@ -19,6 +19,7 @@ Changes from ObjCryst::PowderPattern::
 """
 
 from urllib.request import urlopen
+from packaging.version import parse as version_parse
 from multiprocessing import current_process
 import numpy as np
 
@@ -192,6 +193,7 @@ class PowderPattern(PowderPattern_objcryst):
 
     def _do_plot_hkl(self, nb_max=100, fontsize_hkl=None):
         import matplotlib.pyplot as plt
+        from matplotlib import __version__ as mpl_version
         if fontsize_hkl is None:
             fontsize_hkl = self._plot_hkl_fontsize
         else:
@@ -201,7 +203,12 @@ class PowderPattern(PowderPattern_objcryst):
         calc = self.GetPowderPatternCalc()
         x = np.rad2deg(self.GetPowderPatternX())
         # Clear previous text (assumes only hkl were printed)
-        plt.gca().texts.clear()
+        if version_parse(mpl_version) < version_parse("3.7.0"):
+            # This will fail for matplotlib>=(3,7,0)
+            plt.gca().texts.clear()
+        else:
+            for t in plt.gca().texts:
+                t.remove()
         iphase = 0
         for ic in range(self.GetNbPowderPatternComponent()):
             c = self.GetPowderPatternComponent(ic)
