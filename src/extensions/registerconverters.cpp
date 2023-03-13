@@ -224,8 +224,7 @@ void _deleteMAV(MolAtomVec& mav, size_t i)
 
 /* Exception translation */
 
-PyObject* pyobjcryst_ObjCrystException =
-    PyErr_NewException((char*)"pyobjcryst.ObjCrystException", 0, 0);
+PyObject* pyobjcryst_ObjCrystException;
 
 
 void translateException(const ObjCrystException& e)
@@ -277,6 +276,7 @@ void wrap_registerconverters()
 {
 
     /* Exceptions */
+    pyobjcryst_ObjCrystException = PyErr_NewException((char*)"pyobjcryst.ObjCrystException", 0, 0);
     register_exception_translator<ObjCrystException>(translateException);
     // We want silent exceptions
     ObjCrystException::verbose = false;

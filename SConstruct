@@ -52,7 +52,7 @@ def pyconfigvar(name):
 
 # copy system environment variables related to compilation
 DefaultEnvironment(ENV=subdictionary(os.environ, '''
-    PATH PYTHONPATH GIT_DIR
+    PATH PYTHONPATH GIT_DIR HOMEPATH HOMEDRIVE
     CPATH CPLUS_INCLUDE_PATH LIBRARY_PATH LD_RUN_PATH
     LD_LIBRARY_PATH DYLD_LIBRARY_PATH DYLD_FALLBACK_LIBRARY_PATH
     MACOSX_DEPLOYMENT_TARGET LANG

@@ -16,7 +16,7 @@ import glob
 import platform
 from setuptools import setup
 from setuptools import Extension
-from numpy.distutils.misc_util import get_numpy_include_dirs
+import numpy as np
 
 # Use this version when git data are not available as in a git zip archive.
 # Update when tagging a new release.
@@ -27,7 +27,7 @@ ext_kws = {
     'libraries': ['ObjCryst'],
     'extra_compile_args': ['-std=c++11', '-DBOOST_ERROR_CODE_HEADER_ONLY'],
     'extra_link_args': [],
-    'include_dirs': get_numpy_include_dirs(),
+    'include_dirs': [np.get_include()],
     'library_dirs': []
 }
 if platform.system() == 'Windows':
@@ -36,6 +36,7 @@ if platform.system() == 'Windows':
         ext_kws['include_dirs'] += [pjoin(os.environ['CONDA_PREFIX'], 'include'),
                                     pjoin(os.environ['CONDA_PREFIX'], 'Library', 'include')]
         ext_kws['library_dirs'] += [pjoin(os.environ['CONDA_PREFIX'], 'Library', 'lib'),
+                                    pjoin(os.environ['CONDA_PREFIX'], 'Library', 'bin'),
                                     pjoin(os.environ['CONDA_PREFIX'], 'libs')]
         ext_kws['libraries'] = ['libObjCryst']
 elif platform.system() == 'Darwin':
@@ -168,7 +169,7 @@ setup_args = dict(
     url="https://github.com/diffpy/pyobjcryst",
 
     # Required python packages
-    install_requires=['numpy'],
+    install_requires=['numpy', 'packaging'],
     extras_require={'gui': ['ipywidgets', 'jupyter', 'matplotlib', 'ipympl', 'py3dmol'],
                     'doc': ['sphinx', 'm2r2', 'sphinx_py3doc_enhanced_theme',
                             'nbsphinx', 'nbsphinx-link']},

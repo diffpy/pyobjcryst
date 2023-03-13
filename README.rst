@@ -17,10 +17,6 @@ INSTALLATION
 ------------
 pyobjcryst is available for Python 3.7 (deprecated), and 3.8 to 3.11.
 
-Note regarding windows: on conda-forge, pyobjcryst 2.2.3 is available
-for python3.7 only, and versions >=2.2.4 are available for python 3.8 and
-3.9 using a `pypy` environment rather than the regular cpython interpreter.
-
 Using conda (recommended)
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 

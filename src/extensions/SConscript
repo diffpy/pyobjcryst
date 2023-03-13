@@ -1,11 +1,8 @@
+import numpy as np
 Import('env', 'pyoutput')
 
 # make sure numpy headers are available
-npdirs = pyoutput(
-    'from numpy.distutils.misc_util import get_numpy_include_dirs\n'
-    'print("\\n".join(get_numpy_include_dirs()))')
-npdirs = [d.strip() for d in npdirs.split('\n')]
-env.AppendUnique(CPPPATH=npdirs)
+env.AppendUnique(CPPPATH=[np.get_include()])
 
 # configure the boost_python library, which may have different extensions
 if not (GetOption('clean') or env.GetOption('help')):

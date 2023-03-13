@@ -1,5 +1,12 @@
 # Release notes
 
+## Version 2.2.6
+
+### Fixes
+
+- fix for windows and python>=3.8
+- Fix for matplotlib >=3.7.0 when removing hkl labels
+
 ## Version 2.2.5
 
 ### Changes

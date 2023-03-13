@@ -1,8 +1,13 @@
 import platform
+from os.path import join as pjoin
 Import('env', 'pyconfigvar', 'pyversion')
 
 # Helper functions -----------------------------------------------------------
 
+env.Append(LIBPATH=pjoin(env['prefix'], 'Library', 'bin'))
+env.Append(LIBPATH=pjoin(env['prefix'], 'Library', 'lib'))
+env.Append(CPPPATH=[pjoin(env['prefix'], 'include')])
+env.Append(CPPPATH=[pjoin(env['prefix'], 'Library', 'include')])
 
 def CheckOptimizerFlag(context, flag):
     ccflags_save = context.env['CCFLAGS']
