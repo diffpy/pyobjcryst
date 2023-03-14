@@ -10,7 +10,7 @@ pyobjcryst
 Python bindings to ObjCryst++, the Object-Oriented Crystallographic Library.
 
 The documentation for this release of pyobjcryst can be found on-line at
-http://diffpy.github.io/pyobjcryst.
+https://pyobjcryst.readthedocs.io/
 
 
 INSTALLATION
@@ -20,17 +20,26 @@ pyobjcryst is available for Python 3.7 (deprecated), and 3.8 to 3.11.
 Using conda (recommended)
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-We recommend to use `Anaconda Python <https://www.anaconda.com/download>`_
-as it allows to install all software dependencies together with
-pyobjcryst. For other Python distributions it is necessary to
-install the required software separately. 
+We recommend to use **conda** as it allows to install all software dependencies
+together with pyobjcryst, without too much compiling hastle.
 
-Using conda, we recommend installing pyobjcryst using the "conda-forge" channel ::
+Two distributions can be used:
+
+* `Anaconda Python <https://www.anaconda.com/download>`_, the historical
+  main conda-based distribution
+* `Mamba-forge <https://github.com/conda-forge/miniforge/releases>`_ , which
+  has the advantage off providing **mamba** in addition to conda, and is
+  *much faster* when resolving dependencies during installation. It also
+  uses by default the conda-forge repository, which is what almost all
+  users would want.
+
+Using conda, we you can install pyobjcryst using the "conda-forge" channel ::
 
    conda install -c conda-forge pyobjcryst
 
-Note: when updating, please make sure you are upgrading both
-libobjcryst and pyobjcryst packages.
+Alternatively using mamba ::
+
+   mamba install pyobjcryst
 
 You can also install from the "diffpy" channel - especially if you use
 pyobjcryst allong with the other diffpy tools for PDF calculations,
@@ -40,6 +49,20 @@ pyobjcryst is also included in the "diffpy-cmi" collection
 of packages for structure analysis ::
 
    conda install -c diffpy diffpy-cmi
+
+Complete new conda environment with optional GUI and jupyter dependencies
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Assuming you have installed `Mamba-forge <https://github.com/conda-forge/miniforge/releases>`_,
+you can directly create a new conda environment named `pyobjcryst` with all useful dependencies (including
+jupyter-lab, python 3.11..) using ::
+
+   mamba create -n pyobjcryst python=3.11 pyobjcryst matplotlib py3dmol jupyterlab ipympl multiprocess
+
+Then you can activate the environment and launch jupyter-lab using ::
+
+   conda activate pyobjcryst
+   jupyter-lab
 
 From source
 ^^^^^^^^^^^
@@ -97,17 +120,14 @@ displayed in a jupyter notebook:
   ``py3dmol`` and ``ipywidgets`` modules. See the notebook
   ``examples/cystal_3d_widget.ipynb``
 * a PowderPattern can be displayed (and live-updated) if
-  ``matplotlib`` (and optionally ``ipympl``) are installed. See the
+  ``matplotlib`` and ``ipympl`` are installed. See the
   notebook ``examples/cimetidine-structure-solution-powder.ipynb``
 
-In short, ``pip install jupyter matplotlib ipywidgets py3dmol``
-will give you all the required dependencies. Note that you can also
+In short, ``conda install jupyter matplotlib ipympl py3dmol``
+will give you all the required dependencies. You can also
 use this in jupyterlab.
 
-Note that ``jupyter``, ``ipywidgets``, ``matplotlib`` and ``ipympl`` can
-be installed using conda(-forge), but ``py3dmol`` should be installed using
-``pip``, as the conda version is obsolete.
-
+These packages can also be installed using ``pip`` if you do not use conda.
 
 DEVELOPMENT
 -----------

@@ -20,7 +20,7 @@ import numpy as np
 
 # Use this version when git data are not available as in a git zip archive.
 # Update when tagging a new release.
-FALLBACK_VERSION = '2.2.5'
+FALLBACK_VERSION = '2.2.6'
 
 # define extension arguments here
 ext_kws = {
@@ -160,8 +160,8 @@ setup_args = dict(
     version=versiondata.get('DEFAULT', 'version'),
     author="Simon J.L. Billinge",
     author_email="sb2896@columbia.edu",
-    maintainer='Pavol Juhas',
-    maintainer_email='pavol.juhas@gmail.com',
+    maintainer='Vincent-Favre-Nicolin',
+    maintainer_email='favre@esrf.fr',
     description="Python bindings to the ObjCryst++ library.",
     long_description=long_description,
     long_description_content_type='text/x-rst',
@@ -170,7 +170,7 @@ setup_args = dict(
 
     # Required python packages
     install_requires=['numpy', 'packaging'],
-    extras_require={'gui': ['ipywidgets', 'jupyter', 'matplotlib', 'ipympl', 'py3dmol'],
+    extras_require={'gui': ['ipywidgets', 'jupyter', 'matplotlib', 'ipympl', 'py3dmol>=2.0.1'],
                     'doc': ['sphinx', 'm2r2', 'sphinx_py3doc_enhanced_theme',
                             'nbsphinx', 'nbsphinx-link']},
 

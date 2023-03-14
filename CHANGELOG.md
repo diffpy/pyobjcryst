@@ -2,9 +2,15 @@
 
 ## Version 2.2.6
 
+### Changes
+
+- Support for windows and python>=3.8
+- Added a zoom limit for 3D crystal views
+
 ### Fixes
 
-- fix for windows and python>=3.8
+- Correct error preventing pyobjcryst import for windows and python>=3.8
+  (https://github.com/diffpy/pyobjcryst/issues/33)
 - Fix for matplotlib >=3.7.0 when removing hkl labels
 
 ## Version 2.2.5

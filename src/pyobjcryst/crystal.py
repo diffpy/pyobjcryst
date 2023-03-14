@@ -559,7 +559,6 @@ class Crystal(Crystal_orig):
                        'alabelstyle': {'fontColor': 'black', 'backgroundColor': 'white', 'inFront': True,
                                        'fontSize': 40},
                        'astyle': {'color': 'darkred', 'radius': 5, 'midpos': -10}})
-
         atoms = self._display_list(xmin, xmax, ymin, ymax, zmin, zmax, full_molecule=False,
                                    only_independent_atoms=False)
         m.addAtoms(atoms)
@@ -568,6 +567,7 @@ class Crystal(Crystal_orig):
 
         if zoom:
             v.zoomTo()
+        v.setZoomLimits(0.001, 1000)
         if show:
             v.show()
         else:
@@ -588,6 +588,7 @@ def create_crystal_from_cif(file, oneScatteringPowerPerElement=False,
                             connectAtoms=False, multiple=False):
     """
     Create a crystal object from a CIF file or URL
+
     Example:
         create_crystal_from_cif('http://www.crystallography.net/cod/2201530.cif')
 
@@ -642,6 +643,7 @@ def wrap_boost_crystal(c: Crystal):
                      '_display_cif', '_display_list', 'display_3d', 'widget_3d', '_widget_update',
                      '_widget_on_change_parameter']:
             exec("c.%s = MethodType(Crystal.%s, c)" % (func, func))
+
 
 # PEP8, functions should be lowercase
 CreateCrystalFromCIF = create_crystal_from_cif
