@@ -637,6 +637,12 @@ double _getQ3(Molecule& m)
     return m.GetPar(quatparname(m, 3)).GetValue();
 }
 
+const ScatteringPower* getscatteringpowerpointer(const MolZAtom& a)
+{
+    const ScatteringPower* rv =
+        a.mpPow==0 ? NULL : a.mpPow;
+    return rv;
+}
 
 } // namespace
 
@@ -840,5 +846,18 @@ void wrap_molecule()
     def("ZScatterer2Molecule",
         (Molecule* (*)(ZScatterer*)) &ZScatterer2Molecule, bp::arg("zscatt"),
         return_value_policy<manage_new_object>());
+
+    // Wrap
+    class_<MolZAtom> ("MolZAtom", init<const MolZAtom&>())
+        .def("GetScatteringPower", getscatteringpowerpointer,
+            return_internal_reference<>())
+            //return_value_policy<copy_const_reference>())
+        .add_property("bond_atom", &MolZAtom::mBondAtom)
+        .add_property("bond_angle_atom", &MolZAtom::mBondAngleAtom)
+        .add_property("dihdral_angle_atom", &MolZAtom::mDihedralAtom)
+        .add_property("bond_length", &MolZAtom::mBondLength)
+        .add_property("bond_angle", &MolZAtom::mBondAngle)
+        .add_property("dihdral_angle", &MolZAtom::mDihedralAngle)
+        ;
 
 }
