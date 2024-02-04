@@ -1,5 +1,11 @@
 # Release notes
 
+## Version 2024.1
+
+### Changes
+
+- Add python access to MolZAtom, for Molecule.AsZMatrix()
+
 ## Version 2.2.6
 
 ### Changes
