@@ -20,7 +20,7 @@ import numpy as np
 
 # Use this version when git data are not available as in a git zip archive.
 # Update when tagging a new release.
-FALLBACK_VERSION = '2.2.6'
+FALLBACK_VERSION = '2024.1.1'
 
 # define extension arguments here
 ext_kws = {
