@@ -192,6 +192,9 @@ else:
     # Need this to avoid missing symbol with boost<1.66
     env.PrependUnique(CXXFLAGS=['-DBOOST_ERROR_CODE_HEADER_ONLY'])
 
+    # Use double precision for objcryst's REAL
+    env.PrependUnique(CCFLAGS=['-DREAL=double'])
+
     # Platform specific intricacies.
     if env['PLATFORM'] == 'darwin':
         darwin_shlinkflags = [n for n in env['SHLINKFLAGS'] if n != '-dynamiclib']

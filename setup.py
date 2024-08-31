@@ -25,13 +25,13 @@ FALLBACK_VERSION = '2024.1.1'
 # define extension arguments here
 ext_kws = {
     'libraries': ['ObjCryst'],
-    'extra_compile_args': ['-std=c++11', '-DBOOST_ERROR_CODE_HEADER_ONLY'],
+    'extra_compile_args': ['-std=c++11', '-DBOOST_ERROR_CODE_HEADER_ONLY', '-DREAL=double'],
     'extra_link_args': [],
     'include_dirs': [np.get_include()],
     'library_dirs': []
 }
 if platform.system() == 'Windows':
-    ext_kws['extra_compile_args'] = ['-DBOOST_ERROR_CODE_HEADER_ONLY']
+    ext_kws['extra_compile_args'] = ['-DBOOST_ERROR_CODE_HEADER_ONLY', '-DREAL=double']
     if 'CONDA_PREFIX' in os.environ:
         ext_kws['include_dirs'] += [pjoin(os.environ['CONDA_PREFIX'], 'include'),
                                     pjoin(os.environ['CONDA_PREFIX'], 'Library', 'include')]
