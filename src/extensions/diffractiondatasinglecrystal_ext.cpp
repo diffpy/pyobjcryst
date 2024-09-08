@@ -13,13 +13,17 @@
 ******************************************************************************
 *
 * boost::python bindings to ObjCryst::DiffractionDataSingleCrystal.
-*
+* Changes from ObjCryst::DiffractionDataSingleCrystal
+* - SetHklIobs takes float(64) H, K, L arrays rather than long integers - easier
+* because passing numpy int array seesm complicated, and more practical anyway
+* since GetH() GetK() GetL() functions from ScatteringData natively use floats.
 *****************************************************************************/
 
 #include <boost/python/class.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/copy_const_reference.hpp>
 #include <boost/python/manage_new_object.hpp>
+#include <boost/python/stl_iterator.hpp>
 #undef B0
 
 #include <string>
@@ -67,6 +71,71 @@ DiffractionDataSingleCrystal* _CreateSingleCrystalDataFromCIF(bp::object input, 
     return d;
 }
 
+void setdiffractiondatasinglecrystal_iobs(DiffractionDataSingleCrystal& diff, bp::object iobs)
+{
+    CrystVector_REAL iiobs;
+    assignCrystVector(iiobs, iobs);
+    if(iiobs.size() != diff.GetIobs().size())
+      throw ObjCryst::ObjCrystException("DiffractionDataSingleCrystal::SetIobs(): "
+                                        "number of elements does not match the previous Iobs list. "
+                                        "Use SetHklIobs if you want to change the number of reflections.");
+    MuteObjCrystUserInfo muzzle;
+    diff.SetIobs(iiobs);
+}
+
+void setdiffractiondatasinglecrystal_sigma(DiffractionDataSingleCrystal& diff, bp::object sigma)
+{
+    CrystVector_REAL ssigma;
+    assignCrystVector(ssigma, sigma);
+    if(ssigma.size() != diff.GetIobs().size())
+      throw ObjCryst::ObjCrystException("DiffractionDataSingleCrystal::SetSigma(): "
+                                        "number of elements does not match the Iobs list. "
+                                        "Use SetHklIobs if you want to change the number of reflections.");
+    MuteObjCrystUserInfo muzzle;
+    diff.SetSigma(ssigma);
+}
+
+// TODO: For SetHklIobs we should pass directly an integer array but that seems difficult-passed numpy arrays
+//       are always interpreted as doubles (?). It's more practical this way.
+void assignCrystVector(CrystVector<long>& cv, bp::object obj)
+{
+    bp::stl_input_iterator<double> begin(obj), end;
+    std::list<double> values(begin, end);
+    cv.resize(values.size());
+    std::list<double>::const_iterator vv = values.begin();
+    long* dst = cv.data();
+    for (; vv != values.end(); ++vv, ++dst) *dst = lround(*vv);
+}
+
+void setdiffractiondatasinglecrystal_hkliobs(DiffractionDataSingleCrystal& diff,
+                                             bp::object h,bp::object k, bp::object l,
+                                             bp::object iobs, bp::object sigma)
+{
+    CrystVector<long> hh;
+    assignCrystVector(hh, h);
+    CrystVector<long> kk;
+    assignCrystVector(kk, k);
+    CrystVector<long> ll;
+    assignCrystVector(ll, l);
+    CrystVector_REAL iiobs;
+    assignCrystVector(iiobs, iobs);
+    CrystVector_REAL ssigma;
+    assignCrystVector(ssigma, sigma);
+
+    if(hh.size() != kk.size())
+      throw ObjCryst::ObjCrystException("DiffractionDataSingleCrystal::SetHklIobs(): h and k array sizes differ");
+    if(hh.size() != ll.size())
+      throw ObjCryst::ObjCrystException("DiffractionDataSingleCrystal::SetHklIobs(): h and l array sizes differ");
+    if(hh.size() != iiobs.size())
+      throw ObjCryst::ObjCrystException("DiffractionDataSingleCrystal::SetHklIobs(): h and iobs array sizes differ");
+    if(hh.size() != ssigma.size())
+      throw ObjCryst::ObjCrystException("DiffractionDataSingleCrystal::SetHklIobs(): h and sigma array sizes differ");
+
+    MuteObjCrystUserInfo muzzle;
+    diff.SetHklIobs(hh, kk, ll, iiobs, ssigma);
+}
+
+
 }   // namespace
 
 void wrap_diffractiondatasinglecrystal()
@@ -83,10 +152,24 @@ void wrap_diffractiondatasinglecrystal()
                 return_value_policy<copy_const_reference>())
         .def("GetIobs", &DiffractionDataSingleCrystal::GetIobs,
                 return_value_policy<copy_const_reference>())
-        // FIXME ... add SetIobs, SetSigma ....
+        .def("GetSigma", &DiffractionDataSingleCrystal::GetSigma,
+                return_value_policy<copy_const_reference>())
+        .def("SetIobs",
+                &setdiffractiondatasinglecrystal_iobs,
+                bp::arg("iobs"))
+        .def("SetSigma",
+                &setdiffractiondatasinglecrystal_sigma,
+                bp::arg("sigma"))
+        .def("SetHklIobs",
+                &setdiffractiondatasinglecrystal_hkliobs,
+                (bp::arg("h"),bp::arg("k"),bp::arg("l"), bp::arg("iobs"), bp::arg("sigma")))
         .def("SetIobsToIcalc", &DiffractionDataSingleCrystal::SetIobsToIcalc)
         .def("GetRw", &DiffractionDataSingleCrystal::GetRw)
         .def("GetR", &DiffractionDataSingleCrystal::GetR)
+        .def("GetChi2", &DiffractionDataSingleCrystal::GetChi2)
+        .def("FitScaleFactorForRw", &DiffractionDataSingleCrystal::FitScaleFactorForRw)
+        .def("FitScaleFactorForR", &DiffractionDataSingleCrystal::FitScaleFactorForR)
+        // TODO: These functions should print a limited number of reflections - problems otherwise
         .def("PrintObsData", &DiffractionDataSingleCrystal::PrintObsData)
         .def("PrintObsCalcData", &DiffractionDataSingleCrystal::PrintObsCalcData)
         .def("SetUseOnlyLowAngleData", &DiffractionDataSingleCrystal::SetUseOnlyLowAngleData)
