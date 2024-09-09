@@ -101,7 +101,7 @@ gitarchivecfgfile = os.path.join(MYDIR, '.gitarchive.cfg')
 def gitinfo():
     from subprocess import Popen, PIPE
     kw = dict(stdout=PIPE, cwd=MYDIR, universal_newlines=True)
-    proc = Popen(['git', 'describe', '--match=v[[:digit:]]*'], **kw)
+    proc = Popen(['git', 'describe', '--match=v[[:digit:]]*', '--tags'], **kw)
     desc = proc.stdout.read()
     proc = Popen(['git', 'log', '-1', '--format=%H %ct %ci'], **kw)
     glog = proc.stdout.read()

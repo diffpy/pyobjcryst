@@ -160,7 +160,7 @@ if platform.system().lower() == "windows":
     env.AppendUnique(CPPDEFINES='BOOST_ALL_NO_LIB')
     # Prevent the generation of an import lib (.lib) in addition to the dll
     # env.AppendUnique(no_import_lib=1)
-    env.PrependUnique(CCFLAGS=['/Ox', '/EHsc', '/MD'])
+    env.PrependUnique(CCFLAGS=['/Ox', '/EHsc', '/MD', '/DREAL=double'])
     env.AppendUnique(CPPDEFINES={'NDEBUG': None})
 else:
     if 'CONDA_BUILD' not in os.environ:
