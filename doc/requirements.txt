@@ -3,3 +3,4 @@ m2r2
 nbsphinx
 nbsphinx-link
 numpy
+lxml_html_clean
