@@ -7,7 +7,8 @@ dependencies:
   - pydata-sphinx-theme
   - docutils=0.20.1    # https://github.com/vidartf/nbsphinx-link/issues/22
   - m2r2
-  - nbsphinx=6.4.3     # https://github.com/jupyter/nbconvert/issues/1742
+  - nbconvert=6.4.3     # https://github.com/jupyter/nbconvert/issues/1742
+  - nbsphinx
   - nbsphinx-link
   - numpy
   - lxml-html-clean
