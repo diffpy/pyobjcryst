@@ -11,3 +11,4 @@ dependencies:
   - nbsphinx-link
   - numpy
   - lxml-html-clean
+  - ipython_genutils
