@@ -4,7 +4,6 @@
 
 import sys, os
 import time
-import sphinx_py3doc_enhanced_theme
 
 # Requires sphinx >= 0.6
 
@@ -105,18 +104,22 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_py3doc_enhanced_theme'
-html_theme_path = [sphinx_py3doc_enhanced_theme.get_html_theme_path()]
+html_theme = "pydata_sphinx_theme"
 
-# Theme options are theme-specific and customize the look and feel of a theme
-# further.  For a list of options available for each theme, see the
-# documentation.
-#
+# Not sure what all these actually do
 html_theme_options = {
-    'collapsiblesidebar': 'true',
-    'navigation_with_keys': 'true',
-    'body_min_width': '40%',
-    'body_max_width': '800px',
+    "show_nav_level": 2,
+    "navigation_depth": 2,
+    "navbar_align": "left",
+    # "primary_sidebar_end": ["indices.html", "sidebar-ethical-ads.html"]
+}
+
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_sidebars
+html_sidebars = {
+    "**": ["globaltoc.html", "sidebar-nav-bs"],
+    # "**": ["localtoc.html"],
+    # "**": ["sidebar-nav-bs"],
+    # "<page_pattern>": ["index", "manual-intro", "tutorials", "manual"]
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -141,7 +144,8 @@ html_theme_options = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-# html_static_path = ['_static']
+html_static_path = ['_static']
+html_css_files = ['css/custom.css']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.

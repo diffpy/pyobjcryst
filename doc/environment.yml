@@ -4,7 +4,7 @@ channels:
   - conda-forge
 dependencies:
   - pip
-  - sphinx_py3doc_enhanced_theme
+  - pydata-sphinx-theme
   - docutils=0.20.1    # https://github.com/vidartf/nbsphinx-link/issues/22
   - m2r2
   - nbsphinx
