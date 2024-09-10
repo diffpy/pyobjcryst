@@ -1,0 +1,12 @@
+name: readthedocs
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - sphinx_py3doc_enhanced_theme
+  - docutils=0.20.1    # https://github.com/vidartf/nbsphinx-link/issues/22
+  - m2r2
+  - nbsphinx
+  - nbsphinx-link
+  - numpy
+  - lxml_html_clean

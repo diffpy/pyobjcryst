@@ -1,6 +1,0 @@
-sphinx_py3doc_enhanced_theme
-m2r2
-nbsphinx
-nbsphinx-link
-numpy
-lxml_html_clean
