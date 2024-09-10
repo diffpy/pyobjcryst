@@ -13,3 +13,4 @@ dependencies:
   - numpy
   - lxml-html-clean
   - ipython_genutils
+  - ipywidgets
