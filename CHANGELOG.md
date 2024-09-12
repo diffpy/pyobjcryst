@@ -1,5 +1,21 @@
 # Release notes
 
+## Version 2024.2
+
+### Changes
+
+- DiffractionDataSingleCrystal: add SetHklIobs, SetIobs, SetSigma, GetSigma,
+  GetChi2, FitScaleFactorForRw and FitScaleFactorForR
+  (https://github.com/diffpy/pyobjcryst/issues/42)
+- Add a single crystal data notebook example
+- Online documentation notebooks now include the plots
+  (https://pyobjcryst.readthedocs.io/en/latest/examples)
+
+### Fixes
+
+- From libobjcryst: update the ScatteringComponentList when a Scatterer is removed
+  from a Crystal (https://github.com/diffpy/pyobjcryst/issues/41)
+
 ## Version 2024.1
 
 ### Changes
@@ -23,7 +39,7 @@
 
 ### Changes
 
-- Raise an exception if alpha, beta or gamma are not within ]0;pi[ when 
+- Raise an exception if alpha, beta or gamma are not within ]0;pi[ when
   changing lattice angles
 - Add UnitCell.ChangeSpaceGroup()
 
@@ -40,7 +56,7 @@
 
 ### Changes
 
-- the list of HKL reflections will now be automatically be re-generated 
+- the list of HKL reflections will now be automatically be re-generated
   for a PowderPatternDiffraction when the Crystal's spacegroup changes,  
   or the lattice parameters are modified by more than 0.5%
 
@@ -62,24 +78,24 @@
 
 ### Changes
 
-- Add correct wrapping for C++-instantiated objects available through global 
-  registries, e.g. when loading an XML file. The objects are decorated with 
+- Add correct wrapping for C++-instantiated objects available through global
+  registries, e.g. when loading an XML file. The objects are decorated with
   the python functions when accessed through the global registries GetObj()
 - Moved global object registries to pyobjcryst.globals
 - Update documentation
 
 ### Fixed
 
-- Fix access to PRISM_TETRAGONAL_DICAP, PRISM_TRIGONAL, 
+- Fix access to PRISM_TETRAGONAL_DICAP, PRISM_TRIGONAL,
   ICOSAHEDRON and TRIANGLE_PLANE.
-- Fix powder pattern plot issues (NaN and update of hkl text with recent 
+- Fix powder pattern plot issues (NaN and update of hkl text with recent
   matplotlib versions)
 
 ## Version 2.2.1 -- 2021-11-28
 
 - Add quantitative phase analysis with PowderPattern.qpa(), including
   an example notebook using the QPA Round-Robin data.
-- Correct import of urllib.request.urllopen() when loading CIF or z-matrix 
+- Correct import of urllib.request.urllopen() when loading CIF or z-matrix
   files from http urls.
 - Fix blank line javascript output when updating the Crystal 3D view
 - Add RefinableObj.xml() to directly get the XMLOutput() as a string
