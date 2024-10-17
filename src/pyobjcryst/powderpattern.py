@@ -15,7 +15,7 @@
 See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
 
 Changes from ObjCryst::PowderPattern::
-        In development !
+        Additional functions for plotting, basic QPA and profile fitting.
 """
 
 from urllib.request import urlopen
@@ -65,10 +65,19 @@ class PowderPattern(PowderPattern_objcryst):
         except:
             pass
         if self._plot_fig is not None:
-            import matplotlib.pyplot as plt
-            if 'inline' not in plt.get_backend():
-                if plt.fignum_exists(self._plot_fig.number):
-                    self.plot()
+            if self._plot_fig is not None:
+                self.plot()
+
+    def update_display(self, return_figure=False):
+        """
+        Update the plotted figure (if it exists)
+
+        :param return_figure: if True, returns the figure
+        :return: the figure if return_figure is True
+        """
+        self.UpdateDisplay()
+        if return_figure:
+            return self.figure
 
     def disable_display_update(self):
         """ Disable display (useful for multiprocessing)"""
@@ -118,38 +127,32 @@ class PowderPattern(PowderPattern_objcryst):
 
         # TODO: handle other coordinates than angles (TOF)
         x = np.rad2deg(self.GetPowderPatternX())
-        if 'inline' not in plt.get_backend():
-            if self._plot_fig is None:
-                self._plot_fig = plt.figure(figsize=figsize)
-            elif plt.fignum_exists(self._plot_fig.number) is False:
-                # Somehow the figure disappeared, create a new one
-                self._plot_fig = plt.figure(figsize=figsize)
-            else:
-                self._plot_fig = plt.figure(self._plot_fig.number)
-            plt.clf()
+        if self._plot_fig is None or 'inline' in plt.get_backend():
+            self._plot_fig = plt.figure(figsize=figsize)
         else:
-            plt.figure(figsize=figsize)
-        plt.plot(x, obs, 'k', label='obs', linewidth=1)
-        plt.plot(x, calc, 'r', label='calc', linewidth=1)
+            self._plot_fig.clear()
+        ax = self._plot_fig.axes[0] if len(self._plot_fig.axes) else self._plot_fig.subplots()
+        ax.plot(x, obs, 'k', label='obs', linewidth=1)
+        ax.plot(x, calc, 'r', label='calc', linewidth=1)
         m = min(1, self.GetMaxSinThetaOvLambda() * self.GetWavelength())
         mtth = np.rad2deg(np.arcsin(m)) * 2
         if plot_diff:
             diff = calc - obs - obs.max() / 20
             # Mask difference above max sin(theta)/lambda
             diff = np.ma.masked_array(diff, x > mtth)
-            plt.plot(x, diff, 'g', label='calc-obs',
-                     linewidth=0.5)
+            ax.plot(x, diff, 'g', label='calc-obs',
+                    linewidth=0.5)
 
-        plt.legend(loc='upper right')
+        ax.legend(loc='upper right')
         if self.GetName() != "":
-            plt.title("PowderPattern: %s" % self.GetName())
+            self._plot_fig.title("PowderPattern: %s" % self.GetName())
 
         if self._plot_ylim is not None:
-            plt.ylim(self._plot_ylim)
+            ax.set_ylim(self._plot_ylim)
         if self._plot_xlim is not None:
-            plt.xlim(self._plot_xlim)
+            ax.set_xlim(self._plot_xlim)
         elif m < 1:
-            plt.xlim(x.min(), mtth)
+            ax.set_xlim(x.min(), mtth)
 
         if plot_hkl:
             self._do_plot_hkl(nb_max=100, fontsize_hkl=fontsize_hkl)
@@ -173,15 +176,15 @@ class PowderPattern(PowderPattern_objcryst):
                 if comp.GetExtractionMode():
                     s += "[Le Bail mode]"
                 self._plot_phase_labels.append(s)
-                plt.text(0.005, 0.995, "\n" * iphase + s, horizontalalignment="left", verticalalignment="top",
-                         transform=plt.gca().transAxes, fontsize=6, color=self._colour_phases[iphase])
+                ax.text(0.005, 0.995, "\n" * iphase + s, horizontalalignment="left", verticalalignment="top",
+                        transform=ax.transAxes, fontsize=6, color=self._colour_phases[iphase])
                 iphase += 1
 
         if 'inline' not in plt.get_backend():
             try:
                 # Force immediate display. Not supported on all backends (e.g. nbagg)
-                plt.draw()
-                plt.gcf().canvas.draw()
+                ax.draw()
+                self._plot_fig.canvas.draw()
                 if 'ipympl' not in plt.get_backend():
                     plt.pause(.001)
             except:
@@ -198,6 +201,7 @@ class PowderPattern(PowderPattern_objcryst):
             fontsize_hkl = self._plot_hkl_fontsize
         else:
             self._plot_hkl_fontsize = fontsize_hkl
+        ax = self._plot_fig.axes[0]
         # Plot up to nb_max hkl reflections
         obs = self.GetPowderPatternObs()
         calc = self.GetPowderPatternCalc()
@@ -205,9 +209,9 @@ class PowderPattern(PowderPattern_objcryst):
         # Clear previous text (assumes only hkl were printed)
         if version_parse(mpl_version) < version_parse("3.7.0"):
             # This will fail for matplotlib>=(3,7,0)
-            plt.gca().texts.clear()
+            ax.texts.clear()
         else:
-            for t in plt.gca().texts:
+            for t in ax.texts:
                 t.remove()
         iphase = 0
         for ic in range(self.GetNbPowderPatternComponent()):
@@ -215,7 +219,7 @@ class PowderPattern(PowderPattern_objcryst):
             if isinstance(c, PowderPatternDiffraction) is False:
                 continue
             # print("HKL for:", c.GetName())
-            xmin, xmax = plt.xlim()
+            xmin, xmax = ax.get_xlim()
             vh = np.round(c.GetH()).astype(np.int16)
             vk = np.round(c.GetK()).astype(np.int16)
             vl = np.round(c.GetL()).astype(np.int16)
@@ -228,12 +232,12 @@ class PowderPattern(PowderPattern_objcryst):
                     renderer = plt.gcf().canvas.renderer
                 except:
                     # Force immediate display. Not supported on all backends (e.g. nbagg)
-                    plt.draw()
-                    plt.gcf().canvas.draw()
+                    ax.draw()
+                    self._plot_fig.canvas.draw()
                     if 'ipympl' not in plt.get_backend():
                         plt.pause(.001)
                     try:
-                        renderer = plt.gcf().canvas.renderer
+                        renderer = self._plot_fig.canvas.renderer
                     except:
                         renderer = None
             else:
@@ -242,7 +246,6 @@ class PowderPattern(PowderPattern_objcryst):
             props = {'ha': 'center', 'va': 'bottom'}
             ct = 0
             last_bbox = None
-            ax = plt.gca()
             tdi = ax.transData.inverted()
             for i in range(len(vh)):
                 xhkl = np.rad2deg(self.X2XCorr(self.STOL2X(stol[i])))
@@ -258,8 +261,8 @@ class PowderPattern(PowderPattern_objcryst):
 
                 ihkl = max(calc[idxhkl], obs[idxhkl])
                 s = " %d %d %d" % (vh[i], vk[i], vl[i])
-                t = plt.text(xhkl, ihkl, s, props, rotation=90, fontsize=fontsize_hkl,
-                             fontweight='light', color=self._colour_phases[iphase])
+                t = ax.text(xhkl, ihkl, s, props, rotation=90, fontsize=fontsize_hkl,
+                            fontweight='light', color=self._colour_phases[iphase])
                 if renderer is not None:
                     # Check for overlap with previous
                     bbox = t.get_window_extent(renderer)
@@ -270,12 +273,22 @@ class PowderPattern(PowderPattern_objcryst):
                             t.set_y(ihkl + b.height * 1.2)
                     last_bbox = t.get_window_extent(renderer)
             iphase += 1
-        self._last_hkl_plot_xlim = plt.xlim()
+        self._last_hkl_plot_xlim = ax.get_xlim()
         if self._plot_phase_labels is not None:
             for iphase in range(len(self._plot_phase_labels)):
                 s = self._plot_phase_labels[iphase]
-                plt.text(0.005, 0.995, "\n" * iphase + s, horizontalalignment="left", verticalalignment="top",
-                         transform=plt.gca().transAxes, fontsize=6, color=self._colour_phases[iphase])
+                ax.text(0.005, 0.995, "\n" * iphase + s, horizontalalignment="left", verticalalignment="top",
+                        transform=ax.transAxes, fontsize=6, color=self._colour_phases[iphase])
+
+    @property
+    def figure(self):
+        """
+        return: the figure used for plotting, or None. Note that
+            if you want to display it in a notebook using ipympl (aka
+            'matplotlib widget'), you should 'figure.canvas' to display
+            also the toolbar (zoom, etc...).
+        """
+        return self._plot_fig
 
     def quick_fit_profile(self, pdiff=None, auto_background=True, init_profile=True, plot=True,
                           zero=True, constant_width=True, width=True, eta=True, backgd=True, cell=True,
@@ -434,11 +447,11 @@ class PowderPattern(PowderPattern_objcryst):
             self.plot()
 
     def _on_draw_event(self, event):
-        if self._plot_hkl and self._last_hkl_plot_xlim is not None:
-            import matplotlib.pyplot as plt
-            self._plot_xlim = plt.gca().get_xlim()
-            dx1 = abs(self._last_hkl_plot_xlim[0] - plt.xlim()[0])
-            dx2 = abs(self._last_hkl_plot_xlim[1] - plt.xlim()[1])
+        if self._plot_hkl and self._last_hkl_plot_xlim is not None and len(self._plot_fig.axes):
+            ax = self._plot_fig.axes[0]
+            self._plot_xlim = ax.get_xlim()
+            dx1 = abs(self._last_hkl_plot_xlim[0] - self._plot_xlim[0])
+            dx2 = abs(self._last_hkl_plot_xlim[1] - self._plot_xlim[1])
             if max(dx1, dx2) > 0.1 * (self._last_hkl_plot_xlim[1] - self._last_hkl_plot_xlim[0]):
                 # Need to update the hkl list
                 self._do_plot_hkl()
