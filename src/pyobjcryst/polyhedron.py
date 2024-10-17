@@ -15,7 +15,7 @@
 
 """Python wrapping of Polyhedron.h
 
-See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
+See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 """
 
 __all__ = ["MakeTetrahedron", "MakeOctahedron", "MakeSquarePlane",

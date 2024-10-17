@@ -12,7 +12,7 @@
 
 """Python wrapping of LSQNumObj.h
 
-See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
+See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 
 Changes from ObjCryst::LSQNumObj::
         In development !

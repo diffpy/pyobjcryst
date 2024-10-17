@@ -1,5 +1,13 @@
 # Release notes
 
+## Version 2024.2.1
+
+### Changes
+
+- PowderPattern:
+  - fix re-using a matplotlib figure when plotting
+  - add 'figure' property
+
 ## Version 2024.2
 
 ### Changes

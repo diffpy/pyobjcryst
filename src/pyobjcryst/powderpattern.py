@@ -12,7 +12,7 @@
 
 """Python wrapping of PowderPattern.h
 
-See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
+See the online ObjCryst++ documentation (https://objcryst.readthedocs.io/en/latest/).
 
 Changes from ObjCryst::PowderPattern::
         Additional functions for plotting, basic QPA and profile fitting.

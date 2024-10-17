@@ -15,7 +15,7 @@
 
 """Python wrapping of IO.h
 
-See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
+See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 
 Changes from ObjCryst::XMLCrystTag
 - The istream constructor of XMLCrystTag is not wrapped.

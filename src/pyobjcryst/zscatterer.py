@@ -15,7 +15,7 @@
 
 """Python wrapping of Zscatterer.
 
-See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
+See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 
 Changes from ObjCryst::ZAtom
 - XMLOutput and Input are not wrapped.

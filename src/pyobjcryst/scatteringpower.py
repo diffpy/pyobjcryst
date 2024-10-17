@@ -15,7 +15,7 @@
 
 """Python wrapping of ScatteringPower.h
 
-See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
+See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 
 Changes from ObjCryst::ScatteringComponent
 - Added attributes X, Y, Z, Occupancy to conform to MolAtom.

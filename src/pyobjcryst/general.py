@@ -15,7 +15,7 @@
 
 """Python wrapping of things from General.h.
 
-See the online ObjCryst++ documentation (http://vincefn.net/ObjCryst/).
+See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 """
 
 __all__ = ["RadiationType", "ObjCrystException", "WavelengthType"]
