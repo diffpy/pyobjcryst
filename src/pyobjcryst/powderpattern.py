@@ -145,7 +145,7 @@ class PowderPattern(PowderPattern_objcryst):
 
         ax.legend(loc='upper right')
         if self.GetName() != "":
-            self._plot_fig.title("PowderPattern: %s" % self.GetName())
+            self._plot_fig.suptitle("PowderPattern: %s" % self.GetName())
 
         if self._plot_ylim is not None:
             ax.set_ylim(self._plot_ylim)

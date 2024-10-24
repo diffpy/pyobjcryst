@@ -1,5 +1,13 @@
 # Release notes
 
+## Version 2024.X.X
+
+### Changes
+
+### Fixes:
+
+- correct powder pattern plotting with a non-empty name
+
 ## Version 2024.2.1
 
 ### Changes
