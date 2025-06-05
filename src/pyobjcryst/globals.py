@@ -10,12 +10,19 @@
 #
 ##############################################################################
 
-""" Global objects are exposed here. These are the main objects registries,
+"""Global objects are exposed here. These are the main objects registries,
 which are tweaked to wrap pure C++ objects with the python methods.
 """
 
-__all__ = ["gCrystalRegistry","gPowderPatternRegistry", "gRefinableObjRegistry", "gScattererRegistry",
-           "gOptimizationObjRegistry", "gTopRefinableObjRegistry", "gDiffractionDataSingleCrystalRegistry"]
+__all__ = [
+    "gCrystalRegistry",
+    "gPowderPatternRegistry",
+    "gRefinableObjRegistry",
+    "gScattererRegistry",
+    "gOptimizationObjRegistry",
+    "gTopRefinableObjRegistry",
+    "gDiffractionDataSingleCrystalRegistry",
+]
 
 from .refinableobj import wrap_boost_refinableobjregistry
 from .globaloptim import wrap_boost_optimizationobjregistry

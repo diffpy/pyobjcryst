@@ -21,4 +21,3 @@ Changes from ObjCryst::Radiation::
 __all__ = ["Radiation", "RadiationType", "WavelengthType"]
 
 from pyobjcryst._pyobjcryst import Radiation, RadiationType, WavelengthType
-

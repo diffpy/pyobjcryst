@@ -21,7 +21,7 @@ from pyobjcryst import refinableobj
 class TestGlobalOptim(unittest.TestCase):
 
     def setUp(self):
-        self.c = loadcifdata('caffeine.cif')
+        self.c = loadcifdata("caffeine.cif")
         self.d = DiffractionDataSingleCrystal(self.c)
         self.d.GenHKLFullSpace2(0.4, True)
         self.d.SetIobsToIcalc()
@@ -31,24 +31,21 @@ class TestGlobalOptim(unittest.TestCase):
         del self.d
 
     def test_mc_create(self):
-        """Check Creating a basic Monte-Carlo object
-        """
+        """Check Creating a basic Monte-Carlo object"""
         mc = MonteCarlo()
         mc.AddRefinableObj(self.c)
         mc.AddRefinableObj(self.d)
 
     def test_mc_name(self):
-        """Check Creating a basic Monte-Carlo object
-        """
+        """Check Creating a basic Monte-Carlo object"""
         mc = MonteCarlo()
         mc.AddRefinableObj(self.c)
         mc.AddRefinableObj(self.d)
-        mc.SetName('caffeine')
-        self.assertEqual(mc.GetName(), 'caffeine')
+        mc.SetName("caffeine")
+        self.assertEqual(mc.GetName(), "caffeine")
 
     def test_mc_llk(self):
-        """Check Creating a basic Monte-Carlo object
-        """
+        """Check Creating a basic Monte-Carlo object"""
         mc = MonteCarlo()
         mc.AddRefinableObj(self.c)
         mc.AddRefinableObj(self.d)

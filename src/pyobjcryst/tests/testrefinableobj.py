@@ -189,7 +189,7 @@ class TestRefinablePar(unittest.TestCase):
         self.assertAlmostEqual(3.52, par.GetValue())
 
         # pass a parameter and pass it into c++
-        c.AddPar(self.testpar);
+        c.AddPar(self.testpar)
 
         # get it back
         testpar2 = c.GetPar("test")

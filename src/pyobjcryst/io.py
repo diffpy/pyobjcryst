@@ -26,13 +26,19 @@ Changes from IO functions:
   files ('.xmlgz)
 """
 
-__all__ = ["XMLCrystTag", "xml_cryst_file_load_all_object", "xml_cryst_file_save_global"]
+__all__ = [
+    "XMLCrystTag",
+    "xml_cryst_file_load_all_object",
+    "xml_cryst_file_save_global",
+]
 
 import gzip
 import os
-from pyobjcryst._pyobjcryst import XMLCrystTag, \
-    XMLCrystFileLoadAllObject as XMLCrystFileLoadAllObject_orig, \
-    XMLCrystFileSaveGlobal as XMLCrystFileSaveGlobal_orig
+from pyobjcryst._pyobjcryst import (
+    XMLCrystTag,
+    XMLCrystFileLoadAllObject as XMLCrystFileLoadAllObject_orig,
+    XMLCrystFileSaveGlobal as XMLCrystFileSaveGlobal_orig,
+)
 from .globals import gTopRefinableObjRegistry
 
 
@@ -46,11 +52,11 @@ def xml_cryst_file_load_all_object(file, verbose=False):
     """
     nb0 = len(gTopRefinableObjRegistry)
     if isinstance(file, str):
-        if os.path.splitext(file)[-1] == '.xmlgz':
-            o = gzip.open(file, mode='rb')
+        if os.path.splitext(file)[-1] == ".xmlgz":
+            o = gzip.open(file, mode="rb")
             XMLCrystFileLoadAllObject_orig(o, verbose=verbose)
         else:
-            XMLCrystFileLoadAllObject_orig(open(file, 'rb'), verbose=verbose)
+            XMLCrystFileLoadAllObject_orig(open(file, "rb"), verbose=verbose)
     else:
         XMLCrystFileLoadAllObject_orig(file, verbose=verbose)
     return gTopRefinableObjRegistry[nb0:]
@@ -65,11 +71,17 @@ def xml_cryst_file_save_global(file):
     :return: nothing
     """
     if isinstance(file, str):
-        if os.path.splitext(file)[-1] == '.xmlgz':
-            o = gzip.open(file, mode='wt', compresslevel=9, encoding=None,
-                          errors=None, newline=None)
+        if os.path.splitext(file)[-1] == ".xmlgz":
+            o = gzip.open(
+                file,
+                mode="wt",
+                compresslevel=9,
+                encoding=None,
+                errors=None,
+                newline=None,
+            )
             XMLCrystFileSaveGlobal_orig(o)
         else:
-            XMLCrystFileSaveGlobal_orig(open(file, 'w'))
+            XMLCrystFileSaveGlobal_orig(open(file, "w"))
     else:
         XMLCrystFileSaveGlobal_orig(file)

@@ -21,7 +21,7 @@ from pyobjcryst import refinableobj
 class TestGlobalOptim(unittest.TestCase):
 
     def setUp(self):
-        self.c = loadcifdata('caffeine.cif')
+        self.c = loadcifdata("caffeine.cif")
         self.d = DiffractionDataSingleCrystal(self.c)
         self.d.GenHKLFullSpace2(0.4, True)
         self.d.SetIobsToIcalc()
@@ -31,29 +31,25 @@ class TestGlobalOptim(unittest.TestCase):
         del self.d
 
     def test_lsq_create(self):
-        """Check Creating a basic LSQ object
-        """
+        """Check Creating a basic LSQ object"""
         lsq = LSQ()
         lsq.SetRefinedObj(self.d)
 
     def test_lsq_get_obs_calc(self):
-        """Check Creating a basic LSQ object & get obs&calc arrays
-        """
+        """Check Creating a basic LSQ object & get obs&calc arrays"""
         lsq = LSQ()
         lsq.SetRefinedObj(self.d, 0, True, True)
         junk = lsq.GetLSQObs(), lsq.GetLSQCalc(), lsq.ChiSquare()
 
     def test_lsq_get_refined_obj(self):
-        """Check Creating a basic LSQ object & get obs&calc arrays
-        """
+        """Check Creating a basic LSQ object & get obs&calc arrays"""
         lsq = LSQ()
         lsq.SetRefinedObj(self.d, 0, True, True)
         lsq.PrepareRefParList()
         # print(lsq.GetCompiledRefinedObj())
 
     def test_lsq_set_pr_fixed(self):
-        """Check Creating a basic LSQ object & get obs&calc arrays
-        """
+        """Check Creating a basic LSQ object & get obs&calc arrays"""
         lsq = LSQ()
         lsq.SetRefinedObj(self.d, 0, True, True)
         lsq.PrepareRefParList()

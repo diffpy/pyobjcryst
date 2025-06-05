@@ -18,7 +18,11 @@
 import unittest
 
 from pyobjcryst.tests.pyobjcrysttestutils import (
-    makeScatterer, makeCrystal, getScatterer, makeScattererAnisotropic)
+    makeScatterer,
+    makeCrystal,
+    getScatterer,
+    makeScattererAnisotropic,
+)
 from pyobjcryst.atom import Atom
 
 
@@ -52,6 +56,7 @@ class TestCrystal(unittest.TestCase):
     def testNullData(self):
         """Make sure we get an error when trying to add or remove Null."""
         from pyobjcryst.crystal import Crystal
+
         c = Crystal()
         self.assertRaises(ValueError, c.AddScatterer, None)
         self.assertRaises(ValueError, c.RemoveScatterer, None)
@@ -117,7 +122,7 @@ class TestCrystal(unittest.TestCase):
             self.assertEqual(a.X, ani.X)
             aneg = fget(-1)
             self.assertEqual(a.X, aneg.X)
-            self.assertRaises(ValueError, fget, 'invalid')
+            self.assertRaises(ValueError, fget, "invalid")
             self.assertRaises(IndexError, fget, 10)
             self.assertRaises(IndexError, fget, -2)
         return

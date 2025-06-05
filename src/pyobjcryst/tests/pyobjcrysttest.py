@@ -28,22 +28,25 @@ from pyobjcryst.scatteringpower import ScatteringPowerAtom
 
 from numpy import pi
 
+
 def makeScatterer():
     sp = ScatteringPowerAtom("Ni", "Ni")
-    sp.SetBiso(8*pi*pi*0.003)
-    sp.B11 = 8*pi*pi*0.003
-    sp.SetBij(2, 2, 8*pi*pi*0.003)
-    sp.SetBij(3, 3, 8*pi*pi*0.003)
+    sp.SetBiso(8 * pi * pi * 0.003)
+    sp.B11 = 8 * pi * pi * 0.003
+    sp.SetBij(2, 2, 8 * pi * pi * 0.003)
+    sp.SetBij(3, 3, 8 * pi * pi * 0.003)
     atom = Atom(0, 0, 0, "Ni", sp)
 
     print(sp.B11)
     return sp, atom
+
 
 def makeCrystal(sp, atom):
     c = Crystal(3.52, 3.52, 3.52, "225")
     c.AddScatterer(atom)
     c.AddScatteringPower(sp)
     return c
+
 
 def getScatterer():
     """Make a crystal and return scatterer from GetScatt."""
@@ -52,6 +55,7 @@ def getScatterer():
 
     sp2 = c.GetScatt(sp.GetName())
     return sp2
+
 
 def testCrystalScope():
     """Test to see if the the crystal survives after it is out of scope."""
@@ -63,6 +67,7 @@ def testCrystalScope():
     print(atom)
     print(repr(atom.GetCrystal()))
     return
+
 
 def testMultiAdd():
     """Test exception for multi-crystal additions."""
@@ -79,6 +84,7 @@ def testMultiAdd():
         print("Exception:", e)
     return
 
+
 def testScattererScope():
     """Test when atoms go out of scope before crystal."""
     c = makeCrystal(*makeScatterer())
@@ -86,6 +92,7 @@ def testScattererScope():
     sp2 = getScatterer()
     print(sp2)
     return
+
 
 def testRemoveFunctions():
     """Test the RemoveScatterer and RemoveScatteringPower method."""
@@ -128,6 +135,7 @@ def testRemoveFunctions():
 
     return
 
+
 def parTest():
     rpt = RefParType("default")
     testpar = RefinablePar("test", 3.0, 0, 10, rpt)
@@ -137,7 +145,7 @@ def parTest():
     par = c.GetPar(0)
     print(par.__class__, par)
 
-    c.AddPar(testpar);
+    c.AddPar(testpar)
     testpar2 = c.GetPar("test")
     print(testpar2.__class__, testpar2)
 
@@ -147,6 +155,7 @@ def parTest():
     print(testpar.__class__, testpar)
     return
 
+
 def test1():
     """Run some tests."""
     testCrystalScope()
@@ -154,6 +163,7 @@ def test1():
     testScattererScope()
     testRemoveFunctions()
     return
+
 
 if __name__ == "__main__":
     test1()

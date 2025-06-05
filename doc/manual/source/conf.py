@@ -22,38 +22,38 @@ import time
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.ifconfig',
-    'sphinx.ext.autodoc',
-    'm2r2',
-    'nbsphinx',
-    'nbsphinx_link'
+    "sphinx.ext.ifconfig",
+    "sphinx.ext.autodoc",
+    "m2r2",
+    "nbsphinx",
+    "nbsphinx_link",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # The suffix of source filenames.
-source_suffix = ['.rst', '.md']
+source_suffix = [".rst", ".md"]
 
 # The encoding of source files.
 # source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = "index"
 
 # General information about the project.
-project = 'pyobjcryst'
-copyright = '%Y, Brookhaven National Laboratory'
+project = "pyobjcryst"
+copyright = "%Y, Brookhaven National Laboratory"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
-sys.path.insert(0, os.path.abspath('../../..'))
+sys.path.insert(0, os.path.abspath("../../.."))
 from setup import versiondata
 
-fullversion = versiondata.get('DEFAULT', 'version')
+fullversion = versiondata.get("DEFAULT", "version")
 # The short X.Y version.
-version = ''.join(fullversion.split('.post')[:1])
+version = "".join(fullversion.split(".post")[:1])
 # The full version, including alpha/beta/rc tags.
 release = fullversion
 
@@ -64,13 +64,13 @@ release = fullversion
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
 # today = ''
-today_seconds = versiondata.getint('DEFAULT', 'timestamp')
-today = time.strftime('%B %d, %Y', time.localtime(today_seconds))
+today_seconds = versiondata.getint("DEFAULT", "timestamp")
+today = time.strftime("%B %d, %Y", time.localtime(today_seconds))
 year = today.split()[-1]
 # Else, today_fmt is used as the format for a strftime call.
 # today_fmt = '%B %d, %Y'
 # substitute YEAR in the copyright string
-copyright = copyright.replace('%Y', year)
+copyright = copyright.replace("%Y", year)
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -91,7 +91,7 @@ exclude_patterns = []
 # show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = "sphinx"
 
 # A list of ignored prefixes for module index sorting.
 # modindex_common_prefix = []
@@ -144,8 +144,8 @@ html_sidebars = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
-html_css_files = ['css/custom.css']
+html_static_path = ["_static"]
+html_css_files = ["css/custom.css"]
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
@@ -189,17 +189,15 @@ html_split_index = True
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'pyobjcrystdoc'
+htmlhelp_basename = "pyobjcrystdoc"
 
 # -- Options for LaTeX output --------------------------------------------------
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     # 'papersize': 'letterpaper',
-
     # The font size ('10pt', '11pt' or '12pt').
     # 'pointsize': '10pt',
-
     # Additional stuff for the LaTeX preamble.
     # 'preamble': '',
 }

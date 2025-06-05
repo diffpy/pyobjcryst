@@ -21,9 +21,14 @@ from pkg_resources import resource_filename
 from pyobjcryst import ObjCrystException
 from pyobjcryst.crystal import Crystal
 from pyobjcryst.molecule import (
-    GetBondLength, StretchModeBondLength,
-    GetBondAngle, StretchModeBondAngle,
-    GetDihedralAngle, StretchModeTorsion, ImportFenskeHallZMatrix)
+    GetBondLength,
+    StretchModeBondLength,
+    GetBondAngle,
+    StretchModeBondAngle,
+    GetDihedralAngle,
+    StretchModeTorsion,
+    ImportFenskeHallZMatrix,
+)
 from pyobjcryst.refinableobj import RefParType, RefinablePar
 from pyobjcryst.tests.pyobjcrysttestutils import makeC60, makeMnO6
 
@@ -55,7 +60,6 @@ class TestMolecule(unittest.TestCase):
         self.m.Z *= 1.001
         self.m.Occupancy *= 1.001
         return
-
 
     def testContainment(self):
         """Make sure we can still use the molecule if the crystal is out of
@@ -90,7 +94,7 @@ class TestMolecule(unittest.TestCase):
         self.assertEqual(60, self.m.GetNbAtoms())
         for i in range(60):
             a1 = self.m.GetAtom(i)
-            self.assertEqual(a1.GetName(), "C%i"%i)
+            self.assertEqual(a1.GetName(), "C%i" % i)
 
         a = self.m.GetAtom(0)
         x = a.X
@@ -129,7 +133,6 @@ class TestMolecule(unittest.TestCase):
 
         return
 
-
     def testGetAtom(self):
         "check Molecule.GetAtom."
         m = self.m
@@ -146,7 +149,6 @@ class TestMolecule(unittest.TestCase):
         self.assertRaises(ValueError, m.GetAtom, "invalid")
         return
 
-
     def testFindAtom(self):
         "check Molecule.FindAtom."
         m = self.m
@@ -157,7 +159,6 @@ class TestMolecule(unittest.TestCase):
         self.assertEqual(a0.X, b0.X)
         self.assertIs(None, m.FindAtom("invalid"))
         return
-
 
     def testBonds(self):
         """Test the Bond methods."""
@@ -259,12 +260,10 @@ class TestMolecule(unittest.TestCase):
         # Try some bad bond angles
         self.assertTrue(ba3 is None)
 
-
         # Remove an atom, the bondangle should disappear as well.
         self.m.RemoveAtom(a1)
         ba4 = self.m.FindBondAngle(a2, a1, a3)
         self.assertTrue(ba4 is None)
-
 
         # Try to find a bondangle from an atom outside of the molecule.
         m = makeC60().GetScatterer("c60")
@@ -327,7 +326,6 @@ class TestMolecule(unittest.TestCase):
         da2 = self.m.FindDihedralAngle(a1, a2, a3, a4)
         self.assertTrue(da1 is not None)
         self.assertEqual(da1.GetName(), da2.GetName())
-
 
         # Remove an atom, the dihedral angle should disappear as well.
         self.m.RemoveAtom(a1)
@@ -418,7 +416,7 @@ class TestMolecule(unittest.TestCase):
 
         self.assertAlmostEqual(x, a0.X)
         self.assertAlmostEqual(y, a0.Y)
-        self.assertAlmostEqual(z+0.5, a0.Z)
+        self.assertAlmostEqual(z + 0.5, a0.Z)
 
         # Move them back
         self.m.TranslateAtomGroup(self.m.GetAtomList(), 0, 0, -0.5)
@@ -429,10 +427,10 @@ class TestMolecule(unittest.TestCase):
         # Rotate the atoms
 
         import numpy
+
         xyz = [numpy.array([a.X, a.Y, a.Z]) for a in self.m]
 
-        self.m.RotateAtomGroup((0,0,0), (0,0,1),
-                self.m.GetAtomList(), pi/2)
+        self.m.RotateAtomGroup((0, 0, 0), (0, 0, 1), self.m.GetAtomList(), pi / 2)
 
         rm = numpy.array([[0, -1, 0], [1, 0, 0], [0, 0, 1]])
         for i in range(len(self.m)):
@@ -447,11 +445,13 @@ class TestMolecule(unittest.TestCase):
     def testZMatrix(self):
         """Test creating a Molecule from a z-matrix"""
         fname = resource_filename(__name__, "testdata/cime.fhz")
-        c= Crystal()
+        c = Crystal()
         m = ImportFenskeHallZMatrix(c, fname)
         assert m.GetNbAtoms() == 17
 
+
 # Test how changing a name to one that is already taken messes things up.
+
 
 class TestMolAtom(unittest.TestCase):
 
@@ -518,7 +518,9 @@ class TestMolAtom(unittest.TestCase):
 
         return
 
+
 # End class TestMolAtom
+
 
 class TestMolBond(unittest.TestCase):
 
@@ -572,13 +574,15 @@ class TestMolBond(unittest.TestCase):
 
         # Check the log likelihood of the bond and the containing molecule
         b.Length0 = 4
-        ll = ((b.Length - (b.Length0-b.LengthDelta))/b.LengthSigma)**2
+        ll = ((b.Length - (b.Length0 - b.LengthDelta)) / b.LengthSigma) ** 2
         self.assertAlmostEqual(ll, b.GetLogLikelihood(), numplaces)
         self.assertAlmostEqual(ll, m.GetLogLikelihood(), numplaces)
 
         return
 
+
 # End class TestMolBond
+
 
 class TestMolBondAngle(unittest.TestCase):
 
@@ -634,13 +638,15 @@ class TestMolBondAngle(unittest.TestCase):
 
         # Check the log likelihood of the bond and the containing molecule
         ba.Angle0 = 4
-        ll = ((ba.Angle - (ba.Angle0-ba.AngleDelta))/ba.AngleSigma)**2
+        ll = ((ba.Angle - (ba.Angle0 - ba.AngleDelta)) / ba.AngleSigma) ** 2
         self.assertAlmostEqual(ll, ba.GetLogLikelihood(), numplaces)
         self.assertAlmostEqual(ll, m.GetLogLikelihood(), numplaces)
 
         return
 
+
 # End class TestMolBondAngle
+
 
 class TestMolDihedralAngle(unittest.TestCase):
 
@@ -654,8 +660,7 @@ class TestMolDihedralAngle(unittest.TestCase):
         self.a3 = self.m.GetAtom(2)
         self.a4 = self.m.GetAtom(3)
 
-        self.da = self.m.AddDihedralAngle(self.a1, self.a2, self.a3, self.a4,
-                5, 1, 2)
+        self.da = self.m.AddDihedralAngle(self.a1, self.a2, self.a3, self.a4, 5, 1, 2)
         return
 
     def tearDown(self):
@@ -689,11 +694,11 @@ class TestMolDihedralAngle(unittest.TestCase):
         self.assertEqual(at3.GetName(), a3.GetName())
         self.assertEqual(at4.GetName(), a4.GetName())
 
-
         # Data
         # Note that the angle is in [-pi, pi]
         from math import pi
-        self.assertAlmostEqual(5-2*pi, da.Angle0, numplaces)
+
+        self.assertAlmostEqual(5 - 2 * pi, da.Angle0, numplaces)
         self.assertAlmostEqual(1, da.AngleSigma, numplaces)
         self.assertAlmostEqual(2, da.AngleDelta, numplaces)
         da.Angle0 = 1.2
@@ -704,11 +709,11 @@ class TestMolDihedralAngle(unittest.TestCase):
         self.assertAlmostEqual(1, da.AngleDelta, numplaces)
 
         # Check the log likelihood of the bond and the containing molecule
-        da.Angle0 = pi-0.2
+        da.Angle0 = pi - 0.2
         da.AngleDelta = 0
         da.AngleSigma = 0.1
-        angle = da.Angle + (da.Angle0-da.AngleDelta) - 2*pi
-        ll = (angle/da.AngleSigma)**2
+        angle = da.Angle + (da.Angle0 - da.AngleDelta) - 2 * pi
+        ll = (angle / da.AngleSigma) ** 2
 
         # For some reason these are not very close in value.
         self.assertAlmostEqual(ll, da.GetLogLikelihood(), 2)
@@ -716,7 +721,9 @@ class TestMolDihedralAngle(unittest.TestCase):
 
         return
 
+
 # End class TestMolDihedralAngle
+
 
 class TestStretchModeBondLength(unittest.TestCase):
 
@@ -755,7 +762,7 @@ class TestStretchModeBondLength(unittest.TestCase):
 
         # Make sure this does what we expected
         d1 = GetBondLength(atop, abot)
-        self.assertAlmostEqual(d0+delta, d1, 6)
+        self.assertAlmostEqual(d0 + delta, d1, 6)
 
         # Note that only the second atom has moved
         dc1 = GetBondLength(ac, atop)
@@ -763,7 +770,9 @@ class TestStretchModeBondLength(unittest.TestCase):
 
         return
 
+
 # End class TestStretchModeBondLength
+
 
 class TestStretchModeBondAngle(unittest.TestCase):
 
@@ -795,18 +804,19 @@ class TestStretchModeBondAngle(unittest.TestCase):
         self.assertEqual(sm.mpAtom1.GetName(), ac.GetName())
         self.assertEqual(sm.mpAtom2.GetName(), a2.GetName())
 
-
         # Stretch the angle by 5%
         delta = 0.05 * angle0
         sm.Stretch(delta)
 
         # Make sure this does what we expected
         angle1 = GetBondAngle(a1, ac, a2)
-        self.assertAlmostEqual(angle0+delta, angle1, 6)
+        self.assertAlmostEqual(angle0 + delta, angle1, 6)
 
         return
 
+
 # End class TestStretchModeBondAngle
+
 
 class TestStretchModeTorsion(unittest.TestCase):
 
@@ -845,7 +855,7 @@ class TestStretchModeTorsion(unittest.TestCase):
 
         # Make sure this does what we expected
         angle1 = GetDihedralAngle(a1, ac0, ac1, a2)
-        self.assertAlmostEqual(angle0+delta, angle1, 6)
+        self.assertAlmostEqual(angle0 + delta, angle1, 6)
 
         return
 
@@ -859,14 +869,15 @@ class TestStretchModeTorsion(unittest.TestCase):
         self.assertTrue(sp is None)
 
         sm = self.m.xml()
-        self.assertEqual(8, sm.count('Atom Name'))
+        self.assertEqual(8, sm.count("Atom Name"))
 
         sc = str(self.c)
         sclines = sc.splitlines()
-        self.assertTrue(sclines[2].endswith(' 8'))
-        self.assertTrue('ScattPow: dummy' in sc)
+        self.assertTrue(sclines[2].endswith(" 8"))
+        self.assertTrue("ScattPow: dummy" in sc)
 
         return
+
 
 # End class TestStretchTorsion
 

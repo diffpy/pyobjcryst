@@ -18,7 +18,8 @@
 
 # FIXME: check if this function does any meaningful job.
 
-def putAtomsInMolecule(crystal, alist = None, name = None):
+
+def putAtomsInMolecule(crystal, alist=None, name=None):
     """Place atoms from a crystal into a molecule inside the crystal.
 
     Selected atoms are put into a new Molecule object, which is then placed
@@ -46,6 +47,7 @@ def putAtomsInMolecule(crystal, alist = None, name = None):
 
     from pyobjcryst.molecule import Molecule
     from pyobjcryst.atom import Atom
+
     m = Molecule(c, name)
 
     # center of mass
@@ -53,6 +55,7 @@ def putAtomsInMolecule(crystal, alist = None, name = None):
 
     # mapping fractional coords back into [0, 1)
     from math import floor
+
     f = lambda v: v - floor(v)
 
     scat = []
@@ -108,9 +111,9 @@ def _xyztostring(crystal):
         xyz = [s.X, s.Y, s.Z]
         xyz = crystal.FractionalToOrthonormalCoords(*xyz)
         x, y, z = xyz
-        out += "%s %f %f %f\n"%(el, x, y, z)
+        out += "%s %f %f %f\n" % (el, x, y, z)
 
-    out = "%i\n"%nsc + out
+    out = "%i\n" % nsc + out
     return out
 
 
@@ -122,7 +125,7 @@ def printxyz(crystal):
 
 def writexyz(crystal, filename):
     """Write a crystal to an xyz file."""
-    f = open(filename, 'w')
+    f = open(filename, "w")
     out = _xyztostring(crystal)
     f.write(out)
     f.close()

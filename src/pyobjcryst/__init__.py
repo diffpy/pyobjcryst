@@ -50,6 +50,7 @@ See the modules' documentation for specific changes.
 """
 
 import warnings
+
 # Let's put this on the package level
 from pyobjcryst.general import ObjCrystException
 
@@ -94,11 +95,14 @@ def loadCrystal(filename):
         which has more options when importing a CIF, including
         using an URL instead of a file.
     """
-    warnings.warn("loadCrystal is deprecated. Please use "
-                  "pyobjcryst.crystal.create_crystal_from_cif() instead",
-                  DeprecationWarning)
+    warnings.warn(
+        "loadCrystal is deprecated. Please use "
+        "pyobjcryst.crystal.create_crystal_from_cif() instead",
+        DeprecationWarning,
+    )
     from pyobjcryst.crystal import CreateCrystalFromCIF
-    with open(filename, 'rb') as fp:
+
+    with open(filename, "rb") as fp:
         rv = CreateCrystalFromCIF(fp)
     return rv
 

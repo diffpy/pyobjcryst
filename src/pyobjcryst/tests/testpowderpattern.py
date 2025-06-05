@@ -13,8 +13,7 @@
 #
 ##############################################################################
 
-"""Unit tests for pyobjcryst.powderpattern (with indexing &
-"""
+"""Unit tests for pyobjcryst.powderpattern (with indexing &"""
 
 import unittest
 import numpy as np
@@ -30,6 +29,7 @@ from pyobjcryst.tests.pyobjcrysttestutils import loadcifdata, datafile
 
 # ----------------------------------------------------------------------------
 
+
 class TestRoutines(unittest.TestCase):
     pass
     # def test_CreatePowderPatternFromCIF(self):  assert False
@@ -38,6 +38,7 @@ class TestRoutines(unittest.TestCase):
 # End of class TestRoutines
 
 # ----------------------------------------------------------------------------
+
 
 class TestPowderPattern(unittest.TestCase):
 
@@ -137,7 +138,9 @@ class TestPowderPattern(unittest.TestCase):
         w = pp.GetWavelength()
         pp.SetWavelength("Cu")
         self.assertAlmostEqual(pp.GetWavelength(), 1.5418, places=4)
-        self.assertEqual(pp.GetRadiation().GetWavelengthType(), WavelengthType.WAVELENGTH_ALPHA12)
+        self.assertEqual(
+            pp.GetRadiation().GetWavelengthType(), WavelengthType.WAVELENGTH_ALPHA12
+        )
         pp.GetRadiation().SetWavelengthType(t)
         pp.SetWavelength(w)
 
@@ -198,7 +201,9 @@ class TestPowderPattern(unittest.TestCase):
         p.SetPowderPatternX(np.deg2rad(x))
         p.SetPowderPatternObs(np.ones_like(x))
         pd = p.AddPowderPatternDiffraction(c)
-        pd.SetReflectionProfilePar(ReflectionProfileType.PROFILE_PSEUDO_VOIGT, 1e-6, 0, 0, 0, 0)
+        pd.SetReflectionProfilePar(
+            ReflectionProfileType.PROFILE_PSEUDO_VOIGT, 1e-6, 0, 0, 0, 0
+        )
         # p.plot(hkl=True)
         calc = p.GetPowderPatternCalc()
         obs = np.random.poisson(calc * 1e6 / calc.max() + 50).astype(np.float64)
@@ -208,7 +213,9 @@ class TestPowderPattern(unittest.TestCase):
         # Do the profile optimisation in P1
         pd.GetCrystal().GetSpaceGroup().ChangeSpaceGroup("P1")
         p.FitScaleFactorForIntegratedRw()
-        p.quick_fit_profile(auto_background=True, init_profile=False, verbose=False, plot=False)
+        p.quick_fit_profile(
+            auto_background=True, init_profile=False, verbose=False, plot=False
+        )
 
         spgex = SpaceGroupExplorer(pd)
         spgex.Run("P 1 21/c 1")
@@ -249,6 +256,7 @@ class TestPowderPattern(unittest.TestCase):
 
 # ----------------------------------------------------------------------------
 
+
 class TestPowderPatternComponent(unittest.TestCase):
     pass
     # def test___init__(self):  assert False
@@ -258,6 +266,7 @@ class TestPowderPatternComponent(unittest.TestCase):
 # End of class TestPowderPatternComponent
 
 # ----------------------------------------------------------------------------
+
 
 class TestPowderPatternBackground(unittest.TestCase):
     pass
@@ -272,6 +281,7 @@ class TestPowderPatternBackground(unittest.TestCase):
 # End of class TestPowderPatternBackground
 
 # ----------------------------------------------------------------------------
+
 
 class TestPowderPatternDiffraction(unittest.TestCase):
     pass
@@ -290,5 +300,5 @@ class TestPowderPatternDiffraction(unittest.TestCase):
 
 # ----------------------------------------------------------------------------
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

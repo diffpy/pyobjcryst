@@ -62,25 +62,51 @@ Changes from ObjCryst::Restraint
 - XML input/output are not exposed.
 """
 
-__all__ = ["RefinableObjClock", "RefinableObj", "RefObjOpt",
-           "RefinableObjRegistry", "RefParType", "RefParDerivStepModel",
-           "RefinablePar", "Restraint", "ScattererRegistry",
-           "ScatteringPowerRegistry", "ZAtomRegistry",
-           "refpartype_crystal", "refpartype_objcryst", "refpartype_scatt",
-           "refpartype_scatt_transl", "refpartype_scatt_transl_x",
-           "refpartype_scatt_transl_y", "refpartype_scatt_transl_z",
-           "refpartype_scatt_orient", "refpartype_scatt_conform",
-           "refpartype_scatt_conform_bondlength", "refpartype_scatt_conform_bondangle",
-           "refpartype_scatt_conform_dihedangle", "refpartype_scatt_conform_x",
-           "refpartype_scatt_conform_y", "refpartype_scatt_conform_z",
-           "refpartype_scatt_occup", "refpartype_scattdata", "refpartype_scattdata_background",
-           "refpartype_scattdata_scale", "refpartype_scattdata_profile",
-           "refpartype_scattdata_profile_type", "refpartype_scattdata_profile_width",
-           "refpartype_scattdata_profile_asym", "refpartype_scattdata_corr",
-           "refpartype_scattdata_corr_pos", "refpartype_scattdata_radiation",
-           "refpartype_scattdata_radiation_wavelength", "refpartype_scattpow",
-           "refpartype_scattpow_temperature", "refpartype_unitcell",
-           "refpartype_unitcell_length", "refpartype_unitcell_angle"]
+__all__ = [
+    "RefinableObjClock",
+    "RefinableObj",
+    "RefObjOpt",
+    "RefinableObjRegistry",
+    "RefParType",
+    "RefParDerivStepModel",
+    "RefinablePar",
+    "Restraint",
+    "ScattererRegistry",
+    "ScatteringPowerRegistry",
+    "ZAtomRegistry",
+    "refpartype_crystal",
+    "refpartype_objcryst",
+    "refpartype_scatt",
+    "refpartype_scatt_transl",
+    "refpartype_scatt_transl_x",
+    "refpartype_scatt_transl_y",
+    "refpartype_scatt_transl_z",
+    "refpartype_scatt_orient",
+    "refpartype_scatt_conform",
+    "refpartype_scatt_conform_bondlength",
+    "refpartype_scatt_conform_bondangle",
+    "refpartype_scatt_conform_dihedangle",
+    "refpartype_scatt_conform_x",
+    "refpartype_scatt_conform_y",
+    "refpartype_scatt_conform_z",
+    "refpartype_scatt_occup",
+    "refpartype_scattdata",
+    "refpartype_scattdata_background",
+    "refpartype_scattdata_scale",
+    "refpartype_scattdata_profile",
+    "refpartype_scattdata_profile_type",
+    "refpartype_scattdata_profile_width",
+    "refpartype_scattdata_profile_asym",
+    "refpartype_scattdata_corr",
+    "refpartype_scattdata_corr_pos",
+    "refpartype_scattdata_radiation",
+    "refpartype_scattdata_radiation_wavelength",
+    "refpartype_scattpow",
+    "refpartype_scattpow_temperature",
+    "refpartype_unitcell",
+    "refpartype_unitcell_length",
+    "refpartype_unitcell_angle",
+]
 
 from types import MethodType
 from pyobjcryst._pyobjcryst import RefinableObjClock
@@ -137,14 +163,17 @@ class ObjRegistryWrapper(RefinableObjRegistry):
 
     def GetObj(self, i):
         o = self._GetObj(i)
-        if o.GetClassName() == 'Crystal':
+        if o.GetClassName() == "Crystal":
             from .crystal import wrap_boost_crystal
+
             wrap_boost_crystal(o)
-        elif o.GetClassName() == 'PowderPattern':
+        elif o.GetClassName() == "PowderPattern":
             from .powderpattern import wrap_boost_powderpattern
+
             wrap_boost_powderpattern(o)
-        elif o.GetClassName() == 'MonteCarloObj':
+        elif o.GetClassName() == "MonteCarloObj":
             from .globaloptim import wrap_boost_montecarlo
+
             wrap_boost_montecarlo(o)
         return o
 
@@ -156,6 +185,6 @@ def wrap_boost_refinableobjregistry(o):
     :param c: the C++ created object to which the python function must be added.
     """
     # TODO: moving the original function is not very pretty. Is there a better way ?
-    if '_GetObj' not in dir(o):
+    if "_GetObj" not in dir(o):
         o._GetObj = o.GetObj
         o.GetObj = MethodType(ObjRegistryWrapper.GetObj, o)

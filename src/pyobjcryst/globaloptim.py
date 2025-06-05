@@ -27,8 +27,12 @@ try:
     import ipywidgets as widgets
 except ImportError:
     widgets = None
-from pyobjcryst._pyobjcryst import MonteCarlo as MonteCarlo_orig, AnnealingSchedule, \
-    GlobalOptimType, OptimizationObjRegistry
+from pyobjcryst._pyobjcryst import (
+    MonteCarlo as MonteCarlo_orig,
+    AnnealingSchedule,
+    GlobalOptimType,
+    OptimizationObjRegistry,
+)
 from .refinableobj import *
 
 
@@ -44,9 +48,13 @@ class MonteCarlo(MonteCarlo_orig):
     def MultiRunOptimize(self, nb_run: int, nb_step: int, final_cost=0, max_time=-1):
         self._fix_parameters_for_global_optim()
         if type(self) == MonteCarlo_orig:
-            self._MultiRunOptimize(int(nb_run), int(nb_step), True, final_cost, max_time)
+            self._MultiRunOptimize(
+                int(nb_run), int(nb_step), True, final_cost, max_time
+            )
         else:
-            super().MultiRunOptimize(int(nb_run), int(nb_step), True, final_cost, max_time)
+            super().MultiRunOptimize(
+                int(nb_run), int(nb_step), True, final_cost, max_time
+            )
 
     def RunSimulatedAnnealing(self, nb_step: int, final_cost=0, max_time=-1):
         self._fix_parameters_for_global_optim()
@@ -81,8 +89,12 @@ class MonteCarlo(MonteCarlo_orig):
             return
         self._widget = widgets.Box()
         # See https://ipywidgets.readthedocs.io/en/latest/examples/Widget%20Styling.html
-        self._widget_label = widgets.Label("", layout=widgets.Layout(max_width='25%', width='20em'))
-        self._widget_llk = widgets.Text("", disabled=True, layout=widgets.Layout(max_width='50%', width='30em'))
+        self._widget_label = widgets.Label(
+            "", layout=widgets.Layout(max_width="25%", width="20em")
+        )
+        self._widget_llk = widgets.Text(
+            "", disabled=True, layout=widgets.Layout(max_width="50%", width="30em")
+        )
         self._widget.children = [widgets.HBox([self._widget_label, self._widget_llk])]
         self._widget_update()
         return self._widget
@@ -101,21 +113,25 @@ class MonteCarlo(MonteCarlo_orig):
             pass
 
     def disable_display_update(self):
-        """ Disable display (useful for multiprocessing)"""
+        """Disable display (useful for multiprocessing)"""
         self._display_update_disabled = True
 
     def enable_display_update(self):
-        """ Enable display"""
+        """Enable display"""
         self._display_update_disabled = False
 
     def _widget_update(self):
         self._widget_label.value = "MonteCarlo:%s" % self.GetName()
-        self._widget_label.layout.width = '%dem' % len(self._widget_label.value)
+        self._widget_label.layout.width = "%dem" % len(self._widget_label.value)
         if self.IsOptimizing():
-            self._widget_llk.value = "LLK=%12.2f  Run %2d  Trial %8d" % (self.llk, self.run, self.trial)
+            self._widget_llk.value = "LLK=%12.2f  Run %2d  Trial %8d" % (
+                self.llk,
+                self.run,
+                self.trial,
+            )
         else:
             self._widget_llk.value = "LLK=%12.2f                        " % self.llk
-        self._widget_llk.layout.width = '%dem' % len(self._widget_llk.value)
+        self._widget_llk.layout.width = "%dem" % len(self._widget_llk.value)
 
 
 def wrap_boost_montecarlo(c: MonteCarlo):
@@ -124,13 +140,27 @@ def wrap_boost_montecarlo(c: MonteCarlo):
 
     :param c: the C++ created object to which the python function must be added.
     """
-    if 'widget' not in dir(c):
-        for func in ['Optimize', 'MultiRunOptimize', 'RunSimulatedAnnealing', 'RunParallelTempering']:
+    if "widget" not in dir(c):
+        for func in [
+            "Optimize",
+            "MultiRunOptimize",
+            "RunSimulatedAnnealing",
+            "RunParallelTempering",
+        ]:
             # We keep access to the original functions... Yes, it's a kludge...
             exec("c._%s = c.%s" % (func, func))
-        for func in ['Optimize', 'MultiRunOptimize', 'RunSimulatedAnnealing', 'RunParallelTempering',
-                     '_fix_parameters_for_global_optim', 'widget', 'UpdateDisplay',
-                     'disable_display_update', 'enable_display_update', '_widget_update']:
+        for func in [
+            "Optimize",
+            "MultiRunOptimize",
+            "RunSimulatedAnnealing",
+            "RunParallelTempering",
+            "_fix_parameters_for_global_optim",
+            "widget",
+            "UpdateDisplay",
+            "disable_display_update",
+            "enable_display_update",
+            "_widget_update",
+        ]:
             exec("c.%s = MethodType(MonteCarlo.%s, c)" % (func, func))
 
 
@@ -159,6 +189,6 @@ def wrap_boost_optimizationobjregistry(o):
     :param c: the C++ created object to which the python function must be added.
     """
     # TODO: moving the original function is not very pretty. Is there a better way ?
-    if '_GetObj' not in dir(o):
+    if "_GetObj" not in dir(o):
         o._GetObj = o.GetObj
         o.GetObj = MethodType(OptimizationObjRegistryWrapper.GetObj, o)

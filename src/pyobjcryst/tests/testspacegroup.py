@@ -13,8 +13,7 @@
 #
 ##############################################################################
 
-"""Unit tests for pyobjcryst.spacegroup
-"""
+"""Unit tests for pyobjcryst.spacegroup"""
 
 
 import unittest
@@ -23,11 +22,11 @@ from pyobjcryst.spacegroup import SpaceGroup
 
 # ----------------------------------------------------------------------------
 
+
 class TestSpaceGroup(unittest.TestCase):
 
     def setUp(self):
         return
-
 
     def test___init__(self):
         "check SpaceGroup.__init__()"
@@ -39,7 +38,6 @@ class TestSpaceGroup(unittest.TestCase):
         sg3 = SpaceGroup("3")
         self.assertEqual(3, sg3.GetSpaceGroupNumber())
         return
-
 
     def test_ChangeSpaceGroup(self):
         "check SpaceGroup.ChangeSpaceGroup()"
@@ -56,5 +54,5 @@ class TestSpaceGroup(unittest.TestCase):
 
 # ----------------------------------------------------------------------------
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

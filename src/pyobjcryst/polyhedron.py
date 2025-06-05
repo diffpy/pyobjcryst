@@ -18,9 +18,16 @@
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 """
 
-__all__ = ["MakeTetrahedron", "MakeOctahedron", "MakeSquarePlane",
-           "MakeCube", "MakeAntiPrismTetragonal", "MakePrismTrigonal",
-           "MakeIcosahedron", "MakeTriangle"]
+__all__ = [
+    "MakeTetrahedron",
+    "MakeOctahedron",
+    "MakeSquarePlane",
+    "MakeCube",
+    "MakeAntiPrismTetragonal",
+    "MakePrismTrigonal",
+    "MakeIcosahedron",
+    "MakeTriangle",
+]
 
 from pyobjcryst._pyobjcryst import MakeTetrahedron
 from pyobjcryst._pyobjcryst import MakeOctahedron

@@ -24,8 +24,13 @@ Changes from ObjCryst++
 - XMLOutput and Input are not wrapped.
 """
 
-__all__ = ["ZScatterer", "ZAtom", "ZPolyhedron",
-           "RegularPolyhedraType", "GlobalScatteringPower"]
+__all__ = [
+    "ZScatterer",
+    "ZAtom",
+    "ZPolyhedron",
+    "RegularPolyhedraType",
+    "GlobalScatteringPower",
+]
 
 from urllib.request import urlopen
 
@@ -49,9 +54,9 @@ class ZScatterer(ZScatterer_orig):
         """
         if isinstance(src, str):
             if len(src) > 4:
-                if src[:4].lower() == 'http':
+                if src[:4].lower() == "http":
                     return super().ImportFenskeHallZMatrix(urlopen(src), named)
-            with open(src, 'rb') as fhz:  # Make sure file object is closed
+            with open(src, "rb") as fhz:  # Make sure file object is closed
                 super().ImportFenskeHallZMatrix(fhz, named)
         else:
             super().ImportFenskeHallZMatrix(src, named)

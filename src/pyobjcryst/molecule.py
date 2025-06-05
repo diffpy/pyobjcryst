@@ -82,12 +82,25 @@ Changes from ObjCryst::RigidGroup
   methods.
 """
 
-__all__ = ["Molecule", "GetBondLength", "GetBondAngle",
-           "GetDihedralAngle", "MolAtom", "MolBond",
-           "MolBondAngle", "MolDihedralAngle", "Quaternion",
-           "RigidGroup", "StretchMode", "StretchModeBondLength",
-           "StretchModeBondAngle", "StretchModeTorsion", "StretchModeTwist",
-           "ZScatterer2Molecule", "ImportFenskeHallZMatrix"]
+__all__ = [
+    "Molecule",
+    "GetBondLength",
+    "GetBondAngle",
+    "GetDihedralAngle",
+    "MolAtom",
+    "MolBond",
+    "MolBondAngle",
+    "MolDihedralAngle",
+    "Quaternion",
+    "RigidGroup",
+    "StretchMode",
+    "StretchModeBondLength",
+    "StretchModeBondAngle",
+    "StretchModeTorsion",
+    "StretchModeTwist",
+    "ZScatterer2Molecule",
+    "ImportFenskeHallZMatrix",
+]
 
 # TODO - MolRing
 
@@ -124,7 +137,7 @@ def ImportFenskeHallZMatrix(cryst, src, named=False):
         different fields instead of a strict number of characters.
     """
     z = ZScatterer("", cryst)
-    z.ImportFenskeHallZMatrix(src,named)
+    z.ImportFenskeHallZMatrix(src, named)
     m = ZScatterer2Molecule(z)
     cryst.RemoveScatterer(z)
     cryst.AddScatterer(m)

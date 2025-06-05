@@ -23,18 +23,18 @@ class test_single_crystal_data(unittest.TestCase):
         c = Crystal(3.1, 3.2, 3.3, "Pmmm")
         d = DiffractionDataSingleCrystal(c)
         n0 = 5
-        nb = n0 ** 3
+        nb = n0**3
         r = np.arange(1, nb + 1, dtype=np.float64)
         h = r % n0
-        l = r // n0 ** 2
-        k = (r - l * n0 ** 2) // n0
+        l = r // n0**2
+        k = (r - l * n0**2) // n0
         iobs = np.random.uniform(0, 100, nb)
         sigma = np.sqrt(iobs)
 
         d.SetHklIobs(h, k, l, iobs, sigma)
 
         # SetHklIobs sorts reflecions by sin(theta)/lambda, so do the same for comparison
-        s = np.sqrt(h ** 2 / 3.1 ** 2 + k ** 2 / 3.2 ** 2 + l ** 2 / 3.3 ** 2) / 2
+        s = np.sqrt(h**2 / 3.1**2 + k**2 / 3.2**2 + l**2 / 3.3**2) / 2
         idx = np.argsort(s)
 
         iobs = np.take(iobs, idx)
@@ -56,6 +56,7 @@ class test_single_crystal_data(unittest.TestCase):
         sigma = np.random.uniform(0, 10, nb)
         d.SetSigma(sigma)
         self.assertTrue(np.all(sigma == d.GetSigma()))
+
 
 if __name__ == "__main__":
     unittest.main()

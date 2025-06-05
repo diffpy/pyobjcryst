@@ -24,9 +24,13 @@ Changes from ObjCryst::ScatteringComponentList
 - Wrapped as a to-python converter only (no constructor)
 """
 
-__all__ = ["ScatteringPower", "ScatteringComponent",
-           "ScatteringPowerAtom", "ScatteringComponentList",
-           "gScatteringPowerRegistry"]
+__all__ = [
+    "ScatteringPower",
+    "ScatteringComponent",
+    "ScatteringPowerAtom",
+    "ScatteringComponentList",
+    "gScatteringPowerRegistry",
+]
 
 from pyobjcryst._pyobjcryst import ScatteringPower
 from pyobjcryst._pyobjcryst import ScatteringComponent
