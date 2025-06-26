@@ -12,15 +12,12 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Tests for crystal module."""
 
 import unittest
 
-from pyobjcryst.tests.pyobjcrysttestutils import makeC60
-
 from pyobjcryst.refinableobj import RefinableObjClock
-
+from pyobjcryst.tests.pyobjcrysttestutils import makeC60
 
 
 class TestClocks(unittest.TestCase):
@@ -33,29 +30,29 @@ class TestClocks(unittest.TestCase):
         ref = RefinableObjClock()
         mclock = m.GetClockScatterer()
 
-        self.assertTrue( mclock > ref )
+        self.assertTrue(mclock > ref)
         ref.Click()
-        self.assertFalse( mclock > ref )
+        self.assertFalse(mclock > ref)
 
         m[0].X = 0.01
-        self.assertTrue( mclock > ref )
+        self.assertTrue(mclock > ref)
         ref.Click()
-        self.assertFalse( mclock > ref )
+        self.assertFalse(mclock > ref)
 
         m[1].X = 0.01
-        self.assertTrue( mclock > ref )
+        self.assertTrue(mclock > ref)
         ref.Click()
-        self.assertFalse( mclock > ref )
+        self.assertFalse(mclock > ref)
 
         m[1].Y = 0.01
-        self.assertTrue( mclock > ref )
+        self.assertTrue(mclock > ref)
         ref.Click()
-        self.assertFalse( mclock > ref )
+        self.assertFalse(mclock > ref)
 
         m.Q0 = 1.001
-        self.assertTrue( mclock > ref )
+        self.assertTrue(mclock > ref)
         ref.Click()
-        self.assertFalse( mclock > ref )
+        self.assertFalse(mclock > ref)
 
 
 if __name__ == "__main__":

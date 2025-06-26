@@ -12,28 +12,31 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Test the converters.
 
-This verifies results from tests built into the _registerconverters module.
+This verifies results from tests built into the _registerconverters
+module.
 """
 
 import unittest
-from pyobjcryst._pyobjcryst import getTestVector, getTestMatrix
+
 import numpy
+
+from pyobjcryst._pyobjcryst import getTestMatrix, getTestVector
+
 
 class TestConverters(unittest.TestCase):
 
     def testVector(self):
         tv = numpy.arange(3, dtype=float)
         v = getTestVector()
-        self.assertTrue( numpy.array_equal(tv, v) )
+        self.assertTrue(numpy.array_equal(tv, v))
         return
 
     def testMatrix(self):
         tm = numpy.arange(6, dtype=float).reshape(3, 2)
         m = getTestMatrix()
-        self.assertTrue( numpy.array_equal(tm, m) )
+        self.assertTrue(numpy.array_equal(tm, m))
         return
 
 

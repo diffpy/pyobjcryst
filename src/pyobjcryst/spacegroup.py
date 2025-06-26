@@ -12,13 +12,12 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Python wrapping of SpaceGroup.h.
 
-See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
+See the online ObjCryst++ documentation (
+https://objcryst.readthedocs.io).
 """
 
 __all__ = ["SpaceGroup", "AsymmetricUnit"]
 
-from pyobjcryst._pyobjcryst import SpaceGroup
-from pyobjcryst._pyobjcryst import AsymmetricUnit
+from pyobjcryst._pyobjcryst import AsymmetricUnit, SpaceGroup

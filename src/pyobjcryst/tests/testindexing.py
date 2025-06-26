@@ -7,14 +7,21 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Tests for indexing module."""
 
 import unittest
+
 from numpy import pi
 
-from pyobjcryst.indexing import CrystalSystem, CrystalCentering, \
-    EstimateCellVolume, RecUnitCell, PeakList, CellExplorer, quick_index
+from pyobjcryst.indexing import (
+    CellExplorer,
+    CrystalCentering,
+    CrystalSystem,
+    EstimateCellVolume,
+    PeakList,
+    RecUnitCell,
+    quick_index,
+)
 
 
 class TestIndexing(unittest.TestCase):
@@ -26,25 +33,58 @@ class TestIndexing(unittest.TestCase):
         pass
 
     def test_estimate_cell_volume(self):
-        """Check EstimateCellVolume
-        """
+        """Check EstimateCellVolume."""
         # 20 reflections observed from d=47.326A to 1.537A
-        v = EstimateCellVolume(1 / 1.537, 1 / 47.326, 20, CrystalSystem.CUBIC,
-                               CrystalCentering.LATTICE_P, 1.2)
+        v = EstimateCellVolume(
+            1 / 1.537,
+            1 / 47.326,
+            20,
+            CrystalSystem.CUBIC,
+            CrystalCentering.LATTICE_P,
+            1.2,
+        )
         self.assertAlmostEqual(v, 309, delta=2)
-        v = EstimateCellVolume(1 / 1.537, 1 / 47.326, 20, CrystalSystem.CUBIC,
-                               CrystalCentering.LATTICE_P, 0.3)
+        v = EstimateCellVolume(
+            1 / 1.537,
+            1 / 47.326,
+            20,
+            CrystalSystem.CUBIC,
+            CrystalCentering.LATTICE_P,
+            0.3,
+        )
         self.assertAlmostEqual(v, 2475, delta=2)
-        v = EstimateCellVolume(1 / 1.537, 1 / 47.326, 20, CrystalSystem.ORTHOROMBIC,
-                               CrystalCentering.LATTICE_F, 1.2)
+        v = EstimateCellVolume(
+            1 / 1.537,
+            1 / 47.326,
+            20,
+            CrystalSystem.ORTHOROMBIC,
+            CrystalCentering.LATTICE_F,
+            1.2,
+        )
         self.assertAlmostEqual(v, 308, delta=2)
-        v = EstimateCellVolume(1 / 1.537, 1 / 47.326, 20, CrystalSystem.ORTHOROMBIC,
-                               CrystalCentering.LATTICE_I, 0.3)
+        v = EstimateCellVolume(
+            1 / 1.537,
+            1 / 47.326,
+            20,
+            CrystalSystem.ORTHOROMBIC,
+            CrystalCentering.LATTICE_I,
+            0.3,
+        )
         self.assertAlmostEqual(v, 666, delta=2)
 
     def test_recunitcell(self):
-        r = RecUnitCell(0, 0.1, 0, 0, 0, 0, 0, CrystalSystem.CUBIC,
-                        CrystalCentering.LATTICE_P, 0)
+        r = RecUnitCell(
+            0,
+            0.1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            CrystalSystem.CUBIC,
+            CrystalCentering.LATTICE_P,
+            0,
+        )
         d = r.hkl2d(1, 1, 1, None, 0)
         self.assertAlmostEqual(d, 0.03, 5)
         u = r.DirectUnitCell()
@@ -53,11 +93,28 @@ class TestIndexing(unittest.TestCase):
 
     def test_quick_index(self):
         # Try to index cimetidine powder pattern from experimental list of points
-        v = [0.106317, 0.113542, 0.146200, 0.152765,
-             0.161769, 0.166021, 0.186157, 0.188394,
-             0.189835, 0.200636, 0.207603, 0.211856,
-             0.212616, 0.215067, 0.220722, 0.221532,
-             0.223939, 0.227054, 0.231044, 0.235053]
+        v = [
+            0.106317,
+            0.113542,
+            0.146200,
+            0.152765,
+            0.161769,
+            0.166021,
+            0.186157,
+            0.188394,
+            0.189835,
+            0.200636,
+            0.207603,
+            0.211856,
+            0.212616,
+            0.215067,
+            0.220722,
+            0.221532,
+            0.223939,
+            0.227054,
+            0.231044,
+            0.235053,
+        ]
         pl = PeakList()
         pl.set_dobs_list(v)
         ex = quick_index(pl, verbose=False, continue_on_sol=False)

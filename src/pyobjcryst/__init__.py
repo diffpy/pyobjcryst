@@ -12,7 +12,6 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Python wrapping of ObjCryst++.
 
 Objects are wrapped according to their header file in the ObjCryst source.
@@ -50,11 +49,6 @@ See the modules' documentation for specific changes.
 """
 
 import warnings
-# Let's put this on the package level
-from pyobjcryst.general import ObjCrystException
-
-# version data
-from pyobjcryst.version import __version__
 
 # import submodules that only import from _pyobjcryst
 import pyobjcryst.atom
@@ -78,8 +72,13 @@ import pyobjcryst.scatteringpowersphere
 import pyobjcryst.spacegroup
 import pyobjcryst.unitcell
 import pyobjcryst.zscatterer
-
 from pyobjcryst._pyobjcryst import gTopRefinableObjRegistry
+
+# Let's put this on the package level
+from pyobjcryst.general import ObjCrystException
+
+# version data
+from pyobjcryst.version import __version__
 
 
 def loadCrystal(filename):
@@ -94,11 +93,14 @@ def loadCrystal(filename):
         which has more options when importing a CIF, including
         using an URL instead of a file.
     """
-    warnings.warn("loadCrystal is deprecated. Please use "
-                  "pyobjcryst.crystal.create_crystal_from_cif() instead",
-                  DeprecationWarning)
+    warnings.warn(
+        "loadCrystal is deprecated. Please use "
+        "pyobjcryst.crystal.create_crystal_from_cif() instead",
+        DeprecationWarning,
+    )
     from pyobjcryst.crystal import CreateCrystalFromCIF
-    with open(filename, 'rb') as fp:
+
+    with open(filename, "rb") as fp:
         rv = CreateCrystalFromCIF(fp)
     return rv
 

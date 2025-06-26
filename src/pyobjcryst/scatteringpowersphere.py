@@ -12,10 +12,10 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
+"""Python wrapping of ScatteringPowerSphere.h.
 
-"""Python wrapping of ScatteringPowerSphere.h
-
-See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
+See the online ObjCryst++ documentation (
+https://objcryst.readthedocs.io).
 """
 
 __all__ = ["ScatteringPowerSphere"]

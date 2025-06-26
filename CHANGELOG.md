@@ -73,7 +73,7 @@
 ### Changes
 
 - the list of HKL reflections will now be automatically be re-generated
-  for a PowderPatternDiffraction when the Crystal's spacegroup changes,  
+  for a PowderPatternDiffraction when the Crystal's spacegroup changes,
   or the lattice parameters are modified by more than 0.5%
 
 ### Fixes

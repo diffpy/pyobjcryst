@@ -139,7 +139,7 @@ The following automatic conversions were performed:
 'mixed'.
 
 Automatic conversion script
-Id: cif_fix_values 6452 2018-10-05 10:23:21Z andrius 
+Id: cif_fix_values 6452 2018-10-05 10:23:21Z andrius
 ;
 _cod_original_cell_volume        804.18(19)
 _cod_original_sg_symbol_Hall     '-P 2yn '
