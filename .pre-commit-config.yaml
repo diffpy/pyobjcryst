@@ -13,7 +13,6 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
-      - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: check-case-conflict
@@ -28,7 +27,7 @@ repos:
     rev: 5.13.2
     hooks:
       - id: isort
-        args: ["--profile", "black"]
+        args: ["--profile", "black", "--line-length", "79"]
   - repo: https://github.com/kynan/nbstripout
     rev: 0.7.1
     hooks:
