@@ -46,8 +46,8 @@ _chemical_formula_moiety         'Ba O3 Ti'
 _chemical_formula_sum            'Ba O3 Ti'
 _chemical_formula_weight         233.24
 _chemical_name_systematic
-; 
- ? 
+;
+ ?
 ;
 _space_group_IT_number           99
 _symmetry_cell_setting           tetragonal
@@ -139,7 +139,7 @@ according to /home/saulius/struct/CIF-dictionaries/cif_core.dic
 dictionary named 'cif_core.dic' version 2.4.2 from 2011-04-26.
 
 Automatic conversion script
-Id: cif_fix_values 1891 2012-01-12 08:04:46Z andrius 
+Id: cif_fix_values 1891 2012-01-12 08:04:46Z andrius
 ;
 _cod_database_code               1513252
 loop_

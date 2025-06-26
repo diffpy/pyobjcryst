@@ -12,18 +12,17 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Tests for crystal module."""
 
 import unittest
 
+from pyobjcryst.atom import Atom
 from pyobjcryst.tests.pyobjcrysttestutils import (
-    makeScatterer,
-    makeCrystal,
     getScatterer,
+    makeCrystal,
+    makeScatterer,
     makeScattererAnisotropic,
 )
-from pyobjcryst.atom import Atom
 
 
 class TestCrystal(unittest.TestCase):
@@ -160,7 +159,7 @@ class TestCrystal(unittest.TestCase):
         return
 
     def test_display_list(self):
-        """Test the creation of a atoms list for display using 3dmol"""
+        """Test the creation of a atoms list for display using 3dmol."""
         c = makeCrystal(*makeScatterer())
         s = c._display_list()
         s = c._display_list(full_molecule=True)

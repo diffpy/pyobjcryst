@@ -1,22 +1,21 @@
 #!/usr/bin/env python
 
 # Installation script for pyobjcryst
-
 """pyobjcryst - Python bindings to ObjCryst++ Object-Oriented Crystallographic
 Library
 
 Packages:   pyobjcryst
 """
 
+import glob
 import os
-from os.path import join as pjoin
+import platform
 import re
 import sys
-import glob
-import platform
-from setuptools import setup
-from setuptools import Extension
+from os.path import join as pjoin
+
 import numpy as np
+from setuptools import Extension, setup
 
 # Use this version when git data are not available as in a git zip archive.
 # Update when tagging a new release.
@@ -35,7 +34,10 @@ ext_kws = {
     "library_dirs": [],
 }
 if platform.system() == "Windows":
-    ext_kws["extra_compile_args"] = ["-DBOOST_ERROR_CODE_HEADER_ONLY", "-DREAL=double"]
+    ext_kws["extra_compile_args"] = [
+        "-DBOOST_ERROR_CODE_HEADER_ONLY",
+        "-DREAL=double",
+    ]
     if "CONDA_PREFIX" in os.environ:
         ext_kws["include_dirs"] += [
             pjoin(os.environ["CONDA_PREFIX"], "include"),
@@ -58,9 +60,9 @@ PY3 = sys.version_info[0] == 3
 def get_boost_libraries():
     """Check for installed boost_python shared library.
 
-    Returns list of required boost_python shared libraries that are installed
-    on the system. If required libraries are not found, an Exception will be
-    thrown.
+    Returns list of required boost_python shared libraries that are
+    installed on the system. If required libraries are not found, an
+    Exception will be thrown.
     """
     baselib = "boost_python"
     major, minor = (str(x) for x in sys.version_info[:2])
@@ -84,7 +86,8 @@ def get_boost_libraries():
         if platform.system() == "Darwin":
             ldevname = "DYLD_FALLBACK_LIBRARY_PATH"
         wmsg = (
-            "Cannot detect name suffix for the %r library.  " "Consider setting %s."
+            "Cannot detect name suffix for the %r library.  "
+            "Consider setting %s."
         ) % (baselib, ldevname)
         warnings.warn(wmsg)
 
@@ -110,7 +113,7 @@ gitarchivecfgfile = os.path.join(MYDIR, ".gitarchive.cfg")
 
 
 def gitinfo():
-    from subprocess import Popen, PIPE
+    from subprocess import PIPE, Popen
 
     kw = dict(stdout=PIPE, cwd=MYDIR, universal_newlines=True)
     proc = Popen(["git", "describe", "--match=v[[:digit:]]*", "--tags"], **kw)
@@ -151,7 +154,9 @@ def getversioncfg():
     d = cp.defaults()
     rewrite = not d or (
         g["commit"]
-        and (g["version"] != d.get("version") or g["commit"] != d.get("commit"))
+        and (
+            g["version"] != d.get("version") or g["commit"] != d.get("commit")
+        )
     )
     if rewrite:
         cp.set("DEFAULT", "version", g["version"])
@@ -184,7 +189,13 @@ setup_args = dict(
     # Required python packages
     install_requires=["numpy", "packaging"],
     extras_require={
-        "gui": ["ipywidgets", "jupyter", "matplotlib", "ipympl", "py3dmol>=2.0.1"],
+        "gui": [
+            "ipywidgets",
+            "jupyter",
+            "matplotlib",
+            "ipympl",
+            "py3dmol>=2.0.1",
+        ],
         "doc": [
             "sphinx",
             "m2r2",

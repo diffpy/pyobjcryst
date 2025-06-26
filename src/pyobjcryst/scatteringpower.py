@@ -12,8 +12,7 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
-"""Python wrapping of ScatteringPower.h
+"""Python wrapping of ScatteringPower.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 
@@ -32,8 +31,10 @@ __all__ = [
     "gScatteringPowerRegistry",
 ]
 
-from pyobjcryst._pyobjcryst import ScatteringPower
-from pyobjcryst._pyobjcryst import ScatteringComponent
-from pyobjcryst._pyobjcryst import ScatteringPowerAtom
-from pyobjcryst._pyobjcryst import ScatteringComponentList
-from pyobjcryst._pyobjcryst import gScatteringPowerRegistry
+from pyobjcryst._pyobjcryst import (
+    ScatteringComponent,
+    ScatteringComponentList,
+    ScatteringPower,
+    ScatteringPowerAtom,
+    gScatteringPowerRegistry,
+)

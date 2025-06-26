@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 #
 
-import sys, os
+import os
+import sys
 import time
 
 # Requires sphinx >= 0.6

@@ -12,7 +12,6 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Python wrapping of Crystal.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
@@ -29,16 +28,26 @@ Other Changes
   method accepts a python file or a filename rather than a CIF object.
 """
 
-__all__ = ["Crystal", "BumpMergePar", "CreateCrystalFromCIF", "create_crystal_from_cif"]
+__all__ = [
+    "Crystal",
+    "BumpMergePar",
+    "CreateCrystalFromCIF",
+    "create_crystal_from_cif",
+]
 
 import warnings
+from multiprocessing import current_process
 from types import MethodType
 from urllib.request import urlopen
-from multiprocessing import current_process
+
 import numpy as np
-from pyobjcryst._pyobjcryst import Crystal as Crystal_orig
+
 from pyobjcryst._pyobjcryst import BumpMergePar
-from pyobjcryst._pyobjcryst import CreateCrystalFromCIF as CreateCrystalFromCIF_orig
+from pyobjcryst._pyobjcryst import (
+    CreateCrystalFromCIF as CreateCrystalFromCIF_orig,
+)
+from pyobjcryst._pyobjcryst import Crystal as Crystal_orig
+
 from .refinableobj import wrap_boost_refinableobjregistry
 
 try:
@@ -55,10 +64,10 @@ except ImportError:
 class Crystal(Crystal_orig):
 
     def CIFOutput(self, file, mindist=0):
-        """
-        Save the crystal structure to a CIF file.
+        """Save the crystal structure to a CIF file.
 
-        :param file: either a filename, or a python file object opened in write mode
+        :param file: either a filename, or a python file object opened
+            in write mode
         """
         if isinstance(file, str):
             super().CIFOutput(open(file, "w"), mindist)
@@ -86,7 +95,7 @@ class Crystal(Crystal_orig):
         self._display_update_disabled = True
 
     def enable_display_update(self):
-        """Enable display"""
+        """Enable display."""
         self._display_update_disabled = False
 
     def _display_cif(
@@ -101,16 +110,18 @@ class Crystal(Crystal_orig):
         full_molecule=True,
         only_independent_atoms=False,
     ):
-        """
-        Create a CIF with the full list of atoms, including those deduced by symmetry
-        or translation up to neighbouring unit cells
+        """Create a CIF with the full list of atoms, including those deduced by
+        symmetry or translation up to neighbouring unit cells.
 
-        :param xmin, xmax, ymin, ymax, zmin, zmax: the view limits in fractional coordinates.
-        :param enantiomer: if True, will mirror the structure along the x axis
-        :param full_molecule: if True, a Molecule (or Scatterer) which has at least
-            one atom inside the view limits is entirely shown.
-        :param only_independent_atoms: if True, only show the independent atoms, no symmetry
-            or translation is applied
+        :param xmin, xmax, ymin, ymax, zmin, zmax: the view limits in
+        fractional coordinates.
+        :param enantiomer: if True, will mirror the structure along the
+            x axis
+        :param full_molecule: if True, a Molecule (or Scatterer) which
+            has at least one atom inside the view limits is entirely
+            shown.
+        :param only_independent_atoms: if True, only show the
+            independent atoms, no symmetry or translation is applied
         :return : the CIF as a string
         """
         cif = "data_crystal_for3d\n\n"
@@ -192,7 +203,9 @@ class Crystal(Crystal_orig):
                         for dx in (-1, 0, 1):
                             for dy in (-1, 0, 1):
                                 for dz in (-1, 0, 1):
-                                    x, y, z = vxyz[k, j] + np.array((dx, dy, dz))
+                                    x, y, z = vxyz[k, j] + np.array(
+                                        (dx, dy, dz)
+                                    )
                                     # print("    %12s %4s %8.4f %8.4f %8.4f %6.4f" % \
                                     #           (name, symbol, x, y, z, occ))
                                     if full_molecule:
@@ -239,15 +252,18 @@ class Crystal(Crystal_orig):
         full_molecule=True,
         only_independent_atoms=False,
     ):
-        """
-        Create a list of atoms to be displayed, so it can be supplied to py3Dmol
+        """Create a list of atoms to be displayed, so it can be supplied to
+        py3Dmol.
 
-        :param xmin, xmax, ymin, ymax, zmin, zmax: the view limits in fractional coordinates.
-        :param enantiomer: if True, will mirror the structure along the x axis
-        :param full_molecule: if True, a Molecule (or Scatterer) which has at least
-            one atom inside the view limits is entirely shown.
-        :param only_independent_atoms: if True, only show the independent atoms, no symmetry
-            or translation is applied
+        :param xmin, xmax, ymin, ymax, zmin, zmax: the view limits in
+        fractional coordinates.
+        :param enantiomer: if True, will mirror the structure along the
+            x axis
+        :param full_molecule: if True, a Molecule (or Scatterer) which
+            has at least one atom inside the view limits is entirely
+            shown.
+        :param only_independent_atoms: if True, only show the
+            independent atoms, no symmetry or translation is applied
         :return : the list of atoms and bonds to be displayed for 3dmol
         """
 
@@ -361,9 +377,9 @@ class Crystal(Crystal_orig):
                                                     atoms[int_ptr]["idx"]
                                                     for int_ptr in a["bonds"]
                                                 ]
-                                                x, y, z = vxyz[k, j] + np.array(
-                                                    (dx, dy, dz)
-                                                )
+                                                x, y, z = vxyz[
+                                                    k, j
+                                                ] + np.array((dx, dy, dz))
                                                 x, y, z = (
                                                     self.FractionalToOrthonormalCoords(
                                                         x, y, z
@@ -376,7 +392,9 @@ class Crystal(Crystal_orig):
                                                         "y": y,
                                                         "z": z,
                                                         "bonds": vb,
-                                                        "bondOrder": a["bondOrder"],
+                                                        "bondOrder": a[
+                                                            "bondOrder"
+                                                        ],
                                                     }
                                                 )
                     else:
@@ -413,8 +431,12 @@ class Crystal(Crystal_orig):
                                             for l in range(len(a["bonds"])):
                                                 int_ptr = a["bonds"][l]
                                                 if atoms[int_ptr]["visible"]:
-                                                    vb.append(atoms[int_ptr]["idx"])
-                                                    vo.append(a["bondOrder"][l])
+                                                    vb.append(
+                                                        atoms[int_ptr]["idx"]
+                                                    )
+                                                    vo.append(
+                                                        a["bondOrder"][l]
+                                                    )
                                             x, y, z = vxyz[k, j] + np.array(
                                                 (dx, dy, dz)
                                             )
@@ -483,7 +505,9 @@ class Crystal(Crystal_orig):
                             for dx in (-1, 0, 1):
                                 for dy in (-1, 0, 1):
                                     for dz in (-1, 0, 1):
-                                        x, y, z = vxyz[k, j] + np.array((dx, dy, dz))
+                                        x, y, z = vxyz[k, j] + np.array(
+                                            (dx, dy, dz)
+                                        )
                                         if (
                                             xmin <= x <= xmax
                                             and ymin <= y <= ymax
@@ -495,7 +519,12 @@ class Crystal(Crystal_orig):
                                                 )
                                             )
                                             vv.append(
-                                                {"elem": symbol, "x": x, "y": y, "z": z}
+                                                {
+                                                    "elem": symbol,
+                                                    "x": x,
+                                                    "y": y,
+                                                    "z": z,
+                                                }
                                             )
         return vv
 
@@ -512,18 +541,23 @@ class Crystal(Crystal_orig):
         extra_dist=2,
         extra_opacity=0.5,
     ):
-        """
-        This will return a 3D view of the Crystal structure which can be displayed
-        in a notebook. This cannot be automatically updated, but will remain in the
-        notebook as a static javascript object, so it can still be useful.
+        """This will return a 3D view of the Crystal structure which can be
+        displayed in a notebook. This cannot be automatically updated, but will
+        remain in the notebook as a static javascript object, so it can still
+        be useful.
 
-        :param xmin, xmax, ymin, ymax, zmin, zmax: the view limits in fractional coordinates.
-        :param enantiomer: if True, will mirror the structure along the x axis
-        :param full_molecule_opacity: if >0, a Molecule (or Scatterer) which has at least
-            one atom inside the view limits is entirely shown, with the given opacity (0-1)
-        :param extra_dist: extra distance (in Angstroms) beyond the view limits, where
-            atoms & bonds are still displayed semi-transparently
-        :param extra_opacity: the opacity (0-1) to display the atoms within the extra distance.
+        :param xmin, xmax, ymin, ymax, zmin, zmax: the view limits in
+        fractional coordinates.
+        :param enantiomer: if True, will mirror the structure along the
+            x axis
+        :param full_molecule_opacity: if >0, a Molecule (or Scatterer)
+            which has at least one atom inside the view limits is
+            entirely shown, with the given opacity (0-1)
+        :param extra_dist: extra distance (in Angstroms) beyond the view
+            limits, where atoms & bonds are still displayed semi-
+            transparently
+        :param extra_opacity: the opacity (0-1) to display the atoms
+            within the extra distance.
         """
         if py3Dmol is None:
             warnings.warn(
@@ -559,7 +593,11 @@ class Crystal(Crystal_orig):
             )
 
         if extra_opacity > 0 and extra_dist > 0:
-            dx, dy, dz = extra_dist / self.a, extra_dist / self.b, extra_dist / self.c
+            dx, dy, dz = (
+                extra_dist / self.a,
+                extra_dist / self.b,
+                extra_dist / self.c,
+            )
             v.addModel()
             m = v.getModel()
             atoms = self._display_list(
@@ -648,18 +686,23 @@ class Crystal(Crystal_orig):
         width=640,
         height=480,
     ):
-        """
-        This will return a 3D view of the Crystal structure which can be displayed
-        in a notebook, along with controls for the display. This can be live-updated.
+        """This will return a 3D view of the Crystal structure which can be
+        displayed in a notebook, along with controls for the display. This can
+        be live-updated.
 
-        :param xmin, xmax, ymin, ymax, zmin, zmax: the view limits in fractional coordinates.
-        :param enantiomer: if True, will mirror the structure along the x axis
-        :param full_molecule_opacity: if >0, a Molecule (or Scatterer) which has at least
-            one atom inside the view limits is entirely shown, with the given opacity (0-1)
-        :param extra_dist: extra distance (in Angstroms) beyond the view limits, where
-            atoms & bonds are still displayed semi-transparently
-        :param extra_opacity: the opacity (0-1) to display the atoms within the extra distance.
-        :param width, height: the width and height of the 3D view
+        :param xmin, xmax, ymin, ymax, zmin, zmax: the view limits in
+        fractional coordinates.
+        :param enantiomer: if True, will mirror the structure along the
+            x axis
+        :param full_molecule_opacity: if >0, a Molecule (or Scatterer)
+            which has at least one atom inside the view limits is
+            entirely shown, with the given opacity (0-1)
+        :param extra_dist: extra distance (in Angstroms) beyond the view
+            limits, where atoms & bonds are still displayed semi-
+            transparently
+        :param extra_opacity: the opacity (0-1) to display the atoms
+            within the extra distance. :param width, height: the width
+            and height of the 3D view
         """
         if widgets is None or py3Dmol is None:
             warnings.warn(
@@ -818,7 +861,11 @@ class Crystal(Crystal_orig):
             )
 
         if extra_opacity > 0 and extra_dist > 0:
-            dx, dy, dz = extra_dist / self.a, extra_dist / self.b, extra_dist / self.c
+            dx, dy, dz = (
+                extra_dist / self.a,
+                extra_dist / self.b,
+                extra_dist / self.c,
+            )
             v.addModel()
             m = v.getModel()
             atoms = self._display_list(
@@ -906,10 +953,12 @@ class Crystal(Crystal_orig):
 
 
 def create_crystal_from_cif(
-    file, oneScatteringPowerPerElement=False, connectAtoms=False, multiple=False
+    file,
+    oneScatteringPowerPerElement=False,
+    connectAtoms=False,
+    multiple=False,
 ):
-    """
-    Create a crystal object from a CIF file or URL
+    """Create a crystal object from a CIF file or URL.
 
     Example:
         create_crystal_from_cif('http://www.crystallography.net/cod/2201530.cif')
@@ -934,9 +983,13 @@ def create_crystal_from_cif(
             if len(file) > 4:
                 if file[:4].lower() == "http":
                     return CreateCrystalFromCIF_orig(
-                        urlopen(file), oneScatteringPowerPerElement, connectAtoms
+                        urlopen(file),
+                        oneScatteringPowerPerElement,
+                        connectAtoms,
                     )
-            with open(file, "rb") as cif:  # Make sure file object is closed afterwards
+            with open(
+                file, "rb"
+            ) as cif:  # Make sure file object is closed afterwards
                 c = CreateCrystalFromCIF_orig(
                     cif, oneScatteringPowerPerElement, connectAtoms
                 )
@@ -950,21 +1003,30 @@ def create_crystal_from_cif(
             if len(file) > 4:
                 if file[:4].lower() == "http":
                     c.ImportCrystalFromCIF(
-                        urlopen(file), oneScatteringPowerPerElement, connectAtoms
+                        urlopen(file),
+                        oneScatteringPowerPerElement,
+                        connectAtoms,
                     )
                     return c
-            with open(file, "rb") as cif:  # Make sure file object is closed afterwards
-                c.ImportCrystalFromCIF(cif, oneScatteringPowerPerElement, connectAtoms)
+            with open(
+                file, "rb"
+            ) as cif:  # Make sure file object is closed afterwards
+                c.ImportCrystalFromCIF(
+                    cif, oneScatteringPowerPerElement, connectAtoms
+                )
         else:
-            c.ImportCrystalFromCIF(file, oneScatteringPowerPerElement, connectAtoms)
+            c.ImportCrystalFromCIF(
+                file, oneScatteringPowerPerElement, connectAtoms
+            )
     return c
 
 
 def wrap_boost_crystal(c: Crystal):
-    """
-    This function is used to wrap a C++ Object by adding the python methods to it.
+    """This function is used to wrap a C++ Object by adding the python methods
+    to it.
 
-    :param c: the C++ created object to which the python function must be added.
+    :param c: the C++ created object to which the python function must
+        be added.
     """
     if "_display_cif" not in dir(c):
         for func in [

@@ -12,9 +12,7 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
-"""
-Definition of __version__, __date__, __timestamp__, __git_commit__,
+"""Definition of __version__, __date__, __timestamp__, __git_commit__,
 libobjcryst_version_info.
 
 Notes
@@ -34,7 +32,6 @@ __all__ = [
 import os.path
 
 from pkg_resources import resource_filename
-
 
 # obtain version information from the version.cfg file
 cp = dict(version="", date="", commit="", timestamp="0")
@@ -66,6 +63,7 @@ del cp, fcfg, fp, kwords
 # version information on the active libObjCryst library ----------------------
 
 from collections import namedtuple
+
 from pyobjcryst._pyobjcryst import _get_libobjcryst_version_info_dict
 
 libobjcryst_version_info = namedtuple(

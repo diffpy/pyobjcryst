@@ -9,8 +9,7 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
-"""Python wrapping of Radiation from ScatteringData.h
+"""Python wrapping of Radiation from ScatteringData.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 

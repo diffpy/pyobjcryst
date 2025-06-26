@@ -12,15 +12,17 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Test the converters.
 
-This verifies results from tests built into the _registerconverters module.
+This verifies results from tests built into the _registerconverters
+module.
 """
 
 import unittest
-from pyobjcryst._pyobjcryst import getTestVector, getTestMatrix
+
 import numpy
+
+from pyobjcryst._pyobjcryst import getTestMatrix, getTestVector
 
 
 class TestConverters(unittest.TestCase):

@@ -12,10 +12,10 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
+"""Python wrapping of Polyhedron.h.
 
-"""Python wrapping of Polyhedron.h
-
-See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
+See the online ObjCryst++ documentation (
+https://objcryst.readthedocs.io).
 """
 
 __all__ = [
@@ -29,11 +29,13 @@ __all__ = [
     "MakeTriangle",
 ]
 
-from pyobjcryst._pyobjcryst import MakeTetrahedron
-from pyobjcryst._pyobjcryst import MakeOctahedron
-from pyobjcryst._pyobjcryst import MakeSquarePlane
-from pyobjcryst._pyobjcryst import MakeCube
-from pyobjcryst._pyobjcryst import MakeAntiPrismTetragonal
-from pyobjcryst._pyobjcryst import MakePrismTrigonal
-from pyobjcryst._pyobjcryst import MakeIcosahedron
-from pyobjcryst._pyobjcryst import MakeTriangle
+from pyobjcryst._pyobjcryst import (
+    MakeAntiPrismTetragonal,
+    MakeCube,
+    MakeIcosahedron,
+    MakeOctahedron,
+    MakePrismTrigonal,
+    MakeSquarePlane,
+    MakeTetrahedron,
+    MakeTriangle,
+)

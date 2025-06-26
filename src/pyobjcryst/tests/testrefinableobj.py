@@ -12,17 +12,21 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Tests for refinableobj module."""
 
-from pyobjcryst.refinableobj import RefinableObjClock, RefParType, Restraint
-from pyobjcryst.refinableobj import RefinablePar, RefinableObj
-from pyobjcryst import ObjCrystException
-
 import unittest
+
 import numpy
 
-from pyobjcryst.tests.pyobjcrysttestutils import makeScatterer, makeCrystal
+from pyobjcryst import ObjCrystException
+from pyobjcryst.refinableobj import (
+    RefinableObj,
+    RefinableObjClock,
+    RefinablePar,
+    RefParType,
+    Restraint,
+)
+from pyobjcryst.tests.pyobjcrysttestutils import makeCrystal, makeScatterer
 
 
 class TestRefinableObjClock(unittest.TestCase):
@@ -30,16 +34,17 @@ class TestRefinableObjClock(unittest.TestCase):
     def testRelations(self):
         """Test clicking!
 
-        Chances are that someone will someday read this code for an example on
-        how to use clocks. If not, then I've wasted my time writing this.
-        Anyway, clocks are more complex then they appear. This is because
-        ObjCryst++ has an internal clock that gets incremented whenever any
-        clock is Clicked. So, one cannot trust that a clock will increment by
-        only one value when it is clicked. Furthermore, clocks only alert their
-        parents to a change. So, it is possible to decrease the value of a
-        parent clock with SetEqual below the values of its children clocks.
-        Callling Click on the parent or child will restore the proper parent >
-        child relationship.
+        Chances are that someone will someday read this code for an
+        example on how to use clocks. If not, then I've wasted my time
+        writing this. Anyway, clocks are more complex then they appear.
+        This is because ObjCryst++ has an internal clock that gets
+        incremented whenever any clock is Clicked. So, one cannot trust
+        that a clock will increment by only one value when it is
+        clicked. Furthermore, clocks only alert their parents to a
+        change. So, it is possible to decrease the value of a parent
+        clock with SetEqual below the values of its children clocks.
+        Callling Click on the parent or child will restore the proper
+        parent > child relationship.
         """
         c1 = RefinableObjClock()
         c2 = RefinableObjClock()
@@ -311,8 +316,9 @@ class TestRefinableObj(unittest.TestCase):
     def testAddParTwice(self):
         """Try to add the same parameter twice.
 
-        We could stop this in the bindings, but since RefinableObj doesn't
-        delete its parameters in the destructor, it shouldn't lead to trouble.
+        We could stop this in the bindings, but since RefinableObj
+        doesn't delete its parameters in the destructor, it shouldn't
+        lead to trouble.
         """
         p3 = RefinablePar("p3", 3, 0, 10, self.rpt)
         self.r.AddPar(p3)
@@ -413,7 +419,7 @@ class TestRefinableObj(unittest.TestCase):
         return
 
     def test_xml(self):
-        """Test xml() function"""
+        """Test xml() function."""
         x = self.r.xml()
 
 

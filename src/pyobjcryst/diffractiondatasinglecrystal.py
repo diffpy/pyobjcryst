@@ -12,8 +12,7 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
-"""Python wrapping of DiffractionDataSingleCrystal.h
+"""Python wrapping of DiffractionDataSingleCrystal.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 
@@ -28,9 +27,12 @@ __all__ = [
 ]
 
 from urllib.request import urlopen
-from pyobjcryst._pyobjcryst import DiffractionDataSingleCrystal
-from pyobjcryst._pyobjcryst import gDiffractionDataSingleCrystalRegistry
+
 from pyobjcryst._pyobjcryst import CreateSingleCrystalDataFromCIF as crcif
+from pyobjcryst._pyobjcryst import (
+    DiffractionDataSingleCrystal,
+    gDiffractionDataSingleCrystalRegistry,
+)
 
 
 def create_singlecrystaldata_from_cif(file, crystal):

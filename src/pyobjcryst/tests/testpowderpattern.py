@@ -12,20 +12,19 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
 """Unit tests for pyobjcryst.powderpattern (with indexing &"""
 
 import unittest
+
 import numpy as np
 
 from pyobjcryst import ObjCrystException
+from pyobjcryst.crystal import *
+from pyobjcryst.indexing import *
 from pyobjcryst.powderpattern import PowderPattern, SpaceGroupExplorer
 from pyobjcryst.radiation import RadiationType, WavelengthType
-from pyobjcryst.crystal import *
 from pyobjcryst.reflectionprofile import ReflectionProfileType
-from pyobjcryst.indexing import *
-from pyobjcryst.tests.pyobjcrysttestutils import loadcifdata, datafile
-
+from pyobjcryst.tests.pyobjcrysttestutils import datafile, loadcifdata
 
 # ----------------------------------------------------------------------------
 
@@ -139,7 +138,8 @@ class TestPowderPattern(unittest.TestCase):
         pp.SetWavelength("Cu")
         self.assertAlmostEqual(pp.GetWavelength(), 1.5418, places=4)
         self.assertEqual(
-            pp.GetRadiation().GetWavelengthType(), WavelengthType.WAVELENGTH_ALPHA12
+            pp.GetRadiation().GetWavelengthType(),
+            WavelengthType.WAVELENGTH_ALPHA12,
         )
         pp.GetRadiation().SetWavelengthType(t)
         pp.SetWavelength(w)
@@ -159,10 +159,14 @@ class TestPowderPattern(unittest.TestCase):
         p.SetPowderPatternX(np.deg2rad(x))
         p.SetPowderPatternObs(np.ones_like(x))
         pd = p.AddPowderPatternDiffraction(c)
-        pd.SetReflectionProfilePar(ReflectionProfileType.PROFILE_PSEUDO_VOIGT, 1e-6)
+        pd.SetReflectionProfilePar(
+            ReflectionProfileType.PROFILE_PSEUDO_VOIGT, 1e-6
+        )
         # p.plot(hkl=True)
         calc = p.GetPowderPatternCalc()
-        obs = np.random.poisson(calc * 1e5 / calc.max() + 50).astype(np.float64)
+        obs = np.random.poisson(calc * 1e5 / calc.max() + 50).astype(
+            np.float64
+        )
         p.SetPowderPatternObs(obs)
         p.SetMaxSinThetaOvLambda(0.3)
         p.quick_fit_profile(auto_background=True, verbose=False, plot=False)
@@ -175,10 +179,14 @@ class TestPowderPattern(unittest.TestCase):
         p.SetPowderPatternX(np.deg2rad(x))
         p.SetPowderPatternObs(np.ones_like(x))
         pd = p.AddPowderPatternDiffraction(c)
-        pd.SetReflectionProfilePar(ReflectionProfileType.PROFILE_PSEUDO_VOIGT, 1e-7)
+        pd.SetReflectionProfilePar(
+            ReflectionProfileType.PROFILE_PSEUDO_VOIGT, 1e-7
+        )
         # p.plot(hkl=True)
         calc = p.GetPowderPatternCalc()
-        obs = np.random.poisson(calc * 1e6 / calc.max() + 50).astype(np.float64)
+        obs = np.random.poisson(calc * 1e6 / calc.max() + 50).astype(
+            np.float64
+        )
         p.SetPowderPatternObs(obs)
         p.SetMaxSinThetaOvLambda(0.2)
         p.FitScaleFactorForIntegratedRw()
@@ -191,7 +199,9 @@ class TestPowderPattern(unittest.TestCase):
         self.assertEqual(ruc.centering, CrystalCentering.LATTICE_P)
         self.assertEqual(ruc.lattice, CrystalSystem.MONOCLINIC)
         # Cell volume
-        self.assertAlmostEqual(ruc.DirectUnitCell()[-1], c.GetVolume(), delta=5)
+        self.assertAlmostEqual(
+            ruc.DirectUnitCell()[-1], c.GetVolume(), delta=5
+        )
 
     def test_spacegroup_explorer(self):
         c = loadcifdata("paracetamol.cif")
@@ -206,7 +216,9 @@ class TestPowderPattern(unittest.TestCase):
         )
         # p.plot(hkl=True)
         calc = p.GetPowderPatternCalc()
-        obs = np.random.poisson(calc * 1e6 / calc.max() + 50).astype(np.float64)
+        obs = np.random.poisson(calc * 1e6 / calc.max() + 50).astype(
+            np.float64
+        )
         p.SetPowderPatternObs(obs)
         # NB: with max(stol)=0.2 this fails and best result is P1
         p.SetMaxSinThetaOvLambda(0.3)

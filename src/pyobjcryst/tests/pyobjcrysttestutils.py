@@ -12,16 +12,15 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Utilities for tests."""
 
+from numpy import pi
+
 from pyobjcryst.atom import Atom
+from pyobjcryst.crystal import Crystal
 from pyobjcryst.molecule import Molecule
 from pyobjcryst.polyhedron import MakeOctahedron
-from pyobjcryst.crystal import Crystal
 from pyobjcryst.scatteringpower import ScatteringPowerAtom
-
-from numpy import pi
 
 
 def makeScatterer():

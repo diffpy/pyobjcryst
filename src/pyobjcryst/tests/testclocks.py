@@ -12,14 +12,12 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Tests for crystal module."""
 
 import unittest
 
-from pyobjcryst.tests.pyobjcrysttestutils import makeC60
-
 from pyobjcryst.refinableobj import RefinableObjClock
+from pyobjcryst.tests.pyobjcrysttestutils import makeC60
 
 
 class TestClocks(unittest.TestCase):

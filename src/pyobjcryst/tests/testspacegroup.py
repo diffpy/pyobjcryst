@@ -12,8 +12,7 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
-"""Unit tests for pyobjcryst.spacegroup"""
+"""Unit tests for pyobjcryst.spacegroup."""
 
 
 import unittest

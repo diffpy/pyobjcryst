@@ -12,8 +12,7 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
-"""Python wrapping of RefinableObj.h
+"""Python wrapping of RefinableObj.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 
@@ -109,56 +108,60 @@ __all__ = [
 ]
 
 from types import MethodType
-from pyobjcryst._pyobjcryst import RefinableObjClock
-from pyobjcryst._pyobjcryst import RefinableObj
-from pyobjcryst._pyobjcryst import RefObjOpt
-from pyobjcryst._pyobjcryst import RefinableObjRegistry
-from pyobjcryst._pyobjcryst import RefParType
-from pyobjcryst._pyobjcryst import RefParDerivStepModel
-from pyobjcryst._pyobjcryst import RefinablePar
-from pyobjcryst._pyobjcryst import Restraint
-from pyobjcryst._pyobjcryst import ScattererRegistry
-from pyobjcryst._pyobjcryst import ScatteringPowerRegistry
-from pyobjcryst._pyobjcryst import ZAtomRegistry
-from pyobjcryst._pyobjcryst import refpartype_crystal
-from pyobjcryst._pyobjcryst import refpartype_objcryst
-from pyobjcryst._pyobjcryst import refpartype_scatt
-from pyobjcryst._pyobjcryst import refpartype_scatt_transl
-from pyobjcryst._pyobjcryst import refpartype_scatt_transl_x
-from pyobjcryst._pyobjcryst import refpartype_scatt_transl_y
-from pyobjcryst._pyobjcryst import refpartype_scatt_transl_z
-from pyobjcryst._pyobjcryst import refpartype_scatt_orient
-from pyobjcryst._pyobjcryst import refpartype_scatt_conform
-from pyobjcryst._pyobjcryst import refpartype_scatt_conform_bondlength
-from pyobjcryst._pyobjcryst import refpartype_scatt_conform_bondangle
-from pyobjcryst._pyobjcryst import refpartype_scatt_conform_dihedangle
-from pyobjcryst._pyobjcryst import refpartype_scatt_conform_x
-from pyobjcryst._pyobjcryst import refpartype_scatt_conform_y
-from pyobjcryst._pyobjcryst import refpartype_scatt_conform_z
-from pyobjcryst._pyobjcryst import refpartype_scatt_occup
-from pyobjcryst._pyobjcryst import refpartype_scattdata
-from pyobjcryst._pyobjcryst import refpartype_scattdata_scale
-from pyobjcryst._pyobjcryst import refpartype_scattdata_profile
-from pyobjcryst._pyobjcryst import refpartype_scattdata_profile_type
-from pyobjcryst._pyobjcryst import refpartype_scattdata_profile_width
-from pyobjcryst._pyobjcryst import refpartype_scattdata_profile_asym
-from pyobjcryst._pyobjcryst import refpartype_scattdata_corr
-from pyobjcryst._pyobjcryst import refpartype_scattdata_corr_pos
-from pyobjcryst._pyobjcryst import refpartype_scattdata_radiation
-from pyobjcryst._pyobjcryst import refpartype_scattdata_radiation_wavelength
-from pyobjcryst._pyobjcryst import refpartype_scattdata_background
-from pyobjcryst._pyobjcryst import refpartype_scattpow
-from pyobjcryst._pyobjcryst import refpartype_scattpow_temperature
-from pyobjcryst._pyobjcryst import refpartype_unitcell
-from pyobjcryst._pyobjcryst import refpartype_unitcell_length
-from pyobjcryst._pyobjcryst import refpartype_unitcell_angle
+
+from pyobjcryst._pyobjcryst import (
+    RefinableObj,
+    RefinableObjClock,
+    RefinableObjRegistry,
+    RefinablePar,
+    RefObjOpt,
+    RefParDerivStepModel,
+    RefParType,
+    Restraint,
+    ScattererRegistry,
+    ScatteringPowerRegistry,
+    ZAtomRegistry,
+    refpartype_crystal,
+    refpartype_objcryst,
+    refpartype_scatt,
+    refpartype_scatt_conform,
+    refpartype_scatt_conform_bondangle,
+    refpartype_scatt_conform_bondlength,
+    refpartype_scatt_conform_dihedangle,
+    refpartype_scatt_conform_x,
+    refpartype_scatt_conform_y,
+    refpartype_scatt_conform_z,
+    refpartype_scatt_occup,
+    refpartype_scatt_orient,
+    refpartype_scatt_transl,
+    refpartype_scatt_transl_x,
+    refpartype_scatt_transl_y,
+    refpartype_scatt_transl_z,
+    refpartype_scattdata,
+    refpartype_scattdata_background,
+    refpartype_scattdata_corr,
+    refpartype_scattdata_corr_pos,
+    refpartype_scattdata_profile,
+    refpartype_scattdata_profile_asym,
+    refpartype_scattdata_profile_type,
+    refpartype_scattdata_profile_width,
+    refpartype_scattdata_radiation,
+    refpartype_scattdata_radiation_wavelength,
+    refpartype_scattdata_scale,
+    refpartype_scattpow,
+    refpartype_scattpow_temperature,
+    refpartype_unitcell,
+    refpartype_unitcell_angle,
+    refpartype_unitcell_length,
+)
 
 
 class ObjRegistryWrapper(RefinableObjRegistry):
-    """
-    Wrapper class with a GetObj() method which can correctly wrap C++ objects with
-    the python methods. This is only needed when the objects have been created
-    from C++, e.g. when loading an XML file.
+    """Wrapper class with a GetObj() method which can correctly wrap C++
+    objects with the python methods.
+
+    This is only needed when the objects have been created from C++,
+    e.g. when loading an XML file.
     """
 
     def GetObj(self, i):
@@ -179,10 +182,11 @@ class ObjRegistryWrapper(RefinableObjRegistry):
 
 
 def wrap_boost_refinableobjregistry(o):
-    """
-    This function is used to wrap a C++ Object by adding the python methods to it.
+    """This function is used to wrap a C++ Object by adding the python methods
+    to it.
 
-    :param c: the C++ created object to which the python function must be added.
+    :param c: the C++ created object to which the python function must
+        be added.
     """
     # TODO: moving the original function is not very pretty. Is there a better way ?
     if "_GetObj" not in dir(o):

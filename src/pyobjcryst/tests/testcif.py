@@ -12,41 +12,43 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Tests for crystal module."""
 
-import unittest
 import gc
+import unittest
+
+from numpy import pi
 
 from pyobjcryst.crystal import CreateCrystalFromCIF
+from pyobjcryst.diffractiondatasinglecrystal import (
+    create_singlecrystaldata_from_cif,
+)
 from pyobjcryst.globals import gCrystalRegistry
-from pyobjcryst.diffractiondatasinglecrystal import create_singlecrystaldata_from_cif
-from numpy import pi
-from pyobjcryst.tests.pyobjcrysttestutils import loadcifdata, datafile
+from pyobjcryst.tests.pyobjcrysttestutils import datafile, loadcifdata
 
 
 class TestCif(unittest.TestCase):
 
     def test_Ag_silver_cif(self):
-        """Check loading of Ag_silver.cif"""
+        """Check loading of Ag_silver.cif."""
         c = loadcifdata("Ag_silver.cif")
         self.assertTrue(c is not None)
         return
 
     def test_BaTiO3_cif(self):
-        """Check loading of BaTiO3.cif"""
+        """Check loading of BaTiO3.cif."""
         c = loadcifdata("BaTiO3.cif")
         self.assertTrue(c is not None)
         return
 
     def test_C_graphite_hex_cif(self):
-        """Check loading of C_graphite_hex.cif"""
+        """Check loading of C_graphite_hex.cif."""
         c = loadcifdata("C_graphite_hex.cif")
         self.assertTrue(c is not None)
         return
 
     def test_CaF2_fluorite_cif(self):
-        """Check loading of CaF2_fluorite.cif"""
+        """Check loading of CaF2_fluorite.cif."""
         c = loadcifdata("CaF2_fluorite.cif")
         self.assertTrue(c is not None)
         return
@@ -122,79 +124,79 @@ class TestCif(unittest.TestCase):
         return
 
     def test_CdSe_cadmoselite_cif(self):
-        """Check loading of CdSe_cadmoselite.cif"""
+        """Check loading of CdSe_cadmoselite.cif."""
         c = loadcifdata("CdSe_cadmoselite.cif")
         self.assertTrue(c is not None)
         return
 
     def test_CeO2_cif(self):
-        """Check loading of CeO2.cif"""
+        """Check loading of CeO2.cif."""
         c = loadcifdata("CeO2.cif")
         self.assertTrue(c is not None)
         return
 
     def test_lidocainementhol_cif(self):
-        """Check loading of lidocainementhol.cif"""
+        """Check loading of lidocainementhol.cif."""
         c = loadcifdata("lidocainementhol.cif")
         self.assertTrue(c is not None)
         return
 
     def test_NaCl_cif(self):
-        """Check loading of NaCl.cif"""
+        """Check loading of NaCl.cif."""
         c = loadcifdata("NaCl.cif")
         self.assertTrue(c is not None)
         return
 
     def test_Ni_cif(self):
-        """Check loading of Ni.cif"""
+        """Check loading of Ni.cif."""
         c = loadcifdata("Ni.cif")
         self.assertTrue(c is not None)
         return
 
     def test_paracetamol_cif(self):
-        """Check loading of paracetamol.cif"""
+        """Check loading of paracetamol.cif."""
         c = loadcifdata("paracetamol.cif")
         self.assertTrue(c is not None)
         return
 
     def test_PbS_galena_cif(self):
-        """Check loading of PbS_galena.cif"""
+        """Check loading of PbS_galena.cif."""
         c = loadcifdata("PbS_galena.cif")
         self.assertTrue(c is not None)
         return
 
     def test_PbTe_cif(self):
-        """Check loading of PbTe.cif"""
+        """Check loading of PbTe.cif."""
         c = loadcifdata("PbTe.cif")
         self.assertTrue(c is not None)
         return
 
     def test_Si_cif(self):
-        """Check loading of Si.cif"""
+        """Check loading of Si.cif."""
         c = loadcifdata("Si.cif")
         self.assertTrue(c is not None)
         return
 
     def test_Si_setting2_cif(self):
-        """Check loading of Si_setting2.cif"""
+        """Check loading of Si_setting2.cif."""
         c = loadcifdata("Si_setting2.cif")
         self.assertTrue(c is not None)
         return
 
     def test_SrTiO3_tausonite_cif(self):
-        """Check loading of SrTiO3_tausonite.cif"""
+        """Check loading of SrTiO3_tausonite.cif."""
         c = loadcifdata("SrTiO3_tausonite.cif")
         self.assertTrue(c is not None)
         return
 
     def test_TiO2_anatase_cif(self):
-        """Check loading of TiO2_anatase.cif"""
+        """Check loading of TiO2_anatase.cif."""
         c = loadcifdata("TiO2_anatase.cif")
         self.assertTrue(c is not None)
         return
 
     def test_TiO2_rutile_cif(self):
-        """Check loading of TiO2_rutile.cif and its ADP data"""
+        """Check loading of TiO2_rutile.cif and its ADP data."""
         c = loadcifdata("TiO2_rutile.cif")
         self.assertTrue(c is not None)
         s = c.GetScatt(0)
@@ -207,19 +209,19 @@ class TestCif(unittest.TestCase):
         return
 
     def test_Zn_zinc_cif(self):
-        """Check loading of Zn_zinc.cif"""
+        """Check loading of Zn_zinc.cif."""
         c = loadcifdata("Zn_zinc.cif")
         self.assertTrue(c is not None)
         return
 
     def test_ZnS_sphalerite_cif(self):
-        """Check loading of ZnS_sphalerite.cif"""
+        """Check loading of ZnS_sphalerite.cif."""
         c = loadcifdata("ZnS_sphalerite.cif")
         self.assertTrue(c is not None)
         return
 
     def test_ZnS_wurtzite_cif(self):
-        """Check loading of ZnS_wurtzite.cif"""
+        """Check loading of ZnS_wurtzite.cif."""
         c = loadcifdata("ZnS_wurtzite.cif")
         self.assertTrue(c is not None)
         return
@@ -235,7 +237,7 @@ class TestCif(unittest.TestCase):
         return
 
     def test_paracetamol_monomethanolate(self):
-        """Test loading crystal and diffraction data"""
+        """Test loading crystal and diffraction data."""
         c = loadcifdata("paracetamol_monomethanolate.cif")
         d = create_singlecrystaldata_from_cif(
             datafile("paracetamol_monomethanolate_data_single_crystal.cif"), c
@@ -243,9 +245,8 @@ class TestCif(unittest.TestCase):
         self.assertTrue(d is not None)
 
     def test_paracetamol_monomethanolate_ward(self):
-        """Test loading crystal and diffraction data,
-        make sure custodian & ward works
-        """
+        """Test loading crystal and diffraction data, make sure custodian &
+        ward works."""
         c = loadcifdata("paracetamol_monomethanolate.cif")
         d = create_singlecrystaldata_from_cif(
             datafile("paracetamol_monomethanolate_data_single_crystal.cif"), c

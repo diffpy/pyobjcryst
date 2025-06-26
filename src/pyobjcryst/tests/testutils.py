@@ -12,10 +12,10 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Tests for crystal module."""
 
 import unittest
+
 import numpy
 
 from pyobjcryst.tests.pyobjcrysttestutils import loadcifdata

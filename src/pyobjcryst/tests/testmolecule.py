@@ -12,27 +12,27 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Tests for molecule module."""
 
 import io
 import unittest
+
+from numpy import pi
 from pkg_resources import resource_filename
+
 from pyobjcryst import ObjCrystException
 from pyobjcryst.crystal import Crystal
 from pyobjcryst.molecule import (
-    GetBondLength,
-    StretchModeBondLength,
     GetBondAngle,
-    StretchModeBondAngle,
+    GetBondLength,
     GetDihedralAngle,
-    StretchModeTorsion,
     ImportFenskeHallZMatrix,
+    StretchModeBondAngle,
+    StretchModeBondLength,
+    StretchModeTorsion,
 )
-from pyobjcryst.refinableobj import RefParType, RefinablePar
+from pyobjcryst.refinableobj import RefinablePar, RefParType
 from pyobjcryst.tests.pyobjcrysttestutils import makeC60, makeMnO6
-
-from numpy import pi
 
 numplaces = 6
 
@@ -88,8 +88,7 @@ class TestMolecule(unittest.TestCase):
     def testAtoms(self):
         """Make sure the atoms are there.
 
-        This tests AddAtom by association.
-        This tests GetAtom.
+        This tests AddAtom by association. This tests GetAtom.
         """
         self.assertEqual(60, self.m.GetNbAtoms())
         for i in range(60):
@@ -430,7 +429,9 @@ class TestMolecule(unittest.TestCase):
 
         xyz = [numpy.array([a.X, a.Y, a.Z]) for a in self.m]
 
-        self.m.RotateAtomGroup((0, 0, 0), (0, 0, 1), self.m.GetAtomList(), pi / 2)
+        self.m.RotateAtomGroup(
+            (0, 0, 0), (0, 0, 1), self.m.GetAtomList(), pi / 2
+        )
 
         rm = numpy.array([[0, -1, 0], [1, 0, 0], [0, 0, 1]])
         for i in range(len(self.m)):
@@ -443,7 +444,7 @@ class TestMolecule(unittest.TestCase):
         return
 
     def testZMatrix(self):
-        """Test creating a Molecule from a z-matrix"""
+        """Test creating a Molecule from a z-matrix."""
         fname = resource_filename(__name__, "testdata/cime.fhz")
         c = Crystal()
         m = ImportFenskeHallZMatrix(c, fname)
@@ -660,7 +661,9 @@ class TestMolDihedralAngle(unittest.TestCase):
         self.a3 = self.m.GetAtom(2)
         self.a4 = self.m.GetAtom(3)
 
-        self.da = self.m.AddDihedralAngle(self.a1, self.a2, self.a3, self.a4, 5, 1, 2)
+        self.da = self.m.AddDihedralAngle(
+            self.a1, self.a2, self.a3, self.a4, 5, 1, 2
+        )
         return
 
     def tearDown(self):

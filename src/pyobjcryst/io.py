@@ -12,8 +12,7 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
-"""Python wrapping of IO.h
+"""Python wrapping of IO.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 
@@ -34,11 +33,15 @@ __all__ = [
 
 import gzip
 import os
+
 from pyobjcryst._pyobjcryst import (
-    XMLCrystTag,
     XMLCrystFileLoadAllObject as XMLCrystFileLoadAllObject_orig,
+)
+from pyobjcryst._pyobjcryst import (
     XMLCrystFileSaveGlobal as XMLCrystFileSaveGlobal_orig,
 )
+from pyobjcryst._pyobjcryst import XMLCrystTag
+
 from .globals import gTopRefinableObjRegistry
 
 

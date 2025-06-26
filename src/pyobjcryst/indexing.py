@@ -12,10 +12,10 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
+"""Python wrapping of UnitCell.h.
 
-"""Python wrapping of UnitCell.h
-
-See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
+See the online ObjCryst++ documentation (
+https://objcryst.readthedocs.io).
 """
 
 __all__ = [
@@ -31,16 +31,18 @@ __all__ = [
 ]
 
 import time
+
 from numpy import deg2rad
+
 from pyobjcryst._pyobjcryst import (
-    CrystalSystem,
+    CellExplorer,
     CrystalCentering,
+    CrystalSystem,
     EstimateCellVolume,
-    RecUnitCell,
+    PeakList,
     PeakList_hkl,
     PeakList_hkl0,
-    PeakList,
-    CellExplorer,
+    RecUnitCell,
 )
 
 
@@ -127,8 +129,12 @@ def quick_index(
                 elif cent == CrystalCentering.LATTICE_F:
                     centc = "F"
 
-                minv = EstimateCellVolume(dmin, dmax, nb, csys, cent, max_obs_ratio)
-                maxv = EstimateCellVolume(dmin, dmax, nb, csys, cent, min_obs_ratio)
+                minv = EstimateCellVolume(
+                    dmin, dmax, nb, csys, cent, max_obs_ratio
+                )
+                maxv = EstimateCellVolume(
+                    dmin, dmax, nb, csys, cent, min_obs_ratio
+                )
                 ex.SetVolumeMinMax(minv, maxv)
                 lengthmax = 3 * maxv ** (1 / 3.0)
                 if lengthmax < 25:
@@ -143,12 +149,20 @@ def quick_index(
                     )
                 t0 = time.time()
                 ex.DicVol(
-                    report_score, report_depth, stop_score, stop_depth, verbose=False
+                    report_score,
+                    report_depth,
+                    stop_score,
+                    stop_depth,
+                    verbose=False,
                 )
                 if verbose:
                     print(
                         " -> %3u sols in %6.2fs, best score=%6.1f\n"
-                        % (len(ex.GetSolutions()), time.time() - t0, ex.GetBestScore())
+                        % (
+                            len(ex.GetSolutions()),
+                            time.time() - t0,
+                            ex.GetBestScore(),
+                        )
                     )
                 if try_centered_lattice:
                     break

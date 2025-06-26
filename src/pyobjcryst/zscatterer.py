@@ -12,7 +12,6 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Python wrapping of Zscatterer.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
@@ -34,19 +33,21 @@ __all__ = [
 
 from urllib.request import urlopen
 
+from pyobjcryst._pyobjcryst import (
+    GlobalScatteringPower,
+    RegularPolyhedraType,
+    ZAtom,
+    ZPolyhedron,
+)
 from pyobjcryst._pyobjcryst import ZScatterer as ZScatterer_orig
-from pyobjcryst._pyobjcryst import ZAtom
-from pyobjcryst._pyobjcryst import ZPolyhedron
-from pyobjcryst._pyobjcryst import RegularPolyhedraType
-from pyobjcryst._pyobjcryst import GlobalScatteringPower
 
 
 class ZScatterer(ZScatterer_orig):
 
     def ImportFenskeHallZMatrix(self, src, named=False):
-        """
-        Import atoms from a Fenske-Hall z-matrix
-        :param src: either a python filed (opened in 'rb' mode), or
+        """Import atoms from a Fenske-Hall z-matrix :param src: either a python
+        filed (opened in 'rb' mode), or.
+
             a filename, or an url ("http://...") to a text file with the z-matrix
         :param named: if True, allows to read a named Z-matrix - the formatting
             is similar to a Fenske-Hall z-matrix but only relies on spaces between the

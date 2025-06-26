@@ -9,8 +9,7 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
-"""Python wrapping of PowderPattern.h
+"""Python wrapping of PowderPattern.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io/en/latest/).
 
@@ -18,10 +17,11 @@ Changes from ObjCryst::PowderPattern::
         Additional functions for plotting, basic QPA and profile fitting.
 """
 
-from urllib.request import urlopen
-from packaging.version import parse as version_parse
 from multiprocessing import current_process
+from urllib.request import urlopen
+
 import numpy as np
+from packaging.version import parse as version_parse
 
 __all__ = [
     "PowderPattern",
@@ -34,18 +34,21 @@ __all__ = [
 ]
 
 from types import MethodType
-from pyobjcryst._pyobjcryst import PowderPattern as PowderPattern_objcryst
+
+from pyobjcryst import ObjCrystException
+from pyobjcryst._pyobjcryst import LSQ
 from pyobjcryst._pyobjcryst import (
     CreatePowderPatternFromCIF as CreatePowderPatternFromCIF_orig,
 )
-from pyobjcryst._pyobjcryst import PowderPatternBackground
-from pyobjcryst._pyobjcryst import PowderPatternComponent
-from pyobjcryst._pyobjcryst import PowderPatternDiffraction
-from pyobjcryst._pyobjcryst import ReflectionProfileType
-from pyobjcryst._pyobjcryst import LSQ
+from pyobjcryst._pyobjcryst import PowderPattern as PowderPattern_objcryst
+from pyobjcryst._pyobjcryst import (
+    PowderPatternBackground,
+    PowderPatternComponent,
+    PowderPatternDiffraction,
+    ReflectionProfileType,
+    SpaceGroupExplorer,
+)
 from pyobjcryst.refinableobj import refpartype_scattdata_background
-from pyobjcryst._pyobjcryst import SpaceGroupExplorer
-from pyobjcryst import ObjCrystException
 
 
 class PowderPattern(PowderPattern_objcryst):
@@ -86,8 +89,7 @@ class PowderPattern(PowderPattern_objcryst):
                 self.plot()
 
     def update_display(self, return_figure=False):
-        """
-        Update the plotted figure (if it exists)
+        """Update the plotted figure (if it exists)
 
         :param return_figure: if True, returns the figure
         :return: the figure if return_figure is True
@@ -101,23 +103,28 @@ class PowderPattern(PowderPattern_objcryst):
         self._display_update_disabled = True
 
     def enable_display_update(self):
-        """Enable display"""
+        """Enable display."""
         self._display_update_disabled = False
 
     def plot(
-        self, diff=None, hkl=None, figsize=(9, 4), fontsize_hkl=6, reset=False, **kwargs
+        self,
+        diff=None,
+        hkl=None,
+        figsize=(9, 4),
+        fontsize_hkl=6,
+        reset=False,
+        **kwargs
     ):
-        """
-        Show the powder pattern in a plot using matplotlib
-        :param diff: if True, also show the difference plot
-        :param hkl: if True, print the hkl values
-        :param figsize: the figure size passed to matplotlib
-        :param fontsize_hkl: fontsize for hkl coordinates
-        :param reset: if True, will reset the x and y limits, and remove the flags to plot
-                      the difference and hkl unless the options are set at the same time.
-        :param kwargs: additional keyword arguments:
-                       fig=None will force creating a new figure
-                       fig=fig1 will plot in the given matplotlib figure
+        """Show the powder pattern in a plot using matplotlib :param diff: if
+        True, also show the difference plot :param hkl: if True, print the hkl
+        values :param figsize: the figure size passed to matplotlib :param
+        fontsize_hkl: fontsize for hkl coordinates :param reset: if True, will
+        reset the x and y limits, and remove the flags to plot the difference
+        and hkl unless the options are set at the same time.
+
+        :param kwargs: additional keyword arguments: fig=None will force
+            creating a new figure fig=fig1 will plot in the given
+            matplotlib figure
         """
         import matplotlib.pyplot as plt
 
@@ -225,7 +232,9 @@ class PowderPattern(PowderPattern_objcryst):
             self._plot_fig.canvas.mpl_connect(
                 "button_press_event", self._on_mouse_event
             )
-            self._plot_fig.canvas.mpl_connect("draw_event", self._on_draw_event)
+            self._plot_fig.canvas.mpl_connect(
+                "draw_event", self._on_draw_event
+            )
 
     def _do_plot_hkl(self, nb_max=100, fontsize_hkl=None):
         import matplotlib.pyplot as plt
@@ -487,7 +496,9 @@ class PowderPattern(PowderPattern_objcryst):
                     lsq.SetParIsFixed(refpartype_scattdata_background, False)
                     b.FixParametersBeyondMaxresolution(lsqr)
                     # lsqr.Print()
-                    lsq.SafeRefine(nbCycle=10, useLevenbergMarquardt=True, silent=True)
+                    lsq.SafeRefine(
+                        nbCycle=10, useLevenbergMarquardt=True, silent=True
+                    )
                     break
         if verbose:
             print(
@@ -497,10 +508,10 @@ class PowderPattern(PowderPattern_objcryst):
             )
 
     def get_background(self):
-        """
-        Access the background component.
+        """Access the background component.
 
-        :return: the PowderPatternBackground for this powder pattern, or None
+        :return: the PowderPatternBackground for this powder pattern, or
+            None
         """
         for i in range(self.GetNbPowderPatternComponent()):
             if (
@@ -510,10 +521,8 @@ class PowderPattern(PowderPattern_objcryst):
                 return self.GetPowderPatternComponent(i)
 
     def get_crystalline_components(self):
-        """
-        Get the crystalline phase for this powder pattern
-        :return: a list of the PowderPatternDiffraction components
-        """
+        """Get the crystalline phase for this powder pattern :return: a list of
+        the PowderPatternDiffraction components."""
         vc = []
         for i in range(self.GetNbPowderPatternComponent()):
             if (
@@ -547,13 +556,13 @@ class PowderPattern(PowderPattern_objcryst):
                 self._do_plot_hkl()
 
     def qpa(self, verbose=False):
-        """
-        Get the quantitative phase analysis for the current powder pattern,
+        """Get the quantitative phase analysis for the current powder pattern,
         when multiple crystalline phases are present.
 
-        :param verbose: if True, print the Crystal names and their weight percentage.
-        :return: a dictionary with the PowderPatternDiffraction object as key, and
-            the weight percentages as value.
+        :param verbose: if True, print the Crystal names and their
+            weight percentage.
+        :return: a dictionary with the PowderPatternDiffraction object
+            as key, and the weight percentages as value.
         """
         res = {}
         szmv_sum = 0
@@ -574,7 +583,9 @@ class PowderPattern(PowderPattern_objcryst):
         for k, v in res.items():
             res[k] = v / szmv_sum
             if verbose:
-                print("%25s: %6.2f%%" % (k.GetCrystal().GetName(), res[k] * 100))
+                print(
+                    "%25s: %6.2f%%" % (k.GetCrystal().GetName(), res[k] * 100)
+                )
         return res
 
 
@@ -603,10 +614,11 @@ def create_powderpattern_from_cif(file):
 
 
 def wrap_boost_powderpattern(c: PowderPattern):
-    """
-    This function is used to wrap a C++ Object by adding the python methods to it.
+    """This function is used to wrap a C++ Object by adding the python methods
+    to it.
 
-    :param c: the C++ created object to which the python function must be added.
+    :param c: the C++ created object to which the python function must
+        be added.
     """
     if "_plot_fig" not in dir(c):
         # Add attributes

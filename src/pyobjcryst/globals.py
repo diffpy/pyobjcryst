@@ -9,9 +9,10 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
+"""Global objects are exposed here.
 
-"""Global objects are exposed here. These are the main objects registries,
-which are tweaked to wrap pure C++ objects with the python methods.
+These are the main objects registries, which are tweaked to wrap pure
+C++ objects with the python methods.
 """
 
 __all__ = [
@@ -24,15 +25,18 @@ __all__ = [
     "gDiffractionDataSingleCrystalRegistry",
 ]
 
-from .refinableobj import wrap_boost_refinableobjregistry
+from pyobjcryst._pyobjcryst import (
+    gCrystalRegistry,
+    gDiffractionDataSingleCrystalRegistry,
+    gOptimizationObjRegistry,
+    gPowderPatternRegistry,
+    gRefinableObjRegistry,
+    gScattererRegistry,
+    gTopRefinableObjRegistry,
+)
+
 from .globaloptim import wrap_boost_optimizationobjregistry
-from pyobjcryst._pyobjcryst import gCrystalRegistry
-from pyobjcryst._pyobjcryst import gOptimizationObjRegistry
-from pyobjcryst._pyobjcryst import gPowderPatternRegistry
-from pyobjcryst._pyobjcryst import gRefinableObjRegistry
-from pyobjcryst._pyobjcryst import gScattererRegistry
-from pyobjcryst._pyobjcryst import gTopRefinableObjRegistry
-from pyobjcryst._pyobjcryst import gDiffractionDataSingleCrystalRegistry
+from .refinableobj import wrap_boost_refinableobjregistry
 
 # Wrap registries with python methods
 wrap_boost_refinableobjregistry(gCrystalRegistry)

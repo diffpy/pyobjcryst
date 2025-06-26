@@ -7,19 +7,19 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Tests for indexing module."""
 
 import unittest
+
 from numpy import pi
 
 from pyobjcryst.indexing import (
-    CrystalSystem,
-    CrystalCentering,
-    EstimateCellVolume,
-    RecUnitCell,
-    PeakList,
     CellExplorer,
+    CrystalCentering,
+    CrystalSystem,
+    EstimateCellVolume,
+    PeakList,
+    RecUnitCell,
     quick_index,
 )
 
@@ -33,7 +33,7 @@ class TestIndexing(unittest.TestCase):
         pass
 
     def test_estimate_cell_volume(self):
-        """Check EstimateCellVolume"""
+        """Check EstimateCellVolume."""
         # 20 reflections observed from d=47.326A to 1.537A
         v = EstimateCellVolume(
             1 / 1.537,
@@ -74,7 +74,16 @@ class TestIndexing(unittest.TestCase):
 
     def test_recunitcell(self):
         r = RecUnitCell(
-            0, 0.1, 0, 0, 0, 0, 0, CrystalSystem.CUBIC, CrystalCentering.LATTICE_P, 0
+            0,
+            0.1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            CrystalSystem.CUBIC,
+            CrystalCentering.LATTICE_P,
+            0,
         )
         d = r.hkl2d(1, 1, 1, None, 0)
         self.assertAlmostEqual(d, 0.03, 5)

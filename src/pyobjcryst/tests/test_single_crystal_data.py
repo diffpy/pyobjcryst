@@ -2,24 +2,25 @@
 
 """Tests for diffractiondatasinglecrystal module."""
 
-import unittest
 import gc
+import unittest
+
 import numpy as np
 
 from pyobjcryst.crystal import CreateCrystalFromCIF, Crystal
 from pyobjcryst.diffractiondatasinglecrystal import *
-from pyobjcryst.tests.pyobjcrysttestutils import loadcifdata, datafile
+from pyobjcryst.tests.pyobjcrysttestutils import datafile, loadcifdata
 
 
 class test_single_crystal_data(unittest.TestCase):
 
     def test_create(self):
-        """Test creating a DiffractionDataSingleCrystal object"""
+        """Test creating a DiffractionDataSingleCrystal object."""
         c = Crystal(3.52, 3.52, 3.52, "225")
         d = DiffractionDataSingleCrystal(c)
 
     def test_create_set_hkliobs(self):
-        """test SetHklIobs, SetIobs and SetSigma"""
+        """Test SetHklIobs, SetIobs and SetSigma."""
         c = Crystal(3.1, 3.2, 3.3, "Pmmm")
         d = DiffractionDataSingleCrystal(c)
         n0 = 5

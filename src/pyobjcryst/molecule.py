@@ -12,8 +12,7 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
-"""Python wrapping of Molecule.h
+"""Python wrapping of Molecule.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 
@@ -104,30 +103,33 @@ __all__ = [
 
 # TODO - MolRing
 
-from pyobjcryst._pyobjcryst import Molecule
-from pyobjcryst._pyobjcryst import GetBondLength
-from pyobjcryst._pyobjcryst import GetBondAngle
-from pyobjcryst._pyobjcryst import GetDihedralAngle
-from pyobjcryst._pyobjcryst import MolAtom
-from pyobjcryst._pyobjcryst import MolBond
-from pyobjcryst._pyobjcryst import MolBondAngle
-from pyobjcryst._pyobjcryst import MolDihedralAngle
-from pyobjcryst._pyobjcryst import Quaternion
-from pyobjcryst._pyobjcryst import RigidGroup
-from pyobjcryst._pyobjcryst import StretchMode
-from pyobjcryst._pyobjcryst import StretchModeBondLength
-from pyobjcryst._pyobjcryst import StretchModeBondAngle
-from pyobjcryst._pyobjcryst import StretchModeTorsion
-from pyobjcryst._pyobjcryst import StretchModeTwist
-from pyobjcryst._pyobjcryst import ZScatterer2Molecule
+from pyobjcryst._pyobjcryst import (
+    GetBondAngle,
+    GetBondLength,
+    GetDihedralAngle,
+    MolAtom,
+    MolBond,
+    MolBondAngle,
+    MolDihedralAngle,
+    Molecule,
+    Quaternion,
+    RigidGroup,
+    StretchMode,
+    StretchModeBondAngle,
+    StretchModeBondLength,
+    StretchModeTorsion,
+    StretchModeTwist,
+    ZScatterer2Molecule,
+)
+
 from .zscatterer import ZScatterer
 
 
 def ImportFenskeHallZMatrix(cryst, src, named=False):
-    """
-    Create a Molecule from a Fenske-Hall z-matrix. This is cleaner than importing
-    the Z-matrix into a ZScatterer object and then using ZScatterer2Molecule,
-    as it takes care of keeping only the created Molecule inside the Crystal.
+    """Create a Molecule from a Fenske-Hall z-matrix. This is cleaner than
+    importing the Z-matrix into a ZScatterer object and then using
+    ZScatterer2Molecule, as it takes care of keeping only the created Molecule
+    inside the Crystal.
 
     :param cryst: a Crystal object to which will belong the created Molecule
     :param src: either a python filed (opened in 'rb' mode), or

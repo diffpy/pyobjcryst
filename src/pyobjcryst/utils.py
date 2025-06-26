@@ -12,7 +12,6 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Utilities for crystals."""
 
 
@@ -35,7 +34,6 @@ def putAtomsInMolecule(crystal, alist=None, name=None):
                 crystal's name.
 
     Raises TypeError if idxlist identifies a non-atom.
-
     """
     c = crystal
 
@@ -45,8 +43,8 @@ def putAtomsInMolecule(crystal, alist=None, name=None):
     if alist is None:
         alist = range(c.GetNbScatterer())
 
-    from pyobjcryst.molecule import Molecule
     from pyobjcryst.atom import Atom
+    from pyobjcryst.molecule import Molecule
 
     m = Molecule(c, name)
 
