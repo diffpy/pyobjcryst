@@ -229,7 +229,7 @@ class PowderPattern(PowderPattern_objcryst):
                 # 'inline' backend triggers a delayed exception (?)
                 try:
                     # need the renderer to avoid text overlap
-                    renderer = plt.gcf().canvas.renderer
+                    renderer = plt.gcf().canvas.get_renderer()
                 except:
                     # Force immediate display. Not supported on all backends (e.g. nbagg)
                     ax.draw()
@@ -237,7 +237,7 @@ class PowderPattern(PowderPattern_objcryst):
                     if 'ipympl' not in plt.get_backend():
                         plt.pause(.001)
                     try:
-                        renderer = self._plot_fig.canvas.renderer
+                        renderer = self._plot_fig.canvas.get_renderer()
                     except:
                         renderer = None
             else:

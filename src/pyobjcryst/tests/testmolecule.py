@@ -17,7 +17,7 @@
 
 import io
 import unittest
-from pkg_resources import resource_filename
+from importlib.resources import files
 from pyobjcryst import ObjCrystException
 from pyobjcryst.crystal import Crystal
 from pyobjcryst.molecule import (
@@ -446,7 +446,7 @@ class TestMolecule(unittest.TestCase):
 
     def testZMatrix(self):
         """Test creating a Molecule from a z-matrix"""
-        fname = resource_filename(__name__, "testdata/cime.fhz")
+        fname = str(files(__name__).joinpath("testdata", "cime.fhz"))
         c= Crystal()
         m = ImportFenskeHallZMatrix(c, fname)
         assert m.GetNbAtoms() == 17

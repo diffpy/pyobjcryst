@@ -1,37 +1,85 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
 *.py[cod]
+*$py.class
+.exp
+.lib
+.dll
 
-# C extensions
+# Compiled Dynamic libraries
 *.so
+*.dylib
 
-# Packages
-*.egg
-*.egg-info
-dist
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a.sconf_temp
+
+# SCons build files
+.gdb_history
+.sconf_temp/
+.sconsign.dblite
 build
-eggs
-parts
-bin
-var
-sdist
-temp
-develop-eggs
-.installed.cfg
-lib
-lib64
-tags
+config.log
 errors.err
+/sconscript.local
+/sconsvars.py
+tags
+
+# Distribution / packaging
+.Python
+env/
+build/
+_build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+venv/
+*.egg-info/
+.installed.cfg
+*.egg
+bin/
+temp/
+tags/
+errors.err
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
 
 # Installer logs
 pip-log.txt
+pip-delete-this-directory.txt
 MANIFEST
 
 # Unit test / coverage reports
+htmlcov/
+.tox/
 .coverage
-.tox
+.coverage.*
+.cache
 nosetests.xml
+coverage.xml
+*,cover
+.hypothesis/
 
 # Translations
 *.mo
+*.pot
 
 # Mr Developer
 .mr.developer.cfg
@@ -39,14 +87,43 @@ nosetests.xml
 .pydevproject
 .settings
 
-# SCons build files
-.gdb_history
-.sconf_temp/
-.sconsign.dblite
-config.log
-/sconscript.local
-/sconsvars.py
+# Django stuff:
+*.log
 
-# version information
-setup.cfg
-/src/pyobjcryst/version.cfg
+# Sphinx documentation
+docs/build/
+docs/source/generated/
+
+# pytest
+.pytest_cache/
+
+# PyBuilder
+target/
+
+# Editor files
+# mac
+.DS_Store
+*~
+
+# vim
+*.swp
+*.swo
+
+# pycharm
+.idea/
+
+# VSCode
+.vscode/
+
+# Visual Studio
+.vs/*
+
+# eclipse
+.project
+.pydevproject
+
+# Ipython Notebook
+.ipynb_checkpoints
+
+# source distribution tarball
+libdiffpy-*.tar.gz
