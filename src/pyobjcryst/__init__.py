@@ -72,7 +72,9 @@ import pyobjcryst.scatteringpowersphere
 import pyobjcryst.spacegroup
 import pyobjcryst.unitcell
 import pyobjcryst.zscatterer
-from pyobjcryst._pyobjcryst import gTopRefinableObjRegistry
+
+# could be api breaking if removed
+from pyobjcryst._pyobjcryst import gTopRefinableObjRegistry  # noqa: F401
 
 # Let's put this on the package level
 from pyobjcryst.general import ObjCrystException

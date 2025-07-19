@@ -36,8 +36,6 @@ __all__ = [
 ]
 
 import warnings
-from multiprocessing import current_process
-from types import MethodType
 from urllib.request import urlopen
 
 import numpy as np
@@ -47,8 +45,6 @@ from pyobjcryst._pyobjcryst import (
     CreateCrystalFromCIF as CreateCrystalFromCIF_orig,
 )
 from pyobjcryst._pyobjcryst import Crystal as Crystal_orig
-
-from .refinableobj import wrap_boost_refinableobjregistry
 
 try:
     import py3Dmol
@@ -78,7 +74,7 @@ class Crystal(Crystal_orig):
         try:
             if self._display_update_disabled:
                 return
-        except:
+        except AttributeError:
             pass
         # test for _3d_widget is a bit ugly, but to correctly implement this we'd need an
         # __init__ function which overrides the 3 different Crystal constructors which
@@ -300,7 +296,7 @@ class Crystal(Crystal_orig):
                     name = scatt.GetComponentName(j)
                     name = name.replace("'", "_")
                     symbol = s.mpScattPow.GetSymbol()
-                    occ = s.Occupancy
+                    # occ = s.Occupancy
                     x, y, z = s.X, s.Y, s.Z
                     if enantiomer:
                         x = -x
@@ -413,8 +409,8 @@ class Crystal(Crystal_orig):
                                                     }
                                                 )
                     else:
-                        # TODO add 'visible' value in dictionary to determine which atoms are shown,
-                        # then update the bond and bondOrder lists
+                        # TODO add 'visible' value in dictionary to determine which atoms
+                        # are shown, then update the bond and bondOrder lists
                         for k in range(nsym):
                             for dx in (-1, 0, 1):
                                 for dy in (-1, 0, 1):
@@ -443,14 +439,14 @@ class Crystal(Crystal_orig):
                                             j = a["j"]
                                             vb = []
                                             vo = []
-                                            for l in range(len(a["bonds"])):
-                                                int_ptr = a["bonds"][l]
+                                            for i in range(len(a["bonds"])):
+                                                int_ptr = a["bonds"][i]
                                                 if atoms[int_ptr]["visible"]:
                                                     vb.append(
                                                         atoms[int_ptr]["idx"]
                                                     )
                                                     vo.append(
-                                                        a["bondOrder"][l]
+                                                        a["bondOrder"][i]
                                                     )
                                             x, y, z = vxyz[k, j] + np.array(
                                                 (dx, dy, dz)
@@ -479,7 +475,7 @@ class Crystal(Crystal_orig):
                         # 3dmol.js does not like ' in names,
                         # despite https://www.iucr.org/resources/cif/spec/version1.1/cifsyntax#bnf
                         name = name.replace("'", "_")
-                        occ = s.Occupancy
+                        # occ = s.Occupancy
                         x, y, z = s.X, s.Y, s.Z
                         if enantiomer:
                             x = -x
@@ -514,7 +510,7 @@ class Crystal(Crystal_orig):
                         # 3dmol.js does not like ' in names,
                         # despite https://www.iucr.org/resources/cif/spec/version1.1/cifsyntax#bnf
                         name = name.replace("'", "_")
-                        occ = s.Occupancy
+                        # occ = s.Occupancy
 
                         for k in range(nsym):
                             for dx in (-1, 0, 1):

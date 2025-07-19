@@ -17,4 +17,6 @@ Changes from ObjCryst::LSQNumObj::
         In development !
 """
 
+__all__ = ["LSQ"]
+
 from pyobjcryst._pyobjcryst import LSQ

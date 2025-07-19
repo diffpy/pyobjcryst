@@ -67,7 +67,7 @@ def calc_fourier_map(
         # print(" Fourier map obs scale factor:", scale_fobs)
     vol = c.GetVolume()
     spg = c.GetSpaceGroup()
-    h, k, l = data.GetH()[:nb], data.GetK()[:nb], data.GetL()[:nb]
+    h, k, l = data.GetH()[:nb], data.GetK()[:nb], data.GetL()[:nb]  # noqa E741
     # Map size to achieve resolution
     nx = int(np.ceil(c.a / resolution))
     ny = int(np.ceil(c.b / resolution))

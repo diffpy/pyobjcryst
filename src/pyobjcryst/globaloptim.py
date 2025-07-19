@@ -29,14 +29,21 @@ from pyobjcryst._pyobjcryst import AnnealingSchedule, GlobalOptimType
 from pyobjcryst._pyobjcryst import MonteCarlo as MonteCarlo_orig
 from pyobjcryst._pyobjcryst import OptimizationObjRegistry
 
-from .refinableobj import *
+from .refinableobj import (
+    refpartype_scattdata_background,
+    refpartype_scattdata_corr,
+    refpartype_scattdata_profile,
+    refpartype_scattdata_radiation,
+    refpartype_scattdata_scale,
+    refpartype_unitcell,
+)
 
 
 class MonteCarlo(MonteCarlo_orig):
 
     def Optimize(self, nb_step: int, final_cost=0, max_time=-1):
         self._fix_parameters_for_global_optim()
-        if type(self) == MonteCarlo_orig:
+        if type(self) is MonteCarlo_orig:
             self._Optimize(int(nb_step), True, final_cost, max_time)
         else:
             super().Optimize(int(nb_step), True, final_cost, max_time)
@@ -45,7 +52,7 @@ class MonteCarlo(MonteCarlo_orig):
         self, nb_run: int, nb_step: int, final_cost=0, max_time=-1
     ):
         self._fix_parameters_for_global_optim()
-        if type(self) == MonteCarlo_orig:
+        if type(self) is MonteCarlo_orig:
             self._MultiRunOptimize(
                 int(nb_run), int(nb_step), True, final_cost, max_time
             )
@@ -56,7 +63,7 @@ class MonteCarlo(MonteCarlo_orig):
 
     def RunSimulatedAnnealing(self, nb_step: int, final_cost=0, max_time=-1):
         self._fix_parameters_for_global_optim()
-        if type(self) == MonteCarlo_orig:
+        if type(self) is MonteCarlo_orig:
             self._RunSimulatedAnnealing(
                 int(nb_step), True, final_cost, max_time
             )
@@ -67,7 +74,7 @@ class MonteCarlo(MonteCarlo_orig):
 
     def RunParallelTempering(self, nb_step: int, final_cost=0, max_time=-1):
         self._fix_parameters_for_global_optim()
-        if type(self) == MonteCarlo_orig:
+        if type(self) is MonteCarlo_orig:
             self._RunParallelTempering(
                 int(nb_step), True, final_cost, max_time
             )
@@ -116,7 +123,7 @@ class MonteCarlo(MonteCarlo_orig):
         try:
             if self._display_update_disabled:
                 return
-        except:
+        except AttributeError:
             pass
         try:
             if self._widget is not None:

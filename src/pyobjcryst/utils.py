@@ -54,7 +54,8 @@ def putAtomsInMolecule(crystal, alist=None, name=None):
     # mapping fractional coords back into [0, 1)
     from math import floor
 
-    f = lambda v: v - floor(v)
+    def f(v):
+        return v - floor(v)
 
     scat = []
     for idx in alist:
