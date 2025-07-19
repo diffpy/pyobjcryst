@@ -16,8 +16,9 @@
 
 import unittest
 
-from pyobjcryst.refinableobj import RefinableObjClock
 from utils import makeC60
+
+from pyobjcryst.refinableobj import RefinableObjClock
 
 
 class TestClocks(unittest.TestCase):

@@ -16,13 +16,14 @@
 
 import unittest
 
-from pyobjcryst.atom import Atom
 from utils import (
     getScatterer,
     makeCrystal,
     makeScatterer,
     makeScattererAnisotropic,
 )
+
+from pyobjcryst.atom import Atom
 
 
 class TestCrystal(unittest.TestCase):
@@ -163,10 +164,10 @@ class TestCrystal(unittest.TestCase):
     def test_display_list(self):
         """Test the creation of a atoms list for display using 3dmol."""
         c = makeCrystal(*makeScatterer())
-        s = c._display_list()
-        s = c._display_list(full_molecule=True)
-        s = c._display_list(enantiomer=True)
-        s = c._display_list(only_independent_atoms=True)
+        c._display_list()
+        c._display_list(full_molecule=True)
+        c._display_list(enantiomer=True)
+        c._display_list(only_independent_atoms=True)
 
 
 if __name__ == "__main__":

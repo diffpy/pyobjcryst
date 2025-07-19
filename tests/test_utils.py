@@ -17,8 +17,8 @@
 import unittest
 
 import numpy
-
 from utils import loadcifdata
+
 from pyobjcryst.utils import putAtomsInMolecule
 
 

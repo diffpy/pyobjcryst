@@ -14,7 +14,6 @@ import unittest
 from numpy import pi
 
 from pyobjcryst.indexing import (
-    CellExplorer,
     CrystalCentering,
     CrystalSystem,
     EstimateCellVolume,

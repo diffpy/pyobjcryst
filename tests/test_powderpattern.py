@@ -17,14 +17,13 @@
 import unittest
 
 import numpy as np
+from utils import loadcifdata
 
 from pyobjcryst import ObjCrystException
-from pyobjcryst.crystal import *
-from pyobjcryst.indexing import *
+from pyobjcryst.indexing import CrystalCentering, CrystalSystem, quick_index
 from pyobjcryst.powderpattern import PowderPattern, SpaceGroupExplorer
 from pyobjcryst.radiation import RadiationType, WavelengthType
 from pyobjcryst.reflectionprofile import ReflectionProfileType
-from utils import datafile, loadcifdata
 
 # ----------------------------------------------------------------------------
 
@@ -232,7 +231,7 @@ class TestPowderPattern(unittest.TestCase):
         spgex = SpaceGroupExplorer(pd)
         spgex.Run("P 1 21/c 1")
         spgex.RunAll(verbose=False)
-        spg = spgex.GetScores()[0]
+        spg = spgex.GetScores()[0]  # noqa F841
         # This fails about XX% of the time (fit not converging well enough ?)
         # self.assertEqual(spg.hermann_mauguin, 'P 1 21/c 1')
         # if True:  #spg.hermann_mauguin != 'P 1 21/c 1':

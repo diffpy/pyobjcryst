@@ -11,10 +11,6 @@
 
 import unittest
 
-from pyobjcryst.diffractiondatasinglecrystal import (
-    DiffractionDataSingleCrystal,
-)
-from pyobjcryst.powderpattern import PowderPattern
 from pyobjcryst.radiation import Radiation, RadiationType, WavelengthType
 
 
@@ -22,7 +18,7 @@ class TestRadiation(unittest.TestCase):
 
     def testRadiation(self):
         """Test Radiation creation."""
-        r = Radiation()
+        Radiation()
         return
 
     def testWavelength(self):

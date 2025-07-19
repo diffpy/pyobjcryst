@@ -11,12 +11,13 @@
 
 import unittest
 
+from utils import loadcifdata
+
 from pyobjcryst import refinableobj
 from pyobjcryst.diffractiondatasinglecrystal import (
     DiffractionDataSingleCrystal,
 )
 from pyobjcryst.lsq import LSQ
-from utils import loadcifdata
 
 
 class TestGlobalOptim(unittest.TestCase):
@@ -40,7 +41,9 @@ class TestGlobalOptim(unittest.TestCase):
         """Check Creating a basic LSQ object & get obs&calc arrays."""
         lsq = LSQ()
         lsq.SetRefinedObj(self.d, 0, True, True)
-        junk = lsq.GetLSQObs(), lsq.GetLSQCalc(), lsq.ChiSquare()
+        lsq.GetLSQObs()
+        lsq.GetLSQCalc()
+        lsq.ChiSquare()
 
     def test_lsq_get_refined_obj(self):
         """Check Creating a basic LSQ object & get obs&calc arrays."""

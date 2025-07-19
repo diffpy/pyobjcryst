@@ -11,16 +11,13 @@
 
 import unittest
 
+from utils import loadcifdata
+
 from pyobjcryst import refinableobj
 from pyobjcryst.diffractiondatasinglecrystal import (
     DiffractionDataSingleCrystal,
 )
-from pyobjcryst.globaloptim import (
-    AnnealingSchedule,
-    GlobalOptimType,
-    MonteCarlo,
-)
-from utils import loadcifdata
+from pyobjcryst.globaloptim import AnnealingSchedule, MonteCarlo
 
 
 class TestGlobalOptim(unittest.TestCase):
@@ -54,13 +51,13 @@ class TestGlobalOptim(unittest.TestCase):
         mc = MonteCarlo()
         mc.AddRefinableObj(self.c)
         mc.AddRefinableObj(self.d)
-        junk = mc.GetLogLikelihood()
+        mc.GetLogLikelihood()
 
     def test_mc_fix_use_pars(self):
         mc = MonteCarlo()
         mc.AddRefinableObj(self.c)
         mc.AddRefinableObj(self.d)
-        junk = mc.GetLogLikelihood()
+        mc.GetLogLikelihood()
         mc.FixAllPar()
         mc.SetParIsUsed("Scale factor", False)
         mc.SetParIsUsed("Scale factor", True)
@@ -99,7 +96,8 @@ class TestGlobalOptim(unittest.TestCase):
         mc.RandomizeStartingConfig()
         mc.RunParallelTempering(nb_step=1000)
 
-    # TODO: this is experimental and leads to segfault if testcrystal:testDummyAtom() has been run before (?!)
+    # TODO: this is experimental and leads to segfault if
+    # testcrystal:testDummyAtom() has been run before (?!)
     # def test_mc_lsq(self):
     #     mc = MonteCarlo()
     #     mc.AddRefinableObj(self.c)

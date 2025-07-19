@@ -17,6 +17,7 @@
 import unittest
 
 import numpy
+from utils import makeCrystal, makeScatterer
 
 from pyobjcryst import ObjCrystException
 from pyobjcryst.refinableobj import (
@@ -26,7 +27,6 @@ from pyobjcryst.refinableobj import (
     RefParType,
     Restraint,
 )
-from utils import makeCrystal, makeScatterer
 
 
 class TestRefinableObjClock(unittest.TestCase):
@@ -421,7 +421,7 @@ class TestRefinableObj(unittest.TestCase):
 
     def test_xml(self):
         """Test xml() function."""
-        x = self.r.xml()
+        self.r.xml()
 
 
 if __name__ == "__main__":

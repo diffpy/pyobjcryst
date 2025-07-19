@@ -14,11 +14,11 @@
 ##############################################################################
 """Tests for molecule module."""
 
-import io
 import unittest
 from importlib.resources import files
 
 from numpy import pi
+from utils import makeC60, makeMnO6
 
 from pyobjcryst import ObjCrystException
 from pyobjcryst.crystal import Crystal
@@ -32,7 +32,6 @@ from pyobjcryst.molecule import (
     StretchModeTorsion,
 )
 from pyobjcryst.refinableobj import RefinablePar, RefParType
-from utils import makeC60, makeMnO6
 
 numplaces = 6
 
@@ -117,7 +116,7 @@ class TestMolecule(unittest.TestCase):
         # First, try the same atom again. This will throw an objcryst error.
         self.assertRaises(ObjCrystException, self.m.RemoveAtom, a)
 
-        ## Try to remove an atom from another molecule
+        # Try to remove an atom from another molecule
         c = makeC60()
         m = c.GetScatterer("c60")
         self.assertRaises(ObjCrystException, self.m.RemoveAtom, m.GetAtom(1))
