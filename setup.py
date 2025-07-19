@@ -55,7 +55,12 @@ def create_extensions():
     include_dirs = get_env_config().get("include_dirs") + [np.get_include()]
     library_dirs = get_env_config().get("library_dirs")
 
-    libraries = ["ObjCryst"] + check_boost_libraries(Path(library_dirs[0]))
+    if os.name == "nt":
+        objcryst_lib = "libObjCryst"
+    else:
+        objcryst_lib = "ObjCryst"
+
+    libraries = [objcryst_lib] + check_boost_libraries(Path(library_dirs[0]))
     extra_objects = []
     extra_compile_args = []
     extra_link_args = []

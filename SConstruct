@@ -22,7 +22,6 @@ SCons construction environment can be customized in sconscript.local script.
 import os
 from os.path import join as pjoin
 import re
-import platform
 import sys
 
 
@@ -107,6 +106,9 @@ if env['PLATFORM'] == "win32":
     lib_path = pjoin(env['prefix'], 'Library', 'lib')
     shared_path = pjoin(env['prefix'], 'Library', 'share')
 
+    env.AppendUnique(CPPPATH=[ pjoin(env['prefix'], 'include') ]) # for python headers
+    env.AppendUnique(LIBPATH=[ pjoin(env['prefix'], 'libs') ]) # for python libs
+
     env['ENV']['TMP'] = os.environ.get('TMP', env['ENV'].get('TMP', ''))
 else:
     include_path = pjoin(env['prefix'], 'include')
@@ -137,7 +139,7 @@ env.Help(MY_SCONS_HELP % vars.GenerateHelpText(env))
 
 # Determine python-config script name.
 pyversion = os.environ.get('PY_VER') or f"{sys.version_info.major}.{sys.version_info.minor}"
-if platform.system().lower() != 'windows':
+if env['PLATFORM'] != 'win32':
     pythonconfig = pjoin(env['prefix'], 'bin', f'python{pyversion}-config')
     xpython = pjoin(env['prefix'], 'bin', 'python')
 else:
@@ -155,15 +157,12 @@ if env['PLATFORM'] == 'win32':
     env.AppendUnique(CCFLAGS=['/EHsc', '/MD'])
 
     if env['build'] == 'debug':
-        env.Append(CCFLAGS=['/Zi', '/Od'])
+        env.Append(CCFLAGS=['/Zi', '/Od', '/FS'])
         env.Append(LINKFLAGS=['/DEBUG'])
 
     elif env['build'] == 'fast':
         env.Append(CCFLAGS=['/Ox', '/GL'])
         env.Append(LINKFLAGS=['/LTCG', '/OPT:REF', '/OPT:ICF'])
-
-    if env['profile']:
-        env.Append(CCFLAGS='/Gh')
 
 else:
     # get python flags from python-config script
@@ -202,11 +201,7 @@ else:
         env.Append(CCFLAGS=['-O3'] + fast_opts)
         env.Append(LINKFLAGS=fast_link)
 
-    if env['profile']:
-        env.AppendUnique(CCFLAGS='-pg')
-        env.AppendUnique(LINKFLAGS='-pg')
-
-builddir = env.Dir('build/%s-%s' % (env['build'], platform.machine()))
+builddir = env.Dir('build/%s-%s' % (env['build'], env['PLATFORM']))
 
 Export('env', 'pyversion')
 

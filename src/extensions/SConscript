@@ -1,6 +1,6 @@
 import numpy as np
 import os
-from setuptools import Distribution, Extension
+from SCons.Script import Clean
 
 Import('env')
 
@@ -11,14 +11,23 @@ env.AppendUnique(CPPPATH=[np.get_include()])
 if not (GetOption('clean') or env.GetOption('help')):
     SConscript('SConscript.configure')
 
+if env['PLATFORM'] == 'win32':
+    if env['profile']:
+        print("Warning: Windows profiling is not enabled; skipping /Gh")
+else:
+    if env['profile']:
+        env.AppendUnique(CCFLAGS='-pg')
+        env.AppendUnique(LINKFLAGS='-pg')
+
 # python extension module
-module = env.SharedLibrary(
+module_nodes = env.SharedLibrary(
     '_pyobjcryst', 
     Glob('*.cpp'),
     SHLIBPREFIX='', 
-    SHLIBSUFFIX='.so')
+    SHLIBSUFFIX = '.pyd' if env['PLATFORM']=='win32' else '.so')
 
-installed = env.Install(Dir('#/src/pyobjcryst'), module)
+ext_module = module_nodes[0]
+installed = env.Install(Dir('#/src/pyobjcryst'), ext_module)
 
 # run `scons develop` to install the extension in development mode
 dev = Alias('dev', installed)
@@ -26,13 +35,21 @@ AlwaysBuild(dev)
 
 
 # run `scons test` to run the tests
+env['ENV']['PYTHONPATH'] = Dir('#').abspath + os.sep + 'src'
 test = env.Alias(
     'test', 
     ['dev'],
-    f'PYTHONPATH={Dir("#").abspath + "/src"} python -m pyobjcryst.tests.run')
+    Action('python -m pyobjcryst.tests.run')
+)
 AlwaysBuild(test)
 
 # default targets:
-Default(module)
+Default(module_nodes)
+
+# clean up the build artifacts
+Clean(None, ['.sconsign.dblite', 'config.log'])
+Clean(None, Dir('.sconf_temp'))
+Clean(None, Dir('build'))
+Clean(None, installed)
 
 # vim: ft=python
