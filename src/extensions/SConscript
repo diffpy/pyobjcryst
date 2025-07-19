@@ -39,7 +39,7 @@ env['ENV']['PYTHONPATH'] = Dir('#').abspath + os.sep + 'src'
 test = env.Alias(
     'test',
     ['dev'],
-    Action('python -m pyobjcryst.tests.run')
+    Action('pytest')
 )
 AlwaysBuild(test)
 
@@ -47,9 +47,6 @@ AlwaysBuild(test)
 Default(module_nodes)
 
 # clean up the build artifacts
-Clean(None, ['.sconsign.dblite', 'config.log'])
-Clean(None, Dir('.sconf_temp'))
-Clean(None, Dir('build'))
-Clean(None, installed)
+Clean(module_nodes, installed)
 
 # vim: ft=python

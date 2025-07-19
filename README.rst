@@ -87,9 +87,12 @@ An alternative way of installing pyobjcryst is to use the SCons tool,
 which can speed up the process by compiling C++ files in several
 parallel jobs (-j4)::
 
-   scons -j4 dev
+        conda install scons
+        conda install --file requirements/conda.txt
+        scons -j4 dev
 
-See ``scons -h`` for description of build targets and options.
+See ``scons -h`` for description of build targets and options. Need to install test dependencies
+(``requirements/test.txt``) to run SCons test mode.
 
 Optional graphical dependencies for jupyter notebooks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
