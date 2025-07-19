@@ -9,6 +9,8 @@ Packages:   pyobjcryst
 
 import glob
 import os
+import sys
+from ctypes.util import find_library
 from pathlib import Path
 
 import numpy as np
@@ -17,24 +19,16 @@ from setuptools import Extension, setup
 # Helper functions -----------------------------------------------------------
 
 
-def check_boost_libraries(lib_dir):
-    pattern = "libboost_python*.*" if os.name != "nt" else "boost_python*.lib"
-    found = list(lib_dir.glob(pattern))
-    if not found:
-        raise EnvironmentError(
-            f"No boost_python libraries found in conda environment"
-            f" at {lib_dir}. Please install libboost_python in your "
-            f"conda environment."
-        )
-
-    # convert into linker names
-    lib = []
-    for libpath in found:
-        name = libpath.stem
-        if name.startswith("lib"):
-            name = name[3:]
-        lib.append(name)
-    return lib
+def get_boost_libraries():
+    base_lib = "boost_python"
+    major, minor = str(sys.version_info[0]), str(sys.version_info[1])
+    tags = [f"{major}{minor}", major, ""]
+    mttags = ["", "-mt"]
+    candidates = [base_lib + tag for tag in tags for mt in mttags] + [base_lib]
+    for lib in candidates:
+        if find_library(lib):
+            return [lib]
+    raise RuntimeError("Cannot find a suitable Boost.Python library.")
 
 
 def get_env_config():
@@ -63,7 +57,7 @@ def create_extensions():
     else:
         objcryst_lib = "ObjCryst"
 
-    libraries = [objcryst_lib] + check_boost_libraries(Path(library_dirs[0]))
+    libraries = [objcryst_lib] + get_boost_libraries()
     extra_objects = []
     extra_compile_args = []
     extra_link_args = []
