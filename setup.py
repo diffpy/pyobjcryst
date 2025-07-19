@@ -10,19 +10,21 @@ Packages:   pyobjcryst
 import glob
 import os
 from pathlib import Path
-import numpy as np
 
+import numpy as np
 from setuptools import Extension, setup
 
 # Helper functions -----------------------------------------------------------
+
 
 def check_boost_libraries(lib_dir):
     pattern = "libboost_python*.*" if os.name != "nt" else "boost_python*.lib"
     found = list(lib_dir.glob(pattern))
     if not found:
         raise EnvironmentError(
-            f"No boost_python libraries found in conda environment at {lib_dir}. "
-            "Please install libboost_python in your conda environment."
+            f"No boost_python libraries found in conda environment"
+            f" at {lib_dir}. Please install libboost_python in your "
+            f"conda environment."
         )
 
     # convert into linker names
@@ -33,6 +35,7 @@ def check_boost_libraries(lib_dir):
             name = name[3:]
         lib.append(name)
     return lib
+
 
 def get_env_config():
     conda_prefix = os.environ.get("CONDA_PREFIX")
@@ -68,9 +71,17 @@ def create_extensions():
     define_macros = []
 
     if os.name == "nt":
-        extra_compile_args = ['-DBOOST_ERROR_CODE_HEADER_ONLY', '-DREAL=double']
+        extra_compile_args = [
+            "-DBOOST_ERROR_CODE_HEADER_ONLY",
+            "-DREAL=double",
+        ]
     else:
-        extra_compile_args = ['-std=c++11', '-DBOOST_ERROR_CODE_HEADER_ONLY', '-DREAL=double', '-fno-strict-aliasing']
+        extra_compile_args = [
+            "-std=c++11",
+            "-DBOOST_ERROR_CODE_HEADER_ONLY",
+            "-DREAL=double",
+            "-fno-strict-aliasing",
+        ]
 
     ext_kws = {
         "include_dirs": include_dirs,
@@ -81,7 +92,9 @@ def create_extensions():
         "extra_link_args": extra_link_args,
         "extra_objects": extra_objects,
     }
-    ext = Extension('pyobjcryst._pyobjcryst', glob.glob("src/extensions/*.cpp"), **ext_kws)
+    ext = Extension(
+        "pyobjcryst._pyobjcryst", glob.glob("src/extensions/*.cpp"), **ext_kws
+    )
     return [ext]
 
 

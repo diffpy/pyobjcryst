@@ -1,0 +1,14 @@
+# As of now, flake8 does not natively support configuration via pyproject.toml
+# https://github.com/microsoft/vscode-flake8/issues/135
+[flake8]
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    doc/source/conf.py
+# huge loops in crystal.py
+max-line-length = 99
+# Ignore some style 'errors' produced while formatting by 'black'
+# https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#labels-why-pycodestyle-warnings
+extend-ignore = E203

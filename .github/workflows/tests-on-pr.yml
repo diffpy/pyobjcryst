@@ -1,0 +1,15 @@
+name: Tests on PR
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tests-on-pr:
+    uses: scikit-package/release-scripts/.github/workflows/_tests-on-pr.yml@v0
+    with:
+      project: pyobjcryst
+      c_extension: true
+      headless: false
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

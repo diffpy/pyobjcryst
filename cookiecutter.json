@@ -1,0 +1,18 @@
+{
+  "maintainer_name": "Simon J.L. Billinge group",
+  "maintainer_email": "sb2896@columbia.edu",
+  "maintainer_github_username": "sbillinge",
+  "contributors": "Billinge Group members",
+  "license_holders": "The Trustees of Columbia University in the City of New York",
+  "project_name": "pyobjcryst",
+  "github_username_or_orgname": "diffpy",
+  "github_repo_name": "pyobjcryst",
+  "conda_pypi_package_dist_name": "pyobjcryst",
+  "package_dir_name": "pyobjcryst",
+  "project_short_description": "Python bindings to the ObjCryst++ library.",
+  "project_keywords": "objcryst, atom structure crystallography, powder diffraction",
+  "minimum_supported_python_version": "3.11",
+  "maximum_supported_python_version": "3.13",
+  "project_needs_c_code_compiled": "Yes",
+  "project_has_gui_tests": "No"
+}

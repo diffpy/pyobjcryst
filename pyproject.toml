@@ -3,40 +3,41 @@ requires = ["setuptools>=62.0", "setuptools-git-versioning>=2.0", "numpy"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name="pyobjcryst"
+name = "pyobjcryst"
 dynamic=['version', 'dependencies']
 authors = [
-  { name="Simon J.L. Billinge group", email="simon.billinge@gmail.com" },
+  { name="Simon J.L. Billinge group", email="sb2896@columbia.edu" },
 ]
 maintainers = [
-    { name="Simon J.L. Billinge group", email="simon.billinge@gmail.com" },
-    { name="Vincent-Favre-Nicolin", email="favre@esrf.fr" },
+  { name="Simon J.L. Billinge group", email="sb2896@columbia.edu" },
+  { name="Vincent-Favre-Nicolin", email="favre@esrf.fr" },
 ]
-description="Python bindings to the ObjCryst++ library."
-keywords=["objcryst", "atom structure", "crystallography", "powder diffraction"]
+description = "Python bindings to the ObjCryst++ library."
+keywords = ['objcryst', 'atom structure crystallography', 'powder diffraction']
 readme = "README.rst"
 requires-python = ">=3.11, <3.14"
-classifiers=[
-    'Development Status :: 5 - Production/Stable',
-    'Environment :: Console',
-    'Intended Audience :: Developers',
-    'Intended Audience :: Education',
-    'Intended Audience :: Science/Research',
-    'License :: OSI Approved :: BSD License',
-    'Operating System :: MacOS :: MacOS X',
-    'Operating System :: POSIX',
-    'Operating System :: Unix',
-    'Programming Language :: C++',
-    'Programming Language :: Python :: 3.11',
-    'Programming Language :: Python :: 3.12',
-    'Programming Language :: Python :: 3.13',
-    'Topic :: Scientific/Engineering :: Chemistry',
-    'Topic :: Scientific/Engineering :: Physics',
-    'Topic :: Software Development :: Libraries',
+classifiers = [
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Education',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: POSIX',
+        'Operating System :: Unix',
+        'Programming Language :: C++',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
+        'Topic :: Scientific/Engineering :: Physics',
+        'Topic :: Scientific/Engineering :: Chemistry',
+        'Topic :: Software Development :: Libraries',
 ]
 
 [project.urls]
-Homepage = "https://github.com/diffpy/pyobjcryst"
+Homepage = "https://github.com/diffpy/pyobjcryst/"
 Issues = "https://github.com/diffpy/pyobjcryst/issues/"
 
 [tool.setuptools-git-versioning]
@@ -54,16 +55,24 @@ include = ["*"]  # package names should match these glob patterns (["*"] by defa
 exclude = []  # exclude packages matching these glob patterns (empty by default)
 namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
 
+[project.scripts]
+pyobjcryst = "pyobjcryst.app:main"
+
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements/pip.txt"]}
 
-# [tool.codespell]
-# exclude-file = ".codespell/ignore_lines.txt"
-# ignore-words = ".codespell/ignore_words.txt"
-# skip = "*.cif,*.dat,*.cc,*.h"
+[tool.codespell]
+exclude-file = ".codespell/ignore_lines.txt"
+ignore-words = ".codespell/ignore_words.txt"
+skip = "*.cif,*.dat"
+
+[tool.docformatter]
+recursive = true
+wrap-summaries = 72
+wrap-descriptions = 72
 
 [tool.black]
-line-length = 115
+line-length = 79
 include = '\.pyi?$'
 exclude = '''
 /(

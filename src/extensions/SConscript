@@ -21,9 +21,9 @@ else:
 
 # python extension module
 module_nodes = env.SharedLibrary(
-    '_pyobjcryst', 
+    '_pyobjcryst',
     Glob('*.cpp'),
-    SHLIBPREFIX='', 
+    SHLIBPREFIX='',
     SHLIBSUFFIX = '.pyd' if env['PLATFORM']=='win32' else '.so')
 
 ext_module = module_nodes[0]
@@ -37,7 +37,7 @@ AlwaysBuild(dev)
 # run `scons test` to run the tests
 env['ENV']['PYTHONPATH'] = Dir('#').abspath + os.sep + 'src'
 test = env.Alias(
-    'test', 
+    'test',
     ['dev'],
     Action('python -m pyobjcryst.tests.run')
 )

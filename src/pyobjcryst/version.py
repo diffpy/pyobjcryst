@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 ##############################################################################
 #
-# (c) 2024-2025 The Trustees of Columbia University in the City of New York.
+# (c) 2025 The Trustees of Columbia University in the City of New York.
 # All rights reserved.
 #
-# File coded by: Chris Farrow, Billinge Group members.
+# File coded by: Billinge Group members.
 #
 # See GitHub contributions for a more detailed list of contributors.
 # https://github.com/diffpy/pyobjcryst/graphs/contributors  # noqa: E501
@@ -18,7 +18,7 @@
 #  __all__ = ["__date__", "__git_commit__", "__timestamp__", "__version__"]
 
 # obtain version information
-from importlib.metadata import version, PackageNotFoundError
+from importlib.metadata import PackageNotFoundError, version
 
 FALLBACK_VERSION = "2024.2.1"
 
