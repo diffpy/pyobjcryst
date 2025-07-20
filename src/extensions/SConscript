@@ -1,5 +1,8 @@
 import numpy as np
-Import('env', 'pyoutput')
+import os
+from SCons.Script import Clean
+
+Import('env')
 
 # make sure numpy headers are available
 env.AppendUnique(CPPPATH=[np.get_include()])
@@ -8,56 +11,42 @@ env.AppendUnique(CPPPATH=[np.get_include()])
 if not (GetOption('clean') or env.GetOption('help')):
     SConscript('SConscript.configure')
 
+if env['PLATFORM'] == 'win32':
+    if env['profile']:
+        print("Warning: Windows profiling is not enabled; skipping /Gh")
+else:
+    if env['profile']:
+        env.AppendUnique(CCFLAGS='-pg')
+        env.AppendUnique(LINKFLAGS='-pg')
+
 # python extension module
-module = env.SharedLibrary('_pyobjcryst', Glob('*.cpp'),
-        SHLIBPREFIX='', SHLIBSUFFIX='.so')
-Alias('module', module)
+module_nodes = env.SharedLibrary(
+    '_pyobjcryst',
+    Glob('*.cpp'),
+    SHLIBPREFIX='',
+    SHLIBSUFFIX = '.pyd' if env['PLATFORM']=='win32' else '.so')
 
-# update egg info when package version changes.
-basedir = Dir('#').abspath
-version = pyoutput(
-    'import sys\n'
-    'sys.path.insert(0, %r)\n'
-    'from setup import versiondata\n'
-    'print(versiondata.get("DEFAULT", "version"))\n' % basedir)
-egginfo = env.Command(NoCache('#/src/pyobjcryst.egg-info/PKG-INFO'),
-                      env.Value(version),
-                      '$python -Wignore setup.py egg_info')
+ext_module = module_nodes[0]
+installed = env.Install(Dir('#/src/pyobjcryst'), ext_module)
 
-# install extension module in a development mode.
-develop = Alias('develop', [egginfo, Install('#/src/pyobjcryst', module)])
+# run `scons develop` to install the extension in development mode
+dev = Alias('dev', installed)
+AlwaysBuild(dev)
 
-test = env.Alias('test', develop,
-        '$python -m pyobjcryst.tests.run')
+
+# run `scons test` to run the tests
+env['ENV']['PYTHONPATH'] = Dir('#').abspath + os.sep + 'src'
+test = env.Alias(
+    'test',
+    ['dev'],
+    Action('pytest')
+)
 AlwaysBuild(test)
 
-def resolve_distutils_target(target, source, env):
-    tgt = pyoutput('\n'.join([
-        "from setuptools import Distribution, Extension",
-        "ext = Extension('pyobjcryst._pyobjcryst', [])",
-        "attrs = dict(ext_modules=[ext])",
-        "dist = Distribution(attrs)",
-        "bcmd = dist.get_command_obj('build_ext')",
-        "bcmd.finalize_options()",
-        "print(bcmd.get_ext_fullpath(ext.name))",
-        ]))
-    env['distsofile'] = env.File(tgt)
-    return 0
-
-cmd_install = '$python setup.py install'
-if 'prefix' in env:
-    cmd_install += ' --prefix=$prefix'
-
-install = env.Alias('install', module, [
-    resolve_distutils_target,
-    Mkdir('$distsofile.dir'),
-    Copy('$distsofile', '$SOURCE'),
-    Touch('$distsofile'),
-    cmd_install,
-    ])
-AlwaysBuild(install)
-
 # default targets:
-Default(module)
+Default(module_nodes)
+
+# clean up the build artifacts
+Clean(module_nodes, installed)
 
 # vim: ft=python

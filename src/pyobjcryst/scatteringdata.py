@@ -12,10 +12,10 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
 """Python wrapping of ScatteringData class.
 
-See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
+See the online ObjCryst++ documentation (
+https://objcryst.readthedocs.io).
 """
 
 __all__ = ["ScatteringData"]

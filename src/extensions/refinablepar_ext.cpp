@@ -26,7 +26,7 @@
 *   instances of _RefinablePar, which is a python wrapper around
 *   ObjCryst::RefinablePar. The RefinablePar python class is a wrapper around
 *   the C++ class PyRefinablePar, which manages its own double*.  These python
-*   classes are interchangable once instantiated, so users should not notice.
+*   classes are interchangeable once instantiated, so users should not notice.
 * - XML input/output are not exposed.
 *
 *****************************************************************************/

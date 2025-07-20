@@ -9,8 +9,7 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
-"""Python wrapping of PowderPattern.h
+"""Python wrapping of PowderPattern.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io/en/latest/).
 
@@ -18,27 +17,37 @@ Changes from ObjCryst::PowderPattern::
         Additional functions for plotting, basic QPA and profile fitting.
 """
 
+import inspect
+import warnings
 from urllib.request import urlopen
-from packaging.version import parse as version_parse
-from multiprocessing import current_process
+
 import numpy as np
+from packaging.version import parse as version_parse
 
-__all__ = ["PowderPattern", "CreatePowderPatternFromCIF",
-           "PowderPatternBackground", "PowderPatternComponent",
-           "PowderPatternDiffraction", "ReflectionProfileType",
-           "SpaceGroupExplorer"]
+__all__ = [
+    "PowderPattern",
+    "CreatePowderPatternFromCIF",
+    "PowderPatternBackground",
+    "PowderPatternComponent",
+    "PowderPatternDiffraction",
+    "ReflectionProfileType",
+    "SpaceGroupExplorer",
+]
 
-from types import MethodType
-from pyobjcryst._pyobjcryst import PowderPattern as PowderPattern_objcryst
-from pyobjcryst._pyobjcryst import CreatePowderPatternFromCIF as CreatePowderPatternFromCIF_orig
-from pyobjcryst._pyobjcryst import PowderPatternBackground
-from pyobjcryst._pyobjcryst import PowderPatternComponent
-from pyobjcryst._pyobjcryst import PowderPatternDiffraction
-from pyobjcryst._pyobjcryst import ReflectionProfileType
 from pyobjcryst._pyobjcryst import LSQ
+from pyobjcryst._pyobjcryst import (
+    CreatePowderPatternFromCIF as CreatePowderPatternFromCIF_orig,
+)
+from pyobjcryst._pyobjcryst import PowderPattern as PowderPattern_objcryst
+from pyobjcryst._pyobjcryst import (
+    PowderPatternBackground,
+    PowderPatternComponent,
+    PowderPatternDiffraction,
+    ReflectionProfileType,
+    SpaceGroupExplorer,
+)
+from pyobjcryst.general import ObjCrystException
 from pyobjcryst.refinableobj import refpartype_scattdata_background
-from pyobjcryst._pyobjcryst import SpaceGroupExplorer
-from pyobjcryst import ObjCrystException
 
 
 class PowderPattern(PowderPattern_objcryst):
@@ -55,22 +64,31 @@ class PowderPattern(PowderPattern_objcryst):
         # xlim last time hkl were plotted
         self._last_hkl_plot_xlim = None
         self.evts = []
-        self._colour_phases = ["black", "blue", "green", "red", "brown", "olive",
-                               "cyan", "purple", "magenta", "salmon"]
+        self._colour_phases = [
+            "black",
+            "blue",
+            "green",
+            "red",
+            "brown",
+            "olive",
+            "cyan",
+            "purple",
+            "magenta",
+            "salmon",
+        ]
 
     def UpdateDisplay(self):
         try:
             if self._display_update_disabled:
                 return
-        except:
+        except AttributeError:
             pass
         if self._plot_fig is not None:
             if self._plot_fig is not None:
                 self.plot()
 
     def update_display(self, return_figure=False):
-        """
-        Update the plotted figure (if it exists)
+        """Update the plotted figure (if it exists)
 
         :param return_figure: if True, returns the figure
         :return: the figure if return_figure is True
@@ -80,27 +98,35 @@ class PowderPattern(PowderPattern_objcryst):
             return self.figure
 
     def disable_display_update(self):
-        """ Disable display (useful for multiprocessing)"""
+        """Disable display (useful for multiprocessing)"""
         self._display_update_disabled = True
 
     def enable_display_update(self):
-        """ Enable display"""
+        """Enable display."""
         self._display_update_disabled = False
 
-    def plot(self, diff=None, hkl=None, figsize=(9, 4), fontsize_hkl=6, reset=False, **kwargs):
-        """
-        Show the powder pattern in a plot using matplotlib
-        :param diff: if True, also show the difference plot
-        :param hkl: if True, print the hkl values
-        :param figsize: the figure size passed to matplotlib
-        :param fontsize_hkl: fontsize for hkl coordinates
-        :param reset: if True, will reset the x and y limits, and remove the flags to plot
-                      the difference and hkl unless the options are set at the same time.
-        :param kwargs: additional keyword arguments:
-                       fig=None will force creating a new figure
-                       fig=fig1 will plot in the given matplotlib figure
+    def plot(
+        self,
+        diff=None,
+        hkl=None,
+        figsize=(9, 4),
+        fontsize_hkl=6,
+        reset=False,
+        **kwargs,
+    ):
+        """Show the powder pattern in a plot using matplotlib :param diff: if
+        True, also show the difference plot :param hkl: if True, print the hkl
+        values :param figsize: the figure size passed to matplotlib :param
+        fontsize_hkl: fontsize for hkl coordinates :param reset: if True, will
+        reset the x and y limits, and remove the flags to plot the difference
+        and hkl unless the options are set at the same time.
+
+        :param kwargs: additional keyword arguments: fig=None will force
+            creating a new figure fig=fig1 will plot in the given
+            matplotlib figure
         """
         import matplotlib.pyplot as plt
+
         obs = self.GetPowderPatternObs()
         try:
             calc = self.GetPowderPatternCalc()
@@ -115,8 +141,8 @@ class PowderPattern(PowderPattern_objcryst):
             self._plot_xlim = None
             self._plot_hkl = False
             self._plot_diff = False
-        if 'fig' in kwargs:
-            self._plot_fig = kwargs['fig']
+        if "fig" in kwargs:
+            self._plot_fig = kwargs["fig"]
 
         if diff is not None:
             self._plot_diff = diff
@@ -127,23 +153,26 @@ class PowderPattern(PowderPattern_objcryst):
 
         # TODO: handle other coordinates than angles (TOF)
         x = np.rad2deg(self.GetPowderPatternX())
-        if self._plot_fig is None or 'inline' in plt.get_backend():
+        if self._plot_fig is None or "inline" in plt.get_backend():
             self._plot_fig = plt.figure(figsize=figsize)
         else:
             self._plot_fig.clear()
-        ax = self._plot_fig.axes[0] if len(self._plot_fig.axes) else self._plot_fig.subplots()
-        ax.plot(x, obs, 'k', label='obs', linewidth=1)
-        ax.plot(x, calc, 'r', label='calc', linewidth=1)
+        ax = (
+            self._plot_fig.axes[0]
+            if len(self._plot_fig.axes)
+            else self._plot_fig.subplots()
+        )
+        ax.plot(x, obs, "k", label="obs", linewidth=1)
+        ax.plot(x, calc, "r", label="calc", linewidth=1)
         m = min(1, self.GetMaxSinThetaOvLambda() * self.GetWavelength())
         mtth = np.rad2deg(np.arcsin(m)) * 2
         if plot_diff:
             diff = calc - obs - obs.max() / 20
             # Mask difference above max sin(theta)/lambda
             diff = np.ma.masked_array(diff, x > mtth)
-            ax.plot(x, diff, 'g', label='calc-obs',
-                    linewidth=0.5)
+            ax.plot(x, diff, "g", label="calc-obs", linewidth=0.5)
 
-        ax.legend(loc='upper right')
+        ax.legend(loc="upper right")
         if self.GetName() != "":
             self._plot_fig.suptitle("PowderPattern: %s" % self.GetName())
 
@@ -176,27 +205,49 @@ class PowderPattern(PowderPattern_objcryst):
                 if comp.GetExtractionMode():
                     s += "[Le Bail mode]"
                 self._plot_phase_labels.append(s)
-                ax.text(0.005, 0.995, "\n" * iphase + s, horizontalalignment="left", verticalalignment="top",
-                        transform=ax.transAxes, fontsize=6, color=self._colour_phases[iphase])
+                ax.text(
+                    0.005,
+                    0.995,
+                    "\n" * iphase + s,
+                    horizontalalignment="left",
+                    verticalalignment="top",
+                    transform=ax.transAxes,
+                    fontsize=6,
+                    color=self._colour_phases[iphase],
+                )
                 iphase += 1
 
-        if 'inline' not in plt.get_backend():
+        if "inline" not in plt.get_backend():
             try:
                 # Force immediate display. Not supported on all backends (e.g. nbagg)
                 ax.draw()
                 self._plot_fig.canvas.draw()
-                if 'ipympl' not in plt.get_backend():
-                    plt.pause(.001)
-            except:
-                pass
+                if "ipympl" not in plt.get_backend():
+                    plt.pause(0.001)
+            except (AttributeError, RuntimeError, ValueError) as e:
+                cls_name = type(self).__name__
+                func_name = inspect.currentframe().f_code.co_name
+                backend = plt.get_backend()
+                fig_id = getattr(self._plot_fig, "number", None)
+                warnings.warn(
+                    f"[{cls_name}.{func_name}] "
+                    f"Plot refresh failed ({type(e).__name__}): {e}. "
+                    f"Matplotlib backend={backend}, figure id={fig_id}",
+                    stacklevel=2,
+                )
             # plt.gca().callbacks.connect('xlim_changed', self._on_xlims_change)
             # plt.gca().callbacks.connect('ylim_changed', self._on_ylims_change)
-            self._plot_fig.canvas.mpl_connect('button_press_event', self._on_mouse_event)
-            self._plot_fig.canvas.mpl_connect('draw_event', self._on_draw_event)
+            self._plot_fig.canvas.mpl_connect(
+                "button_press_event", self._on_mouse_event
+            )
+            self._plot_fig.canvas.mpl_connect(
+                "draw_event", self._on_draw_event
+            )
 
     def _do_plot_hkl(self, nb_max=100, fontsize_hkl=None):
         import matplotlib.pyplot as plt
         from matplotlib import __version__ as mpl_version
+
         if fontsize_hkl is None:
             fontsize_hkl = self._plot_hkl_fontsize
         else:
@@ -225,25 +276,25 @@ class PowderPattern(PowderPattern_objcryst):
             vl = np.round(c.GetL()).astype(np.int16)
             stol = c.GetSinThetaOverLambda()
 
-            if 'inline' not in plt.get_backend():
+            if "inline" not in plt.get_backend():
                 # 'inline' backend triggers a delayed exception (?)
                 try:
                     # need the renderer to avoid text overlap
-                    renderer = plt.gcf().canvas.renderer
-                except:
+                    renderer = plt.gcf().canvas.get_renderer()
+                except (AttributeError, RuntimeError):
                     # Force immediate display. Not supported on all backends (e.g. nbagg)
                     ax.draw()
                     self._plot_fig.canvas.draw()
-                    if 'ipympl' not in plt.get_backend():
-                        plt.pause(.001)
+                    if "ipympl" not in plt.get_backend():
+                        plt.pause(0.001)
                     try:
-                        renderer = self._plot_fig.canvas.renderer
-                    except:
+                        renderer = self._plot_fig.canvas.get_renderer()
+                    except (AttributeError, RuntimeError):
                         renderer = None
             else:
                 renderer = None
 
-            props = {'ha': 'center', 'va': 'bottom'}
+            props = {"ha": "center", "va": "bottom"}
             ct = 0
             last_bbox = None
             tdi = ax.transData.inverted()
@@ -261,8 +312,16 @@ class PowderPattern(PowderPattern_objcryst):
 
                 ihkl = max(calc[idxhkl], obs[idxhkl])
                 s = " %d %d %d" % (vh[i], vk[i], vl[i])
-                t = ax.text(xhkl, ihkl, s, props, rotation=90, fontsize=fontsize_hkl,
-                            fontweight='light', color=self._colour_phases[iphase])
+                t = ax.text(
+                    xhkl,
+                    ihkl,
+                    s,
+                    props,
+                    rotation=90,
+                    fontsize=fontsize_hkl,
+                    fontweight="light",
+                    color=self._colour_phases[iphase],
+                )
                 if renderer is not None:
                     # Check for overlap with previous
                     bbox = t.get_window_extent(renderer)
@@ -277,8 +336,16 @@ class PowderPattern(PowderPattern_objcryst):
         if self._plot_phase_labels is not None:
             for iphase in range(len(self._plot_phase_labels)):
                 s = self._plot_phase_labels[iphase]
-                ax.text(0.005, 0.995, "\n" * iphase + s, horizontalalignment="left", verticalalignment="top",
-                        transform=ax.transAxes, fontsize=6, color=self._colour_phases[iphase])
+                ax.text(
+                    0.005,
+                    0.995,
+                    "\n" * iphase + s,
+                    horizontalalignment="left",
+                    verticalalignment="top",
+                    transform=ax.transAxes,
+                    fontsize=6,
+                    color=self._colour_phases[iphase],
+                )
 
     @property
     def figure(self):
@@ -290,16 +357,32 @@ class PowderPattern(PowderPattern_objcryst):
         """
         return self._plot_fig
 
-    def quick_fit_profile(self, pdiff=None, auto_background=True, init_profile=True, plot=True,
-                          zero=True, constant_width=True, width=True, eta=True, backgd=True, cell=True,
-                          anisotropic=False, asym=False, displ_transl=False, verbose=True):
+    def quick_fit_profile(
+        self,
+        pdiff=None,
+        auto_background=True,
+        init_profile=True,
+        plot=True,
+        zero=True,
+        constant_width=True,
+        width=True,
+        eta=True,
+        backgd=True,
+        cell=True,
+        anisotropic=False,
+        asym=False,
+        displ_transl=False,
+        verbose=True,
+    ):
         if plot:
             self.plot()
         if auto_background:
             # Add background if necessary
             need_background = True
             for i in range(self.GetNbPowderPatternComponent()):
-                if isinstance(self.GetPowderPatternComponent(i), PowderPatternBackground):
+                if isinstance(
+                    self.GetPowderPatternComponent(i), PowderPatternBackground
+                ):
                     need_background = False
                     break
             if need_background:
@@ -316,14 +399,22 @@ class PowderPattern(PowderPattern_objcryst):
         if pdiff is None:
             # Probably just one diffraction phase, select it
             for i in range(self.GetNbPowderPatternComponent()):
-                if isinstance(self.GetPowderPatternComponent(i), PowderPatternDiffraction):
+                if isinstance(
+                    self.GetPowderPatternComponent(i), PowderPatternDiffraction
+                ):
                     pdiff = self.GetPowderPatternComponent(i)
                     break
             if verbose:
-                print("Selected PowderPatternDiffraction: ", pdiff.GetName(),
-                      " with Crystal: ", pdiff.GetCrystal().GetName())
+                print(
+                    "Selected PowderPatternDiffraction: ",
+                    pdiff.GetName(),
+                    " with Crystal: ",
+                    pdiff.GetCrystal().GetName(),
+                )
         if init_profile:
-            pdiff.SetReflectionProfilePar(ReflectionProfileType.PROFILE_PSEUDO_VOIGT, 0.0000001)
+            pdiff.SetReflectionProfilePar(
+                ReflectionProfileType.PROFILE_PSEUDO_VOIGT, 0.0000001
+            )
 
         pdiff.SetExtractionMode(True, True)
         pdiff.ExtractLeBail(10)
@@ -406,36 +497,46 @@ class PowderPattern(PowderPattern_objcryst):
                 self.UpdateDisplay()
         if backgd:
             for i in range(self.GetNbPowderPatternComponent()):
-                if isinstance(self.GetPowderPatternComponent(i), PowderPatternBackground):
+                if isinstance(
+                    self.GetPowderPatternComponent(i), PowderPatternBackground
+                ):
                     b = self.GetPowderPatternComponent(i)
                     lsq.SetParIsFixed(refpartype_scattdata_background, False)
                     b.FixParametersBeyondMaxresolution(lsqr)
                     # lsqr.Print()
-                    lsq.SafeRefine(nbCycle=10, useLevenbergMarquardt=True, silent=True)
+                    lsq.SafeRefine(
+                        nbCycle=10, useLevenbergMarquardt=True, silent=True
+                    )
                     break
         if verbose:
-            print("Profile fitting finished.\n"
-                  "Remember to use SetExtractionMode(False) on the PowderPatternDiffraction object\n"
-                  "to disable profile fitting and optimise the structure.")
+            print(
+                "Profile fitting finished.\n"
+                "Remember to use SetExtractionMode(False) on the PowderPatternDiffraction object\n"
+                "to disable profile fitting and optimise the structure."
+            )
 
     def get_background(self):
-        """
-        Access the background component.
+        """Access the background component.
 
-        :return: the PowderPatternBackground for this powder pattern, or None
+        :return: the PowderPatternBackground for this powder pattern, or
+            None
         """
         for i in range(self.GetNbPowderPatternComponent()):
-            if self.GetPowderPatternComponent(i).GetClassName() == "PowderPatternBackground":
+            if (
+                self.GetPowderPatternComponent(i).GetClassName()
+                == "PowderPatternBackground"
+            ):
                 return self.GetPowderPatternComponent(i)
 
     def get_crystalline_components(self):
-        """
-        Get the crystalline phase for this powder pattern
-        :return: a list of the PowderPatternDiffraction components
-        """
+        """Get the crystalline phase for this powder pattern :return: a
+        list of the PowderPatternDiffraction components."""
         vc = []
         for i in range(self.GetNbPowderPatternComponent()):
-            if self.GetPowderPatternComponent(i).GetClassName() == "PowderPatternDiffraction":
+            if (
+                self.GetPowderPatternComponent(i).GetClassName()
+                == "PowderPatternDiffraction"
+            ):
                 vc.append(self.GetPowderPatternComponent(i))
         return vc
 
@@ -447,23 +548,29 @@ class PowderPattern(PowderPattern_objcryst):
             self.plot()
 
     def _on_draw_event(self, event):
-        if self._plot_hkl and self._last_hkl_plot_xlim is not None and len(self._plot_fig.axes):
+        if (
+            self._plot_hkl
+            and self._last_hkl_plot_xlim is not None
+            and len(self._plot_fig.axes)
+        ):
             ax = self._plot_fig.axes[0]
             self._plot_xlim = ax.get_xlim()
             dx1 = abs(self._last_hkl_plot_xlim[0] - self._plot_xlim[0])
             dx2 = abs(self._last_hkl_plot_xlim[1] - self._plot_xlim[1])
-            if max(dx1, dx2) > 0.1 * (self._last_hkl_plot_xlim[1] - self._last_hkl_plot_xlim[0]):
+            if max(dx1, dx2) > 0.1 * (
+                self._last_hkl_plot_xlim[1] - self._last_hkl_plot_xlim[0]
+            ):
                 # Need to update the hkl list
                 self._do_plot_hkl()
 
     def qpa(self, verbose=False):
-        """
-        Get the quantitative phase analysis for the current powder pattern,
-        when multiple crystalline phases are present.
+        """Get the quantitative phase analysis for the current powder
+        pattern, when multiple crystalline phases are present.
 
-        :param verbose: if True, print the Crystal names and their weight percentage.
-        :return: a dictionary with the PowderPatternDiffraction object as key, and
-            the weight percentages as value.
+        :param verbose: if True, print the Crystal names and their
+            weight percentage.
+        :return: a dictionary with the PowderPatternDiffraction object
+            as key, and the weight percentages as value.
         """
         res = {}
         szmv_sum = 0
@@ -484,7 +591,9 @@ class PowderPattern(PowderPattern_objcryst):
         for k, v in res.items():
             res[k] = v / szmv_sum
             if verbose:
-                print("%25s: %6.2f%%" % (k.GetCrystal().GetName(), res[k] * 100))
+                print(
+                    "%25s: %6.2f%%" % (k.GetCrystal().GetName(), res[k] * 100)
+                )
         return res
 
 
@@ -505,20 +614,21 @@ def create_powderpattern_from_cif(file):
     p = PowderPattern()
     if isinstance(file, str):
         if len(file) > 4:
-            if file[:4].lower() == 'http':
+            if file[:4].lower() == "http":
                 return CreatePowderPatternFromCIF_orig(urlopen(file), p)
-        with open(file, 'rb') as cif:  # Make sure file object is closed
+        with open(file, "rb") as cif:  # Make sure file object is closed
             return CreatePowderPatternFromCIF_orig(cif, p)
     return CreatePowderPatternFromCIF_orig(file, p)
 
 
 def wrap_boost_powderpattern(c: PowderPattern):
-    """
-    This function is used to wrap a C++ Object by adding the python methods to it.
+    """This function is used to wrap a C++ Object by adding the python
+    methods to it.
 
-    :param c: the C++ created object to which the python function must be added.
+    :param c: the C++ created object to which the python function must
+        be added.
     """
-    if '_plot_fig' not in dir(c):
+    if "_plot_fig" not in dir(c):
         # Add attributes
         c._plot_fig = None
         c._plot_xlim = None
@@ -529,11 +639,31 @@ def wrap_boost_powderpattern(c: PowderPattern):
         c._plot_phase_labels = None
         c._last_hkl_plot_xlim = None
         c.evts = []
-        c._colour_phases = ["black", "blue", "green", "red", "brown", "olive",
-                            "cyan", "purple", "magenta", "salmon"]
-        for func in ['UpdateDisplay', 'disable_display_update', 'enable_display_update', 'plot',
-                     '_do_plot_hkl', 'quick_fit_profile', 'get_background', 'get_crystalline_components',
-                     '_on_mouse_event', '_on_draw_event', 'qpa']:
+        c._colour_phases = [
+            "black",
+            "blue",
+            "green",
+            "red",
+            "brown",
+            "olive",
+            "cyan",
+            "purple",
+            "magenta",
+            "salmon",
+        ]
+        for func in [
+            "UpdateDisplay",
+            "disable_display_update",
+            "enable_display_update",
+            "plot",
+            "_do_plot_hkl",
+            "quick_fit_profile",
+            "get_background",
+            "get_crystalline_components",
+            "_on_mouse_event",
+            "_on_draw_event",
+            "qpa",
+        ]:
             exec("c.%s = MethodType(PowderPattern.%s, c)" % (func, func))
 
 

@@ -22,7 +22,7 @@
 * - GetScatteringComponentList returns an actual list.
 *
 * Other Changes
-* - CreateCrystalFromCIF is placed here instead of in a seperate CIF module. This
+* - CreateCrystalFromCIF is placed here instead of in a separate CIF module. This
 *   method accepts a python file rather than a CIF object.
 *
 *****************************************************************************/
@@ -58,7 +58,7 @@ void _AddScatterer(Crystal& crystal, Scatterer* scatt)
     if(NULL == scatt)
     {
         PyErr_SetString(PyExc_ValueError,
-                "Cannot add nonexistant Scatterer");
+                "Cannot add nonexistent Scatterer");
         throw_error_already_set();
     }
     // Make sure the associated ScatteringPower exists in the Crystal
@@ -94,7 +94,7 @@ void _RemoveScatterer(Crystal& crystal, Scatterer* scatt)
     if(NULL == scatt)
     {
         PyErr_SetString(PyExc_ValueError,
-                "Cannot remove nonexistant Scatterer");
+                "Cannot remove nonexistent Scatterer");
         throw_error_already_set();
     }
 
@@ -138,7 +138,7 @@ void _AddScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
     if(NULL == scattpow)
     {
         PyErr_SetString(PyExc_ValueError,
-                "Cannot add nonexistant ScatteringPower");
+                "Cannot add nonexistent ScatteringPower");
         throw_error_already_set();
     }
     crystal.AddScatteringPower(scattpow);
@@ -152,7 +152,7 @@ void _RemoveScatteringPower(Crystal& crystal, ScatteringPower* scattpow)
     if(NULL == scattpow)
     {
         PyErr_SetString(PyExc_ValueError,
-                "Cannot remove nonexistant ScatteringPower");
+                "Cannot remove nonexistent ScatteringPower");
         throw_error_already_set();
     }
     crystal.RemoveScatteringPower(scattpow, false);

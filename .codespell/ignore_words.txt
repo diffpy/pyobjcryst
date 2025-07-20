@@ -1,0 +1,17 @@
+;; Please include explanations for each ignored word (lowercase).
+;; See https://docs.openverse.org/meta/codespell.html for docs.
+
+;; ORTHORHOMBIC
+ORTHOROMBIC
+
+;; src/pyobjcryst/tests/testmolecule.py
+;; variable name, abbreviation for "a bottom"
+abot
+
+;; src/extensions/diffractiondatasinglecrystal_ext.cpp:148
+;; abbreviation for "register"
+regist
+
+;; src/pyobjcryst/crystal.py:548
+;; alabelstyle parameter
+inFront

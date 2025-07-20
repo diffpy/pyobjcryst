@@ -12,13 +12,13 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Utilities for crystals."""
 
 
 # FIXME: check if this function does any meaningful job.
 
-def putAtomsInMolecule(crystal, alist = None, name = None):
+
+def putAtomsInMolecule(crystal, alist=None, name=None):
     """Place atoms from a crystal into a molecule inside the crystal.
 
     Selected atoms are put into a new Molecule object, which is then placed
@@ -34,7 +34,6 @@ def putAtomsInMolecule(crystal, alist = None, name = None):
                 crystal's name.
 
     Raises TypeError if idxlist identifies a non-atom.
-
     """
     c = crystal
 
@@ -44,8 +43,9 @@ def putAtomsInMolecule(crystal, alist = None, name = None):
     if alist is None:
         alist = range(c.GetNbScatterer())
 
-    from pyobjcryst.molecule import Molecule
     from pyobjcryst.atom import Atom
+    from pyobjcryst.molecule import Molecule
+
     m = Molecule(c, name)
 
     # center of mass
@@ -53,7 +53,9 @@ def putAtomsInMolecule(crystal, alist = None, name = None):
 
     # mapping fractional coords back into [0, 1)
     from math import floor
-    f = lambda v: v - floor(v)
+
+    def f(v):
+        return v - floor(v)
 
     scat = []
     for idx in alist:
@@ -91,7 +93,8 @@ def putAtomsInMolecule(crystal, alist = None, name = None):
 
 
 def _xyztostring(crystal):
-    """Helper function to write xyz coordinates of a crystal to a string."""
+    """Helper function to write xyz coordinates of a crystal to a
+    string."""
 
     nsc = 0
     out = ""
@@ -108,9 +111,9 @@ def _xyztostring(crystal):
         xyz = [s.X, s.Y, s.Z]
         xyz = crystal.FractionalToOrthonormalCoords(*xyz)
         x, y, z = xyz
-        out += "%s %f %f %f\n"%(el, x, y, z)
+        out += "%s %f %f %f\n" % (el, x, y, z)
 
-    out = "%i\n"%nsc + out
+    out = "%i\n" % nsc + out
     return out
 
 
@@ -122,7 +125,7 @@ def printxyz(crystal):
 
 def writexyz(crystal, filename):
     """Write a crystal to an xyz file."""
-    f = open(filename, 'w')
+    f = open(filename, "w")
     out = _xyztostring(crystal)
     f.write(out)
     f.close()

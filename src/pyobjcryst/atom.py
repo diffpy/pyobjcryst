@@ -12,8 +12,7 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
-"""Python wrapping of Atom.h
+"""Python wrapping of Atom.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 

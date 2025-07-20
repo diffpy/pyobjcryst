@@ -12,13 +12,16 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
-
 """Python wrapping of things from General.h.
 
-See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
+See the online ObjCryst++ documentation (
+https://objcryst.readthedocs.io).
 """
 
 __all__ = ["RadiationType", "ObjCrystException", "WavelengthType"]
 
-from pyobjcryst._pyobjcryst import RadiationType, WavelengthType
-from pyobjcryst._pyobjcryst import ObjCrystException
+from pyobjcryst._pyobjcryst import (
+    ObjCrystException,
+    RadiationType,
+    WavelengthType,
+)

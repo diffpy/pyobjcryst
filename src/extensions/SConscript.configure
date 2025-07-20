@@ -1,13 +1,10 @@
 import platform
 from os.path import join as pjoin
-Import('env', 'pyconfigvar', 'pyversion')
+import sysconfig
+
+Import('env', 'pyversion')
 
 # Helper functions -----------------------------------------------------------
-
-env.Append(LIBPATH=pjoin(env['prefix'], 'Library', 'bin'))
-env.Append(LIBPATH=pjoin(env['prefix'], 'Library', 'lib'))
-env.Append(CPPPATH=[pjoin(env['prefix'], 'include')])
-env.Append(CPPPATH=[pjoin(env['prefix'], 'Library', 'include')])
 
 def CheckOptimizerFlag(context, flag):
     ccflags_save = context.env['CCFLAGS']
@@ -48,8 +45,8 @@ def configure_boost_library(libname):
 
 # Anaconda Python is compiled with super fancy gcc optimizer flags.
 # Remove any flags that are not supported by the current compiler.
-
 custom_tests = {'CheckOptimizerFlag' : CheckOptimizerFlag}
+
 conf = Configure(env, custom_tests=custom_tests)
 optflags = [o for o in env['CCFLAGS']
             if o[:2] in ('-f', '-m')]
@@ -57,16 +54,16 @@ for o in optflags:
     conf.CheckOptimizerFlag(o)
 conf.Finish()
 
+
 if platform.system().lower() == "windows":
     ecfg = env.Clone()
-    # ecfg.MergeFlags(pyconfigvar('BLDLIBRARY'))
     ecfg.Append(LIBS=['libObjCryst'])
 else:
     # Create configuration environment that links with Python shared_library, so
     # that the boost_python check does not fail due to unresolved Python symbols.
     ecfg = env.Clone()
     ecfg.Append(LIBS=[])
-    ecfg.MergeFlags(pyconfigvar('BLDLIBRARY'))
+    ecfg.MergeFlags(sysconfig.get_config_var('BLDLIBRARY'))
     # make sure there are no implicit dependency nodes in added LIBS
     ecfg.Replace(LIBS=[str(n) for n in ecfg['LIBS']])
     newlibsindex = len(ecfg['LIBS'])

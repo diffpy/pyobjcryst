@@ -40,7 +40,7 @@ precise enough (and is architecture-dependant), we use a custom time,\n\
 which records the number of events in the program which uses the library.\n\
 This is purely internal, so don't worry about it...\n\
 \n\
-The clock values have nothing to do with 'time' as any normal person undertands it.";
+The clock values have nothing to do with 'time' as any normal person understands it.";
 
 const char* addchilddoc =
 "Add a 'child' clock. Whenever a child clock is clicked, it will also click its parent.\n\

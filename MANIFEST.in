@@ -1,16 +1,13 @@
-recursive-include src *
-include SConstruct
-include AUTHORS.txt LICENSE*.txt README.rst
-recursive-exclude src *.pyc *.so
-global-exclude .gitattributes .gitignore .gitarchive.cfg
-global-exclude .DS_Store
+graft src
+graft tests
+graft requirements
 
-# Avoid user content in setup.cfg to make distribution reproducible.
-exclude setup.cfg
+include AUTHORS.rst LICENSE*.rst README.rst
 
-# Exclude git-tracked files spuriously added by setuptools_scm
-exclude .coveragerc
-exclude .travis*
-prune conda-recipe
-prune devutils
-prune doc
+# Exclude all bytecode files and __pycache__ directories
+global-exclude *.py[cod]  # Exclude all .pyc, .pyo, and .pyd files.
+global-exclude *.so  # Exclude shared object files.
+global-exclude .DS_Store  # Exclude Mac filesystem artifacts.
+global-exclude __pycache__  # Exclude Python cache directories.
+global-exclude .git*  # Exclude git files and directories.
+global-exclude .idea  # Exclude PyCharm project settings.

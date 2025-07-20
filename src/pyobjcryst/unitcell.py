@@ -12,10 +12,10 @@
 # See LICENSE_DANSE.txt for license information.
 #
 ##############################################################################
+"""Python wrapping of UnitCell.h.
 
-"""Python wrapping of UnitCell.h
-
-See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
+See the online ObjCryst++ documentation (
+https://objcryst.readthedocs.io).
 """
 
 __all__ = ["UnitCell"]
