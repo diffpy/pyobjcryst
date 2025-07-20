@@ -15,10 +15,10 @@
 """Tests for molecule module."""
 
 import unittest
-from importlib.resources import files
 
+import pytest
 from numpy import pi
-from utils import makeC60, makeMnO6
+from testutils import makeC60, makeMnO6
 
 from pyobjcryst import ObjCrystException
 from pyobjcryst.crystal import Crystal
@@ -37,6 +37,10 @@ numplaces = 6
 
 
 class TestMolecule(unittest.TestCase):
+
+    @pytest.fixture(autouse=True)
+    def prepare_fixture(self, datafile):
+        self.datafile = datafile
 
     def setUp(self):
         self.c = makeC60()
@@ -445,7 +449,7 @@ class TestMolecule(unittest.TestCase):
 
     def testZMatrix(self):
         """Test creating a Molecule from a z-matrix."""
-        fname = str(files(__name__).joinpath("testdata", "cime.fhz"))
+        fname = self.datafile("cime.fhz")
         c = Crystal()
         m = ImportFenskeHallZMatrix(c, fname)
         assert m.GetNbAtoms() == 17

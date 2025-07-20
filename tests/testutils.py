@@ -17,7 +17,7 @@
 from numpy import pi
 
 from pyobjcryst.atom import Atom
-from pyobjcryst.crystal import Crystal, create_crystal_from_cif
+from pyobjcryst.crystal import Crystal
 from pyobjcryst.molecule import Molecule
 from pyobjcryst.polyhedron import MakeOctahedron
 from pyobjcryst.scatteringpower import ScatteringPowerAtom
@@ -150,16 +150,3 @@ def makeMnO6():
     crystal.AddScatterer(m)
 
     return crystal
-
-
-def datafile(filename):
-    from importlib.resources import files
-
-    rv = str(files(__name__).joinpath("testdata", filename))
-    return rv
-
-
-def loadcifdata(filename):
-    fullpath = datafile(filename)
-    crst = create_crystal_from_cif(fullpath)
-    return crst

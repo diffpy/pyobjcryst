@@ -17,16 +17,20 @@
 import unittest
 
 import numpy
-from utils import loadcifdata
+import pytest
 
 from pyobjcryst.utils import putAtomsInMolecule
 
 
 class TestPutAtomsInMolecule(unittest.TestCase):
 
+    @pytest.fixture(autouse=True)
+    def prepare_fixture(self, loadcifdata):
+        self.loadcifdata = loadcifdata
+
     def test_caffeine(self):
         """Check molecule conversion for caffeine."""
-        c = loadcifdata("caffeine.cif")
+        c = self.loadcifdata("caffeine.cif")
         xyz0 = [(sc.X, sc.Y, sc.Z) for sc in c.GetScatteringComponentList()]
         self.assertEqual(24, c.GetNbScatterer())
         putAtomsInMolecule(c, name="espresso")

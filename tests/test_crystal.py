@@ -16,7 +16,7 @@
 
 import unittest
 
-from utils import (
+from testutils import (
     getScatterer,
     makeCrystal,
     makeScatterer,

@@ -11,7 +11,7 @@
 
 import unittest
 
-from utils import loadcifdata
+import pytest
 
 from pyobjcryst import refinableobj
 from pyobjcryst.diffractiondatasinglecrystal import (
@@ -22,8 +22,12 @@ from pyobjcryst.lsq import LSQ
 
 class TestGlobalOptim(unittest.TestCase):
 
+    @pytest.fixture(autouse=True)
+    def prepare_fixture(self, loadcifdata):
+        self.loadcifdata = loadcifdata
+
     def setUp(self):
-        self.c = loadcifdata("caffeine.cif")
+        self.c = self.loadcifdata("caffeine.cif")
         self.d = DiffractionDataSingleCrystal(self.c)
         self.d.GenHKLFullSpace2(0.4, True)
         self.d.SetIobsToIcalc()

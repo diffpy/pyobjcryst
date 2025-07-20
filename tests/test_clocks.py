@@ -16,7 +16,7 @@
 
 import unittest
 
-from utils import makeC60
+from testutils import makeC60
 
 from pyobjcryst.refinableobj import RefinableObjClock
 

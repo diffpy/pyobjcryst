@@ -17,7 +17,7 @@
 import unittest
 
 import numpy as np
-from utils import loadcifdata
+import pytest
 
 from pyobjcryst import ObjCrystException
 from pyobjcryst.indexing import CrystalCentering, CrystalSystem, quick_index
@@ -39,6 +39,10 @@ class TestRoutines(unittest.TestCase):
 
 
 class TestPowderPattern(unittest.TestCase):
+
+    @pytest.fixture(autouse=True)
+    def prepare_fixture(self, loadcifdata):
+        self.loadcifdata = loadcifdata
 
     def setUp(self):
         self.pp = PowderPattern()
@@ -151,7 +155,7 @@ class TestPowderPattern(unittest.TestCase):
         pp.SetRadiationType(t)
 
     def test_quick_fit(self):
-        c = loadcifdata("paracetamol.cif")
+        c = self.loadcifdata("paracetamol.cif")
         p = PowderPattern()
         p.SetWavelength(0.7)
         x = np.linspace(0, 40, 8001)
@@ -171,7 +175,7 @@ class TestPowderPattern(unittest.TestCase):
         p.quick_fit_profile(auto_background=True, verbose=False, plot=False)
 
     def test_peaklist_index(self):
-        c = loadcifdata("paracetamol.cif")
+        c = self.loadcifdata("paracetamol.cif")
         p = PowderPattern()
         p.SetWavelength(0.7)
         x = np.linspace(0, 40, 16001)
@@ -203,7 +207,7 @@ class TestPowderPattern(unittest.TestCase):
         )
 
     def test_spacegroup_explorer(self):
-        c = loadcifdata("paracetamol.cif")
+        c = self.loadcifdata("paracetamol.cif")
         p = PowderPattern()
         p.SetWavelength(0.7)
         x = np.linspace(0, 40, 8001)
@@ -240,7 +244,7 @@ class TestPowderPattern(unittest.TestCase):
         #         print(s)
 
     def test_update_nbrefl(self):
-        c = loadcifdata("paracetamol.cif")
+        c = self.loadcifdata("paracetamol.cif")
         p = PowderPattern()
         p.SetWavelength(1.5)
         x = np.linspace(0, 40, 4000)

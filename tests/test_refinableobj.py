@@ -17,7 +17,7 @@
 import unittest
 
 import numpy
-from utils import makeCrystal, makeScatterer
+from testutils import makeCrystal, makeScatterer
 
 from pyobjcryst import ObjCrystException
 from pyobjcryst.refinableobj import (
