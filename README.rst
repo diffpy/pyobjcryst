@@ -153,4 +153,13 @@ For more information on pyobjcryst please visit the project `web-page <https://d
 Acknowledgements
 ----------------
 
+This package bundles the following IUCr data files for bona fide research use:
+
+- **cpd-1a.prn:** Powder diffraction dataset from the `IUCr CPD Round Robin on Quantitative Phase Analysis <https://www.iucr.org/__data/iucr/powder/QARR/index.html>`_.
+
+  Source: https://www.iucr.org/__data/iucr/powder/QARR/col/cpd-1a.prn
+
+  Round Robin on Quantitative Phase Analysis: Madsen, I. (1997) ‘Round Robin on Quantitative Phase Analysis’, Powder Diffraction, 12(1), pp. 1–2. Available at: https://doi.org/10.1017/S0885715600020212.
+
+
 ``pyobjcryst`` is built and maintained with `scikit-package <https://scikit-package.github.io/scikit-package/>`_.

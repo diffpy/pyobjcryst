@@ -17,8 +17,6 @@ Changes from ObjCryst::PowderPattern::
         Additional functions for plotting, basic QPA and profile fitting.
 """
 
-import inspect
-import warnings
 from urllib.request import urlopen
 
 import numpy as np
@@ -81,7 +79,7 @@ class PowderPattern(PowderPattern_objcryst):
         try:
             if self._display_update_disabled:
                 return
-        except AttributeError:
+        except:  # noqa E722
             pass
         if self._plot_fig is not None:
             if self._plot_fig is not None:
@@ -224,17 +222,8 @@ class PowderPattern(PowderPattern_objcryst):
                 self._plot_fig.canvas.draw()
                 if "ipympl" not in plt.get_backend():
                     plt.pause(0.001)
-            except (AttributeError, RuntimeError, ValueError) as e:
-                cls_name = type(self).__name__
-                func_name = inspect.currentframe().f_code.co_name
-                backend = plt.get_backend()
-                fig_id = getattr(self._plot_fig, "number", None)
-                warnings.warn(
-                    f"[{cls_name}.{func_name}] "
-                    f"Plot refresh failed ({type(e).__name__}): {e}. "
-                    f"Matplotlib backend={backend}, figure id={fig_id}",
-                    stacklevel=2,
-                )
+            except:  # noqa E722
+                pass
             # plt.gca().callbacks.connect('xlim_changed', self._on_xlims_change)
             # plt.gca().callbacks.connect('ylim_changed', self._on_ylims_change)
             self._plot_fig.canvas.mpl_connect(
@@ -281,7 +270,7 @@ class PowderPattern(PowderPattern_objcryst):
                 try:
                     # need the renderer to avoid text overlap
                     renderer = plt.gcf().canvas.get_renderer()
-                except (AttributeError, RuntimeError):
+                except:  # noqa E722
                     # Force immediate display. Not supported on all backends (e.g. nbagg)
                     ax.draw()
                     self._plot_fig.canvas.draw()
@@ -289,7 +278,7 @@ class PowderPattern(PowderPattern_objcryst):
                         plt.pause(0.001)
                     try:
                         renderer = self._plot_fig.canvas.get_renderer()
-                    except (AttributeError, RuntimeError):
+                    except:  # noqa E722
                         renderer = None
             else:
                 renderer = None

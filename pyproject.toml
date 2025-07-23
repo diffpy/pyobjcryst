@@ -6,7 +6,9 @@ build-backend = "setuptools.build_meta"
 name = "pyobjcryst"
 dynamic=['version', 'dependencies']
 authors = [
-  { name="Simon J.L. Billinge group", email="sb2896@columbia.edu" },
+  { name="Christopher Farrow" },
+  { name="Pavol Juhás" },
+  { name="Vincent-Favre-Nicolin", email="favre@esrf.fr" },
 ]
 maintainers = [
   { name="Simon J.L. Billinge group", email="sb2896@columbia.edu" },

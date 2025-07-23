@@ -3,6 +3,8 @@ name: Release (GitHub/PyPI) and Deploy Docs
 on:
   workflow_dispatch:
   push:
+    branches:
+      - "**"
     tags:
       - "*" # Trigger on all tags initially, but tag and release privilege are verified in _build-wheel-release-upload.yml
 
