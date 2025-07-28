@@ -108,10 +108,12 @@ def create_extensions():
     )
     return [ext]
 
+
 def ext_modules():
     if set(sys.argv) & {"build_ext", "bdist_wheel", "install"}:
         return create_extensions()
     return []
+
 
 if __name__ == "__main__":
     setup(ext_modules=ext_modules())
