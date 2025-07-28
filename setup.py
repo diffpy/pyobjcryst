@@ -20,14 +20,31 @@ from setuptools import Extension, setup
 
 
 def get_boost_libraries():
-    base_lib = "boost_python"
-    major, minor = str(sys.version_info[0]), str(sys.version_info[1])
-    tags = [f"{major}{minor}", major, ""]
-    mttags = ["", "-mt"]
-    candidates = [base_lib + tag for tag in tags for mt in mttags] + [base_lib]
-    for lib in candidates:
-        if find_library(lib):
-            return [lib]
+    # the names we'll search for
+    major, minor = sys.version_info[:2]
+    candidates = [
+        f"boost_python{major}{minor}",
+        f"boost_python{major}",
+        "boost_python",
+    ]
+
+    conda_prefix = os.environ.get("CONDA_PREFIX")
+    if conda_prefix:
+        libdir = os.path.join(conda_prefix, "lib")
+        for name in candidates:
+            so = f"lib{name}.so"
+            if os.path.isfile(os.path.join(libdir, so)):
+                # return the plain "boost_python311" etc (no "lib" prefix or ".so")
+                return [name]
+
+    # fallback to ldconfig
+    for name in candidates:
+        found = find_library(name)
+        if found:
+            # find_library may return "libboost_python3.so.1.74.0" etc
+            # strip off lib*.so.* if you like, or just return name
+            return [name]
+
     raise RuntimeError("Cannot find a suitable Boost.Python library.")
 
 
@@ -92,10 +109,11 @@ def create_extensions():
     return [ext]
 
 
-setup_args = dict(
-    ext_modules=[],
-)
+def ext_modules():
+    if set(sys.argv) & {"build_ext", "bdist_wheel", "install"}:
+        return create_extensions()
+    return []
+
 
 if __name__ == "__main__":
-    setup_args["ext_modules"] = create_extensions()
-    setup(**setup_args)
+    setup(ext_modules=ext_modules())
