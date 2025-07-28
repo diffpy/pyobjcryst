@@ -48,8 +48,6 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Package API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#pyobjcryst.ObjCrystException"><code class="docutils literal notranslate"><span class="pre">ObjCrystException</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pyobjcryst.loadCrystal"><code class="docutils literal notranslate"><span class="pre">loadCrystal()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="pyobjcryst.example_package.html">pyobjcryst.example_package package</a></li>
 </ul>
@@ -88,61 +86,6 @@
              
   <section id="title">
 <h1>pyobjcryst package<a class="headerlink" href="#title" title="Link to this heading"></a></h1>
-<p id="module-pyobjcryst">Python wrapping of ObjCryst++.</p>
-<p>Objects are wrapped according to their header file in the ObjCryst source.</p>
-<p>See the online ObjCryst++ documentation (<a class="reference external" href="https://objcryst.readthedocs.io">https://objcryst.readthedocs.io</a>).</p>
-<p>Modules</p>
-<p>atom                    –  Wrapping of Atom.h
-crystal                 –  Wrapping of Crystal.h
-general                 –  Wrapping of General.h
-globaloptim             –  Wrapping of GlobalOptimObj.h
-io                      –  Wrapping of IO.h
-lsq                     –  Wrapping of LSQNumObj.h
-molecule                –  Wrapping of Molecule.h
-polyhedron              –  Wrapping of Polyhedron.h
-refinableobj            –  Wrapping of RefinableObj.h
-scatterer               –  Wrapping of Scatterer.h
-scatteringpower         –  Wrapping of ScatteringPower.h
-scatteringpowersphere   –  Wrapping of ScatteringPowerSphere.h
-spacegroup              –  Wrapping of SpaceGroup.h
-unitcell                –  Wrapping of UnitCell.h
-zscatterer              –  Wrapping of ZScatterer.h</p>
-<p>General Changes</p>
-<ul class="simple">
-<li><p>C++ methods that can return const or non-const objects return non-const
-objects in python.</p></li>
-<li><p>Classes with a Print() method have the output of this method exposed in the
-__str__ python method. Thus, obj.Print() == print obj.</p></li>
-<li><p>CrystVector and CrystMatrix are converted to numpy arrays.</p></li>
-<li><p>Indexing methods raise IndexError when index is out of bounds.</p></li>
-</ul>
-<p>See the modules’ documentation for specific changes.</p>
-<dl class="py exception">
-<dt class="sig sig-object py" id="pyobjcryst.ObjCrystException">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyobjcryst.</span></span><span class="sig-name descname"><span class="pre">ObjCrystException</span></span><a class="headerlink" href="#pyobjcryst.ObjCrystException" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyobjcryst.loadCrystal">
-<span class="sig-prename descclassname"><span class="pre">pyobjcryst.</span></span><span class="sig-name descname"><span class="pre">loadCrystal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyobjcryst.html#loadCrystal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyobjcryst.loadCrystal" title="Link to this definition"></a></dt>
-<dd><p>Load pyobjcryst Crystal object from a CIF file.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> – CIF file to be loaded.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>a new Crystal object.</p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>..deprecated:: 2.2.4</dt><dd><p>Use pyobjcryst.crystal.create_crystal_from_cif() instead,
-which has more options when importing a CIF, including
-using an URL instead of a file.</p>
-</dd>
-</dl>
-</dd></dl>
-
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
