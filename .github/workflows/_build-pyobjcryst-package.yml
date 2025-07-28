@@ -1,0 +1,147 @@
+name: Build wheel and sdist for a non-pure Python package
+
+on:
+  push:
+
+jobs:
+  build_sdist:
+    defaults:
+        run:
+          shell: bash -l {0}
+  
+    name: Build sdist
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Initialize miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: sdist
+          channels: conda-forge
+          auto-update-conda: true
+          auto-activate-base: false
+          python-version: 3.13
+      
+      - name: Conda config
+        run: >-
+          conda config --set always_yes yes
+          --set changeps1 no
+      
+      - name: Build sdist
+        run: |
+          pip install --upgrade build
+          python -m build --sdist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-sdist
+          path: ./dist/*.tar.gz
+
+  build-wheels:
+    needs: [build_sdist]
+    defaults:
+        run:
+          shell: bash -l {0}
+
+    name: cibw-wheels-${{ matrix.python }}-${{ matrix.buildplat }}
+    runs-on: ${{ matrix.buildplat }}
+    strategy:
+      fail-fast: false
+      matrix:
+        buildplat:
+          - ubuntu-latest
+          - macos-13
+          - macos-14
+          - windows-latest
+        python:
+          - "3.11"
+          - "3.12"
+          - "3.13"
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Initialize miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: build
+          channels: conda-forge
+          auto-update-conda: true
+          auto-activate-base: false
+          python-version: ${{ matrix.python }}
+
+      - name: Conda config
+        run: >-
+          conda config --set always_yes yes
+          --set changeps1 no
+
+      - name: Install requirements
+        run: |
+          conda install --file requirements/conda.txt
+          conda install --file requirements/pip.txt
+          pip install --upgrade build
+          python -m pip wheel --no-deps --wheel-dir ./dist .
+
+      - name: Upload wheels to GitHub
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.python }}-${{ matrix.buildplat }}.whl
+          path: ./dist/*.whl
+
+  test-wheels:
+    needs: [build-wheels]
+    defaults:
+        run:
+          shell: bash -l {0}
+
+    name: test-wheels-${{ matrix.python }}-${{ matrix.buildplat }}
+    runs-on: ${{ matrix.buildplat }}
+    strategy:
+      fail-fast: false
+      matrix:
+        buildplat:
+          - ubuntu-latest
+          - macos-13
+          - macos-14
+          - windows-latest
+        python:
+          - "3.11"
+          - "3.12"
+          - "3.13"
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Download wheels
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.python }}-${{ matrix.buildplat }}.whl
+          path: ./dist
+      
+      - name: Initialize miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: test
+          channels: conda-forge
+          auto-update-conda: true
+          auto-activate-base: false
+          python-version: ${{ matrix.python }}
+
+      - name: Conda config
+        run: >-
+          conda config --set always_yes yes
+          --set changeps1 no
+
+      - name: Install requirements
+        run: |
+          conda install --file requirements/conda.txt
+          conda install --file requirements/tests.txt
+
+      - name: Install wheel and test
+        run: |
+          pip install ./dist/*.whl
+          pytest
