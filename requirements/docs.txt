@@ -1,5 +1,7 @@
 sphinx
 sphinx_rtd_theme
 sphinx-copybutton
+nbsphinx
+nbsphinx-link
 doctr
 m2r

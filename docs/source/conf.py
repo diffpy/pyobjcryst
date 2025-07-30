@@ -50,6 +50,8 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx_rtd_theme",
     "sphinx_copybutton",
+    "nbsphinx",
+    "nbsphinx_link",
     "m2r",
 ]
 
