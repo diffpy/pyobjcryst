@@ -6,16 +6,8 @@
 
 ``pyobjcryst`` - Python bindings to the ObjCryst++ Object-Oriented Crystallographic Library
 
-| Software version |release|
+| Software version |release|.
 | Last updated |today|.
-
-===============
-Getting started
-===============
-
-Welcome to the ``pyobjcryst`` documentation!
-
-To get started, please visit the :ref:`Getting started <getting-started>` page.
 
 =======
 Authors
@@ -71,7 +63,7 @@ Usage & notebooks
   * :doc:`Meta-structure solution using multi-processing <examples/structure-solution-multiprocessing>`
   * :doc:`Quantitative phase analysis (QPA) <examples/Quantitative-phase-analysis>`
 
-The **API documentation** can be found in :doc:`api/modules`.
+The **API documentation** can be found in :doc:`api/pyobjcryst`.
 
 You can also read the
 `documentation of the underlying ObjCryst++ library <https://vincefn.net/ObjCryst/annotated.html>`_.
@@ -86,12 +78,12 @@ Acknowledgements
 Table of contents
 =================
 .. toctree::
-   :maxdepth: 2
+   :titlesonly:
 
-   getting-started
-   Package API <api/pyobjcryst>
-   release
    license
+   release
+   Examples <examples/index>
+   Package API <api/pyobjcryst>
 
 =======
 Indices

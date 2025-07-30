@@ -50,7 +50,6 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx_rtd_theme",
     "sphinx_copybutton",
-    "m2r",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -300,7 +299,7 @@ texinfo_documents = [
         "pyobjcryst Documentation",
         ab_authors,
         "pyobjcryst",
-        "One line description of project.",
+        "Python bindings to the ObjCryst++ library.",
         "Miscellaneous",
     ),
 ]
