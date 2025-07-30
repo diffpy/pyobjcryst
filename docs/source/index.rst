@@ -9,6 +9,12 @@
 | Software version |release|.
 | Last updated |today|.
 
+===============
+Getting started
+===============
+
+To get started, please visit the :ref:`Getting started <getting-started>` page.
+
 =======
 Authors
 =======
@@ -80,6 +86,7 @@ Table of contents
 .. toctree::
    :titlesonly:
 
+   getting-started
    license
    release
    Examples <examples/index>
