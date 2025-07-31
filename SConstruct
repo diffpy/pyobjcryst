@@ -4,11 +4,11 @@
 MY_SCONS_HELP = """\
 SCons rules for compiling and installing pyobjcryst.
 
-Compile and install the pyobjcryst Python extension. 
+Compile and install the pyobjcryst Python extension.
 For faster builds, run with parallel jobs, e.g.:
     scons -j4
 
-Usage: 
+Usage:
     scons [target] [var=value]
 
 Targets:
