@@ -3,15 +3,18 @@
 
 MY_SCONS_HELP = """\
 SCons rules for compiling and installing pyobjcryst.
-SCons build is much faster when run with parallel jobs (-j4).
-Usage: scons [target] [var=value]
+
+Compile and install the pyobjcryst Python extension.
+For faster builds, run with parallel jobs, e.g.:
+    scons -j4
+
+Usage:
+    scons [target] [var=value]
 
 Targets:
-
-module      build Python extension module _pyobjcryst.so [default]
-install     install to default Python package location
-develop     copy extension module to src/pyobjcryst/ directory
-test        execute unit tests
+    (default)   Build the Python extension module `_pyobjcryst.so` (or `.pyd` on Windows)
+    dev         install extension module into `src/pyobjcryst/` (development mode)
+    test        Run pytest on the package with the installed extension
 
 Build configuration variables:
 %s
