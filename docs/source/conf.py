@@ -13,11 +13,11 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+import shutil
 import sys
 import time
 from importlib.metadata import version
 from pathlib import Path
-import shutil
 
 # Attempt to import the version dynamically from GitHub tag.
 try:
@@ -37,9 +37,9 @@ ab_authors = "Billinge Group members"
 
 # Include notebooks at build time.
 root_dir = Path(__file__).resolve().parents[1]
-external_nb_dir = root_dir / 'examples'
+external_nb_dir = root_dir / "examples"
 for f in external_nb_dir.glob("*.ipynb"):
-    dest = Path(__file__).parent / 'examples' / f.name
+    dest = Path(__file__).parent / "examples" / f.name
     if dest.exists():
         dest.unlink()
     shutil.copy(f, dest)
@@ -164,7 +164,7 @@ html_theme_options = {
         {
             "name": "GitHub",
             "url": "https://github.com/diffpy/pyobjcryst",
-            "icon": "fab-brands fa-github",
+            "icon": "fab fa-github",
         },
     ],
     # "primary_sidebar_end": ["indices.html", "sidebar-ethical-ads.html"]
