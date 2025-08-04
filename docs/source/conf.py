@@ -48,11 +48,10 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
-    "sphinx_rtd_theme",
     "sphinx_copybutton",
     "nbsphinx",
     "nbsphinx_link",
-    "m2r",
+    "m2r2",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -134,7 +133,7 @@ nitpicky = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_rtd_theme"
+html_theme = "pydata_sphinx_theme"
 
 html_context = {
     "display_github": True,
@@ -149,7 +148,25 @@ html_context = {
 # documentation.
 #
 html_theme_options = {
-    "navigation_with_keys": "true",
+    "show_nav_level": 2,
+    "navigation_depth": 2,
+    "navbar_align": "left",
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/diffpy/pyobjcryst",
+            "icon": "fab-brands fa-github",
+        },
+    ],
+    # "primary_sidebar_end": ["indices.html", "sidebar-ethical-ads.html"]
+}
+
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_sidebars
+html_sidebars = {
+    "**": ["globaltoc.html", "sidebar-nav-bs"],
+    # "**": ["localtoc.html"],
+    # "**": ["sidebar-nav-bs"],
+    # "<page_pattern>": ["index", "manual-intro", "tutorials", "manual"]
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
