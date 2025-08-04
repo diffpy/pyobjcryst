@@ -17,6 +17,7 @@ import sys
 import time
 from importlib.metadata import version
 from pathlib import Path
+import shutil
 
 # Attempt to import the version dynamically from GitHub tag.
 try:
@@ -34,6 +35,15 @@ sys.path.insert(0, str(Path("../../src").resolve()))
 # abbreviations
 ab_authors = "Billinge Group members"
 
+# Include notebooks at build time.
+root_dir = Path(__file__).resolve().parents[1]
+external_nb_dir = root_dir / 'examples'
+for f in external_nb_dir.glob("*.ipynb"):
+    dest = Path(__file__).parent / 'examples' / f.name
+    if dest.exists():
+        dest.unlink()
+    shutil.copy(f, dest)
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -50,8 +60,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx_copybutton",
     "nbsphinx",
-    "nbsphinx_link",
-    "m2r2",
+    "m2r",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -63,7 +72,7 @@ templates_path = ["_templates"]
 source_suffix = [".rst", ".md"]
 
 # The encoding of source files.
-# source_encoding = 'utf-8-sig'
+# source_encoding = eutf-8-sig'
 
 # The master toctree document.
 master_doc = "index"

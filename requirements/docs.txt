@@ -2,6 +2,6 @@ sphinx
 pydata-sphinx-theme
 sphinx-copybutton
 nbsphinx
-nbsphinx-link
 doctr
 m2r
+ipykernel
