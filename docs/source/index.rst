@@ -32,7 +32,7 @@ was developed by V. Favre-Nicolin as part of the development of the
 Further developments including the ability to index and refine
 powder patterns, solve and display crystal structures, using the
 global optimisation and least squares algorithms (see the
-:doc:`examples/index`) are provided by Vincent Favre-Nicolin (ESRF).
+:doc:`examples/examples`) are provided by Vincent Favre-Nicolin (ESRF).
 
 For a complete list of contributors, see
 https://github.com/diffpy/pyobjcryst/graphs/contributors and
@@ -63,7 +63,7 @@ Usage & notebooks
   * etc..
 
   The functionality is similar to what is available in `Fox <http://fox.vincefn.net>`_.
-  See the :doc:`examples/index`:
+  See the :doc:`examples/examples`:
 
   * :doc:`3D Crystal structure display <examples/crystal_3d_widget>`
   * :doc:`Solving the cimetidine structure from its powder pattern <examples/structure-solution-powder-cimetidine>`
@@ -71,7 +71,7 @@ Usage & notebooks
   * :doc:`Meta-structure solution using multi-processing <examples/structure-solution-multiprocessing>`
   * :doc:`Quantitative phase analysis (QPA) <examples/Quantitative-phase-analysis>`
 
-The **API documentation** can be found in :doc:`api/modules`.
+The **API documentation** can be found in :doc:`api/pyobjcryst`.
 
 You can also read the
 `documentation of the underlying ObjCryst++ library <https://vincefn.net/ObjCryst/annotated.html>`_.
@@ -89,11 +89,11 @@ Table of contents
    :maxdepth: 2
 
    getting-started
+   Examples <examples/examples>
    Package API <api/pyobjcryst>
    release
    license
 
-=======
 Indices
 =======
 
