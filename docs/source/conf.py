@@ -38,11 +38,25 @@ ab_authors = "Billinge Group members"
 # Include notebooks at build time.
 root_dir = Path(__file__).resolve().parents[1]
 external_nb_dir = root_dir / "examples"
+copied_files = []
 for f in external_nb_dir.glob("*.ipynb"):
     dest = Path(__file__).parent / "examples" / f.name
     if dest.exists():
         dest.unlink()
+    copied_files.append(dest)
     shutil.copy(f, dest)
+
+
+def post_build_hook(app, exception):
+    """Remove copied files after building documentation."""
+    for f in copied_files:
+        if f.exists():
+            f.unlink()
+
+
+def setup(app):
+    app.connect("build-finished", post_build_hook)
+
 
 # -- General configuration ------------------------------------------------
 
