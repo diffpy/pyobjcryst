@@ -13,6 +13,7 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+import shutil
 import sys
 import time
 from importlib.metadata import version
@@ -34,6 +35,15 @@ sys.path.insert(0, str(Path("../../src").resolve()))
 # abbreviations
 ab_authors = "Billinge Group members"
 
+# Include notebooks at build time.
+root_dir = Path(__file__).resolve().parents[1]
+external_nb_dir = root_dir / "examples"
+for f in external_nb_dir.glob("*.ipynb"):
+    dest = Path(__file__).parent / "examples" / f.name
+    if dest.exists():
+        dest.unlink()
+    shutil.copy(f, dest)
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -48,10 +58,8 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
-    "sphinx_rtd_theme",
     "sphinx_copybutton",
     "nbsphinx",
-    "nbsphinx_link",
     "m2r",
 ]
 
@@ -134,7 +142,8 @@ nitpicky = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_rtd_theme"
+# html_theme = "sphinx_rtd_theme"
+html_theme = "pydata_sphinx_theme"
 
 html_context = {
     "display_github": True,
@@ -149,7 +158,25 @@ html_context = {
 # documentation.
 #
 html_theme_options = {
-    "navigation_with_keys": "true",
+    "show_nav_level": 2,
+    "navigation_depth": 2,
+    "navbar_align": "left",
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/diffpy/pyobjcryst",
+            "icon": "fab fa-github",
+        },
+    ],
+    # "primary_sidebar_end": ["indices.html", "sidebar-ethical-ads.html"]
+}
+
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_sidebars
+html_sidebars = {
+    "**": ["globaltoc.html", "sidebar-nav-bs"],
+    # "**": ["localtoc.html"],
+    # "**": ["sidebar-nav-bs"],
+    # "<page_pattern>": ["index", "manual-intro", "tutorials", "manual"]
 }
 
 # Add any paths that contain custom themes here, relative to this directory.

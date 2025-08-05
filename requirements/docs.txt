@@ -1,7 +1,8 @@
 sphinx
-sphinx_rtd_theme
+pydata-sphinx-theme
 sphinx-copybutton
 nbsphinx
-nbsphinx-link
 doctr
 m2r
+ipykernel
+lxml-html-clean
