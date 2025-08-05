@@ -18,13 +18,8 @@
 #  __all__ = ["__date__", "__git_commit__", "__timestamp__", "__version__"]
 
 # obtain version information
-from importlib.metadata import PackageNotFoundError, version
+from importlib.metadata import version
 
-FALLBACK_VERSION = "2024.2.1"
-
-try:
-    __version__ = version("pyobjcryst")
-except PackageNotFoundError:
-    __version__ = FALLBACK_VERSION
+__version__ = version("pyobjcryst")
 
 # End of file
