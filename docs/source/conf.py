@@ -343,7 +343,7 @@ texinfo_documents = [
         "pyobjcryst Documentation",
         ab_authors,
         "pyobjcryst",
-        "One line description of project.",
+        "Python bindings to the ObjCryst++ library.",
         "Miscellaneous",
     ),
 ]
