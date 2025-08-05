@@ -1,6 +1,6 @@
 **Added:**
 
-* No news added: Remove the documentation template and add QPA notebook in docuementation.
+* No news added: Remove the documentation template and add QPA notebook in documentation.
 
 **Changed:**
 
