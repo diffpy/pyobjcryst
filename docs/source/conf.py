@@ -72,7 +72,7 @@ templates_path = ["_templates"]
 source_suffix = [".rst", ".md"]
 
 # The encoding of source files.
-# source_encoding = eutf-8-sig'
+# source_encoding = 'utf-8-sig'
 
 # The master toctree document.
 master_doc = "index"
@@ -142,6 +142,7 @@ nitpicky = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
+# html_theme = "sphinx_rtd_theme"
 html_theme = "pydata_sphinx_theme"
 
 html_context = {
