@@ -15,8 +15,7 @@ Authors
 
 `pyobjcryst` was written as part of the DANSE_ open-source project by
 Christopher Farrow, Pavol Juhás, and Simon J.L. Billinge.
-The sources are maintained as a part of the DiffPy-CMI complex
-modeling initiative at the Brookhaven National Laboratory.
+The sources are maintained as a part of the `diffpy` project.
 The underlying library  `ObjCryst++ <https://github.com/vincefn/objcryst>`_
 was developed by V. Favre-Nicolin as part of the development of the
 `Fox <http://fox.vincefn.net>`_ software.

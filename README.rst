@@ -101,10 +101,10 @@ displayed in a jupyter notebook:
 
 * a Crystal structure can be displayed in 3D: this requires the
   ``py3dmol`` and ``ipywidgets`` modules. See the notebook
-  ``examples/cystal_3d_widget.ipynb``
+  ``docs/examples/cystal_3d_widget.ipynb``
 * a PowderPattern can be displayed (and live-updated) if
   ``matplotlib`` and ``ipympl`` are installed. See the
-  notebook ``examples/cimetidine-structure-solution-powder.ipynb``
+  notebook ``docs/examples/structure-solution-powder-cimetidine.ipynb``
 
 Getting Started
 ---------------
@@ -143,12 +143,14 @@ module with debug information and C-assertions checks ::
 
 Improvements and fixes are always appreciated.
 
-Before contributing, please read our `Code of Conduct <https://github.com/diffpy/pyobjcryst/blob/main/CODE_OF_CONDUCT.rst>`_.
+Before contributing, please read our `Code of Conduct <https://github.com/diffpy/pyobjcryst/blob/main/CODE-OF-CONDUCT.rst>`_.
 
 Contact
 -------
 
 For more information on pyobjcryst please visit the project `web-page <https://diffpy.github.io/>`_ or email Simon Billinge at sb2896@columbia.edu.
+
+You can also contact Vincent Favre-Nicolin (favre@esrf.fr) if you are using pyobjcryst outside diffpy, e.g. to display structures in a notebook, refine powder patterns or solve structures using the global optimisation algorithms, etc..
 
 Acknowledgements
 ----------------
