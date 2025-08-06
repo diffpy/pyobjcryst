@@ -120,6 +120,11 @@ displayed in a jupyter notebook:
   ``matplotlib`` and ``ipympl`` are installed. See the
   notebook ``docs/examples/structure-solution-powder-cimetidine.ipynb``
 
+Getting Started
+---------------
+
+You may consult our `online documentation <https://pyobjcryst.readthedocs.io/en/stable/>`_ for tutorials and API references.
+
 Alternative methods of installation
 -----------------------------------
 
@@ -176,11 +181,6 @@ First install test dependencies then type pytest::
         conda install --file requirements/tests.txt
         pytest
 
-
-Getting Started
----------------
-
-You may consult our `online documentation <https://diffpy.github.io/pyobjcryst>`_ for tutorials and API references.
 
 Support and Contribute
 ----------------------
