@@ -38,22 +38,52 @@
 
 Python bindings to ObjCryst++, the Object-Oriented Crystallographic Library.
 
-
 For more information about the pyobjcryst library, please consult our `online documentation <https://diffpy.github.io/pyobjcryst>`_.
+
+``pyobjcryst`` is an open-source software package originally developed as a part of the DiffPy-CMI
+complex modeling initiative which originated in the DANSE project
+at Columbia University. It was further developed at Brookhaven National Laboratory,
+and Columbia University and the European Synchrotron Radiation Source (ESRF) and is now
+maintained at Columbia and ESRF.
+The pyobjcryst sources are hosted at https://github.com/diffpy/pyobjcryst.
 
 Citation
 --------
 
-If you use pyobjcryst in a scientific publication, we would like you to cite this package as
+If you use diffpy.srfit in a scientific publication, we would like you to cite this package as
 
-        pyobjcryst Package, https://github.com/diffpy/pyobjcryst
+
+   P. Juhás, C. L. Farrow, X. Yang, K. R. Knox and S. J. L. Billinge,
+   `Complex modeling: a strategy and software program for combining
+   multiple information sources to solve ill posed structure and
+   nanostructure inverse problems
+   <http://dx.doi.org/10.1107/S2053273315014473>`__,
+   *Acta Crystallogr. A* **71**, 562-568 (2015).
+
+and
+
+   V. Favre-Nicolin and R. Cerný
+   `FOX, 'free objects for crystallography': a modular approach to ab initio structure determination
+    from powder diffraction
+    <https://doi.org/10.1107/S0021889802015236>`__,
+    *J. Appl. Cryst.*  **35**, 734-743 (2002)
+
+The second paper describes the c++ crystallographic objects in
+``ObjCryst++`` that are wrapped by ``pyobjcryst``
 
 Installation
 ------------
 
+The latest release of ``pyobjcryst`` runs in python versions 3.11, 3.12 and 3.13. You may
+specify an earlier release if you need it to run in an earlier version of Python.
+
 The preferred method is to use `Miniconda Python
 <https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html>`_
+or `mamba <https://mamba.readthedocs.io/en/latest/>`__
 and install from the "conda-forge" channel of Conda packages.
+mamba works in the same way as conda but has the advantage of being much
+faster when resolving dependencies during installation. It also uses by
+default the conda-forge repository, which is what almost all users would want.
 
 To add "conda-forge" to the conda channels, run the following in a terminal. ::
 
@@ -71,7 +101,35 @@ To confirm that the installation was successful, type ::
 
 The output should print the latest version displayed on the badges above.
 
-If the above does not work, you can use ``pip`` to download and install the latest release from
+To use mamba, replace ``conda`` with ``mamba`` in the commands above.
+
+pyobjcryst is also included in the ``diffpy.cmi`` collection of packages for
+structure analysis and so can be installed by ::
+
+        conda install -c conda-forge diffpy.cmi
+
+Optional graphical dependencies for jupyter notebooks
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Some of the classes can produce graphical outputs, which can be
+displayed in a jupyter notebook:
+
+* a Crystal structure can be displayed in 3D: this requires the
+  ``py3dmol`` and ``ipywidgets`` modules. See the notebook
+  ``docs/examples/cystal_3d_widget.ipynb``
+* a PowderPattern can be displayed (and live-updated) if
+  ``matplotlib`` and ``ipympl`` are installed. See the
+  notebook ``docs/examples/structure-solution-powder-cimetidine.ipynb``
+
+Getting Started
+---------------
+
+You may consult our `online documentation <https://pyobjcryst.readthedocs.io/en/stable/>`_ for tutorials and API references.
+
+Alternative methods of installation
+-----------------------------------
+
+These approaches are not recommended but reproduced here for advanced users.
+You can use ``pip`` to download and install the latest release from
 `Python Package Index <https://pypi.python.org>`_.
 To install using ``pip`` into your ``pyobjcryst_env`` environment, type ::
 
@@ -91,25 +149,38 @@ parallel jobs (-j4)::
         conda install --file requirements/conda.txt
         scons -j4 dev
 
-See ``scons -h`` for description of build targets and options. Need to install test dependencies
-(``requirements/test.txt``) to run SCons test mode.
+See ``scons -h`` for description of build targets and options.
 
-Optional graphical dependencies for jupyter notebooks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Some of the classes can produce graphical outputs, which can be
-displayed in a jupyter notebook:
+Alternatively, on Ubuntu Linux the required software can be installed using ::
 
-* a Crystal structure can be displayed in 3D: this requires the
-  ``py3dmol`` and ``ipywidgets`` modules. See the notebook
-  ``docs/examples/cystal_3d_widget.ipynb``
-* a PowderPattern can be displayed (and live-updated) if
-  ``matplotlib`` and ``ipympl`` are installed. See the
-  notebook ``docs/examples/structure-solution-powder-cimetidine.ipynb``
+        sudo apt-get install \
+             python-setuptools python-numpy scons \
+             build-essential python-dev libboost-all-dev
 
-Getting Started
----------------
+If this doesn't work, please see the `requirements/conda.txt` file for the
+latest list of requirements.
 
-You may consult our `online documentation <https://diffpy.github.io/pyobjcryst>`_ for tutorials and API references.
+The ``libobjcryst`` library can also be installed as per the instructions at
+https://github.com/diffpy/libobjcryst. Make sure other required software are
+also in place and then run from the pyobjcryst directory ::
+
+        pip install .
+
+You may need to use sudo with system Python so the process is allowed to copy files to system
+directories, unless you are installing into a conda environment. If administrator (root) access is not
+available, see the usage information from python setup.py install --help for options to install
+to a user-writable location.
+
+Testing your installation
+-------------------------
+
+The installation integrity can be verified by executing the included tests with
+
+First install test dependencies then type pytest::
+
+        conda install --file requirements/tests.txt
+        pytest
+
 
 Support and Contribute
 ----------------------
