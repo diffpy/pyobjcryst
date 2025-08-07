@@ -1,0 +1,823 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Quantitative phase analysis (QPA) &#8212; pyobjcryst 2025.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=65f7d7c4"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=cca77546"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/QPA-Quantitative phase analysis';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2025.1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">pyobjcryst 2025.1.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/pyobjcryst.html">
+    Package API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../release.html">
+    Release notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../license.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/diffpy/pyobjcryst" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/pyobjcryst.html">
+    Package API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../release.html">
+    Release notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../license.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/diffpy/pyobjcryst" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/pyobjcryst.html">Package API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+</div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Quantitative phase analysis (QPA)</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Quantitative-phase-analysis-(QPA)">
+<h1>Quantitative phase analysis (QPA)<a class="headerlink" href="#Quantitative-phase-analysis-(QPA)" title="Link to this heading">#</a></h1>
+<p>Fox/ObjCryst++ was not designed with QPA in mind, but it is still possible to do it when the phases are known and the profiles not too complicated.</p>
+<p>Here we just try the ‘simple’ cases of the QPA Round Robin of 1999 (<a class="reference external" href="https://www.iucr.org/__data/iucr/powder/QARR/index.html">https://www.iucr.org/__data/iucr/powder/QARR/index.html</a>)</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># &#39;widget&#39; allows live update and works in both classical notebooks and jupyter-lab.</span>
+<span class="c1"># Otherwise &#39;notebook&#39;, &#39;ipympl&#39;, &#39;inline&#39; can be used</span>
+<span class="o">%</span><span class="k">matplotlib</span> widget
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyobjcryst</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.crystal</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.powderpattern</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.indexing</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.molecule</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.globaloptim</span><span class="w"> </span><span class="kn">import</span> <span class="n">MonteCarlo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">xml_cryst_file_save_global</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.lsq</span><span class="w"> </span><span class="kn">import</span> <span class="n">LSQ</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.refinableobj</span><span class="w"> </span><span class="kn">import</span> <span class="n">refpartype_scattdata_scale</span>
+<br/></pre></div>
+</div>
+</div>
+<section id="Data-and-CIF-sources">
+<h2>Data and CIF sources<a class="headerlink" href="#Data-and-CIF-sources" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Data from QPA round-robin (cpd-1a.prn):</span>
+<span class="c1"># https://www.iucr.org/__data/iucr/powder/QARR/col/cpd-1a.prn</span>
+<span class="c1"># Try samples 1a to 1h</span>
+
+<span class="n">data_file</span> <span class="o">=</span> <span class="s2">&quot;data/cpd-1a.prn&quot;</span>
+
+<span class="c1"># Data from Crystal structures from the Crystallography Open Database:</span>
+<span class="c1"># https://www.crystallography.net/cod/</span>
+
+<span class="n">cod_phases</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000032</span><span class="p">,</span> <span class="mi">9008877</span><span class="p">,</span> <span class="mi">5000222</span><span class="p">]</span> <span class="c1"># Al2O3, ZnO, CaF2 - needs checking</span>
+<br/></pre></div>
+</div>
+</div>
+</section>
+<section id="Create-Powder-pattern">
+<h2>Create Powder pattern<a class="headerlink" href="#Create-Powder-pattern" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">PowderPattern</span><span class="p">()</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">ImportPowderPattern2ThetaObs</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="c1"># skip first 4 lines header</span>
+<span class="c1"># Copper K-alpha1+alpha2. Use &quot;Cua1&quot; for Cu-alpha1 only</span>
+<span class="n">p</span><span class="o">.</span><span class="n">SetWavelength</span><span class="p">(</span><span class="s2">&quot;Cu&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GetWavelength</span><span class="p">())</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hkl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.5418366591135662
+Imported powder pattern: 7251 points, 2theta=  5.000 -&gt; 150.000, step= 0.020
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "e982d5d79ef84be0a9192ebafce0ea53", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+</section>
+<section id="Add-crystalline-phases">
+<h2>Add crystalline phases<a class="headerlink" href="#Add-crystalline-phases" title="Link to this heading">#</a></h2>
+<p>We assume all structures are known.</p>
+<p>This will update the above plot, though the scales will be incorrect.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">cod_id</span> <span class="ow">in</span> <span class="n">cod_phases</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">CreateCrystalFromCIF</span><span class="p">(</span><span class="s2">&quot;http://crystallography.net/cod/</span><span class="si">%d</span><span class="s2">.cif&quot;</span> <span class="o">%</span> <span class="n">cod_id</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">AddPowderPatternDiffraction</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">FitScaleFactorForRw</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">UpdateDisplay</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+UnitCell : Aluminium oxide - $-alpha(R -3 c:H)
+    Cell dimensions :  4.76050   4.76050  12.99560  90.00000  90.00000  120.00000
+List of scattering components (atoms): 2
+Al1              at :  0.0000 0.0000 0.3522, Occup=1.0000 * 0.3333, ScattPow:Al1             , Biso=    0.0000
+O1               at :  0.3067 0.0000 0.2500, Occup=1.0000 * 0.5000, ScattPow:O1              , Biso=    0.0000
+
+Occupancy = occ * dyn, where:
+        - occ is the &#39;real&#39; occupancy
+        - dyn is the dynamical occupancy correction, indicating  either
+          an atom on a special position, or several identical atoms
+          overlapping (dyn=0.5 -&gt; atom on a symetry plane / 2fold axis..
+                               -&gt; OR 2 atoms strictly overlapping)
+
+ Total number of components (atoms) in one unit cell : 30
+ Chemical formula: Al3+0.33 O2-0.5
+ Weight: 16.9935 g/mol
+
+UnitCell : Zincite(P 63 m c)
+    Cell dimensions :  3.24950   3.24950   5.20690  90.00000  90.00000  120.00000
+List of scattering components (atoms): 2
+Zn               at :  0.3333 0.6667 0.0000, Occup=1.0000 * 0.1667, ScattPow:Zn              , Biso=    0.0000
+O                at :  0.3333 0.6667 0.3450, Occup=1.0000 * 0.1667, ScattPow:O               , Biso=    0.0000
+
+Occupancy = occ * dyn, where:
+        - occ is the &#39;real&#39; occupancy
+        - dyn is the dynamical occupancy correction, indicating  either
+          an atom on a special position, or several identical atoms
+          overlapping (dyn=0.5 -&gt; atom on a symetry plane / 2fold axis..
+                               -&gt; OR 2 atoms strictly overlapping)
+
+ Total number of components (atoms) in one unit cell : 4
+ Chemical formula: O0.17 Zn0.17
+ Weight: 13.5652 g/mol
+
+UnitCell : Calcium fluoride(F m -3 m)
+    Cell dimensions :  5.46250   5.46250   5.46250  90.00000  90.00000  90.00000
+List of scattering components (atoms): 2
+Ca1              at :  0.0000 0.0000 0.0000, Occup=1.0000 * 0.0208, ScattPow:Ca1             , Biso=    0.0000
+F1               at :  0.2500 0.2500 0.2500, Occup=1.0000 * 0.0417, ScattPow:F1              , Biso=    0.0000
+
+Occupancy = occ * dyn, where:
+        - occ is the &#39;real&#39; occupancy
+        - dyn is the dynamical occupancy correction, indicating  either
+          an atom on a special position, or several identical atoms
+          overlapping (dyn=0.5 -&gt; atom on a symetry plane / 2fold axis..
+                               -&gt; OR 2 atoms strictly overlapping)
+
+ Total number of components (atoms) in one unit cell : 12
+ Chemical formula: Ca2+0.021 F1-0.042
+ Weight: 1.62654 g/mol
+
+========================== WARNING =========================
+   In ScatteringPowerAtom::GetTemperatureFactor():
+   Anisotropic Displacement Parameters are not currently properly handled
+   for Debye-Waller calculations (no symmetry handling for ADPs).
+   =&gt;The Debye-Waller calculations will instead use only isotropic DPs
+
+</pre></div></div>
+</div>
+</section>
+<section id="Add-an-automatic-background">
+<h2>Add an automatic background<a class="headerlink" href="#Add-an-automatic-background" title="Link to this heading">#</a></h2>
+<p>This uses a Bayesian estimation of the background, which should be good enough if there is a good separation of the peaks</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add background if necessary</span>
+<span class="n">need_background</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GetNbPowderPatternComponent</span><span class="p">()):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GetPowderPatternComponent</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">PowderPatternBackground</span><span class="p">):</span>
+        <span class="n">need_background</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">break</span>
+<span class="k">if</span> <span class="n">need_background</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No background, adding one automatically&quot;</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">GetPowderPatternX</span><span class="p">()</span>
+    <span class="n">bx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">30</span><span class="p">)</span>  <span class="c1"># Number of interpolation points</span>
+    <span class="n">by</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">bx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">AddPowderPatternBackground</span><span class="p">()</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">SetInterpPoints</span><span class="p">(</span><span class="n">bx</span><span class="p">,</span> <span class="n">by</span><span class="p">)</span>
+    <span class="c1"># b.Print()</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">UnFixAllPar</span><span class="p">()</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">OptimizeBayesianBackground</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">UpdateDisplay</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+No background, adding one automatically
+</pre></div></div>
+</div>
+</section>
+<section id="Fit-profile,-step-1">
+<h2>Fit profile, step 1<a class="headerlink" href="#Fit-profile,-step-1" title="Link to this heading">#</a></h2>
+<p>Conservative fit, starting with a fixed width (W=1e-5)</p>
+<p>Note that as we know the crystalline structures, we don’t need to perform a Le Bail fit</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Multiple phases, so can&#39;t use quick_fit_profile</span>
+<span class="c1">#</span>
+<span class="c1"># NOTE: we don&#39;t use this function as the phases are known, but that&#39;s the way</span>
+<span class="c1"># to do it with multiple crystalline phases</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">do_lebail</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This performs a Le Bail fit by looping over all phases,</span>
+<span class="sd">    one at a time. Le Bail is disabled on output</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GetNbPowderPatternComponent</span><span class="p">()):</span>
+            <span class="n">pdiff</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">GetPowderPatternComponent</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pdiff</span><span class="p">,</span> <span class="n">PowderPatternDiffraction</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="ow">or</span> <span class="n">init</span><span class="p">:</span>
+                <span class="n">pdiff</span><span class="o">.</span><span class="n">SetExtractionMode</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pdiff</span><span class="o">.</span><span class="n">SetExtractionMode</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">pdiff</span><span class="o">.</span><span class="n">ExtractLeBail</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">pdiff</span><span class="o">.</span><span class="n">SetExtractionMode</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GetNbPowderPatternComponent</span><span class="p">()):</span>
+    <span class="n">pdiff</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">GetPowderPatternComponent</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pdiff</span><span class="p">,</span> <span class="n">PowderPatternDiffraction</span><span class="p">):</span>
+        <span class="k">continue</span>
+    <span class="n">pdiff</span><span class="o">.</span><span class="n">SetReflectionProfilePar</span><span class="p">(</span><span class="n">ReflectionProfileType</span><span class="o">.</span><span class="n">PROFILE_PSEUDO_VOIGT</span><span class="p">,</span> <span class="mf">0.00001</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">UpdateDisplay</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+</section>
+<section id="Fit-profile,-step-2">
+<h2>Fit profile, step 2<a class="headerlink" href="#Fit-profile,-step-2" title="Link to this heading">#</a></h2>
+<p>Refine only constant width, zero, Eta Gaussian/Voigt mix, and a, b, c parameters</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lsq</span> <span class="o">=</span> <span class="n">LSQ</span><span class="p">()</span>
+<span class="n">lsq</span><span class="o">.</span><span class="n">SetRefinedObj</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">lsq</span><span class="o">.</span><span class="n">PrepareRefParList</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># lsq.GetCompiledRefinedObj().Print()</span>
+<span class="n">lsqr</span> <span class="o">=</span> <span class="n">lsq</span><span class="o">.</span><span class="n">GetCompiledRefinedObj</span><span class="p">()</span>
+
+<span class="n">lsqr</span><span class="o">.</span><span class="n">FixAllPar</span><span class="p">()</span>
+<span class="c1"># lsqr.Print()</span>
+<span class="c1"># print(lsq.ChiSquare())</span>
+<span class="n">lsq</span><span class="o">.</span><span class="n">SetParIsFixed</span><span class="p">(</span><span class="n">refpartype_scattdata_scale</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="s2">&quot;Zero&quot;</span><span class="p">,</span> <span class="s2">&quot;Eta0&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GetNbPowderPatternComponent</span><span class="p">()):</span>
+        <span class="c1"># This is a KLUDGE - we need this because parameter names are</span>
+        <span class="c1"># unique, and thus &quot;U&quot; gets renamed to &quot;U~&quot;, &quot;U~~&quot; in case of 2,3 phases..</span>
+        <span class="n">lsq</span><span class="o">.</span><span class="n">SetParIsFixed</span><span class="p">(</span><span class="n">par</span> <span class="o">+</span> <span class="s2">&quot;~&quot;</span><span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">lsq</span><span class="o">.</span><span class="n">SafeRefine</span><span class="p">(</span><span class="n">nbCycle</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">useLevenbergMarquardt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">UpdateDisplay</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+</section>
+<section id="Fit-profile,-final">
+<h2>Fit profile, final<a class="headerlink" href="#Fit-profile,-final" title="Link to this heading">#</a></h2>
+<p>Refine more parameters, and fit the scale factor</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lsqr</span><span class="o">.</span><span class="n">FixAllPar</span><span class="p">()</span>
+<span class="c1"># lsqr.Print()</span>
+<span class="c1"># print(lsq.ChiSquare())</span>
+<span class="n">lsq</span><span class="o">.</span><span class="n">SetParIsFixed</span><span class="p">(</span><span class="n">refpartype_scattdata_scale</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;U&quot;</span><span class="p">,</span> <span class="s2">&quot;V&quot;</span><span class="p">,</span> <span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="s2">&quot;Zero&quot;</span><span class="p">,</span> <span class="s2">&quot;Eta0&quot;</span><span class="p">,</span> <span class="s2">&quot;Eta1&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;2ThetaDispl&quot;</span><span class="p">,</span> <span class="s2">&quot;2ThetaTransp&quot;</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GetNbPowderPatternComponent</span><span class="p">()):</span>
+        <span class="c1"># This is a KLUDGE - we need this because parameter names are</span>
+        <span class="c1"># unique, and thus &quot;U&quot; gets renamed to &quot;U~&quot;, &quot;U~~&quot; in case of 2,3 phases..</span>
+        <span class="n">lsq</span><span class="o">.</span><span class="n">SetParIsFixed</span><span class="p">(</span><span class="n">par</span> <span class="o">+</span> <span class="s2">&quot;~&quot;</span><span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">lsq</span><span class="o">.</span><span class="n">SafeRefine</span><span class="p">(</span><span class="n">nbCycle</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">useLevenbergMarquardt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">FitScaleFactorForRw</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">UpdateDisplay</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+</section>
+<section id="Compute-weight-percentages">
+<h2>Compute weight percentages<a class="headerlink" href="#Compute-weight-percentages" title="Link to this heading">#</a></h2>
+<p>This uses the formula: <span class="math notranslate nohighlight">\(w_i = \frac{S_iZ_iM_iV_i}{\Sigma_iS_iZ_iM_iV_i}\)</span></p>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(w_i\)</span> is the weight fraction of crystalline phase i</p></li>
+<li><p><span class="math notranslate nohighlight">\(S_i\)</span> its scale factor in the Rietveld refinement</p></li>
+<li><p><span class="math notranslate nohighlight">\(Z_i\)</span> the multiplicity of the formula in the unit cell</p></li>
+<li><p><span class="math notranslate nohighlight">\(M_i\)</span> the crystal formula’s molecular weight</p></li>
+<li><p><span class="math notranslate nohighlight">\(V_i\)</span> the unit cell volume for the phase</p></li>
+</ul>
+<p>This assumes that the structure is known (and thus that the CIF files are correct), and that we know all present phases.</p>
+<p>The obtained numbers can be compared to: <a class="reference external" href="https://www.iucr.org/__data/iucr/powder/QARR/results.htm">https://www.iucr.org/__data/iucr/powder/QARR/results.htm</a></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: check if the method is correctly applied, notably</span>
+<span class="c1"># is there a shortcut in ObjCryst++ so that the calculated</span>
+<span class="c1"># structure factor sometimes skips a factor 2 (centrosymmetry</span>
+<span class="c1"># or other centering factors which allow to avoid a direct sum)</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">qpa</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Weight percentages:
+Aluminium oxide - $-alpha:   2.42%
+                  Zincite:   4.18%
+         Calcium fluoride:  93.40%
+</pre></div></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Data-and-CIF-sources">Data and CIF sources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Create-Powder-pattern">Create Powder pattern</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Add-crystalline-phases">Add crystalline phases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Add-an-automatic-background">Add an automatic background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Fit-profile,-step-1">Fit profile, step 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Fit-profile,-step-2">Fit profile, step 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Fit-profile,-final">Fit profile, final</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Compute-weight-percentages">Compute weight percentages</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/examples/QPA-Quantitative phase analysis.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, The Trustees of Columbia University in the City of New York.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

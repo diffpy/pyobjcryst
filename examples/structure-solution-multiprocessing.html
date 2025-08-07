@@ -1,0 +1,1053 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Advanced structure solution: parallel process &amp; testing multiple configurations &#8212; pyobjcryst 2025.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=65f7d7c4"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=cca77546"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/structure-solution-multiprocessing';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2025.1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">pyobjcryst 2025.1.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/pyobjcryst.html">
+    Package API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../release.html">
+    Release notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../license.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/diffpy/pyobjcryst" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/pyobjcryst.html">
+    Package API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../release.html">
+    Release notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../license.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/diffpy/pyobjcryst" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/pyobjcryst.html">Package API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+</div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Advanced structure solution: parallel process &amp; testing multiple configurations</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Advanced-structure-solution:-parallel-process-&amp;-testing-multiple-configurations">
+<h1>Advanced structure solution: parallel process &amp; testing multiple configurations<a class="headerlink" href="#Advanced-structure-solution:-parallel-process-&-testing-multiple-configurations" title="Link to this heading">#</a></h1>
+<p>You should first try the cimetidine structure solution notebook before this one.</p>
+<p>In this notebook, you can try solving a structure while:</p>
+<ul class="simple">
+<li><p>testing different spacegroups and adapting the crystal contents (number of independent molecules)</p></li>
+<li><p>using multiple parallel process to go faster</p></li>
+</ul>
+<p>This is an example of meta-structure solution, ‘meta’ meaning that instead if having a single description for the contents of you crystal (spacegroup, number of molecules, atoms or polyhedra), you can try any different combinations using python. It requires a little programming but can be very powerful when several choices for the configuration of your structure are possible.</p>
+<p>For this to work you need to install the following packages:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">multiprocess</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ipywidgets</span></code> and <code class="docutils literal notranslate"><span class="pre">py3dmol</span></code> (optional)</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> widget
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">timeit</span>
+
+<span class="c1"># Note: we need &#39;multiprocess&#39; instead of standard multiprocessing because of the</span>
+<span class="c1"># following issue (specific to ipython or notebooks):</span>
+<span class="c1"># https://bugs.python.org/issue25053</span>
+<span class="c1"># https://stackoverflow.com/questions/41385708/multiprocessing-example-giving-attributeerror</span>
+<span class="c1">#</span>
+<span class="c1"># In a python script (not in ipython or a notebook) multiprocessing could be used instead</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">multiprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pool</span><span class="p">,</span> <span class="n">current_process</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please install `multiprocess` using &#39;pip&#39;, &#39;conda&#39; or &#39;mamba&#39; to run this notebook&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyobjcryst</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.crystal</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.powderpattern</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.indexing</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.molecule</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.globaloptim</span><span class="w"> </span><span class="kn">import</span> <span class="n">MonteCarlo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">xml_cryst_file_save_global</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">widgets</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Get the real number of processor cores available - requires psutil</span>
+    <span class="c1"># os.sched_getaffinity is only available on some *nix platforms</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">psutil</span>
+    <span class="n">nproc</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sched_getaffinity</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">*</span> <span class="n">psutil</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">(</span><span class="n">logical</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">//</span> <span class="n">psutil</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">(</span><span class="n">logical</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">nproc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of processors or cores available: &quot;</span><span class="p">,</span> <span class="n">nproc</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number of processors or cores available:  8
+</pre></div></div>
+</div>
+<section id="Create-powder-pattern-object,-index-&amp;-fit-profile">
+<h2>Create powder pattern object, index &amp; fit profile<a class="headerlink" href="#Create-powder-pattern-object,-index-&-fit-profile" title="Link to this heading">#</a></h2>
+<p>Same as the cimetidine structure solution notebook, so read that for details</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">PowderPattern</span><span class="p">()</span>
+
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s2">&quot;./data&quot;</span>
+<span class="n">dat_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;cime.dat&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dat_path</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;curl -o </span><span class="si">{}</span><span class="s2"> https://raw.githubusercontent.com/vincefn/objcryst/master/Fox/example/tutorial-cimetidine/cime.dat&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dat_path</span><span class="p">))</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">ImportPowderPatternFullprof</span><span class="p">(</span><span class="n">dat_path</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">SetWavelength</span><span class="p">(</span><span class="mf">1.52904</span><span class="p">)</span>
+
+<span class="c1"># Index</span>
+<span class="n">pl</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">FindPeaks</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pl</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>  <span class="c1"># Only keep 20 peaks</span>
+
+<span class="n">ex</span> <span class="o">=</span> <span class="n">quick_index</span><span class="p">(</span><span class="n">pl</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Indexed unit cell:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">ex</span><span class="o">.</span><span class="n">GetSolutions</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="c1"># Use solution to create a crystal</span>
+<span class="n">uc</span> <span class="o">=</span> <span class="n">ex</span><span class="o">.</span><span class="n">GetSolutions</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">DirectUnitCell</span><span class="p">()</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Crystal</span><span class="p">(</span><span class="n">uc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="s2">&quot;P1&quot;</span><span class="p">)</span>
+<span class="n">pdiff</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">AddPowderPatternDiffraction</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+<span class="c1"># Fit profile</span>
+<span class="n">p</span><span class="o">.</span><span class="n">SetMaxSinThetaOvLambda</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">quick_fit_profile</span><span class="p">(</span><span class="n">auto_background</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">init_profile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">quick_fit_profile</span><span class="p">(</span><span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">init_profile</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">asym</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">displ_transl</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">p</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">diff</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hkl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fit result: Rw=</span><span class="si">%6.2f%%</span><span class="s2"> Chi2=</span><span class="si">%10.2f</span><span class="s2">  GoF=</span><span class="si">%8.2f</span><span class="s2">  LLK=</span><span class="si">%10.3f</span><span class="s2">&quot;</span> <span class="o">%</span>
+      <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">rw</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">chi2</span><span class="o">/</span><span class="n">p</span><span class="o">.</span><span class="n">GetNbPointUsed</span><span class="p">(),</span> <span class="n">p</span><span class="o">.</span><span class="n">llk</span><span class="p">))</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Imported powder pattern: 7699 points, 2theta=  8.010 -&gt;  84.990, step= 0.010
+Indexed unit cell:
+( 6.83 18.82 10.39  90.0 106.4  90.0 V=1281 MONOCLINIC P, 130.0296630859375)
+No background, adding one automatically
+Selected PowderPatternDiffraction:    with Crystal:
+Profile fitting finished.
+Remember to use SetExtractionMode(False) on the PowderPatternDiffraction object
+to disable profile fitting and optimise the structure.
+Fit result: Rw=  5.51% Chi2=  34095.69  GoF=    4.43  LLK=  6397.991
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "1d7965398b684d6bb25b76bf2c94a90c", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+</section>
+<section id="Find-the-spacegroup">
+<h2>Find the spacegroup<a class="headerlink" href="#Find-the-spacegroup" title="Link to this heading">#</a></h2>
+<p>We’ll use part of the list of possible spacegroups as options to test</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">SetMaxSinThetaOvLambda</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># Important for stability of profile fit. And faster !</span>
+<span class="n">spgex</span> <span class="o">=</span> <span class="n">SpaceGroupExplorer</span><span class="p">(</span><span class="n">pdiff</span><span class="p">)</span>
+
+<span class="c1"># NB:verbose C++ output does not appear in a notebook</span>
+<span class="n">spgex</span><span class="o">.</span><span class="n">RunAll</span><span class="p">(</span><span class="n">keep_best</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">update_display</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fitprofile_p1</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">sol</span> <span class="ow">in</span> <span class="n">spgex</span><span class="o">.</span><span class="n">GetScores</span><span class="p">():</span>
+    <span class="c1">#if sol.nGoF &gt; 4 * spgex.GetScores()[0].nGoF:</span>
+    <span class="k">if</span> <span class="n">sol</span><span class="o">.</span><span class="n">GoF</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">spgex</span><span class="o">.</span><span class="n">GetScores</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">GoF</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Chosen spacegroup (smallest nGoF): &quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">GetSpaceGroup</span><span class="p">())</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Beginning spacegroup exploration... 37 to go...
+P 1 21/c 1    nGoF=   1.4866 GoF=  13.575 Rw= 6.50 [ 92 reflections, extinct446= 17]
+P 1 21 1      nGoF=   1.6488 GoF=  14.108 Rw= 6.61 [101 reflections, extinct446=  2]
+P 1 21/m 1    nGoF=   1.6488 GoF=  14.108 Rw= 6.61 [101 reflections, extinct446=  2]
+P 1 c 1       nGoF=   1.6649 GoF=  13.922 Rw= 6.58 [ 96 reflections, extinct446= 15]
+P 1 2/c 1     nGoF=   1.6649 GoF=  13.922 Rw= 6.58 [ 96 reflections, extinct446= 15]
+P 1 m 1       nGoF=   1.8392 GoF=  14.458 Rw= 6.69 [105 reflections, extinct446=  0]
+P 1 2/m 1     nGoF=   1.8392 GoF=  14.458 Rw= 6.69 [105 reflections, extinct446=  0]
+P 1 2 1       nGoF=   1.8392 GoF=  14.458 Rw= 6.69 [105 reflections, extinct446=  0]
+P 1           nGoF=   3.2428 GoF=  14.982 Rw= 6.80 [186 reflections, extinct446=  0]
+P -1          nGoF=   3.2428 GoF=  14.982 Rw= 6.80 [186 reflections, extinct446=  0]
+P 1 21/n 1    nGoF=   5.4155 GoF=  26.697 Rw= 9.11 [ 92 reflections, extinct446= 19]
+P 1 n 1       nGoF=   5.7672 GoF=  27.063 Rw= 9.17 [ 96 reflections, extinct446= 17]
+P 1 2/n 1     nGoF=   5.7672 GoF=  27.063 Rw= 9.17 [ 96 reflections, extinct446= 17]
+Chosen spacegroup (smallest nGoF):  P 1 21/c 1
+  (#  1) P 1           : Rwp=  6.80%  GoF=    14.98  nGoF=     3.24  (186 reflections,   0 extinct)
+  (#  2) P -1          : Rwp=  6.80%  GoF=    14.98  nGoF=     3.24  (186 reflections,   0 extinct) [same extinctions as:P 1]
+  (#  3) P 1 2 1       : Rwp=  6.69%  GoF=    14.46  nGoF=     1.84  (105 reflections,   0 extinct)
+  (#  4) P 1 21 1      : Rwp=  6.61%  GoF=    14.11  nGoF=     1.65  (101 reflections,   2 extinct)
+  (#  5) C 1 2 1       : Rwp= 62.70%  GoF=  1246.13  nGoF=   311.68  ( 52 reflections,  84 extinct)
+  (#  5) A 1 2 1       : Rwp= 62.83%  GoF=  1253.74  nGoF=   313.87  ( 53 reflections,  85 extinct)
+  (#  5) I 1 2 1       : Rwp= 60.91%  GoF=  1196.43  nGoF=   246.94  ( 52 reflections,  87 extinct)
+  (#  6) P 1 m 1       : Rwp=  6.69%  GoF=    14.46  nGoF=     1.84  (105 reflections,   0 extinct) [same extinctions as:P 1 2 1]
+  (#  7) P 1 c 1       : Rwp=  6.58%  GoF=    13.92  nGoF=     1.66  ( 96 reflections,  15 extinct)
+  (#  7) P 1 n 1       : Rwp=  9.17%  GoF=    27.06  nGoF=     5.77  ( 96 reflections,  17 extinct)
+  (#  7) P 1 a 1       : Rwp=  9.26%  GoF=    27.58  nGoF=     5.97  ( 97 reflections,  14 extinct)
+  (#  8) C 1 m 1       : Rwp= 62.70%  GoF=  1246.13  nGoF=   311.68  ( 52 reflections,  84 extinct) [same extinctions as:C 1 2 1]
+  (#  8) A 1 m 1       : Rwp= 62.83%  GoF=  1253.74  nGoF=   313.87  ( 53 reflections,  85 extinct) [same extinctions as:A 1 2 1]
+  (#  8) I 1 m 1       : Rwp= 60.91%  GoF=  1196.43  nGoF=   246.94  ( 52 reflections,  87 extinct) [same extinctions as:I 1 2 1]
+  (#  9) C 1 c 1       : Rwp= 62.51%  GoF=  1236.15  nGoF=   280.76  ( 47 reflections,  93 extinct)
+  (#  9) A 1 n 1       : Rwp= 62.99%  GoF=  1258.62  nGoF=   291.60  ( 49 reflections,  93 extinct)
+  (#  9) I 1 a 1       : Rwp= 59.00%  GoF=  1120.91  nGoF=   221.05  ( 48 reflections,  93 extinct)
+  (#  9) A 1 a 1       : Rwp= 62.99%  GoF=  1258.62  nGoF=   291.60  ( 49 reflections,  93 extinct) [same extinctions as:A 1 n 1]
+  (#  9) C 1 n 1       : Rwp= 62.51%  GoF=  1236.15  nGoF=   280.76  ( 47 reflections,  93 extinct) [same extinctions as:C 1 c 1]
+  (#  9) I 1 c 1       : Rwp= 59.00%  GoF=  1120.91  nGoF=   221.05  ( 48 reflections,  93 extinct) [same extinctions as:I 1 a 1]
+  (# 10) P 1 2/m 1     : Rwp=  6.69%  GoF=    14.46  nGoF=     1.84  (105 reflections,   0 extinct) [same extinctions as:P 1 2 1]
+  (# 11) P 1 21/m 1    : Rwp=  6.61%  GoF=    14.11  nGoF=     1.65  (101 reflections,   2 extinct) [same extinctions as:P 1 21 1]
+  (# 12) C 1 2/m 1     : Rwp= 62.70%  GoF=  1246.13  nGoF=   311.68  ( 52 reflections,  84 extinct) [same extinctions as:C 1 2 1]
+  (# 12) A 1 2/m 1     : Rwp= 62.83%  GoF=  1253.74  nGoF=   313.87  ( 53 reflections,  85 extinct) [same extinctions as:A 1 2 1]
+  (# 12) I 1 2/m 1     : Rwp= 60.91%  GoF=  1196.43  nGoF=   246.94  ( 52 reflections,  87 extinct) [same extinctions as:I 1 2 1]
+  (# 13) P 1 2/c 1     : Rwp=  6.58%  GoF=    13.92  nGoF=     1.66  ( 96 reflections,  15 extinct) [same extinctions as:P 1 c 1]
+  (# 13) P 1 2/n 1     : Rwp=  9.17%  GoF=    27.06  nGoF=     5.77  ( 96 reflections,  17 extinct) [same extinctions as:P 1 n 1]
+  (# 13) P 1 2/a 1     : Rwp=  9.26%  GoF=    27.58  nGoF=     5.97  ( 97 reflections,  14 extinct) [same extinctions as:P 1 a 1]
+  (# 14) P 1 21/c 1    : Rwp=  6.50%  GoF=    13.58  nGoF=     1.49  ( 92 reflections,  17 extinct)
+  (# 14) P 1 21/n 1    : Rwp=  9.11%  GoF=    26.70  nGoF=     5.42  ( 92 reflections,  19 extinct)
+  (# 14) P 1 21/a 1    : Rwp=  9.20%  GoF=    27.22  nGoF=     5.61  ( 93 reflections,  16 extinct)
+  (# 15) C 1 2/c 1     : Rwp= 62.51%  GoF=  1236.15  nGoF=   280.76  ( 47 reflections,  93 extinct) [same extinctions as:C 1 c 1]
+  (# 15) A 1 2/n 1     : Rwp= 62.99%  GoF=  1258.62  nGoF=   291.60  ( 49 reflections,  93 extinct) [same extinctions as:A 1 n 1]
+  (# 15) I 1 2/a 1     : Rwp= 59.00%  GoF=  1120.91  nGoF=   221.05  ( 48 reflections,  93 extinct) [same extinctions as:I 1 a 1]
+  (# 15) A 1 2/a 1     : Rwp= 62.99%  GoF=  1258.62  nGoF=   291.60  ( 49 reflections,  93 extinct) [same extinctions as:A 1 n 1]
+  (# 15) C 1 2/n 1     : Rwp= 62.51%  GoF=  1236.15  nGoF=   280.76  ( 47 reflections,  93 extinct) [same extinctions as:C 1 c 1]
+  (# 15) I 1 2/c 1     : Rwp= 59.00%  GoF=  1120.91  nGoF=   221.05  ( 48 reflections,  93 extinct) [same extinctions as:I 1 a 1]
+Restoring best spacegroup: P 1 21/c 1
+</pre></div></div>
+</div>
+</section>
+<section id="Setup-the-'meta'-structure-solution">
+<h2>Setup the ‘meta’-structure solution<a class="headerlink" href="#Setup-the-'meta'-structure-solution" title="Link to this heading">#</a></h2>
+<p>In the spacegroup search above the first solution <code class="docutils literal notranslate"><span class="pre">P</span> <span class="pre">1</span> <span class="pre">21/c</span> <span class="pre">1</span></code> actually is the correct one, and with its multiplicity (4) only requires a single independent cimetidine molecule in the asymmetric unit cell. But let’s proceed as if we did not actually know that.</p>
+<p>What we do is:</p>
+<ul class="simple">
+<li><p>download the cimetidine z-matrix</p></li>
+<li><p>create a list of the possible spacegroups that we want to test</p></li>
+<li><p>create a function which, given a spacegroup, will :</p>
+<ul>
+<li><p>apply the spacegroup to the crystal</p></li>
+<li><p>determine the appropriate number of independent molecules (as a function of the multiplicity)</p></li>
+<li><p>optimise for 5 runs and 2 million trials</p></li>
+<li><p>return the solutions using the XML string of the Crystal</p></li>
+</ul>
+</li>
+<li><p>use <code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code> or <code class="docutils literal notranslate"><span class="pre">multiprocess</span></code> to test the different spacegroups in parallel with multiple processor cores</p></li>
+</ul>
+<p>Note: <em>this is a generic approach - it would be possible also to completely change the contents of the crystal, e.g. if the number of independent units (atoms, molecule, polyhedra) was unknown, as is often the case for inorganic or metallic structures due to special positions</em></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Get the cimetidine z-matrix</span>
+<span class="n">fhz_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;cime.fhz&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fhz_path</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;curl -o </span><span class="si">{}</span><span class="s2"> https://raw.githubusercontent.com/vincefn/objcryst/master/Fox/example/tutorial-cimetidine/cime.fhz&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fhz_path</span><span class="p">))</span>
+
+<span class="c1"># Disable dynamical occupancy correction (no special position expected, usual in organic structures)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">GetOption</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">SetChoice</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Create the Monte-Carlo object with the crystal and the powder pattern</span>
+<span class="n">mc</span> <span class="o">=</span> <span class="n">MonteCarlo</span><span class="p">()</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">AddRefinableObj</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">AddRefinableObj</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">GetOption</span><span class="p">(</span><span class="s2">&quot;Automatic Least Squares Refinement&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">SetChoice</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">nb_step</span> <span class="o">=</span> <span class="mf">1e6</span>  <span class="c1"># Increase this for more complex problems - it&#39;s ok if the spacegroup is correct (1 independent molecule)</span>
+
+<span class="c1"># Disable profile fitting for the powder pattern (or nothing gets optimised !)</span>
+<span class="n">pdiff</span><span class="o">.</span><span class="n">SetExtractionMode</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_for_spacegroup</span><span class="p">(</span><span class="n">spgname</span><span class="p">):</span>
+    <span class="c1"># Set spacegroup</span>
+    <span class="n">spg</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">GetSpaceGroup</span><span class="p">()</span>
+    <span class="n">spg</span><span class="o">.</span><span class="n">ChangeSpaceGroup</span><span class="p">(</span><span class="n">spgname</span><span class="p">)</span>
+
+    <span class="c1"># Multiplicity</span>
+    <span class="n">mult</span> <span class="o">=</span> <span class="n">spg</span><span class="o">.</span><span class="n">GetNbSymmetrics</span><span class="p">()</span>
+
+    <span class="c1"># Empty Crystal of existing scatterers (should not be necessary here)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">GetNbScatterer</span><span class="p">()):</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">RemoveScatterer</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">GetScatterer</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="c1"># Add 4/mult independent cimetidine molecules</span>
+    <span class="n">nb_mol</span> <span class="o">=</span> <span class="mi">4</span><span class="o">//</span><span class="n">mult</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_mol</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">ImportFenskeHallZMatrix</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">fhz_path</span><span class="p">)</span>
+
+    <span class="c1"># Disable all display update if not in the Main process-or strange things happen !</span>
+    <span class="k">if</span> <span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s1">&#39;MainProcess&#39;</span><span class="p">:</span>
+        <span class="c1"># we must do that for the crystal, monte-carlo and powder pattern object</span>
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+            <span class="n">o</span><span class="o">.</span><span class="n">disable_display_update</span><span class="p">()</span>
+
+    <span class="c1"># Run the parallel tempering optimisation</span>
+    <span class="c1"># We could run multiple times the optimisation (using nb_run), but it is more</span>
+    <span class="c1"># efficient to distribute that using the multiprocessing pool</span>
+    <span class="n">nb_run</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_run</span><span class="p">):</span>
+        <span class="n">mc</span><span class="o">.</span><span class="n">MultiRunOptimize</span><span class="p">(</span><span class="n">nb_run</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nb_step</span><span class="o">=</span><span class="n">nb_step</span><span class="p">)</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Spacegroup: </span><span class="si">%12s</span><span class="s2"> LLK: </span><span class="si">%12.2f</span><span class="s2"> dt=</span><span class="si">%3.0f</span><span class="s2">s&quot;</span> <span class="o">%</span>  <span class="c1"># /run (%3.0fs remaining)</span>
+              <span class="p">(</span><span class="n">spgname</span><span class="p">,</span><span class="n">mc</span><span class="o">.</span><span class="n">GetLogLikelihood</span><span class="p">(),</span> <span class="n">dt</span><span class="p">,))</span> <span class="c1">#  dt/(i+1) * (nb_run-i-1)</span>
+
+    <span class="c1"># Extract all solutions as the XML output of the crystal</span>
+    <span class="n">vsol</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mc</span><span class="o">.</span><span class="n">GetNbParamSet</span><span class="p">()</span><span class="o">-</span><span class="n">nb_run</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">GetNbParamSet</span><span class="p">()):</span>
+        <span class="n">mc</span><span class="o">.</span><span class="n">RestoreParamSet</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">update_display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">xml</span><span class="p">()</span>
+        <span class="n">llk</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">GetLogLikelihood</span><span class="p">()</span>
+        <span class="n">vsol</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;xml&#39;</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;llk&#39;</span><span class="p">:</span> <span class="n">llk</span><span class="p">,</span> <span class="s1">&#39;spg&#39;</span><span class="p">:</span> <span class="n">spgname</span><span class="p">,</span> <span class="s1">&#39;nb_mol&#39;</span><span class="p">:</span> <span class="n">nb_mol</span><span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">vsol</span>
+<br/></pre></div>
+</div>
+</div>
+<p>Run the tests: <strong>this will take a little while (5 to 20 minutes for each spacegroup, in parallel processes), and is longer for spacegroups with lower multiplicity and not centrosymmetric (more independent atoms)</strong>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># List of spacegroups to test (this can be larger than the number</span>
+<span class="c1"># of available processor cores, process will loop over possible spacegroups)</span>
+<span class="n">v_spacegroup</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;P 1 21/c 1&quot;</span><span class="p">,</span> <span class="s2">&quot;P 1 2/c 1&quot;</span><span class="p">,</span> <span class="s2">&quot;P 1 c 1&quot;</span><span class="p">,</span> <span class="s2">&quot;P 1 21 1&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;P 1 2 1&quot;</span><span class="p">,</span> <span class="s2">&quot;P 1 m 1&quot;</span><span class="p">,</span> <span class="s2">&quot;P 1 21/m 1&quot;</span><span class="p">,</span> <span class="s2">&quot;P -1&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
+
+<span class="c1"># Use a multiprocess pool to solve in parallel - this should use all available processor cores</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solving structures in // - this will take a little while, be patient !&quot;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">Pool</span><span class="p">(</span><span class="n">nproc</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">solve_for_spacegroup</span><span class="p">,</span> <span class="n">v_spacegroup</span><span class="p">)</span>
+
+<span class="c1"># Merge all the results</span>
+<span class="n">vsol</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+    <span class="n">vsol</span> <span class="o">+=</span> <span class="n">v</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Solving structures in // - this will take a little while, be patient !
+Spacegroup:   P 1 21/c 1 LLK:     18495.13 dt= 30s
+Spacegroup:   P 1 21/c 1 LLK:     18497.70 dt= 30s
+Spacegroup:   P 1 21/m 1 LLK:    256613.45 dt= 31s
+Spacegroup:   P 1 21/m 1 LLK:    297780.55 dt= 31s
+Spacegroup:    P 1 2/c 1 LLK:    335891.83 dt= 30s
+Spacegroup:    P 1 2/c 1 LLK:    288920.12 dt= 30s
+Spacegroup:      P 1 c 1 LLK:     91573.42 dt= 79s
+Spacegroup:      P 1 c 1 LLK:     72883.09 dt= 81s
+Spacegroup:      P 1 2 1 LLK:    236363.10 dt= 89s
+Spacegroup:   P 1 21/c 1 LLK:     18498.68 dt= 30s
+Spacegroup:      P 1 2 1 LLK:    180490.60 dt= 92s
+Spacegroup:         P -1 LLK:    142046.67 dt= 67s
+Spacegroup:         P -1 LLK:    137882.23 dt= 68s
+Spacegroup:    P 1 2/c 1 LLK:    268907.40 dt= 30s
+Spacegroup:   P 1 21/m 1 LLK:    254364.25 dt= 31s
+Spacegroup:      P 1 c 1 LLK:    130411.66 dt= 80s
+Spacegroup:   P 1 21/c 1 LLK:     18495.45 dt= 30s
+Spacegroup:     P 1 21 1 LLK:     95965.21 dt= 78s
+Spacegroup:     P 1 21 1 LLK:    104310.84 dt= 79s
+Spacegroup:      P 1 m 1 LLK:    313023.54 dt= 87s
+Spacegroup:      P 1 m 1 LLK:    291594.11 dt= 87s
+Spacegroup:    P 1 2/c 1 LLK:    318014.98 dt= 30s
+Spacegroup:      P 1 2 1 LLK:    255142.75 dt= 86s
+Spacegroup:         P -1 LLK:    111644.89 dt= 67s
+Spacegroup:   P 1 21/m 1 LLK:    273165.66 dt= 31s
+Spacegroup:   P 1 21/c 1 LLK:     18494.21 dt= 29s
+Spacegroup:     P 1 21 1 LLK:     93373.67 dt= 84s
+Spacegroup:    P 1 2/c 1 LLK:    338329.99 dt= 30s
+Spacegroup:      P 1 c 1 LLK:     93566.20 dt= 82s
+Spacegroup:      P 1 2 1 LLK:    203632.21 dt= 87s
+Spacegroup:   P 1 21/m 1 LLK:    262459.32 dt= 30s
+Spacegroup:      P 1 c 1 LLK:    100817.93 dt= 78s
+Spacegroup:      P 1 m 1 LLK:    345530.12 dt= 85s
+Spacegroup:         P -1 LLK:    121915.00 dt= 66s
+Spacegroup:      P 1 2 1 LLK:    224594.45 dt= 83s
+Spacegroup:     P 1 21 1 LLK:     77726.30 dt= 67s
+Spacegroup:         P -1 LLK:    126293.48 dt= 57s
+Spacegroup:      P 1 m 1 LLK:    210979.84 dt= 72s
+Spacegroup:     P 1 21 1 LLK:     95344.71 dt= 67s
+Spacegroup:      P 1 m 1 LLK:    243392.35 dt= 63s
+</pre></div></div>
+</div>
+</section>
+<section id="Look-at-solutions">
+<h2>Look at solutions<a class="headerlink" href="#Look-at-solutions" title="Link to this heading">#</a></h2>
+<p>If you have ipywidgets, just use the dropdown menu to select available solutions</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># restore the best solution (first in list)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">XMLInput</span><span class="p">(</span><span class="n">vsol</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;xml&#39;</span><span class="p">])</span>
+
+<span class="c1"># sort solutions as a function of the log-likelihood</span>
+<span class="n">vsol</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">vsol</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sol</span><span class="p">:</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;llk&#39;</span><span class="p">])</span>
+
+<span class="k">if</span> <span class="n">widgets</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vsol</span><span class="p">)):</span>
+        <span class="n">sol</span> <span class="o">=</span> <span class="n">vsol</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;#</span><span class="si">%2d</span><span class="s2">  </span><span class="si">%12s</span><span class="s2"> : </span><span class="si">%d</span><span class="s2"> mol LLK=</span><span class="si">%12.2f</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;spg&#39;</span><span class="p">],</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;nb_mol&#39;</span><span class="p">],</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;llk&#39;</span><span class="p">]))</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Solutions:&#39;</span><span class="p">,</span> <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_solution</span><span class="p">(</span><span class="n">solution</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+        <span class="c1"># Crystal display is automatically updated when loaded</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">XMLInput</span><span class="p">(</span><span class="n">vsol</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;xml&#39;</span><span class="p">])</span>
+        <span class="c1"># Update powder pattern display manually</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">FitScaleFactorForIntegratedRw</span><span class="p">()</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">UpdateDisplay</span><span class="p">()</span>
+    <span class="n">widgets</span><span class="o">.</span><span class="n">interact</span><span class="p">(</span><span class="n">show_solution</span><span class="p">,</span> <span class="n">solution</span><span class="o">=</span><span class="n">v</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># print solutions</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vsol</span><span class="p">)):</span>
+        <span class="n">sol</span> <span class="o">=</span> <span class="n">vsol</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#</span><span class="si">%2d</span><span class="s2">  </span><span class="si">%12s</span><span class="s2"> : </span><span class="si">%d</span><span class="s2"> mol LLK=</span><span class="si">%12.2f</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;spg&#39;</span><span class="p">],</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;nb_mol&#39;</span><span class="p">],</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;llk&#39;</span><span class="p">]))</span>
+
+<span class="c1"># displays - requires ipywidgets for crystal 3D display</span>
+<span class="n">display</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">widget_3d</span><span class="p">())</span>
+<span class="n">p</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">diff</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">hkl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+XML: Loading Crystal:
+XML: Loading Crystal:(spg:P 1 21/c 1)
+Input ScatteringPowerAtom:C(C)
+Input ScatteringPowerAtom:N(N)
+Input ScatteringPowerAtom:S(S)
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "a82f1aa443024717b8571727b6f34587", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div id="3dmolviewer_17532245370117052"  style="position: relative; width: 640px; height: 480px;">
+        <p id="3dmolwarning_17532245370117052" style="background-color:#ffcccc;color:black">3Dmol.js failed to load for some reason.  Please check your browser console for error messages.<br></p>
+        </div>
+<script>
+
+var loadScriptAsync = function(uri){
+  return new Promise((resolve, reject) => {
+    //this is to ignore the existence of requirejs amd
+    var savedexports, savedmodule;
+    if (typeof exports !== 'undefined') savedexports = exports;
+    else exports = {}
+    if (typeof module !== 'undefined') savedmodule = module;
+    else module = {}
+
+    var tag = document.createElement('script');
+    tag.src = uri;
+    tag.async = true;
+    tag.onload = () => {
+        exports = savedexports;
+        module = savedmodule;
+        resolve();
+    };
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+});
+};
+
+if(typeof $3Dmolpromise === 'undefined') {
+$3Dmolpromise = null;
+  $3Dmolpromise = loadScriptAsync('https://cdn.jsdelivr.net/npm/3dmol@2.5.1/build/3Dmol-min.js');
+}
+
+var viewer_17532245370117052 = null;
+var warn = document.getElementById("3dmolwarning_17532245370117052");
+if(warn) {
+    warn.parentNode.removeChild(warn);
+}
+$3Dmolpromise.then(function() {
+viewer_17532245370117052 = $3Dmol.createViewer(document.getElementById("3dmolviewer_17532245370117052"),{backgroundColor:"white"});
+viewer_17532245370117052.zoomTo();
+    viewer_17532245370117052.removeAllModels();
+    viewer_17532245370117052.addModel();
+            viewer_17532245370117052.getModel().addAtoms([{"elem": "C", "x": -4.7094728207092595, "y": 15.748458675829283, "z": 0.6985386633106329, "bonds": [1], "bondOrder": [1]}, {"elem": "N", "x": -4.108659788351259, "y": 16.4814036899445, "z": -0.5118911271714527, "bonds": [0, 2], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.8995244237813154, "y": 16.979924795275792, "z": -0.4336832769384522, "bonds": [1, 3, 6], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -2.3312498341795678, "y": 17.084439736707964, "z": 0.8822982616918987, "bonds": [2, 4], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.252191335208606, "y": 17.884672918448246, "z": 1.2441521089515588, "bonds": [3, 5], "bondOrder": [1, 1]}, {"elem": "N", "x": -0.3728925151059191, "y": 18.66021537628103, "z": 1.666597980346818, "bonds": [4], "bondOrder": [1]}, {"elem": "N", "x": -2.2351097814872896, "y": 17.82957980580784, "z": -1.3092953090723154, "bonds": [2, 7], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.923871475123447, "y": 18.08146736535116, "z": -2.648176530290474, "bonds": [6, 8], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.316996689115179, "y": 16.88754994583212, "z": -3.6243434651803597, "bonds": [7, 9], "bondOrder": [1, 1]}, {"elem": "S", "x": -3.4113582028820515, "y": 17.19448462857008, "z": -5.1419746635312045, "bonds": [8, 10], "bondOrder": [1, 1]}, {"elem": "C", "x": -5.307062302598643, "y": 17.149180537715097, "z": -4.7548350196782, "bonds": [9, 11], "bondOrder": [1, 1]}, {"elem": "C", "x": -5.614017292420074, "y": 15.816742907548019, "z": -4.158018912970154, "bonds": [10, 12, 15], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -4.970799937602869, "y": 15.375345180633644, "z": -2.9710473773994233, "bonds": [11, 13], "bondOrder": [1, 1]}, {"elem": "C", "x": -5.615219338656251, "y": 14.125083959888116, "z": -2.7404413878488287, "bonds": [12, 14], "bondOrder": [1, 1]}, {"elem": "N", "x": -6.409718330615349, "y": 13.889659500235325, "z": -3.638937058471845, "bonds": [13, 15], "bondOrder": [1, 1]}, {"elem": "C", "x": -6.408844709692077, "y": 14.688610585963147, "z": -4.745140818735275, "bonds": [11, 14, 16], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": -7.1618364992771175, "y": 14.724714544277276, "z": -6.028486580910628, "bonds": [15], "bondOrder": [1]}, {"elem": "C", "x": 2.115526988555877, "y": 15.748458675829283, "z": 0.6985386633106329, "bonds": [18], "bondOrder": [1]}, {"elem": "N", "x": 2.716340020913877, "y": 16.4814036899445, "z": -0.5118911271714527, "bonds": [17, 19], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.9254753854838214, "y": 16.979924795275792, "z": -0.4336832769384522, "bonds": [18, 20, 23], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 4.493749975085569, "y": 17.084439736707964, "z": 0.8822982616918987, "bonds": [19, 21], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.57280847405653, "y": 17.884672918448246, "z": 1.2441521089515588, "bonds": [20, 22], "bondOrder": [1, 1]}, {"elem": "N", "x": 6.452107294159218, "y": 18.66021537628103, "z": 1.666597980346818, "bonds": [21], "bondOrder": [1]}, {"elem": "N", "x": 4.589890027777847, "y": 17.82957980580784, "z": -1.3092953090723154, "bonds": [19, 24], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.90112833414169, "y": 18.08146736535116, "z": -2.648176530290474, "bonds": [23, 25], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.508003120149957, "y": 16.88754994583212, "z": -3.6243434651803597, "bonds": [24, 26], "bondOrder": [1, 1]}, {"elem": "S", "x": 3.4136416063830852, "y": 17.19448462857008, "z": -5.1419746635312045, "bonds": [25, 27], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.5179375066664937, "y": 17.149180537715097, "z": -4.7548350196782, "bonds": [26, 28], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.2109825168450628, "y": 15.816742907548019, "z": -4.158018912970154, "bonds": [27, 29, 32], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 1.8541998716622679, "y": 15.375345180633644, "z": -2.9710473773994233, "bonds": [28, 30], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.2097804706088857, "y": 14.125083959888116, "z": -2.7404413878488287, "bonds": [29, 31], "bondOrder": [1, 1]}, {"elem": "N", "x": 0.41528147864978787, "y": 13.889659500235325, "z": -3.638937058471845, "bonds": [30, 32], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.4161550995730596, "y": 14.688610585963147, "z": -4.745140818735275, "bonds": [28, 31, 33], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": -0.3368366900119816, "y": 14.724714544277276, "z": -6.028486580910628, "bonds": [32], "bondOrder": [1]}, {"elem": "C", "x": -0.8254507274250343, "y": 15.748458675829283, "z": 10.667994539665548, "bonds": [35], "bondOrder": [1]}, {"elem": "N", "x": -0.22463769506703438, "y": 16.4814036899445, "z": 9.457564749183463, "bonds": [34, 36], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.9844976695029098, "y": 16.979924795275792, "z": 9.535772599416463, "bonds": [35, 37, 40], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 1.5527722591046575, "y": 17.084439736707964, "z": 10.851754138046815, "bonds": [36, 38], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.631830758075619, "y": 17.884672918448246, "z": 11.213607985306474, "bonds": [37, 39], "bondOrder": [1, 1]}, {"elem": "N", "x": 3.5111295781783056, "y": 18.66021537628103, "z": 11.636053856701734, "bonds": [38], "bondOrder": [1]}, {"elem": "N", "x": 1.6489123117969353, "y": 17.82957980580784, "z": 8.6601605672826, "bonds": [36, 41], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.9601506181607781, "y": 18.08146736535116, "z": 7.321279346064442, "bonds": [40, 42], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.5670254041690457, "y": 16.88754994583212, "z": 6.345112411174556, "bonds": [41, 43], "bondOrder": [1, 1]}, {"elem": "S", "x": 0.4726638904021738, "y": 17.19448462857008, "z": 4.827481212823711, "bonds": [42, 44], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.4230402093144179, "y": 17.149180537715097, "z": 5.214620856676715, "bonds": [43, 45], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.7299951991358489, "y": 15.816742907548019, "z": 5.811436963384762, "bonds": [44, 46, 49], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -1.0867778443186438, "y": 15.375345180633644, "z": 6.998408498955492, "bonds": [45, 47], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.731197245372026, "y": 14.125083959888116, "z": 7.2290144885060865, "bonds": [46, 48], "bondOrder": [1, 1]}, {"elem": "N", "x": -2.5256962373311236, "y": 13.889659500235325, "z": 6.330518817883071, "bonds": [47, 49], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.524822616407852, "y": 14.688610585963147, "z": 5.22431505761964, "bonds": [45, 48, 50], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": -3.2778144059928933, "y": 14.724714544277276, "z": 3.9409692954442876, "bonds": [49], "bondOrder": [1]}, {"elem": "C", "x": 5.999549081840104, "y": 15.748458675829283, "z": 10.667994539665548, "bonds": [52], "bondOrder": [1]}, {"elem": "N", "x": 6.600362114198103, "y": 16.4814036899445, "z": 9.457564749183463, "bonds": [51, 53], "bondOrder": [1, 1]}, {"elem": "C", "x": 7.809497478768048, "y": 16.979924795275792, "z": 9.535772599416463, "bonds": [52, 54, 57], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 8.377772068369795, "y": 17.084439736707964, "z": 10.851754138046815, "bonds": [53, 55], "bondOrder": [1, 1]}, {"elem": "C", "x": 9.456830567340756, "y": 17.884672918448246, "z": 11.213607985306474, "bonds": [54, 56], "bondOrder": [1, 1]}, {"elem": "N", "x": 10.336129387443444, "y": 18.66021537628103, "z": 11.636053856701734, "bonds": [55], "bondOrder": [1]}, {"elem": "N", "x": 8.473912121062073, "y": 17.82957980580784, "z": 8.6601605672826, "bonds": [53, 58], "bondOrder": [1, 1]}, {"elem": "C", "x": 7.785150427425916, "y": 18.08146736535116, "z": 7.321279346064442, "bonds": [57, 59], "bondOrder": [1, 1]}, {"elem": "C", "x": 8.392025213434183, "y": 16.88754994583212, "z": 6.345112411174556, "bonds": [58, 60], "bondOrder": [1, 1]}, {"elem": "S", "x": 7.297663699667311, "y": 17.19448462857008, "z": 4.827481212823711, "bonds": [59, 61], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.401959599950719, "y": 17.149180537715097, "z": 5.214620856676715, "bonds": [60, 62], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.095004610129288, "y": 15.816742907548019, "z": 5.811436963384762, "bonds": [61, 63, 66], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 5.738221964946493, "y": 15.375345180633644, "z": 6.998408498955492, "bonds": [62, 64], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.093802563893111, "y": 14.125083959888116, "z": 7.2290144885060865, "bonds": [63, 65], "bondOrder": [1, 1]}, {"elem": "N", "x": 4.299303571934013, "y": 13.889659500235325, "z": 6.330518817883071, "bonds": [64, 66], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.3001771928572845, "y": 14.688610585963147, "z": 5.22431505761964, "bonds": [62, 65, 67], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 3.5471854032722434, "y": 14.724714544277276, "z": 3.9409692954442876, "bonds": [66], "bondOrder": [1]}, {"elem": "C", "x": -0.6450381586703327, "y": 6.339007976803941, "z": -5.683267195713967, "bonds": [69], "bondOrder": [1]}, {"elem": "N", "x": -1.2458513663242647, "y": 7.071954112612957, "z": -4.4728368110060055, "bonds": [68, 70], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.4549867027892964, "y": 7.570475217944249, "z": -4.551044067013129, "bonds": [69, 71, 74], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -3.0232611170951116, "y": 7.674990159376421, "z": -5.867026199869357, "bonds": [70, 72], "bondOrder": [1, 1]}, {"elem": "C", "x": -4.102319791362005, "y": 8.475222219422903, "z": -6.228879452903141, "bonds": [71, 73], "bondOrder": [1, 1]}, {"elem": "N", "x": -4.981618611464692, "y": 9.250765798949487, "z": -6.6513253242984, "bonds": [72], "bondOrder": [1]}, {"elem": "N", "x": -3.1194013450833213, "y": 8.420129106782497, "z": -3.6754320348792664, "bonds": [70, 75], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.430639272750388, "y": 8.672018909713415, "z": -2.336551407886984, "bonds": [74, 76], "bondOrder": [1, 1]}, {"elem": "C", "x": -3.0375142621595, "y": 7.478101490194376, "z": -1.3603844729970984, "bonds": [75, 77], "bondOrder": [1, 1]}, {"elem": "S", "x": -1.9431524573438175, "y": 7.785035051238538, "z": 0.15724642824080845, "bonds": [76, 78], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.047448712238800296, "y": 7.739732082077353, "z": -0.2298929184992574, "bonds": [77, 79], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.25950651862280216, "y": 6.4072922085226764, "z": -0.8267084309814279, "bonds": [78, 80, 83], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -0.3837112170726553, "y": 5.9658967249959005, "z": -2.0136805607780346, "bonds": [79, 81], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.2607084890819935, "y": 4.715634382556573, "z": -2.244286550328629, "bonds": [80, 82], "bondOrder": [1, 1]}, {"elem": "N", "x": 1.0552069725389799, "y": 4.480211044597581, "z": -1.345790879705613, "bonds": [81, 83], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.0543341652190867, "y": 5.279162130325403, "z": -0.23958711944218225, "bonds": [79, 82, 84], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 1.807325256953628, "y": 5.315264966945733, "z": 1.043758939846108, "bonds": [83], "bondOrder": [1]}, {"elem": "C", "x": -3.586015874651244, "y": 6.339007976803941, "z": 4.286188680640949, "bonds": [86], "bondOrder": [1]}, {"elem": "N", "x": -4.186829082305176, "y": 7.071954112612957, "z": 5.49661906534891, "bonds": [85, 87], "bondOrder": [1, 1]}, {"elem": "C", "x": -5.395964418770208, "y": 7.570475217944249, "z": 5.418411809341786, "bonds": [86, 88, 91], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -5.964238833076023, "y": 7.674990159376421, "z": 4.102429676485559, "bonds": [87, 89], "bondOrder": [1, 1]}, {"elem": "C", "x": -7.043297507342917, "y": 8.475222219422903, "z": 3.7405764234517753, "bonds": [88, 90], "bondOrder": [1, 1]}, {"elem": "N", "x": -7.9225963274456035, "y": 9.250765798949487, "z": 3.318130552056516, "bonds": [89], "bondOrder": [1]}, {"elem": "N", "x": -6.060379061064233, "y": 8.420129106782497, "z": 6.294023841475649, "bonds": [87, 92], "bondOrder": [1, 1]}, {"elem": "C", "x": -5.3716169887313, "y": 8.672018909713415, "z": 7.632904468467932, "bonds": [91, 93], "bondOrder": [1, 1]}, {"elem": "C", "x": -5.978491978140412, "y": 7.478101490194375, "z": 8.609071403357817, "bonds": [92, 94], "bondOrder": [1, 1]}, {"elem": "S", "x": -4.884130173324729, "y": 7.785035051238537, "z": 10.126702304595725, "bonds": [93, 95], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.9884264282197117, "y": 7.739732082077352, "z": 9.739562957855659, "bonds": [94, 96], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.6814711973581096, "y": 6.407292208522676, "z": 9.142747445373487, "bonds": [95, 97, 100], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -3.324688933053567, "y": 5.9658967249959, "z": 7.955775315576881, "bonds": [96, 98], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.6802692268989183, "y": 4.715634382556572, "z": 7.725169326026287, "bonds": [97, 99], "bondOrder": [1, 1]}, {"elem": "N", "x": -1.8857707434419317, "y": 4.4802110445975805, "z": 8.623664996649303, "bonds": [98, 100], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.8866435507618249, "y": 5.279162130325402, "z": 9.729868756912733, "bonds": [96, 99, 101], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": -1.1336524590272836, "y": 5.315264966945732, "z": 11.013214816201025, "bonds": [100], "bondOrder": [1]}, {"elem": "C", "x": 6.179961650594803, "y": 6.339007976803941, "z": -5.683267195713967, "bonds": [103], "bondOrder": [1]}, {"elem": "N", "x": 5.5791484429408715, "y": 7.071954112612957, "z": -4.4728368110060055, "bonds": [102, 104], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.370013106475841, "y": 7.570475217944249, "z": -4.551044067013129, "bonds": [103, 105, 108], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 3.8017386921700247, "y": 7.674990159376421, "z": -5.867026199869357, "bonds": [104, 106], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.7226800179031314, "y": 8.475222219422903, "z": -6.228879452903141, "bonds": [105, 107], "bondOrder": [1, 1]}, {"elem": "N", "x": 1.8433811978004446, "y": 9.250765798949487, "z": -6.6513253242984, "bonds": [106], "bondOrder": [1]}, {"elem": "N", "x": 3.705598464181815, "y": 8.420129106782497, "z": -3.6754320348792664, "bonds": [104, 109], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.394360536514749, "y": 8.672018909713415, "z": -2.336551407886984, "bonds": [108, 110], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.7874855471056366, "y": 7.478101490194376, "z": -1.3603844729970984, "bonds": [109, 111], "bondOrder": [1, 1]}, {"elem": "S", "x": 4.88184735192132, "y": 7.785035051238538, "z": 0.15724642824080845, "bonds": [110, 112], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.777551097026337, "y": 7.739732082077353, "z": -0.2298929184992574, "bonds": [111, 113], "bondOrder": [1, 1]}, {"elem": "C", "x": 7.084506327887938, "y": 6.4072922085226764, "z": -0.8267084309814279, "bonds": [112, 114, 117], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 6.441288592192481, "y": 5.9658967249959005, "z": -2.0136805607780346, "bonds": [113, 115], "bondOrder": [1, 1]}, {"elem": "C", "x": 7.08570829834713, "y": 4.715634382556573, "z": -2.244286550328629, "bonds": [114, 116], "bondOrder": [1, 1]}, {"elem": "N", "x": 7.880206781804116, "y": 4.480211044597581, "z": -1.345790879705613, "bonds": [115, 117], "bondOrder": [1, 1]}, {"elem": "C", "x": 7.879333974484223, "y": 5.279162130325403, "z": -0.23958711944218225, "bonds": [113, 116, 118], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 8.632325066218764, "y": 5.315264966945733, "z": 1.043758939846108, "bonds": [117], "bondOrder": [1]}, {"elem": "C", "x": 3.2389839346138922, "y": 6.339007976803941, "z": 4.286188680640949, "bonds": [120], "bondOrder": [1]}, {"elem": "N", "x": 2.63817072695996, "y": 7.071954112612957, "z": 5.49661906534891, "bonds": [119, 121], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.4290353904949287, "y": 7.570475217944249, "z": 5.418411809341786, "bonds": [120, 122, 125], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 0.8607609761891131, "y": 7.674990159376421, "z": 4.102429676485559, "bonds": [121, 123], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.2182976980777802, "y": 8.475222219422903, "z": 3.7405764234517753, "bonds": [122, 124], "bondOrder": [1, 1]}, {"elem": "N", "x": -1.097596518180467, "y": 9.250765798949487, "z": 3.318130552056516, "bonds": [123], "bondOrder": [1]}, {"elem": "N", "x": 0.7646207482009032, "y": 8.420129106782497, "z": 6.294023841475649, "bonds": [121, 126], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.4533828205338373, "y": 8.672018909713415, "z": 7.632904468467932, "bonds": [125, 127], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.8465078311247248, "y": 7.478101490194375, "z": 8.609071403357817, "bonds": [126, 128], "bondOrder": [1, 1]}, {"elem": "S", "x": 1.940869635940408, "y": 7.785035051238537, "z": 10.126702304595725, "bonds": [127, 129], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.836573381045425, "y": 7.739732082077352, "z": 9.739562957855659, "bonds": [128, 130], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.143528611907027, "y": 6.407292208522676, "z": 9.142747445373487, "bonds": [129, 131, 134], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 3.5003108762115693, "y": 5.9658967249959, "z": 7.955775315576881, "bonds": [130, 132], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.144730582366218, "y": 4.715634382556572, "z": 7.725169326026287, "bonds": [131, 133], "bondOrder": [1, 1]}, {"elem": "N", "x": 4.939229065823205, "y": 4.4802110445975805, "z": 8.623664996649303, "bonds": [132, 134], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.938356258503312, "y": 5.279162130325402, "z": 9.729868756912733, "bonds": [130, 133, 135], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 5.691347350237852, "y": 5.315264966945732, "z": 11.013214816201025, "bonds": [134], "bondOrder": [1]}, {"elem": "C", "x": 10.063983743879028, "y": 6.339007976803941, "z": 4.286188680640949, "bonds": [137], "bondOrder": [1]}, {"elem": "N", "x": 9.463170536225096, "y": 7.071954112612957, "z": 5.49661906534891, "bonds": [136, 138], "bondOrder": [1, 1]}, {"elem": "C", "x": 8.254035199760065, "y": 7.570475217944249, "z": 5.418411809341786, "bonds": [137, 139, 142], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 7.685760785454249, "y": 7.674990159376421, "z": 4.102429676485559, "bonds": [138, 140], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.6067021111873565, "y": 8.475222219422903, "z": 3.7405764234517753, "bonds": [139, 141], "bondOrder": [1, 1]}, {"elem": "N", "x": 5.72740329108467, "y": 9.250765798949487, "z": 3.318130552056516, "bonds": [140], "bondOrder": [1]}, {"elem": "N", "x": 7.58962055746604, "y": 8.420129106782497, "z": 6.294023841475649, "bonds": [138, 143], "bondOrder": [1, 1]}, {"elem": "C", "x": 8.278382629798973, "y": 8.672018909713415, "z": 7.632904468467932, "bonds": [142, 144], "bondOrder": [1, 1]}, {"elem": "C", "x": 7.671507640389861, "y": 7.478101490194375, "z": 8.609071403357817, "bonds": [143, 145], "bondOrder": [1, 1]}, {"elem": "S", "x": 8.765869445205544, "y": 7.785035051238537, "z": 10.126702304595725, "bonds": [144, 146], "bondOrder": [1, 1]}, {"elem": "C", "x": 10.66157319031056, "y": 7.739732082077352, "z": 9.739562957855659, "bonds": [145, 147], "bondOrder": [1, 1]}, {"elem": "C", "x": 10.968528421172163, "y": 6.407292208522676, "z": 9.142747445373487, "bonds": [146, 148, 151], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 10.325310685476706, "y": 5.9658967249959, "z": 7.955775315576881, "bonds": [147, 149], "bondOrder": [1, 1]}, {"elem": "C", "x": 10.969730391631355, "y": 4.715634382556572, "z": 7.725169326026287, "bonds": [148, 150], "bondOrder": [1, 1]}, {"elem": "N", "x": 11.76422887508834, "y": 4.4802110445975805, "z": 8.623664996649303, "bonds": [149, 151], "bondOrder": [1, 1]}, {"elem": "C", "x": 11.763356067768449, "y": 5.279162130325402, "z": 9.729868756912733, "bonds": [147, 150, 152], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 12.51634715950299, "y": 5.315264966945732, "z": 11.013214816201025, "bonds": [151], "bondOrder": [1]}, {"elem": "C", "x": -2.115527191956721, "y": 3.0704404788338024, "z": -0.6985386633106329, "bonds": [154], "bondOrder": [1]}, {"elem": "N", "x": -2.7163402243147208, "y": 2.337495464718586, "z": 0.5118911271714527, "bonds": [153, 155], "bondOrder": [1, 1]}, {"elem": "C", "x": -3.9254753854838205, "y": 1.8389743593872936, "z": 0.4336832769384522, "bonds": [154, 156, 159], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -4.493749975085568, "y": 1.7344594179551223, "z": -0.8822982616918987, "bonds": [155, 157], "bondOrder": [1, 1]}, {"elem": "C", "x": -5.572808474056529, "y": 0.9342262362148405, "z": -1.2441521089515588, "bonds": [156, 158], "bondOrder": [1, 1]}, {"elem": "N", "x": -6.452107294159217, "y": 0.15868377838205572, "z": -1.666597980346818, "bonds": [157], "bondOrder": [1]}, {"elem": "N", "x": -4.589890027777846, "y": 0.9893193488552469, "z": 1.3092953090723154, "bonds": [155, 160], "bondOrder": [1, 1]}, {"elem": "C", "x": -3.9011281307408443, "y": 0.7374317893119268, "z": 2.648176530290474, "bonds": [159, 161], "bondOrder": [1, 1]}, {"elem": "C", "x": -4.508003120149956, "y": 1.9313492088309656, "z": 3.6243434651803597, "bonds": [160, 162], "bondOrder": [1, 1]}, {"elem": "S", "x": -3.4136413153342735, "y": 1.6244145260930052, "z": 5.141974366418267, "bonds": [161, 163], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.5179375702292566, "y": 1.669718616947989, "z": 4.7548350196782, "bonds": [162, 164], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.2109821640717218, "y": 3.002156247115067, "z": 4.158018912970154, "bonds": [163, 165, 168], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -1.8542000750631114, "y": 3.4435539740294416, "z": 2.9710473773994233, "bonds": [164, 166], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.2097803689084623, "y": 4.69381519477497, "z": 2.7404413878488287, "bonds": [165, 167], "bondOrder": [1, 1]}, {"elem": "N", "x": -0.4152818854514759, "y": 4.929239654427761, "z": 3.638937058471845, "bonds": [166, 168], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.41615469277136924, "y": 4.130288568699939, "z": 4.745140818735275, "bonds": [164, 167, 169], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 0.3368363989631723, "y": 4.09418461038581, "z": 6.028486878023566, "bonds": [168], "bondOrder": [1]}, {"elem": "C", "x": 4.709472617308416, "y": 3.0704404788338024, "z": -0.6985386633106329, "bonds": [171], "bondOrder": [1]}, {"elem": "N", "x": 4.1086595849504155, "y": 2.337495464718586, "z": 0.5118911271714527, "bonds": [170, 172], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.8995244237813163, "y": 1.8389743593872936, "z": 0.4336832769384522, "bonds": [171, 173, 176], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 2.3312498341795687, "y": 1.7344594179551223, "z": -0.8822982616918987, "bonds": [172, 174], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.2521913352086071, "y": 0.9342262362148405, "z": -1.2441521089515588, "bonds": [173, 175], "bondOrder": [1, 1]}, {"elem": "N", "x": 0.3728925151059202, "y": 0.15868377838205572, "z": -1.666597980346818, "bonds": [174], "bondOrder": [1]}, {"elem": "N", "x": 2.2351097814872904, "y": 0.9893193488552469, "z": 1.3092953090723154, "bonds": [172, 177], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.9238716785242924, "y": 0.7374317893119268, "z": 2.648176530290474, "bonds": [176, 178], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.31699668911518, "y": 1.9313492088309656, "z": 3.6243434651803597, "bonds": [177, 179], "bondOrder": [1, 1]}, {"elem": "S", "x": 3.411358493930863, "y": 1.6244145260930052, "z": 5.141974366418267, "bonds": [178, 180], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.30706223903588, "y": 1.669718616947989, "z": 4.7548350196782, "bonds": [179, 181], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.614017645193415, "y": 3.002156247115067, "z": 4.158018912970154, "bonds": [180, 182, 185], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 4.970799734202025, "y": 3.4435539740294416, "z": 2.9710473773994233, "bonds": [181, 183], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.615219440356674, "y": 4.69381519477497, "z": 2.7404413878488287, "bonds": [182, 184], "bondOrder": [1, 1]}, {"elem": "N", "x": 6.409717923813661, "y": 4.929239654427761, "z": 3.638937058471845, "bonds": [183, 185], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.408845116493767, "y": 4.130288568699939, "z": 4.745140818735275, "bonds": [181, 184, 186], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 7.1618362082283085, "y": 4.09418461038581, "z": 6.028486878023566, "bonds": [185], "bondOrder": [1]}, {"elem": "C", "x": 1.7684949013275042, "y": 3.070440478833802, "z": 9.270917213044283, "bonds": [188], "bondOrder": [1]}, {"elem": "N", "x": 1.167681868969504, "y": 2.3374954647185855, "z": 10.481347003526368, "bonds": [187, 189], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.04145329219959545, "y": 1.838974359387293, "z": 10.403139153293369, "bonds": [188, 190, 193], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -0.6097278818013432, "y": 1.7344594179551216, "z": 9.087157614663017, "bonds": [189, 191], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.6887863807723045, "y": 0.9342262362148398, "z": 8.725303767403357, "bonds": [190, 192], "bondOrder": [1, 1]}, {"elem": "N", "x": -2.5680852008749913, "y": 0.1586837783820551, "z": 8.302857896008097, "bonds": [191], "bondOrder": [1]}, {"elem": "N", "x": -0.7058679344936211, "y": 0.9893193488552463, "z": 11.27875118542723, "bonds": [189, 194], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.017106037456619046, "y": 0.7374317893119261, "z": 12.61763240664539, "bonds": [193, 195], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.6239810268657314, "y": 1.931349208830965, "z": 13.593799341535275, "bonds": [194, 196], "bondOrder": [1, 1]}, {"elem": "S", "x": 0.4703807779499514, "y": 1.6244145260930045, "z": 15.111430242773181, "bonds": [195, 197], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.3660845230549685, "y": 1.6697186169479883, "z": 14.724290896033116, "bonds": [196, 198], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.673039929212503, "y": 3.0021562471150665, "z": 14.127474789325069, "bonds": [197, 199, 202], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 2.0298220182211137, "y": 3.4435539740294407, "z": 12.940503253754338, "bonds": [198, 200], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.6742417243757624, "y": 4.693815194774969, "z": 12.709897264203745, "bonds": [199, 201], "bondOrder": [1, 1]}, {"elem": "N", "x": 3.4687402078327487, "y": 4.92923965442776, "z": 13.60839293482676, "bonds": [200, 202], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.467867400512856, "y": 4.130288568699938, "z": 14.714596695090192, "bonds": [198, 201, 203], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 4.220858492247397, "y": 4.094184610385809, "z": 15.997942754378482, "bonds": [202], "bondOrder": [1]}, {"elem": "C", "x": 8.59349471059264, "y": 3.070440478833802, "z": 9.270917213044283, "bonds": [205], "bondOrder": [1]}, {"elem": "N", "x": 7.992681678234641, "y": 2.3374954647185855, "z": 10.481347003526368, "bonds": [204, 206], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.783546517065541, "y": 1.838974359387293, "z": 10.403139153293369, "bonds": [205, 207, 210], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 6.215271927463793, "y": 1.7344594179551216, "z": 9.087157614663017, "bonds": [206, 208], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.136213428492832, "y": 0.9342262362148398, "z": 8.725303767403357, "bonds": [207, 209], "bondOrder": [1, 1]}, {"elem": "N", "x": 4.2569146083901455, "y": 0.1586837783820551, "z": 8.302857896008097, "bonds": [208], "bondOrder": [1]}, {"elem": "N", "x": 6.119131874771516, "y": 0.9893193488552463, "z": 11.27875118542723, "bonds": [206, 211], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.8078937718085175, "y": 0.7374317893119261, "z": 12.61763240664539, "bonds": [210, 212], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.201018782399405, "y": 1.931349208830965, "z": 13.593799341535275, "bonds": [211, 213], "bondOrder": [1, 1]}, {"elem": "S", "x": 7.295380587215088, "y": 1.6244145260930045, "z": 15.111430242773181, "bonds": [212, 214], "bondOrder": [1, 1]}, {"elem": "C", "x": 9.191084332320106, "y": 1.6697186169479883, "z": 14.724290896033116, "bonds": [213, 215], "bondOrder": [1, 1]}, {"elem": "C", "x": 9.49803973847764, "y": 3.0021562471150665, "z": 14.127474789325069, "bonds": [214, 216, 219], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 8.85482182748625, "y": 3.4435539740294407, "z": 12.940503253754338, "bonds": [215, 217], "bondOrder": [1, 1]}, {"elem": "C", "x": 9.4992415336409, "y": 4.693815194774969, "z": 12.709897264203745, "bonds": [216, 218], "bondOrder": [1, 1]}, {"elem": "N", "x": 10.293740017097885, "y": 4.92923965442776, "z": 13.60839293482676, "bonds": [217, 219], "bondOrder": [1, 1]}, {"elem": "C", "x": 10.292867209777992, "y": 4.130288568699938, "z": 14.714596695090192, "bonds": [215, 218, 220], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 11.045858301512533, "y": 4.094184610385809, "z": 15.997942754378482, "bonds": [219], "bondOrder": [1]}, {"elem": "C", "x": -6.179961853995647, "y": 12.479891177859145, "z": 5.683267195713967, "bonds": [222], "bondOrder": [1]}, {"elem": "N", "x": -5.5791487339896815, "y": 11.746945042050129, "z": 4.472837108118943, "bonds": [221, 223], "bondOrder": [1, 1]}, {"elem": "C", "x": -4.370013194123805, "y": 11.248423936718837, "z": 4.551044364126067, "bonds": [222, 224, 227], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -3.8017386921700234, "y": 11.143908995286665, "z": 5.867026199869357, "bonds": [223, 225], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.72268001790313, "y": 10.343676935240183, "z": 6.228879452903141, "bonds": [224, 226], "bondOrder": [1, 1]}, {"elem": "N", "x": -1.8433811978004433, "y": 9.568133355713599, "z": 6.6513253242984, "bonds": [225], "bondOrder": [1]}, {"elem": "N", "x": -3.70559855182978, "y": 10.39877004788059, "z": 3.675432331992204, "bonds": [223, 228], "bondOrder": [1, 1]}, {"elem": "C", "x": -4.394360376937886, "y": 10.14688024494967, "z": 2.3365515564434527, "bonds": [227, 229], "bondOrder": [1, 1]}, {"elem": "C", "x": -3.7874855909296183, "y": 11.34079766446871, "z": 1.3603846215535673, "bonds": [228, 230], "bondOrder": [1, 1]}, {"elem": "S", "x": -4.881847038960516, "y": 11.033864103424548, "z": -0.15724679963198102, "bonds": [229, 231], "bondOrder": [1, 1]}, {"elem": "C", "x": -6.777551187979088, "y": 11.079167072585733, "z": 0.22989301134705054, "bonds": [230, 232], "bondOrder": [1, 1]}, {"elem": "C", "x": -7.084506062762564, "y": 12.41160694614041, "z": 0.8267087280943659, "bonds": [231, 233, 236], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -6.441288883241291, "y": 12.853002429667185, "z": 2.013680857890973, "bonds": [232, 234], "bondOrder": [1, 1]}, {"elem": "C", "x": -7.085708284294673, "y": 14.103264772106513, "z": 2.244286847441567, "bonds": [233, 235], "bondOrder": [1, 1]}, {"elem": "N", "x": -7.880207232429788, "y": 14.338688110065505, "z": 1.345791028262082, "bonds": [234, 236], "bondOrder": [1, 1]}, {"elem": "C", "x": -7.879333589594524, "y": 13.539737024337683, "z": 0.23958719372041676, "bonds": [232, 235, 237], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": -8.632325379179566, "y": 13.503634187717353, "z": -1.0437585684549355, "bonds": [236], "bondOrder": [1]}, {"elem": "C", "x": 0.6450379552694894, "y": 12.479891177859145, "z": 5.683267195713967, "bonds": [239], "bondOrder": [1]}, {"elem": "N", "x": 1.2458510752754555, "y": 11.746945042050129, "z": 4.472837108118943, "bonds": [238, 240], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.4549866151413315, "y": 11.248423936718837, "z": 4.551044364126067, "bonds": [239, 241, 244], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 3.0232611170951134, "y": 11.143908995286665, "z": 5.867026199869357, "bonds": [240, 242], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.102319791362007, "y": 10.343676935240183, "z": 6.228879452903141, "bonds": [241, 243], "bondOrder": [1, 1]}, {"elem": "N", "x": 4.981618611464694, "y": 9.568133355713599, "z": 6.6513253242984, "bonds": [242], "bondOrder": [1]}, {"elem": "N", "x": 3.1194012574353573, "y": 10.39877004788059, "z": 3.675432331992204, "bonds": [240, 245], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.43063943232725, "y": 10.14688024494967, "z": 2.3365515564434527, "bonds": [244, 246], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.0375142183355184, "y": 11.34079766446871, "z": 1.3603846215535673, "bonds": [245, 247], "bondOrder": [1, 1]}, {"elem": "S", "x": 1.9431527703046207, "y": 11.033864103424548, "z": -0.15724679963198102, "bonds": [246, 248], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.047448621286048126, "y": 11.079167072585733, "z": 0.22989301134705054, "bonds": [247, 249], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.2595062534974272, "y": 12.41160694614041, "z": 0.8267087280943659, "bonds": [248, 250, 253], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 0.3837109260238458, "y": 12.853002429667185, "z": 2.013680857890973, "bonds": [249, 251], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.26070847502953604, "y": 14.103264772106513, "z": 2.244286847441567, "bonds": [250, 252], "bondOrder": [1, 1]}, {"elem": "N", "x": -1.0552074231646509, "y": 14.338688110065505, "z": 1.345791028262082, "bonds": [251, 253], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.0543337803293877, "y": 13.539737024337683, "z": 0.23958719372041676, "bonds": [249, 252, 254], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": -1.8073255699144288, "y": 13.503634187717353, "z": -1.0437585684549355, "bonds": [253], "bondOrder": [1]}, {"elem": "C", "x": -2.2959397607114225, "y": 12.479891177859143, "z": 15.652723072068882, "bonds": [256], "bondOrder": [1]}, {"elem": "N", "x": -1.6951266407054562, "y": 11.746945042050129, "z": 14.442292984473859, "bonds": [255, 257], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.48599110083957997, "y": 11.248423936718835, "z": 14.520500240480983, "bonds": [256, 258, 261], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 0.08228340111420168, "y": 11.143908995286663, "z": 15.836482076224272, "bonds": [257, 259], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.1613420753810952, "y": 10.34367693524018, "z": 16.198335329258057, "bonds": [258, 260], "bondOrder": [1, 1]}, {"elem": "N", "x": 2.040640895483782, "y": 9.568133355713597, "z": 16.620781200653315, "bonds": [259], "bondOrder": [1]}, {"elem": "N", "x": 0.1784235414544456, "y": 10.39877004788059, "z": 13.64488820834712, "bonds": [257, 262], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.5103382836536613, "y": 10.14688024494967, "z": 12.306007432798369, "bonds": [261, 263], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.09653650235460692, "y": 11.34079766446871, "z": 11.329840497908483, "bonds": [262, 264], "bondOrder": [1, 1]}, {"elem": "S", "x": -0.997824945676291, "y": 11.033864103424548, "z": 9.812209076722935, "bonds": [263, 265], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.8935290946948635, "y": 11.079167072585733, "z": 10.199348887701966, "bonds": [264, 266], "bondOrder": [1, 1]}, {"elem": "C", "x": -3.2004839694783387, "y": 12.41160694614041, "z": 10.796164604449281, "bonds": [265, 267, 270], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -2.557266789957066, "y": 12.853002429667185, "z": 11.983136734245889, "bonds": [266, 268], "bondOrder": [1, 1]}, {"elem": "C", "x": -3.2016861910104475, "y": 14.103264772106513, "z": 12.213742723796482, "bonds": [267, 269], "bondOrder": [1, 1]}, {"elem": "N", "x": -3.9961851391455627, "y": 14.338688110065505, "z": 11.315246904616998, "bonds": [268, 270], "bondOrder": [1, 1]}, {"elem": "C", "x": -3.9953114963102996, "y": 13.539737024337683, "z": 10.209043070075332, "bonds": [266, 269, 271], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": -4.74830328589534, "y": 13.503634187717353, "z": 8.92569730789998, "bonds": [270], "bondOrder": [1]}, {"elem": "C", "x": 7.470037764534625, "y": 12.479891177859145, "z": 5.683267195713967, "bonds": [273], "bondOrder": [1]}, {"elem": "N", "x": 8.070850884540592, "y": 11.746945042050129, "z": 4.472837108118943, "bonds": [272, 274], "bondOrder": [1, 1]}, {"elem": "C", "x": 9.279986424406468, "y": 11.248423936718837, "z": 4.551044364126067, "bonds": [273, 275, 278], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 9.848260926360249, "y": 11.143908995286665, "z": 5.867026199869357, "bonds": [274, 276], "bondOrder": [1, 1]}, {"elem": "C", "x": 10.927319600627143, "y": 10.343676935240183, "z": 6.228879452903141, "bonds": [275, 277], "bondOrder": [1, 1]}, {"elem": "N", "x": 11.80661842072983, "y": 9.568133355713599, "z": 6.6513253242984, "bonds": [276], "bondOrder": [1]}, {"elem": "N", "x": 9.944401066700493, "y": 10.39877004788059, "z": 3.675432331992204, "bonds": [274, 279], "bondOrder": [1, 1]}, {"elem": "C", "x": 9.255639241592387, "y": 10.14688024494967, "z": 2.3365515564434527, "bonds": [278, 280], "bondOrder": [1, 1]}, {"elem": "C", "x": 9.862514027600655, "y": 11.34079766446871, "z": 1.3603846215535673, "bonds": [279, 281], "bondOrder": [1, 1]}, {"elem": "S", "x": 8.768152579569756, "y": 11.033864103424548, "z": -0.15724679963198102, "bonds": [280, 282], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.872448430551185, "y": 11.079167072585733, "z": 0.22989301134705054, "bonds": [281, 283], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.565493555767709, "y": 12.41160694614041, "z": 0.8267087280943659, "bonds": [282, 284, 287], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 7.2087107352889825, "y": 12.853002429667185, "z": 2.013680857890973, "bonds": [283, 285], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.564291334235601, "y": 14.103264772106513, "z": 2.244286847441567, "bonds": [284, 286], "bondOrder": [1, 1]}, {"elem": "N", "x": 5.769792386100486, "y": 14.338688110065505, "z": 1.345791028262082, "bonds": [285, 287], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.770666028935749, "y": 13.539737024337683, "z": 0.23958719372041676, "bonds": [283, 286, 288], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 5.017674239350708, "y": 13.503634187717353, "z": -1.0437585684549355, "bonds": [287], "bondOrder": [1]}, {"elem": "C", "x": 4.529060048553713, "y": 12.479891177859143, "z": 15.652723072068882, "bonds": [290], "bondOrder": [1]}, {"elem": "N", "x": 5.12987316855968, "y": 11.746945042050129, "z": 14.442292984473859, "bonds": [289, 291], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.339008708425556, "y": 11.248423936718835, "z": 14.520500240480983, "bonds": [290, 292, 295], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 6.907283210379338, "y": 11.143908995286663, "z": 15.836482076224272, "bonds": [291, 293], "bondOrder": [1, 1]}, {"elem": "C", "x": 7.986341884646231, "y": 10.34367693524018, "z": 16.198335329258057, "bonds": [292, 294], "bondOrder": [1, 1]}, {"elem": "N", "x": 8.865640704748918, "y": 9.568133355713597, "z": 16.620781200653315, "bonds": [293], "bondOrder": [1]}, {"elem": "N", "x": 7.003423350719581, "y": 10.39877004788059, "z": 13.64488820834712, "bonds": [291, 296], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.314661525611475, "y": 10.14688024494967, "z": 12.306007432798369, "bonds": [295, 297], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.921536311619743, "y": 11.34079766446871, "z": 11.329840497908483, "bonds": [296, 298], "bondOrder": [1, 1]}, {"elem": "S", "x": 5.827174863588845, "y": 11.033864103424548, "z": 9.812209076722935, "bonds": [297, 299], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.9314707145702736, "y": 11.079167072585733, "z": 10.199348887701966, "bonds": [298, 300], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.6245158397867976, "y": 12.41160694614041, "z": 10.796164604449281, "bonds": [299, 301, 304], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 4.267733019308071, "y": 12.853002429667185, "z": 11.983136734245889, "bonds": [300, 302], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.6233136182546892, "y": 14.103264772106513, "z": 12.213742723796482, "bonds": [301, 303], "bondOrder": [1, 1]}, {"elem": "N", "x": 2.828814670119574, "y": 14.338688110065505, "z": 11.315246904616998, "bonds": [302, 304], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.8296883129548376, "y": 13.539737024337683, "z": 10.209043070075332, "bonds": [300, 303, 305], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 2.076696523369796, "y": 13.503634187717353, "z": 8.92569730789998, "bonds": [304], "bondOrder": [1]}]);
+            viewer_17532245370117052.getModel().setStyle({"stick": {"radius": 0.2, "opacity": 0.5}, "sphere": {"scale": 0.3, "colorscheme": "jmol", "opacity": 0.5}});
+    viewer_17532245370117052.addModel();
+            viewer_17532245370117052.getModel().addAtoms([{"elem": "C", "x": -1.2521913352086071, "y": -0.9342262362148405, "z": 1.2441521089515588, "bonds": [1], "bondOrder": [1]}, {"elem": "N", "x": -0.3728925151059202, "y": -0.15868377838205572, "z": 1.666597980346818, "bonds": [0], "bondOrder": [1]}, {"elem": "C", "x": -4.1931690511895185, "y": -0.934226236214841, "z": 11.213607985306474, "bonds": [3], "bondOrder": [1]}, {"elem": "N", "x": -3.313870231086832, "y": -0.15868377838205633, "z": 11.636053856701734, "bonds": [2], "bondOrder": [1]}, {"elem": "C", "x": -1.252191335208606, "y": 17.884672918448246, "z": 1.2441521089515588, "bonds": [5], "bondOrder": [1]}, {"elem": "N", "x": -0.3728925151059191, "y": 18.66021537628103, "z": 1.666597980346818, "bonds": [4], "bondOrder": [1]}, {"elem": "C", "x": -4.193169051189518, "y": 17.884672918448246, "z": 11.213607985306474, "bonds": [7], "bondOrder": [1]}, {"elem": "N", "x": -3.3138702310868307, "y": 18.66021537628103, "z": 11.636053856701734, "bonds": [6], "bondOrder": [1]}, {"elem": "C", "x": 3.9254753854838205, "y": -1.8389743593872936, "z": -0.4336832769384522, "bonds": [9, 12], "bondOrder": [1, 1]}, {"elem": "N", "x": 4.493749975085568, "y": -1.7344594179551223, "z": 0.8822982616918987, "bonds": [8, 10], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.572808474056529, "y": -0.9342262362148405, "z": 1.2441521089515588, "bonds": [9, 11], "bondOrder": [1, 1]}, {"elem": "N", "x": 6.452107294159217, "y": -0.15868377838205572, "z": 1.666597980346818, "bonds": [10], "bondOrder": [1]}, {"elem": "N", "x": 4.589890027777846, "y": -0.9893193488552469, "z": -1.3092953090723154, "bonds": [8], "bondOrder": [1]}, {"elem": "C", "x": 0.984497669502909, "y": -1.8389743593872943, "z": 9.535772599416463, "bonds": [14, 17], "bondOrder": [1, 1]}, {"elem": "N", "x": 1.5527722591046567, "y": -1.734459417955123, "z": 10.851754138046815, "bonds": [13, 15], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.631830758075618, "y": -0.934226236214841, "z": 11.213607985306474, "bonds": [14, 16], "bondOrder": [1, 1]}, {"elem": "N", "x": 3.5111295781783047, "y": -0.15868377838205633, "z": 11.636053856701734, "bonds": [15], "bondOrder": [1]}, {"elem": "N", "x": 1.6489123117969344, "y": -0.9893193488552475, "z": 8.6601605672826, "bonds": [13, 18], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.9601506181607772, "y": -0.7374317893119273, "z": 7.321279346064442, "bonds": [17, 19], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.5670254041690448, "y": -1.9313492088309663, "z": 6.345112411174556, "bonds": [18, 20], "bondOrder": [1, 1]}, {"elem": "S", "x": 0.4726638904021727, "y": -1.6244145260930056, "z": 4.827481212823711, "bonds": [19, 21], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.423040209314419, "y": -1.6697186169479894, "z": 5.214620856676715, "bonds": [20], "bondOrder": [1]}, {"elem": "C", "x": 2.115526988555877, "y": 15.748458675829283, "z": 0.6985386633106329, "bonds": [23], "bondOrder": [1]}, {"elem": "N", "x": 2.716340020913877, "y": 16.4814036899445, "z": -0.5118911271714527, "bonds": [22, 24], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.9254753854838214, "y": 16.979924795275792, "z": -0.4336832769384522, "bonds": [23, 25, 28], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 4.493749975085569, "y": 17.084439736707964, "z": 0.8822982616918987, "bonds": [24, 26], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.57280847405653, "y": 17.884672918448246, "z": 1.2441521089515588, "bonds": [25, 27], "bondOrder": [1, 1]}, {"elem": "N", "x": 6.452107294159218, "y": 18.66021537628103, "z": 1.666597980346818, "bonds": [26], "bondOrder": [1]}, {"elem": "N", "x": 4.589890027777847, "y": 17.82957980580784, "z": -1.3092953090723154, "bonds": [24], "bondOrder": [1]}, {"elem": "C", "x": -0.8254507274250343, "y": 15.748458675829283, "z": 10.667994539665548, "bonds": [30], "bondOrder": [1]}, {"elem": "N", "x": -0.22463769506703438, "y": 16.4814036899445, "z": 9.457564749183463, "bonds": [29, 31], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.9844976695029098, "y": 16.979924795275792, "z": 9.535772599416463, "bonds": [30, 32, 35], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 1.5527722591046575, "y": 17.084439736707964, "z": 10.851754138046815, "bonds": [31, 33], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.631830758075619, "y": 17.884672918448246, "z": 11.213607985306474, "bonds": [32, 34], "bondOrder": [1, 1]}, {"elem": "N", "x": 3.5111295781783056, "y": 18.66021537628103, "z": 11.636053856701734, "bonds": [33], "bondOrder": [1]}, {"elem": "N", "x": 1.6489123117969353, "y": 17.82957980580784, "z": 8.6601605672826, "bonds": [31, 36], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.9601506181607781, "y": 18.08146736535116, "z": 7.321279346064442, "bonds": [35, 37], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.5670254041690457, "y": 16.88754994583212, "z": 6.345112411174556, "bonds": [36, 38], "bondOrder": [1, 1]}, {"elem": "S", "x": 0.4726638904021738, "y": 17.19448462857008, "z": 4.827481212823711, "bonds": [37, 39], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.4230402093144179, "y": 17.149180537715097, "z": 5.214620856676715, "bonds": [38, 40], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.7299951991358489, "y": 15.816742907548019, "z": 5.811436963384762, "bonds": [39, 41, 44], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -1.0867778443186438, "y": 15.375345180633644, "z": 6.998408498955492, "bonds": [40, 42], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.731197245372026, "y": 14.125083959888116, "z": 7.2290144885060865, "bonds": [41, 43], "bondOrder": [1, 1]}, {"elem": "N", "x": -2.5256962373311236, "y": 13.889659500235325, "z": 6.330518817883071, "bonds": [42, 44], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.524822616407852, "y": 14.688610585963147, "z": 5.22431505761964, "bonds": [40, 43], "bondOrder": [1, 1]}, {"elem": "S", "x": 7.297663699667309, "y": -1.6244145260930056, "z": 4.827481212823711, "bonds": [46], "bondOrder": [1]}, {"elem": "C", "x": 5.401959599950718, "y": -1.6697186169479894, "z": 5.214620856676715, "bonds": [45], "bondOrder": [1]}, {"elem": "S", "x": 7.297663699667311, "y": 17.19448462857008, "z": 4.827481212823711, "bonds": [48], "bondOrder": [1]}, {"elem": "C", "x": 5.401959599950719, "y": 17.149180537715097, "z": 5.214620856676715, "bonds": [47, 49], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.095004610129288, "y": 15.816742907548019, "z": 5.811436963384762, "bonds": [48, 50, 53], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 5.738221964946493, "y": 15.375345180633644, "z": 6.998408498955492, "bonds": [49, 51], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.093802563893111, "y": 14.125083959888116, "z": 7.2290144885060865, "bonds": [50, 52], "bondOrder": [1, 1]}, {"elem": "N", "x": 4.299303571934013, "y": 13.889659500235325, "z": 6.330518817883071, "bonds": [51, 53], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.3001771928572845, "y": 14.688610585963147, "z": 5.22431505761964, "bonds": [49, 52, 54], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 3.5471854032722434, "y": 14.724714544277276, "z": 3.9409692954442876, "bonds": [53], "bondOrder": [1]}, {"elem": "S", "x": -1.9431524573438175, "y": 7.785035051238538, "z": 0.15724642824080845, "bonds": [56], "bondOrder": [1]}, {"elem": "C", "x": -0.047448712238800296, "y": 7.739732082077353, "z": -0.2298929184992574, "bonds": [55, 57], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.25950651862280216, "y": 6.4072922085226764, "z": -0.8267084309814279, "bonds": [56, 59], "bondOrder": [1, 1]}, {"elem": "N", "x": 1.0552069725389799, "y": 4.480211044597581, "z": -1.345790879705613, "bonds": [59], "bondOrder": [1]}, {"elem": "C", "x": 1.0543341652190867, "y": 5.279162130325403, "z": -0.23958711944218225, "bonds": [57, 58, 60], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 1.807325256953628, "y": 5.315264966945733, "z": 1.043758939846108, "bonds": [59], "bondOrder": [1]}, {"elem": "S", "x": -4.884130173324729, "y": 7.785035051238537, "z": 10.126702304595725, "bonds": [62], "bondOrder": [1]}, {"elem": "C", "x": -2.9884264282197117, "y": 7.739732082077352, "z": 9.739562957855659, "bonds": [61, 63], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.6814711973581096, "y": 6.407292208522676, "z": 9.142747445373487, "bonds": [62, 64, 67], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -3.324688933053567, "y": 5.9658967249959, "z": 7.955775315576881, "bonds": [63, 65], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.6802692268989183, "y": 4.715634382556572, "z": 7.725169326026287, "bonds": [64, 66], "bondOrder": [1, 1]}, {"elem": "N", "x": -1.8857707434419317, "y": 4.4802110445975805, "z": 8.623664996649303, "bonds": [65, 67], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.8866435507618249, "y": 5.279162130325402, "z": 9.729868756912733, "bonds": [63, 66, 68], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": -1.1336524590272836, "y": 5.315264966945732, "z": 11.013214816201025, "bonds": [67], "bondOrder": [1]}, {"elem": "C", "x": 3.7874855471056366, "y": 7.478101490194376, "z": -1.3603844729970984, "bonds": [70], "bondOrder": [1]}, {"elem": "S", "x": 4.88184735192132, "y": 7.785035051238538, "z": 0.15724642824080845, "bonds": [69, 71], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.777551097026337, "y": 7.739732082077353, "z": -0.2298929184992574, "bonds": [70, 72], "bondOrder": [1, 1]}, {"elem": "C", "x": 7.084506327887938, "y": 6.4072922085226764, "z": -0.8267084309814279, "bonds": [71, 74], "bondOrder": [1, 1]}, {"elem": "N", "x": 7.880206781804116, "y": 4.480211044597581, "z": -1.345790879705613, "bonds": [74], "bondOrder": [1]}, {"elem": "C", "x": 7.879333974484223, "y": 5.279162130325403, "z": -0.23958711944218225, "bonds": [72, 73], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.2389839346138922, "y": 6.339007976803941, "z": 4.286188680640949, "bonds": [76], "bondOrder": [1]}, {"elem": "N", "x": 2.63817072695996, "y": 7.071954112612957, "z": 5.49661906534891, "bonds": [75, 77], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.4290353904949287, "y": 7.570475217944249, "z": 5.418411809341786, "bonds": [76, 78, 81], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 0.8607609761891131, "y": 7.674990159376421, "z": 4.102429676485559, "bonds": [77, 79], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.2182976980777802, "y": 8.475222219422903, "z": 3.7405764234517753, "bonds": [78, 80], "bondOrder": [1, 1]}, {"elem": "N", "x": -1.097596518180467, "y": 9.250765798949487, "z": 3.318130552056516, "bonds": [79], "bondOrder": [1]}, {"elem": "N", "x": 0.7646207482009032, "y": 8.420129106782497, "z": 6.294023841475649, "bonds": [77, 82], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.4533828205338373, "y": 8.672018909713415, "z": 7.632904468467932, "bonds": [81, 83], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.8465078311247248, "y": 7.478101490194375, "z": 8.609071403357817, "bonds": [82, 84], "bondOrder": [1, 1]}, {"elem": "S", "x": 1.940869635940408, "y": 7.785035051238537, "z": 10.126702304595725, "bonds": [83, 85], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.836573381045425, "y": 7.739732082077352, "z": 9.739562957855659, "bonds": [84, 86], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.143528611907027, "y": 6.407292208522676, "z": 9.142747445373487, "bonds": [85, 87, 90], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 3.5003108762115693, "y": 5.9658967249959, "z": 7.955775315576881, "bonds": [86, 88], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.144730582366218, "y": 4.715634382556572, "z": 7.725169326026287, "bonds": [87, 89], "bondOrder": [1, 1]}, {"elem": "N", "x": 4.939229065823205, "y": 4.4802110445975805, "z": 8.623664996649303, "bonds": [88, 90], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.938356258503312, "y": 5.279162130325402, "z": 9.729868756912733, "bonds": [86, 89], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.6067021111873565, "y": 8.475222219422903, "z": 3.7405764234517753, "bonds": [92], "bondOrder": [1]}, {"elem": "N", "x": 5.72740329108467, "y": 9.250765798949487, "z": 3.318130552056516, "bonds": [91], "bondOrder": [1]}, {"elem": "S", "x": -3.4136413153342735, "y": 1.6244145260930052, "z": 5.141974366418267, "bonds": [94], "bondOrder": [1]}, {"elem": "C", "x": -1.5179375702292566, "y": 1.669718616947989, "z": 4.7548350196782, "bonds": [93, 95], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.2109821640717218, "y": 3.002156247115067, "z": 4.158018912970154, "bonds": [94, 96, 99], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -1.8542000750631114, "y": 3.4435539740294416, "z": 2.9710473773994233, "bonds": [95, 97], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.2097803689084623, "y": 4.69381519477497, "z": 2.7404413878488287, "bonds": [96, 98], "bondOrder": [1, 1]}, {"elem": "N", "x": -0.4152818854514759, "y": 4.929239654427761, "z": 3.638937058471845, "bonds": [97, 99], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.41615469277136924, "y": 4.130288568699939, "z": 4.745140818735275, "bonds": [95, 98, 100], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 0.3368363989631723, "y": 4.09418461038581, "z": 6.028486878023566, "bonds": [99], "bondOrder": [1]}, {"elem": "S", "x": -3.413641315334272, "y": 20.44331368075609, "z": 5.141974366418267, "bonds": [102], "bondOrder": [1]}, {"elem": "C", "x": -1.5179375702292552, "y": 20.488617771611075, "z": 4.7548350196782, "bonds": [101], "bondOrder": [1]}, {"elem": "C", "x": 4.709472617308416, "y": 3.0704404788338024, "z": -0.6985386633106329, "bonds": [104], "bondOrder": [1]}, {"elem": "N", "x": 4.1086595849504155, "y": 2.337495464718586, "z": 0.5118911271714527, "bonds": [103, 105], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.8995244237813163, "y": 1.8389743593872936, "z": 0.4336832769384522, "bonds": [104, 106, 109], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 2.3312498341795687, "y": 1.7344594179551223, "z": -0.8822982616918987, "bonds": [105, 107], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.2521913352086071, "y": 0.9342262362148405, "z": -1.2441521089515588, "bonds": [106, 108], "bondOrder": [1, 1]}, {"elem": "N", "x": 0.3728925151059202, "y": 0.15868377838205572, "z": -1.666597980346818, "bonds": [107], "bondOrder": [1]}, {"elem": "N", "x": 2.2351097814872904, "y": 0.9893193488552469, "z": 1.3092953090723154, "bonds": [105, 110], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.9238716785242924, "y": 0.7374317893119268, "z": 2.648176530290474, "bonds": [109, 111], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.31699668911518, "y": 1.9313492088309656, "z": 3.6243434651803597, "bonds": [110, 112], "bondOrder": [1, 1]}, {"elem": "S", "x": 3.411358493930863, "y": 1.6244145260930052, "z": 5.141974366418267, "bonds": [111, 113], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.30706223903588, "y": 1.669718616947989, "z": 4.7548350196782, "bonds": [112, 114], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.614017645193415, "y": 3.002156247115067, "z": 4.158018912970154, "bonds": [113, 115, 118], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 4.970799734202025, "y": 3.4435539740294416, "z": 2.9710473773994233, "bonds": [114, 116], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.615219440356674, "y": 4.69381519477497, "z": 2.7404413878488287, "bonds": [115, 117], "bondOrder": [1, 1]}, {"elem": "N", "x": 6.409717923813661, "y": 4.929239654427761, "z": 3.638937058471845, "bonds": [116, 118], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.408845116493767, "y": 4.130288568699939, "z": 4.745140818735275, "bonds": [114, 117], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.7684949013275042, "y": 3.070440478833802, "z": 9.270917213044283, "bonds": [120], "bondOrder": [1]}, {"elem": "N", "x": 1.167681868969504, "y": 2.3374954647185855, "z": 10.481347003526368, "bonds": [119, 121], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.04145329219959545, "y": 1.838974359387293, "z": 10.403139153293369, "bonds": [120, 122, 125], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": -0.6097278818013432, "y": 1.7344594179551216, "z": 9.087157614663017, "bonds": [121, 123], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.6887863807723045, "y": 0.9342262362148398, "z": 8.725303767403357, "bonds": [122, 124], "bondOrder": [1, 1]}, {"elem": "N", "x": -2.5680852008749913, "y": 0.1586837783820551, "z": 8.302857896008097, "bonds": [123], "bondOrder": [1]}, {"elem": "N", "x": -0.7058679344936211, "y": 0.9893193488552463, "z": 11.27875118542723, "bonds": [121], "bondOrder": [1]}, {"elem": "C", "x": 2.8995244237813176, "y": 20.65787351405038, "z": 0.4336832769384522, "bonds": [127, 130], "bondOrder": [1, 1]}, {"elem": "N", "x": 2.33124983417957, "y": 20.553358572618208, "z": -0.8822982616918987, "bonds": [126, 128], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.2521913352086083, "y": 19.753125390877926, "z": -1.2441521089515588, "bonds": [127, 129], "bondOrder": [1, 1]}, {"elem": "N", "x": 0.37289251510592136, "y": 18.97758293304514, "z": -1.666597980346818, "bonds": [128], "bondOrder": [1]}, {"elem": "N", "x": 2.235109781487292, "y": 19.808218503518333, "z": 1.3092953090723154, "bonds": [126, 131], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.9238716785242937, "y": 19.556330943975013, "z": 2.648176530290474, "bonds": [130, 132], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.3169966891151814, "y": 20.75024836349405, "z": 3.6243434651803597, "bonds": [131, 133], "bondOrder": [1, 1]}, {"elem": "S", "x": 3.411358493930864, "y": 20.44331368075609, "z": 5.141974366418267, "bonds": [132, 134], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.307062239035881, "y": 20.488617771611075, "z": 4.7548350196782, "bonds": [133], "bondOrder": [1]}, {"elem": "C", "x": -0.041453292199594115, "y": 20.65787351405038, "z": 10.403139153293369, "bonds": [136, 139], "bondOrder": [1, 1]}, {"elem": "N", "x": -0.6097278818013419, "y": 20.553358572618208, "z": 9.087157614663017, "bonds": [135, 137], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.6887863807723034, "y": 19.753125390877926, "z": 8.725303767403357, "bonds": [136, 138], "bondOrder": [1, 1]}, {"elem": "N", "x": -2.5680852008749904, "y": 18.97758293304514, "z": 8.302857896008097, "bonds": [137], "bondOrder": [1]}, {"elem": "N", "x": -0.7058679344936197, "y": 19.808218503518333, "z": 11.27875118542723, "bonds": [135], "bondOrder": [1]}, {"elem": "C", "x": 8.077191144473744, "y": 0.9342262362148405, "z": -1.2441521089515588, "bonds": [141], "bondOrder": [1]}, {"elem": "N", "x": 7.197892324371057, "y": 0.15868377838205572, "z": -1.666597980346818, "bonds": [140], "bondOrder": [1]}, {"elem": "C", "x": 5.136213428492832, "y": 0.9342262362148398, "z": 8.725303767403357, "bonds": [143], "bondOrder": [1]}, {"elem": "N", "x": 4.2569146083901455, "y": 0.1586837783820551, "z": 8.302857896008097, "bonds": [142], "bondOrder": [1]}, {"elem": "C", "x": 8.077191144473744, "y": 19.753125390877926, "z": -1.2441521089515588, "bonds": [145], "bondOrder": [1]}, {"elem": "N", "x": 7.1978923243710575, "y": 18.97758293304514, "z": -1.666597980346818, "bonds": [144], "bondOrder": [1]}, {"elem": "C", "x": 5.136213428492833, "y": 19.753125390877926, "z": 8.725303767403357, "bonds": [147], "bondOrder": [1]}, {"elem": "N", "x": 4.256914608390146, "y": 18.97758293304514, "z": 8.302857896008097, "bonds": [146], "bondOrder": [1]}, {"elem": "C", "x": -2.72268001790313, "y": 10.343676935240183, "z": 6.228879452903141, "bonds": [149], "bondOrder": [1]}, {"elem": "N", "x": -1.8433811978004433, "y": 9.568133355713599, "z": 6.6513253242984, "bonds": [148], "bondOrder": [1]}, {"elem": "C", "x": 0.6450379552694894, "y": 12.479891177859145, "z": 5.683267195713967, "bonds": [151], "bondOrder": [1]}, {"elem": "N", "x": 1.2458510752754555, "y": 11.746945042050129, "z": 4.472837108118943, "bonds": [150, 152], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.4549866151413315, "y": 11.248423936718837, "z": 4.551044364126067, "bonds": [151, 153, 156], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 3.0232611170951134, "y": 11.143908995286665, "z": 5.867026199869357, "bonds": [152, 154], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.102319791362007, "y": 10.343676935240183, "z": 6.228879452903141, "bonds": [153, 155], "bondOrder": [1, 1]}, {"elem": "N", "x": 4.981618611464694, "y": 9.568133355713599, "z": 6.6513253242984, "bonds": [154], "bondOrder": [1]}, {"elem": "N", "x": 3.1194012574353573, "y": 10.39877004788059, "z": 3.675432331992204, "bonds": [152, 157], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.43063943232725, "y": 10.14688024494967, "z": 2.3365515564434527, "bonds": [156, 158], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.0375142183355184, "y": 11.34079766446871, "z": 1.3603846215535673, "bonds": [157, 159], "bondOrder": [1, 1]}, {"elem": "S", "x": 1.9431527703046207, "y": 11.033864103424548, "z": -0.15724679963198102, "bonds": [158, 160], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.047448621286048126, "y": 11.079167072585733, "z": 0.22989301134705054, "bonds": [159, 161], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.2595062534974272, "y": 12.41160694614041, "z": 0.8267087280943659, "bonds": [160, 162, 165], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 0.3837109260238458, "y": 12.853002429667185, "z": 2.013680857890973, "bonds": [161, 163], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.26070847502953604, "y": 14.103264772106513, "z": 2.244286847441567, "bonds": [162, 164], "bondOrder": [1, 1]}, {"elem": "N", "x": -1.0552074231646509, "y": 14.338688110065505, "z": 1.345791028262082, "bonds": [163, 165], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.0543337803293877, "y": 13.539737024337683, "z": 0.23958719372041676, "bonds": [161, 164], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.09653650235460692, "y": 11.34079766446871, "z": 11.329840497908483, "bonds": [167], "bondOrder": [1]}, {"elem": "S", "x": -0.997824945676291, "y": 11.033864103424548, "z": 9.812209076722935, "bonds": [166, 168], "bondOrder": [1, 1]}, {"elem": "C", "x": -2.8935290946948635, "y": 11.079167072585733, "z": 10.199348887701966, "bonds": [167, 169], "bondOrder": [1, 1]}, {"elem": "C", "x": -3.2004839694783387, "y": 12.41160694614041, "z": 10.796164604449281, "bonds": [168, 171], "bondOrder": [1, 1]}, {"elem": "N", "x": -3.9961851391455627, "y": 14.338688110065505, "z": 11.315246904616998, "bonds": [171], "bondOrder": [1]}, {"elem": "C", "x": -3.9953114963102996, "y": 13.539737024337683, "z": 10.209043070075332, "bonds": [169, 170], "bondOrder": [1, 1]}, {"elem": "S", "x": 8.768152579569756, "y": 11.033864103424548, "z": -0.15724679963198102, "bonds": [173], "bondOrder": [1]}, {"elem": "C", "x": 6.872448430551185, "y": 11.079167072585733, "z": 0.22989301134705054, "bonds": [172, 174], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.565493555767709, "y": 12.41160694614041, "z": 0.8267087280943659, "bonds": [173, 175, 178], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 7.2087107352889825, "y": 12.853002429667185, "z": 2.013680857890973, "bonds": [174, 176], "bondOrder": [1, 1]}, {"elem": "C", "x": 6.564291334235601, "y": 14.103264772106513, "z": 2.244286847441567, "bonds": [175, 177], "bondOrder": [1, 1]}, {"elem": "N", "x": 5.769792386100486, "y": 14.338688110065505, "z": 1.345791028262082, "bonds": [176, 178], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.770666028935749, "y": 13.539737024337683, "z": 0.23958719372041676, "bonds": [174, 177, 179], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 5.017674239350708, "y": 13.503634187717353, "z": -1.0437585684549355, "bonds": [178], "bondOrder": [1]}, {"elem": "S", "x": 5.827174863588845, "y": 11.033864103424548, "z": 9.812209076722935, "bonds": [181], "bondOrder": [1]}, {"elem": "C", "x": 3.9314707145702736, "y": 11.079167072585733, "z": 10.199348887701966, "bonds": [180, 182], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.6245158397867976, "y": 12.41160694614041, "z": 10.796164604449281, "bonds": [181, 184], "bondOrder": [1, 1]}, {"elem": "N", "x": 2.828814670119574, "y": 14.338688110065505, "z": 11.315246904616998, "bonds": [184], "bondOrder": [1]}, {"elem": "C", "x": 2.8296883129548376, "y": 13.539737024337683, "z": 10.209043070075332, "bonds": [182, 183, 185], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 2.076696523369796, "y": 13.503634187717353, "z": 8.92569730789998, "bonds": [184], "bondOrder": [1]}]);
+            viewer_17532245370117052.getModel().setStyle({"stick": {"radius": 0.2, "opacity": 0.5}, "sphere": {"scale": 0.3, "colorscheme": "jmol", "opacity": 0.5}});
+    viewer_17532245370117052.addModel();
+            viewer_17532245370117052.getModel().setCrystData(6.824999809265137,18.818899154663086,10.394200325012207,90.0,106.43599700927734,90.0);
+    viewer_17532245370117052.addUnitCell({"box": {"color": "purple"}, "alabel": "X", "blabel": "Y", "clabel": "Z", "alabelstyle": {"fontColor": "black", "backgroundColor": "white", "inFront": true, "fontSize": 40}, "astyle": {"color": "darkred", "radius": 5, "midpos": -10}});
+            viewer_17532245370117052.getModel().addAtoms([{"elem": "N", "x": -0.3728925151059191, "y": 18.66021537628103, "z": 1.666597980346818, "bonds": [], "bondOrder": []}, {"elem": "C", "x": 2.115526988555877, "y": 15.748458675829283, "z": 0.6985386633106329, "bonds": [], "bondOrder": []}, {"elem": "N", "x": 4.493749975085569, "y": 17.084439736707964, "z": 0.8822982616918987, "bonds": [3], "bondOrder": [1]}, {"elem": "C", "x": 5.57280847405653, "y": 17.884672918448246, "z": 1.2441521089515588, "bonds": [2], "bondOrder": [1]}, {"elem": "N", "x": -0.22463769506703438, "y": 16.4814036899445, "z": 9.457564749183463, "bonds": [5], "bondOrder": [1]}, {"elem": "C", "x": 0.9844976695029098, "y": 16.979924795275792, "z": 9.535772599416463, "bonds": [4, 6], "bondOrder": [1, 1]}, {"elem": "N", "x": 1.6489123117969353, "y": 17.82957980580784, "z": 8.6601605672826, "bonds": [5, 7], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.9601506181607781, "y": 18.08146736535116, "z": 7.321279346064442, "bonds": [6, 8], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.5670254041690457, "y": 16.88754994583212, "z": 6.345112411174556, "bonds": [7, 9], "bondOrder": [1, 1]}, {"elem": "S", "x": 0.4726638904021738, "y": 17.19448462857008, "z": 4.827481212823711, "bonds": [8, 10], "bondOrder": [1, 1]}, {"elem": "C", "x": -1.4230402093144179, "y": 17.149180537715097, "z": 5.214620856676715, "bonds": [9], "bondOrder": [1]}, {"elem": "N", "x": -1.0867778443186438, "y": 15.375345180633644, "z": 6.998408498955492, "bonds": [12], "bondOrder": [1]}, {"elem": "C", "x": -1.731197245372026, "y": 14.125083959888116, "z": 7.2290144885060865, "bonds": [11], "bondOrder": [1]}, {"elem": "C", "x": 5.095004610129288, "y": 15.816742907548019, "z": 5.811436963384762, "bonds": [15], "bondOrder": [1]}, {"elem": "N", "x": 4.299303571934013, "y": 13.889659500235325, "z": 6.330518817883071, "bonds": [15], "bondOrder": [1]}, {"elem": "C", "x": 4.3001771928572845, "y": 14.688610585963147, "z": 5.22431505761964, "bonds": [13, 14, 16], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 3.5471854032722434, "y": 14.724714544277276, "z": 3.9409692954442876, "bonds": [15], "bondOrder": [1]}, {"elem": "C", "x": 1.807325256953628, "y": 5.315264966945733, "z": 1.043758939846108, "bonds": [], "bondOrder": []}, {"elem": "C", "x": -2.6814711973581096, "y": 6.407292208522676, "z": 9.142747445373487, "bonds": [20], "bondOrder": [1]}, {"elem": "N", "x": -1.8857707434419317, "y": 4.4802110445975805, "z": 8.623664996649303, "bonds": [20], "bondOrder": [1]}, {"elem": "C", "x": -1.8866435507618249, "y": 5.279162130325402, "z": 9.729868756912733, "bonds": [18, 19], "bondOrder": [1, 1]}, {"elem": "S", "x": 4.88184735192132, "y": 7.785035051238538, "z": 0.15724642824080845, "bonds": [], "bondOrder": []}, {"elem": "C", "x": 3.2389839346138922, "y": 6.339007976803941, "z": 4.286188680640949, "bonds": [23], "bondOrder": [1]}, {"elem": "N", "x": 2.63817072695996, "y": 7.071954112612957, "z": 5.49661906534891, "bonds": [22, 24], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.4290353904949287, "y": 7.570475217944249, "z": 5.418411809341786, "bonds": [23, 25, 27], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 0.8607609761891131, "y": 7.674990159376421, "z": 4.102429676485559, "bonds": [24, 26], "bondOrder": [1, 1]}, {"elem": "C", "x": -0.2182976980777802, "y": 8.475222219422903, "z": 3.7405764234517753, "bonds": [25], "bondOrder": [1]}, {"elem": "N", "x": 0.7646207482009032, "y": 8.420129106782497, "z": 6.294023841475649, "bonds": [24, 28], "bondOrder": [1, 1]}, {"elem": "C", "x": 1.4533828205338373, "y": 8.672018909713415, "z": 7.632904468467932, "bonds": [27, 29], "bondOrder": [1, 1]}, {"elem": "C", "x": 0.8465078311247248, "y": 7.478101490194375, "z": 8.609071403357817, "bonds": [28], "bondOrder": [1]}, {"elem": "C", "x": 3.836573381045425, "y": 7.739732082077352, "z": 9.739562957855659, "bonds": [], "bondOrder": []}, {"elem": "N", "x": 3.5003108762115693, "y": 5.9658967249959, "z": 7.955775315576881, "bonds": [32], "bondOrder": [1]}, {"elem": "C", "x": 4.144730582366218, "y": 4.715634382556572, "z": 7.725169326026287, "bonds": [31], "bondOrder": [1]}, {"elem": "N", "x": 5.72740329108467, "y": 9.250765798949487, "z": 3.318130552056516, "bonds": [], "bondOrder": []}, {"elem": "C", "x": -1.2109821640717218, "y": 3.002156247115067, "z": 4.158018912970154, "bonds": [36], "bondOrder": [1]}, {"elem": "N", "x": -0.4152818854514759, "y": 4.929239654427761, "z": 3.638937058471845, "bonds": [36], "bondOrder": [1]}, {"elem": "C", "x": -0.41615469277136924, "y": 4.130288568699939, "z": 4.745140818735275, "bonds": [34, 35, 37], "bondOrder": [1, 1, 1]}, {"elem": "C", "x": 0.3368363989631723, "y": 4.09418461038581, "z": 6.028486878023566, "bonds": [36], "bondOrder": [1]}, {"elem": "N", "x": 4.1086595849504155, "y": 2.337495464718586, "z": 0.5118911271714527, "bonds": [39], "bondOrder": [1]}, {"elem": "C", "x": 2.8995244237813163, "y": 1.8389743593872936, "z": 0.4336832769384522, "bonds": [38, 40], "bondOrder": [1, 1]}, {"elem": "N", "x": 2.2351097814872904, "y": 0.9893193488552469, "z": 1.3092953090723154, "bonds": [39, 41], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.9238716785242924, "y": 0.7374317893119268, "z": 2.648176530290474, "bonds": [40, 42], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.31699668911518, "y": 1.9313492088309656, "z": 3.6243434651803597, "bonds": [41, 43], "bondOrder": [1, 1]}, {"elem": "S", "x": 3.411358493930863, "y": 1.6244145260930052, "z": 5.141974366418267, "bonds": [42, 44], "bondOrder": [1, 1]}, {"elem": "C", "x": 5.30706223903588, "y": 1.669718616947989, "z": 4.7548350196782, "bonds": [43], "bondOrder": [1]}, {"elem": "N", "x": 4.970799734202025, "y": 3.4435539740294416, "z": 2.9710473773994233, "bonds": [46], "bondOrder": [1]}, {"elem": "C", "x": 5.615219440356674, "y": 4.69381519477497, "z": 2.7404413878488287, "bonds": [45], "bondOrder": [1]}, {"elem": "C", "x": 1.7684949013275042, "y": 3.070440478833802, "z": 9.270917213044283, "bonds": [], "bondOrder": []}, {"elem": "N", "x": -0.6097278818013432, "y": 1.7344594179551216, "z": 9.087157614663017, "bonds": [49], "bondOrder": [1]}, {"elem": "C", "x": -1.6887863807723045, "y": 0.9342262362148398, "z": 8.725303767403357, "bonds": [48], "bondOrder": [1]}, {"elem": "N", "x": 4.2569146083901455, "y": 0.1586837783820551, "z": 8.302857896008097, "bonds": [], "bondOrder": []}, {"elem": "N", "x": -1.8433811978004433, "y": 9.568133355713599, "z": 6.6513253242984, "bonds": [], "bondOrder": []}, {"elem": "C", "x": 0.6450379552694894, "y": 12.479891177859145, "z": 5.683267195713967, "bonds": [53], "bondOrder": [1]}, {"elem": "N", "x": 1.2458510752754555, "y": 11.746945042050129, "z": 4.472837108118943, "bonds": [52, 54], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.4549866151413315, "y": 11.248423936718837, "z": 4.551044364126067, "bonds": [53, 55, 57], "bondOrder": [1, 1, 1]}, {"elem": "N", "x": 3.0232611170951134, "y": 11.143908995286665, "z": 5.867026199869357, "bonds": [54, 56], "bondOrder": [1, 1]}, {"elem": "C", "x": 4.102319791362007, "y": 10.343676935240183, "z": 6.228879452903141, "bonds": [55], "bondOrder": [1]}, {"elem": "N", "x": 3.1194012574353573, "y": 10.39877004788059, "z": 3.675432331992204, "bonds": [54, 58], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.43063943232725, "y": 10.14688024494967, "z": 2.3365515564434527, "bonds": [57, 59], "bondOrder": [1, 1]}, {"elem": "C", "x": 3.0375142183355184, "y": 11.34079766446871, "z": 1.3603846215535673, "bonds": [58], "bondOrder": [1]}, {"elem": "C", "x": 0.047448621286048126, "y": 11.079167072585733, "z": 0.22989301134705054, "bonds": [], "bondOrder": []}, {"elem": "N", "x": 0.3837109260238458, "y": 12.853002429667185, "z": 2.013680857890973, "bonds": [62], "bondOrder": [1]}, {"elem": "C", "x": -0.26070847502953604, "y": 14.103264772106513, "z": 2.244286847441567, "bonds": [61], "bondOrder": [1]}, {"elem": "S", "x": -0.997824945676291, "y": 11.033864103424548, "z": 9.812209076722935, "bonds": [], "bondOrder": []}, {"elem": "C", "x": 6.565493555767709, "y": 12.41160694614041, "z": 0.8267087280943659, "bonds": [66], "bondOrder": [1]}, {"elem": "N", "x": 5.769792386100486, "y": 14.338688110065505, "z": 1.345791028262082, "bonds": [66], "bondOrder": [1]}, {"elem": "C", "x": 5.770666028935749, "y": 13.539737024337683, "z": 0.23958719372041676, "bonds": [64, 65], "bondOrder": [1, 1]}, {"elem": "C", "x": 2.076696523369796, "y": 13.503634187717353, "z": 8.92569730789998, "bonds": [], "bondOrder": []}]);
+            viewer_17532245370117052.getModel().setStyle({"stick": {"radius": 0.2, "opacity": 1}, "sphere": {"scale": 0.3, "colorscheme": "jmol", "opacity": 1}});
+    viewer_17532245370117052.zoomTo();
+    viewer_17532245370117052.setZoomLimits(0.001,1000);
+viewer_17532245370117052.render();
+});
+</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "24925378d78d408985cc110df32585a8", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "195fed70b78f4a53a1b09edc23cb7eef", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+</section>
+<section id="Try-some-other-solutions">
+<h2>Try some other solutions<a class="headerlink" href="#Try-some-other-solutions" title="Link to this heading">#</a></h2>
+<p>If ipywidgets is not shown in the previous cell, load solutions manually</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crystal display is automatically updated when loaded</span>
+<span class="n">c</span><span class="o">.</span><span class="n">XMLInput</span><span class="p">(</span><span class="n">vsol</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;xml&#39;</span><span class="p">])</span>
+<span class="c1"># Update powder pattern display manually</span>
+<span class="n">p</span><span class="o">.</span><span class="n">UpdateDisplay</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+XML: Loading Crystal:
+XML: Loading Crystal:(spg:P 1 21/c 1)
+Input ScatteringPowerAtom:C(C)
+Input ScatteringPowerAtom:N(N)
+Input ScatteringPowerAtom:S(S)
+</pre></div></div>
+</div>
+</section>
+<section id="Save-the-selected-result-to-CIF-and-Fox-(.xmlgz)-formats">
+<h2>Save the selected result to CIF and Fox (.xmlgz) formats<a class="headerlink" href="#Save-the-selected-result-to-CIF-and-Fox-(.xmlgz)-formats" title="Link to this heading">#</a></h2>
+<p>All the solutions (or just the best ones) could be saved automatically that way by looping over the results</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save result so it can be opened by Fox</span>
+<span class="n">xml_cryst_file_save_global</span><span class="p">(</span><span class="s1">&#39;result.xmlgz&#39;</span><span class="p">)</span>
+<span class="c1"># Also export to the CIF format</span>
+<span class="n">c</span><span class="o">.</span><span class="n">CIFOutput</span><span class="p">(</span><span class="s2">&quot;result.cif&quot;</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Create-powder-pattern-object,-index-&amp;-fit-profile">Create powder pattern object, index &amp; fit profile</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Find-the-spacegroup">Find the spacegroup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Setup-the-'meta'-structure-solution">Setup the ‘meta’-structure solution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Look-at-solutions">Look at solutions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Try-some-other-solutions">Try some other solutions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Save-the-selected-result-to-CIF-and-Fox-(.xmlgz)-formats">Save the selected result to CIF and Fox (.xmlgz) formats</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/examples/structure-solution-multiprocessing.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, The Trustees of Columbia University in the City of New York.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
