@@ -60,7 +60,7 @@ Usage & notebooks
   * :doc:`Solving the cimetidine structure from its powder pattern <examples/structure-solution-powder-cimetidine>`
   * :doc:`Solving the PbSO4 structure from its X and N powder patterns <examples/structure-solution-powder-pbso4>`
   * :doc:`Meta-structure solution using multi-processing <examples/structure-solution-multiprocessing>`
-  * :doc:`Quantitative phase analysis (QPA) <examples/Quantitative-phase-analysis>`
+  * :doc:`Quantitative phase analysis (QPA) <examples/QPA-Quantitative phase analysis>`
 
 The **API documentation** can be found in :doc:`api/pyobjcryst`.
 
