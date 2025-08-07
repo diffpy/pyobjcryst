@@ -1,0 +1,8 @@
+sphinx
+pydata-sphinx-theme
+sphinx-copybutton
+nbsphinx
+doctr
+m2r
+ipykernel
+lxml-html-clean

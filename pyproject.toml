@@ -1,4 +1,94 @@
-# pyproject.toml
 [build-system]
-requires = ["setuptools", "numpy"]
+requires = ["setuptools>=62.0", "setuptools-git-versioning>=2.0", "numpy"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyobjcryst"
+dynamic=['version', 'dependencies']
+authors = [
+  { name="Christopher Farrow" },
+  { name="Pavol Juhás" },
+  { name="Vincent-Favre-Nicolin", email="favre@esrf.fr" },
+]
+maintainers = [
+  { name="Simon J.L. Billinge group", email="sb2896@columbia.edu" },
+  { name="Vincent-Favre-Nicolin", email="favre@esrf.fr" },
+]
+description = "Python bindings to the ObjCryst++ library."
+keywords = ['objcryst', 'atom structure crystallography', 'powder diffraction']
+readme = "README.rst"
+requires-python = ">=3.11, <3.14"
+classifiers = [
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Education',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: POSIX',
+        'Operating System :: Unix',
+        'Programming Language :: C++',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
+        'Topic :: Scientific/Engineering :: Physics',
+        'Topic :: Scientific/Engineering :: Chemistry',
+        'Topic :: Software Development :: Libraries',
+]
+
+[project.urls]
+Homepage = "https://github.com/diffpy/pyobjcryst/"
+Issues = "https://github.com/diffpy/pyobjcryst/issues/"
+
+[tool.setuptools-git-versioning]
+enabled = true
+template = "{tag}"
+dev_template = "{tag}"
+dirty_template = "{tag}"
+# Use this version when git data are not available as in a git zip archive.
+# Update when tagging a new release.
+starting_version = "2024.2.1"
+
+[tool.setuptools.packages.find]
+where = ["src"]  # list of folders that contain the packages (["."] by default)
+include = ["*"]  # package names should match these glob patterns (["*"] by default)
+exclude = []  # exclude packages matching these glob patterns (empty by default)
+namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements/pip.txt"]}
+
+[tool.codespell]
+exclude-file = ".codespell/ignore_lines.txt"
+ignore-words = ".codespell/ignore_words.txt"
+skip = "*.cif,*.dat"
+
+[tool.docformatter]
+recursive = true
+wrap-summaries = 72
+wrap-descriptions = 72
+
+[tool.black]
+line-length = 79
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | \.rst
+  | \.txt
+  | _build
+  | buck-out
+  | build
+  | dist
+
+  # The following are specific to Black, you probably don't want those.
+  | blib2to3
+  | tests/data
+)/
+'''

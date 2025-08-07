@@ -1,0 +1,11 @@
+numpy
+libobjcryst
+libboost-devel
+libboost-python
+packaging # for matplotlib version parsing in powderpattern.py
+
+# plotting
+ipywidgets
+matplotlib
+ipympl
+py3dmol>=2.0.1

@@ -9,14 +9,14 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
-"""Python wrapping of LSQNumObj.h
+"""Python wrapping of LSQNumObj.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 
 Changes from ObjCryst::LSQNumObj::
         In development !
-
 """
+
+__all__ = ["LSQ"]
 
 from pyobjcryst._pyobjcryst import LSQ

@@ -9,8 +9,7 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
-"""Python wrapping of Radiation from ScatteringData.h
+"""Python wrapping of Radiation from ScatteringData.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 
@@ -21,4 +20,3 @@ Changes from ObjCryst::Radiation::
 __all__ = ["Radiation", "RadiationType", "WavelengthType"]
 
 from pyobjcryst._pyobjcryst import Radiation, RadiationType, WavelengthType
-

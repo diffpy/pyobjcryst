@@ -12,8 +12,7 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
-"""Python wrapping of DiffractionDataSingleCrystal.h
+"""Python wrapping of DiffractionDataSingleCrystal.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 
@@ -21,13 +20,20 @@ Changes from ObjCryst::DiffractionDataSingleCrystal::
         In development !
 """
 
-__all__ = ["DiffractionDataSingleCrystal", "gDiffractionDataSingleCrystalRegistry",
-           "create_singlecrystaldata_from_cif"]
+__all__ = [
+    "DiffractionDataSingleCrystal",
+    "gDiffractionDataSingleCrystalRegistry",
+    "create_singlecrystaldata_from_cif",
+]
 
 from urllib.request import urlopen
-from pyobjcryst._pyobjcryst import DiffractionDataSingleCrystal
-from pyobjcryst._pyobjcryst import gDiffractionDataSingleCrystalRegistry
+
 from pyobjcryst._pyobjcryst import CreateSingleCrystalDataFromCIF as crcif
+from pyobjcryst._pyobjcryst import (
+    DiffractionDataSingleCrystal,
+    gDiffractionDataSingleCrystalRegistry,
+)
+
 
 def create_singlecrystaldata_from_cif(file, crystal):
     """
@@ -46,9 +52,9 @@ def create_singlecrystaldata_from_cif(file, crystal):
     """
     if isinstance(file, str):
         if len(file) > 4:
-            if file[:4].lower() == 'http':
+            if file[:4].lower() == "http":
                 return crcif(urlopen(file), crystal)
-        with open(file, 'rb') as cif:  # Make sure file object is closed
+        with open(file, "rb") as cif:  # Make sure file object is closed
             c = crcif(cif, crystal)
     else:
         c = crcif(file, crystal)

@@ -1,18 +1,17 @@
 #!/usr/bin/env python
 ##############################################################################
 #
-# pyobjcryst        by DANSE Diffraction group
-#                   Simon J. L. Billinge
-#                   (c) 2009 The Trustees of Columbia University
-#                   in the City of New York.  All rights reserved.
+# (c) 2025 The Trustees of Columbia University in the City of New York.
+# All rights reserved.
 #
-# File coded by:    Chris Farrow
+# File coded by: Chris Farrow and Billinge Group members.
 #
-# See AUTHORS.txt for a list of people who contributed.
-# See LICENSE_DANSE.txt for license information.
+# See GitHub contributions for a more detailed list of contributors.
+# https://github.com/diffpy/pyobjcryst/graphs/contributors
+#
+# See LICENSE.rst and LICENSE_DANSE.rst for license information.
 #
 ##############################################################################
-
 """Python wrapping of ObjCryst++.
 
 Objects are wrapped according to their header file in the ObjCryst source.
@@ -50,11 +49,6 @@ See the modules' documentation for specific changes.
 """
 
 import warnings
-# Let's put this on the package level
-from pyobjcryst.general import ObjCrystException
-
-# version data
-from pyobjcryst.version import __version__
 
 # import submodules that only import from _pyobjcryst
 import pyobjcryst.atom
@@ -79,7 +73,14 @@ import pyobjcryst.spacegroup
 import pyobjcryst.unitcell
 import pyobjcryst.zscatterer
 
-from pyobjcryst._pyobjcryst import gTopRefinableObjRegistry
+# could be api breaking if removed
+from pyobjcryst._pyobjcryst import gTopRefinableObjRegistry  # noqa: F401
+
+# Let's put this on the package level
+from pyobjcryst.general import ObjCrystException
+
+# version data
+from pyobjcryst.version import __version__
 
 
 def loadCrystal(filename):
@@ -94,11 +95,14 @@ def loadCrystal(filename):
         which has more options when importing a CIF, including
         using an URL instead of a file.
     """
-    warnings.warn("loadCrystal is deprecated. Please use "
-                  "pyobjcryst.crystal.create_crystal_from_cif() instead",
-                  DeprecationWarning)
+    warnings.warn(
+        "loadCrystal is deprecated. Please use "
+        "pyobjcryst.crystal.create_crystal_from_cif() instead",
+        DeprecationWarning,
+    )
     from pyobjcryst.crystal import CreateCrystalFromCIF
-    with open(filename, 'rb') as fp:
+
+    with open(filename, "rb") as fp:
         rv = CreateCrystalFromCIF(fp)
     return rv
 
@@ -107,3 +111,5 @@ def loadCrystal(filename):
 assert ObjCrystException is not None
 assert __version__ or True
 assert pyobjcryst.zscatterer
+
+# End of file

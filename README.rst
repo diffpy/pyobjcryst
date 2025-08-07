@@ -1,115 +1,112 @@
-.. image:: https://travis-ci.org/diffpy/pyobjcryst.svg?branch=master
-   :target: https://travis-ci.org/diffpy/pyobjcryst
+|Icon| |title|_
+===============
 
-.. image:: https://codecov.io/gh/diffpy/pyobjcryst/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/diffpy/pyobjcryst
+.. |title| replace:: pyobjcryst
+.. _title: https://diffpy.github.io/pyobjcryst
 
-pyobjcryst
-==========
+.. |Icon| image:: https://avatars.githubusercontent.com/diffpy
+        :target: https://diffpy.github.io/pyobjcryst
+        :height: 100px
+
+|PyPI| |Forge| |PythonVersion| |PR|
+
+|CI| |Codecov| |Black| |Tracking|
+
+.. |Black| image:: https://img.shields.io/badge/code_style-black-black
+        :target: https://github.com/psf/black
+
+.. |CI| image:: https://github.com/diffpy/pyobjcryst/actions/workflows/matrix-and-codecov-on-merge-to-main.yml/badge.svg
+        :target: https://github.com/diffpy/pyobjcryst/actions/workflows/matrix-and-codecov-on-merge-to-main.yml
+
+.. |Codecov| image:: https://codecov.io/gh/diffpy/pyobjcryst/branch/main/graph/badge.svg
+        :target: https://codecov.io/gh/diffpy/pyobjcryst
+
+.. |Forge| image:: https://img.shields.io/conda/vn/conda-forge/pyobjcryst
+        :target: https://anaconda.org/conda-forge/pyobjcryst
+
+.. |PR| image:: https://img.shields.io/badge/PR-Welcome-29ab47ff
+        :target: https://github.com/diffpy/pyobjcryst/pulls
+
+.. |PyPI| image:: https://img.shields.io/pypi/v/pyobjcryst
+        :target: https://pypi.org/project/pyobjcryst/
+
+.. |PythonVersion| image:: https://img.shields.io/pypi/pyversions/pyobjcryst
+        :target: https://pypi.org/project/pyobjcryst/
+
+.. |Tracking| image:: https://img.shields.io/badge/issue_tracking-github-blue
+        :target: https://github.com/diffpy/pyobjcryst/issues
 
 Python bindings to ObjCryst++, the Object-Oriented Crystallographic Library.
 
-The documentation for this release of pyobjcryst can be found on-line at
-https://pyobjcryst.readthedocs.io/
+For more information about the pyobjcryst library, please consult our `online documentation <https://diffpy.github.io/pyobjcryst>`_.
+
+``pyobjcryst`` is an open-source software package originally developed as a part of the DiffPy-CMI
+complex modeling initiative which originated in the DANSE project
+at Columbia University. It was further developed at Brookhaven National Laboratory,
+and Columbia University and the European Synchrotron Radiation Source (ESRF) and is now
+maintained at Columbia and ESRF.
+The pyobjcryst sources are hosted at https://github.com/diffpy/pyobjcryst.
+
+Citation
+--------
+
+If you use diffpy.srfit in a scientific publication, we would like you to cite this package as
 
 
-INSTALLATION
+   P. Juhás, C. L. Farrow, X. Yang, K. R. Knox and S. J. L. Billinge,
+   `Complex modeling: a strategy and software program for combining
+   multiple information sources to solve ill posed structure and
+   nanostructure inverse problems
+   <http://dx.doi.org/10.1107/S2053273315014473>`__,
+   *Acta Crystallogr. A* **71**, 562-568 (2015).
+
+and
+
+   V. Favre-Nicolin and R. Cerný
+   `FOX, 'free objects for crystallography': a modular approach to ab initio structure determination
+    from powder diffraction
+    <https://doi.org/10.1107/S0021889802015236>`__,
+    *J. Appl. Cryst.*  **35**, 734-743 (2002)
+
+The second paper describes the c++ crystallographic objects in
+``ObjCryst++`` that are wrapped by ``pyobjcryst``
+
+Installation
 ------------
-pyobjcryst is available for Python 3.7 (deprecated), and 3.8 to 3.11.
 
-Using conda (recommended)
-^^^^^^^^^^^^^^^^^^^^^^^^^
+The latest release of ``pyobjcryst`` runs in python versions 3.11, 3.12 and 3.13. You may
+specify an earlier release if you need it to run in an earlier version of Python.
 
-We recommend to use **conda** as it allows to install all software dependencies
-together with pyobjcryst, without too much compiling hastle.
+The preferred method is to use `Miniconda Python
+<https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html>`_
+or `mamba <https://mamba.readthedocs.io/en/latest/>`__
+and install from the "conda-forge" channel of Conda packages.
+mamba works in the same way as conda but has the advantage of being much
+faster when resolving dependencies during installation. It also uses by
+default the conda-forge repository, which is what almost all users would want.
 
-Two distributions can be used:
+To add "conda-forge" to the conda channels, run the following in a terminal. ::
 
-* `Anaconda Python <https://www.anaconda.com/download>`_, the historical
-  main conda-based distribution
-* `Mamba-forge <https://github.com/conda-forge/miniforge/releases>`_ , which
-  has the advantage off providing **mamba** in addition to conda, and is
-  *much faster* when resolving dependencies during installation. It also
-  uses by default the conda-forge repository, which is what almost all
-  users would want.
+        conda config --add channels conda-forge
 
-Using conda, we you can install pyobjcryst using the "conda-forge" channel ::
+We want to install our packages in a suitable conda environment.
+The following creates and activates a new environment named ``pyobjcryst_env`` ::
 
-   conda install -c conda-forge pyobjcryst
+        conda create -n pyobjcryst_env pyobjcryst
+        conda activate pyobjcryst_env
 
-Alternatively using mamba ::
+To confirm that the installation was successful, type ::
 
-   mamba install pyobjcryst
+        python -c "import pyobjcryst; print(pyobjcryst.__version__)"
 
-You can also install from the "diffpy" channel - especially if you use
-pyobjcryst allong with the other diffpy tools for PDF calculations,
-but it is not updated as often as conda-forge.
+The output should print the latest version displayed on the badges above.
 
-pyobjcryst is also included in the "diffpy-cmi" collection
-of packages for structure analysis ::
+To use mamba, replace ``conda`` with ``mamba`` in the commands above.
 
-   conda install -c diffpy diffpy-cmi
+pyobjcryst is also included in the ``diffpy.cmi`` collection of packages for
+structure analysis and so can be installed by ::
 
-Complete new conda environment with optional GUI and jupyter dependencies
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Assuming you have installed `Mamba-forge <https://github.com/conda-forge/miniforge/releases>`_,
-you can directly create a new conda environment named `pyobjcryst` with all useful dependencies (including
-jupyter-lab, python 3.11..) using ::
-
-   mamba create -n pyobjcryst python=3.11 pyobjcryst matplotlib py3dmol jupyterlab ipympl multiprocess
-
-Then you can activate the environment and launch jupyter-lab using ::
-
-   conda activate pyobjcryst
-   jupyter-lab
-
-From source
-^^^^^^^^^^^
-The requirements are:
-
-* ``libobjcryst`` - Object-Oriented Crystallographic Library for C++,
-  https://github.com/diffpy/libobjcryst
-* ``setuptools``  - tools for installing Python packages
-* ``NumPy`` - library for scientific computing with Python
-* ``python-dev`` - header files for interfacing Python with C
-* ``libboost-all-dev`` - Boost C++ libraries and development files
-* ``scons`` - software construction tool (optional)
-
-The above requirements are easily installed through conda using e.g.::
-
-  conda install numpy compilers boost scons libobjcryst
-
-Alternatively, on Ubuntu Linux the required software can be installed using::
-
-   sudo apt-get install \
-      python-setuptools python-numpy scons \
-      build-essential python-dev libboost-all-dev
-
-
-The libobjcryst library can also be installed as per the instructions at
-https://github.com/diffpy/libobjcryst. Make sure other required
-software are also in place and then run from the pyobjcryst directory::
-
-   pip install .
-
-You may need to use ``sudo`` with system Python so the process is
-allowed to copy files to system directories, unless you are installing
-into a conda environment.  If administrator (root)
-access is not available, see the usage information from
-``python setup.py install --help`` for options to install to
-a user-writable location.  The installation integrity can be
-verified by executing the included tests with ::
-
-   python -m pyobjcryst.tests.run
-
-An alternative way of installing pyobjcryst is to use the SCons tool,
-which can speed up the process by compiling C++ files in several
-parallel jobs (-j4)::
-
-   scons -j4 install
-
-See ``scons -h`` for description of build targets and options.
+        conda install -c conda-forge diffpy.cmi
 
 Optional graphical dependencies for jupyter notebooks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -118,92 +115,124 @@ displayed in a jupyter notebook:
 
 * a Crystal structure can be displayed in 3D: this requires the
   ``py3dmol`` and ``ipywidgets`` modules. See the notebook
-  ``examples/cystal_3d_widget.ipynb``
+  ``docs/examples/cystal_3d_widget.ipynb``
 * a PowderPattern can be displayed (and live-updated) if
   ``matplotlib`` and ``ipympl`` are installed. See the
-  notebook ``examples/cimetidine-structure-solution-powder.ipynb``
+  notebook ``docs/examples/structure-solution-powder-cimetidine.ipynb``
 
-In short, ``conda install jupyter matplotlib ipympl py3dmol``
-will give you all the required dependencies. You can also
-use this in jupyterlab.
+Getting Started
+---------------
 
-These packages can also be installed using ``pip`` if you do not use conda.
+You may consult our `online documentation <https://pyobjcryst.readthedocs.io/en/stable/>`_ for tutorials and API references.
 
-DEVELOPMENT
------------
+Alternative methods of installation
+-----------------------------------
 
-pyobjcryst is an open-source software originally developed as a part of the
-DiffPy-CMI complex modeling initiative at the Brookhaven National
-Laboratory, and is also further developed at ESRF.
-The pyobjcryst sources are hosted at
-https://github.com/diffpy/pyobjcryst.
+These approaches are not recommended but reproduced here for advanced users.
+You can use ``pip`` to download and install the latest release from
+`Python Package Index <https://pypi.python.org>`_.
+To install using ``pip`` into your ``pyobjcryst_env`` environment, type ::
 
-Feel free to fork the project and contribute.  To install pyobjcryst
-in a development mode, where its sources are directly used by Python
-rather than copied to a system directory, use ::
+        pip install pyobjcryst
 
-   python setup.py develop --user
+If you prefer to install from sources, after installing the dependencies, obtain the source archive from
+`GitHub <https://github.com/diffpy/pyobjcryst/>`_. Once installed, ``cd`` into your ``pyobjcryst`` directory
+and run the following ::
+
+        pip install .
+
+An alternative way of installing pyobjcryst is to use the SCons tool,
+which can speed up the process by compiling C++ files in several
+parallel jobs (-j4)::
+
+        conda install scons
+        conda install --file requirements/conda.txt
+        scons -j4 dev
+
+See ``scons -h`` for description of build targets and options.
+
+Alternatively, on Ubuntu Linux the required software can be installed using ::
+
+        sudo apt-get install \
+             python-setuptools python-numpy scons \
+             build-essential python-dev libboost-all-dev
+
+If this doesn't work, please see the `requirements/conda.txt` file for the
+latest list of requirements.
+
+The ``libobjcryst`` library can also be installed as per the instructions at
+https://github.com/diffpy/libobjcryst. Make sure other required software are
+also in place and then run from the pyobjcryst directory ::
+
+        pip install .
+
+You may need to use sudo with system Python so the process is allowed to copy files to system
+directories, unless you are installing into a conda environment. If administrator (root) access is not
+available, see the usage information from python setup.py install --help for options to install
+to a user-writable location.
+
+Testing your installation
+-------------------------
+
+The installation integrity can be verified by executing the included tests with
+
+First install test dependencies then type pytest::
+
+        conda install --file requirements/tests.txt
+        pytest
+
+
+Support and Contribute
+----------------------
+
+If you see a bug or want to request a feature, please `report it as an issue <https://github.com/diffpy/pyobjcryst/issues>`_ and/or `submit a fix as a PR <https://github.com/diffpy/pyobjcryst/pulls>`_.
+
+Feel free to fork the project and contribute. To install pyobjcryst
+in a development mode, with its sources being directly used by Python
+rather than copied to a package directory, use the following in the root
+directory ::
+
+        pip install -e .
+
+To ensure code quality and to prevent accidental commits into the default branch, please set up the use of our pre-commit
+hooks.
+
+1. Install pre-commit in your working environment by running ``conda install pre-commit``.
+
+2. Initialize pre-commit (one time only) ``pre-commit install``.
+
+Thereafter your code will be linted by black and isort and checked against flake8 before you can commit.
+If it fails by black or isort, just rerun and it should pass (black and isort will modify the files so should
+pass after they are modified). If the flake8 test fails please see the error messages and fix them manually before
+trying to commit again.
 
 When developing it is preferable to compile the C++ files with
-SCons using the ``build=develop`` option, which compiles the extension
+SCons using the ``build=debug`` option, which compiles the extension
 module with debug information and C-assertions checks ::
 
-   scons -j4 build=debug develop
+   scons -j4 build=debug dev
 
-The build script checks for a presence of ``sconsvars.py`` file, which
-can be used to permanently set the ``build`` variable.  The SCons
-construction environment can be further customized in a ``sconscript.local``
-script.  The package integrity can be verified by executing unit tests with
-``scons -j4 test``.
+Improvements and fixes are always appreciated.
 
-When developing with Anaconda Python it is essential to specify
-header path, library path and runtime library path for the active
-Anaconda environment.  This can be achieved by setting the ``CPATH``,
-``LIBRARY_PATH`` and ``LDFLAGS`` environment variables as follows::
+Before contributing, please read our `Code of Conduct <https://github.com/diffpy/pyobjcryst/blob/main/CODE-OF-CONDUCT.rst>`_.
 
-   # resolve the prefix directory P of the active Anaconda environment
-   P=$CONDA_PREFIX
-   export CPATH=$P/include
-   export LIBRARY_PATH=$P/lib
-   export LDFLAGS=-Wl,-rpath,$P/lib
-   # compile and re-install pyobjcryst
-   scons -j4 build=debug develop
+Contact
+-------
 
-Note the Anaconda package for the required libobjcryst library is built
-with a C++ compiler provided by Anaconda.  This may cause incompatibility
-with system C++.  In such case please use Anaconda C++ to build pyobjcryst.
+For more information on pyobjcryst please visit the project `web-page <https://diffpy.github.io/>`_ or email Simon Billinge at sb2896@columbia.edu.
 
-Quick conda environment from libobjcryst and pyobjcryst sources
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+You can also contact Vincent Favre-Nicolin (favre@esrf.fr) if you are using pyobjcryst outside diffpy, e.g. to display structures in a notebook, refine powder patterns or solve structures using the global optimisation algorithms, etc..
 
-If ``conda`` is available, you can create a pyobjcryst environment
-from the git repositories (downloaded in the current directory) using::
+Acknowledgements
+----------------
 
-  conda create --yes --name pyobjcryst numpy matplotlib ipywidgets jupyter
-  conda install --yes  -n pyobjcryst -c conda-forge boost scons py3dmol
-  conda activate pyobjcryst
-  git clone https://github.com/diffpy/libobjcryst.git
-  cd libobjcryst
-  scons -j4 install prefix=$CONDA_PREFIX
-  cd ..
-  git clone https://github.com/diffpy/pyobjcryst.git
-  cd pyobjcryst
-  export CPATH=$CONDA_PREFIX/include
-  export LIBRARY_PATH=$CONDA_PREFIX/lib
-  export LDFLAGS=-Wl,-rpath,$CONDA_PREFIX/lib
-  scons -j4 install prefix=$CONDA_PREFIX
+This package bundles the following IUCr data files for bona fide research use:
+
+- **cpd-1a.prn:** Powder diffraction dataset from the `IUCr CPD Round Robin on Quantitative Phase Analysis <https://www.iucr.org/__data/iucr/powder/QARR/index.html>`_.
+
+  Source: https://www.iucr.org/__data/iucr/powder/QARR/col/cpd-1a.prn
+
+  Round Robin on Quantitative Phase Analysis: Madsen, I. (1997) ‘Round Robin on Quantitative Phase Analysis’, Powder Diffraction, 12(1), pp. 1–2. Available at: https://doi.org/10.1017/S0885715600020212.
 
 
-CONTACTS
---------
-
-For more information on pyobjcryst please visit the project web-page
-
-http://www.diffpy.org
-
-or email Prof. Simon Billinge at sb2896@columbia.edu.
-
-You can also contact Vincent Favre-Nicolin (favre@esrf.fr) if you
-are using pyobjcryst outside diffpy, e.g. to display structures
-in a notebook, refine powder patterns or solve structures using the
-global optimisation algorithms, etc..
+``pyobjcryst`` is built and maintained with `scikit-package <https://scikit-package.github.io/scikit-package/>`_.

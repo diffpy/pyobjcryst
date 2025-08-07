@@ -3,15 +3,18 @@
 
 MY_SCONS_HELP = """\
 SCons rules for compiling and installing pyobjcryst.
-SCons build is much faster when run with parallel jobs (-j4).
-Usage: scons [target] [var=value]
+
+Compile and install the pyobjcryst Python extension.
+For faster builds, run with parallel jobs, e.g.:
+    scons -j4
+
+Usage:
+    scons [target] [var=value]
 
 Targets:
-
-module      build Python extension module _pyobjcryst.so [default]
-install     install to default Python package location
-develop     copy extension module to src/pyobjcryst/ directory
-test        execute unit tests
+    (default)   Build the Python extension module `_pyobjcryst.so` (or `.pyd` on Windows)
+    dev         install extension module into `src/pyobjcryst/` (development mode)
+    test        Run pytest on the package with the installed extension
 
 Build configuration variables:
 %s
@@ -22,8 +25,7 @@ SCons construction environment can be customized in sconscript.local script.
 import os
 from os.path import join as pjoin
 import re
-import subprocess
-import platform
+import sys
 
 
 def subdictionary(d, keyset):
@@ -35,20 +37,10 @@ def getsyspaths(*names):
     rv = [p for p in pall if os.path.exists(p)]
     return rv
 
-
-def pyoutput(cmd):
-    proc = subprocess.Popen([env['python'], '-c', cmd],
-                            stdout=subprocess.PIPE,
-                            universal_newlines=True)
-    out = proc.communicate()[0]
-    return out.rstrip()
-
-
-def pyconfigvar(name):
-    cmd = ('from distutils.sysconfig import get_config_var\n'
-           'print(get_config_var(%r))\n') % name
-    return pyoutput(cmd)
-
+def ftpyflag(flags):
+    # Figure out compilation switches, filter away fancy flags.
+    pattern = re.compile(r'^(-g|-Wstrict-prototypes|-O\d|-fPIC)$')
+    return [f for f in flags if not (isinstance(f, str) and pattern.match(f))]
 
 # copy system environment variables related to compilation
 DefaultEnvironment(ENV=subdictionary(os.environ, '''
@@ -58,6 +50,7 @@ DefaultEnvironment(ENV=subdictionary(os.environ, '''
     MACOSX_DEPLOYMENT_TARGET LANG
     _PYTHON_SYSCONFIGDATA_NAME
     _CONDA_PYTHON_SYSCONFIGDATA_NAME
+    CONDA_PREFIX
     '''.split())
                    )
 
@@ -70,169 +63,150 @@ env.EnsureSConsVersion(0, 98)
 # Customizable compile variables
 vars = Variables('sconsvars.py')
 
-# Set PREFIX for installation and linking
-# TODO: also amend paths when VIRTUAL_ENV variable exists ?
-if 'PREFIX' in os.environ:
-    # building with a set prefix
-    vars.Add(PathVariable(
-        'prefix',
-        'installation prefix directory',
-        os.environ['PREFIX']))
-elif 'CONDA_PREFIX' in os.environ:
-    # building for a conda environment
-    vars.Add(PathVariable(
-        'prefix',
-        'installation prefix directory',
-        os.environ['CONDA_PREFIX']))
-else:
-    vars.Add(PathVariable('prefix',
-                          'installation prefix directory', None))
+# Customizable build variables
+vars.Add(EnumVariable(
+    'build',
+    'compiler settings',
+    'fast', allowed_values=('debug', 'fast')))
+vars.Add(EnumVariable(
+    'tool',
+    'C++ compiler toolkit to be used',
+    'default', allowed_values=('default', 'intelc')))
+vars.Add(BoolVariable(
+    'profile',
+    'build with profiling information', False))
 vars.Update(env)
 
-vars.Add(EnumVariable('build',
-                      'compiler settings', 'fast',
-                      allowed_values=('debug', 'fast')))
-vars.Add(EnumVariable('tool',
-                      'C++ compiler toolkit to be used', 'default',
-                      allowed_values=('default', 'intelc', 'clang', 'clangxx')))
-vars.Add(BoolVariable('profile',
-                      'build with profiling information', False))
-vars.Add('python',
-         'Python executable to use for installation.', 'python')
-vars.Update(env)
-env.Help(MY_SCONS_HELP % vars.GenerateHelpText(env))
-
-# Use Intel C++ compiler if requested by the user.
-icpc = None
+# Use C++ compiler specified by the 'tool' option.
 if env['tool'] == 'intelc':
     icpc = env.WhereIs('icpc')
     if not icpc:
         print("Cannot find the Intel C/C++ compiler 'icpc'.")
         Exit(1)
     env.Tool('intelc', topdir=icpc[:icpc.rfind('/bin')])
+    env=env.Clone()
+# Default use scons auto found compiler
 
-# Figure out compilation switches, filter away C-related items.
-good_python_flag = lambda n: (
-        not isinstance(n, str) or
-        not re.match(r'(-g|-Wstrict-prototypes|-O\d|-fPIC)$', n))
+# Get prefixes, make sure current interpreter is in conda env so thus is the target.
+if 'PREFIX' in os.environ:
+    default_prefix = os.environ['PREFIX']
+elif 'CONDA_PREFIX' in os.environ:
+    default_prefix = os.environ['CONDA_PREFIX']
+else:
+    print("Environment variable PREFIX or CONDA_PREFIX must be set."
+          " Activate conda environment.")
+    Exit(1)
+
+vars.Add(PathVariable(
+    'prefix',
+    'installation prefix directory',
+    default_prefix))
+vars.Update(env)
+
+# Set paths
+if env['PLATFORM'] == "win32":
+    include_path = pjoin(env['prefix'], 'Library', 'include')
+    lib_path = pjoin(env['prefix'], 'Library', 'lib')
+    shared_path = pjoin(env['prefix'], 'Library', 'share')
+
+    env.AppendUnique(CPPPATH=[ pjoin(env['prefix'], 'include') ]) # for python headers
+    env.AppendUnique(LIBPATH=[ pjoin(env['prefix'], 'libs') ]) # for python libs
+
+    env['ENV']['TMP'] = os.environ.get('TMP', env['ENV'].get('TMP', ''))
+else:
+    include_path = pjoin(env['prefix'], 'include')
+    lib_path = pjoin(env['prefix'], 'lib')
+    shared_path = pjoin(env['prefix'], 'share')
+
+vars.Add(PathVariable(
+    'includedir',
+    'installation directory for C++ header files',
+    include_path,
+    PathVariable.PathAccept))
+vars.Add(PathVariable(
+    'libdir',
+    'installation directory for compiled programs',
+    lib_path,
+    PathVariable.PathAccept))
+vars.Add(PathVariable(
+    'datadir',
+    'installation directory for architecture independent data',
+    shared_path,
+    PathVariable.PathAccept))
+vars.Update(env)
+
+env.AppendUnique(CPPPATH=[include_path])
+env.AppendUnique(LIBPATH=[lib_path])
+
+env.Help(MY_SCONS_HELP % vars.GenerateHelpText(env))
 
 # Determine python-config script name.
-if 'PY_VER' in os.environ:
-    pyversion = os.environ['PY_VER']
+pyversion = os.environ.get('PY_VER') or f"{sys.version_info.major}.{sys.version_info.minor}"
+if env['PLATFORM'] != 'win32':
+    pythonconfig = pjoin(env['prefix'], 'bin', f'python{pyversion}-config')
+    xpython = pjoin(env['prefix'], 'bin', 'python')
 else:
-    pyversion = pyoutput('import sys; print("%i.%i" % sys.version_info[:2])')
+    # use sysconfig on Windows
+    pythonconfig = None
+    xpython = pjoin(env['prefix'], 'python.exe')
+print(f"Using python-config: {pythonconfig} from {xpython}")
 
-if 'CONDA_BUILD' in os.environ and 'PY_VER' in os.environ:
-    # Messy: if CONDA_BUILD and PY_VER are in the path, we are building a conda package
-    # using several environment. Make sure python3.X-config points to the destination
-    # (host) environment
-    pythonconfig = pjoin(os.environ['PREFIX'], 'bin', 'python%s-config' % os.environ['PY_VER'])
-    print("Using $PREFIX and $PY_VER to determine python-config pth: %s" % pythonconfig)
-    xpython = pjoin(os.environ['PREFIX'], 'bin', 'python')
-    pyversion = os.environ['PY_VER']
+
+common_cppdefs = ['REAL=double', 'BOOST_ERROR_CODE_HEADER_ONLY']
+env.AppendUnique(CPPDEFINES=common_cppdefs)
+
+if env['PLATFORM'] == 'win32':
+    env.AppendUnique(CPPDEFINES=['BOOST_ALL_NO_LIB'])
+    env.AppendUnique(CCFLAGS=['/EHsc', '/MD'])
+
+    if env['build'] == 'debug':
+        env.Append(CCFLAGS=['/Zi', '/Od', '/FS'])
+        env.Append(LINKFLAGS=['/DEBUG'])
+
+    elif env['build'] == 'fast':
+        env.Append(CCFLAGS=['/Ox', '/GL'])
+        env.Append(LINKFLAGS=['/LTCG', '/OPT:REF', '/OPT:ICF'])
+
 else:
-    pycfgname = 'python%s-config' % (pyversion if pyversion[0] == '3' else '')
-    # realpath gets the real path if exec is a link (e.g. in a python environment)
-    xpython = os.path.realpath(env.WhereIs(env['python']))
-    pybindir = os.path.dirname(xpython)
-    pythonconfig = pjoin(pybindir, pycfgname)
+    # get python flags from python-config script
+    # not using sysconfig here because of parsing issues
+    env.ParseConfig(f"{pythonconfig} --cflags")
+    env.Replace(CCFLAGS=ftpyflag(env['CCFLAGS']))
 
-# for k in sorted(os.environ.keys()):
-#     print("   ", k, os.environ[k])
+    env.PrependUnique(CCFLAGS=['-Wextra'])
+    env.PrependUnique(CXXFLAGS=['-std=c++11'])
 
-if platform.system().lower() == "windows":
-    # See https://scons.org/faq.html#Linking_on_Windows_gives_me_an_error
-    env['ENV']['TMP'] = os.environ['TMP']
-    # the CPPPATH directories are checked by scons dependency scanner
-    cpppath = getsyspaths('CPLUS_INCLUDE_PATH', 'CPATH')
-    env.AppendUnique(CPPPATH=cpppath)
-    # Insert LIBRARY_PATH explicitly because some compilers
-    # ignore it in the system environment.
-    env.PrependUnique(LIBPATH=getsyspaths('LIBRARY_PATH'))
-    if env['prefix'] is not None:
-        env.Append(CPPPATH=[pjoin(env['prefix'], 'include')])
-        env.Append(CPPPATH=[pjoin(env['prefix'], 'Library', 'include')])
-        # Windows conda library paths are a MESS ('lib', 'libs', 'Library\lib'...)
-        env.Append(LIBPATH=[pjoin(env['prefix'], 'Library', 'lib')])
-        env.Append(LIBPATH=[pjoin(env['prefix'], 'libs')])
-    # This disable automated versioned named e.g. libboost_date_time-vc142-mt-s-x64-1_73.lib
-    # so we can use conda-installed libraries
-    env.AppendUnique(CPPDEFINES='BOOST_ALL_NO_LIB')
-    # Prevent the generation of an import lib (.lib) in addition to the dll
-    # env.AppendUnique(no_import_lib=1)
-    env.PrependUnique(CCFLAGS=['/Ox', '/EHsc', '/MD', '/DREAL=double'])
-    env.AppendUnique(CPPDEFINES={'NDEBUG': None})
-else:
-    if 'CONDA_BUILD' not in os.environ:
-        # Verify python-config comes from the same path as the target python.
-        xpythonconfig = env.WhereIs(pythonconfig)
-        if os.path.dirname(xpython) != os.path.dirname(xpythonconfig):
-            print("Inconsistent paths of %r and %r" % (xpython, xpythonconfig))
-            Exit(1)
-    # Process the python-config flags here.
-    env.ParseConfig(pythonconfig + " --cflags")
-    env.Replace(CCFLAGS=[f for f in env['CCFLAGS'] if good_python_flag(f)])
-    env.Replace(CPPDEFINES='BOOST_ERROR_CODE_HEADER_ONLY')
-    # the CPPPATH directories are checked by scons dependency scanner
-    cpppath = getsyspaths('CPLUS_INCLUDE_PATH', 'CPATH')
-    env.AppendUnique(CPPPATH=cpppath)
-    # Insert LIBRARY_PATH explicitly because some compilers
-    # ignore it in the system environment.
-    env.PrependUnique(LIBPATH=getsyspaths('LIBRARY_PATH'))
-    # Add shared libraries.
-    # Note: ObjCryst and boost_python are added from SConscript.configure.
-
-    fast_linkflags = ['-s']
-    fast_shlinkflags = pyconfigvar('LDSHARED').split()[1:]
-
-    # Specify minimum C++ standard.  Allow later standard from sconscript.local.
-    # In case of multiple `-std` options the last option holds.
-    env.PrependUnique(CXXFLAGS='-std=c++11', delete_existing=1)
-
-    # Need this to avoid missing symbol with boost<1.66
-    env.PrependUnique(CXXFLAGS=['-DBOOST_ERROR_CODE_HEADER_ONLY'])
-
-    # Use double precision for objcryst's REAL
-    env.PrependUnique(CCFLAGS=['-DREAL=double'])
-
-    # Platform specific intricacies.
-    if env['PLATFORM'] == 'darwin':
-        darwin_shlinkflags = [n for n in env['SHLINKFLAGS'] if n != '-dynamiclib']
-        env.Replace(SHLINKFLAGS=darwin_shlinkflags)
-        env.AppendUnique(SHLINKFLAGS=['-bundle'])
-        env.AppendUnique(SHLINKFLAGS=['-undefined', 'dynamic_lookup'])
-        fast_linkflags[:] = []
-
-    # Compiler specific options
-    if icpc:
+    if env['tool'] == 'intelc':
         # options for Intel C++ compiler on hpc dev-intel07
         env.AppendUnique(CCFLAGS=['-w1', '-fp-model', 'precise'])
         env.PrependUnique(LIBS=['imf'])
-        fast_optimflags = ['-fast', '-no-ipo']
+        fast_opts = ['-fast', '-no-ipo']
     else:
-        # g++ options
-        env.AppendUnique(CCFLAGS=['-Wall', '-fno-strict-aliasing'])
-        fast_optimflags = ['-ffast-math']
+        env.AppendUnique(CCFLAGS=['-fno-strict-aliasing'])
+        fast_opts = ['-ffast-math']
 
-    # Configure build variants
+    if env['PLATFORM'] == 'darwin':
+        # macOS bundle
+        sh = [f for f in env['SHLINKFLAGS'] if f != '-dynamiclib']
+        env.Replace(SHLINKFLAGS=sh + ['-bundle', '-undefined', 'dynamic_lookup'])
+        fast_link = []  # no strip on macOS bundles
+    else:
+        fast_link = ['-s']
+
     if env['build'] == 'debug':
-        env.AppendUnique(CCFLAGS='-g')
+        # Python has NDEBUG defined in release builds.
+        cppdefs = env.get('CPPDEFINES', [])
+        env.Replace(CPPDEFINES=[d for d in cppdefs if d != 'NDEBUG'])
+
+        env.Append(CCFLAGS=['-g', '-O0'])
+
     elif env['build'] == 'fast':
-        env.AppendUnique(CCFLAGS=['-O3'] + fast_optimflags)
-        env.AppendUnique(CPPDEFINES='NDEBUG')
-        env.AppendUnique(LINKFLAGS=fast_linkflags)
-        env.AppendUnique(SHLINKFLAGS=fast_shlinkflags)
+        env.Append(CCFLAGS=['-O3'] + fast_opts)
+        env.Append(LINKFLAGS=fast_link)
 
-    if env['profile']:
-        env.AppendUnique(CCFLAGS='-pg')
-        env.AppendUnique(LINKFLAGS='-pg')
+builddir = env.Dir('build/%s-%s' % (env['build'], env['PLATFORM']))
 
-    env.Append(CPPPATH=[pjoin(env['prefix'], 'include')])
-    env.Append(LIBPATH=[pjoin(env['prefix'], 'lib')])
-
-builddir = env.Dir('build/%s-%s' % (env['build'], platform.machine()))
-
-Export('env', 'pyconfigvar', 'pyoutput', 'pyversion')
+Export('env', 'pyversion')
 
 if os.path.isfile('sconscript.local'):
     env.SConscript('sconscript.local')

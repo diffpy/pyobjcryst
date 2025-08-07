@@ -9,8 +9,7 @@
 # See LICENSE.txt for license information.
 #
 ##############################################################################
-
-"""Python wrapping of PowderPattern.h
+"""Python wrapping of PowderPattern.h.
 
 See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).
 
@@ -20,5 +19,4 @@ Changes from ObjCryst::ReflectionProfile::
 
 __all__ = ["ReflectionProfile", "ReflectionProfileType"]
 
-from pyobjcryst._pyobjcryst import ReflectionProfile
-from pyobjcryst._pyobjcryst import ReflectionProfileType
+from pyobjcryst._pyobjcryst import ReflectionProfile, ReflectionProfileType
