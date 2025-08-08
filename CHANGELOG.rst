@@ -4,15 +4,7 @@ Release notes
 
 .. current developments
 
-2025.1.0
-=====
-
-**Removed:**
-
-* Removed fallback version handling in `src/pyobjcryst/version.py`.
-
-
-Version 2024.X.X
+Version 2024.2.2
 ----------------
 
 Changes
