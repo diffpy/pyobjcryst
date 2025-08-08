@@ -1,6 +1,6 @@
 **Added:**
 
-* No news: correct readme indentation for pypi rendering.
+* <news item>
 
 **Changed:**
 
@@ -16,7 +16,7 @@
 
 **Fixed:**
 
-* <news item>
+* Code brought up to scikit-package level 5 standards with automated release workflows
 
 **Security:**
 
