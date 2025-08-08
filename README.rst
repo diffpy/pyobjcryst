@@ -62,11 +62,11 @@ If you use diffpy.srfit in a scientific publication, we would like you to cite t
 
 and
 
-   V. Favre-Nicolin and R. Cerný
-   `FOX, 'free objects for crystallography': a modular approach to ab initio structure determination
-    from powder diffraction
-    <https://doi.org/10.1107/S0021889802015236>`__,
-    *J. Appl. Cryst.*  **35**, 734-743 (2002)
+   V. Favre-Nicolin and R. Cerný,
+   `FOX, 'free objects for crystallography': a modular approach to
+   ab initio structure determination from powder diffraction
+   <https://doi.org/10.1107/S0021889802015236>`__,
+   *J. Appl. Cryst.*  **35**, 734-743 (2002)
 
 The second paper describes the c++ crystallographic objects in
 ``ObjCryst++`` that are wrapped by ``pyobjcryst``
@@ -123,7 +123,7 @@ displayed in a jupyter notebook:
 Getting Started
 ---------------
 
-You may consult our `online documentation <https://pyobjcryst.readthedocs.io/en/stable/>`_ for tutorials and API references.
+You may consult our `online documentation <https://diffpy.github.io/pyobjcryst>`_ for tutorials and API references.
 
 Alternative methods of installation
 -----------------------------------
