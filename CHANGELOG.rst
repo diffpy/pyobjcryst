@@ -4,6 +4,18 @@ Release notes
 
 .. current developments
 
+2025.1.0
+=====
+
+**Fixed:**
+
+* Code brought up to scikit-package level 5 standards with automated release workflows
+
+**Removed:**
+
+* Removed fallback version handling in `src/pyobjcryst/version.py`.
+
+
 Version 2024.2.2
 ----------------
 
