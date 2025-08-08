@@ -4,7 +4,7 @@ Release notes
 
 .. current developments
 
-Version 2024.X.X
+Version 2024.2.2
 ----------------
 
 Changes
