@@ -54,7 +54,7 @@ class ReflectionProfileWrap :
 
         REAL GetFullProfileWidth(
                 const REAL relativeIntensity, const REAL xcenter,
-                const REAL h, const REAL k, const REAL l)
+                const REAL h, const REAL k, const REAL l) const
         {
             bp::override f = this->get_override("GetFullProfileWidth");
             return f(relativeIntensity, xcenter, h, k, l);
@@ -68,7 +68,7 @@ class ReflectionProfileWrap :
 
         void XMLInput(istream& is, const XMLCrystTag& tag)
         {
-            bp::override f = this->get_override("GetProfile");
+            bp::override f = this->get_override("XMLInput");
             f(is, tag);
         }
 };
@@ -80,9 +80,27 @@ void wrap_reflectionprofile()
 {
     class_<ReflectionProfileWrap, bases<RefinableObj>, boost::noncopyable>(
             "ReflectionProfile")
-        // TODO add pure_virtual bindings to the remaining public methods
         .def("CreateCopy",
                 pure_virtual(&ReflectionProfile::CreateCopy),
                 return_value_policy<manage_new_object>())
+        .def(
+            "GetProfile",
+            pure_virtual((CrystVector_REAL (ReflectionProfile::*)(const CrystVector_REAL&, REAL, REAL, REAL) const)
+                         &ReflectionProfile::GetProfile),
+            (bp::arg("x"), bp::arg("xcenter"), bp::arg("h"),
+             bp::arg("k"), bp::arg("l")))
+        .def("GetFullProfileWidth",
+            pure_virtual((REAL (ReflectionProfile::*)(const REAL, const REAL, const REAL, const REAL) const)
+                         &ReflectionProfile::GetFullProfileWidth),
+            (bp::arg("relativeIntensity"), bp::arg("xcenter"),
+             bp::arg("h"), bp::arg("k"), bp::arg("l")))
+        .def("XMLOutput",
+            pure_virtual((void (ReflectionProfile::*)(ostream&, int) const)
+                         &ReflectionProfile::XMLOutput),
+            (bp::arg("os"), bp::arg("indent")))
+        .def("XMLInput",
+            pure_virtual((void (ReflectionProfile::*)(istream&, const XMLCrystTag&))
+                         &ReflectionProfile::XMLInput),
+            (bp::arg("is"), bp::arg("tag")))
         ;
 }
