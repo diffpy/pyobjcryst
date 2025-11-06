@@ -25,6 +25,7 @@
 
 #include <ObjCryst/ObjCryst/General.h>
 #include <ObjCryst/ObjCryst/PowderPattern.h>
+#include <ObjCryst/ObjCryst/ScatteringData.h> 
 
 namespace bp = boost::python;
 using namespace boost::python;
