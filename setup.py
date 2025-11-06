@@ -10,6 +10,7 @@ Packages:   pyobjcryst
 import glob
 import os
 import sys
+import sysconfig
 from ctypes.util import find_library
 from pathlib import Path
 
@@ -21,7 +22,7 @@ from setuptools import Extension, setup
 
 def get_boost_libraries():
     # the names we'll search for
-    major, minor = sys.version_info[:2]
+    major, minor = sys.version_info.major, sys.version_info.minor
     candidates = [
         f"boost_python{major}{minor}",
         f"boost_python{major}",
@@ -50,19 +51,19 @@ def get_boost_libraries():
 
 def get_env_config():
     conda_prefix = os.environ.get("CONDA_PREFIX")
-    if not conda_prefix:
-        raise EnvironmentError(
-            "CONDA_PREFIX environment variable is not set. "
-            "Please activate your conda environment before running setup.py."
-        )
-    if os.name == "nt":
-        inc = Path(conda_prefix) / "Library" / "include"
-        lib = Path(conda_prefix) / "Library" / "lib"
-    else:
-        inc = Path(conda_prefix) / "include"
-        lib = Path(conda_prefix) / "lib"
+    if conda_prefix:
+        if os.name == "nt":
+            inc = Path(conda_prefix) / "Library" / "include"
+            lib = Path(conda_prefix) / "Library" / "lib"
+        else:
+            inc = Path(conda_prefix) / "include"
+            lib = Path(conda_prefix) / "lib"
+        return {"include_dirs": [str(inc)], "library_dirs": [str(lib)]}
 
-    return {"include_dirs": [str(inc)], "library_dirs": [str(lib)]}
+    # no conda env: fallback to system/venv Python include/lib dirs
+    py_inc = sysconfig.get_paths().get("include")
+    libdir = sysconfig.get_config_var("LIBDIR") or "/usr/lib"
+    return {"include_dirs": [p for p in [py_inc] if p], "library_dirs": [libdir]}
 
 
 def create_extensions():
