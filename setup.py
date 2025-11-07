@@ -63,7 +63,10 @@ def get_env_config():
     # no conda env: fallback to system/venv Python include/lib dirs
     py_inc = sysconfig.get_paths().get("include")
     libdir = sysconfig.get_config_var("LIBDIR") or "/usr/lib"
-    return {"include_dirs": [p for p in [py_inc] if p], "library_dirs": [libdir]}
+    return {
+        "include_dirs": [p for p in [py_inc] if p],
+        "library_dirs": [libdir],
+    }
 
 
 def create_extensions():

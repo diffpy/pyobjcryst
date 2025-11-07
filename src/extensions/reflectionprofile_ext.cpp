@@ -54,7 +54,7 @@ class ReflectionProfileWrap :
 
         REAL GetFullProfileWidth(
             const REAL relativeIntensity, const REAL xcenter,
-            const REAL h, const REAL k, const REAL l) 
+            const REAL h, const REAL k, const REAL l)
         {
             bp::override f = this->get_override("GetFullProfileWidth");
             return f(relativeIntensity, xcenter, h, k, l);
