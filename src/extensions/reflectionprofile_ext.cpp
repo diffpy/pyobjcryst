@@ -53,7 +53,7 @@ namespace
 
         REAL GetFullProfileWidth(
             const REAL relativeIntensity, const REAL xcenter,
-            const REAL h, const REAL k, const REAL l) const
+            const REAL h, const REAL k, const REAL l) 
         {
             bp::override f = this->get_override("GetFullProfileWidth");
             return f(relativeIntensity, xcenter, h, k, l);
@@ -83,11 +83,11 @@ void wrap_reflectionprofile()
              return_value_policy<manage_new_object>())
         .def(
             "GetProfile",
-            pure_virtual((CrystVector_REAL (ReflectionProfile::*)(const CrystVector_REAL &, REAL, REAL, REAL) const) & ReflectionProfile::GetProfile),
+            pure_virtual((CrystVector_REAL (ReflectionProfile::*)(const CrystVector_REAL &, REAL, REAL, REAL, REAL) const) & ReflectionProfile::GetProfile),
             (bp::arg("x"), bp::arg("xcenter"), bp::arg("h"),
              bp::arg("k"), bp::arg("l")))
         .def("GetFullProfileWidth",
-             pure_virtual((REAL (ReflectionProfile::*)(const REAL, const REAL, const REAL, const REAL) const) & ReflectionProfile::GetFullProfileWidth),
+             pure_virtual((REAL (ReflectionProfile::*)(const REAL, const REAL, const REAL, const REAL, const REAL) const) & ReflectionProfile::GetFullProfileWidth),
              (bp::arg("relativeIntensity"), bp::arg("xcenter"),
               bp::arg("h"), bp::arg("k"), bp::arg("l")))
         .def("XMLOutput",
