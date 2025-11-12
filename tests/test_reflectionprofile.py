@@ -1,5 +1,4 @@
-"""
-Unit tests for pyobjcryst.reflectionprofile bindings.
+"""Unit tests for pyobjcryst.reflectionprofile bindings.
 
 TODO:
 - ReflectionProfile.GetProfile
@@ -9,14 +8,15 @@ TODO:
 """
 
 import unittest
-import pytest
+
 import numpy as np
+import pytest
 
 from pyobjcryst.powderpattern import PowderPattern
 
 
 class TestReflectionProfile(unittest.TestCase):
-    """Tests for ReflectionProfile methods"""
+    """Tests for ReflectionProfile methods."""
 
     @pytest.fixture(autouse=True)
     def prepare_fixture(self, loadcifdata):
