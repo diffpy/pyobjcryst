@@ -38,7 +38,8 @@ class TestReflectionProfile(unittest.TestCase):
         self.profile = self.ppd.GetProfile()
 
     def test_get_computed_profile(self):
-        """Sample a profile slice and verify broadening lowers the peak height."""
+        """Sample a profile slice and verify broadening lowers the peak
+        height."""
         x = self.pp.GetPowderPatternX()
         hkl = (1, 0, 0)
         window = x[100:200]
@@ -58,7 +59,9 @@ class TestReflectionProfile(unittest.TestCase):
 
     def test_get_profile_width(self):
         """Ensure full-width increases when W increases."""
-        xcenter = float(self.pp.GetPowderPatternX()[len(self.pp.GetPowderPatternX()) // 4])
+        xcenter = float(
+            self.pp.GetPowderPatternX()[len(self.pp.GetPowderPatternX()) // 4]
+        )
         width_default = self.profile.GetFullProfileWidth(0.5, xcenter, 1, 0, 0)
         self.assertGreater(width_default, 0)
 
@@ -67,7 +70,8 @@ class TestReflectionProfile(unittest.TestCase):
         self.assertGreater(width_broader, width_default)
 
     def test_create_copy(self):
-        """Ensure copy returns an independent profile with identical initial params."""
+        """Ensure copy returns an independent profile with identical
+        initial params."""
         copy = self.profile.CreateCopy()
 
         self.assertIsNot(copy, self.profile)
@@ -80,22 +84,32 @@ class TestReflectionProfile(unittest.TestCase):
         self.profile.GetPar("Eta0").SetValue(eta0_original + 0.1)
         copy.GetPar("Eta0").SetValue(eta0_copy + 0.2)
 
-        self.assertAlmostEqual(copy.GetPar("Eta0").GetValue(), eta0_original + 0.2)
-        self.assertAlmostEqual(self.profile.GetPar("Eta0").GetValue(), eta0_original + 0.1)
+        self.assertAlmostEqual(
+            copy.GetPar("Eta0").GetValue(), eta0_original + 0.2
+        )
+        self.assertAlmostEqual(
+            self.profile.GetPar("Eta0").GetValue(), eta0_original + 0.1
+        )
 
     def test_xml_input(self):
-        """Ensure XMLInput restores parameters previously serialized with xml()."""
+        """Ensure XMLInput restores parameters previously serialized
+        with xml()."""
         xml_state = self.profile.xml()
         eta0_original = self.profile.GetPar("Eta0").GetValue()
 
         self.profile.GetPar("Eta0").SetValue(eta0_original + 0.3)
-        self.assertNotAlmostEqual(self.profile.GetPar("Eta0").GetValue(), eta0_original)
+        self.assertNotAlmostEqual(
+            self.profile.GetPar("Eta0").GetValue(), eta0_original
+        )
 
         RefinableObj.XMLInput(self.profile, xml_state)
-        self.assertAlmostEqual(self.profile.GetPar("Eta0").GetValue(), eta0_original)
+        self.assertAlmostEqual(
+            self.profile.GetPar("Eta0").GetValue(), eta0_original
+        )
 
     def test_xml_output(self):
-        """Ensure XMLOutput emits parameter tags and the expected root element."""
+        """Ensure XMLOutput emits parameter tags and the expected root
+        element."""
         xml_state = self.profile.xml()
 
         self.assertIn("<ReflectionProfile", xml_state)
