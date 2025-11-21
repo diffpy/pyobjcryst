@@ -92,24 +92,33 @@ void wrap_reflectionprofile()
         "ReflectionProfile")
         .def("CreateCopy",
              pure_virtual(&ReflectionProfile::CreateCopy),
-             return_value_policy<manage_new_object>())
+             (return_value_policy<manage_new_object>()),
+             "Return a new ReflectionProfile instance copied from this one.")
+        // Two overloads for GetProfile:
+        // - Native CrystVector signature (for C++ callers / already-converted vectors).
+        // - Python-friendly wrapper that accepts sequences/ndarrays and converts them.
         .def(
             "GetProfile",
              pure_virtual((CrystVector_REAL (ReflectionProfile::*)(const CrystVector_REAL &, REAL, REAL, REAL, REAL) const) & ReflectionProfile::GetProfile),
             (bp::arg("x"), bp::arg("xcenter"), bp::arg("h"),
-             bp::arg("k"), bp::arg("l")))
+             bp::arg("k"), bp::arg("l")),
+             "Compute the profile values at positions `x` for reflection (h, k, l) centered at `xcenter`.")
         .def(
             "GetProfile", &_GetProfile,
             (bp::arg("x"), bp::arg("xcenter"), bp::arg("h"), bp::arg("k"),
-             bp::arg("l")))
+             bp::arg("l")),
+             "Compute the profile values at positions `x` (sequence/ndarray accepted) for reflection (h, k, l) centered at `xcenter`.")
         .def("GetFullProfileWidth",
              pure_virtual((REAL (ReflectionProfile::*)(const REAL, const REAL, const REAL, const REAL, const REAL) const) & ReflectionProfile::GetFullProfileWidth),
              (bp::arg("relativeIntensity"), bp::arg("xcenter"),
-              bp::arg("h"), bp::arg("k"), bp::arg("l")))
+              bp::arg("h"), bp::arg("k"), bp::arg("l")),
+              "Return the full profile width at a given relative intensity for reflection (h, k, l) around `xcenter`.")
         .def("XMLOutput",
              pure_virtual((void (ReflectionProfile::*)(ostream &, int) const) & ReflectionProfile::XMLOutput),
-             (bp::arg("os"), bp::arg("indent")))
+             (bp::arg("os"), bp::arg("indent")),
+             "Write this ReflectionProfile as XML to a file-like object. `indent` controls indentation depth.")
         .def("XMLInput",
              pure_virtual((void (ReflectionProfile::*)(istream &, const XMLCrystTag &))&ReflectionProfile::XMLInput),
-             (bp::arg("is"), bp::arg("tag")));
+             (bp::arg("is"), bp::arg("tag")),
+             "Load ReflectionProfile parameters from an XML stream and tag.");
 }
