@@ -15,3 +15,6 @@ regist
 ;; src/pyobjcryst/crystal.py:548
 ;; alabelstyle parameter
 inFront
+
+;; tests/test_reflectionprofile.py: unittest assertions flagged as typos
+assertin

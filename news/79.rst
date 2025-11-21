@@ -1,0 +1,25 @@
+**Added:**
+
+* Exposed `ReflectionProfile` methods (`GetProfile`, `GetFullProfileWidth`, `XMLOutput`, `XMLInput`) via Python bindings. Added unit tests.
+* The binding to `ReflectionProfile.GetProfile(x, xcenter, h, k, l)` accepts python sequences / `numpy` arrays for the `x` argument, thanks to the helper function `assignCrystVector`.
+
+**Changed:**
+
+* None.
+
+**Deprecated:**
+
+* None.
+
+**Removed:**
+
+* None.
+
+**Fixed:**
+
+* Building with `pip install .` now uses `sysconfig` to locate `ObjCryst++`` libraries outside conda environments.
+* Missing definition of `ScatteringData` in `powderpatterndiffraction_ext.ccp`
+
+**Security:**
+
+* None.
