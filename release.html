@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Release notes &#8212; pyobjcryst 2025.1.0 documentation</title>
+    <title>Release notes &#8212; pyobjcryst 2025.1.1rc0 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=65f7d7c4"></script>
+    <script src="_static/documentation_options.js?v=820e97a1"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -52,7 +52,7 @@
     <link rel="prev" title="pyobjcryst package" href="api/pyobjcryst.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.1.0" />
+  <meta name="docsearch:version" content="2025.1.1rc0" />
   </head>
   
   
@@ -114,7 +114,7 @@
   
   
   
-    <p class="title logo__title">pyobjcryst 2025.1.0 documentation</p>
+    <p class="title logo__title">pyobjcryst 2025.1.1rc0 documentation</p>
   
 </a></div>
     
@@ -396,112 +396,84 @@
 </ul>
 <section id="version-2024-2-2">
 <h3>Version 2024.2.2<a class="headerlink" href="#version-2024-2-2" title="Link to this heading">#</a></h3>
-<section id="changes">
-<h4>Changes<a class="headerlink" href="#changes" title="Link to this heading">#</a></h4>
-</section>
-<section id="fixes">
-<h4>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h4>
+<p><strong>Fixes:</strong></p>
 <ul class="simple">
 <li><p>Correct powder pattern plotting with a non-empty name</p></li>
 </ul>
 </section>
-</section>
 <section id="version-2024-2-1">
 <h3>Version 2024.2.1<a class="headerlink" href="#version-2024-2-1" title="Link to this heading">#</a></h3>
-<section id="id2">
-<h4>Changes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<p><strong>Changes:</strong></p>
 <ul class="simple">
-<li><p><strong>PowderPattern</strong>:
-- Fix re-using a matplotlib figure when plotting
-- Add <code class="docutils literal notranslate"><span class="pre">figure</span></code> property</p></li>
+<li><p>PowderPattern:
+* Fix re-using a matplotlib figure when plotting
+* Add <code class="docutils literal notranslate"><span class="pre">figure</span></code> property</p></li>
 </ul>
-</section>
 </section>
 <section id="version-2024-2">
 <h3>Version 2024.2<a class="headerlink" href="#version-2024-2" title="Link to this heading">#</a></h3>
-<section id="id3">
-<h4>Changes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<p><strong>Changes:</strong></p>
 <ul class="simple">
 <li><p><strong>DiffractionDataSingleCrystal</strong>: add <code class="docutils literal notranslate"><span class="pre">SetHklIobs</span></code>, <code class="docutils literal notranslate"><span class="pre">SetIobs</span></code>, <code class="docutils literal notranslate"><span class="pre">SetSigma</span></code>, <code class="docutils literal notranslate"><span class="pre">GetSigma</span></code>, <code class="docutils literal notranslate"><span class="pre">GetChi2</span></code>, <code class="docutils literal notranslate"><span class="pre">FitScaleFactorForRw</span></code> and <code class="docutils literal notranslate"><span class="pre">FitScaleFactorForR</span></code> (<a class="reference external" href="https://github.com/diffpy/pyobjcryst/issues/42">issue #42</a>)</p></li>
 <li><p>Add a single crystal data notebook example</p></li>
 <li><p>Online documentation notebooks now include the plots <a class="reference external" href="https://pyobjcryst.readthedocs.io/en/latest/examples">https://pyobjcryst.readthedocs.io/en/latest/examples</a></p></li>
 </ul>
-</section>
-<section id="id4">
-<h4>Fixes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<p><strong>Fixes:</strong></p>
 <ul class="simple">
 <li><p>From libobjcryst: update the ScatteringComponentList when a Scatterer is removed from a Crystal (<a class="reference external" href="https://github.com/diffpy/pyobjcryst/issues/41">issue #41</a>)</p></li>
 </ul>
 </section>
-</section>
 <section id="version-2024-1">
 <h3>Version 2024.1<a class="headerlink" href="#version-2024-1" title="Link to this heading">#</a></h3>
-<section id="id5">
-<h4>Changes<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<p><strong>Changes:</strong></p>
 <ul class="simple">
 <li><p>Add python access to MolZAtom, for <code class="docutils literal notranslate"><span class="pre">Molecule.AsZMatrix()</span></code></p></li>
 </ul>
 </section>
-</section>
 <section id="version-2-2-6">
 <h3>Version 2.2.6<a class="headerlink" href="#version-2-2-6" title="Link to this heading">#</a></h3>
-<section id="id6">
-<h4>Changes<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<p><strong>Changes:</strong></p>
 <ul class="simple">
 <li><p>Support for Windows and Python&gt;=3.8</p></li>
 <li><p>Added a zoom limit for 3D crystal views</p></li>
 </ul>
-</section>
-<section id="id7">
-<h4>Fixes<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<p><strong>Fixes:</strong></p>
 <ul class="simple">
 <li><p>Correct error preventing pyobjcryst import for Windows and Python&gt;=3.8 (<a class="reference external" href="https://github.com/diffpy/pyobjcryst/issues/33">issue #33</a>)</p></li>
 <li><p>Fix for matplotlib &gt;=3.7.0 when removing hkl labels</p></li>
 </ul>
 </section>
-</section>
 <section id="version-2-2-5">
 <h3>Version 2.2.5<a class="headerlink" href="#version-2-2-5" title="Link to this heading">#</a></h3>
-<section id="id8">
-<h4>Changes<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
+<p><strong>Changes:</strong></p>
 <ul class="simple">
 <li><p>Raise an exception if <code class="docutils literal notranslate"><span class="pre">alpha</span></code>, <code class="docutils literal notranslate"><span class="pre">beta</span></code> or <code class="docutils literal notranslate"><span class="pre">gamma</span></code> are not within <code class="docutils literal notranslate"><span class="pre">]0;pi[</span></code> when changing lattice angles</p></li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">UnitCell.ChangeSpaceGroup()</span></code></p></li>
 </ul>
-</section>
-<section id="id9">
-<h4>Fixes<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
+<p><strong>Fixes:</strong></p>
 <ul class="simple">
 <li><p>Avoid duplication of plots when using ipympl (aka <code class="docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">widget</span></code>)</p></li>
 <li><p>Correct powder pattern tests to avoid warnings</p></li>
 </ul>
-</section>
-<section id="deprecated">
-<h4>Deprecated<a class="headerlink" href="#deprecated" title="Link to this heading">#</a></h4>
+<p><strong>Deprecated:</strong></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">loadCrystal</span></code> – use <code class="docutils literal notranslate"><span class="pre">create_crystal_from_cif()</span></code> instead</p></li>
 </ul>
 </section>
-</section>
 <section id="version-2-2-4">
 <h3>Version 2.2.4<a class="headerlink" href="#version-2-2-4" title="Link to this heading">#</a></h3>
-<section id="id10">
-<h4>Changes<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
+<p><strong>Changes:</strong></p>
 <ul class="simple">
 <li><p>The list of HKL reflections will now be automatically re-generated for a <code class="docutils literal notranslate"><span class="pre">PowderPatternDiffraction</span></code> when the Crystal’s spacegroup changes, or the lattice parameters are modified by more than 0.5%</p></li>
 </ul>
-</section>
-<section id="id11">
-<h4>Fixes<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
+<p><strong>Fixes:</strong></p>
 <ul class="simple">
 <li><p>Fixed the powder pattern indexing test</p></li>
 </ul>
 </section>
-</section>
 <section id="version-2-2-3">
 <h3>Version 2.2.3<a class="headerlink" href="#version-2-2-3" title="Link to this heading">#</a></h3>
-<section id="added">
-<h4>Added<a class="headerlink" href="#added" title="Link to this heading">#</a></h4>
+<p><strong>Added:</strong></p>
 <ul class="simple">
 <li><p>Support for Windows install (works with Python 3.7, and with PyPy 3.8 and 3.9)</p></li>
 <li><p>Native support for Apple arm64 (M1, M2) processors</p></li>
@@ -509,24 +481,19 @@
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">gDiffractionDataSingleCrystalRegistry</span></code> to globals</p></li>
 </ul>
 </section>
-</section>
 <section id="version-2-2-2">
 <h3>Version 2.2.2<a class="headerlink" href="#version-2-2-2" title="Link to this heading">#</a></h3>
-<section id="id12">
-<h4>Changes<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
+<p><strong>Changes:</strong></p>
 <ul class="simple">
 <li><p>Add correct wrapping for C++-instantiated objects available through global registries, e.g. when loading an XML file. The objects are decorated with the python functions when accessed through the global registries <code class="docutils literal notranslate"><span class="pre">GetObj()</span></code></p></li>
 <li><p>Moved global object registries to <code class="docutils literal notranslate"><span class="pre">pyobjcryst.globals</span></code></p></li>
 <li><p>Update documentation</p></li>
 </ul>
-</section>
-<section id="fixed">
-<h4>Fixed<a class="headerlink" href="#fixed" title="Link to this heading">#</a></h4>
+<p><strong>Fixed:</strong></p>
 <ul class="simple">
 <li><p>Fix access to <code class="docutils literal notranslate"><span class="pre">PRISM_TETRAGONAL_DICAP</span></code>, <code class="docutils literal notranslate"><span class="pre">PRISM_TRIGONAL</span></code>, <code class="docutils literal notranslate"><span class="pre">ICOSAHEDRON</span></code> and <code class="docutils literal notranslate"><span class="pre">TRIANGLE_PLANE</span></code></p></li>
 <li><p>Fix powder pattern plot issues (NaN and update of hkl text with recent matplotlib versions)</p></li>
 </ul>
-</section>
 </section>
 <section id="version-2-2-1-2021-11-28">
 <h3>Version 2.2.1 – 2021-11-28<a class="headerlink" href="#version-2-2-1-2021-11-28" title="Link to this heading">#</a></h3>
@@ -549,8 +516,7 @@
 </section>
 <section id="version-2-1-0-2019-03-11">
 <h3>Version 2.1.0 – 2019-03-11<a class="headerlink" href="#version-2-1-0-2019-03-11" title="Link to this heading">#</a></h3>
-<section id="id13">
-<h4>Added<a class="headerlink" href="#id13" title="Link to this heading">#</a></h4>
+<p><strong>Added:</strong></p>
 <ul class="simple">
 <li><p>Support for Python 3.7</p></li>
 <li><p>Validation of compiler options from <code class="docutils literal notranslate"><span class="pre">python-config</span></code></p></li>
@@ -559,35 +525,26 @@
 <li><p>Declare compatible version requirements for client Anaconda packages</p></li>
 <li><p>Facility for silencing spurious console output from libobjcryst</p></li>
 </ul>
-</section>
-<section id="changed">
-<h4>Changed<a class="headerlink" href="#changed" title="Link to this heading">#</a></h4>
+<p><strong>Changed:</strong></p>
 <ul class="simple">
 <li><p>Build Anaconda package with Anaconda C++ compiler</p></li>
 <li><p>Update to libobjcryst 2017.2.x</p></li>
 </ul>
-</section>
-<section id="id14">
-<h4>Deprecated<a class="headerlink" href="#id14" title="Link to this heading">#</a></h4>
+<p><strong>Deprecated:</strong></p>
 <ul class="simple">
 <li><p>Variable <code class="docutils literal notranslate"><span class="pre">__gitsha__</span></code> in the <code class="docutils literal notranslate"><span class="pre">version</span></code> module, renamed to <code class="docutils literal notranslate"><span class="pre">__git_commit__</span></code></p></li>
 </ul>
-</section>
-<section id="removed">
-<h4>Removed<a class="headerlink" href="#removed" title="Link to this heading">#</a></h4>
+<p><strong>Removed:</strong></p>
 <ul class="simple">
 <li><p>Support for Python 3.4</p></li>
 </ul>
-</section>
-<section id="id15">
-<h4>Fixed<a class="headerlink" href="#id15" title="Link to this heading">#</a></h4>
+<p><strong>Fixed:</strong></p>
 <ul class="simple">
 <li><p>Ambiguous use of boost::python classes and functions</p></li>
 <li><p>Name suffix resolution of <code class="docutils literal notranslate"><span class="pre">boost_python</span></code> shared library</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">SetPowderPatternX</span></code> crash for zero-length argument</p></li>
 <li><p>Incorrectly doubled return value from <code class="docutils literal notranslate"><span class="pre">GetInversionCenter</span></code></p></li>
 </ul>
-</section>
 </section>
 </section>
 </section>
@@ -640,59 +597,18 @@
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2025.1.0</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-2-2">Version 2024.2.2</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#changes">Changes</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-2-1">Version 2024.2.1</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Changes</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-2">Version 2024.2</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Changes</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fixes</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-1">Version 2024.1</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Changes</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-2-6">Version 2.2.6</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Changes</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Fixes</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-2-5">Version 2.2.5</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Changes</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Fixes</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecated">Deprecated</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-2-4">Version 2.2.4</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Changes</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Fixes</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-2-3">Version 2.2.3</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#added">Added</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-2-2">Version 2.2.2</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Changes</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed">Fixed</a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-2-2">Version 2024.2.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-2-1">Version 2024.2.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-2">Version 2024.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-1">Version 2024.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-2-6">Version 2.2.6</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-2-5">Version 2.2.5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-2-4">Version 2.2.4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-2-3">Version 2.2.3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-2-2">Version 2.2.2</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-2-1-2021-11-28">Version 2.2.1 – 2021-11-28</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-2-0-2021-06-08">Version 2.2.0 – 2021-06-08</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-1-0-2019-03-11">Version 2.1.0 – 2019-03-11</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Added</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#changed">Changed</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Deprecated</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#removed">Removed</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Fixed</a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2-1-0-2019-03-11">Version 2.1.0 – 2019-03-11</a></li>
 </ul>
 </li>
 </ul>
