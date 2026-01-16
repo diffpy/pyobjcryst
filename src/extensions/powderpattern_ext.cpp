@@ -141,6 +141,13 @@ void setpowderpatternobs (PowderPattern& pp, bp::object x)
     pp.SetPowderPatternObs(cvx);
 }
 
+void setpowderpatternobssigma (PowderPattern& pp, bp::object x)
+{
+    CrystVector_REAL cvx;
+    assignCrystVector(cvx, x);
+    pp.SetPowderPatternObsSigma(cvx);
+}
+
 
 // Allow override (since we can't benefit from override in RefinableObjWrap)
 class PowderPatternWrap : public PowderPattern, public wrapper<PowderPattern>
@@ -230,6 +237,9 @@ void wrap_powderpattern()
         .def("GetPowderPatternObs",
                 &PowderPattern::GetPowderPatternObs,
                 return_value_policy<copy_const_reference>())
+        .def("GetPowderPatternObsSigma",
+                &PowderPattern::GetPowderPatternObsSigma,
+                return_value_policy<copy_const_reference>())
         .def("GetPowderPatternX",
                 &PowderPattern::GetPowderPatternX,
                 return_value_policy<copy_const_reference>())
@@ -287,6 +297,9 @@ void wrap_powderpattern()
         .def("SetPowderPatternObs",
                 &setpowderpatternobs,
                 bp::arg("obs"))
+        .def("SetPowderPatternObsSigma",
+                &setpowderpatternobssigma,
+                bp::arg("sigma"))
         .def("FitScaleFactorForR",
                 &PowderPattern::FitScaleFactorForR)
         .def("FitScaleFactorForIntegratedR",
