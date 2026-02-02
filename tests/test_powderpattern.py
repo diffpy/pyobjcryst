@@ -101,6 +101,17 @@ class TestPowderPattern(unittest.TestCase):
         self.assertTrue(np.array_equal(obs[::-1], pp.GetPowderPatternObs()))
         return
 
+    def test_SetPowderPatternObsSigma(self):
+        pp = self.pp
+        obs = np.array([1.0, 3.0, 7.0])
+        sig = np.array([1.0, 2.0, 3.0])
+        self.assertRaises(ObjCrystException, pp.SetPowderPatternObsSigma, sig)
+        pp.SetPowderPatternPar(0, 0.5, 3)
+        pp.SetPowderPatternObs(obs)
+        pp.SetPowderPatternObsSigma(sig)
+        self.assertTrue(np.array_equal(sig, pp.GetPowderPatternObsSigma()))
+        return
+
     def test_SetPowderPatternPar(self):
         pp = self.pp
         pp.SetPowderPatternPar(0, 0.25, 5)
