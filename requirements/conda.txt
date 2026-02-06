@@ -1,5 +1,5 @@
 numpy
-libobjcryst
+libobjcryst>=2026.1
 libboost-devel
 libboost-python
 packaging # for matplotlib version parsing in powderpattern.py
