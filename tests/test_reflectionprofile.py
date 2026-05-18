@@ -1,11 +1,4 @@
-"""Unit tests for pyobjcryst.reflectionprofile bindings.
-
-TODO:
-- ReflectionProfile.GetProfile
-- ReflectionProfile.GetFullProfileWidth
-- ReflectionProfile.XMLOutput / XMLInput
-- ReflectionProfile.CreateCopy
-"""
+"""Unit tests for pyobjcryst.reflectionprofile bindings."""
 
 import unittest
 
