@@ -1,0 +1,23 @@
+**Added:**
+
+* None.
+
+**Changed:**
+
+* None.
+
+**Deprecated:**
+
+* None.
+
+**Removed:**
+
+* None.
+
+**Fixed:**
+
+* `quick_fit_profile(displ_transl=True)` now correctly enables refinement of `2ThetaDispl` and `2ThetaTransp` by unfixing both parameters.
+
+**Security:**
+
+* None.

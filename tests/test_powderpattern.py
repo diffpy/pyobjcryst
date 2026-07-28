@@ -15,6 +15,7 @@
 """Unit tests for pyobjcryst.powderpattern (with indexing &"""
 
 import unittest
+from unittest.mock import MagicMock, patch
 
 import numpy as np
 import pytest
@@ -184,6 +185,44 @@ class TestPowderPattern(unittest.TestCase):
         p.SetPowderPatternObs(obs)
         p.SetMaxSinThetaOvLambda(0.3)
         p.quick_fit_profile(auto_background=True, verbose=False, plot=False)
+
+    def test_quick_fit_profile_displ_transl_unfixes_refinement_parameters(
+        self,
+    ):
+        fake_powder_pattern = MagicMock()
+        fake_diffraction = MagicMock()
+        fake_lsqr = MagicMock()
+        fake_lsqr.GetNbParNotFixed.return_value = 0
+        fake_lsq = MagicMock()
+        fake_lsq.GetCompiledRefinedObj.return_value = fake_lsqr
+
+        with patch("pyobjcryst.powderpattern.LSQ", return_value=fake_lsq):
+            PowderPattern.quick_fit_profile(
+                fake_powder_pattern,
+                pdiff=fake_diffraction,
+                auto_background=False,
+                init_profile=False,
+                plot=False,
+                zero=False,
+                constant_width=False,
+                width=False,
+                eta=False,
+                cell=False,
+                asym=False,
+                backgd=False,
+                displ_transl=True,
+                verbose=False,
+            )
+
+        displ_transl_calls = [
+            call.args
+            for call in fake_lsq.SetParIsFixed.call_args_list
+            if call.args[0] in ("2ThetaDispl", "2ThetaTransp")
+        ]
+        self.assertEqual(
+            displ_transl_calls,
+            [("2ThetaDispl", False), ("2ThetaTransp", False)],
+        )
 
     def test_peaklist_index(self):
         c = self.loadcifdata("paracetamol.cif")
