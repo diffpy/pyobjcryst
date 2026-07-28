@@ -54,6 +54,7 @@ def quick_index(
     try_centered_lattice=True,
     continue_on_sol=False,
     max_nb_spurious=0,
+    length_min=2.5,
     verbose=True,
 ):
     if len(pl) > nb_refl:
@@ -70,7 +71,7 @@ def quick_index(
         )
         print("Starting indexing using %2u peaks" % nb)
     ex = CellExplorer(pl, CrystalSystem.CUBIC, 0)
-    ex.SetLengthMinMax(3, 25)
+    ex.SetLengthMinMax(length_min, 25)
     ex.SetAngleMinMax(deg2rad(90), deg2rad(140))
     ex.SetD2Error(0)
     stop_score = 50
@@ -139,7 +140,7 @@ def quick_index(
                 lengthmax = 3 * maxv ** (1 / 3.0)
                 if lengthmax < 25:
                     lengthmax = 25
-                ex.SetLengthMinMax(3, lengthmax)
+                ex.SetLengthMinMax(length_min, lengthmax)
                 ex.SetCrystalSystem(csys)
                 ex.SetCrystalCentering(cent)
                 if verbose:
