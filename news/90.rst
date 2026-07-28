@@ -1,0 +1,26 @@
+**Added:**
+
+* ``quick_index()`` now accepts a ``length_min`` parameter (default: 2.5 Å)
+  to control the minimum unit cell length explored during indexing.
+
+**Changed:**
+
+* ``quick_index()`` default minimum unit cell length lowered from 3 Å to 2.5 Å,
+  allowing correct indexing of compact structures such as α-Fe, B, or ZRNCl
+  (`issue #47 <https://github.com/diffpy/pyobjcryst/issues/47>`_).
+
+**Deprecated:**
+
+* <news item>
+
+**Removed:**
+
+* <news item>
+
+**Fixed:**
+
+* <news item>
+
+**Security:**
+
+* <news item>
