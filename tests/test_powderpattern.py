@@ -79,6 +79,8 @@ class TestPowderPattern(unittest.TestCase):
         pp = self.pp
         crystal = makeCrystal(*makeScatterer())
         pp.SetWavelength(1.54056)
+        # Keep the 2theta window below the first reflection so setup raises
+        # and we can verify the failed diffraction component is not retained.
         pp.SetPowderPatternPar(np.deg2rad(0.1), np.deg2rad(0.01), 41)
 
         with self.assertRaisesRegex(ObjCrystException, "no reflections"):

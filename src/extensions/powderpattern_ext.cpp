@@ -126,6 +126,9 @@ PowderPatternDiffraction& addppdiffraction(PowderPattern& pp, Crystal& crst)
 {
     std::unique_ptr<PowderPatternDiffractionShim> ppc(new PowderPatternDiffractionShim());
     ppc->SetCrystal(crst);
+    // Prepare against the target powder-pattern context before final
+    // registration so a no-reflections failure cannot leave a broken
+    // partially attached component behind.
     ppc->SetParentPowderPattern(pp);
     try
     {
