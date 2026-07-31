@@ -390,11 +390,10 @@ class PowderPattern(PowderPattern_objcryst):
         if pdiff is None:
             # Probably just one diffraction phase, select it
             for i in range(self.GetNbPowderPatternComponent()):
-                comp = self.GetPowderPatternComponent(i)
-                if isinstance(comp, PowderPatternDiffraction) or (
-                    comp.GetClassName() == "PowderPatternDiffraction"
+                if isinstance(
+                    self.GetPowderPatternComponent(i), PowderPatternDiffraction
                 ):
-                    pdiff = comp
+                    pdiff = self.GetPowderPatternComponent(i)
                     break
             if verbose:
                 print(

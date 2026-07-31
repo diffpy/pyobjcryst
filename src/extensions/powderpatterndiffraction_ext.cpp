@@ -27,8 +27,6 @@
 #include <ObjCryst/ObjCryst/PowderPattern.h>
 #include <ObjCryst/ObjCryst/ScatteringData.h>
 
-#include "powderpattern_diffraction_shim.hpp"
-
 namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
@@ -80,6 +78,4 @@ void wrap_powderpatterndiffraction()
                 return_value_policy<copy_const_reference>())
         ;
 
-    class_<PowderPatternDiffractionShim, bases<PowderPatternDiffraction> >(
-                "_PowderPatternDiffractionShim", no_init);
 }

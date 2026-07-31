@@ -33,7 +33,6 @@
 
 #include "python_streambuf.hpp"
 #include "helpers.hpp"
-#include "powderpattern_diffraction_shim.hpp"
 
 namespace bp = boost::python;
 using namespace boost::python;
@@ -118,19 +117,18 @@ PowderPatternBackground& addppbackground(PowderPattern& pp)
 
 PowderPatternDiffraction& addppdiffraction(PowderPattern& pp, Crystal& crst)
 {
-    std::unique_ptr<PowderPatternDiffractionShim> ppc(new PowderPatternDiffractionShim());
+    std::unique_ptr<PowderPatternDiffraction> ppc(new PowderPatternDiffraction());
     ppc->SetCrystal(crst);
     // Prepare against the target powder-pattern context before final
     // registration so a no-reflections failure cannot leave a broken
     // partially attached component behind.
     ppc->SetParentPowderPattern(pp);
-    try
+    ppc->GenHKLFullSpace();
+    if(ppc->GetNbReflBelowMaxSinThetaOvLambda() == 0)
     {
-        ppc->Prepare();
-    }
-    catch(...)
-    {
-        throw;
+        throw ObjCrystException(
+            "PowderPatternDiffraction::CalcSinThetaLambda(): there are no reflections!"
+        );
     }
     pp.AddPowderPatternComponent(*ppc);
     return *ppc.release();
