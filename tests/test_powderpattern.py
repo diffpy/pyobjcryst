@@ -18,13 +18,13 @@ import unittest
 
 import numpy as np
 import pytest
+from testutils import makeCrystal, makeScatterer
 
 from pyobjcryst import ObjCrystException
 from pyobjcryst.indexing import CrystalCentering, CrystalSystem, quick_index
 from pyobjcryst.powderpattern import PowderPattern, SpaceGroupExplorer
 from pyobjcryst.radiation import RadiationType, WavelengthType
 from pyobjcryst.reflectionprofile import ReflectionProfileType
-from testutils import makeCrystal, makeScatterer
 
 # ----------------------------------------------------------------------------
 
