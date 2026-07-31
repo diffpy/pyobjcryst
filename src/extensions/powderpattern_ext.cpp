@@ -131,6 +131,15 @@ PowderPatternDiffraction& addppdiffraction(PowderPattern& pp, Crystal& crst)
         );
     }
     pp.AddPowderPatternComponent(*ppc);
+    try
+    {
+        pp.Prepare();
+    }
+    catch(...)
+    {
+        pp.RemovePowderPatternComponent(*ppc);
+        throw;
+    }
     return *ppc.release();
 }
 
