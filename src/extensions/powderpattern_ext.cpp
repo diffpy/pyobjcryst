@@ -24,6 +24,7 @@
 #include <boost/format.hpp>
 #undef B0
 
+#include <memory>
 #include <string>
 
 #include <ObjCryst/RefinableObj/RefinableObj.h>
@@ -38,6 +39,12 @@ using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
+
+class PowderPatternDiffractionShim : public PowderPatternDiffraction
+{
+  public:
+    using PowderPatternDiffraction::Prepare;
+};
 
 
 // This creates a C++ PowderPattern object
@@ -117,11 +124,19 @@ PowderPatternBackground& addppbackground(PowderPattern& pp)
 
 PowderPatternDiffraction& addppdiffraction(PowderPattern& pp, Crystal& crst)
 {
-    PowderPatternDiffraction* ppc = new PowderPatternDiffraction();
+    std::unique_ptr<PowderPatternDiffractionShim> ppc(new PowderPatternDiffractionShim());
     ppc->SetCrystal(crst);
+    ppc->SetParentPowderPattern(pp);
+    try
+    {
+        ppc->Prepare();
+    }
+    catch(...)
+    {
+        throw;
+    }
     pp.AddPowderPatternComponent(*ppc);
-    pp.Prepare();
-    return *ppc;
+    return *ppc.release();
 }
 
 
