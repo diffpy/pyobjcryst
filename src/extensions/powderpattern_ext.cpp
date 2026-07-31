@@ -33,19 +33,13 @@
 
 #include "python_streambuf.hpp"
 #include "helpers.hpp"
+#include "powderpattern_diffraction_shim.hpp"
 
 namespace bp = boost::python;
 using namespace boost::python;
 using namespace ObjCryst;
 
 namespace {
-
-class PowderPatternDiffractionShim : public PowderPatternDiffraction
-{
-  public:
-    using PowderPatternDiffraction::Prepare;
-};
-
 
 // This creates a C++ PowderPattern object
 PowderPattern* _CreatePowderPatternFromCIF(bp::object input)
