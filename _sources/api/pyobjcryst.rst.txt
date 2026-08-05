@@ -117,6 +117,7 @@ pyobjcryst.powderpattern module
     :members:
     :undoc-members:
     :show-inheritance:
+    :exclude-members: ReflectionProfileType
 
 pyobjcryst.pyobjcryst_app module
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -138,6 +139,14 @@ pyobjcryst.refineableobj module
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: pyobjcryst.refineableobj
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyobjcryst.reflectionprofile module
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. automodule:: pyobjcryst.reflectionprofile
     :members:
     :undoc-members:
     :show-inheritance:

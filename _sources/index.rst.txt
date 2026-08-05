@@ -79,12 +79,12 @@ Table of contents
 .. toctree::
    :maxdepth: 2
 
-   getting-started
    Examples <examples/examples>
    Package API <api/pyobjcryst>
    release
    license
 
+=======
 Indices
 =======
 
