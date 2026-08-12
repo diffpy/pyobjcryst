@@ -8,7 +8,7 @@ name = "pyobjcryst"
 # setuptools.build_meta; scikit-build-core needs a different dynamic-version
 # provider to match that exactly. Pinned as a static placeholder for now --
 # revisit before release, see nanobind_migration_notes.md.
-version = "2024.2.1.dev0"
+version = "2026.2.1.dev0"
 authors = [
   { name="Christopher Farrow" },
   { name="Pavol Juhás" },
