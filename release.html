@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Release notes &#8212; pyobjcryst 2026.1.0rc1 documentation</title>
+    <title>Release notes &#8212; pyobjcryst 2026.1.0 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
 
     <script src="_static/jquery.js?v=5d32c60e"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="_static/documentation_options.js?v=b1e5d033"></script>
+    <script src="_static/documentation_options.js?v=b916904f"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -55,7 +55,7 @@
     <link rel="prev" title="pyobjcryst package" href="api/pyobjcryst.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.1.0rc1" />
+  <meta name="docsearch:version" content="2026.1.0" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -123,7 +123,7 @@
   
   
   
-    <p class="title logo__title">pyobjcryst 2026.1.0rc1 documentation</p>
+    <p class="title logo__title">pyobjcryst 2026.1.0 documentation</p>
   
 </a></div>
     
@@ -337,7 +337,8 @@
 <li class="toctree-l1"><a class="reference internal" href="examples/examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/pyobjcryst.html">Package API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">2025.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2026.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2025.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2024-2-2">Version 2024.2.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2024-2-1">Version 2024.2.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2024-2">Version 2024.2</a></li>
@@ -419,7 +420,61 @@
   <section id="release-notes">
 <span id="index-0"></span><h1>Release notes<a class="headerlink" href="#release-notes" title="Link to this heading">#</a></h1>
 <section id="id1">
-<h2>2025.1.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2>2026.1.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p><strong>Added:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">quick_index()</span></code> now accepts a <code class="docutils literal notranslate"><span class="pre">length_min</span></code> parameter (default: 2.5 Å)</p></li>
+</ul>
+<p>to control the minimum unit cell length explored during indexing.
+* Exposed <cite>ReflectionProfile</cite> methods (<cite>GetProfile</cite>, <cite>GetFullProfileWidth</cite>, <cite>XMLOutput</cite>, <cite>XMLInput</cite>) via Python bindings. Added unit tests.
+* The binding to <cite>ReflectionProfile.GetProfile(x, xcenter, h, k, l)</cite> accepts python sequences / <cite>numpy</cite> arrays for the <cite>x</cite> argument, thanks to the helper function <cite>assignCrystVector</cite>.
+* None.
+* Expose PowderPattern.GetPowderPatternObsSigma and PowderPattern.SetPowderPatternObsSigma from objcryst
+* Add <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> documenting contribution guidelines for AI coding agents
+(dependency chain, commit conventions, news-item policy, human-review
+requirement).
+* Add support for Python 3.14.
+* Exposed <code class="docutils literal notranslate"><span class="pre">Radiation.GetLinearPolarRate()</span></code>, <code class="docutils literal notranslate"><span class="pre">Radiation.SetLinearPolarRate()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">Radiation.GetClockWavelength()</span></code>, and <code class="docutils literal notranslate"><span class="pre">Radiation.GetClockRadiation()</span></code> via
+Python bindings. Closes <a class="reference external" href="https://github.com/diffpy/pyobjcryst/issues/38">#38</a>.
+<code class="docutils literal notranslate"><span class="pre">Radiation.GetClockLinearPolarRate()</span></code> is also bound and will be available once
+<cite>diffpy/libobjcryst</cite> picks up <a class="reference external" href="https://github.com/vincefn/objcryst/pull/79">vincefn/objcryst PR #79</a>, which adds the dedicated
+polarisation clock and fixes the polarisation-correction recalculation trigger.</p>
+<p><strong>Changed:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">quick_index()</span></code> default minimum unit cell length lowered from 3 Å to 2.5 Å,</p></li>
+</ul>
+<p>allowing correct indexing of compact structures such as α-Fe, B, or ZRNCl
+(<a class="reference external" href="https://github.com/diffpy/pyobjcryst/issues/47">issue #47</a>).
+* None.
+* None.</p>
+<p><strong>Deprecated:</strong></p>
+<ul class="simple">
+<li><p>None.</p></li>
+<li><p>None.</p></li>
+</ul>
+<p><strong>Fixed:</strong></p>
+<ul class="simple">
+<li><p>Exposed the correctly spelled <cite>ORTHORHOMBIC</cite> while preserving <cite>ORTHOROMBIC</cite> as temporary backend compatible alias</p></li>
+<li><p>Building with <cite>pip install .</cite> now uses <cite>sysconfig</cite> to locate <cite>ObjCryst++`</cite> libraries outside conda environments.</p></li>
+<li><p>Missing definition of <cite>ScatteringData</cite> in <cite>powderpatterndiffraction_ext.ccp</cite></p></li>
+<li><p>Fixed <cite>PowderPattern.AddPowderPatternDiffraction()</cite> so a no-reflections failure does not leave a failed diffraction component attached to the powder pattern.</p></li>
+<li><p><cite>quick_fit_profile(displ_transl=True)</cite> now correctly enables refinement of <cite>2ThetaDispl</cite> and <cite>2ThetaTransp</cite> by unfixing both parameters.</p></li>
+</ul>
+<p><strong>Removed:</strong></p>
+<ul class="simple">
+<li><p>None.</p></li>
+<li><p>None.</p></li>
+<li><p>Remove support for Python 3.11.</p></li>
+</ul>
+<p><strong>Security:</strong></p>
+<ul class="simple">
+<li><p>None.</p></li>
+<li><p>None.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>2025.1.0<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p><strong>Fixed:</strong></p>
 <ul class="simple">
 <li><p>Code brought up to scikit-package level 5 standards with automated release workflows</p></li>
@@ -630,7 +685,8 @@
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2025.1.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2026.1.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2025.1.0</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-2-2">Version 2024.2.2</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-2-1">Version 2024.2.1</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-2">Version 2024.2</a></li>
