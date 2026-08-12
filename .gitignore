@@ -128,3 +128,8 @@ target/
 
 # source distribution tarball
 libdiffpy-*.tar.gz
+
+# ObjCryst run-log autosave files (MonteCarloObj/LSQ XML dumps), produced
+# any time an example notebook/script runs an optimization.
+ObjCryst*.xml
+*-Run#*-Cost-*.xml

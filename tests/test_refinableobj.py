@@ -423,6 +423,49 @@ class TestRefinableObj(unittest.TestCase):
         """Test xml() function."""
         self.r.xml()
 
+    def test_xml_output_input_reachable(self):
+        """XMLOutput/XMLInput were dropped from the nanobind port's
+        method-forwarding audit alongside the LSQ methods below. Note
+        RefinableObj's own C++ base implementation is a documented no-op
+        ("Does nothing! Should be purely virtual...", see
+        RefinableObj/IO.cpp) -- real content only appears once a concrete
+        subclass overrides it, so this just confirms the base-class methods
+        are reachable from Python and don't raise. Real roundtrips through a
+        file-like object, exercised on concrete subclasses that do override
+        XMLOutput/XMLInput with real behaviour, live in test_scatterer.py
+        (Atom), test_powderpattern.py (PowderPatternBackground) and
+        test_single_crystal_data.py (DiffractionDataSingleCrystal)."""
+        import io
+
+        buf = io.StringIO()
+        self.r.XMLOutput(buf)
+        self.assertEqual("", buf.getvalue())
+
+        self.r.XMLInput("")
+
+    def test_LSQ_methods_not_overridden_raise(self):
+        """GetLSQCalc/GetLSQObs/GetLSQWeight/GetLSQDeriv are virtual methods
+        RefinableObj declares for the "custom LSQ target" extensibility API
+        (a Python subclass overrides them to supply a least-squares
+        objective) -- they existed under Boost.Python but were entirely
+        missing from the initial nanobind port (not bound at all, not even
+        as a plain call). This only checks they're reachable and that the
+        un-overridden base implementation's documented failure mode (it
+        raises rather than returning nonsense) still holds; overriding them
+        from a Python subclass is a separate, not-yet-supported capability
+        (see nanobind_migration_notes.md) and is not exercised here."""
+        from pyobjcryst import ObjCrystException
+
+        with self.assertRaises(ObjCrystException):
+            self.r.GetLSQCalc(0)
+        with self.assertRaises(ObjCrystException):
+            self.r.GetLSQObs(0)
+        with self.assertRaises(ObjCrystException):
+            self.r.GetLSQWeight(0)
+        p1, _ = self._getPars()
+        with self.assertRaises(ObjCrystException):
+            self.r.GetLSQDeriv(0, p1)
+
 
 if __name__ == "__main__":
     unittest.main()

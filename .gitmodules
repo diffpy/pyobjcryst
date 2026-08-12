@@ -1,0 +1,3 @@
+[submodule "extern/objcryst"]
+	path = extern/objcryst
+	url = https://github.com/vincefn/objcryst.git

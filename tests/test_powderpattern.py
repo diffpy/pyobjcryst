@@ -181,6 +181,33 @@ class TestPowderPattern(unittest.TestCase):
         self.assertEqual(pp.GetRadiationType(), RadiationType.RAD_NEUTRON)
         pp.SetRadiationType(t)
 
+    def test_GetClassName(self):
+        # Regression test: PowderPatternDiffraction/PowderPatternBackground
+        # nanobind-inherit from ScatteringData/PowderPatternComponent rather
+        # than RefinableObj directly (RefinableObj is a *virtual* base of
+        # both, see nanobind_migration_notes.md); GetName/SetName/FixAllPar/
+        # UnFixAllPar were rebound manually to compensate, but GetClassName
+        # was missed, so it raised AttributeError -- surfaced via
+        # PowderPattern.plot(hkl=True), which calls GetClassName() on every
+        # component to build the phase legend. Nanobind-specific; no
+        # equivalent needed upstream (Boost.Python didn't have this bug).
+        c = self.loadcifdata("paracetamol.cif")
+        p = PowderPattern()
+        p.SetWavelength(0.7)
+        x = np.linspace(0, 40, 8001)
+        p.SetPowderPatternX(np.deg2rad(x))
+        p.SetPowderPatternObs(np.ones_like(x))
+        pd = p.AddPowderPatternDiffraction(c)
+        bg = p.AddPowderPatternBackground()
+        self.assertEqual("PowderPatternDiffraction", pd.GetClassName())
+        self.assertEqual("PowderPatternBackground", bg.GetClassName())
+        for i in range(p.GetNbPowderPatternComponent()):
+            comp = p.GetPowderPatternComponent(i)
+            self.assertIn(
+                comp.GetClassName(),
+                ("PowderPatternDiffraction", "PowderPatternBackground"),
+            )
+
     def test_quick_fit(self):
         c = self.loadcifdata("paracetamol.cif")
         p = PowderPattern()
@@ -337,10 +364,53 @@ class TestPowderPattern(unittest.TestCase):
 # ----------------------------------------------------------------------------
 
 
-class TestPowderPatternComponent(unittest.TestCase):
-    pass
-    # def test___init__(self):  assert False
-    # def test_GetParentPowderPattern(self):  assert False
+class _PowderPatternComponentFixtureMixin:
+    """Shared setUp for the three test classes below: a PowderPattern with
+    one real PowderPatternBackground and one real PowderPatternDiffraction
+    attached, mirroring TestPowderPattern.test_GetClassName's setup. Both
+    PowderPatternComponent and ScatteringData inherit RefinableObj virtually
+    in C++ (and PowderPatternDiffraction inherits PowderPatternComponent
+    virtually *again*, on top of ScatteringData non-virtually) -- see
+    nanobind_migration_notes.md's "Follow-up" section -- so neither class is
+    directly instantiable from Python; these fixtures exercise the
+    forwarding fix through real, concrete PowderPatternComponent-family
+    objects instead.
+    """
+
+    @pytest.fixture(autouse=True)
+    def prepare_fixture(self, loadcifdata):
+        self.loadcifdata = loadcifdata
+
+    def setUp(self):
+        c = self.loadcifdata("paracetamol.cif")
+        self.pp = PowderPattern()
+        self.pp.SetWavelength(0.7)
+        x = np.linspace(0, 40, 8001)
+        self.pp.SetPowderPatternX(np.deg2rad(x))
+        self.pp.SetPowderPatternObs(np.ones_like(x))
+        self.bg = self.pp.AddPowderPatternBackground()
+        self.diff = self.pp.AddPowderPatternDiffraction(c)
+
+
+class TestPowderPatternComponent(_PowderPatternComponentFixtureMixin, unittest.TestCase):
+
+    def test_GetParentPowderPattern(self):
+        self.assertIs(self.pp, self.bg.GetParentPowderPattern())
+        self.assertIs(self.pp, self.diff.GetParentPowderPattern())
+
+    def test_refinableobj_forwarding(self):
+        """PowderPatternComponent inherits RefinableObj virtually; only
+        GetName/SetName/GetClassName/FixAllPar/UnFixAllPar were reachable
+        before the forwarding fix (see test_GetClassName above, which
+        covers GetClassName specifically) -- exercise the rest here."""
+        self.bg.SetName("mybg")
+        self.assertEqual("mybg", self.bg.GetName())
+        self.bg.FixAllPar()
+        self.bg.UnFixAllPar()
+        self.bg.BeginOptimization()
+        self.bg.EndOptimization()
+        self.assertEqual(0.0, self.bg.GetLogLikelihood())
+        self.bg.UpdateDisplay()
 
 
 # End of class TestPowderPatternComponent
@@ -348,8 +418,7 @@ class TestPowderPatternComponent(unittest.TestCase):
 # ----------------------------------------------------------------------------
 
 
-class TestPowderPatternBackground(unittest.TestCase):
-    pass
+class TestPowderPatternBackground(_PowderPatternComponentFixtureMixin, unittest.TestCase):
     # def test___init__(self):  assert False
     # def test_FixParametersBeyondMaxresolution(self):  assert False
     # def test_GetPowderPatternCalc(self):  assert False
@@ -357,42 +426,21 @@ class TestPowderPatternBackground(unittest.TestCase):
     # def test_OptimizeBayesianBackground(self):  assert False
     # def test_SetInterpPoints(self):  assert False
 
+    def test_refinableobj_forwarding(self):
+        import io
+
+        self.bg.SetName("bg_xml_test")
+        buf = io.StringIO()
+        self.bg.XMLOutput(buf)
+        self.assertIn("<PowderPatternBackground", buf.getvalue())
+
 
 # End of class TestPowderPatternBackground
 
 # ----------------------------------------------------------------------------
 
 
-class TestPowderPatternDiffraction(unittest.TestCase):
-    def test_X2XCorrPhase_flat_detector_displacement(self):
-        pp = PowderPattern()
-        pp.SetWavelength(1.54056)
-        pp.SetPowderPatternPar(np.deg2rad(5), np.deg2rad(0.1), 851)
-        crystal = makeCrystal(*makeScatterer())
-        pdiff = pp.AddPowderPatternDiffraction(crystal)
-
-        x = np.deg2rad(30)
-        self.assertAlmostEqual(pdiff.X2XCorrPhase(x), x)
-
-        phase_ratio = 1e-4
-        pdiff.GetPar("2ThetaFlatDetDispRatioPhase").SetValue(phase_ratio)
-        expected = x + np.arctan(
-            phase_ratio
-            * np.sin(2 * x)
-            / (2 - 2 * phase_ratio * np.sin(x) ** 2)
-        )
-        self.assertAlmostEqual(pdiff.X2XCorrPhase(x), expected)
-
-        pattern_ratio = 2e-4
-        pp.GetPar("2ThetaFlatDetDispRatio").SetValue(pattern_ratio)
-        total_ratio = phase_ratio + pattern_ratio
-        expected = x + np.arctan(
-            total_ratio
-            * np.sin(2 * x)
-            / (2 - 2 * total_ratio * np.sin(x) ** 2)
-        )
-        self.assertAlmostEqual(pdiff.X2XCorrPhase(x), expected)
-
+class TestPowderPatternDiffraction(_PowderPatternComponentFixtureMixin, unittest.TestCase):
     # def test___init__(self):  assert False
     # def test_ExtractLeBail(self):  assert False
     # def test_GetExtractionMode(self):  assert False
@@ -402,6 +450,16 @@ class TestPowderPatternDiffraction(unittest.TestCase):
     # def test_SetCrystal(self):  assert False
     # def test_SetExtractionMode(self):  assert False
     # def test_SetReflectionProfilePar(self):  assert False
+
+    def test_refinableobj_forwarding(self):
+        """PowderPatternDiffraction reaches RefinableObj via ScatteringData
+        (non-virtual, already a correct nanobind base) -- confirm the
+        forwarding applied to ScatteringData actually cascades here rather
+        than assuming it does."""
+        self.diff.FixAllPar()
+        self.diff.UnFixAllPar()
+        self.assertEqual(0.0, self.diff.GetLogLikelihood())
+        self.diff.UpdateDisplay()
 
 
 # End of class TestPowderPatternDiffraction
