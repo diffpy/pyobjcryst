@@ -61,8 +61,14 @@ class PowderPattern(PowderPattern_objcryst):
         self._plot_hkl = False
         self._plot_hkl_fontsize = 6
         self._plot_phase_labels = None
+
         # xlim last time hkl were plotted
         self._last_hkl_plot_xlim = None
+
+        # Used to avoid issues with get_window_extent
+        # before figure is actually rendered
+        self._plot_fig_displayed_once = False
+
         self.evts = []
         self._colour_phases = [
             "black",
@@ -155,6 +161,7 @@ class PowderPattern(PowderPattern_objcryst):
         x = np.rad2deg(self.GetPowderPatternX())
         if self._plot_fig is None or "inline" in plt.get_backend():
             self._plot_fig = plt.figure(figsize=figsize)
+            self._plot_fig_displayed_once = False
         else:
             self._plot_fig.clear()
         ax = (
@@ -234,6 +241,8 @@ class PowderPattern(PowderPattern_objcryst):
             self._plot_fig.canvas.mpl_connect(
                 "draw_event", self._on_draw_event
             )
+        # TODO: There may be cases where this is not true
+        self._plot_fig_displayed_once = True
 
     def _do_plot_hkl(self, nb_max=100, fontsize_hkl=None):
         import matplotlib.pyplot as plt
@@ -313,7 +322,10 @@ class PowderPattern(PowderPattern_objcryst):
                     fontweight="light",
                     color=self._colour_phases[iphase],
                 )
-                if renderer is not None:
+                # get_window_extent gets stuck if image has not yet
+                # been completely rendered, preventing the display
+                # of the figure (%matplotlib widget)
+                if renderer is not None and self._plot_fig_displayed_once:
                     # Check for overlap with previous
                     bbox = t.get_window_extent(renderer)
                     # print(s, bbox)
