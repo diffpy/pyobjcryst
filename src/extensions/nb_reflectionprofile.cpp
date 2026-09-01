@@ -91,7 +91,71 @@ void wrap_reflectionprofile(nb::module_& m)
                  &ReflectionProfile::GetFullProfileWidth),
              nb::arg("relativeIntensity"), nb::arg("xcenter"),
              nb::arg("h"), nb::arg("k"), nb::arg("l"))
+        .def("IsAnisotropic", &ReflectionProfile::IsAnisotropic,
+             "Return whether the profile depends on the reflection indices.")
         .def("XMLOutput", &_XMLOutput, nb::arg("file"), nb::arg("indent") = 0)
         .def("XMLInput",  &_XMLInput,  nb::arg("file"), nb::arg("tag"))
+        ;
+
+    nb::class_<ReflectionProfilePseudoVoigt, ReflectionProfile>(
+        m, "ReflectionProfilePseudoVoigt")
+        .def(nb::init<>())
+        .def(nb::init<const ReflectionProfilePseudoVoigt&>(), nb::arg("old"))
+        .def("CreateCopy", &ReflectionProfilePseudoVoigt::CreateCopy,
+             nb::rv_policy::take_ownership,
+             "Return an independent copy of this profile.")
+        .def("SetProfilePar", &ReflectionProfilePseudoVoigt::SetProfilePar,
+             nb::arg("fwhmCagliotiW"), nb::arg("fwhmCagliotiU") = 0.0,
+             nb::arg("fwhmCagliotiV") = 0.0, nb::arg("eta0") = 0.5,
+             nb::arg("eta1") = 0.0,
+             "Set the isotropic pseudo-Voigt profile parameters.")
+        ;
+
+    nb::class_<ReflectionProfilePseudoVoigtTCH, ReflectionProfile>(
+        m, "ReflectionProfilePseudoVoigtTCH")
+        .def(nb::init<>())
+        .def(nb::init<const ReflectionProfilePseudoVoigtTCH&>(), nb::arg("old"))
+        .def("CreateCopy", &ReflectionProfilePseudoVoigtTCH::CreateCopy,
+             nb::rv_policy::take_ownership,
+             "Return an independent copy of this profile.")
+        .def("SetProfilePar",
+             nb::overload_cast<const REAL, const REAL, const REAL,
+                               const REAL, const REAL, const REAL,
+                               const REAL, const REAL>(
+                 &ReflectionProfilePseudoVoigtTCH::SetProfilePar),
+             nb::arg("fwhmCagliotiW"), nb::arg("fwhmCagliotiU") = 0.0,
+             nb::arg("fwhmCagliotiV") = 0.0,
+             nb::arg("fwhmLorentzX") = 0.0,
+             nb::arg("fwhmLorentzY") = 0.0,
+             nb::arg("fwhmLorentzZ") = 0.0,
+             nb::arg("fwhmScherrerP") = 0.0,
+             nb::arg("scherrerLGmix") = 1.0,
+             "Set the TCH pseudo-Voigt U, V, W, X, Y, Z, P and LGmix parameters.")
+        ;
+
+    nb::class_<ReflectionProfilePseudoVoigtAnisotropic, ReflectionProfile>(
+        m, "ReflectionProfilePseudoVoigtAnisotropic")
+        .def(nb::init<>())
+        .def(nb::init<const ReflectionProfilePseudoVoigtAnisotropic&>(), nb::arg("old"))
+        .def("CreateCopy", &ReflectionProfilePseudoVoigtAnisotropic::CreateCopy,
+             nb::rv_policy::take_ownership,
+             "Return an independent copy of this profile.")
+        .def("SetProfilePar",
+             &ReflectionProfilePseudoVoigtAnisotropic::SetProfilePar,
+             nb::arg("fwhmCagliotiW"), nb::arg("fwhmCagliotiU") = 0.0,
+             nb::arg("fwhmCagliotiV") = 0.0, nb::arg("fwhmGaussP") = 0.0,
+             nb::arg("fwhmLorentzX") = 0.0,
+             nb::arg("fwhmLorentzY") = 0.0,
+             nb::arg("fwhmLorentzGammaHH") = 0.0,
+             nb::arg("fwhmLorentzGammaKK") = 0.0,
+             nb::arg("fwhmLorentzGammaLL") = 0.0,
+             nb::arg("fwhmLorentzGammaHK") = 0.0,
+             nb::arg("fwhmLorentzGammaHL") = 0.0,
+             nb::arg("fwhmLorentzGammaKL") = 0.0,
+             nb::arg("pseudoVoigtEta0") = 0.0,
+             nb::arg("pseudoVoigtEta1") = 0.0,
+             nb::arg("asymA0") = 1.0, nb::arg("asymA1") = 0.0,
+             nb::arg("asymA2") = 0.0,
+             "Set the anisotropic pseudo-Voigt profile parameters.")
         ;
 }

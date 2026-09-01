@@ -1,6 +1,6 @@
 **Added:**
 
-* <news item>
+* Expose reflection profile ``ReflectionProfilePseudoVoigtTCH`` with TCH instead of explicit Eta mixing.
 
 **Changed:**
 
@@ -16,7 +16,7 @@
 
 **Fixed:**
 
-* Fix ``EraseAllParamSet`` on compiled ``RefinableObj`` (from ``LSQ.GetCompiledRefinedObj()``).
+* <news item>
 
 **Security:**
 

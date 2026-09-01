@@ -1,6 +1,6 @@
 **Added:**
 
-* <news item>
+* Add method ``GetRwHistory`` on LSQ object to get history of Rw values through one run of ``lsq.Refine()``.
 
 **Changed:**
 
@@ -16,7 +16,7 @@
 
 **Fixed:**
 
-* Fix ``EraseAllParamSet`` on compiled ``RefinableObj`` (from ``LSQ.GetCompiledRefinedObj()``).
+* <news item>
 
 **Security:**
 

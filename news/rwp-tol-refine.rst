@@ -1,6 +1,6 @@
 **Added:**
 
-* <news item>
+* Add Rwp threshold ``minRwpVar`` for ``lsq.Refine()`` and ``lsq.SafeRefine()``.
 
 **Changed:**
 
@@ -16,7 +16,7 @@
 
 **Fixed:**
 
-* Fix ``EraseAllParamSet`` on compiled ``RefinableObj`` (from ``LSQ.GetCompiledRefinedObj()``).
+* <news item>
 
 **Security:**
 

@@ -96,6 +96,19 @@ target_include_directories(cctbx PUBLIC
 if(DEFINED ENV{CONDA_PREFIX})
     target_include_directories(cctbx PUBLIC "$ENV{CONDA_PREFIX}/include")
 endif()
+# Homebrew (Apple Silicon / Intel)
+if(EXISTS "/opt/homebrew/include")
+    target_include_directories(cctbx PUBLIC "/opt/homebrew/include")
+endif()
+if(EXISTS "/usr/local/include")
+    target_include_directories(cctbx PUBLIC "/usr/local/include")
+endif()
+# Honour an explicit Boost_ROOT / BOOST_ROOT from the environment or cmake args
+if(DEFINED Boost_INCLUDE_DIR)
+    target_include_directories(cctbx PUBLIC "${Boost_INCLUDE_DIR}")
+elseif(DEFINED ENV{BOOST_ROOT})
+    target_include_directories(cctbx PUBLIC "$ENV{BOOST_ROOT}/include")
+endif()
 set_property(TARGET cctbx PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # ---------------------------------------------------------------------------

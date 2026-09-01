@@ -245,14 +245,9 @@ void wrap_crystal(nb::module_& m)
              nb::arg("alpha"), nb::arg("beta"), nb::arg("gamma"),
              nb::arg("SpaceGroupId"))
         .def("AddScatterer",
-             [](nb::handle crystal_h, nb::handle obj) {
-                 Crystal& crystal = nb::cast<Crystal&>(crystal_h);
+             [](Crystal& crystal, nb::object obj) {
                  _AddScatterer(crystal, obj);
-                 // Keep scatterer alive as long as crystal is alive (but not for None)
-                 if (!obj.is_none()) {
-                     nb::detail::keep_alive(crystal_h.ptr(), obj.ptr());
-                 }
-             }, nb::arg("arg").none())
+             }, nb::arg("arg").none(), nb::keep_alive<1,2>())
         .def("RemoveScatterer", &_RemoveScatterer, nb::arg("arg").none())
         .def("GetNbScatterer",  &Crystal::GetNbScatterer)
         .def("GetScatt",

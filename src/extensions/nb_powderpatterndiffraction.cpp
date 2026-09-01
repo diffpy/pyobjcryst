@@ -10,6 +10,7 @@
 #undef B0
 #include <ObjCryst/ObjCryst/PowderPattern.h>
 #include <ObjCryst/ObjCryst/ScatteringData.h>
+#include <ObjCryst/ObjCryst/ReflectionProfile.h>
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 
 #include "helpers_nb.hpp"
@@ -70,6 +71,12 @@ void wrap_powderpatterndiffraction(nb::module_& m)
         .def("GetProfile",
              nb::overload_cast<>(&PowderPatternDiffraction::GetProfile),
              nb::rv_policy::reference_internal)
+        .def("SetProfile",
+             [](PowderPatternDiffraction& d, ReflectionProfile& p) {
+                 d.SetProfile(p.CreateCopy());
+             },
+             nb::arg("profile"),
+             "Install an independent copy of the given profile.")
         .def("SetExtractionMode",
              &PowderPatternDiffraction::SetExtractionMode,
              nb::arg("extract") = true, nb::arg("init") = false)
@@ -85,5 +92,7 @@ void wrap_powderpatterndiffraction(nb::module_& m)
              &PowderPatternDiffraction::GetNbReflBelowMaxSinThetaOvLambda)
         .def("GetFhklObsSq",
              [](PowderPatternDiffraction& d){ return crystvec_to_array(d.GetFhklObsSq()); })
+        .def("X2XCorrPhase", &PowderPatternDiffraction::X2XCorrPhase,
+             "Apply the flat-detector displacement correction for this phase's offset.")
         ;
 }

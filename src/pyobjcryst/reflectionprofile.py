@@ -20,21 +20,28 @@ public methods ``GetProfile``, ``GetFullProfileWidth``,
 ``XMLOutput`` / ``XMLInput`` and ``CreateCopy``. ``GetProfile``
 accepts a Python sequence or numpy array for ``x``.
 
-Concrete isotropic and anisotropic pseudo-Voigt profiles can be installed
-with ``PowderPatternDiffraction.SetProfile``. The diffraction component
-stores an independent copy, so one configured profile can be reused as a
-template for multiple phases::
+Concrete empirical isotropic, TCH isotropic, and anisotropic pseudo-Voigt
+profiles can be installed with ``PowderPatternDiffraction.SetProfile``. The
+diffraction component stores an independent copy, so one configured profile
+can be reused as a template for multiple phases::
 
     from pyobjcryst.reflectionprofile import (
+        ReflectionProfilePseudoVoigt,
+        ReflectionProfilePseudoVoigtTCH,
         ReflectionProfilePseudoVoigtAnisotropic,
     )
 
-    profile = ReflectionProfilePseudoVoigtAnisotropic()
-    profile.GetPar("W").SetValue(1e-6)
-    profile.GetPar("G_HH").SetValue(2e-6)
+    iso = ReflectionProfilePseudoVoigt()
+    iso.SetProfilePar(fwhmCagliotiW=1e-4, eta0=0.5)
+    ppd.SetProfile(iso)
 
-    for pdiff in powder_pattern.get_crystalline_components():
-        pdiff.SetProfile(profile)
+    tch = ReflectionProfilePseudoVoigtTCH()
+    tch.SetProfilePar(fwhmCagliotiW=1e-4, fwhmLorentzZ=2e-4)
+    ppd2.SetProfile(tch)
+
+    aniso = ReflectionProfilePseudoVoigtAnisotropic()
+    aniso.SetProfilePar(fwhmCagliotiW=1e-4)
+    ppd3.SetProfile(aniso)
 
 Example
 -------
@@ -67,6 +74,7 @@ the ``W`` Caglioti parameter::
 __all__ = [
     "ReflectionProfile",
     "ReflectionProfilePseudoVoigt",
+    "ReflectionProfilePseudoVoigtTCH",
     "ReflectionProfilePseudoVoigtAnisotropic",
     "ReflectionProfileType",
 ]
@@ -75,5 +83,6 @@ from pyobjcryst._pyobjcryst import (
     ReflectionProfile,
     ReflectionProfilePseudoVoigt,
     ReflectionProfilePseudoVoigtAnisotropic,
+    ReflectionProfilePseudoVoigtTCH,
     ReflectionProfileType,
 )

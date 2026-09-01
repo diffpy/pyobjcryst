@@ -93,6 +93,66 @@ class TestGlobalOptim(unittest.TestCase):
             self.c.RandomizeConfiguration()
             lsq.Refine(10, False, True)
 
+    def test_lsq_compiled_refined_obj_erase_all_param_set(self):
+        """Check parameter sets can be erased on compiled refined objects."""
+        lsq = LSQ()
+        lsq.SetRefinedObj(self.d, 0, True, True)
+        lsq.PrepareRefParList()
+        refobj = lsq.GetCompiledRefinedObj()
+        save = refobj.CreateParamSet("save")
+        refobj.EraseAllParamSet()
+        self.assertRaises(ObjCrystException, refobj.SaveParamSet, save)
+
+    def test_lsq_get_variance_covariance_map(self):
+        """GetVarianceCovarianceMap returns a dict keyed by (name, name) tuples."""
+        lsq = LSQ()
+        lsq.SetRefinedObj(self.d, 0, True, True)
+        lsq.PrepareRefParList()
+        lsq.SetParIsFixed(refinableobj.refpartype_objcryst, True)
+        lsq.SetParIsFixed(refinableobj.refpartype_scattdata_scale, False)
+        lsq.Refine(1, silent=True)
+        cov = lsq.GetVarianceCovarianceMap()
+        self.assertIsInstance(cov, dict)
+        for key in cov:
+            self.assertIsInstance(key, tuple)
+            self.assertEqual(len(key), 2)
+            self.assertIsInstance(key[0], str)
+            self.assertIsInstance(key[1], str)
+
+    def test_lsq_get_rw_history(self):
+        """GetRwHistory returns a list of floats after Refine()."""
+        lsq = LSQ()
+        lsq.SetRefinedObj(self.d, 0, True, True)
+        lsq.PrepareRefParList()
+        lsq.SetParIsFixed(refinableobj.refpartype_objcryst, True)
+        lsq.SetParIsFixed(refinableobj.refpartype_scattdata_scale, False)
+        history_before = lsq.GetRwHistory()
+        self.assertEqual(list(history_before), [])
+        lsq.Refine(3, silent=True)
+        history = lsq.GetRwHistory()
+        self.assertIsInstance(history, list)
+        self.assertGreater(len(history), 0)
+        for v in history:
+            self.assertIsInstance(v, float)
+            self.assertGreaterEqual(v, 0.0)
+
+    def test_lsq_refine_minrwpvar(self):
+        """minRwpVar argument is accepted by Refine without error."""
+        lsq = LSQ()
+        lsq.SetRefinedObj(self.d, 0, True, True)
+        lsq.PrepareRefParList()
+        lsq.SetParIsFixed(refinableobj.refpartype_objcryst, True)
+        lsq.SetParIsFixed(refinableobj.refpartype_scattdata_scale, False)
+        lsq.Refine(5, silent=True, minRwpVar=0.01)
+
+    def test_lsq_prepare_ref_par_list_verbose(self):
+        """PrepareRefParList accepts a verbose keyword argument."""
+        lsq = LSQ()
+        lsq.SetRefinedObj(self.d, 0, True, True)
+        lsq.PrepareRefParList(verbose=False)
+        lsq.PrepareRefParList(copy_param=False, verbose=True)
+
 
 if __name__ == "__main__":
     unittest.main()
+
