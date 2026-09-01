@@ -90,6 +90,7 @@ void wrap_powderpatterndiffraction()
                 &PowderPatternDiffraction::GetNbReflBelowMaxSinThetaOvLambda)
         .def("GetFhklObsSq", &PowderPatternDiffraction::GetFhklObsSq,
                 return_value_policy<copy_const_reference>())
+        .def("X2XCorrPhase", &PowderPatternDiffraction::X2XCorrPhase)
         ;
 
 }

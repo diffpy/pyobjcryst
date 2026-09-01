@@ -364,7 +364,35 @@ class TestPowderPatternBackground(unittest.TestCase):
 
 
 class TestPowderPatternDiffraction(unittest.TestCase):
-    pass
+    def test_X2XCorrPhase_flat_detector_displacement(self):
+        pp = PowderPattern()
+        pp.SetWavelength(1.54056)
+        pp.SetPowderPatternPar(np.deg2rad(5), np.deg2rad(0.1), 851)
+        crystal = makeCrystal(*makeScatterer())
+        pdiff = pp.AddPowderPatternDiffraction(crystal)
+
+        x = np.deg2rad(30)
+        self.assertAlmostEqual(pdiff.X2XCorrPhase(x), x)
+
+        phase_ratio = 1e-4
+        pdiff.GetPar("2ThetaFlatDetDispRatioPhase").SetValue(phase_ratio)
+        expected = x + np.arctan(
+            phase_ratio
+            * np.sin(2 * x)
+            / (2 - 2 * phase_ratio * np.sin(x) ** 2)
+        )
+        self.assertAlmostEqual(pdiff.X2XCorrPhase(x), expected)
+
+        pattern_ratio = 2e-4
+        pp.GetPar("2ThetaFlatDetDispRatio").SetValue(pattern_ratio)
+        total_ratio = phase_ratio + pattern_ratio
+        expected = x + np.arctan(
+            total_ratio
+            * np.sin(2 * x)
+            / (2 - 2 * total_ratio * np.sin(x) ** 2)
+        )
+        self.assertAlmostEqual(pdiff.X2XCorrPhase(x), expected)
+
     # def test___init__(self):  assert False
     # def test_ExtractLeBail(self):  assert False
     # def test_GetExtractionMode(self):  assert False
