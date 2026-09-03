@@ -108,8 +108,13 @@ void wrap_lsq()
                 &LSQNumObj::GetCompiledRefinedObj,
                 with_custodian_and_ward_postcall<0,1,return_internal_reference<> >())
         .def("PrintRefResults", &LSQNumObj::PrintRefResults)
-        .def("PrepareRefParList", &LSQNumObj::PrepareRefParList,
-                (bp::arg("copy_param")=false))
+        .def("PrepareRefParList",
+                (void (LSQNumObj::*)(const bool, const bool))
+                &LSQNumObj::PrepareRefParList,
+                (bp::arg("copy_param")=false,
+                 bp::arg("verbose")=false),
+                "Prepare the compiled parameter list. Set verbose=True to "
+                "show warnings emitted while resolving duplicate names.")
         .def("GetLSQCalc", &LSQNumObj::GetLSQCalc,
                 return_value_policy<copy_const_reference>())
         .def("GetLSQObs", &LSQNumObj::GetLSQObs,
