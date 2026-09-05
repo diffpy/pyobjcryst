@@ -62,6 +62,15 @@ bp::dict _GetVarianceCovarianceMap(LSQNumObj & lsq)
     return d;
 }
 
+bp::list _GetRwHistory(const LSQNumObj & lsq)
+{
+    bp::list out;
+    const std::vector<REAL> & h = lsq.GetRwHistory();
+    for (std::vector<REAL>::const_iterator it = h.begin(); it != h.end(); ++it)
+        out.append(*it);
+    return out;
+}
+
 }   // namespace
 
 void wrap_lsq()
@@ -98,6 +107,7 @@ void wrap_lsq()
                  bp::arg("minChi2var")=0.01))
         .def("Rfactor", &LSQNumObj::Rfactor)
         .def("RwFactor", &LSQNumObj::RwFactor)
+        .def("GetRwHistory", &_GetRwHistory)
         .def("ChiSquare", &LSQNumObj::ChiSquare)
         .def("SetRefinedObj", &LSQNumObj::SetRefinedObj,
                 (bp::arg("obj"), bp::arg("LSQFuncIndex")=0,
