@@ -36,15 +36,17 @@ using namespace ObjCryst;
 namespace {
 
 bool _SafeRefine(LSQNumObj & lsq, REAL maxChi2factor, int nbCycle, bool useLevenbergMarquardt,
-                 const bool silent, const bool callBeginEndOptimization,const float minChi2var)
+                 const bool silent, const bool callBeginEndOptimization,const float minChi2var,
+                 const float minRwpVar)
 {
     CaptureStdOut gag;
     if(!silent) gag.release();
 
     std::list<RefinablePar*> vnewpar;
     std::list<const RefParType*> vnewpartype;
-    return lsq.SafeRefine(vnewpar, vnewpartype, nbCycle, useLevenbergMarquardt, silent,
-                          callBeginEndOptimization, minChi2var);
+    return lsq.SafeRefine(vnewpar, vnewpartype, maxChi2factor, nbCycle,
+                          useLevenbergMarquardt, silent,
+                          callBeginEndOptimization, minChi2var, minRwpVar);
 }
 
 bp::dict _GetVarianceCovarianceMap(LSQNumObj & lsq)
@@ -89,13 +91,15 @@ void wrap_lsq()
                  bp::arg("useLevenbergMarquardt")=false,
                  bp::arg("silent")=false,
                  bp::arg("callBeginEndOptimization")=true,
-                 bp::arg("minChi2var")=0.01))
+                 bp::arg("minChi2var")=0.01,
+                 bp::arg("minRwpVar")=-1))
         .def("SafeRefine", &_SafeRefine,
                 (bp::arg("maxChi2factor")=1.01,bp::arg("nbCycle")=1,
                  bp::arg("useLevenbergMarquardt")=false,
                  bp::arg("silent")=false,
                  bp::arg("callBeginEndOptimization")=true,
-                 bp::arg("minChi2var")=0.01))
+                 bp::arg("minChi2var")=0.01,
+                 bp::arg("minRwpVar")=-1))
         .def("Rfactor", &LSQNumObj::Rfactor)
         .def("RwFactor", &LSQNumObj::RwFactor)
         .def("ChiSquare", &LSQNumObj::ChiSquare)
