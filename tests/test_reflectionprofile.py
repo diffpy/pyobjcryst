@@ -11,6 +11,7 @@ from pyobjcryst.reflectionprofile import (
     ReflectionProfile,
     ReflectionProfilePseudoVoigt,
     ReflectionProfilePseudoVoigtAnisotropic,
+    ReflectionProfilePseudoVoigtTCH,
 )
 
 
@@ -72,6 +73,73 @@ class TestReflectionProfile(unittest.TestCase):
                 for i in range(anisotropic.GetNbPar())
             },
         )
+
+    def test_tch_profile_width_and_limits(self):
+        """TCH derives one common FWHM and reaches both pure limits."""
+        profile = ReflectionProfilePseudoVoigtTCH()
+        self.assertFalse(profile.IsAnisotropic())
+        self.assertEqual(
+            {"U", "V", "W", "X", "Y", "Z", "P", "LGmix"},
+            {profile.GetPar(i).GetName() for i in range(profile.GetNbPar())},
+        )
+
+        center = np.deg2rad(30.0)
+        hg = np.deg2rad(0.08)
+        hl = np.deg2rad(0.04)
+        profile.SetProfilePar(hg**2, fwhmLorentzZ=hl)
+        h = (
+            hg**5
+            + 2.69269 * hg**4 * hl
+            + 2.42843 * hg**3 * hl**2
+            + 4.47163 * hg**2 * hl**3
+            + 0.07842 * hg * hl**4
+            + hl**5
+        ) ** 0.2
+        self.assertAlmostEqual(
+            profile.GetFullProfileWidth(0.5, center, 1, 0, 0), h
+        )
+
+        x = np.array([center - h / 2, center, center + h / 2])
+        y = profile.GetProfile(x, center, 1, 0, 0)
+        np.testing.assert_allclose(y[[0, 2]] / y[1], 0.5, rtol=1e-6)
+
+        profile.SetProfilePar(hg**2)
+        self.assertAlmostEqual(
+            profile.GetFullProfileWidth(0.5, center, 1, 0, 0), hg
+        )
+        profile.SetProfilePar(0, fwhmLorentzZ=hl)
+        self.assertAlmostEqual(
+            profile.GetFullProfileWidth(0.5, center, 1, 0, 0), hl
+        )
+
+        size_width = np.deg2rad(0.03) / np.cos(center / 2)
+        profile.SetProfilePar(
+            0, fwhmScherrerP=np.deg2rad(0.03), scherrerLGmix=1
+        )
+        self.assertAlmostEqual(
+            profile.GetFullProfileWidth(0.5, center, 1, 0, 0), size_width
+        )
+        profile.SetProfilePar(
+            0, fwhmScherrerP=np.deg2rad(0.03), scherrerLGmix=0
+        )
+        self.assertAlmostEqual(
+            profile.GetFullProfileWidth(0.5, center, 1, 0, 0), size_width
+        )
+
+        self.ppd.SetProfile(profile)
+        installed = self.ppd.GetProfile()
+        self.assertIsInstance(installed, ReflectionProfilePseudoVoigtTCH)
+        self.assertAlmostEqual(
+            installed.GetPar("P").GetValue(), np.deg2rad(0.03)
+        )
+        self.assertAlmostEqual(installed.GetPar("LGmix").GetValue(), 0)
+
+        restored = ReflectionProfilePseudoVoigtTCH()
+        RefinableObj.XMLInput(restored, profile.xml())
+        self.assertAlmostEqual(
+            restored.GetPar("P").GetValue(), np.deg2rad(0.03)
+        )
+        self.assertAlmostEqual(restored.GetPar("LGmix").GetValue(), 0)
 
     def test_anisotropic_set_profile_par(self):
         """SetProfilePar assigns widths and retains symmetric default
