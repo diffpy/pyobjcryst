@@ -159,6 +159,30 @@ void wrap_reflectionprofile()
               bp::arg("scherrerLGmix") = 1),
              "Set the TCH pseudo-Voigt U, V, W, X, Y, Z, P and LGmix parameters.");
 
+    class_<ReflectionProfileDoubleExponentialPseudoVoigt,
+           bases<ReflectionProfile> >(
+        "ReflectionProfileDoubleExponentialPseudoVoigt", init<>())
+        .def(init<const UnitCell &>(bp::arg("cell"))
+             [with_custodian_and_ward<1, 2>()])
+        .def(init<const ReflectionProfileDoubleExponentialPseudoVoigt &>(
+            bp::arg("old")))
+        .def("CreateCopy",
+             &ReflectionProfileDoubleExponentialPseudoVoigt::CreateCopy,
+             return_value_policy<manage_new_object>(),
+             "Return an independent copy of this profile.")
+        .def("SetProfilePar",
+             &ReflectionProfileDoubleExponentialPseudoVoigt::SetProfilePar,
+             (bp::arg("instrumentAlpha0"), bp::arg("instrumentAlpha1"),
+              bp::arg("instrumentBeta0"), bp::arg("instrumentBeta1"),
+              bp::arg("gaussianSigma0"), bp::arg("gaussianSigma1"),
+              bp::arg("gaussianSigma2"), bp::arg("lorentzianGamma0"),
+              bp::arg("lorentzianGamma1"), bp::arg("lorentzianGamma2")),
+             "Set the double-exponential pseudo-Voigt TOF profile parameters.")
+        .def("SetUnitCell",
+             &ReflectionProfileDoubleExponentialPseudoVoigt::SetUnitCell,
+             bp::arg("cell"), with_custodian_and_ward<1, 2>(),
+             "Set the unit cell used to compute d_hkl for reflections.");
+
     class_<ReflectionProfilePseudoVoigtAnisotropic,
            bases<ReflectionProfile> >(
         "ReflectionProfilePseudoVoigtAnisotropic", init<>())
