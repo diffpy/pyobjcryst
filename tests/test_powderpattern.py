@@ -14,6 +14,7 @@
 ##############################################################################
 """Unit tests for pyobjcryst.powderpattern (with indexing &"""
 
+import re
 import unittest
 from unittest.mock import MagicMock, patch
 
@@ -23,7 +24,11 @@ from testutils import makeCrystal, makeScatterer
 
 from pyobjcryst import ObjCrystException
 from pyobjcryst.indexing import CrystalCentering, CrystalSystem, quick_index
-from pyobjcryst.powderpattern import PowderPattern, SpaceGroupExplorer
+from pyobjcryst.powderpattern import (
+    PowderPattern,
+    SpaceGroupExplorer,
+    TextureMarchDollase,
+)
 from pyobjcryst.radiation import RadiationType, WavelengthType
 from pyobjcryst.reflectionprofile import ReflectionProfileType
 
@@ -407,6 +412,145 @@ class TestPowderPatternDiffraction(unittest.TestCase):
 # End of class TestPowderPatternDiffraction
 
 # ----------------------------------------------------------------------------
+
+
+def build_textured_pattern(crystal, phases):
+    """Return an X-ray powder pattern of crystal with March-Dollase
+    phases."""
+    pattern = PowderPattern()
+    pattern.SetWavelength(1.54)
+    x = np.deg2rad(np.linspace(5, 40, 2001))
+    pattern.SetPowderPatternX(x)
+    pattern.SetPowderPatternObs(np.ones_like(x))
+    diffraction = pattern.AddPowderPatternDiffraction(crystal)
+    texture = diffraction.GetTextureMarchDollase()
+    for phase in phases:
+        texture.AddPhase(*phase)
+    return pattern
+
+
+@pytest.mark.parametrize(
+    "phases, expected_par_names",
+    [
+        # Test that AddPhase stores a texture phase and its refinable
+        # parameters
+        # C1: One phase with a fraction, March coefficient and hkl is
+        # added.
+        # Expected: The getters return the phase's values, and its five
+        # parameters are named with the suffix _0.
+        (
+            [(1.0, 0.5, 0, 0, 1)],
+            ["Fraction_0", "MarchCoeff_0", "H_0", "K_0", "L_0"],
+        ),
+        # C2: Two phases are added.
+        # Expected: The getters return each phase's values, and the second
+        # phase's parameters are named with the suffix _1.
+        (
+            [(0.7, 0.5, 0, 0, 1), (0.3, 2.0, 1, 1, 0)],
+            [
+                "Fraction_0",
+                "MarchCoeff_0",
+                "H_0",
+                "K_0",
+                "L_0",
+                "Fraction_1",
+                "MarchCoeff_1",
+                "H_1",
+                "K_1",
+                "L_1",
+            ],
+        ),
+    ],
+)
+def test_add_phase(loadcifdata, phases, expected_par_names):
+    crystal = loadcifdata("paracetamol.cif")
+    pattern = build_textured_pattern(crystal, phases)
+    texture = pattern.GetPowderPatternComponent(0).GetTextureMarchDollase()
+    actual_type = type(texture)
+    expected_type = TextureMarchDollase
+    actual_phases = [
+        (
+            texture.GetFraction(i),
+            texture.GetMarchCoeff(i),
+            texture.GetPhaseH(i),
+            texture.GetPhaseK(i),
+            texture.GetPhaseL(i),
+        )
+        for i in range(texture.GetNbPhase())
+    ]
+    expected_phases = phases
+    actual_par_names = [
+        texture.GetPar(i).GetName() for i in range(texture.GetNbPar())
+    ]
+    assert actual_type == expected_type
+    assert actual_phases == pytest.approx(expected_phases)
+    assert actual_par_names == expected_par_names
+
+
+@pytest.mark.parametrize(
+    "initial_phases, method_name, method_args, expected_phases",
+    [
+        # Test that changing the texture of an existing pattern
+        # recalculates it
+        # C1: A phase is added to an untextured pattern.
+        # Expected: The pattern equals one built with that phase.
+        ([], "AddPhase", (1.0, 0.5, 0, 0, 1), [(1.0, 0.5, 0, 0, 1)]),
+        # C2: SetPhasePar changes the March coefficient of a phase.
+        # Expected: The pattern equals one built with the new March
+        # coefficient.
+        (
+            [(1.0, 0.5, 0, 0, 1)],
+            "SetPhasePar",
+            (0, 1.0, 2.0, 0, 0, 1),
+            [(1.0, 2.0, 0, 0, 1)],
+        ),
+    ],
+)
+def test_get_powder_pattern_calc_after_texture_change(
+    loadcifdata, initial_phases, method_name, method_args, expected_phases
+):
+    crystal = loadcifdata("paracetamol.cif")
+    pattern = build_textured_pattern(crystal, initial_phases)
+    pattern.GetPowderPatternCalc()
+    texture = pattern.GetPowderPatternComponent(0).GetTextureMarchDollase()
+    getattr(texture, method_name)(*method_args)
+    actual_calc = pattern.GetPowderPatternCalc()
+    expected_calc = build_textured_pattern(
+        crystal, expected_phases
+    ).GetPowderPatternCalc()
+    assert np.allclose(actual_calc, expected_calc)
+
+
+def test_set_phase_par_out_of_range(loadcifdata):
+    # Test SetPhasePar with an index of a phase that does not exist
+    # Expected: An ObjCrystException names the missing phase and says
+    # which indices are valid.
+    crystal = loadcifdata("paracetamol.cif")
+    pattern = build_textured_pattern(crystal, [(1.0, 0.5, 0, 0, 1)])
+    texture = pattern.GetPowderPatternComponent(0).GetTextureMarchDollase()
+    expected_msg = (
+        "TextureMarchDollase has no phase 1. Please use an index smaller "
+        "than GetNbPhase()."
+    )
+    with pytest.raises(ObjCrystException, match=re.escape(expected_msg)):
+        texture.SetPhasePar(1, 1.0, 2.0, 0, 0, 1)
+
+
+def test_get_powder_pattern_calc_after_march_coeff_par_change(loadcifdata):
+    # Test refining the March coefficient through its RefinablePar
+    # Expected: The pattern equals one built with the new March
+    # coefficient.
+    crystal = loadcifdata("paracetamol.cif")
+    pattern = build_textured_pattern(crystal, [(1.0, 0.5, 0, 0, 1)])
+    pattern.GetPowderPatternCalc()
+    texture = pattern.GetPowderPatternComponent(0).GetTextureMarchDollase()
+    texture.GetPar("MarchCoeff_0").SetValue(2.0)
+    actual_calc = pattern.GetPowderPatternCalc()
+    expected_calc = build_textured_pattern(
+        crystal, [(1.0, 2.0, 0, 0, 1)]
+    ).GetPowderPatternCalc()
+    assert np.allclose(actual_calc, expected_calc)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -26,7 +26,10 @@
 #include <ObjCryst/ObjCryst/General.h>
 #include <ObjCryst/ObjCryst/PowderPattern.h>
 #include <ObjCryst/ObjCryst/ReflectionProfile.h>
+#include <ObjCryst/ObjCryst/ScatteringCorr.h>
 #include <ObjCryst/ObjCryst/ScatteringData.h>
+
+#include <string>
 
 namespace bp = boost::python;
 using namespace boost::python;
@@ -39,6 +42,40 @@ void SetProfileCopy(PowderPatternDiffraction &pdiff,
                     const ReflectionProfile &profile)
 {
     pdiff.SetProfile(profile.CreateCopy());
+}
+
+// PowderPatternDiffraction has no public accessor for its texture
+// correction, but registers it as a sub-object.
+TextureMarchDollase &GetTextureMarchDollase(PowderPatternDiffraction &pdiff)
+{
+    ObjRegistry<RefinableObj> &subobjs = pdiff.GetSubObjRegistry();
+    for (long i = 0; i < subobjs.GetNb(); ++i)
+    {
+        TextureMarchDollase *texture =
+            dynamic_cast<TextureMarchDollase *>(&subobjs.GetObj(i));
+        if (texture != 0) return *texture;
+    }
+    throw ObjCrystException("PowderPatternDiffraction has no "
+                            "TextureMarchDollase sub-object. Please report "
+                            "this as a pyobjcryst bug.");
+}
+
+// TextureMarchDollase::SetPhasePar does not click the texture clock, so the
+// cached powder pattern is not recalculated. Set the values through the
+// phase's RefinablePars instead, which AddPhase registers in this order.
+void SetPhasePar(TextureMarchDollase &texture, const unsigned int i,
+                 const REAL fraction, const REAL coeffMarch,
+                 const REAL h, const REAL k, const REAL l)
+{
+    if (i >= texture.GetNbPhase())
+    {
+        throw ObjCrystException("TextureMarchDollase has no phase " +
+                                std::to_string(i) + ". Please use an index "
+                                "smaller than GetNbPhase().");
+    }
+    const REAL values[5] = {fraction, coeffMarch, h, k, l};
+    for (long j = 0; j < 5; ++j)
+        texture.GetPar(5L * i + j).SetValue(values[j]);
 }
 
 } // namespace
@@ -91,6 +128,26 @@ void wrap_powderpatterndiffraction()
         .def("GetFhklObsSq", &PowderPatternDiffraction::GetFhklObsSq,
                 return_value_policy<copy_const_reference>())
         .def("X2XCorrPhase", &PowderPatternDiffraction::X2XCorrPhase)
+        .def("GetTextureMarchDollase", &GetTextureMarchDollase,
+                return_internal_reference<>(),
+                "Return the March-Dollase preferred-orientation correction.")
+        ;
+
+    class_<TextureMarchDollase, bases<RefinableObj>, boost::noncopyable>(
+            "TextureMarchDollase", no_init)
+        .def("AddPhase", &TextureMarchDollase::AddPhase,
+                (bp::arg("fraction"), bp::arg("coeffMarch"), bp::arg("h"),
+                 bp::arg("k"), bp::arg("l")))
+        .def("SetPhasePar", &SetPhasePar,
+                (bp::arg("i"), bp::arg("fraction"), bp::arg("coeffMarch"),
+                 bp::arg("h"), bp::arg("k"), bp::arg("l")))
+        .def("GetNbPhase", &TextureMarchDollase::GetNbPhase)
+        .def("GetFraction", &TextureMarchDollase::GetFraction, bp::arg("i"))
+        .def("GetMarchCoeff", &TextureMarchDollase::GetMarchCoeff,
+                bp::arg("i"))
+        .def("GetPhaseH", &TextureMarchDollase::GetPhaseH, bp::arg("i"))
+        .def("GetPhaseK", &TextureMarchDollase::GetPhaseK, bp::arg("i"))
+        .def("GetPhaseL", &TextureMarchDollase::GetPhaseL, bp::arg("i"))
         ;
 
 }

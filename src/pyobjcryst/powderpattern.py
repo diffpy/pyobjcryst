@@ -30,6 +30,7 @@ __all__ = [
     "PowderPatternDiffraction",
     "ReflectionProfileType",
     "SpaceGroupExplorer",
+    "TextureMarchDollase",
 ]
 
 from pyobjcryst._pyobjcryst import (
@@ -45,6 +46,7 @@ from pyobjcryst._pyobjcryst import (
     PowderPatternDiffraction,
     ReflectionProfileType,
     SpaceGroupExplorer,
+    TextureMarchDollase,
 )
 from pyobjcryst.general import ObjCrystException
 from pyobjcryst.refinableobj import refpartype_scattdata_background
