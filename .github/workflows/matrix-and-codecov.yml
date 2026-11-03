@@ -15,7 +15,7 @@ jobs:
     uses: scikit-package/release-scripts/.github/workflows/_matrix-and-codecov-on-merge-to-main.yml@v0
     with:
       project: pyobjcryst
-      submodules: 'true'
+      submodules: "true"
       c_extension: true
       headless: false
     secrets:

@@ -13,7 +13,7 @@ jobs:
     uses: scikit-package/release-scripts/.github/workflows/_release-docs.yml@v0
     with:
       project: pyobjcryst
-      submodules: 'true'
+      submodules: "true"
       c_extension: true
       headless: false
       python_version: ${{ fromJSON(needs.get-python-version.outputs.latest_python_version) }}

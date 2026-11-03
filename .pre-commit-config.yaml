@@ -1,5 +1,5 @@
 # Vendored third-party sources (objcryst submodule, cctbx, newmat)
-exclude: '^extern/'
+exclude: "^extern/"
 default_language_version:
   python: python3
 ci:
