@@ -520,9 +520,9 @@ depending on `cctbx-base` as it currently ships.
 
 **Before writing/extending a binding for class `X`:**
 
-- [ ] Grep `X`'s header and its whole ancestry (not just the direct parent) for `: *virtual
-public` — if found, do **not** declare that base in `nb::class_<X, Base>`; use the manual
-      `dynamic_cast`/`nb::cast<Leaf&>` patterns instead
+- [ ] Grep `X`'s header and its whole ancestry (not just the direct parent) for
+      `: *virtual public` — if found, do **not** declare that base in
+      `nb::class_<X, Base>`; use the manual `dynamic_cast`/`nb::cast<Leaf&>` patterns instead
 
 **While writing:**
 
