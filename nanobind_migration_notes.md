@@ -203,6 +203,12 @@ is fine and should still use nanobind's automatic base declaration (e.g. `Scatte
 public ScatteringPower`, no `virtual`, is safely `nb::class_<ScatteringPowerSphere,
 ScatteringPower>`).
 
+The same applies to *non-virtual multiple inheritance* where the base is not the first one, e.g.
+`TextureMarchDollase : public ScatteringCorr, public RefinableObj`: `RefinableObj` sits at a
+non-zero offset, and `nb::class_<TextureMarchDollase, RefinableObj>` silently returns garbage
+(`GetNbPar()` was 0). Register it standalone, call `bind_refinableobj_forwarding()`, and add it to
+`extractRefinableObjArg`.
+
 ### Four ways this bites, and the fix for each
 
 **1. Return direction** — a function returns a base-typed reference/pointer

@@ -11,12 +11,45 @@
 #include <ObjCryst/ObjCryst/PowderPattern.h>
 #include <ObjCryst/ObjCryst/ScatteringData.h>
 #include <ObjCryst/ObjCryst/ReflectionProfile.h>
+#include <ObjCryst/ObjCryst/ScatteringCorr.h>
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 
 #include "helpers_nb.hpp"
 
 namespace nb = nanobind;
 using namespace ObjCryst;
+
+namespace {
+
+void SetProfileCopy(PowderPatternDiffraction& pdiff,
+                    const ReflectionProfile& profile)
+{
+    ReflectionProfile* copy = profile.CreateCopy();
+    // The TOF profile needs a unit cell to compute d_hkl, as in
+    // PowderPatternDiffraction::SetCrystal and XMLInput.
+    auto* tofprofile =
+        dynamic_cast<ReflectionProfileDoubleExponentialPseudoVoigt*>(copy);
+    if (tofprofile != nullptr && pdiff.HasCrystal())
+        tofprofile->SetUnitCell(pdiff.GetCrystal());
+    pdiff.SetProfile(copy);
+}
+
+// PowderPatternDiffraction has no public accessor for its texture
+// correction, but registers it as a sub-object.
+TextureMarchDollase& GetTextureMarchDollase(PowderPatternDiffraction& pdiff)
+{
+    ObjRegistry<RefinableObj>& subobjs = pdiff.GetSubObjRegistry();
+    for (long i = 0; i < subobjs.GetNb(); ++i)
+    {
+        auto* texture = dynamic_cast<TextureMarchDollase*>(&subobjs.GetObj(i));
+        if (texture != nullptr) return *texture;
+    }
+    throw ObjCrystException("PowderPatternDiffraction has no "
+                            "TextureMarchDollase sub-object. Please report "
+                            "this as a pyobjcryst bug.");
+}
+
+} // namespace
 
 void wrap_powderpatterndiffraction(nb::module_& m)
 {
@@ -72,9 +105,7 @@ void wrap_powderpatterndiffraction(nb::module_& m)
              nb::overload_cast<>(&PowderPatternDiffraction::GetProfile),
              nb::rv_policy::reference_internal)
         .def("SetProfile",
-             [](PowderPatternDiffraction& d, ReflectionProfile& p) {
-                 d.SetProfile(p.CreateCopy());
-             },
+              &SetProfileCopy,
              nb::arg("profile"),
              "Install an independent copy of the given profile.")
         .def("SetExtractionMode",
@@ -94,5 +125,31 @@ void wrap_powderpatterndiffraction(nb::module_& m)
              [](PowderPatternDiffraction& d){ return crystvec_to_array(d.GetFhklObsSq()); })
         .def("X2XCorrPhase", &PowderPatternDiffraction::X2XCorrPhase,
              "Apply the flat-detector displacement correction for this phase's offset.")
+        .def("GetTextureMarchDollase", &GetTextureMarchDollase,
+             nb::rv_policy::reference_internal,
+             "Return the March-Dollase preferred-orientation correction.")
+        ;
+
+    // TextureMarchDollase : public ScatteringCorr, public RefinableObj --
+    // RefinableObj is a second base at a non-zero offset, which nanobind's
+    // base casting cannot handle (same failure mode as the virtual bases in
+    // nanobind_migration_notes.md). Register it standalone and forward the
+    // RefinableObj surface through T instead.
+    auto texture = nb::class_<TextureMarchDollase>(m, "TextureMarchDollase");
+    bind_refinableobj_forwarding(texture);
+    texture
+        .def("AddPhase", &TextureMarchDollase::AddPhase,
+             nb::arg("fraction"), nb::arg("coeffMarch"),
+             nb::arg("h"), nb::arg("k"), nb::arg("l"))
+        .def("SetPhasePar", &TextureMarchDollase::SetPhasePar,
+             nb::arg("i"), nb::arg("fraction"), nb::arg("coeffMarch"),
+             nb::arg("h"), nb::arg("k"), nb::arg("l"))
+        .def("DeletePhase", &TextureMarchDollase::DeletePhase, nb::arg("i"))
+        .def("GetNbPhase", &TextureMarchDollase::GetNbPhase)
+        .def("GetFraction", &TextureMarchDollase::GetFraction, nb::arg("i"))
+        .def("GetMarchCoeff", &TextureMarchDollase::GetMarchCoeff, nb::arg("i"))
+        .def("GetPhaseH", &TextureMarchDollase::GetPhaseH, nb::arg("i"))
+        .def("GetPhaseK", &TextureMarchDollase::GetPhaseK, nb::arg("i"))
+        .def("GetPhaseL", &TextureMarchDollase::GetPhaseL, nb::arg("i"))
         ;
 }

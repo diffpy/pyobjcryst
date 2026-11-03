@@ -28,6 +28,7 @@
 #include <ObjCryst/ObjCryst/PowderPattern.h>
 #include <ObjCryst/ObjCryst/Scatterer.h>
 #include <ObjCryst/ObjCryst/ScatteringPower.h>
+#include <ObjCryst/ObjCryst/ScatteringCorr.h>
 
 #include "helpers_nb.hpp"
 
@@ -154,6 +155,8 @@ RefinableObj& extractRefinableObjArg(nb::object obj)
     try { return static_cast<RefinableObj&>(nb::cast<Scatterer&>(obj)); } catch (...) {}
     try { return static_cast<RefinableObj&>(nb::cast<ScatteringPower&>(obj)); } catch (...) {}
     try { return static_cast<RefinableObj&>(nb::cast<ScatteringPowerAtom&>(obj)); } catch (...) {}
+    // Non-virtual, but RefinableObj is its second base (non-zero offset).
+    try { return static_cast<RefinableObj&>(nb::cast<TextureMarchDollase&>(obj)); } catch (...) {}
     // Nothing matched -- let this raise a clear nanobind TypeError rather
     // than silently returning a dangling reference.
     return nb::cast<RefinableObj&>(obj);

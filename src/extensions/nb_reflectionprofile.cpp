@@ -10,6 +10,7 @@
 
 #undef B0
 #include <ObjCryst/ObjCryst/ReflectionProfile.h>
+#include <ObjCryst/ObjCryst/UnitCell.h>
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 
 #include "helpers_nb.hpp"
@@ -131,6 +132,31 @@ void wrap_reflectionprofile(nb::module_& m)
              nb::arg("fwhmScherrerP") = 0.0,
              nb::arg("scherrerLGmix") = 1.0,
              "Set the TCH pseudo-Voigt U, V, W, X, Y, Z, P and LGmix parameters.")
+        ;
+
+    nb::class_<ReflectionProfileDoubleExponentialPseudoVoigt, ReflectionProfile>(
+        m, "ReflectionProfileDoubleExponentialPseudoVoigt",
+        nb::is_weak_referenceable())
+        .def(nb::init<>())
+        .def(nb::init<const UnitCell&>(), nb::arg("cell"), nb::keep_alive<1, 2>())
+        .def(nb::init<const ReflectionProfileDoubleExponentialPseudoVoigt&>(),
+             nb::arg("old"), nb::keep_alive<1, 2>())
+        .def("CreateCopy",
+             &ReflectionProfileDoubleExponentialPseudoVoigt::CreateCopy,
+             nb::rv_policy::take_ownership, nb::keep_alive<0, 1>(),
+             "Return an independent copy of this profile.")
+        .def("SetProfilePar",
+             &ReflectionProfileDoubleExponentialPseudoVoigt::SetProfilePar,
+             nb::arg("instrumentAlpha0"), nb::arg("instrumentAlpha1"),
+             nb::arg("instrumentBeta0"), nb::arg("instrumentBeta1"),
+             nb::arg("gaussianSigma0"), nb::arg("gaussianSigma1"),
+             nb::arg("gaussianSigma2"), nb::arg("lorentzianGamma0"),
+             nb::arg("lorentzianGamma1"), nb::arg("lorentzianGamma2"),
+             "Set the double-exponential pseudo-Voigt TOF profile parameters.")
+        .def("SetUnitCell",
+             &ReflectionProfileDoubleExponentialPseudoVoigt::SetUnitCell,
+             nb::arg("cell"), nb::keep_alive<1, 2>(),
+             "Set the unit cell used to compute d_hkl for reflections.")
         ;
 
     nb::class_<ReflectionProfilePseudoVoigtAnisotropic, ReflectionProfile>(
