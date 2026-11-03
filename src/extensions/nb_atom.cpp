@@ -56,7 +56,7 @@ void wrap_atom(nb::module_& m)
         .def("__init__",
              [](Atom* self, const Atom& old) {
                  new (self) Atom(old);
-             }, nb::arg("old"))
+             }, nb::arg("old"), nb::keep_alive<1,2>())
         .def("__init__",
              [](Atom* self, REAL x, REAL y, REAL z,
                 const std::string& name, nb::object pow, REAL popu) {
@@ -64,7 +64,8 @@ void wrap_atom(nb::module_& m)
                  new (self) Atom(x, y, z, name, sp, popu);
              },
              nb::arg("x"), nb::arg("y"), nb::arg("z"), nb::arg("name"),
-             nb::arg("pow").none(), nb::arg("popu") = (REAL)1.0)
+             nb::arg("pow").none(), nb::arg("popu") = (REAL)1.0,
+             nb::keep_alive<1,6>())
         .def("Init",
              [](Atom& self, REAL x, REAL y, REAL z,
                 const std::string& name, nb::object pow, REAL popu) {
@@ -72,7 +73,8 @@ void wrap_atom(nb::module_& m)
                  self.Init(x, y, z, name, sp, popu);
              },
              nb::arg("x"), nb::arg("y"), nb::arg("z"), nb::arg("name"),
-             nb::arg("pow").none(), nb::arg("popu") = (REAL)1.0)
+             nb::arg("pow").none(), nb::arg("popu") = (REAL)1.0,
+             nb::keep_alive<1,6>())
         .def("GetMass",   &Atom::GetMass)
         .def("GetRadius", &Atom::GetRadius)
         .def("IsDummy",   &Atom::IsDummy)
