@@ -42,6 +42,10 @@ def ftpyflag(flags):
     pattern = re.compile(r'^(-g|-Wstrict-prototypes|-O\d|-fPIC)$')
     return [f for f in flags if not (isinstance(f, str) and pattern.match(f))]
 
+
+def filter_warning_flags(flags):
+    return [f for f in flags if not (isinstance(f, str) and f.startswith('-W'))]
+
 # copy system environment variables related to compilation
 DefaultEnvironment(ENV=subdictionary(os.environ, '''
     PATH PYTHONPATH GIT_DIR HOMEPATH HOMEDRIVE
@@ -69,6 +73,13 @@ vars.Add(EnumVariable(
     'compiler settings',
     'fast', allowed_values=('debug', 'fast')))
 vars.Add(EnumVariable(
+    'warnings',
+    'warning flags policy',
+    'all', allowed_values=('all', 'none', 'default')))
+vars.Add(BoolVariable(
+    'verbose',
+    'print build commands', True))
+vars.Add(EnumVariable(
     'tool',
     'C++ compiler toolkit to be used',
     'default', allowed_values=('default', 'intelc')))
@@ -82,6 +93,8 @@ vars.Add(
     'Defaults to the OBJCRYST_ARCH environment variable if set.',
     os.environ.get('OBJCRYST_ARCH', ''))
 vars.Update(env)
+SetOption('silent', not env['verbose'])
+SetOption('no_progress', not env['verbose'])
 
 # Use C++ compiler specified by the 'tool' option.
 if env['tool'] == 'intelc':
@@ -155,7 +168,8 @@ else:
     # use sysconfig on Windows
     pythonconfig = None
     xpython = pjoin(env['prefix'], 'python.exe')
-print(f"Using python-config: {pythonconfig} from {xpython}")
+if env['verbose']:
+    print(f"Using python-config: {pythonconfig} from {xpython}")
 
 
 common_cppdefs = ['REAL=double', 'BOOST_ERROR_CODE_HEADER_ONLY']
@@ -164,6 +178,8 @@ env.AppendUnique(CPPDEFINES=common_cppdefs)
 if env['PLATFORM'] == 'win32':
     env.AppendUnique(CPPDEFINES=['BOOST_ALL_NO_LIB'])
     env.AppendUnique(CCFLAGS=['/EHsc', '/MD'])
+    if env['warnings'] == 'none':
+        env.PrependUnique(CCFLAGS=['/w'])
 
     if env['build'] == 'debug':
         env.Append(CCFLAGS=['/Zi', '/Od', '/FS'])
@@ -178,13 +194,28 @@ else:
     # not using sysconfig here because of parsing issues
     env.ParseConfig(f"{pythonconfig} --cflags")
     env.Replace(CCFLAGS=ftpyflag(env['CCFLAGS']))
+    if env['warnings'] != 'all':
+        env.Replace(CCFLAGS=filter_warning_flags(env['CCFLAGS']))
 
-    env.PrependUnique(CCFLAGS=['-Wextra'])
+    if env['warnings'] == 'all':
+        env.PrependUnique(CCFLAGS=['-Wextra'])
+    elif env['warnings'] == 'none':
+        env.PrependUnique(CCFLAGS=['-w'])
+        env.PrependUnique(LINKFLAGS=['-w'])
+        # GCC emits an unconditional warning when LTO objects are linked
+        # without an explicit parallelization mode.
+        if ('-flto' in env['CCFLAGS'] and
+                any(isinstance(f, str) and
+                    f.startswith('-flto-partition=')
+                    for f in env['CCFLAGS'])):
+            env.PrependUnique(LINKFLAGS=['-flto=auto'])
     env.PrependUnique(CXXFLAGS=['-std=c++11'])
 
     if env['tool'] == 'intelc':
         # options for Intel C++ compiler on hpc dev-intel07
-        env.AppendUnique(CCFLAGS=['-w1', '-fp-model', 'precise'])
+        if env['warnings'] != 'none':
+            env.AppendUnique(CCFLAGS=['-w1'])
+        env.AppendUnique(CCFLAGS=['-fp-model', 'precise'])
         env.PrependUnique(LIBS=['imf'])
         fast_opts = ['-fast', '-no-ipo']
     else:
