@@ -36,6 +36,11 @@ can be reused as a template for multiple phases::
     for pdiff in powder_pattern.get_crystalline_components():
         pdiff.SetProfile(profile)
 
+For time-of-flight neutron data, use the double-exponential pseudo-Voigt
+profile ``ReflectionProfileDoubleExponentialPseudoVoigt``. It needs the
+unit cell to compute ``d_hkl``, which ``PowderPatternDiffraction.SetProfile``
+sets from the component's crystal.
+
 Example
 -------
 
@@ -69,11 +74,13 @@ __all__ = [
     "ReflectionProfilePseudoVoigt",
     "ReflectionProfilePseudoVoigtTCH",
     "ReflectionProfilePseudoVoigtAnisotropic",
+    "ReflectionProfileDoubleExponentialPseudoVoigt",
     "ReflectionProfileType",
 ]
 
 from pyobjcryst._pyobjcryst import (
     ReflectionProfile,
+    ReflectionProfileDoubleExponentialPseudoVoigt,
     ReflectionProfilePseudoVoigt,
     ReflectionProfilePseudoVoigtAnisotropic,
     ReflectionProfilePseudoVoigtTCH,

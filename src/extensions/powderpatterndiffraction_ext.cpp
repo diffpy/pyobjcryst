@@ -41,7 +41,14 @@ namespace
 void SetProfileCopy(PowderPatternDiffraction &pdiff,
                     const ReflectionProfile &profile)
 {
-    pdiff.SetProfile(profile.CreateCopy());
+    ReflectionProfile *copy = profile.CreateCopy();
+    // The TOF profile needs a unit cell to compute d_hkl, as in
+    // PowderPatternDiffraction::SetCrystal and XMLInput.
+    ReflectionProfileDoubleExponentialPseudoVoigt *tofprofile =
+        dynamic_cast<ReflectionProfileDoubleExponentialPseudoVoigt *>(copy);
+    if (tofprofile != 0 && pdiff.HasCrystal())
+        tofprofile->SetUnitCell(pdiff.GetCrystal());
+    pdiff.SetProfile(copy);
 }
 
 // PowderPatternDiffraction has no public accessor for its texture
