@@ -17,7 +17,7 @@
 
 **Fixed:**
 
-* <news item>
+* Update ObjCryst++ to vincefn/objcryst master (ba6ca89): fix TextureEllipsoid, invalidate March-Dollase cache on phase change, recalculate powder pattern on Radiation change, update Le-Bail extracted intensities when the number of reflections changes.
 
 **Security:**
 

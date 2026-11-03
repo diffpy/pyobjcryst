@@ -11,7 +11,7 @@ What's done and verified:
   nothing there is Boost.Python-specific.
 - All 45 `nb_*.cpp` binding files (`src/extensions/`) have real implementations covering the same
   class surface as the old `*_ext.cpp` files, built against `extern/objcryst`
-  (`vincefn/objcryst@bfdcfda`, vendored as a submodule).
+  (`vincefn/objcryst@ba6ca89`, vendored as a submodule).
 - A systematic audit (diffing every Python-exposed name in the old Boost.Python bindings against
   the nanobind ones) found and fixed every discovered regression, most recently a significant one:
   `Scatterer`, `ScatteringPower`, `ScatteringData`, and `PowderPatternComponent` (and everything
@@ -86,7 +86,7 @@ around that one limitation. [Virtual Inheritance](#virtual-inheritance) covers t
 ```
 pyobjcryst/
 ├── extern/
-│   ├── objcryst/     # ObjCryst++ C++ core (git submodule, vincefn/objcryst@bfdcfda)
+│   ├── objcryst/     # ObjCryst++ C++ core (git submodule, vincefn/objcryst@ba6ca89)
 │   ├── newmat/       # matrix library (vendored)
 │   └── cctbx/        # crystallography utilities (vendored, hand-pared subset)
 ├── src/
