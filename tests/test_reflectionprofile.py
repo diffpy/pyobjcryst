@@ -1,6 +1,8 @@
 """Unit tests for pyobjcryst.reflectionprofile bindings."""
 
+import gc
 import unittest
+import weakref
 
 import numpy as np
 import pytest
@@ -405,6 +407,29 @@ def test_get_powder_pattern_calc_after_tof_profile_change(
         crystal, expected_profile
     ).GetPowderPatternCalc()
     assert np.allclose(actual_calc, expected_calc)
+
+
+@pytest.mark.parametrize("copy_method", ["CreateCopy", "copy_constructor"])
+def test_tof_profile_copy_keeps_original_alive(loadcifdata, copy_method):
+    # Test that a copy of a TOF profile keeps its source and unit cell alive
+    # Expected: The original profile and crystal survive until the copy is
+    # deleted, since both profiles reference the same unit cell.
+    crystal = loadcifdata("Si.cif")
+    original = ReflectionProfileDoubleExponentialPseudoVoigt(crystal)
+    if copy_method == "CreateCopy":
+        copied = original.CreateCopy()
+    else:
+        copied = ReflectionProfileDoubleExponentialPseudoVoigt(original)
+    original_ref = weakref.ref(original)
+    crystal_ref = weakref.ref(crystal)
+    del original, crystal
+    gc.collect()
+    assert original_ref() is not None
+    assert crystal_ref() is not None
+    del copied
+    gc.collect()
+    assert original_ref() is None
+    assert crystal_ref() is None
 
 
 if __name__ == "__main__":

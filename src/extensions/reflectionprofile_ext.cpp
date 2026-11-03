@@ -165,10 +165,11 @@ void wrap_reflectionprofile()
         .def(init<const UnitCell &>(bp::arg("cell"))
              [with_custodian_and_ward<1, 2>()])
         .def(init<const ReflectionProfileDoubleExponentialPseudoVoigt &>(
-            bp::arg("old")))
+            bp::arg("old"))[with_custodian_and_ward<1, 2>()])
         .def("CreateCopy",
              &ReflectionProfileDoubleExponentialPseudoVoigt::CreateCopy,
-             return_value_policy<manage_new_object>(),
+             return_value_policy<manage_new_object,
+                                 with_custodian_and_ward_postcall<0, 1> >(),
              "Return an independent copy of this profile.")
         .def("SetProfilePar",
              &ReflectionProfileDoubleExponentialPseudoVoigt::SetProfilePar,
