@@ -27,6 +27,7 @@ jobs:
     uses: scikit-package/release-scripts/.github/workflows/_build-wheel-release-upload.yml@v0
     with:
       project: pyobjcryst
+      submodules: 'true'
       c_extension: true
       maintainer_github_username: sbillinge
     secrets:

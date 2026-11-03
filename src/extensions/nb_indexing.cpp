@@ -30,7 +30,7 @@ namespace {
 // with "incompatible function arguments", even though None is exactly what a
 // Python caller must pass (a Python float is immutable, so there is no way for
 // the derivative to be written back to it regardless of binding technology --
-// this matches the pre-existing Boost.Python behavor, where derivpar was only
+// this matches the pre-existing Boost.Python behavior, where derivpar was only
 // ever meaningfully used from within C++ itself, e.g. LSQ fitting internals).
 // Fixed by taking derivpar as nb::object and manually bridging None -> nullptr.
 float _hkl2d(const RecUnitCell& r, const float h, const float k, const float l,
