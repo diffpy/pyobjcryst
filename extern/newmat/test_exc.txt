@@ -34,7 +34,7 @@ Illegal conversion
 
 An exception has been thrown
 Logic error:- detected by Newmat: Illegal Conversion
-MatrixTypes = Rect ; UT
+MatrixTypes = Rect ; UT   
 
 Trace: Block C; Test.
 
@@ -207,3 +207,4 @@ compilers - see documentation)
 Checking for lost memory (large block): 9191360 9191360  - ok
 
 Checking for lost memory (small block): 9191360 9191360  - ok
+

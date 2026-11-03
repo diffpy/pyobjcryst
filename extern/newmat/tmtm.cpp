@@ -264,7 +264,7 @@ void trymatm()
       M = AB;
       C -= M; Print(C);
       C << M; C += -M; Print(C);
-
+      
    }
 
 
@@ -272,3 +272,8 @@ void trymatm()
 
 
 ///@}
+
+
+
+
+

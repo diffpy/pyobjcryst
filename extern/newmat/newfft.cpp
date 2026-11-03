@@ -1062,3 +1062,4 @@ static int BitReverse(int x, int prod, int n, const SimpleIntArray& f)
 #endif
 
 ///@}
+
