@@ -483,7 +483,7 @@ def test_add_phase(loadcifdata, phases, expected_par_names):
         texture.GetPar(i).GetName() for i in range(texture.GetNbPar())
     ]
     assert actual_type == expected_type
-    assert actual_phases == pytest.approx(expected_phases)
+    assert actual_phases == [pytest.approx(e) for e in expected_phases]
     assert actual_par_names == expected_par_names
 
 
