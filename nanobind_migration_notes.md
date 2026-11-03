@@ -44,7 +44,7 @@ Known, accepted gaps — real, not oversights, but still open:
 - **Cross-platform**: everything above has been built and tested on Linux only. macOS/Windows are
   unverified.
 - **Performance**: not benchmarked against Boost.Python.
-- **Versioning**: `pyproject.toml` uses a static placeholder version (`2024.2.1.dev0`) instead of
+- **Versioning**: `pyproject.toml` uses a static version (`2026.2.0rc0`) instead of
   `main`'s dynamic tag-based versioning (`setuptools-git-versioning`) — scikit-build-core needs a
   different mechanism for that; flagged as a `TODO` in `pyproject.toml` itself, not yet resolved.
 
@@ -121,7 +121,7 @@ works, re-exported from `pyobjcryst._pyobjcryst`.
 ```bash
 # Miniforge/mamba, created OUTSIDE the git checkout. Tested with python=3.14.
 mamba create -n pyobjcryst-nb python=3.14 numpy nanobind scikit-build-core \
-    ninja cmake libboost-devel libboost-headers libboost
+    ninja cmake libboost-headers
 conda activate pyobjcryst-nb
 git submodule update --init   # fetches extern/objcryst
 ```

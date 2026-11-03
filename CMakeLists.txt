@@ -22,8 +22,34 @@ find_package(nanobind CONFIG REQUIRED)
 
 # ---------------------------------------------------------------------------
 # Boost (header-only: format, rational, date_time used by ObjCryst sources)
+# Priority: explicit BOOST_INCLUDE_DIR, then the PyPI `libboost-headers`
+# package (used for isolated pip builds), then system/conda headers.
 # ---------------------------------------------------------------------------
-find_package(Boost REQUIRED)
+if(BOOST_INCLUDE_DIR)
+    set(PYOBJCRYST_BOOST_INCLUDE_DIR "${BOOST_INCLUDE_DIR}")
+else()
+    execute_process(
+        COMMAND "${Python_EXECUTABLE}" -c
+            "import importlib.util, os; s = importlib.util.find_spec('libboost_headers'); print(os.path.join(s.submodule_search_locations[0], 'include') if s else '')"
+        OUTPUT_VARIABLE _PYPI_BOOST_INCLUDE_DIR
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET
+    )
+    if(_PYPI_BOOST_INCLUDE_DIR AND EXISTS "${_PYPI_BOOST_INCLUDE_DIR}/boost/rational.hpp")
+        set(PYOBJCRYST_BOOST_INCLUDE_DIR "${_PYPI_BOOST_INCLUDE_DIR}")
+    else()
+        find_path(BOOST_SYSTEM_INCLUDE_DIR boost/rational.hpp
+            HINTS "$ENV{BOOST_ROOT}/include" "$ENV{Boost_ROOT}/include" "$ENV{CONDA_PREFIX}/include"
+        )
+        if(NOT BOOST_SYSTEM_INCLUDE_DIR)
+            message(FATAL_ERROR
+                "Boost headers not found. Install them with `pip install libboost-headers`, "
+                "`conda install -c conda-forge libboost-headers`, or set -DBOOST_INCLUDE_DIR=<path>.")
+        endif()
+        set(PYOBJCRYST_BOOST_INCLUDE_DIR "${BOOST_SYSTEM_INCLUDE_DIR}")
+    endif()
+endif()
+message(STATUS "Using Boost headers from: ${PYOBJCRYST_BOOST_INCLUDE_DIR}")
 
 # ---------------------------------------------------------------------------
 # External source paths
@@ -91,24 +117,8 @@ add_library(cctbx STATIC ${CCTBX_SOURCES})
 target_include_directories(cctbx PUBLIC
     "${CCTBX_SRC}/include"
     "${Python_ROOT_DIR}/include"
+    "${PYOBJCRYST_BOOST_INCLUDE_DIR}"
 )
-# Add conda/system boost headers if available
-if(DEFINED ENV{CONDA_PREFIX})
-    target_include_directories(cctbx PUBLIC "$ENV{CONDA_PREFIX}/include")
-endif()
-# Homebrew (Apple Silicon / Intel)
-if(EXISTS "/opt/homebrew/include")
-    target_include_directories(cctbx PUBLIC "/opt/homebrew/include")
-endif()
-if(EXISTS "/usr/local/include")
-    target_include_directories(cctbx PUBLIC "/usr/local/include")
-endif()
-# Honour an explicit Boost_ROOT / BOOST_ROOT from the environment or cmake args
-if(DEFINED Boost_INCLUDE_DIR)
-    target_include_directories(cctbx PUBLIC "${Boost_INCLUDE_DIR}")
-elseif(DEFINED ENV{BOOST_ROOT})
-    target_include_directories(cctbx PUBLIC "$ENV{BOOST_ROOT}/include")
-endif()
 set_property(TARGET cctbx PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # ---------------------------------------------------------------------------
@@ -131,7 +141,7 @@ target_include_directories(ObjCryst PUBLIC
     "${CCTBX_SRC}/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/extern"
     "${CMAKE_CURRENT_BINARY_DIR}/include"
-    ${Boost_INCLUDE_DIRS}
+    "${PYOBJCRYST_BOOST_INCLUDE_DIR}"
 )
 set_property(TARGET ObjCryst PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_compile_definitions(ObjCryst PUBLIC
@@ -159,7 +169,7 @@ target_include_directories(_pyobjcryst PRIVATE
     "${CCTBX_SRC}/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/extern"
     "${CMAKE_CURRENT_BINARY_DIR}/include"
-    ${Boost_INCLUDE_DIRS}
+    "${PYOBJCRYST_BOOST_INCLUDE_DIR}"
     ${Python_NumPy_INCLUDE_DIRS}
     "${CMAKE_CURRENT_SOURCE_DIR}/src/extensions"
 )

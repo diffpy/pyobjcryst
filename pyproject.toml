@@ -1,5 +1,5 @@
 [build-system]
-requires = ["scikit-build-core>=0.9", "nanobind", "numpy"]
+requires = ["scikit-build-core>=0.9", "nanobind", "numpy", "libboost-headers"]
 build-backend = "scikit_build_core.build"
 
 [project]
@@ -8,7 +8,7 @@ name = "pyobjcryst"
 # setuptools.build_meta; scikit-build-core needs a different dynamic-version
 # provider to match that exactly. Pinned as a static placeholder for now --
 # revisit before release, see nanobind_migration_notes.md.
-version = "2026.2.1.dev0"
+version = "2026.2.0rc0"
 authors = [
   { name="Christopher Farrow" },
   { name="Pavol Juhás" },
@@ -21,7 +21,7 @@ maintainers = [
 description = "Python bindings to the ObjCryst++ library."
 keywords = ['objcryst', 'atom structure crystallography', 'powder diffraction']
 readme = "README.rst"
-requires-python = ">=3.12, <3.15"
+requires-python = ">=3.12, <3.16"
 dependencies = ["numpy"]
 classifiers = [
         'Development Status :: 5 - Production/Stable',
@@ -38,6 +38,7 @@ classifiers = [
         'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: 3.13',
         'Programming Language :: Python :: 3.14',
+        'Programming Language :: Python :: 3.15',
         'Topic :: Scientific/Engineering :: Physics',
         'Topic :: Scientific/Engineering :: Chemistry',
         'Topic :: Software Development :: Libraries',

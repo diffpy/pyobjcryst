@@ -74,7 +74,7 @@ The second paper describes the c++ crystallographic objects in
 Installation
 ------------
 
-The latest release of ``pyobjcryst`` runs in python versions 3.12, 3.13 and 3.14. You may
+The latest release of ``pyobjcryst`` runs in python versions 3.12, 3.13, 3.14 and 3.15. You may
 specify an earlier release if you need it to run in an earlier version of Python.
 
 The preferred method is to use `Miniconda Python
@@ -132,9 +132,9 @@ You can use ``pip`` to download and install the latest release from
 Pyobjcryst can be installed from pip.  We recommend installing the dependencies that can be
 found in ``requirements/conda.txt`` from conda-forge, e.g., ::
 
-        conda create -n pyobjcryst-env python=3.14
+        conda create -n pyobjcryst-env python=3.15
         conda activate pyobjcryst-env
-        conda install -c conda-forge numpy libobjcryst libboost-devel libboost-python packaging ipywidgets matplotlib-base ipympl py3dmol
+        conda install -c conda-forge numpy compilers libboost-devel packaging ipywidgets matplotlib-base ipympl py3dmol
         pip install pyobjcryst
 
 If you prefer to install from sources, after installing the dependencies, obtain the source archive from
