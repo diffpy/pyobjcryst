@@ -23,7 +23,11 @@ from testutils import makeCrystal, makeScatterer
 
 from pyobjcryst import ObjCrystException
 from pyobjcryst.indexing import CrystalCentering, CrystalSystem, quick_index
-from pyobjcryst.powderpattern import PowderPattern, SpaceGroupExplorer
+from pyobjcryst.powderpattern import (
+    PowderPattern,
+    SpaceGroupExplorer,
+    TextureMarchDollase,
+)
 from pyobjcryst.radiation import RadiationType, WavelengthType
 from pyobjcryst.reflectionprofile import ReflectionProfileType
 
@@ -365,16 +369,18 @@ class TestPowderPattern(unittest.TestCase):
 
 
 class _PowderPatternComponentFixtureMixin:
-    """Shared setUp for the three test classes below: a PowderPattern with
-    one real PowderPatternBackground and one real PowderPatternDiffraction
-    attached, mirroring TestPowderPattern.test_GetClassName's setup. Both
-    PowderPatternComponent and ScatteringData inherit RefinableObj virtually
-    in C++ (and PowderPatternDiffraction inherits PowderPatternComponent
-    virtually *again*, on top of ScatteringData non-virtually) -- see
-    nanobind_migration_notes.md's "Follow-up" section -- so neither class is
-    directly instantiable from Python; these fixtures exercise the
-    forwarding fix through real, concrete PowderPatternComponent-family
-    objects instead.
+    """Shared setUp for the three test classes below: a PowderPattern
+    with one real PowderPatternBackground and one real
+    PowderPatternDiffraction attached, mirroring
+    TestPowderPattern.test_GetClassName's setup.
+
+    Both PowderPatternComponent and ScatteringData inherit RefinableObj
+    virtually in C++ (and PowderPatternDiffraction inherits
+    PowderPatternComponent virtually *again*, on top of ScatteringData
+    non-virtually) -- see nanobind_migration_notes.md's "Follow-up"
+    section -- so neither class is directly instantiable from Python;
+    these fixtures exercise the forwarding fix through real, concrete
+    PowderPatternComponent-family objects instead.
     """
 
     @pytest.fixture(autouse=True)
@@ -392,7 +398,9 @@ class _PowderPatternComponentFixtureMixin:
         self.diff = self.pp.AddPowderPatternDiffraction(c)
 
 
-class TestPowderPatternComponent(_PowderPatternComponentFixtureMixin, unittest.TestCase):
+class TestPowderPatternComponent(
+    _PowderPatternComponentFixtureMixin, unittest.TestCase
+):
 
     def test_GetParentPowderPattern(self):
         self.assertIs(self.pp, self.bg.GetParentPowderPattern())
@@ -400,9 +408,10 @@ class TestPowderPatternComponent(_PowderPatternComponentFixtureMixin, unittest.T
 
     def test_refinableobj_forwarding(self):
         """PowderPatternComponent inherits RefinableObj virtually; only
-        GetName/SetName/GetClassName/FixAllPar/UnFixAllPar were reachable
-        before the forwarding fix (see test_GetClassName above, which
-        covers GetClassName specifically) -- exercise the rest here."""
+        GetName/SetName/GetClassName/FixAllPar/UnFixAllPar were
+        reachable before the forwarding fix (see test_GetClassName
+        above, which covers GetClassName specifically) -- exercise the
+        rest here."""
         self.bg.SetName("mybg")
         self.assertEqual("mybg", self.bg.GetName())
         self.bg.FixAllPar()
@@ -418,7 +427,9 @@ class TestPowderPatternComponent(_PowderPatternComponentFixtureMixin, unittest.T
 # ----------------------------------------------------------------------------
 
 
-class TestPowderPatternBackground(_PowderPatternComponentFixtureMixin, unittest.TestCase):
+class TestPowderPatternBackground(
+    _PowderPatternComponentFixtureMixin, unittest.TestCase
+):
     # def test___init__(self):  assert False
     # def test_FixParametersBeyondMaxresolution(self):  assert False
     # def test_GetPowderPatternCalc(self):  assert False
@@ -440,7 +451,9 @@ class TestPowderPatternBackground(_PowderPatternComponentFixtureMixin, unittest.
 # ----------------------------------------------------------------------------
 
 
-class TestPowderPatternDiffraction(_PowderPatternComponentFixtureMixin, unittest.TestCase):
+class TestPowderPatternDiffraction(
+    _PowderPatternComponentFixtureMixin, unittest.TestCase
+):
     # def test___init__(self):  assert False
     # def test_ExtractLeBail(self):  assert False
     # def test_GetExtractionMode(self):  assert False
@@ -452,10 +465,10 @@ class TestPowderPatternDiffraction(_PowderPatternComponentFixtureMixin, unittest
     # def test_SetReflectionProfilePar(self):  assert False
 
     def test_refinableobj_forwarding(self):
-        """PowderPatternDiffraction reaches RefinableObj via ScatteringData
-        (non-virtual, already a correct nanobind base) -- confirm the
-        forwarding applied to ScatteringData actually cascades here rather
-        than assuming it does."""
+        """PowderPatternDiffraction reaches RefinableObj via
+        ScatteringData (non-virtual, already a correct nanobind base) --
+        confirm the forwarding applied to ScatteringData actually
+        cascades here rather than assuming it does."""
         self.diff.FixAllPar()
         self.diff.UnFixAllPar()
         self.assertEqual(0.0, self.diff.GetLogLikelihood())
@@ -496,6 +509,202 @@ class TestPowderPatternDiffraction(_PowderPatternComponentFixtureMixin, unittest
 # End of class TestPowderPatternDiffraction
 
 # ----------------------------------------------------------------------------
+
+
+def build_textured_pattern(crystal, phases):
+    """Return an X-ray powder pattern of crystal with March-Dollase
+    phases."""
+    pattern = PowderPattern()
+    pattern.SetWavelength(1.54)
+    x = np.deg2rad(np.linspace(5, 40, 2001))
+    pattern.SetPowderPatternX(x)
+    pattern.SetPowderPatternObs(np.ones_like(x))
+    diffraction = pattern.AddPowderPatternDiffraction(crystal)
+    texture = diffraction.GetTextureMarchDollase()
+    for phase in phases:
+        texture.AddPhase(*phase)
+    return pattern
+
+
+@pytest.mark.parametrize(
+    "phases, expected_par_names",
+    [
+        # Test that AddPhase stores a texture phase and its refinable
+        # parameters
+        # C1: One phase with a fraction, March coefficient and hkl is
+        # added.
+        # Expected: The getters return the phase's values, and its five
+        # parameters are named with the suffix _0.
+        (
+            [(1.0, 0.5, 0, 0, 1)],
+            ["Fraction_0", "MarchCoeff_0", "H_0", "K_0", "L_0"],
+        ),
+        # C2: Two phases are added.
+        # Expected: The getters return each phase's values, and the second
+        # phase's parameters are named with the suffix _1.
+        (
+            [(0.7, 0.5, 0, 0, 1), (0.3, 2.0, 1, 1, 0)],
+            [
+                "Fraction_0",
+                "MarchCoeff_0",
+                "H_0",
+                "K_0",
+                "L_0",
+                "Fraction_1",
+                "MarchCoeff_1",
+                "H_1",
+                "K_1",
+                "L_1",
+            ],
+        ),
+    ],
+)
+def test_add_phase(loadcifdata, phases, expected_par_names):
+    crystal = loadcifdata("paracetamol.cif")
+    pattern = build_textured_pattern(crystal, phases)
+    texture = pattern.GetPowderPatternComponent(0).GetTextureMarchDollase()
+    actual_type = type(texture)
+    expected_type = TextureMarchDollase
+    actual_phases = [
+        (
+            texture.GetFraction(i),
+            texture.GetMarchCoeff(i),
+            texture.GetPhaseH(i),
+            texture.GetPhaseK(i),
+            texture.GetPhaseL(i),
+        )
+        for i in range(texture.GetNbPhase())
+    ]
+    expected_phases = phases
+    actual_par_names = [
+        texture.GetPar(i).GetName() for i in range(texture.GetNbPar())
+    ]
+    assert actual_type == expected_type
+    assert actual_phases == [pytest.approx(e) for e in expected_phases]
+    assert actual_par_names == expected_par_names
+
+
+@pytest.mark.parametrize(
+    "initial_phases, method_name, method_args, expected_phases",
+    [
+        # Test that changing the texture of an existing pattern
+        # recalculates it
+        # C1: A phase is added to an untextured pattern.
+        # Expected: The pattern equals one built with that phase.
+        ([], "AddPhase", (1.0, 0.5, 0, 0, 1), [(1.0, 0.5, 0, 0, 1)]),
+        # C2: SetPhasePar changes the March coefficient of a phase.
+        # Expected: The pattern equals one built with the new March
+        # coefficient.
+        (
+            [(1.0, 0.5, 0, 0, 1)],
+            "SetPhasePar",
+            (0, 1.0, 2.0, 0, 0, 1),
+            [(1.0, 2.0, 0, 0, 1)],
+        ),
+        # C3: DeletePhase removes the second of two phases.
+        # Expected: The pattern equals one built with only the first phase.
+        (
+            [(0.7, 0.5, 0, 0, 1), (0.3, 2.0, 1, 1, 0)],
+            "DeletePhase",
+            (1,),
+            [(0.7, 0.5, 0, 0, 1)],
+        ),
+    ],
+)
+def test_get_powder_pattern_calc_after_texture_change(
+    loadcifdata, initial_phases, method_name, method_args, expected_phases
+):
+    crystal = loadcifdata("paracetamol.cif")
+    pattern = build_textured_pattern(crystal, initial_phases)
+    pattern.GetPowderPatternCalc()
+    texture = pattern.GetPowderPatternComponent(0).GetTextureMarchDollase()
+    getattr(texture, method_name)(*method_args)
+    actual_calc = pattern.GetPowderPatternCalc()
+    expected_calc = build_textured_pattern(
+        crystal, expected_phases
+    ).GetPowderPatternCalc()
+    assert np.allclose(actual_calc, expected_calc)
+
+
+@pytest.mark.parametrize(
+    "method_name, method_args",
+    [
+        # Test texture methods with the index of a phase that does not exist
+        # C1: SetPhasePar is called with index 1 on a single-phase texture.
+        # Expected: An ObjCrystException is raised.
+        ("SetPhasePar", (1, 1.0, 2.0, 0, 0, 1)),
+        # C2: DeletePhase is called with index 1 on a single-phase texture.
+        # Expected: An ObjCrystException is raised.
+        ("DeletePhase", (1,)),
+    ],
+)
+def test_texture_phase_index_out_of_range(
+    loadcifdata, method_name, method_args
+):
+    crystal = loadcifdata("paracetamol.cif")
+    pattern = build_textured_pattern(crystal, [(1.0, 0.5, 0, 0, 1)])
+    texture = pattern.GetPowderPatternComponent(0).GetTextureMarchDollase()
+    with pytest.raises(ObjCrystException):
+        getattr(texture, method_name)(*method_args)
+
+
+@pytest.mark.parametrize(
+    "phases, deleted_index, expected_phases, expected_par_names",
+    [
+        # Test that DeletePhase removes a phase and its refinable parameters
+        # C1: The only phase is deleted.
+        # Expected: No phase and no parameter remain.
+        ([(1.0, 0.5, 0, 0, 1)], 0, [], []),
+        # C2: The first of two phases is deleted.
+        # Expected: The second phase remains, and its parameters are
+        # renamed with the suffix _0.
+        (
+            [(0.7, 0.5, 0, 0, 1), (0.3, 2.0, 1, 1, 0)],
+            0,
+            [(0.3, 2.0, 1, 1, 0)],
+            ["Fraction_0", "MarchCoeff_0", "H_0", "K_0", "L_0"],
+        ),
+    ],
+)
+def test_delete_phase(
+    loadcifdata, phases, deleted_index, expected_phases, expected_par_names
+):
+    crystal = loadcifdata("paracetamol.cif")
+    pattern = build_textured_pattern(crystal, phases)
+    texture = pattern.GetPowderPatternComponent(0).GetTextureMarchDollase()
+    texture.DeletePhase(deleted_index)
+    actual_phases = [
+        (
+            texture.GetFraction(i),
+            texture.GetMarchCoeff(i),
+            texture.GetPhaseH(i),
+            texture.GetPhaseK(i),
+            texture.GetPhaseL(i),
+        )
+        for i in range(texture.GetNbPhase())
+    ]
+    actual_par_names = [
+        texture.GetPar(i).GetName() for i in range(texture.GetNbPar())
+    ]
+    assert actual_phases == [pytest.approx(e) for e in expected_phases]
+    assert actual_par_names == expected_par_names
+
+
+def test_get_powder_pattern_calc_after_march_coeff_par_change(loadcifdata):
+    # Test refining the March coefficient through its RefinablePar
+    # Expected: The pattern equals one built with the new March
+    # coefficient.
+    crystal = loadcifdata("paracetamol.cif")
+    pattern = build_textured_pattern(crystal, [(1.0, 0.5, 0, 0, 1)])
+    pattern.GetPowderPatternCalc()
+    texture = pattern.GetPowderPatternComponent(0).GetTextureMarchDollase()
+    texture.GetPar("MarchCoeff_0").SetValue(2.0)
+    actual_calc = pattern.GetPowderPatternCalc()
+    expected_calc = build_textured_pattern(
+        crystal, [(1.0, 2.0, 0, 0, 1)]
+    ).GetPowderPatternCalc()
+    assert np.allclose(actual_calc, expected_calc)
+
 
 if __name__ == "__main__":
     unittest.main()

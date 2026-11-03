@@ -1,13 +1,17 @@
 """Unit tests for pyobjcryst.reflectionprofile bindings."""
 
+import gc
 import unittest
+import weakref
 
 import numpy as np
 import pytest
 
 from pyobjcryst.powderpattern import PowderPattern
+from pyobjcryst.radiation import RadiationType, WavelengthType
 from pyobjcryst.refinableobj import RefinableObj
 from pyobjcryst.reflectionprofile import (
+    ReflectionProfileDoubleExponentialPseudoVoigt,
     ReflectionProfilePseudoVoigt,
     ReflectionProfilePseudoVoigtAnisotropic,
     ReflectionProfilePseudoVoigtTCH,
@@ -126,8 +130,8 @@ class TestReflectionProfile(unittest.TestCase):
         self.assertFalse(self.profile.IsAnisotropic())
 
     def test_concrete_pseudo_voigt_profiles(self):
-        """ReflectionProfilePseudoVoigt and Anisotropic can be constructed
-        and installed on a PowderPatternDiffraction."""
+        """ReflectionProfilePseudoVoigt and Anisotropic can be
+        constructed and installed on a PowderPatternDiffraction."""
         iso = ReflectionProfilePseudoVoigt()
         self.assertFalse(iso.IsAnisotropic())
         self.assertTrue(
@@ -148,7 +152,9 @@ class TestReflectionProfile(unittest.TestCase):
         aniso.SetProfilePar(fwhmCagliotiW=1e-4)
         self.ppd.SetProfile(aniso)
         installed_aniso = self.ppd.GetProfile()
-        self.assertIsInstance(installed_aniso, ReflectionProfilePseudoVoigtAnisotropic)
+        self.assertIsInstance(
+            installed_aniso, ReflectionProfilePseudoVoigtAnisotropic
+        )
 
     def test_tch_profile_width_and_limits(self):
         """TCH derives one common FWHM and reaches both pure limits."""
@@ -228,6 +234,141 @@ class TestReflectionProfile(unittest.TestCase):
         )
         self.assertAlmostEqual(aniso.GetPar("G_HH").GetValue(), 1e-5)
         self.assertAlmostEqual(aniso.GetPar("G_KK").GetValue(), 2e-5)
+
+
+def build_tof_pattern(crystal, profile):
+    """Return a TOF neutron powder pattern of crystal using profile."""
+    pattern = PowderPattern()
+    pattern.SetRadiationType(RadiationType.RAD_NEUTRON)
+    pattern.GetRadiation().SetWavelengthType(WavelengthType.WAVELENGTH_TOF)
+    # TOF decreases with sin(theta)/lambda, so x is in descending order.
+    x = np.linspace(120000, 20000, 2001)
+    pattern.SetPowderPatternX(x)
+    pattern.SetPowderPatternObs(np.ones_like(x))
+    diffraction = pattern.AddPowderPatternDiffraction(crystal)
+    diffraction.SetProfile(profile)
+    return pattern
+
+
+def test_set_profile_par_tof():
+    # Test that SetProfilePar assigns the ten TOF profile parameters
+    # Expected: Each refinable parameter has the value passed for it.
+    profile = ReflectionProfileDoubleExponentialPseudoVoigt()
+    profile.SetProfilePar(
+        instrumentAlpha0=0.01,
+        instrumentAlpha1=0.1,
+        instrumentBeta0=0.02,
+        instrumentBeta1=0.004,
+        gaussianSigma0=1.0,
+        gaussianSigma1=7.0,
+        gaussianSigma2=0.5,
+        lorentzianGamma0=0.1,
+        lorentzianGamma1=0.2,
+        lorentzianGamma2=0.4,
+    )
+    actual_values = {
+        profile.GetPar(i).GetName(): profile.GetPar(i).GetValue()
+        for i in range(profile.GetNbPar())
+    }
+    expected_values = {
+        "Alpha0": 0.01,
+        "Alpha1": 0.1,
+        "Beta0": 0.02,
+        "Beta1": 0.004,
+        "GaussianSigma0": 1.0,
+        "GaussianSigma1": 7.0,
+        "GaussianSigma2": 0.5,
+        "LorentzianGamma0": 0.1,
+        "LorentzianGamma1": 0.2,
+        "LorentzianGamma2": 0.4,
+    }
+    assert actual_values == pytest.approx(expected_values)
+
+
+def test_set_profile_tof_without_unit_cell(loadcifdata):
+    # Test installing a TOF profile constructed without a unit cell
+    # Expected: SetProfile gives the profile the crystal's unit cell, so
+    # the strongest peak is the Si (220) reflection at
+    # TOF = DIFC * d + DIFA * d^2.
+    crystal = loadcifdata("Si.cif")
+    pattern = build_tof_pattern(
+        crystal, ReflectionProfileDoubleExponentialPseudoVoigt()
+    )
+    calc = pattern.GetPowderPatternCalc()
+    x = pattern.GetPowderPatternX()
+    actual_peak_tof = x[np.argmax(calc)]
+    d_220 = crystal.a / np.sqrt(8)
+    expected_peak_tof = (
+        pattern.GetPar("DIFC").GetValue() * d_220
+        + pattern.GetPar("DIFA").GetValue() * d_220**2
+    )
+    tof_step = abs(x[1] - x[0])
+    assert actual_peak_tof == pytest.approx(expected_peak_tof, abs=tof_step)
+
+
+@pytest.mark.parametrize(
+    "parameter_name, new_value",
+    [
+        # Test that changing a parameter of the installed TOF profile
+        # recalculates the pattern
+        # C1: The rising-edge exponential coefficient Alpha1 is changed.
+        # Expected: The pattern equals one calculated with Alpha1 set
+        # before the profile was installed.
+        ("Alpha1", 0.2),
+        # C2: The falling-edge exponential coefficient Beta0 is changed.
+        # Expected: The pattern equals one calculated with Beta0 set
+        # before the profile was installed.
+        ("Beta0", 0.05),
+        # C3: The Gaussian width coefficient GaussianSigma1 is changed.
+        # Expected: The pattern equals one calculated with GaussianSigma1
+        # set before the profile was installed.
+        ("GaussianSigma1", 50.0),
+        # C4: The Lorentzian width coefficient LorentzianGamma2 is changed.
+        # Expected: The pattern equals one calculated with
+        # LorentzianGamma2 set before the profile was installed.
+        ("LorentzianGamma2", 2.0),
+    ],
+)
+def test_get_powder_pattern_calc_after_tof_profile_change(
+    loadcifdata, parameter_name, new_value
+):
+    crystal = loadcifdata("Si.cif")
+    pattern = build_tof_pattern(
+        crystal, ReflectionProfileDoubleExponentialPseudoVoigt()
+    )
+    pattern.GetPowderPatternCalc()
+    profile = pattern.GetPowderPatternComponent(0).GetProfile()
+    profile.GetPar(parameter_name).SetValue(new_value)
+    actual_calc = pattern.GetPowderPatternCalc()
+    expected_profile = ReflectionProfileDoubleExponentialPseudoVoigt(crystal)
+    expected_profile.GetPar(parameter_name).SetValue(new_value)
+    expected_calc = build_tof_pattern(
+        crystal, expected_profile
+    ).GetPowderPatternCalc()
+    assert np.allclose(actual_calc, expected_calc)
+
+
+@pytest.mark.parametrize("copy_method", ["CreateCopy", "copy_constructor"])
+def test_tof_profile_copy_keeps_original_alive(loadcifdata, copy_method):
+    # Test that a copy of a TOF profile keeps its source and unit cell alive
+    # Expected: The original profile and crystal survive until the copy is
+    # deleted, since both profiles reference the same unit cell.
+    crystal = loadcifdata("Si.cif")
+    original = ReflectionProfileDoubleExponentialPseudoVoigt(crystal)
+    if copy_method == "CreateCopy":
+        copied = original.CreateCopy()
+    else:
+        copied = ReflectionProfileDoubleExponentialPseudoVoigt(original)
+    original_ref = weakref.ref(original)
+    crystal_ref = weakref.ref(crystal)
+    del original, crystal
+    gc.collect()
+    assert original_ref() is not None
+    assert crystal_ref() is not None
+    del copied
+    gc.collect()
+    assert original_ref() is None
+    assert crystal_ref() is None
 
 
 if __name__ == "__main__":

@@ -6,6 +6,7 @@
 gaps listed below — it is not "fully done" in the sense of zero open items.**
 
 What's done and verified:
+
 - The C++ binding layer is fully ported from Boost.Python + SCons to nanobind + CMake +
   scikit-build-core. `src/pyobjcryst/*.py` (the pure-Python layer) and `tests/*.py` are untouched —
   nothing there is Boost.Python-specific.
@@ -21,6 +22,7 @@ What's done and verified:
 - **161/161 tests pass** (`pytest tests/ -q`).
 
 Known, accepted gaps — real, not oversights, but still open:
+
 - **Python-side method override does not work across the `RefinableObj` virtual-inheritance
   seam.** A Python subclass of `Atom`, `Molecule`, `ScatteringPowerAtom`,
   `DiffractionDataSingleCrystal`, `PowderPatternBackground`, etc. that overrides an inherited
@@ -28,7 +30,7 @@ Known, accepted gaps — real, not oversights, but still open:
   C++-internal virtual dispatch — only plain forwarding calls were restored, not overridability.
   This was an explicit scope decision (general override support was confirmed not needed), not an
   oversight, but it is a real regression vs. Boost.Python's `bases<RefinableObj>`, which handled
-  this transparently. Override support that *does* still work: `RefinableObj`'s own ~15 virtuals
+  this transparently. Override support that _does_ still work: `RefinableObj`'s own ~15 virtuals
   when subclassing `RefinableObj` directly; `Scatterer`/`ScatteringPower`/`Restraint`'s own
   (non-inherited) virtuals; and `UpdateDisplay` specifically on `Crystal`, `PowderPattern`, and
   `MonteCarloObj` (all three reach `RefinableObj` through a non-virtual chain, so no seam exists
@@ -153,18 +155,19 @@ after every test run — pre-existing, tracked in [Status](#status-2026-08-12) a
 
 ### Build troubleshooting
 
-| Symptom | Cause | Fix |
-|---|---|---|
-| `nanobind not found` | not installed | `conda install nanobind` |
-| `ObjCryst submodule empty` | not initialized | `git submodule update --init --recursive` |
-| `version.h: No such file` | CMake config not run | `pip install -e . --no-build-isolation` |
-| Segfault / bus error in a test | pointer-offset bug (virtual inheritance) | check whether the crashing class's C++ header declares `virtual` inheritance anywhere in its ancestry; see [Virtual Inheritance](#virtual-inheritance) |
-| `RuntimeError: std::bad_cast`, no useful location | usually `nb::cast<std::string>` on a `bytes` object | check every `.attr("read")()` call site — see [Python file-like input](#python-file-like-input-str-vs-bytes) |
-| Binary needs a newer glibc than the host ships (`GLIBC_ABI_GNU2_TLS`) | conda-forge GCC's `gnu2` TLS dialect | build with the system compiler: `CC=/usr/bin/gcc CXX=/usr/bin/g++ pip install -e . --no-build-isolation` |
-| gdb: `(no debugging symbols found)` | scikit-build-core strips symbols on install | `pip install -e . --no-build-isolation -Ccmake.define.CMAKE_BUILD_TYPE=RelWithDebInfo`, then copy the unstripped `.so` over the installed one |
-| Values off in the last few digits | `REAL` (`ObjCryst/ObjCryst/General.h`) defaults to `float`; must be forced to `double` | confirm `CMakeLists.txt` sets `target_compile_definitions(ObjCryst PUBLIC REAL=double ...)`, and that any helper uses the `CrystVector_REAL`/`CrystMatrix_REAL` macros rather than a hardcoded `<float>`/`<double>` |
+| Symptom                                                               | Cause                                                                                  | Fix                                                                                                                                                                                                                 |
+| --------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `nanobind not found`                                                  | not installed                                                                          | `conda install nanobind`                                                                                                                                                                                            |
+| `ObjCryst submodule empty`                                            | not initialized                                                                        | `git submodule update --init --recursive`                                                                                                                                                                           |
+| `version.h: No such file`                                             | CMake config not run                                                                   | `pip install -e . --no-build-isolation`                                                                                                                                                                             |
+| Segfault / bus error in a test                                        | pointer-offset bug (virtual inheritance)                                               | check whether the crashing class's C++ header declares `virtual` inheritance anywhere in its ancestry; see [Virtual Inheritance](#virtual-inheritance)                                                              |
+| `RuntimeError: std::bad_cast`, no useful location                     | usually `nb::cast<std::string>` on a `bytes` object                                    | check every `.attr("read")()` call site — see [Python file-like input](#python-file-like-input-str-vs-bytes)                                                                                                        |
+| Binary needs a newer glibc than the host ships (`GLIBC_ABI_GNU2_TLS`) | conda-forge GCC's `gnu2` TLS dialect                                                   | build with the system compiler: `CC=/usr/bin/gcc CXX=/usr/bin/g++ pip install -e . --no-build-isolation`                                                                                                            |
+| gdb: `(no debugging symbols found)`                                   | scikit-build-core strips symbols on install                                            | `pip install -e . --no-build-isolation -Ccmake.define.CMAKE_BUILD_TYPE=RelWithDebInfo`, then copy the unstripped `.so` over the installed one                                                                       |
+| Values off in the last few digits                                     | `REAL` (`ObjCryst/ObjCryst/General.h`) defaults to `float`; must be forced to `double` | confirm `CMakeLists.txt` sets `target_compile_definitions(ObjCryst PUBLIC REAL=double ...)`, and that any helper uses the `CrystVector_REAL`/`CrystMatrix_REAL` macros rather than a hardcoded `<float>`/`<double>` |
 
 Useful gdb recipe for a segfault/bad_cast inside the extension:
+
 ```bash
 gdb -q --args python -m pytest tests/test_whatever.py -k test_name
 (gdb) catch throw   # for std::bad_cast / C++ exceptions
@@ -182,7 +185,7 @@ or extending any class near `RefinableObj`, `Scatterer`, `ScatteringPower`, `Sca
 
 ### The core problem
 
-ObjCryst++ uses *virtual* inheritance in several places: `Scatterer : virtual public
+ObjCryst++ uses _virtual_ inheritance in several places: `Scatterer : virtual public
 RefinableObj`, `ScatteringPower : virtual public RefinableObj`, `ScatteringData : virtual public
 RefinableObj`, `PowderPatternComponent : virtual public RefinableObj`, and a second hop for
 `ScatteringPowerAtom : virtual public ScatteringPower` and `GlobalScatteringPower : virtual public
@@ -190,8 +193,8 @@ ScatteringPower`.
 
 nanobind's automatic base↔derived pointer adjustment (used by `nb::class_<Derived, Base>(...)`)
 assumes a **fixed, statically computable** offset between `Derived*` and `Base*`. That's only
-valid for *non-virtual* inheritance. Declaring the nanobind base across a virtual link does **not**
-raise an error — it silently computes a *wrong* offset, which can look fine for fields at offset 0
+valid for _non-virtual_ inheritance. Declaring the nanobind base across a virtual link does **not**
+raise an error — it silently computes a _wrong_ offset, which can look fine for fields at offset 0
 and then segfault or return garbage the moment a method touching state further into the object is
 called.
 
@@ -202,6 +205,12 @@ binding work — it's cheap and saves a debugging session per class. Plain (non-
 is fine and should still use nanobind's automatic base declaration (e.g. `ScatteringPowerSphere :
 public ScatteringPower`, no `virtual`, is safely `nb::class_<ScatteringPowerSphere,
 ScatteringPower>`).
+
+The same applies to _non-virtual multiple inheritance_ where the base is not the first one, e.g.
+`TextureMarchDollase : public ScatteringCorr, public RefinableObj`: `RefinableObj` sits at a
+non-zero offset, and `nb::class_<TextureMarchDollase, RefinableObj>` silently returns garbage
+(`GetNbPar()` was 0). Register it standalone, call `bind_refinableobj_forwarding()`, and add it to
+`extractRefinableObjArg`.
 
 ### Four ways this bites, and the fix for each
 
@@ -218,14 +227,15 @@ nb::object wrapScatteringPowerReturn(const ScatteringPower* sp, nb::handle paren
     return nb::cast(const_cast<ScatteringPower*>(sp), nb::rv_policy::reference_internal, parent);
 }
 ```
-Applies even when the returned type is an *intermediate* base, not the ultimate leaf (e.g.
+
+Applies even when the returned type is an _intermediate_ base, not the ultimate leaf (e.g.
 `PowderPattern::GetPowderPatternComponent(i)` returns `PowderPatternComponent&`, whose dynamic type
 is `PowderPatternDiffraction`) — every function returning a shared ancestor type anywhere in a
 virtual hierarchy needs this, not just the one function returning the immediate leaf type.
 
-**2. Argument direction** — a virtually-derived leaf is registered *without* a declared nanobind
+**2. Argument direction** — a virtually-derived leaf is registered _without_ a declared nanobind
 base (per the rule above), so nanobind refuses it wherever a C++ function's parameter type is the
-*base* (`void AddAtom(..., const ScatteringPower* pow, ...)` rejects a Python `ScatteringPowerAtom`
+_base_ (`void AddAtom(..., const ScatteringPower* pow, ...)` rejects a Python `ScatteringPowerAtom`
 with `TypeError: incompatible function arguments`). Fix: accept `nb::object` and resolve manually,
 trying the concrete leaf type first:
 
@@ -238,13 +248,13 @@ const ScatteringPower* extractScatteringPowerArg(nb::object obj) {
 ```
 
 **3. Generic "any `RefinableObj`" argument functions** — the same argument-direction problem, but
-for functions generic over *any* `RefinableObj` (`MonteCarloObj::AddRefinableObj`,
+for functions generic over _any_ `RefinableObj` (`MonteCarloObj::AddRefinableObj`,
 `LSQNumObj::SetRefinedObj`, `RefinableObj::AddPar`): nanobind has no conversion path from a Python
 `DiffractionDataSingleCrystal`/`Atom`/`Molecule`/etc. to `RefinableObj&`, since none of those
 concrete classes declare that base. Fix: a shared helper (`extractRefinableObjArg`, in
 `helpers_nb.hpp`/`nb_refinableobj.cpp`) trying the safe cast first, then falling back through every
 known virtually-linked type with `static_cast` (always well-defined at compile time — the problem
-is only ever nanobind's own *runtime* offset table, never a real `static_cast`):
+is only ever nanobind's own _runtime_ offset table, never a real `static_cast`):
 
 ```cpp
 RefinableObj& extractRefinableObjArg(nb::object obj) {
@@ -258,11 +268,12 @@ RefinableObj& extractRefinableObjArg(nb::object obj) {
 }
 ```
 
-**4. Under-declaring a *safe* base** — the mirror-image mistake: forgetting to declare a nanobind
+**4. Under-declaring a _safe_ base** — the mirror-image mistake: forgetting to declare a nanobind
 base across a link that's perfectly safe (plain, non-virtual). Symptom looks identical
-(`TypeError: incompatible function arguments`) but the cause is a *missing* declaration, not a
+(`TypeError: incompatible function arguments`) but the cause is a _missing_ declaration, not a
 dangerous one. Fix: register the base type too (it needs no bindings of its own, just an internal
 name), then declare the relationship normally:
+
 ```cpp
 nb::class_<PeakList>(m, "_PeakListBase");          // internal-only
 nb::class_<PeakListNB, PeakList>(m, "PeakList");   // now declared
@@ -281,28 +292,29 @@ Fix: two reusable template helpers in `helpers_nb.hpp`, `bind_refinableobj_forwa
 `bind_scatteringpower_forwarding<T>()`, each binding one method-set's full surface via plain
 forwarding `.def()` calls (`&T::Method`, or a lambda for anything needing a helper/numpy
 conversion). This is safe despite the virtual base because `T` is fully known at compile time at
-the call site, so the *compiler* resolves the pointer adjustment — exactly the mechanism
+the call site, so the _compiler_ resolves the pointer adjustment — exactly the mechanism
 Boost.Python relied on, nothing to do with nanobind's own (virtual-base-unsafe) casting. Called
 once each in `nb_scatterer.cpp`, `nb_scatteringpower.cpp`, `nb_scatteringdata.cpp`, and
 `nb_powderpatterncomponent.cpp` (cascades automatically to every non-virtually-inherited child —
 `Atom`, `Molecule`, `ZScatterer`, `PowderPatternBackground`, `PowderPatternDiffraction`, etc. — via
 ordinary Python MRO); `ScatteringPowerAtom` and `GlobalScatteringPower` need both helpers called
-directly on them, since they have a *second* virtual-inheritance hop of their own.
+directly on them, since they have a _second_ virtual-inheritance hop of their own.
 
 **This restores callability, not overridability** — see [Status](#status-2026-08-12) for why that
 distinction matters and is a deliberate, accepted scope limit (nanobind's `NB_TRAMPOLINE` macro
-requires its argument to be a *direct* base, a hard C++ rule that blocks chained/templated
+requires its argument to be a _direct_ base, a hard C++ rule that blocks chained/templated
 trampolines the way pybind11 supports them — confirmed by compiler error in a standalone repro,
 not a nanobind design choice that could be worked around).
 
 Two real bugs turned up while adding test coverage for this fix, both worth remembering as general
 lessons:
+
 - A binding that reaches a protected member via a trampoline/alias helper class (here,
   `PyScatterer::GetClockScattCompList()`, added to reach `Scatterer`'s protected
   `mClockScattCompList`) must take the **real base type** (`Scatterer&`) as its bound parameter,
   not the trampoline/alias type (`PyScatterer&`) — a plain `Atom`/`Molecule` instance is never
   actually constructed as the trampoline, so binding against the alias type raises `TypeError` for
-  every ordinary instance. Cast through the alias *inside* the lambda instead:
+  every ordinary instance. Cast through the alias _inside_ the lambda instead:
   ```cpp
   .def("GetClockScattCompList",
        [](Scatterer& s) -> const RefinableObjClock& {
@@ -310,7 +322,7 @@ lessons:
        }, nb::rv_policy::reference_internal)
   ```
 - `bind_scatteringpower_forwarding<T>()` forwarded `GetBij`/`SetBij` but missed the `B11`/`B12`/
-  `B13`/`B22`/`B23`/`B33`/`Biso` *properties* that `nb_scatteringpower.cpp` defines separately via
+  `B13`/`B22`/`B23`/`B33`/`Biso` _properties_ that `nb_scatteringpower.cpp` defines separately via
   file-local templates — a reminder that a forwarding helper needs to be checked against the full
   `dir()` of the canonical class, not just its method list, when a class also exposes properties.
 
@@ -321,9 +333,11 @@ lessons:
 ### `None` argument handling
 
 nanobind rejects `None` by default for any typed `nb::arg`. Allow it explicitly:
+
 ```cpp
 .def("AddScatterer", &Crystal::AddScatterer, nb::arg("pScatt").none(), nb::arg("ownsScatt") = true)
 ```
+
 `.none()` is required even for generic `nb::object` parameters — it isn't automatic just because
 the C++ parameter type is generic.
 
@@ -332,6 +346,7 @@ the C++ parameter type is generic.
 `REAL* derivpar` in `RecUnitCell::hkl2d`) — nanobind's arithmetic `type_caster<double>` rejects
 `None` outright before `.none()` on the outer `nb::arg` ever gets a chance to matter. Fix: wrap in
 a helper taking `nb::object` and bridge manually:
+
 ```cpp
 float _hkl2d(const RecUnitCell& r, float h, float k, float l, nb::object derivpar, unsigned int derivhkl) {
     if (derivpar.is_none()) return r.hkl2d(h, k, l, nullptr, derivhkl);
@@ -351,8 +366,8 @@ produce wrong-precision code.
 ### Lambda return type silently deduced by value
 
 A `.def(...)` that wraps a reference-returning helper in a lambda **without an explicit trailing
-return type** deduces `auto`, which strips the reference and returns *by value* — silently
-*copying* the object, even with `nb::rv_policy::reference_internal` set (that policy only controls
+return type** deduces `auto`, which strips the reference and returns _by value_ — silently
+_copying_ the object, even with `nb::rv_policy::reference_internal` set (that policy only controls
 how nanobind wraps whatever the lambda actually returns; it can't recover a reference from an
 already-copied value). This caused a real bug: `Molecule.AddRigidGroup`'s lambda copied the
 `RigidGroup` it had just added, so `Molecule.RemoveRigidGroup` (which finds the group to remove by
@@ -371,18 +386,18 @@ confirmed by a plain, non-pytest script that creates a `Molecule`, calls `AddBon
 all references, and calls `gc.collect()` twice: still leaks 6 instances at exit. Root cause:
 nanobind types don't participate in Python's cyclic GC by default (no `tp_traverse`/`tp_clear`),
 so a bidirectional `keep_alive` between two live objects — parent keeps child alive (a `.def()`
-declares `keep_alive<1,N>()`) *and* child keeps parent alive (a `.def()` returns via
+declares `keep_alive<1,N>()`) _and_ child keeps parent alive (a `.def()` returns via
 `rv_policy::reference_internal`, nanobind's shorthand for `keep_alive<0,1>()`) — forms a cycle
 nothing can ever collect.
 
 Fixed for `Molecule`↔`MolAtom`: removed the redundant Molecule-keeps-atom direction from
 `AddBond`/`AddBondAngle`/`AddDihedralAngle` (safe because `MolAtom` has no standalone Python-owned
 existence — its only constructor is a copy constructor, so it's always reached via
-`GetAtom()`/`AddAtom()`, which already protects it via the *other* direction).
+`GetAtom()`/`AddAtom()`, which already protects it via the _other_ direction).
 
 **Not safe to fix the same way**, and still open: `Crystal`↔`Scatterer`/`Molecule`/
 `ScatteringPower` (and possibly `RefinableObj`↔`RefinablePar`). Unlike `MolAtom`, these classes
-*do* have real standalone Python-owned constructors (`sp = ScatteringPowerAtom("C", "C")` with no
+_do_ have real standalone Python-owned constructors (`sp = ScatteringPowerAtom("C", "C")` with no
 parent) — the forward direction is protecting a real gap (between construction and being added to
 a `Crystal`, nothing else keeps the child's wrapper alive), so removing it would trade a leak for a
 use-after-free. The real fix is nanobind's `tp_traverse`/`tp_clear` mechanism, which likely requires
@@ -396,6 +411,7 @@ the parent — that combination is the signature to look for.
 Any binding calling `.attr("read")()` on a caller-supplied Python object and casting straight to
 `std::string` breaks the moment the file was opened in binary mode (`.read()` returns `bytes`,
 `nb::cast<std::string>` throws `std::bad_cast`). Use a shared helper:
+
 ```cpp
 inline std::string read_pyfile_to_string(nb::object input) {
     nb::object data = input.attr("read")();
@@ -437,6 +453,7 @@ this fix unless it's re-applied or merged upstream.
 ## Binding Patterns Quick Reference
 
 **Simple class, no virtuals:**
+
 ```cpp
 nb::class_<MyClass>(m, "MyClass")
     .def(nb::init<>())
@@ -445,8 +462,9 @@ nb::class_<MyClass>(m, "MyClass")
     ;
 ```
 
-**Class with overridable virtuals (trampoline) — only where `Base` is a *direct*, non-virtual
+**Class with overridable virtuals (trampoline) — only where `Base` is a _direct_, non-virtual
 base of the trampoline, per [Virtual Inheritance](#virtual-inheritance):**
+
 ```cpp
 struct PyMyClass : MyClass {
     NB_TRAMPOLINE(MyClass, 2);  // 2 virtual methods
@@ -457,6 +475,7 @@ nb::class_<MyClass, PyMyClass>(m, "MyClass").def(nb::init<>());
 ```
 
 **String representation** (many ObjCryst objects have a useful `operator<<`):
+
 ```cpp
 .def("__str__", [](const T& obj){ return obj_str(obj); })   // obj_str() in helpers_nb.hpp, mutes debug spam
 .def("__repr__", [](const T& obj){ return obj_str(obj); })
@@ -464,6 +483,7 @@ nb::class_<MyClass, PyMyClass>(m, "MyClass").def(nb::init<>());
 
 **Method overload resolution** — nanobind can't distinguish C++ overloads at binding time; use a
 lambda or a pointer-to-member-function cast:
+
 ```cpp
 .def("SetX", nb::overload_cast<const REAL>(&T::SetX))
 ```
@@ -476,13 +496,13 @@ handling, container conversion, lambda return types, `keep_alive`, and file-like
 
 ## Architecture Decisions
 
-| Decision | Rationale |
-|---|---|
-| Single `_pyobjcryst` extension | simpler than per-class extensions; nanobind modules can be large |
-| Static linking (newmat, cctbx, ObjCryst) | avoids runtime library conflicts on Windows/macOS wheels |
-| scikit-build-core + CMake | modern standard for C++ Python extensions, replaces SCons |
-| ObjCryst++ as a submodule | tracks upstream, simpler than a fork |
-| Vendored newmat/cctbx (not conda-forge `cctbx-base`) | see below |
+| Decision                                             | Rationale                                                        |
+| ---------------------------------------------------- | ---------------------------------------------------------------- |
+| Single `_pyobjcryst` extension                       | simpler than per-class extensions; nanobind modules can be large |
+| Static linking (newmat, cctbx, ObjCryst)             | avoids runtime library conflicts on Windows/macOS wheels         |
+| scikit-build-core + CMake                            | modern standard for C++ Python extensions, replaces SCons        |
+| ObjCryst++ as a submodule                            | tracks upstream, simpler than a fork                             |
+| Vendored newmat/cctbx (not conda-forge `cctbx-base`) | see below                                                        |
 
 **Vendored `cctbx` vs. conda-forge's `cctbx-base`** (investigated, not adopted): `cctbx-base`
 does contain the right modules, compiled and working, but isn't structured for third-party C++
@@ -499,17 +519,19 @@ depending on `cctbx-base` as it currently ships.
 ## Pitfalls Checklist
 
 **Before writing/extending a binding for class `X`:**
-- [ ] Grep `X`'s header and its whole ancestry (not just the direct parent) for `: *virtual
-      public` — if found, do **not** declare that base in `nb::class_<X, Base>`; use the manual
-      `dynamic_cast`/`nb::cast<Leaf&>` patterns instead
+
+- [ ] Grep `X`'s header and its whole ancestry (not just the direct parent) for
+      `: *virtual public` — if found, do **not** declare that base in
+      `nb::class_<X, Base>`; use the manual `dynamic_cast`/`nb::cast<Leaf&>` patterns instead
 
 **While writing:**
+
 - [ ] Every optional pointer/object argument needs `.none()` on its `nb::arg(...)`, including plain
       `nb::object` params — except pointers to a plain arithmetic type, where `.none()` has no
       effect; wrap those in an `nb::object`-taking helper instead
 - [ ] Every function returning a base-typed reference/pointer whose dynamic type is commonly a
       virtually-derived leaf needs the `dynamic_cast`-and-recast treatment
-- [ ] Every function generically *accepting* a base type as an argument needs its argument routed
+- [ ] Every function generically _accepting_ a base type as an argument needs its argument routed
       through a helper like `extractRefinableObjArg()`
 - [ ] Any `.def(...)` combining a lambda with `nb::rv_policy::reference`/`reference_internal` needs
       an explicit `-> T&`/`-> T*` trailing return type on the lambda
@@ -518,10 +540,11 @@ depending on `cctbx-base` as it currently ships.
 - [ ] Any container type (`CrystVector`, `CrystMatrix`) crossing the boundary should use the
       `CrystVector_REAL`/`CrystMatrix_REAL` macros, never a hardcoded `<float>`/`<double>`
 - [ ] A binding reaching a protected/private member via a trampoline/alias helper class must take
-      the *real* base type as its bound parameter, not the trampoline/alias type — otherwise it
+      the _real_ base type as its bound parameter, not the trampoline/alias type — otherwise it
       raises `TypeError` on every instance not literally constructed as that alias
 
 **After writing, before declaring done:**
+
 - [ ] Rebuilt and re-ran the specific test file, then the full suite, and confirmed no new failures
 - [ ] If the class exposes properties as well as methods, checked the forwarding/coverage against
       the full `dir()` of the canonical class, not just its method list

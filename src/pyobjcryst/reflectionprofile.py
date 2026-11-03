@@ -43,6 +43,11 @@ can be reused as a template for multiple phases::
     aniso.SetProfilePar(fwhmCagliotiW=1e-4)
     ppd3.SetProfile(aniso)
 
+For time-of-flight neutron data, use the double-exponential pseudo-Voigt
+profile ``ReflectionProfileDoubleExponentialPseudoVoigt``. It needs the
+unit cell to compute ``d_hkl``, which ``PowderPatternDiffraction.SetProfile``
+sets from the component's crystal.
+
 Example
 -------
 
@@ -76,11 +81,13 @@ __all__ = [
     "ReflectionProfilePseudoVoigt",
     "ReflectionProfilePseudoVoigtTCH",
     "ReflectionProfilePseudoVoigtAnisotropic",
+    "ReflectionProfileDoubleExponentialPseudoVoigt",
     "ReflectionProfileType",
 ]
 
 from pyobjcryst._pyobjcryst import (
     ReflectionProfile,
+    ReflectionProfileDoubleExponentialPseudoVoigt,
     ReflectionProfilePseudoVoigt,
     ReflectionProfilePseudoVoigtAnisotropic,
     ReflectionProfilePseudoVoigtTCH,

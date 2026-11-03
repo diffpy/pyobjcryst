@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-"""Coverage guard for the RefinableObj/ScatteringPower method-forwarding fix.
+"""Coverage guard for the RefinableObj/ScatteringPower method-forwarding
+fix.
 
 Scatterer, ScatteringPower, ScatteringData, and PowderPatternComponent all
 inherit RefinableObj *virtually* in C++, so nanobind cannot declare
@@ -46,8 +47,8 @@ SCATTERINGPOWER_METHODS = _public_methods(ScatteringPower)
 
 
 class TestRefinableObjSurfaceForwarding(unittest.TestCase):
-    """Every RefinableObj method must be reachable on the four classes that
-    only reach RefinableObj through a C++ virtual base."""
+    """Every RefinableObj method must be reachable on the four classes
+    that only reach RefinableObj through a C++ virtual base."""
 
     def _assert_full_coverage(self, cls):
         missing = [m for m in REFINABLEOBJ_METHODS if not hasattr(cls, m)]
@@ -108,9 +109,10 @@ class TestRefinableObjSurfaceForwarding(unittest.TestCase):
 
 
 class TestScatteringPowerSurfaceForwarding(unittest.TestCase):
-    """ScatteringPowerAtom and GlobalScatteringPower need ScatteringPower's
-    own method surface (GetScatteringFactor, GetBij/SetBij, GetColour, ...)
-    forwarded too, on top of RefinableObj's."""
+    """ScatteringPowerAtom and GlobalScatteringPower need
+    ScatteringPower's own method surface (GetScatteringFactor,
+    GetBij/SetBij, GetColour, ...) forwarded too, on top of
+    RefinableObj's."""
 
     def _assert_full_coverage(self, cls):
         missing = [m for m in SCATTERINGPOWER_METHODS if not hasattr(cls, m)]
