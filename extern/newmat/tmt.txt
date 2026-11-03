@@ -4,97 +4,97 @@ Now print a real number: 3.14159
 
 Matrix type: Rect  (1, 8)
 
-0	0	0	0	0	0	0	1	
+0	0	0	0	0	0	0	1
 
-+     UT    LT    Rect  Squ   Sym   Skew  Diag  Ident Band  UpBnd LwBnd SmBnd SkBnd 
-UT    UT    Squ   Rect  Squ   Squ   Squ   UT    UT    Squ   UT    Squ   Squ   Squ   
-LT    Squ   LT    Rect  Squ   Squ   Squ   LT    LT    Squ   Squ   LT    Squ   Squ   
-Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-Squ   Squ   Squ   Rect  Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   
-Sym   Squ   Squ   Rect  Squ   Sym   Squ   Sym   Sym   Squ   Squ   Squ   Sym   Squ   
-Skew  Squ   Squ   Rect  Squ   Squ   Skew  Squ   Squ   Squ   Squ   Squ   Squ   Skew  
-Diag  UT    LT    Rect  Squ   Sym   Squ   Diag  Diag  Band  UpBnd LwBnd SmBnd Band  
-Ident UT    LT    Rect  Squ   Sym   Squ   Diag  Ident Band  UpBnd LwBnd SmBnd Band  
-Band  Squ   Squ   Rect  Squ   Squ   Squ   Band  Band  Band  Band  Band  Band  Band  
-UpBnd UT    Squ   Rect  Squ   Squ   Squ   UpBnd UpBnd Band  UpBnd Band  Band  Band  
-LwBnd Squ   LT    Rect  Squ   Squ   Squ   LwBnd LwBnd Band  Band  LwBnd Band  Band  
-SmBnd Squ   Squ   Rect  Squ   Sym   Squ   SmBnd SmBnd Band  Band  Band  SmBnd Band  
-SkBnd Squ   Squ   Rect  Squ   Squ   Skew  Band  Band  Band  Band  Band  Band  SkBnd 
++     UT    LT    Rect  Squ   Sym   Skew  Diag  Ident Band  UpBnd LwBnd SmBnd SkBnd
+UT    UT    Squ   Rect  Squ   Squ   Squ   UT    UT    Squ   UT    Squ   Squ   Squ
+LT    Squ   LT    Rect  Squ   Squ   Squ   LT    LT    Squ   Squ   LT    Squ   Squ
+Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+Squ   Squ   Squ   Rect  Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ
+Sym   Squ   Squ   Rect  Squ   Sym   Squ   Sym   Sym   Squ   Squ   Squ   Sym   Squ
+Skew  Squ   Squ   Rect  Squ   Squ   Skew  Squ   Squ   Squ   Squ   Squ   Squ   Skew
+Diag  UT    LT    Rect  Squ   Sym   Squ   Diag  Diag  Band  UpBnd LwBnd SmBnd Band
+Ident UT    LT    Rect  Squ   Sym   Squ   Diag  Ident Band  UpBnd LwBnd SmBnd Band
+Band  Squ   Squ   Rect  Squ   Squ   Squ   Band  Band  Band  Band  Band  Band  Band
+UpBnd UT    Squ   Rect  Squ   Squ   Squ   UpBnd UpBnd Band  UpBnd Band  Band  Band
+LwBnd Squ   LT    Rect  Squ   Squ   Squ   LwBnd LwBnd Band  Band  LwBnd Band  Band
+SmBnd Squ   Squ   Rect  Squ   Sym   Squ   SmBnd SmBnd Band  Band  Band  SmBnd Band
+SkBnd Squ   Squ   Rect  Squ   Squ   Skew  Band  Band  Band  Band  Band  Band  SkBnd
 
-*     UT    LT    Rect  Squ   Sym   Skew  Diag  Ident Band  UpBnd LwBnd SmBnd SkBnd 
-UT    UT    Squ   Rect  Squ   Squ   Squ   UT    UT    Squ   UT    Squ   Squ   Squ   
-LT    Squ   LT    Rect  Squ   Squ   Squ   LT    LT    Squ   Squ   LT    Squ   Squ   
-Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-Squ   Squ   Squ   Rect  Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   
-Sym   Squ   Squ   Rect  Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   
-Skew  Squ   Squ   Rect  Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   
-Diag  UT    LT    Rect  Squ   Squ   Squ   Diag  Diag  Band  UpBnd LwBnd Band  Band  
-Ident UT    LT    Rect  Squ   Squ   Squ   Diag  Ident Band  UpBnd LwBnd Band  Band  
-Band  Squ   Squ   Rect  Squ   Squ   Squ   Band  Band  Band  Band  Band  Band  Band  
-UpBnd UT    Squ   Rect  Squ   Squ   Squ   UpBnd UpBnd Band  UpBnd Band  Band  Band  
-LwBnd Squ   LT    Rect  Squ   Squ   Squ   LwBnd LwBnd Band  Band  LwBnd Band  Band  
-SmBnd Squ   Squ   Rect  Squ   Squ   Squ   Band  Band  Band  Band  Band  Band  Band  
-SkBnd Squ   Squ   Rect  Squ   Squ   Squ   Band  Band  Band  Band  Band  Band  Band  
+*     UT    LT    Rect  Squ   Sym   Skew  Diag  Ident Band  UpBnd LwBnd SmBnd SkBnd
+UT    UT    Squ   Rect  Squ   Squ   Squ   UT    UT    Squ   UT    Squ   Squ   Squ
+LT    Squ   LT    Rect  Squ   Squ   Squ   LT    LT    Squ   Squ   LT    Squ   Squ
+Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+Squ   Squ   Squ   Rect  Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ
+Sym   Squ   Squ   Rect  Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ
+Skew  Squ   Squ   Rect  Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ   Squ
+Diag  UT    LT    Rect  Squ   Squ   Squ   Diag  Diag  Band  UpBnd LwBnd Band  Band
+Ident UT    LT    Rect  Squ   Squ   Squ   Diag  Ident Band  UpBnd LwBnd Band  Band
+Band  Squ   Squ   Rect  Squ   Squ   Squ   Band  Band  Band  Band  Band  Band  Band
+UpBnd UT    Squ   Rect  Squ   Squ   Squ   UpBnd UpBnd Band  UpBnd Band  Band  Band
+LwBnd Squ   LT    Rect  Squ   Squ   Squ   LwBnd LwBnd Band  Band  LwBnd Band  Band
+SmBnd Squ   Squ   Rect  Squ   Squ   Squ   Band  Band  Band  Band  Band  Band  Band
+SkBnd Squ   Squ   Rect  Squ   Squ   Squ   Band  Band  Band  Band  Band  Band  Band
 
-|     UT    LT    Rect  Squ   Sym   Skew  Diag  Ident Band  UpBnd LwBnd SmBnd SkBnd 
-UT    Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-LT    Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-Squ   Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-Sym   Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-Skew  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-Diag  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-Ident Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-Band  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-UpBnd Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-LwBnd Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-SmBnd Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-SkBnd Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
+|     UT    LT    Rect  Squ   Sym   Skew  Diag  Ident Band  UpBnd LwBnd SmBnd SkBnd
+UT    Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+LT    Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+Squ   Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+Sym   Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+Skew  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+Diag  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+Ident Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+Band  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+UpBnd Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+LwBnd Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+SmBnd Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+SkBnd Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
 
-SP    UT    LT    Rect  Squ   Sym   Skew  Diag  Ident Band  UpBnd LwBnd SmBnd SkBnd 
-UT    UT    Diag  UT    UT    UT    UT    Diag  Diag  UpBnd UpBnd Diag  UpBnd UpBnd 
-LT    Diag  LT    LT    LT    LT    LT    Diag  Diag  LwBnd Diag  LwBnd LwBnd LwBnd 
-Rect  UT    LT    Rect  Squ   Squ   Squ   Diag  Diag  Band  UpBnd LwBnd Band  Band  
-Squ   UT    LT    Squ   Squ   Squ   Squ   Diag  Diag  Band  UpBnd LwBnd Band  Band  
-Sym   UT    LT    Squ   Squ   Sym   Skew  Diag  Diag  Band  UpBnd LwBnd SmBnd SkBnd 
-Skew  UT    LT    Squ   Squ   Skew  Sym   ????? ????? Band  UpBnd LwBnd SkBnd SmBnd 
-Diag  Diag  Diag  Diag  Diag  Diag  ????? Diag  Diag  Diag  Diag  Diag  Diag  ????? 
-Ident Diag  Diag  Diag  Diag  Diag  ????? Diag  Ident Diag  Diag  Diag  Diag  ????? 
-Band  UpBnd LwBnd Band  Band  Band  Band  Diag  Diag  Band  UpBnd LwBnd Band  Band  
-UpBnd UpBnd Diag  UpBnd UpBnd UpBnd UpBnd Diag  Diag  UpBnd UpBnd Diag  UpBnd UpBnd 
-LwBnd Diag  LwBnd LwBnd LwBnd LwBnd LwBnd Diag  Diag  LwBnd Diag  LwBnd LwBnd LwBnd 
-SmBnd UpBnd LwBnd Band  Band  SmBnd SkBnd Diag  Diag  Band  UpBnd LwBnd SmBnd SkBnd 
-SkBnd UpBnd LwBnd Band  Band  SkBnd SmBnd ????? ????? Band  UpBnd LwBnd SkBnd SmBnd 
+SP    UT    LT    Rect  Squ   Sym   Skew  Diag  Ident Band  UpBnd LwBnd SmBnd SkBnd
+UT    UT    Diag  UT    UT    UT    UT    Diag  Diag  UpBnd UpBnd Diag  UpBnd UpBnd
+LT    Diag  LT    LT    LT    LT    LT    Diag  Diag  LwBnd Diag  LwBnd LwBnd LwBnd
+Rect  UT    LT    Rect  Squ   Squ   Squ   Diag  Diag  Band  UpBnd LwBnd Band  Band
+Squ   UT    LT    Squ   Squ   Squ   Squ   Diag  Diag  Band  UpBnd LwBnd Band  Band
+Sym   UT    LT    Squ   Squ   Sym   Skew  Diag  Diag  Band  UpBnd LwBnd SmBnd SkBnd
+Skew  UT    LT    Squ   Squ   Skew  Sym   ????? ????? Band  UpBnd LwBnd SkBnd SmBnd
+Diag  Diag  Diag  Diag  Diag  Diag  ????? Diag  Diag  Diag  Diag  Diag  Diag  ?????
+Ident Diag  Diag  Diag  Diag  Diag  ????? Diag  Ident Diag  Diag  Diag  Diag  ?????
+Band  UpBnd LwBnd Band  Band  Band  Band  Diag  Diag  Band  UpBnd LwBnd Band  Band
+UpBnd UpBnd Diag  UpBnd UpBnd UpBnd UpBnd Diag  Diag  UpBnd UpBnd Diag  UpBnd UpBnd
+LwBnd Diag  LwBnd LwBnd LwBnd LwBnd LwBnd Diag  Diag  LwBnd Diag  LwBnd LwBnd LwBnd
+SmBnd UpBnd LwBnd Band  Band  SmBnd SkBnd Diag  Diag  Band  UpBnd LwBnd SmBnd SkBnd
+SkBnd UpBnd LwBnd Band  Band  SkBnd SmBnd ????? ????? Band  UpBnd LwBnd SkBnd SmBnd
 
-KP    UT    LT    Rect  Squ   Sym   Skew  Diag  Ident Band  UpBnd LwBnd SmBnd SkBnd 
-UT    UT    Squ   Rect  Squ   Squ   Squ   UpBnd UpBnd Band  UpBnd Band  Band  Band  
-LT    Squ   LT    Rect  Squ   Squ   Squ   LwBnd LwBnd Band  Band  LwBnd Band  Band  
-Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  
-Squ   Squ   Squ   Rect  Squ   Squ   Squ   Band  Band  Band  Band  Band  Band  Band  
-Sym   Squ   Squ   Rect  Squ   Sym   Squ   SmBnd SmBnd Band  Band  Band  SmBnd Band  
-Skew  Squ   Squ   Rect  Squ   Squ   Skew  Band  Band  Band  Band  Band  Band  SkBnd 
-Diag  UT    LT    Rect  Squ   Sym   Squ   Diag  Diag  Band  UpBnd LwBnd SmBnd Band  
-Ident UT    LT    Rect  Squ   Sym   Squ   Diag  Diag  Band  UpBnd LwBnd SmBnd Band  
-Band  Squ   Squ   Rect  Squ   Squ   Squ   Band  Band  Band  Band  Band  Band  Band  
-UpBnd UT    Squ   Rect  Squ   Squ   Squ   UpBnd UpBnd Band  UpBnd Band  Band  Band  
-LwBnd Squ   LT    Rect  Squ   Squ   Squ   LwBnd LwBnd Band  Band  LwBnd Band  Band  
-SmBnd Squ   Squ   Rect  Squ   Sym   Squ   SmBnd SmBnd Band  Band  Band  SmBnd Band  
-SkBnd Squ   Squ   Rect  Squ   Squ   Skew  Band  Band  Band  Band  Band  Band  SkBnd 
+KP    UT    LT    Rect  Squ   Sym   Skew  Diag  Ident Band  UpBnd LwBnd SmBnd SkBnd
+UT    UT    Squ   Rect  Squ   Squ   Squ   UpBnd UpBnd Band  UpBnd Band  Band  Band
+LT    Squ   LT    Rect  Squ   Squ   Squ   LwBnd LwBnd Band  Band  LwBnd Band  Band
+Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect  Rect
+Squ   Squ   Squ   Rect  Squ   Squ   Squ   Band  Band  Band  Band  Band  Band  Band
+Sym   Squ   Squ   Rect  Squ   Sym   Squ   SmBnd SmBnd Band  Band  Band  SmBnd Band
+Skew  Squ   Squ   Rect  Squ   Squ   Skew  Band  Band  Band  Band  Band  Band  SkBnd
+Diag  UT    LT    Rect  Squ   Sym   Squ   Diag  Diag  Band  UpBnd LwBnd SmBnd Band
+Ident UT    LT    Rect  Squ   Sym   Squ   Diag  Diag  Band  UpBnd LwBnd SmBnd Band
+Band  Squ   Squ   Rect  Squ   Squ   Squ   Band  Band  Band  Band  Band  Band  Band
+UpBnd UT    Squ   Rect  Squ   Squ   Squ   UpBnd UpBnd Band  UpBnd Band  Band  Band
+LwBnd Squ   LT    Rect  Squ   Squ   Squ   LwBnd LwBnd Band  Band  LwBnd Band  Band
+SmBnd Squ   Squ   Rect  Squ   Sym   Squ   SmBnd SmBnd Band  Band  Band  SmBnd Band
+SkBnd Squ   Squ   Rect  Squ   Squ   Skew  Band  Band  Band  Band  Band  Band  SkBnd
 
->=    UT    LT    Rect  Squ   Sym   Skew  Diag  Ident Band  UpBnd LwBnd SmBnd SkBnd 
-UT    Yes   No    Yes   Yes   No    No    No    No    No    No    No    No    No    
-LT    No    Yes   Yes   Yes   No    No    No    No    No    No    No    No    No    
-Rect  No    No    Yes   Yes   No    No    No    No    No    No    No    No    No    
-Squ   No    No    Yes   Yes   No    No    No    No    No    No    No    No    No    
-Sym   No    No    Yes   Yes   Yes   No    No    No    No    No    No    No    No    
-Skew  No    No    Yes   Yes   No    Yes   No    No    No    No    No    No    No    
-Diag  Yes   Yes   Yes   Yes   Yes   No    Yes   No    Yes   Yes   Yes   Yes   No    
-Ident Yes   Yes   Yes   Yes   Yes   No    Yes   Yes   Yes   Yes   Yes   Yes   No    
-Band  No    No    Yes   Yes   No    No    No    No    Yes   No    No    No    No    
-UpBnd Yes   No    Yes   Yes   No    No    No    No    Yes   Yes   No    No    No    
-LwBnd No    Yes   Yes   Yes   No    No    No    No    Yes   No    Yes   No    No    
-SmBnd No    No    Yes   Yes   Yes   No    No    No    Yes   No    No    Yes   No    
-SkBnd No    No    Yes   Yes   No    Yes   No    No    Yes   No    No    No    Yes   
+>=    UT    LT    Rect  Squ   Sym   Skew  Diag  Ident Band  UpBnd LwBnd SmBnd SkBnd
+UT    Yes   No    Yes   Yes   No    No    No    No    No    No    No    No    No
+LT    No    Yes   Yes   Yes   No    No    No    No    No    No    No    No    No
+Rect  No    No    Yes   Yes   No    No    No    No    No    No    No    No    No
+Squ   No    No    Yes   Yes   No    No    No    No    No    No    No    No    No
+Sym   No    No    Yes   Yes   Yes   No    No    No    No    No    No    No    No
+Skew  No    No    Yes   Yes   No    Yes   No    No    No    No    No    No    No
+Diag  Yes   Yes   Yes   Yes   Yes   No    Yes   No    Yes   Yes   Yes   Yes   No
+Ident Yes   Yes   Yes   Yes   Yes   No    Yes   Yes   Yes   Yes   Yes   Yes   No
+Band  No    No    Yes   Yes   No    No    No    No    Yes   No    No    No    No
+UpBnd Yes   No    Yes   Yes   No    No    No    No    Yes   Yes   No    No    No
+LwBnd No    Yes   Yes   Yes   No    No    No    No    Yes   No    Yes   No    No
+SmBnd No    No    Yes   Yes   Yes   No    No    No    Yes   No    No    Yes   No
+SkBnd No    No    Yes   Yes   No    Yes   No    No    Yes   No    No    No    Yes
 
 
   * First test of Matrix package
@@ -6591,4 +6591,3 @@ Number of matrices tested                 = 1604
 Number of non-zero matrices (should be 1) = 1
 
 Elapsed (processor) time = 0.36 seconds
-

@@ -303,7 +303,7 @@ GeneralMatrix* GetSubMatrix::Evaluate(MatrixType mt)
    else Compare(gm->Type().sub(), mt);
    GeneralMatrix* gmx = mt.New(row_number, col_number, this);
    int i = row_number;
-   MatrixRow mr(gm, LoadOnEntry, row_skip); 
+   MatrixRow mr(gm, LoadOnEntry, row_skip);
    MatrixRow mrx(gmx, StoreOnExit+DirectPart);
    MatrixRowCol sub;
    while (i--)
@@ -330,7 +330,7 @@ void GeneralMatrix::Add(GeneralMatrix* gm1, Real f)
    { *s++ = *s1++ + f; *s++ = *s1++ + f; *s++ = *s1++ + f; *s++ = *s1++ + f; }
    i = storage & 3; while (i--) *s++ = *s1++ + f;
 }
-   
+
 void GeneralMatrix::Add(Real f)
 {
    REPORT
@@ -338,7 +338,7 @@ void GeneralMatrix::Add(Real f)
    while (i--) { *s++ += f; *s++ += f; *s++ += f; *s++ += f; }
    i = storage & 3; while (i--) *s++ += f;
 }
-   
+
 void GeneralMatrix::NegAdd(GeneralMatrix* gm1, Real f)
 {
    REPORT
@@ -347,7 +347,7 @@ void GeneralMatrix::NegAdd(GeneralMatrix* gm1, Real f)
    { *s++ = f - *s1++; *s++ = f - *s1++; *s++ = f - *s1++; *s++ = f - *s1++; }
    i = storage & 3; while (i--) *s++ = f - *s1++;
 }
-   
+
 void GeneralMatrix::NegAdd(Real f)
 {
    REPORT
@@ -359,7 +359,7 @@ void GeneralMatrix::NegAdd(Real f)
    }
    i = storage & 3; while (i--)  { *s = f - *s; s++; }
 }
-   
+
 void GeneralMatrix::Negate(GeneralMatrix* gm1)
 {
    // change sign of elements
@@ -369,7 +369,7 @@ void GeneralMatrix::Negate(GeneralMatrix* gm1)
    { *s++ = -(*s1++); *s++ = -(*s1++); *s++ = -(*s1++); *s++ = -(*s1++); }
    i = storage & 3; while(i--) *s++ = -(*s1++);
 }
-   
+
 void GeneralMatrix::Negate()
 {
    REPORT
@@ -378,7 +378,7 @@ void GeneralMatrix::Negate()
    { *s = -(*s); s++; *s = -(*s); s++; *s = -(*s); s++; *s = -(*s); s++; }
    i = storage & 3; while(i--) { *s = -(*s); s++; }
 }
-   
+
 void GeneralMatrix::Multiply(GeneralMatrix* gm1, Real f)
 {
    REPORT
@@ -387,7 +387,7 @@ void GeneralMatrix::Multiply(GeneralMatrix* gm1, Real f)
    { *s++ = *s1++ * f; *s++ = *s1++ * f; *s++ = *s1++ * f; *s++ = *s1++ * f; }
    i = storage & 3; while (i--) *s++ = *s1++ * f;
 }
-   
+
 void GeneralMatrix::Multiply(Real f)
 {
    REPORT
@@ -395,7 +395,7 @@ void GeneralMatrix::Multiply(Real f)
    while (i--) { *s++ *= f; *s++ *= f; *s++ *= f; *s++ *= f; }
    i = storage & 3; while (i--) *s++ *= f;
 }
-   
+
 
 /************************ MatrixInput routines ****************************/
 

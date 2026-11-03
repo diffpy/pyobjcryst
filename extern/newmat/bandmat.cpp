@@ -284,8 +284,8 @@ GeneralMatrix* BandLUMatrix::Evaluate(MatrixType mt)
 // could we use SetParameters instead of this
 void BandLUMatrix::get_aux(BandLUMatrix& X)
 {
-   X.d = d; X.sing = sing; X.storage2 = storage2; X.m1 = m1; X.m2 = m2;   
-   if (tag_val == 0 || tag_val == 1) // reuse the array 
+   X.d = d; X.sing = sing; X.storage2 = storage2; X.m1 = m1; X.m2 = m2;
+   if (tag_val == 0 || tag_val == 1) // reuse the array
    {
       REPORT
       X.indx = indx; indx = 0;
@@ -333,7 +333,7 @@ void BandLUMatrix::operator=(const BandLUMatrix& gm)
    ((BandLUMatrix&)gm).get_aux(*this);
    Eq(gm);
 }
-   
+
 
 
 
@@ -714,5 +714,3 @@ Real SymmetricBandMatrix::sum() const
 #endif
 
 ///@}
-
-

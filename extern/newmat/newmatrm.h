@@ -130,7 +130,7 @@ inline void GivensRotation(Real cGivens, Real sGivens, Real& x, Real& y)
    Real tmp1 = -sGivens * x + cGivens * y;
    x = tmp0; y = tmp1;
 }
-   
+
 inline void GivensRotationR(Real cGivens, Real sGivens, Real& x, Real& y)
 {
    // also change sign of y
@@ -138,7 +138,7 @@ inline void GivensRotationR(Real cGivens, Real sGivens, Real& x, Real& y)
    Real tmp0 = cGivens * x + sGivens * y;
    Real tmp1 = sGivens * x - cGivens * y;
    x = tmp0; y = tmp1;
-}   
+}
 
 
 

@@ -189,7 +189,7 @@ int main()
    }
    CatchAll
    {
-      cout << "\nProgram fails - exception generated\n\n"; 
+      cout << "\nProgram fails - exception generated\n\n";
    }
    return 0;
 }

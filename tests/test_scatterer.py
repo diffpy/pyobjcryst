@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 """Functional tests for the RefinableObj/ScatteringPower method surface
 restored on Scatterer/ScatteringPowerAtom (see
-nanobind_migration_notes.md's "Follow-up: restoring RefinableObj's method
-surface on virtually-inherited classes"; presence-only coverage across every
-affected class lives in test_virtualbase_forwarding.py). These exercise the
-actual behaviour, not just that the method exists.
+nanobind_migration_notes.md's "Follow-up: restoring RefinableObj's
+method surface on virtually-inherited classes"; presence-only coverage
+across every affected class lives in test_virtualbase_forwarding.py).
+
+These exercise the actual behaviour, not just that the method exists.
 """
 
 import io
@@ -17,7 +18,8 @@ from pyobjcryst.refinableobj import RefinableObjClock
 
 
 class TestScattererForwarding(unittest.TestCase):
-    """Atom reaches RefinableObj only through Scatterer's C++ virtual base."""
+    """Atom reaches RefinableObj only through Scatterer's C++ virtual
+    base."""
 
     def setUp(self):
         self.sp, self.atom = makeScatterer()
@@ -62,9 +64,10 @@ class TestScattererForwarding(unittest.TestCase):
         self.atom.UpdateDisplay()
 
     def test_get_clock_scatt_comp_list(self):
-        """Forwards a *protected* Scatterer member (mClockScattCompList);
-        unrelated to the virtual-inheritance issue (it's a plain omission)
-        but fixed in the same pass -- see PyScatterer in nb_scatterer.cpp."""
+        """Forwards a *protected* Scatterer member
+        (mClockScattCompList); unrelated to the virtual-inheritance
+        issue (it's a plain omission) but fixed in the same pass -- see
+        PyScatterer in nb_scatterer.cpp."""
         clock = self.atom.GetClockScattCompList()
         self.assertIsInstance(clock, RefinableObjClock)
 
@@ -86,9 +89,10 @@ class TestScattererForwarding(unittest.TestCase):
 
 class TestScatteringPowerAtomForwarding(unittest.TestCase):
     """ScatteringPowerAtom inherits ScatteringPower virtually, and
-    ScatteringPower inherits RefinableObj virtually too -- a second hop, so
-    both bind_refinableobj_forwarding<T>() and
-    bind_scatteringpower_forwarding<T>() had to be applied directly to it."""
+    ScatteringPower inherits RefinableObj virtually too -- a second hop,
+    so both bind_refinableobj_forwarding<T>() and
+    bind_scatteringpower_forwarding<T>() had to be applied directly to
+    it."""
 
     def setUp(self):
         self.sp, self.atom = makeScatterer()
@@ -105,8 +109,9 @@ class TestScatteringPowerAtomForwarding(unittest.TestCase):
         self.assertEqual(0.0, self.sp.GetLogLikelihood())
 
     def test_scatteringpower_own_methods_forwarded(self):
-        """These are ScatteringPower's *own* methods (not RefinableObj's),
-        forwarded via bind_scatteringpower_forwarding<T>()."""
+        """These are ScatteringPower's *own* methods (not
+        RefinableObj's), forwarded via
+        bind_scatteringpower_forwarding<T>()."""
         self.assertGreaterEqual(self.sp.GetDynPopCorrIndex(), 0)
         self.assertIsNotNone(self.sp.GetLastChangeClock())
         r, g, b = self.sp.GetColourRGB()
@@ -114,8 +119,9 @@ class TestScatteringPowerAtomForwarding(unittest.TestCase):
 
     def test_lsq_methods_reachable_and_raise_when_unset(self):
         """Ported forward alongside the forwarding fix: GetLSQCalc/Obs/
-        Weight/Deriv exist on RefinableObj and are therefore forwarded here
-        too, even though nothing has configured a custom LSQ target."""
+        Weight/Deriv exist on RefinableObj and are therefore forwarded
+        here too, even though nothing has configured a custom LSQ
+        target."""
         with self.assertRaises(ObjCrystException):
             self.sp.GetLSQCalc(0)
 

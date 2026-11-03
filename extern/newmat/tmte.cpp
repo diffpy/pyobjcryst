@@ -502,7 +502,7 @@ void trymate()
       Clean(X, 0.000000001); Print(X);
       Y = V * V.t() - IdentityMatrix(2);
       Clean(Y, 0.000000001); Print(Y);
-            
+
    }
 
 

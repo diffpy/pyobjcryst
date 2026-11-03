@@ -38,11 +38,11 @@ public:
 };
 
 // fill a matrix with values from the MultWithCarry random number generator
-void FillWithValues(MultWithCarry& MWC, Matrix& M);   
-void FillWithValues(MultWithCarry& MWC, UpperTriangularMatrix& M);   
-void FillWithValues(MultWithCarry& MWC, LowerTriangularMatrix& M);   
-void FillWithValues(MultWithCarry& MWC, DiagonalMatrix& M);   
-void FillWithValues(MultWithCarry& MWC, SymmetricMatrix& M);   
+void FillWithValues(MultWithCarry& MWC, Matrix& M);
+void FillWithValues(MultWithCarry& MWC, UpperTriangularMatrix& M);
+void FillWithValues(MultWithCarry& MWC, LowerTriangularMatrix& M);
+void FillWithValues(MultWithCarry& MWC, DiagonalMatrix& M);
+void FillWithValues(MultWithCarry& MWC, SymmetricMatrix& M);
 
 
 void Print(const Matrix& X);

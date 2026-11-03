@@ -3,7 +3,7 @@
 
 /// \file sl_ex.cpp
 /// Test one-dimensional solve function.
-/// This is an example of the use of solution to find the cube root of 
+/// This is an example of the use of solution to find the cube root of
 /// the integers -10 to 10
 ///
 /// you will need to compile and link solution.cpp and my_except.cpp
@@ -50,7 +50,7 @@ int main()
    }
    CatchAll
    {
-      cout << "\nProgram fails - exception generated\n\n"; 
+      cout << "\nProgram fails - exception generated\n\n";
    }
    return 0;
 }

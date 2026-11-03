@@ -130,8 +130,8 @@ class TestReflectionProfile(unittest.TestCase):
         self.assertFalse(self.profile.IsAnisotropic())
 
     def test_concrete_pseudo_voigt_profiles(self):
-        """ReflectionProfilePseudoVoigt and Anisotropic can be constructed
-        and installed on a PowderPatternDiffraction."""
+        """ReflectionProfilePseudoVoigt and Anisotropic can be
+        constructed and installed on a PowderPatternDiffraction."""
         iso = ReflectionProfilePseudoVoigt()
         self.assertFalse(iso.IsAnisotropic())
         self.assertTrue(
@@ -152,7 +152,9 @@ class TestReflectionProfile(unittest.TestCase):
         aniso.SetProfilePar(fwhmCagliotiW=1e-4)
         self.ppd.SetProfile(aniso)
         installed_aniso = self.ppd.GetProfile()
-        self.assertIsInstance(installed_aniso, ReflectionProfilePseudoVoigtAnisotropic)
+        self.assertIsInstance(
+            installed_aniso, ReflectionProfilePseudoVoigtAnisotropic
+        )
 
     def test_tch_profile_width_and_limits(self):
         """TCH derives one common FWHM and reaches both pure limits."""

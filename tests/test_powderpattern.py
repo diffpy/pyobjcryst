@@ -369,16 +369,18 @@ class TestPowderPattern(unittest.TestCase):
 
 
 class _PowderPatternComponentFixtureMixin:
-    """Shared setUp for the three test classes below: a PowderPattern with
-    one real PowderPatternBackground and one real PowderPatternDiffraction
-    attached, mirroring TestPowderPattern.test_GetClassName's setup. Both
-    PowderPatternComponent and ScatteringData inherit RefinableObj virtually
-    in C++ (and PowderPatternDiffraction inherits PowderPatternComponent
-    virtually *again*, on top of ScatteringData non-virtually) -- see
-    nanobind_migration_notes.md's "Follow-up" section -- so neither class is
-    directly instantiable from Python; these fixtures exercise the
-    forwarding fix through real, concrete PowderPatternComponent-family
-    objects instead.
+    """Shared setUp for the three test classes below: a PowderPattern
+    with one real PowderPatternBackground and one real
+    PowderPatternDiffraction attached, mirroring
+    TestPowderPattern.test_GetClassName's setup.
+
+    Both PowderPatternComponent and ScatteringData inherit RefinableObj
+    virtually in C++ (and PowderPatternDiffraction inherits
+    PowderPatternComponent virtually *again*, on top of ScatteringData
+    non-virtually) -- see nanobind_migration_notes.md's "Follow-up"
+    section -- so neither class is directly instantiable from Python;
+    these fixtures exercise the forwarding fix through real, concrete
+    PowderPatternComponent-family objects instead.
     """
 
     @pytest.fixture(autouse=True)
@@ -396,7 +398,9 @@ class _PowderPatternComponentFixtureMixin:
         self.diff = self.pp.AddPowderPatternDiffraction(c)
 
 
-class TestPowderPatternComponent(_PowderPatternComponentFixtureMixin, unittest.TestCase):
+class TestPowderPatternComponent(
+    _PowderPatternComponentFixtureMixin, unittest.TestCase
+):
 
     def test_GetParentPowderPattern(self):
         self.assertIs(self.pp, self.bg.GetParentPowderPattern())
@@ -404,9 +408,10 @@ class TestPowderPatternComponent(_PowderPatternComponentFixtureMixin, unittest.T
 
     def test_refinableobj_forwarding(self):
         """PowderPatternComponent inherits RefinableObj virtually; only
-        GetName/SetName/GetClassName/FixAllPar/UnFixAllPar were reachable
-        before the forwarding fix (see test_GetClassName above, which
-        covers GetClassName specifically) -- exercise the rest here."""
+        GetName/SetName/GetClassName/FixAllPar/UnFixAllPar were
+        reachable before the forwarding fix (see test_GetClassName
+        above, which covers GetClassName specifically) -- exercise the
+        rest here."""
         self.bg.SetName("mybg")
         self.assertEqual("mybg", self.bg.GetName())
         self.bg.FixAllPar()
@@ -422,7 +427,9 @@ class TestPowderPatternComponent(_PowderPatternComponentFixtureMixin, unittest.T
 # ----------------------------------------------------------------------------
 
 
-class TestPowderPatternBackground(_PowderPatternComponentFixtureMixin, unittest.TestCase):
+class TestPowderPatternBackground(
+    _PowderPatternComponentFixtureMixin, unittest.TestCase
+):
     # def test___init__(self):  assert False
     # def test_FixParametersBeyondMaxresolution(self):  assert False
     # def test_GetPowderPatternCalc(self):  assert False
@@ -444,7 +451,9 @@ class TestPowderPatternBackground(_PowderPatternComponentFixtureMixin, unittest.
 # ----------------------------------------------------------------------------
 
 
-class TestPowderPatternDiffraction(_PowderPatternComponentFixtureMixin, unittest.TestCase):
+class TestPowderPatternDiffraction(
+    _PowderPatternComponentFixtureMixin, unittest.TestCase
+):
     # def test___init__(self):  assert False
     # def test_ExtractLeBail(self):  assert False
     # def test_GetExtractionMode(self):  assert False
@@ -456,10 +465,10 @@ class TestPowderPatternDiffraction(_PowderPatternComponentFixtureMixin, unittest
     # def test_SetReflectionProfilePar(self):  assert False
 
     def test_refinableobj_forwarding(self):
-        """PowderPatternDiffraction reaches RefinableObj via ScatteringData
-        (non-virtual, already a correct nanobind base) -- confirm the
-        forwarding applied to ScatteringData actually cascades here rather
-        than assuming it does."""
+        """PowderPatternDiffraction reaches RefinableObj via
+        ScatteringData (non-virtual, already a correct nanobind base) --
+        confirm the forwarding applied to ScatteringData actually
+        cascades here rather than assuming it does."""
         self.diff.FixAllPar()
         self.diff.UnFixAllPar()
         self.assertEqual(0.0, self.diff.GetLogLikelihood())

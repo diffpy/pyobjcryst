@@ -1033,7 +1033,7 @@ ReturnMatrix crossproduct_columns(const Matrix& A, const Matrix& B)
    Real* bn = b+n; Real* bn2 = bn+n;
    Real* cn = c+n; Real* cn2 = cn+n;
 
-   int i = n; 
+   int i = n;
    while (i--)
    {
       *c++   = *an    * *bn2   - *an2   * *bn;
@@ -1050,4 +1050,3 @@ ReturnMatrix crossproduct_columns(const Matrix& A, const Matrix& B)
 #endif
 
 ///@}
-

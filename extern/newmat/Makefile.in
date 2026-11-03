@@ -113,4 +113,3 @@ submat.o:     $(newmatxx) $(srcdir)/newmatrc.h $(srcdir)/controlw.h $(srcdir)/su
 
 svd.o:        $(newmatxx) $(srcdir)/newmatrm.h $(srcdir)/precisio.h $(srcdir)/svd.cpp
 	$(CXX) $(CXXFLAGS) $(OPT++DEFINES) $(OPT++INCLUDES) $(srcdir)/svd.cpp
-

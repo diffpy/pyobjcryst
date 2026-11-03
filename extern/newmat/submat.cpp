@@ -256,7 +256,7 @@ void GetSubMatrix::operator+=(const BaseMatrix& bmx)
       SetUpLHS(); gmx = ((BaseMatrix&)bmx).Evaluate();
       if (row_number != gmx->Nrows() || col_number != gmx->Ncols())
          Throw(IncompatibleDimensionsException());
-      if (gm->type().is_symmetric() && 
+      if (gm->type().is_symmetric() &&
          ( ! gmx->type().is_symmetric() || row_skip != col_skip) )
          Throw(ProgramException("Illegal operation on symmetric"));
       MatrixRow mrx(gmx, LoadOnEntry);
@@ -289,7 +289,7 @@ void GetSubMatrix::SP_eq(const BaseMatrix& bmx)
       SetUpLHS(); gmx = ((BaseMatrix&)bmx).Evaluate();
       if (row_number != gmx->Nrows() || col_number != gmx->Ncols())
          Throw(IncompatibleDimensionsException());
-      if (gm->type().is_symmetric() && 
+      if (gm->type().is_symmetric() &&
          ( ! gmx->type().is_symmetric() || row_skip != col_skip) )
          Throw(ProgramException("Illegal operation on symmetric"));
       MatrixRow mrx(gmx, LoadOnEntry);
@@ -321,7 +321,7 @@ void GetSubMatrix::operator-=(const BaseMatrix& bmx)
       SetUpLHS(); gmx = ((BaseMatrix&)bmx).Evaluate();
       if (row_number != gmx->Nrows() || col_number != gmx->Ncols())
          Throw(IncompatibleDimensionsException());
-      if (gm->type().is_symmetric() && 
+      if (gm->type().is_symmetric() &&
          ( ! gmx->type().is_symmetric() || row_skip != col_skip) )
          Throw(ProgramException("Illegal operation on symmetric"));
       MatrixRow mrx(gmx, LoadOnEntry);
@@ -398,4 +398,3 @@ void GetSubMatrix::operator*=(Real r)
 #endif
 
 ///@}
-

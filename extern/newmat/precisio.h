@@ -25,7 +25,7 @@ namespace NEWMAT {
 #endif
 
 using namespace std;
-	
+
 /// Floating point precision.
 class FloatingPointPrecision
 {
@@ -52,7 +52,7 @@ public:
       { return (Real)log(Maximum()); }
 
    static Real Minimum()         // minimum positive value
-      { return numeric_limits<Real>::min(); } 
+      { return numeric_limits<Real>::min(); }
 
    static int MinimumDecimalExponent() // minimum decimal exponent
       { return numeric_limits<Real>::min_exponent10; }

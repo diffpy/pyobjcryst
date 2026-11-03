@@ -145,7 +145,7 @@ void trymat8()
       M.ReSize(MX);
       DCR( D.nric(), C.nric(), 5, R.nric(), 9, M.nric() );
       M -= MX;  Print(M);
-      
+
       // test swap
       nricMatrix A(3,4); nricMatrix B(4,5);
       A.Row(1) << 2 << 7 << 3 << 6;
@@ -164,7 +164,7 @@ void trymat8()
          for (int k = 1; k <= 4; ++k)
             X.nric()[i][j] += A1.nric()[i][k] * B1.nric()[k][j];
       }
-      X1 -= X; Print(X1); 
+      X1 -= X; Print(X1);
    }
 #endif
    {

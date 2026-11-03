@@ -61,7 +61,7 @@ void trymatk()
    A1.CleanUp(); B1.CleanUp();
 
    cout << "LowerTriangularMatrix\n";
-   LowerTriangularMatrix A2(35), B2(35); 
+   LowerTriangularMatrix A2(35), B2(35);
    for (i=0; i<35; i++) for (j=0; j<=i; j++)
       { A2[i][j] = i+100*j; B2(i+1,j+1) = i+100*j; }
    X = A2 - B2; Print(X); Y = X;
@@ -176,7 +176,7 @@ void trymatk()
    }
    Print(X); Print(Y);
    Aa.CleanUp(); Ba.CleanUp();
-   
+
    // test special constructors used in Numerical Recipes for C++
    Real a[] = {1.2, 5.6, 7.9, 3.8, 4.5, 1.3,
                5.2, 9.9, 2.1, 4.7, 0.0, 1.6 };

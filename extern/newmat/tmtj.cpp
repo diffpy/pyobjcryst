@@ -142,7 +142,7 @@ void trymatj()
       SymmetricBandMatrix SB(7,3);
       SymmetricMatrix S; S << (B+B.t());
       SB.Inject(S); A = BA; S = SB;
-      Matrix X;  
+      Matrix X;
       X = SP(BA,SB); X=X-SP(A,S); Print(X);
       X = SP(BA*2,SB); X=X-SP(A,S*2); Print(X);
       X = SP(BA,SB/4); X=X-SP(A/4,S); Print(X);

@@ -385,7 +385,7 @@ void FreeCheck::Status()
    else cout << "\nNo objects remain undeleted\n\n";
    if (BadDelete)
    {
-      cout << "\nThere were " << BadDelete << 
+      cout << "\nThere were " << BadDelete <<
          " requests to delete non-existent items\n\n";
    }
 }
@@ -493,4 +493,3 @@ unsigned long Bad_alloc::Select;
 
 
 ///@}
-

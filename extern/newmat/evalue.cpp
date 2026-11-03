@@ -66,7 +66,7 @@ static void tred2(const SymmetricMatrix& A, DiagonalMatrix& D,
             f = *zij++; g = *ej - hh * f; *ej++ = g;
             Real* zjk = z + j*n; Real* zik = z + i*n;
             Real* ek = E.Store(); k = j+1;
-            while (k--)  *zjk++ -= ( f*(*ek++) + g*(*zik++) ); 
+            while (k--)  *zjk++ -= ( f*(*ek++) + g*(*zik++) );
          }
       }
       D.element(i) = h;
@@ -206,10 +206,10 @@ static void tred3(const SymmetricMatrix& X, DiagonalMatrix& D,
             Real* dk = D.Store(); Real* ak = A.Store()+(j*(j+1))/2;
             Real g = 0.0; k = j;
             while (k--)  g += *ak++ * *dk++;
-            k = i-j; int l = j; 
+            k = i-j; int l = j;
             if (k) for (;;) { g += *ak * *dk++; if (!(--k)) break; ak += ++l; }
             g /= h; *ej++ = g; f += g * *dj++;
-         }  
+         }
          Real hh = f / (2 * h); Real* ak = A.Store();
          dj = D.Store(); ej = E.Store();
          for (j = 0; j < i; j++)
@@ -300,4 +300,3 @@ void eigenvalues(const SymmetricMatrix& X, DiagonalMatrix& D,
 #endif
 
 ///@}
-

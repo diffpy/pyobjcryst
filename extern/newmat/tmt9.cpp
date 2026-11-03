@@ -41,7 +41,7 @@ void trymat9()
    {
       Tracer et1("Stage 2");
       Matrix DXE = D.i() * X * E;
-      DXE = E.i() * DXE.t() * D - X.t(); Clean(DXE, 0.00000001); Print(DXE); 
+      DXE = E.i() * DXE.t() * D - X.t(); Clean(DXE, 0.00000001); Print(DXE);
       E=D; for (i=1;i<=7;i++) E(i,i)=i*3+1;
    }
    DiagonalMatrix F=D;
@@ -216,7 +216,7 @@ void trymat9()
 
    {
       Tracer et1("Stage 8");
-      // test copying CroutMatrix and BandLUMatrix - see also tmtd.cpp 
+      // test copying CroutMatrix and BandLUMatrix - see also tmtd.cpp
       MultWithCarry MWC;
       SymmetricBandMatrix SBM(50, 10);
       for (int i = 1; i <= 50; ++i) for (int j = 1; j <= i; ++j)
@@ -241,7 +241,7 @@ void trymat9()
 
    {
       Tracer et1("Stage 9");
-      // do it again odd matrix size 
+      // do it again odd matrix size
       MultWithCarry MWC;
       SymmetricBandMatrix SBM(51, 10);
       for (int i = 1; i <= 51; ++i) for (int j = 1; j <= i; ++j)
@@ -263,7 +263,7 @@ void trymat9()
       D(4) = z.sign() - x.sign();
       Clean(D,0.00000001); Print(D);
    }
-   
+
    {
       Tracer et1("Stage 10");
       // testing equal again
@@ -280,12 +280,12 @@ void trymat9()
       B *= 3;
       A = B;
       X = A.i() * B - IdentityMatrix(10); Clean(X,0.00000001); Print(X);
-   }      
-   
-   
-   
-   
-   
+   }
+
+
+
+
+
 //   cout << "\nEnd of ninth test\n";
 }
 

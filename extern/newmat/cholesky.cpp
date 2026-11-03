@@ -104,7 +104,7 @@ void update_Cholesky(UpperTriangularMatrix &chol, RowVector x)
    int nc = chol.Nrows();
    ColumnVector cGivens(nc); cGivens = 0.0;
    ColumnVector sGivens(nc); sGivens = 0.0;
-	
+
    for(int j = 1; j <= nc; ++j) // process the jth column of chol
    {
       // apply the previous Givens rotations k = 1,...,j-1 to column j
@@ -129,12 +129,12 @@ void update_Cholesky(UpperTriangularMatrix &chol, RowVector x)
 void downdate_Cholesky(UpperTriangularMatrix &chol, RowVector x)
 {
    int nRC = chol.Nrows();
-	
+
    // solve R^T a = x
    LowerTriangularMatrix L = chol.t();
    ColumnVector a(nRC); a = 0.0;
    int i, j;
-	
+
    for (i = 1; i <= nRC; ++i)
    {
       // accumulate subtr sum
@@ -177,7 +177,7 @@ void right_circular_update_Cholesky(UpperTriangularMatrix &chol, int k, int l)
 {
    int nRC = chol.Nrows();
    int i, j;
-	
+
    // I. compute shift of column l to the kth position
    Matrix cholCopy = chol;
    // a. grab column l
@@ -202,7 +202,7 @@ void right_circular_update_Cholesky(UpperTriangularMatrix &chol, int k, int l)
    }
    // the kth entry of columnL is the new diagonal element in column k of cholCopy
    cholCopy(k,k) = columnL(k);
-	
+
    // III. apply these Given's rotations to subsequent columns
    // for columns k+1,...,l-1 we only need to apply the last nGivens-(j-k) rotations
    for(j = k+1; j <= nRC; ++j)
@@ -276,7 +276,7 @@ void left_circular_update_Cholesky(UpperTriangularMatrix &chol, int k, int l)
    }
 
    chol << cholCopy;
-	
+
 }
 
 

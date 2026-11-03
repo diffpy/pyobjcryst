@@ -237,7 +237,7 @@ void MLE_D_FI::Fit(ColumnVector& Parameters)
    FindMaximum2::Fit(Parameters,Lim);
    cout << "\nConverged" << endl;
 }
-  
+
 void MLE_D_FI::MakeCovariance()
 {
    if (Covariance.Nrows()==0)
@@ -252,7 +252,7 @@ void MLE_D_FI::MakeCovariance()
 
 void MLE_D_FI::GetStandardErrors(ColumnVector& SEX)
 { MakeCovariance(); SEX = SE.AsColumn(); }
-   
+
 void MLE_D_FI::GetCorrelations(SymmetricMatrix& Corr)
 { MakeCovariance(); Corr << SE.i() * Covariance * SE.i(); }
 

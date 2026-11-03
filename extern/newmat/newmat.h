@@ -188,7 +188,7 @@ public:
    bool is_diagonal() const { return (attribute & Diagonal) != 0; }
    bool is_symmetric() const { return (attribute & Symmetric) != 0; }
    bool CannotConvert() const { return (attribute & LUDeco) != 0; }
-                                               // used by operator== 
+                                               // used by operator==
    FREE_CHECK(MatrixType)
 };
 
@@ -198,7 +198,7 @@ public:
 ///Upper and lower bandwidths of a matrix.
 ///That is number of diagonals strictly above or below main diagonal,
 ///e.g. diagonal matrix has 0 upper and lower bandwiths.
-///-1 means the matrix may have the maximum bandwidth. 
+///-1 means the matrix may have the maximum bandwidth.
 class MatrixBandWidth
 {
 public:
@@ -1854,7 +1854,7 @@ class LinearEquationSolver : public BaseMatrix
 public:
    LinearEquationSolver(const BaseMatrix& bm);
    ~LinearEquationSolver() { delete gm; }
-   void cleanup() { delete gm; } 
+   void cleanup() { delete gm; }
    GeneralMatrix* Evaluate(MatrixType) { return gm; }
    // probably should have an error message if MatrixType != UnSp
    NEW_DELETE(LinearEquationSolver)
@@ -1983,7 +1983,7 @@ public:
    OverflowException(const char* c);
 };
 
-/// Miscellaneous exception (details in character string). 
+/// Miscellaneous exception (details in character string).
 class ProgramException : public Logic_error
 {
 protected:
@@ -2105,7 +2105,7 @@ inline ReturnMatrix CrossProductRows(const Matrix& A, const Matrix& B)
    { return crossproduct_rows(A, B); }
 inline ReturnMatrix CrossProductColumns(const Matrix& A, const Matrix& B)
    { return crossproduct_columns(A, B); }
-   
+
 void newmat_block_copy(int n, Real* from, Real* to);
 
 // ********************* friend functions ******************************** //
@@ -2247,7 +2247,3 @@ inline Real Dot(ColumnVector& CV1, ColumnVector& CV2)
 
 
 ///@}
-
-
-
-

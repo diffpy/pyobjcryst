@@ -766,7 +766,7 @@ void trymath()
       RV(2) = BM.BandWidth().Upper();
       Print(RV);
    }
-   
+
    {
       // Helmert multiplies
       Tracer et1("Stage 9");
@@ -779,22 +779,22 @@ void trymath()
       Matrix H = Helmert(9); H -= Y.t(); Clean(H,0.000000001); Print(H);
       Matrix Z = Helmert(Y) - I;
       Clean(Z,0.000000001); Print(Z);
-      
+
       Matrix A(9, 8);
       for (i = 1; i <= 9; ++i) for (j = 1; j <= 8; ++j)
          A(i, j) = Helmert_transpose(X.column(j), i);
-      A -= Y; Clean(A,0.000000001); Print(A); 
-   
+      A -= Y; Clean(A,0.000000001); Print(A);
+
       X = I;
       Y = Helmert_transpose(X, true);
       H = Helmert(8, true); H -= Y.t(); Clean(H,0.000000001); Print(H);
       Z = Helmert(Y, true) - I;
       Clean(Z,0.000000001); Print(Z);
-      
+
       A.resize(8, 8);
       for (i = 1; i <= 8; ++i) for (j = 1; j <= 8; ++j)
          A(i, j) = Helmert_transpose(X.column(j), i, true);
-      A -= Y; Clean(A,0.000000001); Print(A); 
+      A -= Y; Clean(A,0.000000001); Print(A);
 
 
 
@@ -804,7 +804,7 @@ void trymath()
       H = Helmert(9, true); H -= Y; Clean(H,0.000000001); Print(H);
       Z = Helmert_transpose(Y, true) - I;
       Clean(Z,0.000000001); Print(Z);
-   
+
       A.ReSize(9, 9);
       for (i = 1; i <= 9; ++i) A.Column(i) = Helmert(9, i, true);
       A -= Y; Clean(A,0.000000001); Print(A);
@@ -813,10 +813,10 @@ void trymath()
       A.ReSize(8, 9);
       for (i = 1; i <= 9; ++i) A.Column(i) = Helmert(9, i);
       A -= Y; Clean(A,0.000000001); Print(A);
-      
+
       ColumnVector Twos(100); Twos = 2;
       ColumnVector CV = Helmert(Twos); Clean(CV,0.000000001); Print(CV);
-      
+
       X.resize(25,30);
       FillWithValues(MCW, X);
       Y = Helmert(X);
@@ -824,7 +824,7 @@ void trymath()
       Clean(Z,0.000000001); Print(Z);
       Z = Helmert(X,true).row(25) - X.sum_columns() / 5.0;
       Clean(Z,0.000000001); Print(Z);
-      
+
       I.resize(15);
       X = I;
       Z = Helmert_transpose(X, true) - Helmert(X, true).t();
@@ -832,15 +832,15 @@ void trymath()
       I.resize(14); Y = I;
       Z = Helmert(X) - Helmert_transpose(Y).t();
       Clean(Z,0.000000001); Print(Z);
-      
-      
-      
+
+
+
    }
-      
-      
-      
-      
-      
+
+
+
+
+
 
 //   cout << "\nEnd of Seventeenth test\n";
 }

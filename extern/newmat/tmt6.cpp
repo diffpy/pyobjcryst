@@ -79,7 +79,7 @@ void trymat6()
    for (i=1;i<=6;i++) for (j=i;j<=6;j++) S(i,j)=i*i+2.0+j;
    Matrix MD=D; Matrix ML=L; Matrix MU=U; Matrix MS=S;
    Matrix M(6,6);
-   for (i=1;i<=6;i++) for (j=1;j<=6;j++) M(i,j)=i*j+i*i-10.0;  
+   for (i=1;i<=6;i++) for (j=1;j<=6;j++) M(i,j)=i*j+i*i-10.0;
    {
       Tracer et1("Stage 1");
       Print(Matrix(MS+(-MS)));

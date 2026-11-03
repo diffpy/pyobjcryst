@@ -55,11 +55,11 @@ MatrixType MatrixType::SP(const MatrixType& mt) const
    if ((a & Lower) != 0  &&  (a & Upper) != 0) a |= Diagonal;
    if ((attribute & Skew) != 0)
    {
-      if ((mt.attribute & Symmetric) != 0) a |= Skew;  
+      if ((mt.attribute & Symmetric) != 0) a |= Skew;
       if ((mt.attribute & Skew) != 0) { a &= ~Skew; a |= Symmetric; }
    }
    else if ((mt.attribute & Skew) != 0 && (attribute & Symmetric) != 0)
-      a |= Skew;  
+      a |= Skew;
    a |= (a & Diagonal) * 63;                   // recognise diagonal
    return MatrixType(a);
 }
@@ -67,7 +67,7 @@ MatrixType MatrixType::SP(const MatrixType& mt) const
 MatrixType MatrixType::KP(const MatrixType& mt) const
 // Kronecker product
 // Lower, Upper, Diag, Symmetric, Band, Valid if both are
-// Band if LHS is band & other is square 
+// Band if LHS is band & other is square
 // Ones is complicated so leave this out
 {
    REPORT
@@ -195,7 +195,7 @@ GeneralMatrix* MatrixType::New(int nr, int nc, BaseMatrix* bm) const
    default:
       Throw(ProgramException("Invalid matrix type"));
    }
-   
+
    MatrixErrorNoSpace(gm); gm->Protect(); return gm;
 }
 

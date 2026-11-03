@@ -12,7 +12,7 @@
 ///
 /// The dimensions of this matrix are not large enough for there to be numerical
 /// problems but we will be able to see that wide range of values of the
-/// eigenvalues. 
+/// eigenvalues.
 
 #define WANT_STREAM            // include iostream and iomanipulators
 
@@ -27,13 +27,13 @@ using namespace RBD_LIBRARIES;
 int my_main()                  // called by main()
 {
    Tracer tr("my_main ");      // for tracking exceptions
-   
+
    int n = 7;                  // this is the order we will work with
    int i, j;
 
    // declare a matrix
    SymmetricMatrix H(n);
-   
+
    // load values for Hilbert matrix
    for (i = 1; i <= n; ++i) for (j = 1; j <= i; ++j)
       H(i, j) = 1.0 / (i + j - 1);
@@ -41,7 +41,7 @@ int my_main()                  // called by main()
    // print the matrix
    cout << "SymmetricMatrix H" << endl;
    cout << setw(10) << setprecision(7) << H << endl;
-   
+
    // calculate its eigenvalues and eigenvectors and print them
    Matrix U; DiagonalMatrix D;
    eigenvalues(H, D, U);
@@ -51,13 +51,13 @@ int my_main()                  // called by main()
    cout << setw(10) << setprecision(7) << U << endl;
 
    // check orthogonality
-   cout << "U * U.t() (should be near identity)" << endl;   
+   cout << "U * U.t() (should be near identity)" << endl;
    cout << setw(10) << setprecision(7) << (U * U.t()) << endl;
-   
+
    // check decomposition
-   cout << "U * D * U.t() (should be near H)" << endl;   
+   cout << "U * D * U.t() (should be near H)" << endl;
    cout << setw(10) << setprecision(7) << (U * D * U.t()) << endl;
-   
+
    return 0;
 }
 

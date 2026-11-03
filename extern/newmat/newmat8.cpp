@@ -750,7 +750,7 @@ ReturnMatrix BaseMatrix::sum_square_rows() const
          int s = mr.Storage();
          Real* in = mr.Data();
          while (s--) sum += square(*in++);
-         ssq(i) = sum;   
+         ssq(i) = sum;
          mr.Next();
       }
    }
@@ -795,7 +795,7 @@ ReturnMatrix BaseMatrix::sum_rows() const
          int s = mr.Storage();
          Real* in = mr.Data();
          while (s--) sum += *in++;
-         sum_vec(i) = sum;   
+         sum_vec(i) = sum;
          mr.Next();
       }
    }

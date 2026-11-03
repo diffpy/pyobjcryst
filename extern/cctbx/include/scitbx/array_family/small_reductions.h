@@ -152,4 +152,3 @@ namespace scitbx { namespace af {
 #endif // DOXYGEN_SHOULD_SKIP_THIS
 
 #endif // SCITBX_ARRAY_FAMILY_SMALL_REDUCTIONS_H
-

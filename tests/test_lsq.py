@@ -94,7 +94,8 @@ class TestGlobalOptim(unittest.TestCase):
             lsq.Refine(10, False, True)
 
     def test_lsq_compiled_refined_obj_erase_all_param_set(self):
-        """Check parameter sets can be erased on compiled refined objects."""
+        """Check parameter sets can be erased on compiled refined
+        objects."""
         lsq = LSQ()
         lsq.SetRefinedObj(self.d, 0, True, True)
         lsq.PrepareRefParList()
@@ -104,7 +105,8 @@ class TestGlobalOptim(unittest.TestCase):
         self.assertRaises(ObjCrystException, refobj.SaveParamSet, save)
 
     def test_lsq_get_variance_covariance_map(self):
-        """GetVarianceCovarianceMap returns a dict keyed by (name, name) tuples."""
+        """GetVarianceCovarianceMap returns a dict keyed by (name, name)
+        tuples."""
         lsq = LSQ()
         lsq.SetRefinedObj(self.d, 0, True, True)
         lsq.PrepareRefParList()
@@ -137,7 +139,7 @@ class TestGlobalOptim(unittest.TestCase):
             self.assertGreaterEqual(v, 0.0)
 
     def test_lsq_refine_minrwpvar(self):
-        """minRwpVar argument is accepted by Refine without error."""
+        """MinRwpVar argument is accepted by Refine without error."""
         lsq = LSQ()
         lsq.SetRefinedObj(self.d, 0, True, True)
         lsq.PrepareRefParList()
@@ -155,4 +157,3 @@ class TestGlobalOptim(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

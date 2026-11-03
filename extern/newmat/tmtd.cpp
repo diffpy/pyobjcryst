@@ -137,9 +137,9 @@ void QRZ_checkT(Matrix& X, Matrix& Y, UpperTriangularMatrix& U, Matrix& M)
       Matrix XT = X.t(), YT = Y.t(), MT, BX;
       LowerTriangularMatrix L;
       QRZ(X, Y, U, M); QRZT(XT, YT, L, MT);
-      BX = U - L.t(); Clean(BX, 0.000000001); Print(BX); 
-      BX = M - MT.t(); Clean(BX, 0.000000001); Print(BX); 
-}    
+      BX = U - L.t(); Clean(BX, 0.000000001); Print(BX);
+      BX = M - MT.t(); Clean(BX, 0.000000001); Print(BX);
+}
 
 
 
@@ -289,7 +289,7 @@ void trymatd()
       M = A * Cholesky(B); M = M * M.t() - A * B * A;
       Clean(M, 0.000000001); Print(M);
    }
-   
+
    {
       Tracer et1("Stage 6");
       int N=49;
@@ -334,8 +334,8 @@ void trymatd()
       D(6) = B1.nrows(); D(7) = B1.ncols(); D(8) = B1.size();
       Clean(C, 0.000000001); Print(C);
       // see if we get an implicit invert
-      B1 = -A; 
-      D(9) = determinant(B1) / x + 1; // odd number of rows - sign will change 
+      B1 = -A;
+      D(9) = determinant(B1) / x + 1; // odd number of rows - sign will change
       C = -A * Inverter2(B1) - IdentityMatrix(7);
       Clean(C, 0.000000001); Print(C);
       // check for_return
@@ -368,7 +368,7 @@ void trymatd()
       const int* i2 = B2.const_data_indx();
       D(25) = (d != d1 ? 0 : 1) + (d1 == d2 ? 0 : 1)
          + (i != i1 ? 0 : 1) + (i1 == i2 ? 0 : 1);
-  
+
       Clean(D, 0.000000001); Print(D);
    }
 
@@ -403,8 +403,8 @@ void trymatd()
       D(6) = B1.nrows(); D(7) = B1.ncols(); D(8) = B1.size();
       Clean(C, 0.000000001); Print(C);
       // see if we get an implicit invert
-      B1 = -A; 
-      D(9) = determinant(B1) / x + 1; // odd number of rows - sign will change 
+      B1 = -A;
+      D(9) = determinant(B1) / x + 1; // odd number of rows - sign will change
       C = -A * Inverter2(B1) - IdentityMatrix(7);
       Clean(C, 0.000000001); Print(C);
       // check for_return
@@ -471,7 +471,7 @@ void trymatd()
       QRZ(X, U2);
       Matrix Diff = U1 - U2; Clean(Diff, 0.000000001); Print(Diff);
 
-      // Try adding new row to X and updating triangular matrix 
+      // Try adding new row to X and updating triangular matrix
       RowVector NewRow(10);
       for (j = 1; j <= 10; ++j) NewRow(j) = 2.0 * (mwc.Next() - 0.5);
       UpdateCholesky(U2, NewRow);
@@ -492,7 +492,7 @@ void trymatd()
       CircularShift(X, 1,6);
       CircularShift(X, 6,10);
    }
-   
+
    {
       Tracer et1("Stage 10");
       // Try updating QRZ, QRZT decomposition
@@ -507,9 +507,9 @@ void trymatd()
       tuqrz2.Reset(); tuqrz2.ClearRow(5); tuqrz2.ClearRow(6); tuqrz2.DoTest();
       tuqrz2.Reset(); tuqrz2.ClearRow(15); tuqrz2.DoTest();
       TestUpdateQRZ tuqrz3(5, 0, 10, 0); tuqrz3.DoTest();
-      
+
    }
-   
+
    {
       Tracer et1("Stage 11");
       // combining three decompositions
@@ -537,14 +537,14 @@ void trymatd()
       fix_signs(U3);
       BX = U - U3;
       Clean(BX, 0.000000001); Print(BX);
-      
+
       // same again with some columns set to zero
       FillWithValues(MWC, X1); FillWithValues(MWC, Y1);
       FillWithValues(MWC, X2); FillWithValues(MWC, Y2);
       FillWithValues(MWC, X3); FillWithValues(MWC, Y3);
       X1.columns(1,8) = 0;
       X2.columns(5,13) = 0;
-      X3.columns(10,20) = 0;      
+      X3.columns(10,20) = 0;
       X = X1 & X2 & X3; Y = Y1 & Y2 & Y3;
       QRZ(X1, Y1, U1, M1);
       QRZ(X2, Y2, U2, M2);
@@ -560,14 +560,14 @@ void trymatd()
       fix_signs(U3);
       BX = U - U3;
       Clean(BX, 0.000000001); Print(BX);
-      
+
       // same again with some duplicate columns
       FillWithValues(MWC, X1); FillWithValues(MWC, Y1);
       FillWithValues(MWC, X2); FillWithValues(MWC, Y2);
       FillWithValues(MWC, X3); FillWithValues(MWC, Y3);
       X1.columns(4,5) = X1.columns(1,2);
       X2.columns(7,12) = X2.columns(1,6);
-      X3.columns(11,20) = X3.columns(1,10);      
+      X3.columns(11,20) = X3.columns(1,10);
       X = X1 & X2 & X3; Y = Y1 & Y2 & Y3;
       QRZ(X1, Y1, U1, M1);
       QRZ(X2, Y2, U2, M2);
@@ -583,9 +583,9 @@ void trymatd()
       fix_signs(U3);
       BX = U - U3;
       Clean(BX, 0.000000001); Print(BX);
-      
-      
-      
+
+
+
       // Try with incremental update
       FillWithValues(MWC, X1); FillWithValues(MWC, Y1);
       FillWithValues(MWC, X2); FillWithValues(MWC, Y2);
@@ -608,7 +608,7 @@ void trymatd()
       FillWithValues(MWC, X3); FillWithValues(MWC, Y3);
       X1.columns(1,8) = 0;
       X2.columns(5,13) = 0;
-      X3.columns(10,20) = 0;      
+      X3.columns(10,20) = 0;
       X = X1 & X2 & X3, Y = Y1 & Y2 & Y3;
       QRZ(X1, Y1, U1, M1);
       UpdateQRZ(X2, U1); UpdateQRZ(X2, Y2, M1);
@@ -620,15 +620,15 @@ void trymatd()
       fix_signs(U1);
       BX = U - U1;
       Clean(BX, 0.000000001); Print(BX);
-      
-      
+
+
       // same again with some duplicate columns
       FillWithValues(MWC, X1); FillWithValues(MWC, Y1);
       FillWithValues(MWC, X2); FillWithValues(MWC, Y2);
       FillWithValues(MWC, X3); FillWithValues(MWC, Y3);
       X1.columns(4,5) = X1.columns(1,2);
       X2.columns(7,12) = X2.columns(1,6);
-      X3.columns(11,20) = X3.columns(1,10);      
+      X3.columns(11,20) = X3.columns(1,10);
       X = X1 & X2 & X3, Y = Y1 & Y2 & Y3;
       QRZ(X1, Y1, U1, M1);
       UpdateQRZ(X2, U1); UpdateQRZ(X2, Y2, M1);
@@ -640,7 +640,7 @@ void trymatd()
       fix_signs(U1);
       BX = U - U1;
       Clean(BX, 0.000000001); Print(BX);
-      
+
       // Try with incremental update using QRZT
       LowerTriangularMatrix L, L1;
       X1.resize(21, 90); X2.resize(21, 250); X3.resize(21, 113);
@@ -662,7 +662,7 @@ void trymatd()
       FillWithValues(MWC, X3);
       X1.rows(1,8) = 0;
       X2.rows(5,13) = 0;
-      X3.rows(10,21) = 0;      
+      X3.rows(10,21) = 0;
       X = X1 | X2 | X3;
       QRZT(X1, L1);
       UpdateQRZT(X2, L1);
@@ -671,15 +671,15 @@ void trymatd()
       fix_signs(L1);
       BX = L - L1;
       Clean(BX, 0.000000001); Print(BX);
-      
-      
+
+
       // same again with some duplicate columns
       FillWithValues(MWC, X1);
       FillWithValues(MWC, X2);
       FillWithValues(MWC, X3);
       X1.columns(4,5) = X1.columns(1,2);
       X2.columns(7,12) = X2.columns(1,6);
-      X3.columns(12,21) = X3.columns(1,10);      
+      X3.columns(12,21) = X3.columns(1,10);
       X = X1 | X2 | X3;
       QRZT(X1, L1);
       UpdateQRZT(X2, L1);
@@ -688,9 +688,9 @@ void trymatd()
       fix_signs(L1);
       BX = L - L1;
       Clean(BX, 0.000000001); Print(BX);
-   }   
-      
-   
+   }
+
+
 //   cout << "\nEnd of Thirteenth test\n";
 }
 
@@ -764,6 +764,6 @@ void fix_signs(LowerTriangularMatrix& L)
       L.column(i) = -L.column(i);
    }
 }
-   
+
 
 ///@}

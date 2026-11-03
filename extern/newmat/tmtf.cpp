@@ -303,7 +303,7 @@ static void test9(int m, int n)
    Clean(X,0.000000001); Clean(Y,0.000000001); Print(X); Print(Y);
    FFT2I(X1, Y1, X1, Y1);
    X1 -= A; Y1 -= B;
-   Clean(X1,0.000000001); Clean(Y1,0.000000001); Print(X1); Print(Y1);   
+   Clean(X1,0.000000001); Clean(Y1,0.000000001); Print(X1); Print(Y1);
 }
 
 
@@ -367,7 +367,7 @@ void trymatf()
    test9(1,16); test9(16,1);
    test9(4,3); test9(4,4); test9(4,5); test9(5,3);
 
-   
+
    // now do the same thing all over again forcing use of old FFT
    FFT_Controller::OnlyOldFFT = true;
 
@@ -417,7 +417,7 @@ void trymatf()
 
    // compare DCT, DST and slow versions
    test8(2); test8(26); test8(32); test8(18);
-   
+
    // compare FFT2 with slow version
    // don't redo these
 

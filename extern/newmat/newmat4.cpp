@@ -200,12 +200,12 @@ CroutMatrix::CroutMatrix(const BaseMatrix& m)
 void CroutMatrix::get_aux(CroutMatrix& X)
 {
    X.d = d; X.sing = sing;
-   if (tag_val == 0 || tag_val == 1) // reuse the array 
+   if (tag_val == 0 || tag_val == 1) // reuse the array
       { REPORT  X.indx = indx; indx = 0; d = true; sing = true; return; }
    else if (nrows_val == 0)
       { REPORT indx = 0; d = true; sing = true; return; }
    else                              // copy the array
-   { 
+   {
       REPORT
       Tracer tr("CroutMatrix::get_aux");
       int *ix = new int [nrows_val]; MatrixErrorNoSpace(ix);
@@ -259,7 +259,7 @@ ReturnMatrix GeneralMatrix::for_return() const
 
 Matrix::Matrix(Real a, int m, int n) : GeneralMatrix(m * n)
    { REPORT nrows_val=m; ncols_val=n; operator=(a); }
-   
+
 Matrix::Matrix(const Real* a, int m, int n) : GeneralMatrix(m * n)
    { REPORT nrows_val=m; ncols_val=n; *this << a; }
 
@@ -433,7 +433,7 @@ void Matrix::resize_keep(int nr, int nc)
 {
    Tracer tr("Matrix::resize_keep");
    if (nr == nrows_val && nc == ncols_val) { REPORT return; }
-   
+
    if (nr <= nrows_val && nc <= ncols_val)
    {
       REPORT
@@ -456,7 +456,7 @@ void Matrix::resize_keep(int nr, int nc)
       X.submatrix(1,nr,1,nc) = submatrix(1,nr,1,nc);
       swap(X);
    }
-} 
+}
 
 void SquareMatrix::resize_keep(int nr)
 {
@@ -483,7 +483,7 @@ void SquareMatrix::resize_keep(int nr, int nc)
    if (nr != nc) Throw(NotSquareException(*this));
    resize_keep(nr);
 }
- 
+
 
 void SymmetricMatrix::resize_keep(int nr)
 {
@@ -501,7 +501,7 @@ void SymmetricMatrix::resize_keep(int nr)
       X.sym_submatrix(1,nrows_val) = *this;
       swap(X);
    }
-} 
+}
 
 void UpperTriangularMatrix::resize_keep(int nr)
 {
@@ -519,7 +519,7 @@ void UpperTriangularMatrix::resize_keep(int nr)
       X.sym_submatrix(1,nrows_val) = *this;
       swap(X);
    }
-} 
+}
 
 void LowerTriangularMatrix::resize_keep(int nr)
 {
@@ -537,7 +537,7 @@ void LowerTriangularMatrix::resize_keep(int nr)
       X.sym_submatrix(1,nrows_val) = *this;
       swap(X);
    }
-} 
+}
 
 void DiagonalMatrix::resize_keep(int nr)
 {
@@ -555,7 +555,7 @@ void DiagonalMatrix::resize_keep(int nr)
       X.sym_submatrix(1,nrows_val) = *this;
       swap(X);
    }
-} 
+}
 
 void RowVector::resize_keep(int nc)
 {
@@ -599,7 +599,7 @@ void ColumnVector::resize_keep(int nr)
       X.rows(1,nrows_val) = *this;
       swap(X);
    }
-} 
+}
 
 void ColumnVector::resize_keep(int nr, int nc)
 {
@@ -683,7 +683,7 @@ MatrixBandWidth BandMatrix::bandwidth() const
 
 MatrixBandWidth BandLUMatrix::bandwidth() const
    { REPORT return MatrixBandWidth(m1,m2); }
-   
+
 MatrixBandWidth GenericMatrix::bandwidth()const
    { REPORT return gm->bandwidth(); }
 
@@ -1271,7 +1271,7 @@ void GeneralMatrix::swap(GeneralMatrix& gm)
    t = storage; storage = gm.storage; gm.storage = t;
    Real* s = store; store = gm.store; gm.store = s;
 }
-   
+
 void nricMatrix::swap(nricMatrix& gm)
 {
    REPORT
@@ -1339,7 +1339,7 @@ RealStarStar::RealStarStar(Matrix& A)
    MatrixErrorNoSpace(a);
    Real* d = A.data();
    for (int i = 0; i < m; ++i) a[i] = d + i * n;
-} 
+}
 
 ConstRealStarStar::ConstRealStarStar(const Matrix& A)
 {
@@ -1351,7 +1351,7 @@ ConstRealStarStar::ConstRealStarStar(const Matrix& A)
    MatrixErrorNoSpace(a);
    const Real* d = A.data();
    for (int i = 0; i < m; ++i) a[i] = d + i * n;
-} 
+}
 
 
 

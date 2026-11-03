@@ -1,4 +1,4 @@
-/// \defgroup rbd_common RBD common library 
+/// \defgroup rbd_common RBD common library
 ///@{
 
 /// \file include.h
@@ -359,4 +359,3 @@ namespace RBD_LIBRARIES                 // access all my libraries
 
 
 ///@}
-

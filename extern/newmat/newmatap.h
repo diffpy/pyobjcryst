@@ -25,13 +25,13 @@ void QRZT(const Matrix&, Matrix&, Matrix&);
 
 void QRZ(Matrix&, UpperTriangularMatrix&);
 
-void QRZ(const Matrix&, Matrix&, Matrix&); 
+void QRZ(const Matrix&, Matrix&, Matrix&);
 
 inline void QRZT(Matrix& X, Matrix& Y, LowerTriangularMatrix& L, Matrix& M)
-   { QRZT(X, L); QRZT(X, Y, M); } 
+   { QRZT(X, L); QRZT(X, Y, M); }
 
 inline void QRZ(Matrix& X, Matrix& Y, UpperTriangularMatrix& U, Matrix& M)
-   { QRZ(X, U); QRZ(X, Y, M); } 
+   { QRZ(X, U); QRZ(X, Y, M); }
 
 inline void HHDecompose(Matrix& X, LowerTriangularMatrix& L)
 { QRZT(X,L); }
@@ -60,7 +60,7 @@ inline void UpdateQRZ(UpperTriangularMatrix& X, UpperTriangularMatrix& U)
 
 inline void UpdateQRZ(const UpperTriangularMatrix& X, Matrix& MX, Matrix& MU)
    { updateQRZ(X, MX, MU); }
-   
+
 inline void UpdateQRZ(const Matrix& X, Matrix& MX, Matrix& MU)
    { updateQRZ(X, MX, MU); }
 
@@ -68,7 +68,7 @@ inline void UpdateQRZ(const Matrix& X, Matrix& MX, Matrix& MU)
 // Matrix A's first n columns are orthonormal
 // so A.Columns(1,n).t() * A.Columns(1,n) is the identity matrix.
 // Fill out the remaining columns of A to make them orthonormal
-// so A.t() * A is the identity matrix 
+// so A.t() * A is the identity matrix
 void extend_orthonormal(Matrix& A, int n);
 
 
@@ -99,9 +99,9 @@ inline void RightCircularUpdateCholesky(UpperTriangularMatrix &chol,
 // a LEFT circular shift of the rows and columns from
 // 1,...,k-1,k,k+1,...l,l+1,...,p to
 // 1,...,k-1,k+1,...l,k,l+1,...,p to
-void left_circular_update_Cholesky(UpperTriangularMatrix &chol, int k, int l); 
+void left_circular_update_Cholesky(UpperTriangularMatrix &chol, int k, int l);
 inline void LeftCircularUpdateCholesky(UpperTriangularMatrix &chol,
-   int k, int l) { left_circular_update_Cholesky(chol, k, l); } 
+   int k, int l) { left_circular_update_Cholesky(chol, k, l); }
 
 
 void SVD(const Matrix&, DiagonalMatrix&, Matrix&, Matrix&,
@@ -268,5 +268,3 @@ ReturnMatrix Helmert_transpose(const Matrix& Y, bool full=false);
 
 
 ///@}
-
-

@@ -322,4 +322,3 @@ void BaseMatrix::IEQND() const
 #ifdef use_namespace
 }
 #endif
-

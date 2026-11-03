@@ -95,7 +95,7 @@ int my_main()
 #ifdef DO_FREE_CHECK
    FreeCheck::Status();
 #endif
- 
+
    return 0;
 }
 
@@ -113,13 +113,10 @@ int main()
    }
    CatchAll
    {
-      cout << "\nProgram fails - exception generated\n\n"; 
+      cout << "\nProgram fails - exception generated\n\n";
    }
    return 0;
 }
 
 
 ///@}
-
-
-

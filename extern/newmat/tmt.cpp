@@ -194,21 +194,21 @@ void FillWithValues(MultWithCarry&MWC, Matrix& M)
    for (int i = 1; i <= nr; ++i) for (int j = 1; j <= nc; ++ j)
    M(i, j) = MWC.Next();
 }
-   
+
 void FillWithValues(MultWithCarry&MWC, UpperTriangularMatrix& M)
 {
    int nr = M.nrows();
    for (int i = 1; i <= nr; ++i) for (int j = i; j <= nr; ++ j)
    M(i, j) = MWC.Next();
 }
-   
+
 void FillWithValues(MultWithCarry&MWC, LowerTriangularMatrix& M)
 {
    int nr = M.nrows();
    for (int i = 1; i <= nr; ++i) for (int j = 1; j <= i; ++ j)
    M(i, j) = MWC.Next();
 }
-   
+
 void FillWithValues(MultWithCarry&MWC, DiagonalMatrix& M)
 {
    int nr = M.nrows();
@@ -222,8 +222,8 @@ void FillWithValues(MultWithCarry&MWC, SymmetricMatrix& M)
    for (int i = 1; i <= nr; ++i) for (int j = 1; j <= i; ++ j)
    M(i, j) = MWC.Next();
 }
-   
-   
+
+
 
 #ifdef use_namespace
 }
@@ -271,8 +271,8 @@ int main()
 
       TestTypeAdd(); TestTypeMult(); TestTypeConcat();
       TestTypeSP(); TestTypeKP(); TestTypeOrder();
-      
-      Try { 
+
+      Try {
          trymat1();
          trymat2();
          trymat3();
@@ -554,6 +554,3 @@ time_lapse::~time_lapse()
 
 
 ///@}
-
-
-

@@ -11,7 +11,7 @@
                           // should not be required for this example
                           // included because it seems to help MS VC6
                           // when you have namespace turned on
-                           
+
 #include "newmatio.h"     // newmat headers including output functions
 
 #ifdef use_namespace
@@ -25,7 +25,7 @@ int my_main()                  // called by main()
 
    // declare a matrix
    Matrix X(4,4);
-   
+
    // load values row by row
    X.row(1) <<  3.7 << -2.1 <<  7.4 << -1.0;
    X.row(2) <<  4.1 <<  0.0 <<  3.9 <<  4.0;
@@ -35,16 +35,16 @@ int my_main()                  // called by main()
    // print the matrix
    cout << "Matrix X" << endl;
    cout << setw(15) << setprecision(8) << X << endl;
-   
+
    // calculate its inverse and print it
    Matrix Y = X.i();
    cout << "Inverse of X" << endl;
    cout << setw(15) << setprecision(8) << Y << endl;
-   
+
    // multiply X by its inverse and print the result (should be near identity)
    cout << "X * inverse of X" << endl;
    cout << setw(15) << setprecision(8) << (X * Y) << endl;
-   
+
    return 0;
 }
 
@@ -60,4 +60,3 @@ int main()
 }
 
 ///@}
-

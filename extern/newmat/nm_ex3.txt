@@ -10,19 +10,19 @@ LnMinimum    -708.396
 Load values into a ColumnVector and print in scientific format
 
 Values in scientific format
-   2.22045e-016 
-   1.79769e+308 
-   7.09783e+002 
-   2.22507e-308 
-  -7.08396e+002 
+   2.22045e-016
+   1.79769e+308
+   7.09783e+002
+   2.22507e-308
+  -7.08396e+002
 
 Print in fixed format
 
 Selected values in fixed format (omit Maximum)
-        0.00000 
-      709.78271 
-        0.00000 
-     -708.39642 
+        0.00000
+      709.78271
+        0.00000
+     -708.39642
 
 Test Epsilon
 
@@ -47,4 +47,3 @@ Fails with some compilers - needs fixing
 exp(LnMaximum)              1.79769e+308
 This should print a value close to Minimum, not zero
 exp(LnMinimum)              2.22507e-308
-

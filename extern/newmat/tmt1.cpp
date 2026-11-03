@@ -137,15 +137,15 @@ void trymat1()
       Matrix M1X = BM1; Matrix M2X = BM2; Matrix MX = BM;
       MX -= M1X + M2X; Print(MX);
       MX = BM1; MX += BM2; MX -= M1X; MX -= M2X; Print(MX);
-      SymmetricBandMatrix SM1; SM1 << BM1 * BM1.t(); 
+      SymmetricBandMatrix SM1; SM1 << BM1 * BM1.t();
       SymmetricBandMatrix SM2; SM2 << BM2 * BM2.t();
       SM1 *= 5.5;
       M1X *= M1X.t(); M1X *= 5.5; M2X *= M2X.t();
       SM1 -= SM2; M1 = SM1 - M1X + M2X; Print(M1);
-      M1 = BM1; BM1 *= SM1; M1 = M1 * SM1 - BM1; Print(M1); 
-      M1 = BM1; BM1 -= SM1; M1 = M1 - SM1 - BM1; Print(M1); 
-      M1 = BM1; BM1 += SM1; M1 = M1 + SM1 - BM1; Print(M1); 
-      
+      M1 = BM1; BM1 *= SM1; M1 = M1 * SM1 - BM1; Print(M1);
+      M1 = BM1; BM1 -= SM1; M1 = M1 - SM1 - BM1; Print(M1);
+      M1 = BM1; BM1 += SM1; M1 = M1 + SM1 - BM1; Print(M1);
+
    }
    {
       Tracer et1("Stage 6");
@@ -271,16 +271,16 @@ void trymat1()
       ColumnVector cv(10);
       for (int i = 1; i <= 10; ++i) cv(i) = mwc.Next();
       cv *= 100.0;
-      cv(1) -= 6.27874;	
-      cv(2) -= 42.1718;	
-      cv(3) -= 80.2854;	
-      cv(4) -= 12.961;	
-      cv(5) -= 17.7499;	
-      cv(6) -= 13.2657;	
-      cv(7) -= 50.4923;	
-      cv(8) -= 26.095;	
-      cv(9) -= 57.9147;	
-      cv(10) -= 30.1778;	
+      cv(1) -= 6.27874;
+      cv(2) -= 42.1718;
+      cv(3) -= 80.2854;
+      cv(4) -= 12.961;
+      cv(5) -= 17.7499;
+      cv(6) -= 13.2657;
+      cv(7) -= 50.4923;
+      cv(8) -= 26.095;
+      cv(9) -= 57.9147;
+      cv(10) -= 30.1778;
       Clean(cv, 0.0001); Print(cv);
    }
 

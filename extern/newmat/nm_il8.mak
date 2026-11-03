@@ -9,7 +9,7 @@ MINOR = 0
 %.o:           	%.cpp
 		$(CXX) $(CXXFLAGS) -c $*.cpp
 
-everything:    	tmt example nm_ex1 nm_ex2 nm_ex3 test_exc nl_ex sl_ex garch 
+everything:    	tmt example nm_ex1 nm_ex2 nm_ex3 test_exc nl_ex sl_ex garch
 
 newmat_lobj = newmat1.o newmat2.o newmat3.o newmat4.o newmat5.o newmat6.o newmat7.o newmat8.o newmatex.o bandmat.o submat.o myexcept.o cholesky.o evalue.o fft.o hholder.o jacobi.o newfft.o sort.o svd.o nm_misc.o newmatrm.o newmat9.o
 
@@ -209,4 +209,3 @@ sl_ex.txx:     	sl_ex
 garch.txx:     	garch
 		$(PRE)garch > garch.txx
 		$(DIFF) garch.txt garch.txx
-

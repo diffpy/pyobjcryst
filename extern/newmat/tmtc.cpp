@@ -184,7 +184,7 @@ void trymatc()
          { RowVector RV = 5 * M1.Row(i); M.Row(i) -= RV; }
 
       M += M1; Print(M);
- 
+
    }
 
    {
@@ -205,13 +205,13 @@ void trymatc()
       nricMatrix N2 = N;
       nricMatrix Y = N;   Print(Y);
       Y = N1 - N2;        Print(Y);
-      
+
       N = M1 / 2; N1 = N * 2; N.Release(); N2 = N * 2; Y = N; Print(N);
       Y = (N1 - M1) | (N2 - M1); Print(Y);
 #endif
 
    }
-   
+
    {
       Tracer et("Stage 13");
       // test sum of squares of rows or columns
@@ -272,9 +272,9 @@ void trymatc()
       A1.ReSize(10,0);
       X.ReSize(10,1); X = 0; X -= A1.sum_square_rows(); Clean(X, 0.00000000000001); Print(X);
       X.ReSize(1,0); X -= A1.sum_square_columns(); Clean(X, 0.00000000000001); Print(X);
-      
+
    }
-   
+
    {
       Tracer et("Stage 14");
       // test extend orthonormal
@@ -289,7 +289,7 @@ void trymatc()
       // Check orthogonality
       X = A.t() * A - IdentityMatrix(5);
       Clean(X, 0.000000001); Print(X);
-      // Try orthonality extend 
+      // Try orthonality extend
       SquareMatrix A1(20);
       A1.Columns(1,5) = A;
       extend_orthonormal(A1,5);
@@ -297,10 +297,10 @@ void trymatc()
       X = A - A1.Columns(1,5); Print(X);
       // Check orthogonality
       X = A1.t() * A1 - IdentityMatrix(20);
-      Clean(X, 0.000000001); Print(X); 
+      Clean(X, 0.000000001); Print(X);
       X = A1 * A1.t() - IdentityMatrix(20);
       Clean(X, 0.000000001); Print(X);
-      // Test with smaller number of columns 
+      // Test with smaller number of columns
       Matrix A2(20,15);
       A2.Columns(1,5) = A;
       extend_orthonormal(A2,5);
@@ -333,7 +333,7 @@ void trymatc()
       B -= A;
       Clean(B, 0.000000001); Print(B);
    }
-      
+
    {
       Tracer et("Stage 16");
       // test sum of rows or columns
@@ -396,9 +396,9 @@ void trymatc()
       A1.ReSize(10,0);
       X.ReSize(10,1); X = 0; X -= A1.sum_rows(); Print(X);
       X.ReSize(1,0); X -= A1.sum_columns(); Print(X);
-      
+
    }
-   
+
    {
       Tracer et("Stage 17");
       // SP_eq on submatrices
@@ -408,20 +408,20 @@ void trymatc()
       Matrix X = A; X.submatrix(5,21,3,13).SP_eq(B);
       Matrix Y = A; Y.submatrix(5,21,3,13) = SP(Y.submatrix(5,21,3,13),B);
       Y -= X; Print(Y);
-      
+
       UpperTriangularMatrix UT(33);
       FillWithValues(mwc, UT);
       UpperTriangularMatrix UTX = UT;
       UTX.submatrix(5,21,3,13).SP_eq(B);
       Y = UT; Y.submatrix(5,21,3,13) = SP(Y.submatrix(5,21,3,13),B);
       Y -= UTX; Print(Y);
-      
+
       UT.resize(10);
       FillWithValues(mwc, UT);
       X = A; X.submatrix(5,14,3,12).SP_eq(UT);
       Y = A; Y.submatrix(5,14,3,12) = SP(Y.submatrix(5,14,3,12),UT);
       Y -= X; Print(Y);
-      
+
       SymmetricMatrix SM(30), SM1(10);
       FillWithValues(mwc, SM); FillWithValues(mwc, SM1);
       SymmetricMatrix SMX = SM;
@@ -429,12 +429,12 @@ void trymatc()
       //SMX.sym_submatrix(5,14) += SM1;
       //Y = SM; Y.submatrix(5,14,5,14) = Y.submatrix(5,14,5,14) + SM1;
       //Y -= SMX; Print(Y);
-      
+
       SMX = SM;
       SMX.submatrix(5,14,5,14).SP_eq(SM1);
       Y = SM; Y.submatrix(5,14,5,14) = SP(Y.submatrix(5,14,5,14),SM1);
       Y -= SMX; Print(Y);
-      
+
       BandMatrix BM(50, 10, 12);
       X.resize(50,50); FillWithValues(mwc, X);
       BM.inject(X); X = BM;
@@ -449,17 +449,17 @@ void trymatc()
       BM.submatrix(2,8,4,13).SP_eq(B);
       X.submatrix(2,8,4,13) = SP(X.submatrix(2,8,4,13), B);
       X -= BM; Print(X);
-      
+
       X.resize(50,50); FillWithValues(mwc, X);
       BM.inject(X); X = BM;
       B.resize(21, 23); FillWithValues(mwc, B);
       BM.submatrix(2,22,4,26).SP_eq(B);
       X.submatrix(2,22,4,26) = SP(X.submatrix(2,22,4,26), B);
       X -= BM; Print(X);
-      
+
    }
-   
-   {   
+
+   {
       Tracer et("Stage 18");
       // += real on submatrices of symmetric matrices
       // these don't work either
@@ -470,27 +470,27 @@ void trymatc()
       //SMX.sym_submatrix(7,11) += 5;
       //Matrix X = SM; X.sym_submatrix(7,11) += 5;
       //X -= SMX; Print(X);
-      
+
    }
-   
+
    {
       Tracer et("Stage 19");
       // SQ_eq on matrices
       MultWithCarry mwc;
-      
+
       Matrix X(10,13), Y(10,13);
       FillWithValues(mwc, X); FillWithValues(mwc, Y);
       Matrix Z = X; Z.SP_eq(Y);
       Z -= SP(X, Y); Print(Z);
-      
+
       Z = X; Z.SP_eq(2 * Y);
       Z -= 2 * SP(X, Y); Print(Z);
-      
+
       Z = X; Z.SP_eq(Z);
       Z -= SP(X, X); Print(Z);
-      
+
       GenericMatrix GX = X, GY = Y; test_SP_eq(GX, GY); test_SP_eq(GX, GX);
-      
+
       X.resize(17,17); Y.resize(17,17);
       FillWithValues(mwc, X); FillWithValues(mwc, Y);
       UpperTriangularMatrix UT; UT << Y;
@@ -504,28 +504,28 @@ void trymatc()
 
       UpperTriangularMatrix UX(19), UY(19);
       FillWithValues(mwc, UX); FillWithValues(mwc, UY);
-      
+
       GX = UX; GY = UY; test_SP_eq(GX, GY); test_SP_eq(GX, GY.t());
 
       UpperTriangularMatrix UZ = UX; UZ.SP_eq(UY);
       UZ -= SP(UX, UY); Print(UZ);
-      
+
       UZ = UX; UZ.SP_eq(2 * UY);
       UZ -= 2 * SP(UX, UY); Print(UZ);
-      
+
       UT << UY; LT << UY; D << UY;
       UpperTriangularMatrix UZUT = UX; UZUT.SP_eq(UT);
       UpperTriangularMatrix UZLT = UX; UZLT.SP_eq(LT);
       UpperTriangularMatrix UZD = UX; UZD.SP_eq(D);
       Z = UZUT + UZLT - UZD - SP(UX, UY);
       Clean(Z, 0.000000001); Print(Z);
-      
+
       SymmetricMatrix SM(13), SM1(13), SMX, SM2;
       FillWithValues(mwc, SM); FillWithValues(mwc, SM1);
       SMX = SP(SM, SM1); SM2 = SM;
       SM2.SP_eq(SM1); SM2 -= SMX; Print(SM2);
       GX = SM; GY = SM1; test_SP_eq(GX, GY);
-      
+
       X.resize(13,13); FillWithValues(mwc, X);
       Z = SP(X,SM); SM2 = SM;
       X.SP_eq(SM); X -= Z; Print(X);
@@ -533,7 +533,7 @@ void trymatc()
       FillWithValues(mwc, X);
       GX = X; GY = SM; test_SP_eq(GX, GY);
       GX = SM; GY = X; test_SP_eq(GX, GY);
-      
+
       BandMatrix BMX(13, 5,9); BMX.inject(X);
       SymmetricBandMatrix SBM(13,6); SBM.inject(SM);
       GX = BMX; GY = SBM; test_SP_eq(GX, GY);
@@ -542,11 +542,11 @@ void trymatc()
       BandMatrix BMX2 = SBM;
       GX = BMX; GY = BMX2; test_SP_eq(GX, GY);
       BMX1 = BMX; BMX1.SP_eq(BMX2); Z = BMX1 - SP(BMX,BMX2); Print(Z);
-      
-      
+
+
    }
-   
- 
+
+
 
 //   cout << "\nEnd of twelfth test\n";
 }

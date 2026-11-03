@@ -232,12 +232,12 @@ void updateQRZT(Matrix& X, LowerTriangularMatrix& L)
 	 Tracer et("updateQRZT");
    int n = X.Ncols(); int s = X.Nrows();
    if (s != L.Nrows())
-      Throw(ProgramException("Incompatible dimensions",X,L)); 
+      Throw(ProgramException("Incompatible dimensions",X,L));
    if (n == 0 || s == 0) return;
    Real* xi = X.Store(); int k;
    for (int i=0; i<s; i++)
    {
-      Real r = L.element(i,i); 
+      Real r = L.element(i,i);
       Real sum = 0.0;
       Real* xi0=xi; k=n; while(k--) { sum += square(*xi++); }
       sum = sqrt(sum + square(r));
@@ -273,7 +273,7 @@ void updateQRZ(Matrix& X, UpperTriangularMatrix& U)
    int n = X.Nrows(); int s = X.Ncols();
    if (s != U.Ncols())
       Throw(ProgramException("Incompatible dimensions",X,U));
-   if (n == 0 || s == 0) return; 
+   if (n == 0 || s == 0) return;
    Real* xi0 = X.Store(); Real* u0 = U.Store(); Real* u;
    RowVector V(s); Real* v0 = V.Store(); Real* v; V = 0.0;
    int j, k; int J = s; int i = s;
@@ -290,7 +290,7 @@ void updateQRZ(Matrix& X, UpperTriangularMatrix& U)
 
       Real r = *u0;
       Real sum = sqrt(*v0 + square(r));
-      
+
       if (sum == 0.0)
       {
          REPORT
@@ -311,8 +311,8 @@ void updateQRZ(Matrix& X, UpperTriangularMatrix& U)
          Real a0 = sqrt(frs / sum); Real alpha = a0 / frs;
          if (r <= 0) { REPORT alpha = -alpha; *u0 = sum; }
          else { REPORT *u0 = -sum; }
-      
-         j = J - 1; v = v0 + 1; u = u0 + 1;     
+
+         j = J - 1; v = v0 + 1; u = u0 + 1;
          while (j--)
             { *v = a0 * *u + alpha * *v; *u -= a0 * *v; ++v; ++u; }
 
@@ -325,10 +325,10 @@ void updateQRZ(Matrix& X, UpperTriangularMatrix& U)
             if (!(--k)) break;
 	          xi += s; xj0 += s;
          }
-         
+
          j = J; v = v0;
          while (j--) *v++ = 0.0;
-         
+
          u0 += J--;
       }
    }
@@ -351,9 +351,9 @@ void updateQRZ(const Matrix& X, Matrix& MX, Matrix& MU)
    int t = MX.Ncols();
    if (t != MU.Ncols())
       Throw(ProgramException("Incompatible dimensions",MX,MU));
-   
+
    if (s == 0) return;
-    
+
    const Real* xi0 = X.data(); Real* mx = MX.data(); Real* muj = MU.data();
    for (int i=1; i<=s; ++i)
    {
@@ -366,7 +366,7 @@ void updateQRZ(const Matrix& X, Matrix& MX, Matrix& MU)
       for (int j=1; j<=t; ++j)
       {
          Real sum = 0.0;
-         const Real* xi=xi0; Real* mxj=mxj0; int k=n; 
+         const Real* xi=xi0; Real* mxj=mxj0; int k=n;
          while(--k) { sum += *xi * *mxj; xi += s; mxj += t; }
          sum += *xi * *mxj;    // last line of loop
          sum += a0 * *muj;
@@ -394,7 +394,7 @@ void updateQRZ(UpperTriangularMatrix& X, UpperTriangularMatrix& U)
    int s = X.Ncols();
    if (s != U.Ncols())
       Throw(ProgramException("Incompatible dimensions",X,U));
-   if (s == 0) return; 
+   if (s == 0) return;
    Real* xi0 = X.data(); Real* u = U.data();
    for (int i=1; i<=s; ++i)
    {
@@ -419,7 +419,7 @@ void updateQRZ(UpperTriangularMatrix& X, UpperTriangularMatrix& U)
          for (int j=i+1; j<=s; ++j)
          {
             Real sum = 0.0; ++xj0; ++uj;
-            Real* xi=xi0; Real* xj=xj0; int k=i; int l=s; 
+            Real* xi=xi0; Real* xj=xj0; int k=i; int l=s;
             while(k--) { sum += *xi * *xj; --l; xi += l; xj += l; }
             sum += a0 * *uj;
             xi=xi0; xj=xj0; k=i; l=s;
@@ -448,7 +448,7 @@ void updateQRZ(const UpperTriangularMatrix& X, Matrix& MX, Matrix& MU)
    if (t != MU.Ncols())
       Throw(ProgramException("Incompatible dimensions",MX,MU));
    if (s == 0) return;
-    
+
    const Real* xi0 = X.data(); Real* mx = MX.data(); Real* muj = MU.data();
    for (int i=1; i<=s; ++i)
    {
@@ -461,7 +461,7 @@ void updateQRZ(const UpperTriangularMatrix& X, Matrix& MX, Matrix& MU)
       for (int j=1; j<=t; ++j)
       {
          Real sum = 0.0;
-         const Real* xi=xi0; Real* mxj=mxj0; int k=i; int l=s; 
+         const Real* xi=xi0; Real* mxj=mxj0; int k=i; int l=s;
          while(--k) { sum += *xi * *mxj; --l; xi += l; mxj += t; }
          sum += *xi * *mxj;    // last line of loop
          sum += a0 * *muj;
@@ -481,7 +481,7 @@ void updateQRZ(const UpperTriangularMatrix& X, Matrix& MX, Matrix& MU)
 // Matrix A's first n columns are orthonormal
 // so A.Columns(1,n).t() * A.Columns(1,n) is the identity matrix.
 // Fill out the remaining columns of A to make them orthonormal
-// so A.t() * A is the identity matrix 
+// so A.t() * A is the identity matrix
 void extend_orthonormal(Matrix& A, int n)
 {
    REPORT
@@ -507,8 +507,8 @@ void extend_orthonormal(Matrix& A, int n)
       A.Column(i+1) = X;
    }
 }
-   
-   
+
+
 
 
 

@@ -141,7 +141,7 @@ void ComplexScale(RectMatrixCol& U, RectMatrixCol& V, Real x, Real y)
       Tracer tr("newmatrm");
       Throw(InternalException("Dimensions differ in ComplexScale"));
    }
-   Real* u = U.store; Real* v = V.store; 
+   Real* u = U.store; Real* v = V.store;
    int su = U.spacing; int sv = V.spacing;
    //while (n--)
    //{

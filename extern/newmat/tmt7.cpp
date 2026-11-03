@@ -29,7 +29,7 @@ void c_matrix_multiply(int p, int q, int r,
       c[i][k] = sum;
    }
 }
-   
+
 
 
 void trymat7()
@@ -50,7 +50,7 @@ void trymat7()
    Matrix MD=D; Matrix ML=L; Matrix MU=U;
    Matrix MS=S;
    Matrix M(6,6);
-   for (i=1;i<=6;i++) for (j=1;j<=6;j++) M(i,j)=i*j+i*i-10.0;  
+   for (i=1;i<=6;i++) for (j=1;j<=6;j++) M(i,j)=i*j+i*i-10.0;
    {
       Tracer et1("Stage 1");
       Print(Matrix((S-M)-(MS-M)));
@@ -99,7 +99,7 @@ void trymat7()
       CV << 2 << 6 <<3 << 8 << -4 << 17.5 << 2 << 1 << -2 << 5 << 3.75;
       D << 2 << 6 <<3 << 8 << -4 << 17.5 << 2 << 1 << -2 << 5 << 3.75;
       X = CV.AsDiagonal(); X = X-D; Print(X);
-      SymmetricBandMatrix SB1(11,7); SB1 = 5; 
+      SymmetricBandMatrix SB1(11,7); SB1 = 5;
       SymmetricBandMatrix SB2 = SB1 + D;
       X.ReSize(11,11); X=0;
       for (i=1;i<=11;i++) for (j=1;j<=11;j++)
@@ -145,12 +145,12 @@ void trymat7()
       for (i = 0; i < 5; i++) if (F[i] != 0) Test(9)=1;
       Print(Test);
    }
-   
+
    {
       // testing RealStarStar
       Tracer et("Stage 6");
       MultWithCarry MWC;
-      
+
       Matrix A(10, 12), B(12, 15), C(10, 15);
       FillWithValues(MWC, A); FillWithValues(MWC, B);
       ConstRealStarStar a(A);
@@ -165,13 +165,13 @@ void trymat7()
          ConstRealStarStar(A),ConstRealStarStar(B),RealStarStar(C));
       X = C - A * B; Clean(X,0.00000001); Print(X);
    }
-   
+
    {
       // testing resize_keep
       Tracer et("Stage 7");
       Matrix X, Y;
       MultWithCarry MWC;
-      
+
       X.resize(20,35); FillWithValues(MWC, X);
       Matrix M(20,35); M = X;
       X = M.submatrix(1,15,1,25);
@@ -181,14 +181,14 @@ void trymat7()
       M.resize_keep(29,27); Y -= M; Print(Y);
       M.resize_keep(0,5);  M.resize_keep(10,10); Print(M);
       M.resize_keep(15,0); M.resize_keep(10,10); Print(M);
-      
+
       X.resize(20,35); FillWithValues(MWC, X);
       M = X;
       M.resize_keep(38,17);
       Y.resize(38,17); Y = 0;
       Y.submatrix(1,20,1,17) = X.submatrix(1,20,1,17);
       Y -= M; Print(Y);
-            
+
       X.resize(40,12); FillWithValues(MWC, X);
       M = X;
       M.resize_keep(38,17);
@@ -207,23 +207,23 @@ void trymat7()
       nM.resize_keep(29,27); Y -= nM; Print(Y);
       nM.resize_keep(0,5);  nM.resize_keep(10,10); Print(nM);
       nM.resize_keep(15,0); nM.resize_keep(10,10); Print(nM);
-      
+
       X.resize(20,35); FillWithValues(MWC, X);
       nM = X;
       nM.resize_keep(38,17);
       Y.resize(38,17); Y = 0;
       Y.submatrix(1,20,1,17) = X.submatrix(1,20,1,17);
       Y -= nM; Print(Y);
-            
+
       X.resize(40,12); FillWithValues(MWC, X);
       nM = X;
       nM.resize_keep(38,17);
       Y.resize(38,17); Y = 0;
       Y.submatrix(1,38,1,12) = X.submatrix(1,38,1,12);
-      Y -= nM; Print(Y);      
+      Y -= nM; Print(Y);
 
-#endif      
-      
+#endif
+
       X.resize(20,20); FillWithValues(MWC, X);
       SquareMatrix SQM(20); SQM << X;
       X = SQM.sym_submatrix(1,13);
@@ -232,7 +232,7 @@ void trymat7()
       Y.resize(23,23); Y = 0; Y.sym_submatrix(1,13) = X;
       SQM.resize_keep(23,23); Y -= SQM; Print(Y);
       SQM.resize_keep(0); SQM.resize_keep(50); Print(SQM);
-      
+
       X.resize(20,20); FillWithValues(MWC, X);
       SymmetricMatrix SM(20); SM << X;
       X = SM.sym_submatrix(1,13);
@@ -241,7 +241,7 @@ void trymat7()
       Y.resize(23,23); Y = 0; Y.sym_submatrix(1,13) = X;
       SM.resize_keep(23); Y -= SM; Print(Y);
       SM.resize_keep(0); SM.resize_keep(50); Print(SM);
-      
+
       X.resize(20,20); FillWithValues(MWC, X);
       LowerTriangularMatrix LT(20); LT << X;
       X = LT.sym_submatrix(1,13);
@@ -250,7 +250,7 @@ void trymat7()
       Y.resize(23,23); Y = 0; Y.sym_submatrix(1,13) = X;
       LT.resize_keep(23); Y -= LT; Print(Y);
       LT.resize_keep(0); LT.resize_keep(50); Print(LT);
-      
+
       X.resize(20,20); FillWithValues(MWC, X);
       UpperTriangularMatrix UT(20); UT << X;
       X = UT.sym_submatrix(1,13);
@@ -259,7 +259,7 @@ void trymat7()
       Y.resize(23,23); Y = 0; Y.sym_submatrix(1,13) = X;
       UT.resize_keep(23); Y -= UT; Print(Y);
       UT.resize_keep(0); UT.resize_keep(50); Print(UT);
-      
+
       X.resize(20,20); FillWithValues(MWC, X);
       DiagonalMatrix DM(20); DM << X;
       X = DM.sym_submatrix(1,13);
@@ -268,7 +268,7 @@ void trymat7()
       Y.resize(23,23); Y = 0; Y.sym_submatrix(1,13) = X;
       DM.resize_keep(23); Y -= DM; Print(Y);
       DM.resize_keep(0); DM.resize_keep(50); Print(DM);
-      
+
       X.resize(1,20); FillWithValues(MWC, X);
       RowVector RV(20); RV << X;
       X = RV.columns(1,13);
@@ -277,7 +277,7 @@ void trymat7()
       Y.resize(1,23); Y = 0; Y.columns(1,13) = X;
       RV.resize_keep(1,23); Y -= RV; Print(Y);
       RV.resize_keep(0); RV.resize_keep(50); Print(RV);
-      
+
       X.resize(20,1); FillWithValues(MWC, X);
       ColumnVector CV(20); CV << X;
       X = CV.rows(1,13);
@@ -286,9 +286,9 @@ void trymat7()
       Y.resize(23,1); Y = 0; Y.rows(1,13) = X;
       CV.resize_keep(23,1); Y -= CV; Print(Y);
       CV.resize_keep(0); CV.resize_keep(50); Print(CV);
-      
-      
-   }    
+
+
+   }
 
 
 //   cout << "\nEnd of seventh test\n";

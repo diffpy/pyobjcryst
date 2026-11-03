@@ -223,7 +223,7 @@ void test4(Real* y, Real* x1, Real* x2, int nobs, int npred)
    cout << "\n\nTest 4 - QR triangularisation\n";
 
    // QR triangularisation method
- 
+
    // load data - 1s into col 1 of matrix
    int npred1 = npred+1;
    Matrix X(nobs,npred1); ColumnVector Y(nobs);
@@ -251,7 +251,7 @@ void test4(Real* y, Real* x1, Real* x2, int nobs, int npred)
    for (int i=1; i<=npred1; i++) SE(i) = sqrt(D(i)*ResVar);
    cout << setw(11) << setprecision(5) << (A | SE) << endl;
    cout << "\nObservations, fitted value, residual value, hat value\n";
-   cout << setw(9) << setprecision(3) << 
+   cout << setw(9) << setprecision(3) <<
       (X.columns(2,3) | Y | Fitted | Y1 | Hat.as_column());
    cout << "\n\n";
 }
@@ -261,7 +261,7 @@ void test5(Real* y, Real* x1, Real* x2, int nobs, int npred)
    cout << "\n\nTest 5 - singular value\n";
 
    // Singular value decomposition method
- 
+
    // load data - 1s into col 1 of matrix
    int npred1 = npred+1;
    Matrix X(nobs,npred1); ColumnVector Y(nobs);
@@ -288,7 +288,7 @@ void test5(Real* y, Real* x1, Real* x2, int nobs, int npred)
    for (int i=1; i<=npred1; i++) SE(i) = sqrt(D(i)*ResVar);
    cout << setw(11) << setprecision(5) << (A | SE) << endl;
    cout << "\nObservations, fitted value, residual value, hat value\n";
-   cout << setw(9) << setprecision(3) << 
+   cout << setw(9) << setprecision(3) <<
       (X.columns(2,3) | Y | Fitted | Residual | Hat.as_column());
    cout << "\n\n";
 }

@@ -27,7 +27,7 @@ ReturnMatrix Helmert(int n, bool full)
    Tracer et("Helmert ");
    if (n <= 0) Throw(ProgramException("Dimension <= 0 "));
    Matrix H;
-   
+
    if (full) H.resize(n,n); else H.resize(n-1,n);
    H = 0.0;
    for (int i = 1; i < n; ++i)
@@ -37,7 +37,7 @@ ReturnMatrix Helmert(int n, bool full)
    }
    if (full) { H.row(n) = 1.0 / sqrt((Real)n); }
    H.release(); return H.for_return();
-} 
+}
 
 
 
@@ -55,7 +55,7 @@ ReturnMatrix Helmert(const ColumnVector& X, bool full)
       { sum += X(i); Y(i) = (i * X(i+1) - sum) / sqrt((Real)i * (i+1)); }
    if (full) { sum += X(n); Y(n) = sum / sqrt((Real)n); }
    Y.release(); return Y.for_return();
-} 
+}
 
 // same as above for X a ColumnVector, length n, element j = 1; otherwise 0
 ReturnMatrix Helmert(int n, int j, bool full)
@@ -71,7 +71,7 @@ ReturnMatrix Helmert(int n, int j, bool full)
    for (int i = j; i < n; ++i) Y(i) = - 1.0 / sqrt((Real)i * (i+1));
    if (full) Y(n) = 1.0 / sqrt((Real)n);
    Y.release(); return Y.for_return();
-} 
+}
 
 ReturnMatrix Helmert_transpose(const ColumnVector& Y, bool full)
 {

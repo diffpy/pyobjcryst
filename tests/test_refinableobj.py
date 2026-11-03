@@ -425,7 +425,9 @@ class TestRefinableObj(unittest.TestCase):
 
     def test_xml_output_input_reachable(self):
         """XMLOutput/XMLInput were dropped from the nanobind port's
-        method-forwarding audit alongside the LSQ methods below. Note
+        method-forwarding audit alongside the LSQ methods below.
+
+        Note
         RefinableObj's own C++ base implementation is a documented no-op
         ("Does nothing! Should be purely virtual...", see
         RefinableObj/IO.cpp) -- real content only appears once a concrete
@@ -434,7 +436,8 @@ class TestRefinableObj(unittest.TestCase):
         file-like object, exercised on concrete subclasses that do override
         XMLOutput/XMLInput with real behaviour, live in test_scatterer.py
         (Atom), test_powderpattern.py (PowderPatternBackground) and
-        test_single_crystal_data.py (DiffractionDataSingleCrystal)."""
+        test_single_crystal_data.py (DiffractionDataSingleCrystal).
+        """
         import io
 
         buf = io.StringIO()
