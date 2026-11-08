@@ -1,3 +1,4 @@
 setuptools
 numpy
+packaging
 libboost-headers

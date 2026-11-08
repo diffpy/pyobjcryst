@@ -1,14 +1,16 @@
 [build-system]
-requires = ["scikit-build-core>=0.9", "nanobind", "numpy", "libboost-headers"]
+requires = [
+    "scikit-build-core>=0.10",
+    "setuptools-scm>=8",
+    "nanobind",
+    "numpy",
+    "libboost-headers",
+]
 build-backend = "scikit_build_core.build"
 
 [project]
 name = "pyobjcryst"
-# TODO: main uses setuptools-git-versioning (dynamic, tag-based) with
-# setuptools.build_meta; scikit-build-core needs a different dynamic-version
-# provider to match that exactly. Pinned as a static placeholder for now --
-# revisit before release, see nanobind_migration_notes.md.
-version = "2026.2.0rc0"
+dynamic = ["version"]
 authors = [
   { name="Christopher Farrow" },
   { name="Pavol Juhás" },
@@ -22,7 +24,7 @@ description = "Python bindings to the ObjCryst++ library."
 keywords = ['objcryst', 'atom structure crystallography', 'powder diffraction']
 readme = "README.rst"
 requires-python = ">=3.12, <3.16"
-dependencies = ["numpy"]
+dependencies = ["numpy", "packaging"]
 classifiers = [
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
@@ -52,8 +54,46 @@ Issues = "https://github.com/diffpy/pyobjcryst/issues/"
 pyobjcryst = "pyobjcryst.pyobjcryst_app:main"
 
 [tool.scikit-build]
+minimum-version = "build-system.requires"
 cmake.build-type = "Release"
 wheel.packages = ["src/pyobjcryst"]
+sdist.cmake = true
+sdist.exclude = [
+    "build",
+    "dist",
+    ".pytest_cache",
+    # Parts of the ObjCryst++ submodule not needed to build the extension.
+    "extern/objcryst/Fox",
+    "extern/objcryst/test",
+    "extern/objcryst/ObjCryst/doc",
+    "extern/objcryst/ObjCryst/example",
+]
+metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
+
+[tool.setuptools_scm]
+version_scheme = "no-guess-dev"
+
+# PyPI wheels: ObjCryst++, cctbx and newmat are built from extern/ and linked
+# statically, Boost is header-only and nanobind is linked statically, so the
+# wheels install into any environment without conda or system libraries.
+[tool.cibuildwheel]
+build = ["cp312-*", "cp313-*", "cp314-*", "cp315-*"]
+skip = ["*-musllinux_*"]
+test-requires = ["pytest"]
+# The tests open tests/testdata/* relative to the working directory.
+test-sources = ["tests"]
+test-command = "pytest tests"
+
+[tool.cibuildwheel.linux]
+archs = ["x86_64"]
+
+[tool.cibuildwheel.macos]
+archs = ["native"]
+environment = { MACOSX_DEPLOYMENT_TARGET = "11.0" }
+
+# No Windows ARM64 wheels.
+[tool.cibuildwheel.windows]
+archs = ["AMD64"]
 
 [tool.codespell]
 exclude-file = ".codespell/ignore_lines.txt"
