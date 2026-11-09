@@ -24,16 +24,17 @@ jobs:
   # Choose this for open-source packages distributed via PyPI and/or
   # conda-forge where broad public availability is the goal.
   #
-  # Wheels are built with cibuildwheel using [tool.cibuildwheel] in
-  # pyproject.toml.
+  # build_c_ext_with_cibw builds the wheels with cibuildwheel using
+  # [tool.cibuildwheel] in pyproject.toml.
   # TODO: switch back to scikit-package/release-scripts@v0 once the
-  # cibuildwheel change is released there.
+  # cibw change is released there.
   build-release:
-    uses: SYMSCAE/release-scripts/.github/workflows/_build-wheel-release-upload.yml@cibuildwheel
+    uses: SYMSCAE/release-scripts/.github/workflows/_build-wheel-release-upload.yml@cibw
     with:
       project: pyobjcryst
       submodules: "true"
       c_extension: true
+      build_c_ext_with_cibw: true
       maintainer_github_username: sbillinge
     secrets:
       PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
