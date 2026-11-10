@@ -26,8 +26,6 @@ jobs:
   #
   # build_c_ext_with_cibw builds the wheels with cibuildwheel using
   # [tool.cibuildwheel] in pyproject.toml.
-  # TODO: switch back to scikit-package/release-scripts@v0 once the
-  # cibw change is released there.
   build-release:
     uses: scikit-package/release-scripts/.github/workflows/_build-wheel-release-upload.yml@v0
     with:
