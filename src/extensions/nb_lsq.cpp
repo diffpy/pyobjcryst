@@ -109,9 +109,6 @@ void wrap_lsq(nb::module_& m)
              nb::rv_policy::reference_internal)
         .def("PrintRefResults",  &LSQNumObj::PrintRefResults)
         .def("PrepareRefParList",
-             nb::overload_cast<const bool>(&LSQNumObj::PrepareRefParList),
-             nb::arg("copy_param") = false)
-        .def("PrepareRefParList",
              nb::overload_cast<const bool, const bool>(&LSQNumObj::PrepareRefParList),
              nb::arg("copy_param") = false,
              nb::arg("verbose") = false,
