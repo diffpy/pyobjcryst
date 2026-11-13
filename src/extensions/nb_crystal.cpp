@@ -284,7 +284,8 @@ void wrap_crystal(nb::module_& m)
         .def("GetScatteringComponentList", &_GetScatteringComponentList)
         .def("GetClockScattCompList", &Crystal::GetClockScattCompList,
              nb::rv_policy::reference_internal)
-        .def("GetMinDistanceTable", &Crystal::GetMinDistanceTable,
+        .def("GetMinDistanceTable",
+             [](const Crystal& c, double d){ return crystmat_to_array(c.GetMinDistanceTable(d)); },
              nb::arg("minDistance") = 1.0)
         .def("PrintMinDistanceTable",
              [](const Crystal& c, double d){ c.PrintMinDistanceTable(d); },
