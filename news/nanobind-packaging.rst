@@ -5,7 +5,6 @@
 **Changed:**
 
 * Boost headers are now taken from the PyPI ``libboost-headers`` package when building with pip, falling back to system/conda Boost headers (or ``-DBOOST_INCLUDE_DIR=<path>``).
-* Set package version to ``2026.2.0rc0``.
 
 **Deprecated:**
 

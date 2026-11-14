@@ -152,10 +152,21 @@ target_compile_definitions(ObjCryst PUBLIC
 target_link_libraries(ObjCryst PUBLIC cctbx newmat)
 
 # Put VFNDebug.cpp first so debug-level constants are defined before use
-set_source_files_properties(
-    "${OBJCRYST_SRC}/Quirks/VFNDebug.cpp"
-    PROPERTIES COMPILE_FLAGS "-O0"
-)
+if(NOT MSVC)
+    set_source_files_properties(
+        "${OBJCRYST_SRC}/Quirks/VFNDebug.cpp"
+        PROPERTIES COMPILE_FLAGS "-O0"
+    )
+endif()
+
+# MSVC: same settings as the libobjcryst Windows build (/EHsc, M_PI etc.),
+# plus /bigobj for the large binding translation units.
+if(MSVC)
+    foreach(_tgt newmat cctbx ObjCryst)
+        target_compile_definitions(${_tgt} PUBLIC _USE_MATH_DEFINES NOMINMAX)
+        target_compile_options(${_tgt} PUBLIC /EHsc /bigobj)
+    endforeach()
+endif()
 
 # ---------------------------------------------------------------------------
 # nanobind extension: _pyobjcryst
@@ -178,3 +189,11 @@ target_link_libraries(_pyobjcryst PRIVATE ObjCryst)
 
 # Install into pyobjcryst package
 install(TARGETS _pyobjcryst LIBRARY DESTINATION pyobjcryst)
+
+# Licenses of the statically linked third-party code ship with the wheel.
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/extern/objcryst/LICENSE.txt"
+        DESTINATION pyobjcryst/licenses/objcryst)
+install(FILES "${CCTBX_SRC}/LICENSE_2_0.txt" "${CCTBX_SRC}/COPYRIGHT_2_0.txt"
+        DESTINATION pyobjcryst/licenses/cctbx)
+install(FILES "${NEWMAT_SRC}/readme.txt" "${NEWMAT_SRC}/nm11.htm"
+        DESTINATION pyobjcryst/licenses/newmat)

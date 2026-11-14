@@ -40,15 +40,18 @@ Known, accepted gaps — real, not oversights, but still open:
   The `Molecule`↔`MolAtom` cycle is fixed. `Crystal`↔`Scatterer`/`Molecule`/`ScatteringPower` cycles
   remain (56 leaked instances in the current full-suite run) — not safe to fix the same way, see
   [keep_alive Reference Cycles](#keep_alive-reference-cycles). Not blocking functionality.
-- **CI has not been exercised against this build.** `.github/workflows/` is inherited from `main`
-  unmodified (it calls a shared reusable workflow); it has never actually run against the
-  nanobind/CMake build because nothing on this branch has been pushed yet.
-- **Cross-platform**: everything above has been built and tested on Linux only. macOS/Windows are
-  unverified.
+- **Wheel builds**: PyPI wheels are built with `cibuildwheel` by the shared release workflow,
+  configured in `[tool.cibuildwheel]` in `pyproject.toml`. The old shared workflow stripped the
+  libraries `auditwheel` had bundled, so those wheels only worked inside a conda environment.
+  The cibuildwheel version of the shared workflow is not released yet:
+  `build-wheel-release-upload.yml` points at `SYMSCAE/release-scripts@cibuildwheel` for now and
+  must be switched back to `scikit-package/release-scripts@v0` once it is.
+- **Cross-platform**: Linux, macOS (x86_64/arm64) and Windows wheels are built and tested by
+  cibuildwheel in the release workflow.
 - **Performance**: not benchmarked against Boost.Python.
-- **Versioning**: `pyproject.toml` uses a static version (`2026.2.0rc0`) instead of
-  `main`'s dynamic tag-based versioning (`setuptools-git-versioning`) — scikit-build-core needs a
-  different mechanism for that; flagged as a `TODO` in `pyproject.toml` itself, not yet resolved.
+- **Versioning**: the version comes from the git tag via `setuptools-scm`
+  (`metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"`), replacing
+  `main`'s `setuptools-git-versioning`. Builds need the tags (`fetch-depth: 0` in CI).
 
 None of the above blocks day-to-day use of the library from Python — every method that was
 reachable under Boost.Python is reachable under nanobind (modulo the override caveat above, which
