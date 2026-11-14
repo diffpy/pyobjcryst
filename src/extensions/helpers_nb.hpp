@@ -477,18 +477,28 @@ void bind_refinableobj_forwarding(nb::class_<T, Extra...>& cls)
         ;
 }
 
+namespace ObjCryst { class ScatteringData; }
+
 template <typename T, typename... Extra>
 void bind_scatteringpower_forwarding(nb::class_<T, Extra...>& cls)
 {
     cls
-        .def("GetScatteringFactor",  &T::GetScatteringFactor,
+        .def("GetScatteringFactor",
+             [](T& sp, const ObjCryst::ScatteringData& data, const int idx){
+                 return crystvec_to_array(sp.GetScatteringFactor(data, idx)); },
              nb::arg("data"), nb::arg("spgSymPosIndex") = -1)
         .def("GetForwardScatteringFactor", &T::GetForwardScatteringFactor)
-        .def("GetTemperatureFactor", &T::GetTemperatureFactor,
+        .def("GetTemperatureFactor",
+             [](T& sp, const ObjCryst::ScatteringData& data, const int idx){
+                 return crystvec_to_array(sp.GetTemperatureFactor(data, idx)); },
              nb::arg("data"), nb::arg("spgSymPosIndex") = -1)
-        .def("GetResonantScattFactReal", &T::GetResonantScattFactReal,
+        .def("GetResonantScattFactReal",
+             [](T& sp, const ObjCryst::ScatteringData& data, const int idx){
+                 return crystmat_to_array(sp.GetResonantScattFactReal(data, idx)); },
              nb::arg("data"), nb::arg("spgSymPosIndex") = -1)
-        .def("GetResonantScattFactImag", &T::GetResonantScattFactImag,
+        .def("GetResonantScattFactImag",
+             [](T& sp, const ObjCryst::ScatteringData& data, const int idx){
+                 return crystmat_to_array(sp.GetResonantScattFactImag(data, idx)); },
              nb::arg("data"), nb::arg("spgSymPosIndex") = -1)
         .def("IsScatteringFactorAnisotropic",  &T::IsScatteringFactorAnisotropic)
         .def("IsTemperatureFactorAnisotropic", &T::IsTemperatureFactorAnisotropic)

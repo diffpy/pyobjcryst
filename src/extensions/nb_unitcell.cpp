@@ -93,7 +93,7 @@ void wrap_unitcell(nb::module_& m)
                       const std::string&>())
         .def(nb::init<const UnitCell&>())
         .def("GetLatticePar",
-             nb::overload_cast<>(&UnitCell::GetLatticePar, nb::const_))
+             [](const UnitCell& u){ return crystvec_to_array(u.GetLatticePar()); })
         .def("GetLatticePar",
              nb::overload_cast<const int>(&UnitCell::GetLatticePar, nb::const_))
         .def("GetClockLatticePar",   &UnitCell::GetClockLatticePar,
@@ -102,7 +102,9 @@ void wrap_unitcell(nb::module_& m)
         .def("GetOrthMatrix",  [](UnitCell& u){ return crystmat_to_array(u.GetOrthMatrix()); })
         .def("GetClockMetricMatrix", &UnitCell::GetClockMetricMatrix,
              nb::rv_policy::reference_internal)
-        .def("GetOrthonormalCoords", &UnitCell::GetOrthonormalCoords)
+        .def("GetOrthonormalCoords",
+             [](const UnitCell& u, double x, double y, double z){
+                 return crystvec_to_array(u.GetOrthonormalCoords(x, y, z)); })
         .def("FractionalToOrthonormalCoords", &FractionalToOrthonormal)
         .def("OrthonormalToFractionalCoords", &OrthonormalToFractional)
         .def("MillerToOrthonormalCoords",     &MillerToOrthonormal)
