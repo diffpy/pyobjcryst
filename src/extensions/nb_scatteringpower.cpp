@@ -76,14 +76,22 @@ void wrap_scatteringpower(nb::module_& m)
 
     nb::class_<ScatteringPower, PyScatteringPower> cls(m, "ScatteringPower");
     cls
-        .def("GetScatteringFactor",  &ScatteringPower::GetScatteringFactor,
+        .def("GetScatteringFactor",
+             [](ScatteringPower& sp, const ScatteringData& data, const int idx){
+                 return crystvec_to_array(sp.GetScatteringFactor(data, idx)); },
              nb::arg("data"), nb::arg("spgSymPosIndex") = -1)
         .def("GetForwardScatteringFactor", &ScatteringPower::GetForwardScatteringFactor)
-        .def("GetTemperatureFactor", &ScatteringPower::GetTemperatureFactor,
+        .def("GetTemperatureFactor",
+             [](ScatteringPower& sp, const ScatteringData& data, const int idx){
+                 return crystvec_to_array(sp.GetTemperatureFactor(data, idx)); },
              nb::arg("data"), nb::arg("spgSymPosIndex") = -1)
-        .def("GetResonantScattFactReal", &ScatteringPower::GetResonantScattFactReal,
+        .def("GetResonantScattFactReal",
+             [](ScatteringPower& sp, const ScatteringData& data, const int idx){
+                 return crystmat_to_array(sp.GetResonantScattFactReal(data, idx)); },
              nb::arg("data"), nb::arg("spgSymPosIndex") = -1)
-        .def("GetResonantScattFactImag", &ScatteringPower::GetResonantScattFactImag,
+        .def("GetResonantScattFactImag",
+             [](ScatteringPower& sp, const ScatteringData& data, const int idx){
+                 return crystmat_to_array(sp.GetResonantScattFactImag(data, idx)); },
              nb::arg("data"), nb::arg("spgSymPosIndex") = -1)
         .def("IsScatteringFactorAnisotropic",  &ScatteringPower::IsScatteringFactorAnisotropic)
         .def("IsTemperatureFactorAnisotropic", &ScatteringPower::IsTemperatureFactorAnisotropic)
