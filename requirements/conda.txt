@@ -1,6 +1,4 @@
 numpy
-compilers
-libboost-devel
 packaging # for matplotlib version parsing in powderpattern.py
 
 # plotting
