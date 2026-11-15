@@ -1,10 +1,16 @@
 [build-system]
-requires = ["setuptools>=62.0", "setuptools-git-versioning>=2.0", "numpy"]
-build-backend = "setuptools.build_meta"
+requires = [
+    "scikit-build-core>=0.10",
+    "setuptools-scm>=8",
+    "nanobind",
+    "numpy",
+    "libboost-headers",
+]
+build-backend = "scikit_build_core.build"
 
 [project]
 name = "pyobjcryst"
-dynamic=['version', 'dependencies']
+dynamic = ["version"]
 authors = [
   { name="Christopher Farrow" },
   { name="Pavol Juhás" },
@@ -17,7 +23,8 @@ maintainers = [
 description = "Python bindings to the ObjCryst++ library."
 keywords = ['objcryst', 'atom structure crystallography', 'powder diffraction']
 readme = "README.rst"
-requires-python = ">=3.12, <3.15"
+requires-python = ">=3.12, <3.16"
+dependencies = ["numpy", "packaging"]
 classifiers = [
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
@@ -33,6 +40,7 @@ classifiers = [
         'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: 3.13',
         'Programming Language :: Python :: 3.14',
+        'Programming Language :: Python :: 3.15',
         'Topic :: Scientific/Engineering :: Physics',
         'Topic :: Scientific/Engineering :: Chemistry',
         'Topic :: Software Development :: Libraries',
@@ -42,26 +50,50 @@ classifiers = [
 Homepage = "https://github.com/diffpy/pyobjcryst/"
 Issues = "https://github.com/diffpy/pyobjcryst/issues/"
 
-[tool.setuptools-git-versioning]
-enabled = true
-template = "{tag}"
-dev_template = "{tag}"
-dirty_template = "{tag}"
-# Use this version when git data are not available as in a git zip archive.
-# Update when tagging a new release.
-starting_version = "2024.2.1"
-
-[tool.setuptools.packages.find]
-where = ["src"]  # list of folders that contain the packages (["."] by default)
-include = ["*"]  # package names should match these glob patterns (["*"] by default)
-exclude = []  # exclude packages matching these glob patterns (empty by default)
-namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
-
 [project.scripts]
 pyobjcryst = "pyobjcryst.pyobjcryst_app:main"
 
-[tool.setuptools.dynamic]
-dependencies = {file = ["requirements/pip.txt"]}
+[tool.scikit-build]
+minimum-version = "build-system.requires"
+cmake.build-type = "Release"
+wheel.packages = ["src/pyobjcryst"]
+sdist.cmake = true
+sdist.exclude = [
+    "build",
+    "dist",
+    ".pytest_cache",
+    # Parts of the ObjCryst++ submodule not needed to build the extension.
+    "extern/objcryst/Fox",
+    "extern/objcryst/test",
+    "extern/objcryst/ObjCryst/doc",
+    "extern/objcryst/ObjCryst/example",
+]
+metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
+
+[tool.setuptools_scm]
+version_scheme = "no-guess-dev"
+
+# PyPI wheels: ObjCryst++, cctbx and newmat are built from extern/ and linked
+# statically, Boost is header-only and nanobind is linked statically, so the
+# wheels install into any environment without conda or system libraries.
+[tool.cibuildwheel]
+build = ["cp312-*", "cp313-*", "cp314-*", "cp315-*"]
+skip = ["*-musllinux_*"]
+test-requires = ["pytest"]
+# The tests open tests/testdata/* relative to the working directory.
+test-sources = ["tests"]
+test-command = "pytest tests"
+
+[tool.cibuildwheel.linux]
+archs = ["x86_64"]
+
+[tool.cibuildwheel.macos]
+archs = ["native"]
+environment = { MACOSX_DEPLOYMENT_TARGET = "11.0" }
+
+# No Windows ARM64 wheels.
+[tool.cibuildwheel.windows]
+archs = ["AMD64"]
 
 [tool.codespell]
 exclude-file = ".codespell/ignore_lines.txt"
@@ -89,8 +121,6 @@ exclude = '''
   | buck-out
   | build
   | dist
-
-  # The following are specific to Black, you probably don't want those.
   | blib2to3
   | tests/data
 )/

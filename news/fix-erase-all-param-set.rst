@@ -16,7 +16,7 @@
 
 **Fixed:**
 
-* Fix EraseAllParamSet binding for compiled RefinableObj
+* Fix ``EraseAllParamSet`` on compiled ``RefinableObj`` (from ``LSQ.GetCompiledRefinedObj()``).
 
 **Security:**
 

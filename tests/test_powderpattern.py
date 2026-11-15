@@ -14,7 +14,6 @@
 ##############################################################################
 """Unit tests for pyobjcryst.powderpattern (with indexing &"""
 
-import re
 import unittest
 from unittest.mock import MagicMock, patch
 
@@ -186,6 +185,33 @@ class TestPowderPattern(unittest.TestCase):
         self.assertEqual(pp.GetRadiationType(), RadiationType.RAD_NEUTRON)
         pp.SetRadiationType(t)
 
+    def test_GetClassName(self):
+        # Regression test: PowderPatternDiffraction/PowderPatternBackground
+        # nanobind-inherit from ScatteringData/PowderPatternComponent rather
+        # than RefinableObj directly (RefinableObj is a *virtual* base of
+        # both, see nanobind_migration_notes.md); GetName/SetName/FixAllPar/
+        # UnFixAllPar were rebound manually to compensate, but GetClassName
+        # was missed, so it raised AttributeError -- surfaced via
+        # PowderPattern.plot(hkl=True), which calls GetClassName() on every
+        # component to build the phase legend. Nanobind-specific; no
+        # equivalent needed upstream (Boost.Python didn't have this bug).
+        c = self.loadcifdata("paracetamol.cif")
+        p = PowderPattern()
+        p.SetWavelength(0.7)
+        x = np.linspace(0, 40, 8001)
+        p.SetPowderPatternX(np.deg2rad(x))
+        p.SetPowderPatternObs(np.ones_like(x))
+        pd = p.AddPowderPatternDiffraction(c)
+        bg = p.AddPowderPatternBackground()
+        self.assertEqual("PowderPatternDiffraction", pd.GetClassName())
+        self.assertEqual("PowderPatternBackground", bg.GetClassName())
+        for i in range(p.GetNbPowderPatternComponent()):
+            comp = p.GetPowderPatternComponent(i)
+            self.assertIn(
+                comp.GetClassName(),
+                ("PowderPatternDiffraction", "PowderPatternBackground"),
+            )
+
     def test_quick_fit(self):
         c = self.loadcifdata("paracetamol.cif")
         p = PowderPattern()
@@ -342,10 +368,58 @@ class TestPowderPattern(unittest.TestCase):
 # ----------------------------------------------------------------------------
 
 
-class TestPowderPatternComponent(unittest.TestCase):
-    pass
-    # def test___init__(self):  assert False
-    # def test_GetParentPowderPattern(self):  assert False
+class _PowderPatternComponentFixtureMixin:
+    """Shared setUp for the three test classes below: a PowderPattern
+    with one real PowderPatternBackground and one real
+    PowderPatternDiffraction attached, mirroring
+    TestPowderPattern.test_GetClassName's setup.
+
+    Both PowderPatternComponent and ScatteringData inherit RefinableObj
+    virtually in C++ (and PowderPatternDiffraction inherits
+    PowderPatternComponent virtually *again*, on top of ScatteringData
+    non-virtually) -- see nanobind_migration_notes.md's "Follow-up"
+    section -- so neither class is directly instantiable from Python;
+    these fixtures exercise the forwarding fix through real, concrete
+    PowderPatternComponent-family objects instead.
+    """
+
+    @pytest.fixture(autouse=True)
+    def prepare_fixture(self, loadcifdata):
+        self.loadcifdata = loadcifdata
+
+    def setUp(self):
+        c = self.loadcifdata("paracetamol.cif")
+        self.pp = PowderPattern()
+        self.pp.SetWavelength(0.7)
+        x = np.linspace(0, 40, 8001)
+        self.pp.SetPowderPatternX(np.deg2rad(x))
+        self.pp.SetPowderPatternObs(np.ones_like(x))
+        self.bg = self.pp.AddPowderPatternBackground()
+        self.diff = self.pp.AddPowderPatternDiffraction(c)
+
+
+class TestPowderPatternComponent(
+    _PowderPatternComponentFixtureMixin, unittest.TestCase
+):
+
+    def test_GetParentPowderPattern(self):
+        self.assertIs(self.pp, self.bg.GetParentPowderPattern())
+        self.assertIs(self.pp, self.diff.GetParentPowderPattern())
+
+    def test_refinableobj_forwarding(self):
+        """PowderPatternComponent inherits RefinableObj virtually; only
+        GetName/SetName/GetClassName/FixAllPar/UnFixAllPar were
+        reachable before the forwarding fix (see test_GetClassName
+        above, which covers GetClassName specifically) -- exercise the
+        rest here."""
+        self.bg.SetName("mybg")
+        self.assertEqual("mybg", self.bg.GetName())
+        self.bg.FixAllPar()
+        self.bg.UnFixAllPar()
+        self.bg.BeginOptimization()
+        self.bg.EndOptimization()
+        self.assertEqual(0.0, self.bg.GetLogLikelihood())
+        self.bg.UpdateDisplay()
 
 
 # End of class TestPowderPatternComponent
@@ -353,8 +427,9 @@ class TestPowderPatternComponent(unittest.TestCase):
 # ----------------------------------------------------------------------------
 
 
-class TestPowderPatternBackground(unittest.TestCase):
-    pass
+class TestPowderPatternBackground(
+    _PowderPatternComponentFixtureMixin, unittest.TestCase
+):
     # def test___init__(self):  assert False
     # def test_FixParametersBeyondMaxresolution(self):  assert False
     # def test_GetPowderPatternCalc(self):  assert False
@@ -362,14 +437,46 @@ class TestPowderPatternBackground(unittest.TestCase):
     # def test_OptimizeBayesianBackground(self):  assert False
     # def test_SetInterpPoints(self):  assert False
 
+    def test_refinableobj_forwarding(self):
+        import io
+
+        self.bg.SetName("bg_xml_test")
+        buf = io.StringIO()
+        self.bg.XMLOutput(buf)
+        self.assertIn("<PowderPatternBackground", buf.getvalue())
+
 
 # End of class TestPowderPatternBackground
 
 # ----------------------------------------------------------------------------
 
 
-class TestPowderPatternDiffraction(unittest.TestCase):
+class TestPowderPatternDiffraction(
+    _PowderPatternComponentFixtureMixin, unittest.TestCase
+):
+    # def test___init__(self):  assert False
+    # def test_ExtractLeBail(self):  assert False
+    # def test_GetExtractionMode(self):  assert False
+    # def test_GetNbReflBelowMaxSinThetaOvLambda(self):  assert False
+    # def test_GetPowderPatternCalc(self):  assert False
+    # def test_GetProfile(self):  assert False
+    # def test_SetCrystal(self):  assert False
+    # def test_SetExtractionMode(self):  assert False
+    # def test_SetReflectionProfilePar(self):  assert False
+
+    def test_refinableobj_forwarding(self):
+        """PowderPatternDiffraction reaches RefinableObj via
+        ScatteringData (non-virtual, already a correct nanobind base) --
+        confirm the forwarding applied to ScatteringData actually
+        cascades here rather than assuming it does."""
+        self.diff.FixAllPar()
+        self.diff.UnFixAllPar()
+        self.assertEqual(0.0, self.diff.GetLogLikelihood())
+        self.diff.UpdateDisplay()
+
     def test_X2XCorrPhase_flat_detector_displacement(self):
+        """X2XCorrPhase returns the corrected 2theta for a flat-detector
+        displacement offset on this phase."""
         pp = PowderPattern()
         pp.SetWavelength(1.54056)
         pp.SetPowderPatternPar(np.deg2rad(5), np.deg2rad(0.1), 851)
@@ -397,16 +504,6 @@ class TestPowderPatternDiffraction(unittest.TestCase):
             / (2 - 2 * total_ratio * np.sin(x) ** 2)
         )
         self.assertAlmostEqual(pdiff.X2XCorrPhase(x), expected)
-
-    # def test___init__(self):  assert False
-    # def test_ExtractLeBail(self):  assert False
-    # def test_GetExtractionMode(self):  assert False
-    # def test_GetNbReflBelowMaxSinThetaOvLambda(self):  assert False
-    # def test_GetPowderPatternCalc(self):  assert False
-    # def test_GetProfile(self):  assert False
-    # def test_SetCrystal(self):  assert False
-    # def test_SetExtractionMode(self):  assert False
-    # def test_SetReflectionProfilePar(self):  assert False
 
 
 # End of class TestPowderPatternDiffraction
@@ -504,6 +601,14 @@ def test_add_phase(loadcifdata, phases, expected_par_names):
             (0, 1.0, 2.0, 0, 0, 1),
             [(1.0, 2.0, 0, 0, 1)],
         ),
+        # C3: DeletePhase removes the second of two phases.
+        # Expected: The pattern equals one built with only the first phase.
+        (
+            [(0.7, 0.5, 0, 0, 1), (0.3, 2.0, 1, 1, 0)],
+            "DeletePhase",
+            (1,),
+            [(0.7, 0.5, 0, 0, 1)],
+        ),
     ],
 )
 def test_get_powder_pattern_calc_after_texture_change(
@@ -521,19 +626,68 @@ def test_get_powder_pattern_calc_after_texture_change(
     assert np.allclose(actual_calc, expected_calc)
 
 
-def test_set_phase_par_out_of_range(loadcifdata):
-    # Test SetPhasePar with an index of a phase that does not exist
-    # Expected: An ObjCrystException names the missing phase and says
-    # which indices are valid.
+@pytest.mark.parametrize(
+    "method_name, method_args",
+    [
+        # Test texture methods with the index of a phase that does not exist
+        # C1: SetPhasePar is called with index 1 on a single-phase texture.
+        # Expected: An ObjCrystException is raised.
+        ("SetPhasePar", (1, 1.0, 2.0, 0, 0, 1)),
+        # C2: DeletePhase is called with index 1 on a single-phase texture.
+        # Expected: An ObjCrystException is raised.
+        ("DeletePhase", (1,)),
+    ],
+)
+def test_texture_phase_index_out_of_range(
+    loadcifdata, method_name, method_args
+):
     crystal = loadcifdata("paracetamol.cif")
     pattern = build_textured_pattern(crystal, [(1.0, 0.5, 0, 0, 1)])
     texture = pattern.GetPowderPatternComponent(0).GetTextureMarchDollase()
-    expected_msg = (
-        "TextureMarchDollase has no phase 1. Please use an index smaller "
-        "than GetNbPhase()."
-    )
-    with pytest.raises(ObjCrystException, match=re.escape(expected_msg)):
-        texture.SetPhasePar(1, 1.0, 2.0, 0, 0, 1)
+    with pytest.raises(ObjCrystException):
+        getattr(texture, method_name)(*method_args)
+
+
+@pytest.mark.parametrize(
+    "phases, deleted_index, expected_phases, expected_par_names",
+    [
+        # Test that DeletePhase removes a phase and its refinable parameters
+        # C1: The only phase is deleted.
+        # Expected: No phase and no parameter remain.
+        ([(1.0, 0.5, 0, 0, 1)], 0, [], []),
+        # C2: The first of two phases is deleted.
+        # Expected: The second phase remains, and its parameters are
+        # renamed with the suffix _0.
+        (
+            [(0.7, 0.5, 0, 0, 1), (0.3, 2.0, 1, 1, 0)],
+            0,
+            [(0.3, 2.0, 1, 1, 0)],
+            ["Fraction_0", "MarchCoeff_0", "H_0", "K_0", "L_0"],
+        ),
+    ],
+)
+def test_delete_phase(
+    loadcifdata, phases, deleted_index, expected_phases, expected_par_names
+):
+    crystal = loadcifdata("paracetamol.cif")
+    pattern = build_textured_pattern(crystal, phases)
+    texture = pattern.GetPowderPatternComponent(0).GetTextureMarchDollase()
+    texture.DeletePhase(deleted_index)
+    actual_phases = [
+        (
+            texture.GetFraction(i),
+            texture.GetMarchCoeff(i),
+            texture.GetPhaseH(i),
+            texture.GetPhaseK(i),
+            texture.GetPhaseL(i),
+        )
+        for i in range(texture.GetNbPhase())
+    ]
+    actual_par_names = [
+        texture.GetPar(i).GetName() for i in range(texture.GetNbPar())
+    ]
+    assert actual_phases == [pytest.approx(e) for e in expected_phases]
+    assert actual_par_names == expected_par_names
 
 
 def test_get_powder_pattern_calc_after_march_coeff_par_change(loadcifdata):

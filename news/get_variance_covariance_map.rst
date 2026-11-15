@@ -1,6 +1,6 @@
 **Added:**
 
-* Expose ``lsq.GetVarianceCovarianceMap()`` for covariance between refined parameters
+* Add ``lsq.GetVarianceCovarianceMap()`` to get the variance-covariance matrix as a dict keyed by ``(param_name, param_name)`` tuples.
 
 **Changed:**
 

@@ -2,6 +2,7 @@
 
 """Tests for diffractiondatasinglecrystal module."""
 
+import io
 import unittest
 
 import numpy as np
@@ -57,6 +58,29 @@ class test_single_crystal_data(unittest.TestCase):
         sigma = np.random.uniform(0, 10, nb)
         d.SetSigma(sigma)
         self.assertTrue(np.all(sigma == d.GetSigma()))
+
+    def test_refinableobj_forwarding(self):
+        """DiffractionDataSingleCrystal reaches RefinableObj only through
+        ScatteringData's C++ virtual base (see nanobind_migration_notes.md's
+        "Follow-up: restoring RefinableObj's method surface on virtually-
+        inherited classes"); presence-only coverage for the class lives in
+        test_virtualbase_forwarding.py -- this exercises actual behaviour."""
+        c = Crystal(3.52, 3.52, 3.52, "225")
+        d = DiffractionDataSingleCrystal(c)
+
+        d.SetName("mydiff")
+        self.assertEqual("mydiff", d.GetName())
+
+        d.FixAllPar()
+        d.UnFixAllPar()
+        d.BeginOptimization()
+        d.EndOptimization()
+        self.assertEqual(0.0, d.GetLogLikelihood())
+        d.UpdateDisplay()
+
+        buf = io.StringIO()
+        d.XMLOutput(buf)
+        self.assertIn("<DiffractionDataSingleCrystal", buf.getvalue())
 
 
 if __name__ == "__main__":

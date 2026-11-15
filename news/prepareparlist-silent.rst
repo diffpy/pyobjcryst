@@ -4,7 +4,7 @@
 
 **Changed:**
 
-* Make PrepareRefParList silent by default and add a verbose argument
+* Make ``LSQ.PrepareRefParList()`` silent by default and add a ``verbose`` argument to control warnings about duplicate parameter names.
 
 **Deprecated:**
 

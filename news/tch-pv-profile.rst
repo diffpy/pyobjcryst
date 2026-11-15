@@ -1,6 +1,6 @@
 **Added:**
 
-* Expose reflection profile ReflectionProfilePseudoVoigtTCH
+* Expose reflection profile ``ReflectionProfilePseudoVoigtTCH`` with TCH instead of explicit Eta mixing.
 
 **Changed:**
 

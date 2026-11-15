@@ -26,15 +26,22 @@ diffraction component stores an independent copy, so one configured profile
 can be reused as a template for multiple phases::
 
     from pyobjcryst.reflectionprofile import (
+        ReflectionProfilePseudoVoigt,
+        ReflectionProfilePseudoVoigtTCH,
         ReflectionProfilePseudoVoigtAnisotropic,
     )
 
-    profile = ReflectionProfilePseudoVoigtAnisotropic()
-    profile.GetPar("W").SetValue(1e-6)
-    profile.GetPar("G_HH").SetValue(2e-6)
+    iso = ReflectionProfilePseudoVoigt()
+    iso.SetProfilePar(fwhmCagliotiW=1e-4, eta0=0.5)
+    ppd.SetProfile(iso)
 
-    for pdiff in powder_pattern.get_crystalline_components():
-        pdiff.SetProfile(profile)
+    tch = ReflectionProfilePseudoVoigtTCH()
+    tch.SetProfilePar(fwhmCagliotiW=1e-4, fwhmLorentzZ=2e-4)
+    ppd2.SetProfile(tch)
+
+    aniso = ReflectionProfilePseudoVoigtAnisotropic()
+    aniso.SetProfilePar(fwhmCagliotiW=1e-4)
+    ppd3.SetProfile(aniso)
 
 For time-of-flight neutron data, use the double-exponential pseudo-Voigt
 profile ``ReflectionProfileDoubleExponentialPseudoVoigt``. It needs the

@@ -1,0 +1,28 @@
+**Added:**
+
+* <news item>
+
+**Changed:**
+
+* <news item>
+
+**Deprecated:**
+
+* <news item>
+
+**Removed:**
+
+* <news item>
+
+**Fixed:**
+
+* Return numpy arrays from ``UnitCell.GetLatticePar()``,
+  ``UnitCell.GetOrthonormalCoords()``, ``Crystal.GetMinDistanceTable()``
+  and the ``ScatteringPower`` methods ``GetScatteringFactor()``,
+  ``GetTemperatureFactor()``, ``GetResonantScattFactReal()`` and
+  ``GetResonantScattFactImag()``, which raised a ``TypeError`` in the
+  nanobind bindings.
+
+**Security:**
+
+* <news item>

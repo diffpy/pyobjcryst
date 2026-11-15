@@ -1,6 +1,6 @@
 **Added:**
 
-* Add Rwp threshold minRwpVar for lsq.Refine()
+* Add Rwp threshold ``minRwpVar`` for ``lsq.Refine()`` and ``lsq.SafeRefine()``.
 
 **Changed:**
 

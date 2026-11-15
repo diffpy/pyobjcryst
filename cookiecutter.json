@@ -14,7 +14,7 @@
   "project_short_description": "Python bindings to the ObjCryst++ library.",
   "project_keywords": "objcryst, atom structure crystallography, powder diffraction",
   "minimum_supported_python_version": "3.12",
-  "maximum_supported_python_version": "3.14",
+  "maximum_supported_python_version": "3.15",
   "project_needs_c_code_compiled": "Yes",
   "project_has_gui_tests": "No"
 }

@@ -1,6 +1,6 @@
 **Added:**
 
-* Expose PowderPatternDiffraction.X2XCorrPhase
+* Expose ``PowderPatternDiffraction.X2XCorrPhase()`` for per-phase flat-detector displacement correction.
 
 **Changed:**
 

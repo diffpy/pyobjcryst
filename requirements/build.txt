@@ -1,0 +1,6 @@
+compilers
+libboost-devel
+nanobind
+numpy
+scikit-build-core
+setuptools-scm

@@ -74,7 +74,7 @@ The second paper describes the c++ crystallographic objects in
 Installation
 ------------
 
-The latest release of ``pyobjcryst`` runs in python versions 3.12, 3.13 and 3.14. You may
+The latest release of ``pyobjcryst`` runs in python versions 3.12, 3.13, 3.14 and 3.15. You may
 specify an earlier release if you need it to run in an earlier version of Python.
 
 The preferred method is to use `Miniconda Python
@@ -127,56 +127,38 @@ Alternative methods of installation
 
 These approaches are not recommended but reproduced here for advanced users.
 You can use ``pip`` to download and install the latest release from
-`Python Package Index <https://pypi.python.org>`_.
+`Python Package Index <https://pypi.python.org>`_. The PyPI wheels are
+self-contained (ObjCryst++, cctbx and newmat are built in), so no compiler
+or conda libraries are needed ::
 
-Pyobjcryst can be installed from pip.  We recommend installing the dependencies that can be
-found in ``requirements/conda.txt`` from conda-forge, e.g., ::
-
-        conda create -n pyobjcryst-env python=3.14
-        conda activate pyobjcryst-env
-        conda install -c conda-forge numpy libobjcryst libboost-devel libboost-python packaging ipywidgets matplotlib-base ipympl py3dmol
         pip install pyobjcryst
 
-If you prefer to install from sources, after installing the dependencies, obtain the source archive from
-`GitHub <https://github.com/diffpy/pyobjcryst/>`_. Once installed, ``cd`` into your ``pyobjcryst`` directory
-and run the following ::
+The optional graphical dependencies can be installed with ::
 
+        pip install ipywidgets matplotlib ipympl py3dmol
+
+To build from source, a C++ compiler is required; CMake, nanobind and the
+Boost headers are fetched automatically by ``pip``. ObjCryst++ is included
+as a git submodule, so clone with ``--recursive`` (or run
+``git submodule update --init`` in an existing clone) ::
+
+        git clone --recursive https://github.com/diffpy/pyobjcryst.git
+        cd pyobjcryst
         pip install .
 
-An alternative way of installing pyobjcryst is to use the SCons tool,
-which can speed up the process by compiling C++ files in several
-parallel jobs (-j4)::
+Outside a conda environment, e.g. on Ubuntu Linux, the compiler and Boost
+headers can be installed using ::
 
-        conda install scons
-        conda install --file requirements/conda.txt
-        scons -j4 dev
+        sudo apt-get install build-essential python3-dev python3-pip libboost-dev
 
-See ``scons -h`` for description of build targets and options.
-
-Alternatively, on Ubuntu Linux the required software can be installed using ::
-
-        sudo apt-get install \
-             python-setuptools python-numpy scons \
-             build-essential python-dev libboost-all-dev
-
-If this doesn't work, please see the `requirements/conda.txt` file for the
-latest list of requirements.
-
-The ``libobjcryst`` library can also be installed as per the instructions at
-https://github.com/diffpy/libobjcryst. Make sure other required software are
-also in place and then run from the pyobjcryst directory ::
-
-        pip install .
-
-You may need to use sudo with system Python so the process is allowed to copy files to system
-directories, unless you are installing into a conda environment. If administrator (root) access is not
-available, see the usage information from python setup.py install --help for options to install
-to a user-writable location.
+Boost headers can also be installed from conda-forge (``libboost-headers``),
+or their location given explicitly with
+``pip install . -Ccmake.define.BOOST_INCLUDE_DIR=<path>``.
 
 Testing your installation
 -------------------------
 
-The installation integrity can be verified by executing the included tests with
+The installation integrity can be verified by executing the included tests.
 
 First install test dependencies then type pytest::
 
@@ -208,11 +190,10 @@ If it fails by black or isort, just rerun and it should pass (black and isort wi
 pass after they are modified). If the flake8 test fails please see the error messages and fix them manually before
 trying to commit again.
 
-When developing it is preferable to compile the C++ files with
-SCons using the ``build=debug`` option, which compiles the extension
-module with debug information and C-assertions checks ::
+When developing it is preferable to compile the extension module with
+debug information and C-assertions checks ::
 
-   scons -j4 build=debug dev
+        pip install -e . -Ccmake.build-type=Debug
 
 Improvements and fixes are always appreciated.
 

@@ -3,6 +3,8 @@
 * Add explicitly constructable reflection profiles
 * Expose objcryst's anisotropic Pseudo-Voigt profile
 * Add PowderPatternDiffraction.SetProfile
+* Expose reflection profile ``ReflectionProfilePseudoVoigt`` and ``ReflectionProfilePseudoVoigtAnisotropic`` as constructible Python classes.
+* Add ``IsAnisotropic()`` method to ``ReflectionProfile``.
 
 **Changed:**
 
