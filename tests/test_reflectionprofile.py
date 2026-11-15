@@ -235,6 +235,60 @@ class TestReflectionProfile(unittest.TestCase):
         self.assertAlmostEqual(aniso.GetPar("G_HH").GetValue(), 1e-5)
         self.assertAlmostEqual(aniso.GetPar("G_KK").GetValue(), 2e-5)
 
+    def test_anisotropic_profile_depends_on_hkl(self):
+        """Anisotropic Lorentz coefficients make the profile depend on
+        the reflection direction."""
+        profile = ReflectionProfilePseudoVoigtAnisotropic()
+        profile.SetProfilePar(
+            fwhmCagliotiW=1e-6,
+            fwhmLorentzGammaHH=1e-3,
+            fwhmLorentzGammaKK=2e-3,
+            pseudoVoigtEta0=1,
+        )
+        center = 0.5
+        x = np.linspace(center - 0.1, center + 0.1, 401)
+        h00 = profile.GetProfile(x, center, 1, 0, 0)
+        k00 = profile.GetProfile(x, center, 0, 1, 0)
+        self.assertFalse(np.allclose(h00, k00))
+
+    def test_set_profile_copies_reusable_template(self):
+        """One profile template can initialize several phases, each
+        receiving an independent copy."""
+        second = self.pp.AddPowderPatternDiffraction(
+            self.loadcifdata("paracetamol.cif")
+        )
+        template = ReflectionProfilePseudoVoigtAnisotropic()
+        template.GetPar("W").SetValue(1e-6)
+        template.GetPar("G_HH").SetValue(2e-6)
+
+        for pdiff in (self.ppd, second):
+            pdiff.SetProfile(template)
+
+        first_profile = self.ppd.GetProfile()
+        second_profile = second.GetProfile()
+        self.assertIsInstance(
+            first_profile, ReflectionProfilePseudoVoigtAnisotropic
+        )
+        self.assertIsInstance(
+            second_profile, ReflectionProfilePseudoVoigtAnisotropic
+        )
+        self.assertAlmostEqual(first_profile.GetPar("W").GetValue(), 1e-6)
+        self.assertAlmostEqual(second_profile.GetPar("G_HH").GetValue(), 2e-6)
+
+        first_profile.GetPar("W").SetValue(3e-6)
+        self.assertAlmostEqual(template.GetPar("W").GetValue(), 1e-6)
+        self.assertAlmostEqual(second_profile.GetPar("W").GetValue(), 1e-6)
+
+    def test_set_profile_accepts_temporary(self):
+        """A temporary profile is copied into the phase and stays valid
+        after the temporary is garbage collected."""
+        self.ppd.SetProfile(ReflectionProfilePseudoVoigt())
+        gc.collect()
+        profile = self.ppd.GetProfile()
+        self.assertIsInstance(profile, ReflectionProfilePseudoVoigt)
+        self.assertFalse(profile.IsAnisotropic())
+        self.assertGreater(self.pp.GetPowderPatternCalc().max(), 0)
+
 
 def build_tof_pattern(crystal, profile):
     """Return a TOF neutron powder pattern of crystal using profile."""
