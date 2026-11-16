@@ -14,6 +14,7 @@
 ##############################################################################
 """Tests for crystal module."""
 
+import gc
 import unittest
 
 from testutils import (
@@ -24,6 +25,8 @@ from testutils import (
 )
 
 from pyobjcryst.atom import Atom
+from pyobjcryst.crystal import Crystal
+from pyobjcryst.scatteringpower import ScatteringPowerAtom
 
 
 class TestCrystal(unittest.TestCase):
@@ -167,6 +170,84 @@ class TestCrystal(unittest.TestCase):
         c._display_list(full_molecule=True)
         c._display_list(enantiomer=True)
         c._display_list(only_independent_atoms=True)
+
+    def testConnectAtomsKeepsHeldAtoms(self):
+        """Regression test for #132: ConnectAtoms used to delete atoms
+        owned by Python, causing a double free."""
+        c = Crystal(10, 10, 10, "P1")
+        sp = ScatteringPowerAtom("C", "C")
+        c.AddScatteringPower(sp)
+        atoms = [
+            Atom(0.1 + 0.14 * i, 0.1, 0.1, "C%d" % i, sp) for i in range(4)
+        ]
+        for atom in atoms:
+            c.AddScatterer(atom)
+        c.ConnectAtoms()
+        self.assertEqual(1, c.GetNbScatterer())
+        del c
+        gc.collect()
+        self.assertEqual(
+            ["C0", "C1", "C2", "C3"], [a.GetName() for a in atoms]
+        )
+
+    def testDefaultCrystalKeepsPythonAtom(self):
+        """Crystal() deletes its sub-objects in its destructor, but not
+        those owned by Python."""
+        c = Crystal()
+        sp = ScatteringPowerAtom("C", "C")
+        c.AddScatteringPower(sp)
+        atom = Atom(0.1, 0.1, 0.1, "C0", sp)
+        c.AddScatterer(atom)
+        del c
+        gc.collect()
+        self.assertEqual("C0", atom.GetName())
+        self.assertEqual("C", sp.GetName())
+
+    def testRemoveHeldScatterer(self):
+        """A removed scatterer stays valid while Python holds it."""
+        c = Crystal(10, 10, 10, "P1")
+        sp = ScatteringPowerAtom("C", "C")
+        c.AddScatteringPower(sp)
+        c.AddScatterer(Atom(0.1, 0.1, 0.1, "C0", sp))
+        c.AddScatterer(Atom(0.3, 0.1, 0.1, "C1", sp))
+        atom = c.GetScatt("C0")
+        c.RemoveScatterer(atom)
+        self.assertEqual(1, c.GetNbScatterer())
+        self.assertEqual("C1", c.GetScatt(0).GetName())
+        del c
+        gc.collect()
+        self.assertEqual("C0", atom.GetName())
+        self.assertAlmostEqual(0.1, atom.GetX())
+
+
+def test_connect_atoms_keeps_held_atoms(loadcifdata):
+    # Test ConnectAtoms on a CIF crystal while Python holds its atoms
+    # Expected: Removed atoms stay valid after the crystal is deleted.
+    crystal = loadcifdata("paracetamol.cif")
+    held = [crystal.GetScatt(i) for i in range(crystal.GetNbScatterer())]
+    names = [a.GetName() for a in held]
+    crystal.ConnectAtoms()
+    assert crystal.GetNbScatterer() < len(held)
+    del crystal
+    gc.collect()
+    assert [a.GetName() for a in held] == names
+
+
+def test_xml_input_keeps_held_scatterers(loadcifdata):
+    # Test XMLInput into a Crystal() while Python holds its scatterers
+    # Expected: The old scatterers stay valid and the crystal is replaced.
+    from pyobjcryst.refinableobj import RefinableObj
+
+    crystal = Crystal()
+    RefinableObj.XMLInput(crystal, loadcifdata("caffeine.cif").xml())
+    held = [crystal.GetScatt(i) for i in range(crystal.GetNbScatterer())]
+    names = [a.GetName() for a in held]
+    paracetamol = loadcifdata("paracetamol.cif")
+    RefinableObj.XMLInput(crystal, paracetamol.xml())
+    assert crystal.GetNbScatterer() == paracetamol.GetNbScatterer()
+    del crystal
+    gc.collect()
+    assert [a.GetName() for a in held] == names
 
 
 if __name__ == "__main__":

@@ -289,6 +289,42 @@ class TestReflectionProfile(unittest.TestCase):
         self.assertFalse(profile.IsAnisotropic())
         self.assertGreater(self.pp.GetPowderPatternCalc().max(), 0)
 
+    def test_set_profile_keeps_replaced_profile_valid(self):
+        """Regression test for #121: a held wrapper of a replaced
+        profile stays valid, and GetProfile returns the new profile type
+        even when it is allocated at the address of the old one."""
+        held = []
+        for i in range(20):
+            old = self.ppd.GetProfile()
+            held.append((old, type(old)))
+            cls = (
+                ReflectionProfilePseudoVoigtAnisotropic
+                if i % 2 == 0
+                else ReflectionProfilePseudoVoigt
+            )
+            self.ppd.SetProfile(cls())
+            new = self.ppd.GetProfile()
+            self.assertIs(type(new), cls)
+            self.assertIsNot(new, old)
+            for profile, profile_type in held:
+                self.assertIs(type(profile), profile_type)
+                self.assertEqual(profile.GetPar("W").GetName(), "W")
+        self.assertGreater(self.pp.GetPowderPatternCalc().max(), 0)
+
+    def test_set_reflection_profile_par_keeps_replaced_profile_valid(self):
+        """SetReflectionProfilePar replaces the profile; the held old
+        profile stays usable after the pattern is deleted."""
+        old = self.ppd.GetProfile()
+        self.ppd.SetReflectionProfilePar(fwhmCagliotiW=2e-6)
+        new = self.ppd.GetProfile()
+        self.assertIsNot(new, old)
+        self.assertAlmostEqual(new.GetPar("W").GetValue(), 2e-6)
+        old.GetPar("W").SetValue(5e-6)
+        self.assertAlmostEqual(new.GetPar("W").GetValue(), 2e-6)
+        del self.pp, self.ppd, new
+        gc.collect()
+        self.assertAlmostEqual(old.GetPar("W").GetValue(), 5e-6)
+
 
 def build_tof_pattern(crystal, profile):
     """Return a TOF neutron powder pattern of crystal using profile."""

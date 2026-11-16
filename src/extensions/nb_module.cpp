@@ -9,6 +9,8 @@
 #include <ObjCryst/ObjCryst/General.h>
 #include <ObjCryst/RefinableObj/RefinableObj.h>
 
+#include "nb_release_hooks.hpp"
+
 namespace nb = nanobind;
 
 // Forward declarations for all wrap_* functions
@@ -133,4 +135,7 @@ NB_MODULE(_pyobjcryst, m)
     wrap_radiation(m);
     wrap_zatom(m);
     wrap_zpolyhedron(m);
+
+    // Let Python wrappers own sub-objects released by ObjCryst
+    install_release_hooks();
 }

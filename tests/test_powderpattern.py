@@ -690,6 +690,50 @@ def test_delete_phase(
     assert actual_par_names == expected_par_names
 
 
+def assert_par_invalidated(par):
+    """Assert that the RefinablePar wrapper can no longer be used."""
+    with pytest.warns(RuntimeWarning, match="uninitialized"):
+        with pytest.raises(TypeError):
+            par.GetValue()
+
+
+def test_delete_phase_invalidates_held_pars(loadcifdata):
+    # Test that DeletePhase invalidates wrappers of the deleted parameters
+    # Expected: Deleted parameters raise TypeError, the other phase's
+    # parameters stay usable.
+    crystal = loadcifdata("paracetamol.cif")
+    pattern = build_textured_pattern(
+        crystal, [(0.7, 0.5, 0, 0, 1), (0.3, 2.0, 1, 1, 0)]
+    )
+    texture = pattern.GetPowderPatternComponent(0).GetTextureMarchDollase()
+    held = [texture.GetPar(i) for i in range(texture.GetNbPar())]
+    texture.DeletePhase(0)
+    for par in held[:5]:
+        assert_par_invalidated(par)
+    assert held[5].GetValue() == pytest.approx(0.3)
+    assert texture.GetPar("Fraction_0").GetValue() == pytest.approx(0.3)
+    assert pattern.GetPowderPatternCalc().max() > 0
+
+
+def test_background_set_interp_points_invalidates_held_pars():
+    # Test that SetInterpPoints invalidates wrappers of the old
+    # interpolation point parameters, whose values it reallocates
+    # Expected: Old Background_Point pars raise TypeError, new pars work.
+    pattern = PowderPattern()
+    x = np.deg2rad(np.linspace(5, 40, 101))
+    pattern.SetPowderPatternX(x)
+    pattern.SetPowderPatternObs(np.ones_like(x))
+    background = pattern.AddPowderPatternBackground()
+    background.SetInterpPoints(np.deg2rad([5.0, 20.0, 40.0]), np.ones(3))
+    held = background.GetPar("Background_Point_1")
+    background.SetInterpPoints(np.deg2rad(np.linspace(5, 40, 50)), np.ones(50))
+    assert_par_invalidated(held)
+    par = background.GetPar("Background_Point_3")
+    par.SetValue(2.0)
+    assert par.GetValue() == 2.0
+    assert pattern.GetPowderPatternCalc().max() > 0
+
+
 def test_get_powder_pattern_calc_after_march_coeff_par_change(loadcifdata):
     # Test refining the March coefficient through its RefinablePar
     # Expected: The pattern equals one built with the new March

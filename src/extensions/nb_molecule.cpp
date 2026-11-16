@@ -2,6 +2,7 @@
 #include <nanobind/stl/string.h>
 #include <nanobind/make_iterator.h>
 
+#include <algorithm>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -16,6 +17,7 @@
 #include <ObjCryst/ObjCryst/ScatteringPower.h>
 
 #include "helpers_nb.hpp"
+#include "nb_release_hooks.hpp"
 
 namespace nb = nanobind;
 using namespace ObjCryst;
@@ -98,6 +100,29 @@ MolAtom& _GetAtomIdx(Molecule& m, int idx)
 {
     int i = check_index(idx, m.GetNbComponent(), ALLOW_NEGATIVE);
     return m.GetAtom(i);
+}
+
+// Molecule::RemoveAtom only unlists the atom's x/y/z parameters, whose
+// values live in the atom. Release them as well, so that any Python wrapper
+// of these parameters is invalidated instead of dangling.
+void _RemoveAtom(Molecule& m, MolAtom& atom)
+{
+    RefinablePar* pars[3] = {nullptr, nullptr, nullptr};
+    if (std::find(m.GetAtomList().begin(), m.GetAtomList().end(), &atom)
+        != m.GetAtomList().end())
+    {
+        pars[0] = &m.GetPar(&atom.X());
+        pars[1] = &m.GetPar(&atom.Y());
+        pars[2] = &m.GetPar(&atom.Z());
+    }
+    // RemoveAtom does not update rigid groups: keep (leak) the atom if one
+    // still refers to it.
+    bool del = true;
+    for (const RigidGroup* rg : m.GetRigidGroupList())
+        if (rg->count(&atom) != 0) del = false;
+    KeepRestraintAtomsAlive guard;
+    m.RemoveAtom(atom, del);
+    for (RefinablePar* p : pars) ReleaseObj(p);
 }
 
 MolAtom* _FindAtom(Molecule& m, const std::string& name)
@@ -359,8 +384,8 @@ void wrap_molecule(nb::module_& m)
              nb::arg("x"), nb::arg("y"), nb::arg("z"), nb::arg("pPow").none(),
              nb::arg("name"), nb::arg("updateDisplay") = true,
              nb::keep_alive<1,5>(), nb::rv_policy::reference_internal)
-        .def("RemoveAtom", [](Molecule& mol, MolAtom& a){ mol.RemoveAtom(a, false); })
-        .def("RemoveAtom", [](Molecule& mol, int idx){ mol.RemoveAtom(_GetAtomIdx(mol, idx), false); })
+        .def("RemoveAtom", &_RemoveAtom)
+        .def("RemoveAtom", [](Molecule& mol, int idx){ _RemoveAtom(mol, _GetAtomIdx(mol, idx)); })
         .def("AddBond", &_AddBond,
              nb::arg("atom1"), nb::arg("atom2"), nb::arg("length"),
              nb::arg("sigma"), nb::arg("delta"), nb::arg("bondOrder") = 1.,
@@ -379,8 +404,8 @@ void wrap_molecule(nb::module_& m)
              // the Molecule that returned it, so nothing here can dangle
              // once the redundant direction is removed.
              nb::rv_policy::reference_internal)
-        .def("RemoveBond", [](Molecule& mol, const MolBond& b){ mol.RemoveBond(b, false); })
-        .def("RemoveBond", [](Molecule& mol, int idx){ mol.RemoveBond(_GetBondIdx(mol, idx), false); })
+        .def("RemoveBond", [](Molecule& mol, const MolBond& b){ KeepRestraintAtomsAlive g; mol.RemoveBond(b, true); })
+        .def("RemoveBond", [](Molecule& mol, int idx){ KeepRestraintAtomsAlive g; mol.RemoveBond(_GetBondIdx(mol, idx), true); })
         .def("GetBond", &_GetBondIdx, nb::rv_policy::reference_internal)
         .def("FindBond", &_FindBond)
         .def("AddBondAngle", &_AddBondAngle,
@@ -390,8 +415,8 @@ void wrap_molecule(nb::module_& m)
              // See the comment on AddBond above -- same reasoning applies to
              // atom1/atom2/atom3 here (§10).
              nb::rv_policy::reference_internal)
-        .def("RemoveBondAngle", [](Molecule& mol, MolBondAngle& ba){ mol.RemoveBondAngle(ba, false); })
-        .def("RemoveBondAngle", [](Molecule& mol, int idx){ mol.RemoveBondAngle(_GetBondAngleIdx(mol, idx), false); })
+        .def("RemoveBondAngle", [](Molecule& mol, MolBondAngle& ba){ KeepRestraintAtomsAlive g; mol.RemoveBondAngle(ba, true); })
+        .def("RemoveBondAngle", [](Molecule& mol, int idx){ KeepRestraintAtomsAlive g; mol.RemoveBondAngle(_GetBondAngleIdx(mol, idx), true); })
         .def("GetBondAngle", &_GetBondAngleIdx, nb::rv_policy::reference_internal)
         .def("FindBondAngle", &_FindBondAngle)
         .def("AddDihedralAngle", &_AddDihedralAngle,
@@ -401,8 +426,8 @@ void wrap_molecule(nb::module_& m)
              // See the comment on AddBond above -- same reasoning applies to
              // atom1..atom4 here (§10).
              nb::rv_policy::reference_internal)
-        .def("RemoveDihedralAngle", [](Molecule& mol, MolDihedralAngle& da){ mol.RemoveDihedralAngle(da, false); })
-        .def("RemoveDihedralAngle", [](Molecule& mol, int idx){ mol.RemoveDihedralAngle(_GetDihedralAngleIdx(mol, idx), false); })
+        .def("RemoveDihedralAngle", [](Molecule& mol, MolDihedralAngle& da){ KeepRestraintAtomsAlive g; mol.RemoveDihedralAngle(da, true); })
+        .def("RemoveDihedralAngle", [](Molecule& mol, int idx){ KeepRestraintAtomsAlive g; mol.RemoveDihedralAngle(_GetDihedralAngleIdx(mol, idx), true); })
         .def("GetDihedralAngle", &_GetDihedralAngleIdx, nb::rv_policy::reference_internal)
         .def("FindDihedralAngle", &_FindDihedralAngle)
         .def("AddRigidGroup",
@@ -413,7 +438,7 @@ void wrap_molecule(nb::module_& m)
              [](Molecule& mol, nb::object& group, const bool updateDisplay) -> RigidGroup& { return _AddRigidGroupIterable(mol, group, updateDisplay); },
              nb::arg("group"), nb::arg("updateDisplay") = true,
              nb::rv_policy::reference_internal)
-        .def("RemoveRigidGroup", [](Molecule& mol, RigidGroup& rg, const bool ud){ mol.RemoveRigidGroup(rg, ud, false); },
+        .def("RemoveRigidGroup", [](Molecule& mol, RigidGroup& rg, const bool ud){ KeepRestraintAtomsAlive g; mol.RemoveRigidGroup(rg, ud, true); },
              nb::arg("group"), nb::arg("updateDisplay") = true)
         .def("GetAtom", [](Molecule& mol, int idx) -> MolAtom& { return _GetAtomIdx(mol, idx); }, nb::rv_policy::reference_internal)
         .def("GetAtom", [](Molecule& mol, const std::string& name) -> MolAtom& { return *_GetAtomByName(mol, name); }, nb::rv_policy::reference_internal)

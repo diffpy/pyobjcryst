@@ -109,7 +109,7 @@ void _RemoveScatterer(Crystal& crystal, nb::handle obj)
         }
     }
     if (!scatt) throw nb::value_error("Cannot remove nonexistent Scatterer");
-    crystal.RemoveScatterer(scatt, false);
+    crystal.RemoveScatterer(scatt, true);
 }
 
 Scatterer& _GetScattByIndex(Crystal& crystal, int idx)
@@ -155,7 +155,16 @@ void _RemoveScatteringPower(Crystal& crystal, nb::handle obj)
     throw nb::type_error("RemoveScatteringPower: argument must be a ScatteringPower instance");
 found:
     if (!sp) throw nb::value_error("Cannot remove nonexistent ScatteringPower");
-    crystal.RemoveScatteringPower(sp, false);
+    // Only release the scattering power if no scatterer still refers to it,
+    // otherwise it is kept (and leaked) as before.
+    bool in_use = false;
+    const ScatteringComponentList& scl = crystal.GetScatteringComponentList();
+    for (long i = 0; i < scl.GetNbComponent(); ++i)
+        if (scl(i).mpScattPow == sp) in_use = true;
+    const ObjRegistry<RefinableObj>& clients = sp->GetClientRegistry();
+    for (long i = 0; i < clients.GetNb(); ++i)
+        if (&clients.GetObj(i) != static_cast<RefinableObj*>(&crystal)) in_use = true;
+    crystal.RemoveScatteringPower(sp, !in_use);
 }
 
 nb::list _GetScatteringComponentList(Crystal& c)
