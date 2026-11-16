@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 
@@ -8,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Quantitative phase analysis (QPA) &#8212; pyobjcryst 2026.1.0 documentation</title>
+    <title>Quantitative phase analysis (QPA) &#8212; pyobjcryst 2026.2.0rc1 documentation</title>
   
   
   
@@ -27,22 +26,22 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
 
     <script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../_static/documentation_options.js?v=cb536bdc"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -55,8 +54,9 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.1.0" />
+  <meta name="docsearch:version" content="2026.2.0rc1" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -104,7 +104,7 @@
   
     <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
     <span class="fa-solid fa-bars"></span>
   </button>
   
@@ -124,7 +124,7 @@
   
   
   
-    <p class="title logo__title">pyobjcryst 2026.1.0 documentation</p>
+    <p class="title logo__title">pyobjcryst 2026.2.0rc1 documentation</p>
   
 </a></div>
     
@@ -176,7 +176,7 @@
         <div class="navbar-item navbar-persistent--container">
           
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
  <i class="fa-solid fa-magnifying-glass"></i>
  <span class="search-button__default-text">Search</span>
  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -187,15 +187,15 @@
         <div class="navbar-item">
 
 <div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
   </ul>
 </div></div>
       
@@ -221,7 +221,7 @@
   
     <div class="navbar-persistent--mobile">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
  <i class="fa-solid fa-magnifying-glass"></i>
  <span class="search-button__default-text">Search</span>
  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -230,7 +230,7 @@
   
 
   
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
       <span class="fa-solid fa-outdent"></span>
     </button>
   
@@ -246,7 +246,7 @@
       
         
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
@@ -302,15 +302,15 @@
           <div class="navbar-item">
 
 <div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
   </ul>
 </div></div>
         
@@ -377,7 +377,7 @@
     
     <li class="breadcrumb-item breadcrumb-home">
       <a href="../index.html" class="nav-link" aria-label="Home">
-        <i class="fa-solid fa-home"></i>
+        <i class="fa-solid fa-house"></i>
       </a>
     </li>
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Quantitative phase analysis (QPA)</span></li>
@@ -405,8 +405,8 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># &#39;widget&#39; allows live update and works in both classical notebooks and jupyter-lab.</span>
-<span class="c1"># Otherwise &#39;notebook&#39;, &#39;ipympl&#39;, &#39;inline&#39; can be used</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 'widget' allows live update and works in both classical notebooks and jupyter-lab.</span>
+<span class="c1"># Otherwise 'notebook', 'ipympl', 'inline' can be used</span>
 <span class="o">%</span><span class="k">matplotlib</span> widget
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -434,7 +434,7 @@
 <span class="c1"># https://www.iucr.org/__data/iucr/powder/QARR/col/cpd-1a.prn</span>
 <span class="c1"># Try samples 1a to 1h</span>
 
-<span class="n">data_file</span> <span class="o">=</span> <span class="s2">&quot;data/cpd-1a.prn&quot;</span>
+<span class="n">data_file</span> <span class="o">=</span> <span class="s2">"data/cpd-1a.prn"</span>
 
 <span class="c1"># Data from Crystal structures from the Crystallography Open Database:</span>
 <span class="c1"># https://www.crystallography.net/cod/</span>
@@ -453,8 +453,8 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">PowderPattern</span><span class="p">()</span>
 
 <span class="n">p</span><span class="o">.</span><span class="n">ImportPowderPattern2ThetaObs</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="c1"># skip first 4 lines header</span>
-<span class="c1"># Copper K-alpha1+alpha2. Use &quot;Cua1&quot; for Cu-alpha1 only</span>
-<span class="n">p</span><span class="o">.</span><span class="n">SetWavelength</span><span class="p">(</span><span class="s2">&quot;Cu&quot;</span><span class="p">)</span>
+<span class="c1"># Copper K-alpha1+alpha2. Use "Cua1" for Cu-alpha1 only</span>
+<span class="n">p</span><span class="o">.</span><span class="n">SetWavelength</span><span class="p">(</span><span class="s2">"Cu"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GetWavelength</span><span class="p">())</span>
 
 <span class="n">p</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hkl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -486,8 +486,8 @@ Imported powder pattern: 7251 points, 2theta=  5.000 -&gt; 150.000, step= 0.020
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">cod_id</span> <span class="ow">in</span> <span class="n">cod_phases</span><span class="p">:</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">CreateCrystalFromCIF</span><span class="p">(</span><span class="s2">&quot;http://crystallography.net/cod/</span><span class="si">%d</span><span class="s2">.cif&quot;</span> <span class="o">%</span> <span class="n">cod_id</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">CreateCrystalFromCIF</span><span class="p">(</span><span class="s2">"http://crystallography.net/cod/</span><span class="si">%d</span><span class="s2">.cif"</span> <span class="o">%</span> <span class="n">cod_id</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
     <span class="n">p</span><span class="o">.</span><span class="n">AddPowderPatternDiffraction</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
 <span class="n">p</span><span class="o">.</span><span class="n">FitScaleFactorForRw</span><span class="p">()</span>
@@ -574,7 +574,7 @@ Occupancy = occ * dyn, where:
         <span class="n">need_background</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">break</span>
 <span class="k">if</span> <span class="n">need_background</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No background, adding one automatically&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"No background, adding one automatically"</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">GetPowderPatternX</span><span class="p">()</span>
     <span class="n">bx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">30</span><span class="p">)</span>  <span class="c1"># Number of interpolation points</span>
     <span class="n">by</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">bx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -604,15 +604,15 @@ No background, adding one automatically
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Multiple phases, so can&#39;t use quick_fit_profile</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Multiple phases, so can't use quick_fit_profile</span>
 <span class="c1">#</span>
-<span class="c1"># NOTE: we don&#39;t use this function as the phases are known, but that&#39;s the way</span>
+<span class="c1"># NOTE: we don't use this function as the phases are known, but that's the way</span>
 <span class="c1"># to do it with multiple crystalline phases</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">do_lebail</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    This performs a Le Bail fit by looping over all phases,</span>
 <span class="sd">    one at a time. Le Bail is disabled on output</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GetNbPowderPatternComponent</span><span class="p">()):</span>
             <span class="n">pdiff</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">GetPowderPatternComponent</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
@@ -659,11 +659,11 @@ No background, adding one automatically
 <span class="c1"># lsqr.Print()</span>
 <span class="c1"># print(lsq.ChiSquare())</span>
 <span class="n">lsq</span><span class="o">.</span><span class="n">SetParIsFixed</span><span class="p">(</span><span class="n">refpartype_scattdata_scale</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="s2">&quot;Zero&quot;</span><span class="p">,</span> <span class="s2">&quot;Eta0&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">]:</span>
+<span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"W"</span><span class="p">,</span> <span class="s2">"Zero"</span><span class="p">,</span> <span class="s2">"Eta0"</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">]:</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GetNbPowderPatternComponent</span><span class="p">()):</span>
         <span class="c1"># This is a KLUDGE - we need this because parameter names are</span>
-        <span class="c1"># unique, and thus &quot;U&quot; gets renamed to &quot;U~&quot;, &quot;U~~&quot; in case of 2,3 phases..</span>
-        <span class="n">lsq</span><span class="o">.</span><span class="n">SetParIsFixed</span><span class="p">(</span><span class="n">par</span> <span class="o">+</span> <span class="s2">&quot;~&quot;</span><span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># unique, and thus "U" gets renamed to "U~", "U~~" in case of 2,3 phases..</span>
+        <span class="n">lsq</span><span class="o">.</span><span class="n">SetParIsFixed</span><span class="p">(</span><span class="n">par</span> <span class="o">+</span> <span class="s2">"~"</span><span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 <span class="n">lsq</span><span class="o">.</span><span class="n">SafeRefine</span><span class="p">(</span><span class="n">nbCycle</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">useLevenbergMarquardt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">p</span><span class="o">.</span><span class="n">UpdateDisplay</span><span class="p">()</span>
@@ -682,11 +682,11 @@ No background, adding one automatically
 <span class="c1"># lsqr.Print()</span>
 <span class="c1"># print(lsq.ChiSquare())</span>
 <span class="n">lsq</span><span class="o">.</span><span class="n">SetParIsFixed</span><span class="p">(</span><span class="n">refpartype_scattdata_scale</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;U&quot;</span><span class="p">,</span> <span class="s2">&quot;V&quot;</span><span class="p">,</span> <span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="s2">&quot;Zero&quot;</span><span class="p">,</span> <span class="s2">&quot;Eta0&quot;</span><span class="p">,</span> <span class="s2">&quot;Eta1&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;2ThetaDispl&quot;</span><span class="p">,</span> <span class="s2">&quot;2ThetaTransp&quot;</span><span class="p">]:</span>
+<span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"U"</span><span class="p">,</span> <span class="s2">"V"</span><span class="p">,</span> <span class="s2">"W"</span><span class="p">,</span> <span class="s2">"Zero"</span><span class="p">,</span> <span class="s2">"Eta0"</span><span class="p">,</span> <span class="s2">"Eta1"</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">,</span> <span class="s2">"2ThetaDispl"</span><span class="p">,</span> <span class="s2">"2ThetaTransp"</span><span class="p">]:</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GetNbPowderPatternComponent</span><span class="p">()):</span>
         <span class="c1"># This is a KLUDGE - we need this because parameter names are</span>
-        <span class="c1"># unique, and thus &quot;U&quot; gets renamed to &quot;U~&quot;, &quot;U~~&quot; in case of 2,3 phases..</span>
-        <span class="n">lsq</span><span class="o">.</span><span class="n">SetParIsFixed</span><span class="p">(</span><span class="n">par</span> <span class="o">+</span> <span class="s2">&quot;~&quot;</span><span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># unique, and thus "U" gets renamed to "U~", "U~~" in case of 2,3 phases..</span>
+        <span class="n">lsq</span><span class="o">.</span><span class="n">SetParIsFixed</span><span class="p">(</span><span class="n">par</span> <span class="o">+</span> <span class="s2">"~"</span><span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 <span class="n">lsq</span><span class="o">.</span><span class="n">SafeRefine</span><span class="p">(</span><span class="n">nbCycle</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">useLevenbergMarquardt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">p</span><span class="o">.</span><span class="n">FitScaleFactorForRw</span><span class="p">()</span>
@@ -752,7 +752,7 @@ Aluminium oxide - $-alpha:   2.42%
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
@@ -797,8 +797,8 @@ Aluminium oxide - $-alpha:   2.42%
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -818,8 +818,7 @@ Aluminium oxide - $-alpha:   2.42%
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
-    <br/>
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.2.0.
   </p>
 </div>
       
@@ -832,7 +831,7 @@ Aluminium oxide - $-alpha:   2.42%
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
 </p></div>
       
     </div>

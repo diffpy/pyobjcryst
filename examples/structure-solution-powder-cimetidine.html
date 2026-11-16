@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 
@@ -8,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Cimetidine tutorial: indexing, spacegroup determination &amp; structure solution &#8212; pyobjcryst 2026.1.0 documentation</title>
+    <title>Cimetidine tutorial: indexing, spacegroup determination &amp; structure solution &#8212; pyobjcryst 2026.2.0rc1 documentation</title>
   
   
   
@@ -27,22 +26,22 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
 
     <script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../_static/documentation_options.js?v=cb536bdc"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -55,8 +54,9 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.1.0" />
+  <meta name="docsearch:version" content="2026.2.0rc1" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -104,7 +104,7 @@
   
     <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
     <span class="fa-solid fa-bars"></span>
   </button>
   
@@ -124,7 +124,7 @@
   
   
   
-    <p class="title logo__title">pyobjcryst 2026.1.0 documentation</p>
+    <p class="title logo__title">pyobjcryst 2026.2.0rc1 documentation</p>
   
 </a></div>
     
@@ -176,7 +176,7 @@
         <div class="navbar-item navbar-persistent--container">
           
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
  <i class="fa-solid fa-magnifying-glass"></i>
  <span class="search-button__default-text">Search</span>
  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -187,15 +187,15 @@
         <div class="navbar-item">
 
 <div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
   </ul>
 </div></div>
       
@@ -221,7 +221,7 @@
   
     <div class="navbar-persistent--mobile">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
  <i class="fa-solid fa-magnifying-glass"></i>
  <span class="search-button__default-text">Search</span>
  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -230,7 +230,7 @@
   
 
   
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
       <span class="fa-solid fa-outdent"></span>
     </button>
   
@@ -246,7 +246,7 @@
       
         
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
@@ -302,15 +302,15 @@
           <div class="navbar-item">
 
 <div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
   </ul>
 </div></div>
         
@@ -377,7 +377,7 @@
     
     <li class="breadcrumb-item breadcrumb-home">
       <a href="../index.html" class="nav-link" aria-label="Home">
-        <i class="fa-solid fa-home"></i>
+        <i class="fa-solid fa-house"></i>
       </a>
     </li>
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Cimetidine tutorial: indexing, spacegroup determination &amp; structure solution</span></li>
@@ -420,8 +420,8 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># &#39;widget&#39; allows live update and works in both classical notebooks and jupyter-lab.</span>
-<span class="c1"># Otherwise &#39;notebook&#39;, &#39;ipympl&#39;, &#39;inline&#39; can be used</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 'widget' allows live update and works in both classical notebooks and jupyter-lab.</span>
+<span class="c1"># Otherwise 'notebook', 'ipympl', 'inline' can be used</span>
 <span class="o">%</span><span class="k">matplotlib</span> widget
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -446,11 +446,11 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">PowderPattern</span><span class="p">()</span>
 
-<span class="n">data_dir</span> <span class="o">=</span> <span class="s2">&quot;./data&quot;</span>
-<span class="n">dat_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;cime.dat&quot;</span><span class="p">)</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s2">"./data"</span>
+<span class="n">dat_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"cime.dat"</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dat_path</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;curl -o </span><span class="si">{}</span><span class="s2"> https://raw.githubusercontent.com/vincefn/objcryst/master/Fox/example/tutorial-cimetidine/cime.dat&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dat_path</span><span class="p">))</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">"curl -o </span><span class="si">{}</span><span class="s2"> https://raw.githubusercontent.com/vincefn/objcryst/master/Fox/example/tutorial-cimetidine/cime.dat"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dat_path</span><span class="p">))</span>
 
 <span class="n">p</span><span class="o">.</span><span class="n">ImportPowderPatternFullprof</span><span class="p">(</span><span class="n">dat_path</span><span class="p">)</span>
 <span class="n">p</span><span class="o">.</span><span class="n">SetWavelength</span><span class="p">(</span><span class="mf">1.52904</span><span class="p">)</span>
@@ -492,7 +492,7 @@ Imported powder pattern: 7699 points, 2theta=  8.010 -&gt;  84.990, step= 0.010
 
 <span class="n">ex</span> <span class="o">=</span> <span class="n">quick_index</span><span class="p">(</span><span class="n">pl</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solutions:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Solutions:"</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">ex</span><span class="o">.</span><span class="n">GetSolutions</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 <br/></pre></div>
@@ -556,7 +556,7 @@ Solutions:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uc</span> <span class="o">=</span> <span class="n">ex</span><span class="o">.</span><span class="n">GetSolutions</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">DirectUnitCell</span><span class="p">()</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">pyobjcryst</span><span class="o">.</span><span class="n">crystal</span><span class="o">.</span><span class="n">Crystal</span><span class="p">(</span><span class="n">uc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="s2">&quot;P1&quot;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">pyobjcryst</span><span class="o">.</span><span class="n">crystal</span><span class="o">.</span><span class="n">Crystal</span><span class="p">(</span><span class="n">uc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="s2">"P1"</span><span class="p">)</span>
 <span class="n">pdiff</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">AddPowderPatternDiffraction</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
 <span class="c1"># Plot with indexing in new figure</span>
@@ -585,7 +585,7 @@ Solutions:
 
 <span class="c1"># Plot in new figure</span>
 <span class="n">p</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">diff</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hkl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fit result: Rw=</span><span class="si">%6.2f%%</span><span class="s2"> Chi2=</span><span class="si">%10.2f</span><span class="s2">  GoF=</span><span class="si">%8.2f</span><span class="s2">  LLK=</span><span class="si">%10.3f</span><span class="s2">&quot;</span> <span class="o">%</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Fit result: Rw=</span><span class="si">%6.2f%%</span><span class="s2"> Chi2=</span><span class="si">%10.2f</span><span class="s2">  GoF=</span><span class="si">%8.2f</span><span class="s2">  LLK=</span><span class="si">%10.3f</span><span class="s2">"</span> <span class="o">%</span>
       <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">rw</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">chi2</span><span class="o">/</span><span class="n">p</span><span class="o">.</span><span class="n">GetNbPointUsed</span><span class="p">(),</span> <span class="n">p</span><span class="o">.</span><span class="n">llk</span><span class="p">))</span>
 <br/></pre></div>
 </div>
@@ -639,7 +639,7 @@ Fit result: Rw=  5.51% Chi2=  34095.69  GoF=    4.43  LLK=  6397.991
     <span class="k">if</span> <span class="n">sol</span><span class="o">.</span><span class="n">GoF</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">spgex</span><span class="o">.</span><span class="n">GetScores</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">GoF</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Chosen spacegroup (smallest nGoF): &quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">GetSpaceGroup</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Chosen spacegroup (smallest nGoF): "</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">GetSpaceGroup</span><span class="p">())</span>
 
 <span class="c1"># Updated plot with optimal spacegroup</span>
 <span class="n">p</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">diff</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hkl</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">reset</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -721,21 +721,21 @@ Restoring best spacegroup: P 1 21/c 1
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fhz_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;cime.fhz&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fhz_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"cime.fhz"</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fhz_path</span><span class="p">):</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;curl -o </span><span class="si">{}</span><span class="s2"> https://raw.githubusercontent.com/vincefn/objcryst/master/Fox/example/tutorial-cimetidine/cime.fhz&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fhz_path</span><span class="p">))</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">"curl -o </span><span class="si">{}</span><span class="s2"> https://raw.githubusercontent.com/vincefn/objcryst/master/Fox/example/tutorial-cimetidine/cime.fhz"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fhz_path</span><span class="p">))</span>
 
 <span class="c1"># This will automatically add the Molecule to the Crystal object</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">ImportFenskeHallZMatrix</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">fhz_path</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Crystal Formula:&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">GetFormula</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Crystal Formula:"</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">GetFormula</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">()</span>
 
 <span class="c1"># List the options to see which are available</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">GetNbOption</span><span class="p">()):</span>
     <span class="n">o</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">GetOption</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Option #</span><span class="si">%d</span><span class="s2">: </span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">o</span><span class="o">.</span><span class="n">GetName</span><span class="p">(),</span> <span class="n">o</span><span class="o">.</span><span class="n">GetChoiceName</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">GetChoice</span><span class="p">())))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Option #</span><span class="si">%d</span><span class="s2">: </span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2">"</span><span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">o</span><span class="o">.</span><span class="n">GetName</span><span class="p">(),</span> <span class="n">o</span><span class="o">.</span><span class="n">GetChoiceName</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">GetChoice</span><span class="p">())))</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">GetNbChoice</span><span class="p">()):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Choice </span><span class="si">%d</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">o</span><span class="o">.</span><span class="n">GetChoiceName</span><span class="p">(</span><span class="n">j</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"   Choice </span><span class="si">%d</span><span class="s2">: </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">o</span><span class="o">.</span><span class="n">GetChoiceName</span><span class="p">(</span><span class="n">j</span><span class="p">)))</span>
 
 
 <span class="n">c</span><span class="o">.</span><span class="n">GetOption</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">SetChoice</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -887,8 +887,8 @@ viewer_1753236577668403.render();
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span><span class="o">.</span><span class="n">GetOption</span><span class="p">(</span><span class="s2">&quot;Automatic Least Squares Refinement&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">SetChoice</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;LSQ option: &quot;</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">GetOption</span><span class="p">(</span><span class="s2">&quot;Automatic Least Squares Refinement&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">GetChoiceName</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span><span class="o">.</span><span class="n">GetOption</span><span class="p">(</span><span class="s2">"Automatic Least Squares Refinement"</span><span class="p">)</span><span class="o">.</span><span class="n">SetChoice</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"LSQ option: "</span><span class="p">,</span> <span class="n">mc</span><span class="o">.</span><span class="n">GetOption</span><span class="p">(</span><span class="s2">"Automatic Least Squares Refinement"</span><span class="p">)</span><span class="o">.</span><span class="n">GetChoiceName</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 
 <span class="c1"># 3D structure view which will be live-updated with the best</span>
 <span class="c1"># configuration of the current run</span>
@@ -900,7 +900,7 @@ viewer_1753236577668403.render();
 
 <span class="c1"># The powder pattern plot a few cells above should also be updated for each run best solution</span>
 <span class="n">mc</span><span class="o">.</span><span class="n">MultiRunOptimize</span><span class="p">(</span><span class="n">nb_run</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">nb_step</span><span class="o">=</span><span class="mf">1e6</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Final LLK: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">mc</span><span class="o">.</span><span class="n">GetLogLikelihood</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Final LLK: </span><span class="si">%.2f</span><span class="s2">"</span> <span class="o">%</span> <span class="n">mc</span><span class="o">.</span><span class="n">GetLogLikelihood</span><span class="p">())</span>
 <br/></pre></div>
 </div>
 </div>
@@ -1008,7 +1008,7 @@ Final LLK: 18496.02
     <span class="n">idx</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">GetParamSetIndex</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
     <span class="n">cost</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">GetParamSetCost</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">GetFullRefinableObj</span><span class="p">()</span><span class="o">.</span><span class="n">GetParamSetName</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%3d</span><span class="s2">: LLK=</span><span class="si">%10.2f</span><span class="s2">, name=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="si">%3d</span><span class="s2">: LLK=</span><span class="si">%10.2f</span><span class="s2">, name=</span><span class="si">%s</span><span class="s2">"</span><span class="o">%</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
 <br/></pre></div>
 </div>
 </div>
@@ -1050,9 +1050,9 @@ Final LLK: 18496.02
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save result so it can be opened by Fox</span>
-<span class="n">xml_cryst_file_save_global</span><span class="p">(</span><span class="s1">&#39;result.xmlgz&#39;</span><span class="p">)</span>
+<span class="n">xml_cryst_file_save_global</span><span class="p">(</span><span class="s1">'result.xmlgz'</span><span class="p">)</span>
 <span class="c1"># Also export to the CIF format</span>
-<span class="n">c</span><span class="o">.</span><span class="n">CIFOutput</span><span class="p">(</span><span class="s2">&quot;result.cif&quot;</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">CIFOutput</span><span class="p">(</span><span class="s2">"result.cif"</span><span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
@@ -1076,7 +1076,7 @@ Final LLK: 18496.02
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
@@ -1127,8 +1127,8 @@ Final LLK: 18496.02
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1148,8 +1148,7 @@ Final LLK: 18496.02
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
-    <br/>
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.2.0.
   </p>
 </div>
       
@@ -1162,7 +1161,7 @@ Final LLK: 18496.02
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
 </p></div>
       
     </div>

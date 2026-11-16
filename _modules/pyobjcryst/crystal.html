@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyobjcryst.crystal &#8212; pyobjcryst 2026.2.0rc1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../_static/documentation_options.js?v=cb536bdc"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=cca77546"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyobjcryst/crystal';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2026.2.0rc1" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">pyobjcryst 2026.2.0rc1 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../examples/examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/pyobjcryst.html">
+    Package API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../release.html">
+    Release notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../license.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/diffpy/pyobjcryst" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../examples/examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/pyobjcryst.html">
+    Package API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../release.html">
+    Release notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../license.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/diffpy/pyobjcryst" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/pyobjcryst.html">Package API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+</div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../pyobjcryst.html" class="nav-link">pyobjcryst</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pyobjcryst.crystal</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pyobjcryst.crystal</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">##############################################################################</span>
+<span class="c1">#</span>
+<span class="c1"># pyobjcryst        by DANSE Diffraction group</span>
+<span class="c1">#                   Simon J. L. Billinge</span>
+<span class="c1">#                   (c) 2009 The Trustees of Columbia University</span>
+<span class="c1">#                   in the City of New York.  All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># File coded by:    Chris Farrow, Vincent Favre-Nicolin</span>
+<span class="c1">#</span>
+<span class="c1"># See AUTHORS.txt for a list of people who contributed.</span>
+<span class="c1"># See LICENSE_DANSE.txt for license information.</span>
+<span class="c1">#</span>
+<span class="c1">##############################################################################</span>
+<span class="sd">"""Python wrapping of Crystal.h.</span>
+
+<span class="sd">See the online ObjCryst++ documentation (https://objcryst.readthedocs.io).</span>
+
+<span class="sd">Changes from ObjCryst::Crystal</span>
+
+<span class="sd">- CIFOutput accepts a python file-like object</span>
+<span class="sd">- CalcDynPopCorr is not enabled, as the API states that this is for internal</span>
+<span class="sd">  use only.</span>
+
+<span class="sd">Other Changes</span>
+
+<span class="sd">- CreateCrystalFromCIF is placed here instead of in a separate CIF module. This</span>
+<span class="sd">  method accepts a python file or a filename rather than a CIF object.</span>
+<span class="sd">"""</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"Crystal"</span><span class="p">,</span>
+    <span class="s2">"BumpMergePar"</span><span class="p">,</span>
+    <span class="s2">"CreateCrystalFromCIF"</span><span class="p">,</span>
+    <span class="s2">"create_crystal_from_cif"</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlopen</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst._pyobjcryst</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BumpMergePar</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst._pyobjcryst</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CreateCrystalFromCIF</span> <span class="k">as</span> <span class="n">CreateCrystalFromCIF_orig</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyobjcryst._pyobjcryst</span><span class="w"> </span><span class="kn">import</span> <span class="n">Crystal</span> <span class="k">as</span> <span class="n">Crystal_orig</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">py3Dmol</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">py3Dmol</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">widgets</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="Crystal">
+<a class="viewcode-back" href="../../api/pyobjcryst.html#pyobjcryst.crystal.Crystal">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Crystal</span><span class="p">(</span><span class="n">Crystal_orig</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Crystal.CIFOutput">
+<a class="viewcode-back" href="../../api/pyobjcryst.html#pyobjcryst.crystal.Crystal.CIFOutput">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">CIFOutput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">mindist</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Save the crystal structure to a CIF file.</span>
+
+<span class="sd">        :param file: either a filename, or a python file object opened</span>
+<span class="sd">            in write mode</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">CIFOutput</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">),</span> <span class="n">mindist</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">CIFOutput</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mindist</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Crystal.UpdateDisplay">
+<a class="viewcode-back" href="../../api/pyobjcryst.html#pyobjcryst.crystal.Crystal.UpdateDisplay">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">UpdateDisplay</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_update_disabled</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="c1"># test for _3d_widget is a bit ugly, but to correctly implement this we'd need an</span>
+        <span class="c1"># __init__ function which overrides the 3 different Crystal constructors which</span>
+        <span class="c1"># could be messy as well.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_3d_widget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_widget_update</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="c1"># self._3d_widget does not exist</span>
+            <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Crystal.disable_display_update">
+<a class="viewcode-back" href="../../api/pyobjcryst.html#pyobjcryst.crystal.Crystal.disable_display_update">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">disable_display_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Disable display (useful for multiprocessing)"""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display_update_disabled</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="Crystal.enable_display_update">
+<a class="viewcode-back" href="../../api/pyobjcryst.html#pyobjcryst.crystal.Crystal.enable_display_update">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">enable_display_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Enable display."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display_update_disabled</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_display_cif</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">xmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">xmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">zmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">zmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">enantiomer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">full_molecule</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">only_independent_atoms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Create a CIF with the full list of atoms, including those</span>
+<span class="sd">        deduced by symmetry or translation up to neighbouring unit</span>
+<span class="sd">        cells.</span>
+
+<span class="sd">        :param xmin, xmax, ymin, ymax, zmin, zmax: the view limits in</span>
+<span class="sd">        fractional coordinates.</span>
+<span class="sd">        :param enantiomer: if True, will mirror the structure along the</span>
+<span class="sd">            x axis</span>
+<span class="sd">        :param full_molecule: if True, a Molecule (or Scatterer) which</span>
+<span class="sd">            has at least one atom inside the view limits is entirely</span>
+<span class="sd">            shown.</span>
+<span class="sd">        :param only_independent_atoms: if True, only show the</span>
+<span class="sd">            independent atoms, no symmetry or translation is applied</span>
+<span class="sd">        :return : the CIF as a string</span>
+<span class="sd">        """</span>
+        <span class="n">cif</span> <span class="o">=</span> <span class="s2">"data_crystal_for3d</span><span class="se">\n\n</span><span class="s2">"</span>
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"_computing_structure_solution     'FOX http://objcryst.sourceforge.net'</span><span class="se">\n\n</span><span class="s2">"</span>
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"_cell_length_a       </span><span class="si">%8.3f</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span>
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"_cell_length_b       </span><span class="si">%8.3f</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"_cell_length_c       </span><span class="si">%8.3f</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span>
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"_cell_length_alpha   </span><span class="si">%8.3f</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"_cell_length_beta    </span><span class="si">%8.3f</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span>
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"_cell_length_gamma   </span><span class="si">%8.3f</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span>
+
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"loop_</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"    _atom_site_label</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"    _atom_site_type_symbol</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"    _atom_site_fract_x</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"    _atom_site_fract_y</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"    _atom_site_fract_z</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"    _atom_site_occupancy</span><span class="se">\n</span><span class="s2">"</span>
+
+        <span class="n">spg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSpaceGroup</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetNbScatterer</span><span class="p">()):</span>
+            <span class="n">scatt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetScatterer</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">scatt</span><span class="o">.</span><span class="n">GetScatteringComponentList</span><span class="p">()</span>
+            <span class="n">nat</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">only_independent_atoms</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)):</span>
+                    <span class="n">s</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="n">symbol</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">mpScattPow</span><span class="o">.</span><span class="n">GetSymbol</span><span class="p">()</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">scatt</span><span class="o">.</span><span class="n">GetComponentName</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                    <span class="c1"># 3dmol.js does not like ' in names,</span>
+                    <span class="c1"># despite https://www.iucr.org/resources/cif/spec/version1.1/cifsyntax#bnf</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">)</span>
+                    <span class="n">occ</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">Occupancy</span>
+                    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">X</span> <span class="o">%</span> <span class="mi">1</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">Y</span> <span class="o">%</span> <span class="mi">1</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">Z</span> <span class="o">%</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">enantiomer</span><span class="p">:</span>
+                        <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="n">x</span> <span class="o">%</span> <span class="mi">1</span>
+                    <span class="n">cif</span> <span class="o">+=</span> <span class="s2">"    </span><span class="si">%12s</span><span class="s2"> </span><span class="si">%4s</span><span class="s2"> </span><span class="si">%8.4f</span><span class="s2"> </span><span class="si">%8.4f</span><span class="s2"> </span><span class="si">%8.4f</span><span class="s2"> </span><span class="si">%6.4f</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">name</span><span class="p">,</span>
+                        <span class="n">symbol</span><span class="p">,</span>
+                        <span class="n">x</span><span class="p">,</span>
+                        <span class="n">y</span><span class="p">,</span>
+                        <span class="n">z</span><span class="p">,</span>
+                        <span class="n">occ</span><span class="p">,</span>
+                    <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Generate all symmetrics to enable full molecule display</span>
+                <span class="n">nsym</span> <span class="o">=</span> <span class="n">spg</span><span class="o">.</span><span class="n">GetNbSymmetrics</span><span class="p">()</span>
+                <span class="c1"># print(nsym)</span>
+                <span class="n">vxyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nsym</span><span class="p">,</span> <span class="n">nat</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nat</span><span class="p">):</span>
+                    <span class="n">s</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">Z</span>
+                    <span class="k">if</span> <span class="n">enantiomer</span><span class="p">:</span>
+                        <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="n">x</span>
+                    <span class="n">xyzsym</span> <span class="o">=</span> <span class="n">spg</span><span class="o">.</span><span class="n">GetAllSymmetrics</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsym</span><span class="p">):</span>
+                        <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">xyzsym</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsym</span><span class="p">):</span>
+                    <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">zc</span> <span class="o">=</span> <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-=</span> <span class="n">xc</span> <span class="o">-</span> <span class="n">xc</span> <span class="o">%</span> <span class="mi">1</span>
+                    <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">yc</span> <span class="o">-</span> <span class="n">yc</span> <span class="o">%</span> <span class="mi">1</span>
+                    <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-=</span> <span class="n">zc</span> <span class="o">-</span> <span class="n">zc</span> <span class="o">%</span> <span class="mi">1</span>
+
+                <span class="c1"># print(vxyz, vxyz.shape)</span>
+
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nat</span><span class="p">):</span>
+                    <span class="n">s</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="n">symbol</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">mpScattPow</span><span class="o">.</span><span class="n">GetSymbol</span><span class="p">()</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">scatt</span><span class="o">.</span><span class="n">GetComponentName</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                    <span class="c1"># 3dmol.js does not like ' in names,</span>
+                    <span class="c1"># despite https://www.iucr.org/resources/cif/spec/version1.1/cifsyntax#bnf</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">)</span>
+                    <span class="n">occ</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">Occupancy</span>
+
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsym</span><span class="p">):</span>
+                        <span class="k">for</span> <span class="n">dx</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                            <span class="k">for</span> <span class="n">dy</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                                <span class="k">for</span> <span class="n">dz</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                                    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                                        <span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">)</span>
+                                    <span class="p">)</span>
+                                    <span class="c1"># print("    %12s %4s %8.4f %8.4f %8.4f %6.4f" % \</span>
+                                    <span class="c1">#           (name, symbol, x, y, z, occ))</span>
+                                    <span class="k">if</span> <span class="n">full_molecule</span><span class="p">:</span>
+                                        <span class="c1"># If any atom is within limits, display all</span>
+                                        <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">vz</span> <span class="o">=</span> <span class="p">(</span>
+                                            <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span>
+                                            <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">dy</span><span class="p">,</span>
+                                            <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">dz</span><span class="p">,</span>
+                                        <span class="p">)</span>
+                                        <span class="n">tmp</span> <span class="o">=</span> <span class="p">(</span>
+                                            <span class="p">(</span><span class="n">vx</span> <span class="o">&gt;=</span> <span class="n">xmin</span><span class="p">)</span>
+                                            <span class="o">*</span> <span class="p">(</span><span class="n">vx</span> <span class="o">&lt;=</span> <span class="n">xmax</span><span class="p">)</span>
+                                            <span class="o">*</span> <span class="p">(</span><span class="n">vy</span> <span class="o">&gt;=</span> <span class="n">ymin</span><span class="p">)</span>
+                                            <span class="o">*</span> <span class="p">(</span><span class="n">vy</span> <span class="o">&lt;=</span> <span class="n">ymax</span><span class="p">)</span>
+                                            <span class="o">*</span> <span class="p">(</span><span class="n">vz</span> <span class="o">&gt;=</span> <span class="n">zmin</span><span class="p">)</span>
+                                            <span class="o">*</span> <span class="p">(</span><span class="n">vz</span> <span class="o">&lt;=</span> <span class="n">zmax</span><span class="p">)</span>
+                                        <span class="p">)</span>
+                                        <span class="k">if</span> <span class="n">tmp</span><span class="o">.</span><span class="n">sum</span><span class="p">():</span>
+                                            <span class="n">cif</span> <span class="o">+=</span> <span class="p">(</span>
+                                                <span class="s2">"    </span><span class="si">%12s</span><span class="s2"> </span><span class="si">%4s</span><span class="s2"> </span><span class="si">%8.4f</span><span class="s2"> </span><span class="si">%8.4f</span><span class="s2"> </span><span class="si">%8.4f</span><span class="s2"> </span><span class="si">%6.4f</span><span class="se">\n</span><span class="s2">"</span>
+                                                <span class="o">%</span> <span class="p">(</span>
+                                                    <span class="n">name</span><span class="p">,</span>
+                                                    <span class="n">symbol</span><span class="p">,</span>
+                                                    <span class="n">x</span><span class="p">,</span>
+                                                    <span class="n">y</span><span class="p">,</span>
+                                                    <span class="n">z</span><span class="p">,</span>
+                                                    <span class="n">occ</span><span class="p">,</span>
+                                                <span class="p">)</span>
+                                            <span class="p">)</span>
+                                    <span class="k">else</span><span class="p">:</span>
+                                        <span class="k">if</span> <span class="p">(</span>
+                                            <span class="n">xmin</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">xmax</span>
+                                            <span class="ow">and</span> <span class="n">ymin</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="n">ymax</span>
+                                            <span class="ow">and</span> <span class="n">zmin</span> <span class="o">&lt;=</span> <span class="n">z</span> <span class="o">&lt;=</span> <span class="n">zmax</span>
+                                        <span class="p">):</span>
+                                            <span class="n">cif</span> <span class="o">+=</span> <span class="p">(</span>
+                                                <span class="s2">"    </span><span class="si">%12s</span><span class="s2"> </span><span class="si">%4s</span><span class="s2"> </span><span class="si">%8.4f</span><span class="s2"> </span><span class="si">%8.4f</span><span class="s2"> </span><span class="si">%8.4f</span><span class="s2"> </span><span class="si">%6.4f</span><span class="se">\n</span><span class="s2">"</span>
+                                                <span class="o">%</span> <span class="p">(</span>
+                                                    <span class="n">name</span><span class="p">,</span>
+                                                    <span class="n">symbol</span><span class="p">,</span>
+                                                    <span class="n">x</span><span class="p">,</span>
+                                                    <span class="n">y</span><span class="p">,</span>
+                                                    <span class="n">z</span><span class="p">,</span>
+                                                    <span class="n">occ</span><span class="p">,</span>
+                                                <span class="p">)</span>
+                                            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">cif</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_display_list</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">xmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">xmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">zmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">zmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">enantiomer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">full_molecule</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">only_independent_atoms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Create a list of atoms to be displayed, so it can be supplied</span>
+<span class="sd">        to py3Dmol.</span>
+
+<span class="sd">        :param xmin, xmax, ymin, ymax, zmin, zmax: the view limits in</span>
+<span class="sd">        fractional coordinates.</span>
+<span class="sd">        :param enantiomer: if True, will mirror the structure along the</span>
+<span class="sd">            x axis</span>
+<span class="sd">        :param full_molecule: if True, a Molecule (or Scatterer) which</span>
+<span class="sd">            has at least one atom inside the view limits is entirely</span>
+<span class="sd">            shown.</span>
+<span class="sd">        :param only_independent_atoms: if True, only show the</span>
+<span class="sd">            independent atoms, no symmetry or translation is applied</span>
+<span class="sd">        :return : the list of atoms and bonds to be displayed for 3dmol</span>
+<span class="sd">        """</span>
+        <span class="n">spg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSpaceGroup</span><span class="p">()</span>
+        <span class="n">vv</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetNbScatterer</span><span class="p">()):</span>
+            <span class="n">scatt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetScatterer</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">scatt</span><span class="o">.</span><span class="n">GetScatteringComponentList</span><span class="p">()</span>
+            <span class="n">nat</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">scatt</span><span class="o">.</span><span class="n">GetClassName</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"Molecule"</span><span class="p">:</span>
+                <span class="c1"># We need to generate all atomic positions and the associated bonds</span>
+                <span class="n">atoms</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nat</span><span class="p">):</span>
+                    <span class="n">s</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="n">a</span> <span class="o">=</span> <span class="n">scatt</span><span class="o">.</span><span class="n">GetAtom</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">IsDummy</span><span class="p">():</span>
+                        <span class="k">continue</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">scatt</span><span class="o">.</span><span class="n">GetComponentName</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">)</span>
+                    <span class="n">symbol</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">mpScattPow</span><span class="o">.</span><span class="n">GetSymbol</span><span class="p">()</span>
+                    <span class="c1"># occ = s.Occupancy</span>
+                    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">Z</span>
+                    <span class="k">if</span> <span class="n">enantiomer</span><span class="p">:</span>
+                        <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="n">x</span>
+                    <span class="n">atoms</span><span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">int_ptr</span><span class="p">()]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">"x"</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+                        <span class="s2">"y"</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span>
+                        <span class="s2">"z"</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span>
+                        <span class="s2">"name"</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+                        <span class="s2">"j"</span><span class="p">:</span> <span class="n">j</span><span class="p">,</span>
+                        <span class="s2">"symbol"</span><span class="p">:</span> <span class="n">symbol</span><span class="p">,</span>
+                        <span class="s2">"bonds"</span><span class="p">:</span> <span class="p">[],</span>
+                        <span class="s2">"bondOrder"</span><span class="p">:</span> <span class="p">[],</span>
+                    <span class="p">}</span>
+                <span class="k">for</span> <span class="n">bond</span> <span class="ow">in</span> <span class="n">scatt</span><span class="o">.</span><span class="n">IterBond</span><span class="p">():</span>
+                    <span class="n">o</span> <span class="o">=</span> <span class="n">bond</span><span class="o">.</span><span class="n">BondOrder</span>
+                    <span class="k">if</span> <span class="n">o</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">o</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="n">i1</span> <span class="o">=</span> <span class="n">bond</span><span class="o">.</span><span class="n">GetAtom1</span><span class="p">()</span><span class="o">.</span><span class="n">int_ptr</span><span class="p">()</span>
+                    <span class="n">i2</span> <span class="o">=</span> <span class="n">bond</span><span class="o">.</span><span class="n">GetAtom2</span><span class="p">()</span><span class="o">.</span><span class="n">int_ptr</span><span class="p">()</span>
+                    <span class="n">atoms</span><span class="p">[</span><span class="n">i1</span><span class="p">][</span><span class="s2">"bonds"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i2</span><span class="p">)</span>
+                    <span class="n">atoms</span><span class="p">[</span><span class="n">i2</span><span class="p">][</span><span class="s2">"bonds"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i1</span><span class="p">)</span>
+                    <span class="n">atoms</span><span class="p">[</span><span class="n">i1</span><span class="p">][</span><span class="s2">"bondOrder"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+                    <span class="n">atoms</span><span class="p">[</span><span class="n">i2</span><span class="p">][</span><span class="s2">"bondOrder"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">only_independent_atoms</span><span class="p">:</span>
+                    <span class="c1"># Generate the index for the atoms</span>
+                    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">atoms</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                        <span class="n">a</span><span class="p">[</span><span class="s2">"idx"</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+                        <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">atoms</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                        <span class="n">vb</span> <span class="o">=</span> <span class="p">[</span><span class="n">atoms</span><span class="p">[</span><span class="n">int_ptr</span><span class="p">][</span><span class="s2">"idx"</span><span class="p">]</span> <span class="k">for</span> <span class="n">int_ptr</span> <span class="ow">in</span> <span class="n">a</span><span class="p">[</span><span class="s2">"bonds"</span><span class="p">]]</span>
+                        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FractionalToOrthonormalCoords</span><span class="p">(</span>
+                            <span class="n">a</span><span class="p">[</span><span class="s2">"x"</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="s2">"y"</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="s2">"z"</span><span class="p">]</span>
+                        <span class="p">)</span>
+                        <span class="n">vv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                            <span class="p">{</span>
+                                <span class="s2">"elem"</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="s2">"symbol"</span><span class="p">],</span>
+                                <span class="s2">"x"</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+                                <span class="s2">"y"</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span>
+                                <span class="s2">"z"</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span>
+                                <span class="s2">"bonds"</span><span class="p">:</span> <span class="n">vb</span><span class="p">,</span>
+                                <span class="s2">"bondOrder"</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="s2">"bondOrder"</span><span class="p">],</span>
+                            <span class="p">}</span>
+                        <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Generate all symmetrics to enable full molecule display</span>
+                    <span class="n">nsym</span> <span class="o">=</span> <span class="n">spg</span><span class="o">.</span><span class="n">GetNbSymmetrics</span><span class="p">()</span>
+                    <span class="c1"># print(nsym)</span>
+                    <span class="n">vxyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nsym</span><span class="p">,</span> <span class="n">nat</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nat</span><span class="p">):</span>
+                        <span class="n">s</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">Z</span>
+                        <span class="k">if</span> <span class="n">enantiomer</span><span class="p">:</span>
+                            <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="n">x</span>
+                        <span class="n">xyzsym</span> <span class="o">=</span> <span class="n">spg</span><span class="o">.</span><span class="n">GetAllSymmetrics</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+                        <span class="n">vxyz</span><span class="p">[:,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">xyzsym</span>
+
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsym</span><span class="p">):</span>
+                        <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">zc</span> <span class="o">=</span> <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-=</span> <span class="n">xc</span> <span class="o">-</span> <span class="n">xc</span> <span class="o">%</span> <span class="mi">1</span>
+                        <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">yc</span> <span class="o">-</span> <span class="n">yc</span> <span class="o">%</span> <span class="mi">1</span>
+                        <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-=</span> <span class="n">zc</span> <span class="o">-</span> <span class="n">zc</span> <span class="o">%</span> <span class="mi">1</span>
+
+                    <span class="k">if</span> <span class="n">full_molecule</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsym</span><span class="p">):</span>
+                            <span class="k">for</span> <span class="n">dx</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                                <span class="k">for</span> <span class="n">dy</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                                    <span class="k">for</span> <span class="n">dz</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                                        <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">vz</span> <span class="o">=</span> <span class="p">(</span>
+                                            <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span>
+                                            <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">dy</span><span class="p">,</span>
+                                            <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">dz</span><span class="p">,</span>
+                                        <span class="p">)</span>
+                                        <span class="c1"># Is at least one atom inside the limits ?</span>
+                                        <span class="n">tmp</span> <span class="o">=</span> <span class="p">(</span>
+                                            <span class="p">(</span><span class="n">vx</span> <span class="o">&gt;=</span> <span class="n">xmin</span><span class="p">)</span>
+                                            <span class="o">*</span> <span class="p">(</span><span class="n">vx</span> <span class="o">&lt;=</span> <span class="n">xmax</span><span class="p">)</span>
+                                            <span class="o">*</span> <span class="p">(</span><span class="n">vy</span> <span class="o">&gt;=</span> <span class="n">ymin</span><span class="p">)</span>
+                                            <span class="o">*</span> <span class="p">(</span><span class="n">vy</span> <span class="o">&lt;=</span> <span class="n">ymax</span><span class="p">)</span>
+                                            <span class="o">*</span> <span class="p">(</span><span class="n">vz</span> <span class="o">&gt;=</span> <span class="n">zmin</span><span class="p">)</span>
+                                            <span class="o">*</span> <span class="p">(</span><span class="n">vz</span> <span class="o">&lt;=</span> <span class="n">zmax</span><span class="p">)</span>
+                                        <span class="p">)</span>
+                                        <span class="k">if</span> <span class="n">tmp</span><span class="o">.</span><span class="n">sum</span><span class="p">():</span>
+                                            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">atoms</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                                                <span class="n">a</span><span class="p">[</span><span class="s2">"idx"</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+                                                <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+                                            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">atoms</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                                                <span class="n">j</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="s2">"j"</span><span class="p">]</span>
+                                                <span class="n">vb</span> <span class="o">=</span> <span class="p">[</span>
+                                                    <span class="n">atoms</span><span class="p">[</span><span class="n">int_ptr</span><span class="p">][</span><span class="s2">"idx"</span><span class="p">]</span>
+                                                    <span class="k">for</span> <span class="n">int_ptr</span> <span class="ow">in</span> <span class="n">a</span><span class="p">[</span><span class="s2">"bonds"</span><span class="p">]</span>
+                                                <span class="p">]</span>
+                                                <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">vxyz</span><span class="p">[</span>
+                                                    <span class="n">k</span><span class="p">,</span> <span class="n">j</span>
+                                                <span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">))</span>
+                                                <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="p">(</span>
+                                                    <span class="bp">self</span><span class="o">.</span><span class="n">FractionalToOrthonormalCoords</span><span class="p">(</span>
+                                                        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
+                                                    <span class="p">)</span>
+                                                <span class="p">)</span>
+                                                <span class="n">vv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                                    <span class="p">{</span>
+                                                        <span class="s2">"elem"</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="s2">"symbol"</span><span class="p">],</span>
+                                                        <span class="s2">"x"</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+                                                        <span class="s2">"y"</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span>
+                                                        <span class="s2">"z"</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span>
+                                                        <span class="s2">"bonds"</span><span class="p">:</span> <span class="n">vb</span><span class="p">,</span>
+                                                        <span class="s2">"bondOrder"</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span>
+                                                            <span class="s2">"bondOrder"</span>
+                                                        <span class="p">],</span>
+                                                    <span class="p">}</span>
+                                                <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># TODO add 'visible' value in dictionary to determine which atoms</span>
+                        <span class="c1"># are shown, then update the bond and bondOrder lists</span>
+                        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsym</span><span class="p">):</span>
+                            <span class="k">for</span> <span class="n">dx</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                                <span class="k">for</span> <span class="n">dy</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                                    <span class="k">for</span> <span class="n">dz</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                                        <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">vz</span> <span class="o">=</span> <span class="p">(</span>
+                                            <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span>
+                                            <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">dy</span><span class="p">,</span>
+                                            <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">dz</span><span class="p">,</span>
+                                        <span class="p">)</span>
+                                        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">atoms</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                                            <span class="n">j</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="s2">"j"</span><span class="p">]</span>
+                                            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">vx</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">vy</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">vz</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                                            <span class="k">if</span> <span class="p">(</span>
+                                                <span class="n">xmin</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">xmax</span>
+                                                <span class="ow">and</span> <span class="n">ymin</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="n">ymax</span>
+                                                <span class="ow">and</span> <span class="n">zmin</span> <span class="o">&lt;=</span> <span class="n">z</span> <span class="o">&lt;=</span> <span class="n">zmax</span>
+                                            <span class="p">):</span>
+                                                <span class="n">a</span><span class="p">[</span><span class="s2">"idx"</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+                                                <span class="n">a</span><span class="p">[</span><span class="s2">"visible"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                                                <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+                                            <span class="k">else</span><span class="p">:</span>
+                                                <span class="n">a</span><span class="p">[</span><span class="s2">"visible"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+                                        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">atoms</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                                            <span class="k">if</span> <span class="ow">not</span> <span class="n">a</span><span class="p">[</span><span class="s2">"visible"</span><span class="p">]:</span>
+                                                <span class="k">continue</span>
+                                            <span class="n">j</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="s2">"j"</span><span class="p">]</span>
+                                            <span class="n">vb</span> <span class="o">=</span> <span class="p">[]</span>
+                                            <span class="n">vo</span> <span class="o">=</span> <span class="p">[]</span>
+                                            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="s2">"bonds"</span><span class="p">])):</span>
+                                                <span class="n">int_ptr</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="s2">"bonds"</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+                                                <span class="k">if</span> <span class="n">atoms</span><span class="p">[</span><span class="n">int_ptr</span><span class="p">][</span><span class="s2">"visible"</span><span class="p">]:</span>
+                                                    <span class="n">vb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                                        <span class="n">atoms</span><span class="p">[</span><span class="n">int_ptr</span><span class="p">][</span><span class="s2">"idx"</span><span class="p">]</span>
+                                                    <span class="p">)</span>
+                                                    <span class="n">vo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                                        <span class="n">a</span><span class="p">[</span><span class="s2">"bondOrder"</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+                                                    <span class="p">)</span>
+                                            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                                                <span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">)</span>
+                                            <span class="p">)</span>
+                                            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="p">(</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">FractionalToOrthonormalCoords</span><span class="p">(</span>
+                                                    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
+                                                <span class="p">)</span>
+                                            <span class="p">)</span>
+                                            <span class="n">vv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                                <span class="p">{</span>
+                                                    <span class="s2">"elem"</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="s2">"symbol"</span><span class="p">],</span>
+                                                    <span class="s2">"x"</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+                                                    <span class="s2">"y"</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span>
+                                                    <span class="s2">"z"</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span>
+                                                    <span class="s2">"bonds"</span><span class="p">:</span> <span class="n">vb</span><span class="p">,</span>
+                                                    <span class="s2">"bondOrder"</span><span class="p">:</span> <span class="n">vo</span><span class="p">,</span>
+                                                <span class="p">}</span>
+                                            <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">only_independent_atoms</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)):</span>
+                        <span class="n">s</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                        <span class="n">symbol</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">mpScattPow</span><span class="o">.</span><span class="n">GetSymbol</span><span class="p">()</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">scatt</span><span class="o">.</span><span class="n">GetComponentName</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                        <span class="c1"># 3dmol.js does not like ' in names,</span>
+                        <span class="c1"># despite https://www.iucr.org/resources/cif/spec/version1.1/cifsyntax#bnf</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">)</span>
+                        <span class="c1"># occ = s.Occupancy</span>
+                        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">Z</span>
+                        <span class="k">if</span> <span class="n">enantiomer</span><span class="p">:</span>
+                            <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="n">x</span>
+                        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FractionalToOrthonormalCoords</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+                        <span class="n">vv</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"elem"</span><span class="p">:</span> <span class="n">symbol</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span> <span class="s2">"z"</span><span class="p">:</span> <span class="n">z</span><span class="p">})</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Generate all symmetrics to enable full molecule display</span>
+                    <span class="n">nsym</span> <span class="o">=</span> <span class="n">spg</span><span class="o">.</span><span class="n">GetNbSymmetrics</span><span class="p">()</span>
+                    <span class="c1"># print(nsym)</span>
+                    <span class="n">vxyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nsym</span><span class="p">,</span> <span class="n">nat</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nat</span><span class="p">):</span>
+                        <span class="n">s</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">Z</span>
+                        <span class="k">if</span> <span class="n">enantiomer</span><span class="p">:</span>
+                            <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="n">x</span>
+                        <span class="n">xyzsym</span> <span class="o">=</span> <span class="n">spg</span><span class="o">.</span><span class="n">GetAllSymmetrics</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsym</span><span class="p">):</span>
+                            <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">xyzsym</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsym</span><span class="p">):</span>
+                        <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">zc</span> <span class="o">=</span> <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-=</span> <span class="n">xc</span> <span class="o">-</span> <span class="n">xc</span> <span class="o">%</span> <span class="mi">1</span>
+                        <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">yc</span> <span class="o">-</span> <span class="n">yc</span> <span class="o">%</span> <span class="mi">1</span>
+                        <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-=</span> <span class="n">zc</span> <span class="o">-</span> <span class="n">zc</span> <span class="o">%</span> <span class="mi">1</span>
+
+                    <span class="c1"># print(vxyz, vxyz.shape)</span>
+
+                    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nat</span><span class="p">):</span>
+                        <span class="n">s</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                        <span class="n">symbol</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">mpScattPow</span><span class="o">.</span><span class="n">GetSymbol</span><span class="p">()</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">scatt</span><span class="o">.</span><span class="n">GetComponentName</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                        <span class="c1"># 3dmol.js does not like ' in names,</span>
+                        <span class="c1"># despite https://www.iucr.org/resources/cif/spec/version1.1/cifsyntax#bnf</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">)</span>
+                        <span class="c1"># occ = s.Occupancy</span>
+
+                        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsym</span><span class="p">):</span>
+                            <span class="k">for</span> <span class="n">dx</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                                <span class="k">for</span> <span class="n">dy</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                                    <span class="k">for</span> <span class="n">dz</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                                        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">vxyz</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                                            <span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">)</span>
+                                        <span class="p">)</span>
+                                        <span class="k">if</span> <span class="p">(</span>
+                                            <span class="n">xmin</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">xmax</span>
+                                            <span class="ow">and</span> <span class="n">ymin</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="n">ymax</span>
+                                            <span class="ow">and</span> <span class="n">zmin</span> <span class="o">&lt;=</span> <span class="n">z</span> <span class="o">&lt;=</span> <span class="n">zmax</span>
+                                        <span class="p">):</span>
+                                            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="p">(</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">FractionalToOrthonormalCoords</span><span class="p">(</span>
+                                                    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
+                                                <span class="p">)</span>
+                                            <span class="p">)</span>
+                                            <span class="n">vv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                                <span class="p">{</span>
+                                                    <span class="s2">"elem"</span><span class="p">:</span> <span class="n">symbol</span><span class="p">,</span>
+                                                    <span class="s2">"x"</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+                                                    <span class="s2">"y"</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span>
+                                                    <span class="s2">"z"</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span>
+                                                <span class="p">}</span>
+                                            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">vv</span>
+
+<div class="viewcode-block" id="Crystal.display_3d">
+<a class="viewcode-back" href="../../api/pyobjcryst.html#pyobjcryst.crystal.Crystal.display_3d">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">display_3d</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">xmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">xmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">zmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">zmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">enantiomer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">full_molecule_opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">extra_dist</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">extra_opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""This will return a 3D view of the Crystal structure which can</span>
+<span class="sd">        be displayed in a notebook. This cannot be automatically</span>
+<span class="sd">        updated, but will remain in the notebook as a static javascript</span>
+<span class="sd">        object, so it can still be useful.</span>
+
+<span class="sd">        :param xmin, xmax, ymin, ymax, zmin, zmax: the view limits in</span>
+<span class="sd">        fractional coordinates.</span>
+<span class="sd">        :param enantiomer: if True, will mirror the structure along the</span>
+<span class="sd">            x axis</span>
+<span class="sd">        :param full_molecule_opacity: if &gt;0, a Molecule (or Scatterer)</span>
+<span class="sd">            which has at least one atom inside the view limits is</span>
+<span class="sd">            entirely shown, with the given opacity (0-1)</span>
+<span class="sd">        :param extra_dist: extra distance (in Angstroms) beyond the view</span>
+<span class="sd">            limits, where atoms &amp; bonds are still displayed semi-</span>
+<span class="sd">            transparently</span>
+<span class="sd">        :param extra_opacity: the opacity (0-1) to display the atoms</span>
+<span class="sd">            within the extra distance.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">py3Dmol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">"Yout need to install py3Dmol&gt;=0.9 to use Crystal.display_3d()"</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">py3Dmol</span><span class="o">.</span><span class="n">view</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">full_molecule_opacity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">addModel</span><span class="p">()</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getModel</span><span class="p">()</span>
+            <span class="n">atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_list</span><span class="p">(</span>
+                <span class="n">xmin</span><span class="p">,</span>
+                <span class="n">xmax</span><span class="p">,</span>
+                <span class="n">ymin</span><span class="p">,</span>
+                <span class="n">ymax</span><span class="p">,</span>
+                <span class="n">zmin</span><span class="p">,</span>
+                <span class="n">zmax</span><span class="p">,</span>
+                <span class="n">full_molecule</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">only_independent_atoms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">enantiomer</span><span class="o">=</span><span class="n">enantiomer</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">addAtoms</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">"stick"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"radius"</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s2">"opacity"</span><span class="p">:</span> <span class="n">full_molecule_opacity</span><span class="p">},</span>
+                    <span class="s2">"sphere"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">"scale"</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+                        <span class="s2">"colorscheme"</span><span class="p">:</span> <span class="s2">"jmol"</span><span class="p">,</span>
+                        <span class="s2">"opacity"</span><span class="p">:</span> <span class="n">full_molecule_opacity</span><span class="p">,</span>
+                    <span class="p">},</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">extra_opacity</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">extra_dist</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">extra_dist</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span>
+                <span class="n">extra_dist</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">,</span>
+                <span class="n">extra_dist</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">addModel</span><span class="p">()</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getModel</span><span class="p">()</span>
+            <span class="n">atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_list</span><span class="p">(</span>
+                <span class="n">xmin</span> <span class="o">-</span> <span class="n">dx</span><span class="p">,</span>
+                <span class="n">xmax</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span>
+                <span class="n">ymin</span> <span class="o">-</span> <span class="n">dy</span><span class="p">,</span>
+                <span class="n">ymax</span> <span class="o">+</span> <span class="n">dy</span><span class="p">,</span>
+                <span class="n">zmin</span> <span class="o">-</span> <span class="n">dz</span><span class="p">,</span>
+                <span class="n">zmax</span> <span class="o">+</span> <span class="n">dz</span><span class="p">,</span>
+                <span class="n">full_molecule</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">only_independent_atoms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">enantiomer</span><span class="o">=</span><span class="n">enantiomer</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">addAtoms</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">"stick"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"radius"</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s2">"opacity"</span><span class="p">:</span> <span class="n">extra_opacity</span><span class="p">},</span>
+                    <span class="s2">"sphere"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">"scale"</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+                        <span class="s2">"colorscheme"</span><span class="p">:</span> <span class="s2">"jmol"</span><span class="p">,</span>
+                        <span class="s2">"opacity"</span><span class="p">:</span> <span class="n">extra_opacity</span><span class="p">,</span>
+                    <span class="p">},</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="n">v</span><span class="o">.</span><span class="n">addModel</span><span class="p">()</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getModel</span><span class="p">()</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">setCrystData</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">,</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">addUnitCell</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">"box"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"color"</span><span class="p">:</span> <span class="s2">"purple"</span><span class="p">},</span>
+                <span class="s2">"alabel"</span><span class="p">:</span> <span class="s2">"X"</span><span class="p">,</span>
+                <span class="s2">"blabel"</span><span class="p">:</span> <span class="s2">"Y"</span><span class="p">,</span>
+                <span class="s2">"clabel"</span><span class="p">:</span> <span class="s2">"Z"</span><span class="p">,</span>
+                <span class="s2">"alabelstyle"</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">"fontColor"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span>
+                    <span class="s2">"backgroundColor"</span><span class="p">:</span> <span class="s2">"white"</span><span class="p">,</span>
+                    <span class="s2">"inFront"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="s2">"fontSize"</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">"astyle"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"color"</span><span class="p">:</span> <span class="s2">"darkred"</span><span class="p">,</span> <span class="s2">"radius"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">"midpos"</span><span class="p">:</span> <span class="o">-</span><span class="mi">10</span><span class="p">},</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="n">atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_list</span><span class="p">(</span>
+            <span class="n">xmin</span><span class="p">,</span>
+            <span class="n">xmax</span><span class="p">,</span>
+            <span class="n">ymin</span><span class="p">,</span>
+            <span class="n">ymax</span><span class="p">,</span>
+            <span class="n">zmin</span><span class="p">,</span>
+            <span class="n">zmax</span><span class="p">,</span>
+            <span class="n">full_molecule</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">only_independent_atoms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">enantiomer</span><span class="o">=</span><span class="n">enantiomer</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">addAtoms</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">"stick"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"radius"</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s2">"opacity"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+                <span class="s2">"sphere"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"scale"</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="s2">"colorscheme"</span><span class="p">:</span> <span class="s2">"jmol"</span><span class="p">,</span> <span class="s2">"opacity"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="n">v</span><span class="o">.</span><span class="n">zoomTo</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">v</span></div>
+
+
+<div class="viewcode-block" id="Crystal.widget_3d">
+<a class="viewcode-back" href="../../api/pyobjcryst.html#pyobjcryst.crystal.Crystal.widget_3d">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">widget_3d</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">xmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">xmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">zmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">zmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">enantiomer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">full_molecule_opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">extra_dist</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">extra_opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="mi">480</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""This will return a 3D view of the Crystal structure which can</span>
+<span class="sd">        be displayed in a notebook, along with controls for the display.</span>
+<span class="sd">        This can be live-updated.</span>
+
+<span class="sd">        :param xmin, xmax, ymin, ymax, zmin, zmax: the view limits in</span>
+<span class="sd">        fractional coordinates.</span>
+<span class="sd">        :param enantiomer: if True, will mirror the structure along the</span>
+<span class="sd">            x axis</span>
+<span class="sd">        :param full_molecule_opacity: if &gt;0, a Molecule (or Scatterer)</span>
+<span class="sd">            which has at least one atom inside the view limits is</span>
+<span class="sd">            entirely shown, with the given opacity (0-1)</span>
+<span class="sd">        :param extra_dist: extra distance (in Angstroms) beyond the view</span>
+<span class="sd">            limits, where atoms &amp; bonds are still displayed semi-</span>
+<span class="sd">            transparently</span>
+<span class="sd">        :param extra_opacity: the opacity (0-1) to display the atoms</span>
+<span class="sd">            within the extra distance. :param width, height: the width</span>
+<span class="sd">            and height of the 3D view</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">widgets</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">py3Dmol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">"You need to install py3Dmol&gt;=0.9 and ipywidgets to use Crystal.widget_3d()"</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_3d_widget</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Box</span><span class="p">()</span>
+
+        <span class="c1"># TODO: toggle for labels, toggle for stick (bonds), radius for atoms, enantiomer</span>
+
+        <span class="c1"># Use a step of ~0.5 Angstroem</span>
+        <span class="n">xstep</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span>
+        <span class="c1"># Adapt step so we can keep original values as integral number steps</span>
+        <span class="n">xstep</span> <span class="o">=</span> <span class="p">(</span><span class="n">xmax</span> <span class="o">-</span> <span class="n">xmin</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">xmax</span> <span class="o">-</span> <span class="n">xmin</span><span class="p">)</span> <span class="o">/</span> <span class="n">xstep</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xrange</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatRangeSlider</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="p">[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">],</span>
+            <span class="nb">min</span><span class="o">=</span><span class="n">xmin</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">,</span>
+            <span class="nb">max</span><span class="o">=</span><span class="n">xmax</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">step</span><span class="o">=</span><span class="n">xstep</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"Xrange"</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">continuous_update</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s2">"horizontal"</span><span class="p">,</span>
+            <span class="n">readout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ystep</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+        <span class="n">ystep</span> <span class="o">=</span> <span class="p">(</span><span class="n">ymax</span> <span class="o">-</span> <span class="n">ymin</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">ymax</span> <span class="o">-</span> <span class="n">ymin</span><span class="p">)</span> <span class="o">/</span> <span class="n">ystep</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yrange</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatRangeSlider</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="p">[</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">],</span>
+            <span class="nb">min</span><span class="o">=</span><span class="n">ymin</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">,</span>
+            <span class="nb">max</span><span class="o">=</span><span class="n">ymax</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">step</span><span class="o">=</span><span class="n">ystep</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"Yrange"</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">continuous_update</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s2">"horizontal"</span><span class="p">,</span>
+            <span class="n">readout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">zstep</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span>
+        <span class="n">zstep</span> <span class="o">=</span> <span class="p">(</span><span class="n">zmax</span> <span class="o">-</span> <span class="n">zmin</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">zmax</span> <span class="o">-</span> <span class="n">zmin</span><span class="p">)</span> <span class="o">/</span> <span class="n">zstep</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zrange</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatRangeSlider</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="p">[</span><span class="n">zmin</span><span class="p">,</span> <span class="n">zmax</span><span class="p">],</span>
+            <span class="nb">min</span><span class="o">=</span><span class="n">zmin</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">,</span>
+            <span class="nb">max</span><span class="o">=</span><span class="n">zmax</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">step</span><span class="o">=</span><span class="n">zstep</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"Zrange"</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">continuous_update</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s2">"horizontal"</span><span class="p">,</span>
+            <span class="n">readout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vbox_range</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">xrange</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yrange</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">zrange</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">extra_dist</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">extra_dist</span><span class="p">,</span>
+            <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="nb">max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">step</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"extra dist"</span><span class="p">,</span>
+            <span class="n">tooltip</span><span class="o">=</span><span class="s2">"Extra distance (A) with semi-transparent display"</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">continuous_update</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s2">"horizontal"</span><span class="p">,</span>
+            <span class="n">readout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">readout_format</span><span class="o">=</span><span class="s2">".1f"</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">extra_opacity</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">extra_opacity</span><span class="p">,</span>
+            <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"extra opac."</span><span class="p">,</span>
+            <span class="n">tooltip</span><span class="o">=</span><span class="s2">"Opacity for extra distance display"</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">continuous_update</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s2">"horizontal"</span><span class="p">,</span>
+            <span class="n">readout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">readout_format</span><span class="o">=</span><span class="s2">".01f"</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">full_molecule_opacity</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">full_molecule_opacity</span><span class="p">,</span>
+            <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"fullMol opac"</span><span class="p">,</span>
+            <span class="n">tooltip</span><span class="o">=</span><span class="s2">"Opacity to display fully molecules</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"which have at least one atom inside the limits"</span><span class="p">,</span>
+            <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">continuous_update</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s2">"horizontal"</span><span class="p">,</span>
+            <span class="n">readout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">readout_format</span><span class="o">=</span><span class="s2">".01f"</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vbox_options</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">(</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">extra_dist</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra_opacity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_molecule_opacity</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">hbox_options</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">HBox</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">vbox_range</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vbox_options</span><span class="p">])</span>
+
+        <span class="c1"># catch the py3dmol display in widgets.Output ?</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_view</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Output</span><span class="p">()</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_view</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">py3dmol_view</span> <span class="o">=</span> <span class="n">py3Dmol</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vbox</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">VBox</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">hbox_options</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_view</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_3d_widget</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">vbox</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget_update</span><span class="p">(</span><span class="n">show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">xrange</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_widget_on_change_parameter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yrange</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_widget_on_change_parameter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zrange</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_widget_on_change_parameter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extra_dist</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_widget_on_change_parameter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extra_opacity</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_widget_on_change_parameter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">full_molecule_opacity</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_widget_on_change_parameter</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_3d_widget</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_widget_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xrange</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">yrange</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">zmin</span><span class="p">,</span> <span class="n">zmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zrange</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">extra_dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra_dist</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">extra_opacity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra_opacity</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">full_molecule_opacity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_molecule_opacity</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">py3dmol_view</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">removeAllModels</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">full_molecule_opacity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">addModel</span><span class="p">()</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getModel</span><span class="p">()</span>
+            <span class="n">atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_list</span><span class="p">(</span>
+                <span class="n">xmin</span><span class="p">,</span>
+                <span class="n">xmax</span><span class="p">,</span>
+                <span class="n">ymin</span><span class="p">,</span>
+                <span class="n">ymax</span><span class="p">,</span>
+                <span class="n">zmin</span><span class="p">,</span>
+                <span class="n">zmax</span><span class="p">,</span>
+                <span class="n">full_molecule</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">only_independent_atoms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">addAtoms</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">"stick"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"radius"</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s2">"opacity"</span><span class="p">:</span> <span class="n">full_molecule_opacity</span><span class="p">},</span>
+                    <span class="s2">"sphere"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">"scale"</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+                        <span class="s2">"colorscheme"</span><span class="p">:</span> <span class="s2">"jmol"</span><span class="p">,</span>
+                        <span class="s2">"opacity"</span><span class="p">:</span> <span class="n">full_molecule_opacity</span><span class="p">,</span>
+                    <span class="p">},</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">extra_opacity</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">extra_dist</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">extra_dist</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span>
+                <span class="n">extra_dist</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">,</span>
+                <span class="n">extra_dist</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">addModel</span><span class="p">()</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getModel</span><span class="p">()</span>
+            <span class="n">atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_list</span><span class="p">(</span>
+                <span class="n">xmin</span> <span class="o">-</span> <span class="n">dx</span><span class="p">,</span>
+                <span class="n">xmax</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span>
+                <span class="n">ymin</span> <span class="o">-</span> <span class="n">dy</span><span class="p">,</span>
+                <span class="n">ymax</span> <span class="o">+</span> <span class="n">dy</span><span class="p">,</span>
+                <span class="n">zmin</span> <span class="o">-</span> <span class="n">dz</span><span class="p">,</span>
+                <span class="n">zmax</span> <span class="o">+</span> <span class="n">dz</span><span class="p">,</span>
+                <span class="n">full_molecule</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">only_independent_atoms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">addAtoms</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">"stick"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"radius"</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s2">"opacity"</span><span class="p">:</span> <span class="n">extra_opacity</span><span class="p">},</span>
+                    <span class="s2">"sphere"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">"scale"</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+                        <span class="s2">"colorscheme"</span><span class="p">:</span> <span class="s2">"jmol"</span><span class="p">,</span>
+                        <span class="s2">"opacity"</span><span class="p">:</span> <span class="n">extra_opacity</span><span class="p">,</span>
+                    <span class="p">},</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="n">v</span><span class="o">.</span><span class="n">addModel</span><span class="p">()</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">getModel</span><span class="p">()</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">setCrystData</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">,</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">addUnitCell</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">"box"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"color"</span><span class="p">:</span> <span class="s2">"purple"</span><span class="p">},</span>
+                <span class="s2">"alabel"</span><span class="p">:</span> <span class="s2">"X"</span><span class="p">,</span>
+                <span class="s2">"blabel"</span><span class="p">:</span> <span class="s2">"Y"</span><span class="p">,</span>
+                <span class="s2">"clabel"</span><span class="p">:</span> <span class="s2">"Z"</span><span class="p">,</span>
+                <span class="s2">"alabelstyle"</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">"fontColor"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span>
+                    <span class="s2">"backgroundColor"</span><span class="p">:</span> <span class="s2">"white"</span><span class="p">,</span>
+                    <span class="s2">"inFront"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="s2">"fontSize"</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">"astyle"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"color"</span><span class="p">:</span> <span class="s2">"darkred"</span><span class="p">,</span> <span class="s2">"radius"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">"midpos"</span><span class="p">:</span> <span class="o">-</span><span class="mi">10</span><span class="p">},</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_list</span><span class="p">(</span>
+            <span class="n">xmin</span><span class="p">,</span>
+            <span class="n">xmax</span><span class="p">,</span>
+            <span class="n">ymin</span><span class="p">,</span>
+            <span class="n">ymax</span><span class="p">,</span>
+            <span class="n">zmin</span><span class="p">,</span>
+            <span class="n">zmax</span><span class="p">,</span>
+            <span class="n">full_molecule</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">only_independent_atoms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">addAtoms</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">"stick"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"radius"</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s2">"opacity"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+                <span class="s2">"sphere"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"scale"</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="s2">"colorscheme"</span><span class="p">:</span> <span class="s2">"jmol"</span><span class="p">,</span> <span class="s2">"opacity"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">zoom</span><span class="p">:</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">zoomTo</span><span class="p">()</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">setZoomLimits</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># This avoids adding extra lines in the javascript output every time</span>
+            <span class="c1"># the model is update. Only a flicker (line removed/added) remains.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output_view</span><span class="o">.</span><span class="n">clear_output</span><span class="p">()</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_view</span><span class="p">:</span>
+                <span class="n">v</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_widget_on_change_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">"value"</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget_update</span><span class="p">(</span><span class="n">zoom</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_crystal_from_cif">
+<a class="viewcode-back" href="../../api/pyobjcryst.html#pyobjcryst.crystal.create_crystal_from_cif">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_crystal_from_cif</span><span class="p">(</span>
+    <span class="n">file</span><span class="p">,</span>
+    <span class="n">oneScatteringPowerPerElement</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">connectAtoms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">multiple</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Create a crystal object from a CIF file or URL.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        create_crystal_from_cif('http://www.crystallography.net/cod/2201530.cif')</span>
+
+<span class="sd">    :param file: the filename/URL or python file object (need to open with mode='rb')</span>
+<span class="sd">                 If the string begins by 'http' it is assumed that it is an URL instead,</span>
+<span class="sd">                 e.g. from the crystallography open database</span>
+<span class="sd">    :param oneScatteringPowerPerElement: if False (the default), then there will</span>
+<span class="sd">          be as many ScatteringPowerAtom created as there are different elements.</span>
+<span class="sd">          If True, only one will be created per element.</span>
+<span class="sd">    :param connectAtoms: if True, call Crystal::ConnectAtoms to try to create</span>
+<span class="sd">          as many Molecules as possible from the list of imported atoms.</span>
+<span class="sd">    :param multiple: if True, all structures from the CIF will be imported, but</span>
+<span class="sd">        the returned Crystal object and those created in the global registry</span>
+<span class="sd">        will not have been created in python, and so will miss the derived</span>
+<span class="sd">        functions for display &amp; widget.</span>
+<span class="sd">    :return: the imported Crystal structure</span>
+<span class="sd">    :raises: ObjCrystException - if no Crystal object can be imported</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">multiple</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">file</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"http"</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">CreateCrystalFromCIF_orig</span><span class="p">(</span>
+                        <span class="n">urlopen</span><span class="p">(</span><span class="n">file</span><span class="p">),</span>
+                        <span class="n">oneScatteringPowerPerElement</span><span class="p">,</span>
+                        <span class="n">connectAtoms</span><span class="p">,</span>
+                    <span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
+                <span class="n">file</span><span class="p">,</span> <span class="s2">"rb"</span>
+            <span class="p">)</span> <span class="k">as</span> <span class="n">cif</span><span class="p">:</span>  <span class="c1"># Make sure file object is closed afterwards</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">CreateCrystalFromCIF_orig</span><span class="p">(</span>
+                    <span class="n">cif</span><span class="p">,</span> <span class="n">oneScatteringPowerPerElement</span><span class="p">,</span> <span class="n">connectAtoms</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">CreateCrystalFromCIF_orig</span><span class="p">(</span>
+                <span class="n">file</span><span class="p">,</span> <span class="n">oneScatteringPowerPerElement</span><span class="p">,</span> <span class="n">connectAtoms</span>
+            <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">Crystal</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">file</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"http"</span><span class="p">:</span>
+                    <span class="n">c</span><span class="o">.</span><span class="n">ImportCrystalFromCIF</span><span class="p">(</span>
+                        <span class="n">urlopen</span><span class="p">(</span><span class="n">file</span><span class="p">),</span>
+                        <span class="n">oneScatteringPowerPerElement</span><span class="p">,</span>
+                        <span class="n">connectAtoms</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="n">c</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
+                <span class="n">file</span><span class="p">,</span> <span class="s2">"rb"</span>
+            <span class="p">)</span> <span class="k">as</span> <span class="n">cif</span><span class="p">:</span>  <span class="c1"># Make sure file object is closed afterwards</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">ImportCrystalFromCIF</span><span class="p">(</span>
+                    <span class="n">cif</span><span class="p">,</span> <span class="n">oneScatteringPowerPerElement</span><span class="p">,</span> <span class="n">connectAtoms</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">ImportCrystalFromCIF</span><span class="p">(</span>
+                <span class="n">file</span><span class="p">,</span> <span class="n">oneScatteringPowerPerElement</span><span class="p">,</span> <span class="n">connectAtoms</span>
+            <span class="p">)</span>
+    <span class="k">return</span> <span class="n">c</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">wrap_boost_crystal</span><span class="p">(</span><span class="n">c</span><span class="p">:</span> <span class="n">Crystal</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""This function is used to wrap a C++ Object by adding the python</span>
+<span class="sd">    methods to it.</span>
+
+<span class="sd">    :param c: the C++ created object to which the python function must</span>
+<span class="sd">        be added.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="s2">"_display_cif"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="s2">"CIFOutput"</span><span class="p">,</span>
+            <span class="s2">"UpdateDisplay"</span><span class="p">,</span>
+            <span class="s2">"disable_display_update"</span><span class="p">,</span>
+            <span class="s2">"enable_display_update"</span><span class="p">,</span>
+            <span class="s2">"_display_cif"</span><span class="p">,</span>
+            <span class="s2">"_display_list"</span><span class="p">,</span>
+            <span class="s2">"display_3d"</span><span class="p">,</span>
+            <span class="s2">"widget_3d"</span><span class="p">,</span>
+            <span class="s2">"_widget_update"</span><span class="p">,</span>
+            <span class="s2">"_widget_on_change_parameter"</span><span class="p">,</span>
+        <span class="p">]:</span>
+            <span class="n">exec</span><span class="p">(</span><span class="s2">"c.</span><span class="si">%s</span><span class="s2"> = MethodType(Crystal.</span><span class="si">%s</span><span class="s2">, c)"</span> <span class="o">%</span> <span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">func</span><span class="p">))</span>
+
+
+<span class="c1"># PEP8, functions should be lowercase</span>
+<span class="n">CreateCrystalFromCIF</span> <span class="o">=</span> <span class="n">create_crystal_from_cif</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, The Trustees of Columbia University in the City of New York.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.2.0.
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

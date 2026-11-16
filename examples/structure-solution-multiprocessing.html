@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 
@@ -8,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Advanced structure solution: parallel process &amp; testing multiple configurations &#8212; pyobjcryst 2026.1.0 documentation</title>
+    <title>Advanced structure solution: parallel process &amp; testing multiple configurations &#8212; pyobjcryst 2026.2.0rc1 documentation</title>
   
   
   
@@ -27,22 +26,22 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
 
     <script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../_static/documentation_options.js?v=cb536bdc"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -55,8 +54,9 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.1.0" />
+  <meta name="docsearch:version" content="2026.2.0rc1" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -104,7 +104,7 @@
   
     <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
     <span class="fa-solid fa-bars"></span>
   </button>
   
@@ -124,7 +124,7 @@
   
   
   
-    <p class="title logo__title">pyobjcryst 2026.1.0 documentation</p>
+    <p class="title logo__title">pyobjcryst 2026.2.0rc1 documentation</p>
   
 </a></div>
     
@@ -176,7 +176,7 @@
         <div class="navbar-item navbar-persistent--container">
           
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
  <i class="fa-solid fa-magnifying-glass"></i>
  <span class="search-button__default-text">Search</span>
  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -187,15 +187,15 @@
         <div class="navbar-item">
 
 <div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
   </ul>
 </div></div>
       
@@ -221,7 +221,7 @@
   
     <div class="navbar-persistent--mobile">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
  <i class="fa-solid fa-magnifying-glass"></i>
  <span class="search-button__default-text">Search</span>
  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -230,7 +230,7 @@
   
 
   
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
       <span class="fa-solid fa-outdent"></span>
     </button>
   
@@ -246,7 +246,7 @@
       
         
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
@@ -302,15 +302,15 @@
           <div class="navbar-item">
 
 <div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
-    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
-    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
   </ul>
 </div></div>
         
@@ -377,7 +377,7 @@
     
     <li class="breadcrumb-item breadcrumb-home">
       <a href="../index.html" class="nav-link" aria-label="Home">
-        <i class="fa-solid fa-home"></i>
+        <i class="fa-solid fa-house"></i>
       </a>
     </li>
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Advanced structure solution: parallel process &amp; testing multiple configurations</span></li>
@@ -422,7 +422,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">timeit</span>
 
-<span class="c1"># Note: we need &#39;multiprocess&#39; instead of standard multiprocessing because of the</span>
+<span class="c1"># Note: we need 'multiprocess' instead of standard multiprocessing because of the</span>
 <span class="c1"># following issue (specific to ipython or notebooks):</span>
 <span class="c1"># https://bugs.python.org/issue25053</span>
 <span class="c1"># https://stackoverflow.com/questions/41385708/multiprocessing-example-giving-attributeerror</span>
@@ -431,7 +431,7 @@
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">multiprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pool</span><span class="p">,</span> <span class="n">current_process</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please install `multiprocess` using &#39;pip&#39;, &#39;conda&#39; or &#39;mamba&#39; to run this notebook&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Please install `multiprocess` using 'pip', 'conda' or 'mamba' to run this notebook"</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">()</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
@@ -457,7 +457,7 @@
 <span class="k">except</span><span class="p">:</span>
     <span class="n">nproc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of processors or cores available: &quot;</span><span class="p">,</span> <span class="n">nproc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Number of processors or cores available: "</span><span class="p">,</span> <span class="n">nproc</span><span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
@@ -480,11 +480,11 @@ Number of processors or cores available:  8
 
 <span class="n">p</span> <span class="o">=</span> <span class="n">PowderPattern</span><span class="p">()</span>
 
-<span class="n">data_dir</span> <span class="o">=</span> <span class="s2">&quot;./data&quot;</span>
-<span class="n">dat_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;cime.dat&quot;</span><span class="p">)</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s2">"./data"</span>
+<span class="n">dat_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"cime.dat"</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dat_path</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;curl -o </span><span class="si">{}</span><span class="s2"> https://raw.githubusercontent.com/vincefn/objcryst/master/Fox/example/tutorial-cimetidine/cime.dat&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dat_path</span><span class="p">))</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">"curl -o </span><span class="si">{}</span><span class="s2"> https://raw.githubusercontent.com/vincefn/objcryst/master/Fox/example/tutorial-cimetidine/cime.dat"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dat_path</span><span class="p">))</span>
 
 <span class="n">p</span><span class="o">.</span><span class="n">ImportPowderPatternFullprof</span><span class="p">(</span><span class="n">dat_path</span><span class="p">)</span>
 <span class="n">p</span><span class="o">.</span><span class="n">SetWavelength</span><span class="p">(</span><span class="mf">1.52904</span><span class="p">)</span>
@@ -496,13 +496,13 @@ Number of processors or cores available:  8
 
 <span class="n">ex</span> <span class="o">=</span> <span class="n">quick_index</span><span class="p">(</span><span class="n">pl</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Indexed unit cell:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Indexed unit cell:"</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">ex</span><span class="o">.</span><span class="n">GetSolutions</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
 <span class="c1"># Use solution to create a crystal</span>
 <span class="n">uc</span> <span class="o">=</span> <span class="n">ex</span><span class="o">.</span><span class="n">GetSolutions</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">DirectUnitCell</span><span class="p">()</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">Crystal</span><span class="p">(</span><span class="n">uc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="s2">&quot;P1&quot;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Crystal</span><span class="p">(</span><span class="n">uc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">uc</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="s2">"P1"</span><span class="p">)</span>
 <span class="n">pdiff</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">AddPowderPatternDiffraction</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
 <span class="c1"># Fit profile</span>
@@ -512,7 +512,7 @@ Number of processors or cores available:  8
 
 <span class="c1"># Plot</span>
 <span class="n">p</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">diff</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hkl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fit result: Rw=</span><span class="si">%6.2f%%</span><span class="s2"> Chi2=</span><span class="si">%10.2f</span><span class="s2">  GoF=</span><span class="si">%8.2f</span><span class="s2">  LLK=</span><span class="si">%10.3f</span><span class="s2">&quot;</span> <span class="o">%</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Fit result: Rw=</span><span class="si">%6.2f%%</span><span class="s2"> Chi2=</span><span class="si">%10.2f</span><span class="s2">  GoF=</span><span class="si">%8.2f</span><span class="s2">  LLK=</span><span class="si">%10.3f</span><span class="s2">"</span> <span class="o">%</span>
       <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">rw</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">chi2</span><span class="o">/</span><span class="n">p</span><span class="o">.</span><span class="n">GetNbPointUsed</span><span class="p">(),</span> <span class="n">p</span><span class="o">.</span><span class="n">llk</span><span class="p">))</span>
 <br/></pre></div>
 </div>
@@ -558,7 +558,7 @@ Fit result: Rw=  5.51% Chi2=  34095.69  GoF=    4.43  LLK=  6397.991
     <span class="k">if</span> <span class="n">sol</span><span class="o">.</span><span class="n">GoF</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">spgex</span><span class="o">.</span><span class="n">GetScores</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">GoF</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Chosen spacegroup (smallest nGoF): &quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">GetSpaceGroup</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Chosen spacegroup (smallest nGoF): "</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">GetSpaceGroup</span><span class="p">())</span>
 <br/></pre></div>
 </div>
 </div>
@@ -648,10 +648,10 @@ Restoring best spacegroup: P 1 21/c 1
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="c1"># Get the cimetidine z-matrix</span>
-<span class="n">fhz_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;cime.fhz&quot;</span><span class="p">)</span>
+<span class="n">fhz_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">"cime.fhz"</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fhz_path</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;curl -o </span><span class="si">{}</span><span class="s2"> https://raw.githubusercontent.com/vincefn/objcryst/master/Fox/example/tutorial-cimetidine/cime.fhz&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fhz_path</span><span class="p">))</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">"curl -o </span><span class="si">{}</span><span class="s2"> https://raw.githubusercontent.com/vincefn/objcryst/master/Fox/example/tutorial-cimetidine/cime.fhz"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fhz_path</span><span class="p">))</span>
 
 <span class="c1"># Disable dynamical occupancy correction (no special position expected, usual in organic structures)</span>
 <span class="n">c</span><span class="o">.</span><span class="n">GetOption</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">SetChoice</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -660,9 +660,9 @@ Restoring best spacegroup: P 1 21/c 1
 <span class="n">mc</span> <span class="o">=</span> <span class="n">MonteCarlo</span><span class="p">()</span>
 <span class="n">mc</span><span class="o">.</span><span class="n">AddRefinableObj</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 <span class="n">mc</span><span class="o">.</span><span class="n">AddRefinableObj</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-<span class="n">mc</span><span class="o">.</span><span class="n">GetOption</span><span class="p">(</span><span class="s2">&quot;Automatic Least Squares Refinement&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">SetChoice</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">GetOption</span><span class="p">(</span><span class="s2">"Automatic Least Squares Refinement"</span><span class="p">)</span><span class="o">.</span><span class="n">SetChoice</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="n">nb_step</span> <span class="o">=</span> <span class="mf">1e6</span>  <span class="c1"># Increase this for more complex problems - it&#39;s ok if the spacegroup is correct (1 independent molecule)</span>
+<span class="n">nb_step</span> <span class="o">=</span> <span class="mf">1e6</span>  <span class="c1"># Increase this for more complex problems - it's ok if the spacegroup is correct (1 independent molecule)</span>
 
 <span class="c1"># Disable profile fitting for the powder pattern (or nothing gets optimised !)</span>
 <span class="n">pdiff</span><span class="o">.</span><span class="n">SetExtractionMode</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
@@ -686,7 +686,7 @@ Restoring best spacegroup: P 1 21/c 1
         <span class="n">m</span> <span class="o">=</span> <span class="n">ImportFenskeHallZMatrix</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">fhz_path</span><span class="p">)</span>
 
     <span class="c1"># Disable all display update if not in the Main process-or strange things happen !</span>
-    <span class="k">if</span> <span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s1">&#39;MainProcess&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s1">'MainProcess'</span><span class="p">:</span>
         <span class="c1"># we must do that for the crystal, monte-carlo and powder pattern object</span>
         <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
             <span class="n">o</span><span class="o">.</span><span class="n">disable_display_update</span><span class="p">()</span>
@@ -699,7 +699,7 @@ Restoring best spacegroup: P 1 21/c 1
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_run</span><span class="p">):</span>
         <span class="n">mc</span><span class="o">.</span><span class="n">MultiRunOptimize</span><span class="p">(</span><span class="n">nb_run</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nb_step</span><span class="o">=</span><span class="n">nb_step</span><span class="p">)</span>
         <span class="n">dt</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Spacegroup: </span><span class="si">%12s</span><span class="s2"> LLK: </span><span class="si">%12.2f</span><span class="s2"> dt=</span><span class="si">%3.0f</span><span class="s2">s&quot;</span> <span class="o">%</span>  <span class="c1"># /run (%3.0fs remaining)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Spacegroup: </span><span class="si">%12s</span><span class="s2"> LLK: </span><span class="si">%12.2f</span><span class="s2"> dt=</span><span class="si">%3.0f</span><span class="s2">s"</span> <span class="o">%</span>  <span class="c1"># /run (%3.0fs remaining)</span>
               <span class="p">(</span><span class="n">spgname</span><span class="p">,</span><span class="n">mc</span><span class="o">.</span><span class="n">GetLogLikelihood</span><span class="p">(),</span> <span class="n">dt</span><span class="p">,))</span> <span class="c1">#  dt/(i+1) * (nb_run-i-1)</span>
 
     <span class="c1"># Extract all solutions as the XML output of the crystal</span>
@@ -708,7 +708,7 @@ Restoring best spacegroup: P 1 21/c 1
         <span class="n">mc</span><span class="o">.</span><span class="n">RestoreParamSet</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">update_display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">xml</span><span class="p">()</span>
         <span class="n">llk</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">GetLogLikelihood</span><span class="p">()</span>
-        <span class="n">vsol</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;xml&#39;</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;llk&#39;</span><span class="p">:</span> <span class="n">llk</span><span class="p">,</span> <span class="s1">&#39;spg&#39;</span><span class="p">:</span> <span class="n">spgname</span><span class="p">,</span> <span class="s1">&#39;nb_mol&#39;</span><span class="p">:</span> <span class="n">nb_mol</span><span class="p">})</span>
+        <span class="n">vsol</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">'xml'</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span> <span class="s1">'llk'</span><span class="p">:</span> <span class="n">llk</span><span class="p">,</span> <span class="s1">'spg'</span><span class="p">:</span> <span class="n">spgname</span><span class="p">,</span> <span class="s1">'nb_mol'</span><span class="p">:</span> <span class="n">nb_mol</span><span class="p">})</span>
 
     <span class="k">return</span> <span class="n">vsol</span>
 <br/></pre></div>
@@ -721,11 +721,11 @@ Restoring best spacegroup: P 1 21/c 1
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># List of spacegroups to test (this can be larger than the number</span>
 <span class="c1"># of available processor cores, process will loop over possible spacegroups)</span>
-<span class="n">v_spacegroup</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;P 1 21/c 1&quot;</span><span class="p">,</span> <span class="s2">&quot;P 1 2/c 1&quot;</span><span class="p">,</span> <span class="s2">&quot;P 1 c 1&quot;</span><span class="p">,</span> <span class="s2">&quot;P 1 21 1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;P 1 2 1&quot;</span><span class="p">,</span> <span class="s2">&quot;P 1 m 1&quot;</span><span class="p">,</span> <span class="s2">&quot;P 1 21/m 1&quot;</span><span class="p">,</span> <span class="s2">&quot;P -1&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
+<span class="n">v_spacegroup</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"P 1 21/c 1"</span><span class="p">,</span> <span class="s2">"P 1 2/c 1"</span><span class="p">,</span> <span class="s2">"P 1 c 1"</span><span class="p">,</span> <span class="s2">"P 1 21 1"</span><span class="p">,</span>
+                <span class="s2">"P 1 2 1"</span><span class="p">,</span> <span class="s2">"P 1 m 1"</span><span class="p">,</span> <span class="s2">"P 1 21/m 1"</span><span class="p">,</span> <span class="s2">"P -1"</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
 
 <span class="c1"># Use a multiprocess pool to solve in parallel - this should use all available processor cores</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solving structures in // - this will take a little while, be patient !&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Solving structures in // - this will take a little while, be patient !"</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">Pool</span><span class="p">(</span><span class="n">nproc</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">solve_for_spacegroup</span><span class="p">,</span> <span class="n">v_spacegroup</span><span class="p">)</span>
 
@@ -793,21 +793,21 @@ Spacegroup:      P 1 m 1 LLK:    243392.35 dt= 63s
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># restore the best solution (first in list)</span>
-<span class="n">c</span><span class="o">.</span><span class="n">XMLInput</span><span class="p">(</span><span class="n">vsol</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;xml&#39;</span><span class="p">])</span>
+<span class="n">c</span><span class="o">.</span><span class="n">XMLInput</span><span class="p">(</span><span class="n">vsol</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">'xml'</span><span class="p">])</span>
 
 <span class="c1"># sort solutions as a function of the log-likelihood</span>
-<span class="n">vsol</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">vsol</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sol</span><span class="p">:</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;llk&#39;</span><span class="p">])</span>
+<span class="n">vsol</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">vsol</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sol</span><span class="p">:</span> <span class="n">sol</span><span class="p">[</span><span class="s1">'llk'</span><span class="p">])</span>
 
 <span class="k">if</span> <span class="n">widgets</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
     <span class="n">v</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vsol</span><span class="p">)):</span>
         <span class="n">sol</span> <span class="o">=</span> <span class="n">vsol</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">v</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;#</span><span class="si">%2d</span><span class="s2">  </span><span class="si">%12s</span><span class="s2"> : </span><span class="si">%d</span><span class="s2"> mol LLK=</span><span class="si">%12.2f</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;spg&#39;</span><span class="p">],</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;nb_mol&#39;</span><span class="p">],</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;llk&#39;</span><span class="p">]))</span>
-    <span class="n">w</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Solutions:&#39;</span><span class="p">,</span> <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,)</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"#</span><span class="si">%2d</span><span class="s2">  </span><span class="si">%12s</span><span class="s2"> : </span><span class="si">%d</span><span class="s2"> mol LLK=</span><span class="si">%12.2f</span><span class="s2">"</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sol</span><span class="p">[</span><span class="s1">'spg'</span><span class="p">],</span> <span class="n">sol</span><span class="p">[</span><span class="s1">'nb_mol'</span><span class="p">],</span> <span class="n">sol</span><span class="p">[</span><span class="s1">'llk'</span><span class="p">]))</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">'Solutions:'</span><span class="p">,</span> <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span><span class="p">,)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">show_solution</span><span class="p">(</span><span class="n">solution</span><span class="p">):</span>
         <span class="n">i</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
         <span class="c1"># Crystal display is automatically updated when loaded</span>
-        <span class="n">c</span><span class="o">.</span><span class="n">XMLInput</span><span class="p">(</span><span class="n">vsol</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;xml&#39;</span><span class="p">])</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">XMLInput</span><span class="p">(</span><span class="n">vsol</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">'xml'</span><span class="p">])</span>
         <span class="c1"># Update powder pattern display manually</span>
         <span class="n">p</span><span class="o">.</span><span class="n">FitScaleFactorForIntegratedRw</span><span class="p">()</span>
         <span class="n">p</span><span class="o">.</span><span class="n">UpdateDisplay</span><span class="p">()</span>
@@ -816,7 +816,7 @@ Spacegroup:      P 1 m 1 LLK:    243392.35 dt= 63s
     <span class="c1"># print solutions</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vsol</span><span class="p">)):</span>
         <span class="n">sol</span> <span class="o">=</span> <span class="n">vsol</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#</span><span class="si">%2d</span><span class="s2">  </span><span class="si">%12s</span><span class="s2"> : </span><span class="si">%d</span><span class="s2"> mol LLK=</span><span class="si">%12.2f</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;spg&#39;</span><span class="p">],</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;nb_mol&#39;</span><span class="p">],</span> <span class="n">sol</span><span class="p">[</span><span class="s1">&#39;llk&#39;</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"#</span><span class="si">%2d</span><span class="s2">  </span><span class="si">%12s</span><span class="s2"> : </span><span class="si">%d</span><span class="s2"> mol LLK=</span><span class="si">%12.2f</span><span class="s2">"</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sol</span><span class="p">[</span><span class="s1">'spg'</span><span class="p">],</span> <span class="n">sol</span><span class="p">[</span><span class="s1">'nb_mol'</span><span class="p">],</span> <span class="n">sol</span><span class="p">[</span><span class="s1">'llk'</span><span class="p">]))</span>
 
 <span class="c1"># displays - requires ipywidgets for crystal 3D display</span>
 <span class="n">display</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">widget_3d</span><span class="p">())</span>
@@ -925,7 +925,7 @@ viewer_17532245370117052.render();
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crystal display is automatically updated when loaded</span>
-<span class="n">c</span><span class="o">.</span><span class="n">XMLInput</span><span class="p">(</span><span class="n">vsol</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;xml&#39;</span><span class="p">])</span>
+<span class="n">c</span><span class="o">.</span><span class="n">XMLInput</span><span class="p">(</span><span class="n">vsol</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">'xml'</span><span class="p">])</span>
 <span class="c1"># Update powder pattern display manually</span>
 <span class="n">p</span><span class="o">.</span><span class="n">UpdateDisplay</span><span class="p">()</span>
 <br/></pre></div>
@@ -952,9 +952,9 @@ Input ScatteringPowerAtom:S(S)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save result so it can be opened by Fox</span>
-<span class="n">xml_cryst_file_save_global</span><span class="p">(</span><span class="s1">&#39;result.xmlgz&#39;</span><span class="p">)</span>
+<span class="n">xml_cryst_file_save_global</span><span class="p">(</span><span class="s1">'result.xmlgz'</span><span class="p">)</span>
 <span class="c1"># Also export to the CIF format</span>
-<span class="n">c</span><span class="o">.</span><span class="n">CIFOutput</span><span class="p">(</span><span class="s2">&quot;result.cif&quot;</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">CIFOutput</span><span class="p">(</span><span class="s2">"result.cif"</span><span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
@@ -986,7 +986,7 @@ Input ScatteringPowerAtom:S(S)
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
@@ -1029,8 +1029,8 @@ Input ScatteringPowerAtom:S(S)
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1050,8 +1050,7 @@ Input ScatteringPowerAtom:S(S)
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
-    <br/>
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.2.0.
   </p>
 </div>
       
@@ -1064,7 +1063,7 @@ Input ScatteringPowerAtom:S(S)
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
 </p></div>
       
     </div>
