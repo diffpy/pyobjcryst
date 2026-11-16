@@ -315,19 +315,16 @@ inline void refobj_fwd_add_par_obj(ObjCryst::RefinableObj& obj, nb::object o, co
 
 inline ObjCryst::RefinablePar& refobj_fwd_get_par_long(ObjCryst::RefinableObj& obj, const long i)
 {
-    obj.SetDeleteRefParInDestructor(0);
     return obj.GetPar(i);
 }
 
 inline ObjCryst::RefinablePar& refobj_fwd_get_par_string(ObjCryst::RefinableObj& obj, const std::string& s)
 {
-    obj.SetDeleteRefParInDestructor(0);
     return obj.GetPar(s);
 }
 
 inline ObjCryst::RefinablePar& refobj_fwd_get_par_not_fixed(ObjCryst::RefinableObj& obj, const long i)
 {
-    obj.SetDeleteRefParInDestructor(0);
     return obj.GetParNotFixed(i);
 }
 

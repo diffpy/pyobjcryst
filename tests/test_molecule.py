@@ -14,6 +14,7 @@
 ##############################################################################
 """Tests for molecule module."""
 
+import gc
 import unittest
 
 import pytest
@@ -27,11 +28,13 @@ from pyobjcryst.molecule import (
     GetBondLength,
     GetDihedralAngle,
     ImportFenskeHallZMatrix,
+    Molecule,
     StretchModeBondAngle,
     StretchModeBondLength,
     StretchModeTorsion,
 )
 from pyobjcryst.refinableobj import RefinablePar, RefParType
+from pyobjcryst.scatteringpower import ScatteringPowerAtom
 
 numplaces = 6
 
@@ -883,6 +886,55 @@ class TestStretchModeTorsion(unittest.TestCase):
 
 
 # End class TestStretchTorsion
+
+
+def make_chain_molecule():
+    """Return a crystal and a 5-atom chain molecule with restraints."""
+    crystal = Crystal(10, 10, 10, "P1")
+    sp = ScatteringPowerAtom("C", "C")
+    crystal.AddScatteringPower(sp)
+    m = Molecule(crystal, "m")
+    for i in range(5):
+        m.AddAtom(1.5 * i, 0.1 * i * i, 0.0, sp, "C%d" % i)
+    a = [m.GetAtom(i) for i in range(5)]
+    for i in range(4):
+        m.AddBond(a[i], a[i + 1], 1.5, 0.01, 0.02)
+    for i in range(3):
+        m.AddBondAngle(a[i], a[i + 1], a[i + 2], 2.0, 0.01, 0.02)
+    m.AddDihedralAngle(a[0], a[1], a[2], a[3], 0.5, 0.01, 0.02)
+    crystal.AddScatterer(m)
+    return crystal, m
+
+
+def test_remove_atom_keeps_held_wrappers_valid():
+    # Test RemoveAtom while Python holds the atom, its restraints and its
+    # coordinate parameter
+    # Expected: The atom and restraints stay usable, the coordinate
+    # parameter is invalidated, and the molecule is updated.
+    crystal, m = make_chain_molecule()
+    atom = m.GetAtom(1)
+    bond = m.GetBond(0)
+    angle = m.GetBondAngle(0)
+    dihedral = m.GetDihedralAngle(0)
+    xpar = m.GetPar("C1_x")
+    m.RemoveAtom(atom)
+    assert (m.GetNbAtoms(), m.GetNbBonds(), m.GetNbBondAngles()) == (4, 2, 1)
+    assert m.GetNbDihedralAngles() == 0
+    with pytest.warns(RuntimeWarning, match="uninitialized"):
+        with pytest.raises(TypeError):
+            xpar.GetValue()
+    m.RemoveBond(m.GetBond(0))
+    m.RemoveAtom(0)
+    del crystal, m
+    gc.collect()
+    assert atom.GetName() == "C1"
+    assert [bond.GetAtom1().GetName(), bond.GetAtom2().GetName()] == [
+        "C0",
+        "C1",
+    ]
+    assert angle.GetAtom1().GetName() == "C0"
+    assert dihedral.GetAtom2().GetName() == "C1"
+
 
 if __name__ == "__main__":
     unittest.main()

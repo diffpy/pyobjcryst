@@ -3,7 +3,10 @@
  *
  * Changes from ObjCryst::RefinableObj:
  * - XMLOutput and XMLInput accept python file-like objects or strings
- * - SetDeleteRefParInDestructor(false) called in constructors
+ * - SetDeleteRefParInDestructor(false) called by AddPar, since an added
+ *   parameter may be shared with another object
+ * - Wrappers of parameters deleted by ObjCryst are invalidated by the
+ *   release hooks (nb_release_hooks.cpp)
  * - GetParamSet returns a copy
  * - RemovePar returns None
  */
@@ -81,19 +84,16 @@ void _AddParObj(RefinableObj& obj, nb::object o, const bool copyParam = false)
 
 RefinablePar& _GetParLong(RefinableObj& obj, const long i)
 {
-    obj.SetDeleteRefParInDestructor(0);
     return obj.GetPar(i);
 }
 
 RefinablePar& _GetParString(RefinableObj& obj, const std::string& s)
 {
-    obj.SetDeleteRefParInDestructor(0);
     return obj.GetPar(s);
 }
 
 RefinablePar& _GetParNotFixed(RefinableObj& obj, const long i)
 {
-    obj.SetDeleteRefParInDestructor(0);
     return obj.GetParNotFixed(i);
 }
 
