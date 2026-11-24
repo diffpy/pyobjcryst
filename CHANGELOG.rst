@@ -4,6 +4,61 @@ Release notes
 
 .. current developments
 
+2026.2.0
+=====
+
+**Added:**
+
+* Add explicitly constructable reflection profiles
+* Expose objcryst's anisotropic Pseudo-Voigt profile
+* Add PowderPatternDiffraction.SetProfile
+* Expose reflection profile ``ReflectionProfilePseudoVoigt`` and ``ReflectionProfilePseudoVoigtAnisotropic`` as constructible Python classes.
+* Add ``IsAnisotropic()`` method to ``ReflectionProfile``.
+* Expose the time-of-flight reflection profile ReflectionProfileDoubleExponentialPseudoVoigt.
+* Add ``lsq.GetVarianceCovarianceMap()`` to get the variance-covariance matrix as a dict keyed by ``(param_name, param_name)`` tuples.
+* Expose reflection profile ``ReflectionProfilePseudoVoigtTCH`` with TCH instead of explicit Eta mixing.
+* Expose the March-Dollase preferred-orientation correction TextureMarchDollase (AddPhase, SetPhasePar, DeletePhase and getters) and PowderPatternDiffraction.GetTextureMarchDollase. SetPhasePar and DeletePhase rely on the upstream ObjCryst++ fix (vincefn/objcryst#105) which recalculates the powder pattern when the texture changes.
+* Add SCons ``arch`` option to set architecture during compilation. By default, no arch is specified.
+* Add Rwp threshold ``minRwpVar`` for ``lsq.Refine()`` and ``lsq.SafeRefine()``.
+* Add method ``GetRwHistory`` on LSQ object to get history of Rw values through one run of ``lsq.Refine()``.
+* Expose ``PowderPatternDiffraction.X2XCorrPhase()`` for per-phase flat-detector displacement correction.
+* Support for Python 3.15.
+
+**Changed:**
+
+* PowderPatternDiffraction.SetProfile gives a ReflectionProfileDoubleExponentialPseudoVoigt the unit cell of the component's crystal.
+* Removed scatterers, scattering powers and molecule sub-objects are now deleted instead of leaked, unless still referenced from Python.
+* Build the PyPI wheels with ``cibuildwheel`` (manylinux, macOS x86_64/arm64 and Windows AMD64), configured in ``[tool.cibuildwheel]`` in ``pyproject.toml``.
+* The package version is now derived from the git tag via ``setuptools-scm``.
+* Make ``LSQ.PrepareRefParList()`` silent by default and add a ``verbose`` argument to control warnings about duplicate parameter names.
+* Boost headers are now taken from the PyPI ``libboost-headers`` package when building with pip, falling back to system/conda Boost headers (or ``-DBOOST_INCLUDE_DIR=<path>``).
+
+**Fixed:**
+
+* ``LSQ.PrepareRefParList()`` is silent by default again in the nanobind
+bindings, as documented. Pass ``verbose=True`` to show the warnings
+about duplicate parameter names.
+* Fix crashes (use-after-free, double free) and stale wrappers when ObjCryst++ deletes objects still referenced from Python (#121, #132).
+* Return numpy arrays from ``UnitCell.GetLatticePar()``,
+``UnitCell.GetOrthonormalCoords()``, ``Crystal.GetMinDistanceTable()``
+and the ``ScatteringPower`` methods ``GetScatteringFactor()``,
+``GetTemperatureFactor()``, ``GetResonantScattFactReal()`` and
+``GetResonantScattFactImag()``, which raised a ``TypeError`` in the
+nanobind bindings.
+* PyPI wheels are now self-contained and no longer need ``libObjCryst`` or ``libboost_python`` from a conda environment; previously ``import pyobjcryst`` failed in a plain virtual environment.
+* Declare ``packaging`` as a runtime dependency (used by ``pyobjcryst.powderpattern``).
+* Fix memory leak in makeNdArray
+* Fix ``EraseAllParamSet`` on compiled ``RefinableObj`` (from ``LSQ.GetCompiledRefinedObj()``).
+* Fixed powder pattern plot(hkl=True) when used before the figure has been displayed at least once.
+* Update ObjCryst++ to vincefn/objcryst master (ba6ca89): fix TextureEllipsoid, invalidate March-Dollase cache on phase change, recalculate powder pattern on Radiation change, update Le-Bail extracted intensities when the number of reflections changes.
+* Preserve scattering power lifetimes in nanobind Atom construction,
+copying, and initialization to prevent use-after-free crashes.
+
+**Removed:**
+
+* ``libboost-python`` and ``libobjcryst`` from the conda requirements, as they are no longer needed with the nanobind build.
+
+
 2026.1.0
 =====
 
