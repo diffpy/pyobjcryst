@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Release notes &#8212; pyobjcryst 2026.2.0rc1 documentation</title>
+    <title>Release notes &#8212; pyobjcryst 2026.2.0 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
 
     <script src="_static/jquery.js?v=5d32c60e"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="_static/documentation_options.js?v=cb536bdc"></script>
+    <script src="_static/documentation_options.js?v=2b694ea4"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -55,7 +55,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.2.0rc1" />
+  <meta name="docsearch:version" content="2026.2.0" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -123,7 +123,7 @@
   
   
   
-    <p class="title logo__title">pyobjcryst 2026.2.0rc1 documentation</p>
+    <p class="title logo__title">pyobjcryst 2026.2.0 documentation</p>
   
 </a></div>
     
@@ -337,8 +337,9 @@
 <li class="toctree-l1"><a class="reference internal" href="examples/examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/pyobjcryst.html">Package API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">2026.1.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">2025.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2026.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2026.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">2025.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2024-2-2">Version 2024.2.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2024-2-1">Version 2024.2.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2024-2">Version 2024.2</a></li>
@@ -420,7 +421,61 @@
   <section id="release-notes">
 <span id="index-0"></span><h1>Release notes<a class="headerlink" href="#release-notes" title="Link to this heading">#</a></h1>
 <section id="id1">
-<h2>2026.1.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2>2026.2.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p><strong>Added:</strong></p>
+<ul class="simple">
+<li><p>Add explicitly constructable reflection profiles</p></li>
+<li><p>Expose objcryst’s anisotropic Pseudo-Voigt profile</p></li>
+<li><p>Add PowderPatternDiffraction.SetProfile</p></li>
+<li><p>Expose reflection profile <code class="docutils literal notranslate"><span class="pre">ReflectionProfilePseudoVoigt</span></code> and <code class="docutils literal notranslate"><span class="pre">ReflectionProfilePseudoVoigtAnisotropic</span></code> as constructible Python classes.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">IsAnisotropic()</span></code> method to <code class="docutils literal notranslate"><span class="pre">ReflectionProfile</span></code>.</p></li>
+<li><p>Expose the time-of-flight reflection profile ReflectionProfileDoubleExponentialPseudoVoigt.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">lsq.GetVarianceCovarianceMap()</span></code> to get the variance-covariance matrix as a dict keyed by <code class="docutils literal notranslate"><span class="pre">(param_name,</span> <span class="pre">param_name)</span></code> tuples.</p></li>
+<li><p>Expose reflection profile <code class="docutils literal notranslate"><span class="pre">ReflectionProfilePseudoVoigtTCH</span></code> with TCH instead of explicit Eta mixing.</p></li>
+<li><p>Expose the March-Dollase preferred-orientation correction TextureMarchDollase (AddPhase, SetPhasePar, DeletePhase and getters) and PowderPatternDiffraction.GetTextureMarchDollase. SetPhasePar and DeletePhase rely on the upstream ObjCryst++ fix (vincefn/objcryst#105) which recalculates the powder pattern when the texture changes.</p></li>
+<li><p>Add SCons <code class="docutils literal notranslate"><span class="pre">arch</span></code> option to set architecture during compilation. By default, no arch is specified.</p></li>
+<li><p>Add Rwp threshold <code class="docutils literal notranslate"><span class="pre">minRwpVar</span></code> for <code class="docutils literal notranslate"><span class="pre">lsq.Refine()</span></code> and <code class="docutils literal notranslate"><span class="pre">lsq.SafeRefine()</span></code>.</p></li>
+<li><p>Add method <code class="docutils literal notranslate"><span class="pre">GetRwHistory</span></code> on LSQ object to get history of Rw values through one run of <code class="docutils literal notranslate"><span class="pre">lsq.Refine()</span></code>.</p></li>
+<li><p>Expose <code class="docutils literal notranslate"><span class="pre">PowderPatternDiffraction.X2XCorrPhase()</span></code> for per-phase flat-detector displacement correction.</p></li>
+<li><p>Support for Python 3.15.</p></li>
+</ul>
+<p><strong>Changed:</strong></p>
+<ul class="simple">
+<li><p>PowderPatternDiffraction.SetProfile gives a ReflectionProfileDoubleExponentialPseudoVoigt the unit cell of the component’s crystal.</p></li>
+<li><p>Removed scatterers, scattering powers and molecule sub-objects are now deleted instead of leaked, unless still referenced from Python.</p></li>
+<li><p>Build the PyPI wheels with <code class="docutils literal notranslate"><span class="pre">cibuildwheel</span></code> (manylinux, macOS x86_64/arm64 and Windows AMD64), configured in <code class="docutils literal notranslate"><span class="pre">[tool.cibuildwheel]</span></code> in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>.</p></li>
+<li><p>The package version is now derived from the git tag via <code class="docutils literal notranslate"><span class="pre">setuptools-scm</span></code>.</p></li>
+<li><p>Make <code class="docutils literal notranslate"><span class="pre">LSQ.PrepareRefParList()</span></code> silent by default and add a <code class="docutils literal notranslate"><span class="pre">verbose</span></code> argument to control warnings about duplicate parameter names.</p></li>
+<li><p>Boost headers are now taken from the PyPI <code class="docutils literal notranslate"><span class="pre">libboost-headers</span></code> package when building with pip, falling back to system/conda Boost headers (or <code class="docutils literal notranslate"><span class="pre">-DBOOST_INCLUDE_DIR=&lt;path&gt;</span></code>).</p></li>
+</ul>
+<p><strong>Fixed:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">LSQ.PrepareRefParList()</span></code> is silent by default again in the nanobind</p></li>
+</ul>
+<p>bindings, as documented. Pass <code class="docutils literal notranslate"><span class="pre">verbose=True</span></code> to show the warnings
+about duplicate parameter names.
+* Fix crashes (use-after-free, double free) and stale wrappers when ObjCryst++ deletes objects still referenced from Python (#121, #132).
+* Return numpy arrays from <code class="docutils literal notranslate"><span class="pre">UnitCell.GetLatticePar()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">UnitCell.GetOrthonormalCoords()</span></code>, <code class="docutils literal notranslate"><span class="pre">Crystal.GetMinDistanceTable()</span></code>
+and the <code class="docutils literal notranslate"><span class="pre">ScatteringPower</span></code> methods <code class="docutils literal notranslate"><span class="pre">GetScatteringFactor()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">GetTemperatureFactor()</span></code>, <code class="docutils literal notranslate"><span class="pre">GetResonantScattFactReal()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">GetResonantScattFactImag()</span></code>, which raised a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> in the
+nanobind bindings.
+* PyPI wheels are now self-contained and no longer need <code class="docutils literal notranslate"><span class="pre">libObjCryst</span></code> or <code class="docutils literal notranslate"><span class="pre">libboost_python</span></code> from a conda environment; previously <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pyobjcryst</span></code> failed in a plain virtual environment.
+* Declare <code class="docutils literal notranslate"><span class="pre">packaging</span></code> as a runtime dependency (used by <code class="docutils literal notranslate"><span class="pre">pyobjcryst.powderpattern</span></code>).
+* Fix memory leak in makeNdArray
+* Fix <code class="docutils literal notranslate"><span class="pre">EraseAllParamSet</span></code> on compiled <code class="docutils literal notranslate"><span class="pre">RefinableObj</span></code> (from <code class="docutils literal notranslate"><span class="pre">LSQ.GetCompiledRefinedObj()</span></code>).
+* Fixed powder pattern plot(hkl=True) when used before the figure has been displayed at least once.
+* Update ObjCryst++ to vincefn/objcryst master (ba6ca89): fix TextureEllipsoid, invalidate March-Dollase cache on phase change, recalculate powder pattern on Radiation change, update Le-Bail extracted intensities when the number of reflections changes.
+* Preserve scattering power lifetimes in nanobind Atom construction,
+copying, and initialization to prevent use-after-free crashes.</p>
+<p><strong>Removed:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">libboost-python</span></code> and <code class="docutils literal notranslate"><span class="pre">libobjcryst</span></code> from the conda requirements, as they are no longer needed with the nanobind build.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>2026.1.0<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p><strong>Added:</strong></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">quick_index()</span></code> now accepts a <code class="docutils literal notranslate"><span class="pre">length_min</span></code> parameter (default: 2.5 Å)</p></li>
@@ -460,8 +515,8 @@ polarisation clock and fixes the polarisation-correction recalculation trigger.<
 </ul>
 <p><strong>Security:</strong></p>
 </section>
-<section id="id3">
-<h2>2025.1.0<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<section id="id4">
+<h2>2025.1.0<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p><strong>Fixed:</strong></p>
 <ul class="simple">
 <li><p>Code brought up to scikit-package level 5 standards with automated release workflows</p></li>
@@ -672,8 +727,9 @@ polarisation clock and fixes the polarisation-correction recalculation trigger.<
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2026.1.0</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2025.1.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2026.2.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2026.1.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2025.1.0</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-2-2">Version 2024.2.2</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-2-1">Version 2024.2.1</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-2024-2">Version 2024.2</a></li>
