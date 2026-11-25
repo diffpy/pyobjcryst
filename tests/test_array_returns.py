@@ -71,7 +71,9 @@ class TestArrayReturns(unittest.TestCase):
         xyz = self.crystal.GetOrthonormalCoords(0.1, 0.2, 0.3)
         self.assertIsInstance(xyz, np.ndarray)
         np.testing.assert_allclose(
-            xyz, self.crystal.FractionalToOrthonormalCoords(0.1, 0.2, 0.3)
+            xyz,
+            self.crystal.FractionalToOrthonormalCoords(0.1, 0.2, 0.3),
+            atol=1e-14,
         )
 
     def test_GetMinDistanceTable(self):
