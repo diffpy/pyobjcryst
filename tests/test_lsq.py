@@ -11,13 +11,18 @@
 
 import unittest
 
+import numpy as np
 import pytest
 
 from pyobjcryst import ObjCrystException, refinableobj
+from pyobjcryst.atom import Atom
+from pyobjcryst.crystal import Crystal
 from pyobjcryst.diffractiondatasinglecrystal import (
     DiffractionDataSingleCrystal,
 )
 from pyobjcryst.lsq import LSQ
+from pyobjcryst.powderpattern import PowderPattern
+from pyobjcryst.scatteringpower import ScatteringPowerAtom
 
 
 class TestGlobalOptim(unittest.TestCase):
@@ -142,6 +147,38 @@ class TestGlobalOptim(unittest.TestCase):
         lsq.SetRefinedObj(self.d, 0, True, True)
         lsq.PrepareRefParList(verbose=False)
         lsq.PrepareRefParList(copy_param=False, verbose=True)
+
+
+@pytest.mark.parametrize("choice, scale_after", [("Yes", 2.0), ("No", 1.0)])
+def test_lsq_refine_fit_scale_begin_optimization(choice, scale_after):
+    """Refine fits even fixed scale factors at the beginning, unless the
+    PowderPattern option is set to "No"."""
+    cryst = Crystal(4.05, 4.05, 4.05, "Fm-3m")
+    sp = ScatteringPowerAtom("Al", "Al")
+    cryst.AddScatteringPower(sp)
+    cryst.AddScatterer(Atom(0, 0, 0, "Al", sp))
+
+    pp = PowderPattern()
+    pp.SetWavelength(1.0)
+    pp.SetPowderPatternX(np.radians(np.linspace(10, 60, 2000)))
+    pp.AddPowderPatternDiffraction(cryst)
+    # observed pattern = calculated pattern at twice the scale
+    pp.SetPowderPatternObs(np.ones(2000))
+    pp.SetPowderPatternObs(2 * pp.GetPowderPatternCalc())
+    pp.GetOption("Fit Scale Factors at Beginning of Optimization").SetChoice(
+        choice
+    )
+
+    lsq = LSQ()
+    lsq.SetRefinedObj(pp, 0, True, True)
+    lsq.PrepareRefParList(False)
+    lsq.GetCompiledRefinedObj().FixAllPar()
+    pp.GetPar("Zero").SetIsFixed(False)  # LSQ needs a free parameter
+    lsq.Refine(nbCycle=1, silent=True)
+
+    scale = pp.GetPar("Scale_")
+    assert scale.IsFixed()
+    assert scale.GetValue() == pytest.approx(scale_after, rel=1e-6)
 
 
 if __name__ == "__main__":

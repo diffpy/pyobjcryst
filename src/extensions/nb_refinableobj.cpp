@@ -240,6 +240,9 @@ void wrap_refinableobj(nb::module_& m)
         .def("GetOption",
              nb::overload_cast<const unsigned int>(&RefinableObj::GetOption),
              nb::rv_policy::reference_internal)
+        .def("GetOption",
+             nb::overload_cast<const std::string&>(&RefinableObj::GetOption),
+             nb::rv_policy::reference_internal)
         /* State */
         .def("IsBeingRefined",          &RefinableObj::IsBeingRefined)
         .def("BeginGlobalOptRandomMove",&RefinableObj::BeginGlobalOptRandomMove)
